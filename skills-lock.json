@@ -19,12 +19,6 @@
       "skillPath": "skills/apple-design/SKILL.md",
       "computedHash": "8b94db67cb9edaad5f1501010804caa610131f1d2dfda0a27664b2e858deade3"
     },
-    "design-guide": {
-      "source": "getpaperclipai/paperclip",
-      "sourceType": "github",
-      "skillPath": ".claude/skills/design-guide/SKILL.md",
-      "computedHash": "8e63de4c4ee0bd816ef430507acad167006f09e4ac21314fbe5abd988db55845"
-    },
     "emil-design-eng": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
@@ -54,12 +48,6 @@
       "sourceType": "github",
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "4eabc66183767153e404b39d1b839b1c37f2d82d86f0a0d7e880a579d8d62336"
-    },
-    "high-end-visual-design": {
-      "source": "leonxlnx/taste-skill",
-      "sourceType": "github",
-      "skillPath": "skills/soft-skill/SKILL.md",
-      "computedHash": "7db385e4c5370e5a7fca9704a1361b056e4504ea6a03924bb86f33a4f00b5c73"
     },
     "review-animations": {
       "source": "emilkowalski/skills",
