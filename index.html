@@ -218,12 +218,7 @@
     position: relative;
     aspect-ratio: 4 / 5;
     border: 1px solid var(--line);
-    background:
-      repeating-linear-gradient(
-        -45deg,
-        transparent 0 10px,
-        var(--line) 10px 11px
-      );
+    background: var(--line);
     display: grid;
     place-items: center;
     overflow: hidden;
@@ -441,6 +436,9 @@
 
     <div class="output-grid">
       <!--
+        TEMPORARY: mock assets are hotlinked from Higgsfield's CDN while this
+        sandbox cannot download them. Localize before launch: save each image
+        to assets/<slug>.jpg (compressed, ~200KB) and point src back to it.
         Drop real work into these slots: replace .asset-frame contents with
         <video muted playsinline loop preload="none" poster="...">
           <source src="..." type="video/mp4">
@@ -448,43 +446,43 @@
         Keep each file under 4MB. Update the caption to the real record.
       -->
       <figure class="asset">
-        <div class="asset-frame" role="img" aria-label="Asset no. 001, reserved — in production">
-          <span class="asset-pending">NO. 001 · IN PRODUCTION</span>
+        <div class="asset-frame">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011106_b8d36656-c4bf-49bf-87b1-36ec69e4037e.png" alt="Sparkling water can with frozen splash on cobalt blue" loading="lazy" width="928" height="1152">
         </div>
         <figcaption class="asset-caption">NO. 001 · BEVERAGE · :15 VIDEO</figcaption>
       </figure>
 
       <figure class="asset">
-        <div class="asset-frame" role="img" aria-label="Asset no. 002, reserved — in production">
-          <span class="asset-pending">NO. 002 · IN PRODUCTION</span>
+        <div class="asset-frame">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011108_e148dbb9-76cc-4193-a63d-16b61d6e9d3b.png" alt="Stacked fresh oranges on warm red-orange" loading="lazy" width="928" height="1152">
         </div>
         <figcaption class="asset-caption">NO. 002 · GROCERY · KEY VISUAL</figcaption>
       </figure>
 
       <figure class="asset">
-        <div class="asset-frame" role="img" aria-label="Asset no. 003, reserved — in production">
-          <span class="asset-pending">NO. 003 · IN PRODUCTION</span>
+        <div class="asset-frame">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011110_ee74357b-6a4d-48d3-ad9b-9c48b2b0ce71.png" alt="Frosted cream jar with cream smear on pale sage" loading="lazy" width="928" height="1152">
         </div>
         <figcaption class="asset-caption">NO. 003 · SKINCARE · :06 LOOP</figcaption>
       </figure>
 
       <figure class="asset">
-        <div class="asset-frame" role="img" aria-label="Asset no. 004, reserved — in production">
-          <span class="asset-pending">NO. 004 · IN PRODUCTION</span>
+        <div class="asset-frame">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011115_9d78b8d8-b503-406f-a7c1-599256cd4a48.png" alt="Running sneaker floating on acid yellow" loading="lazy" width="928" height="1152">
         </div>
         <figcaption class="asset-caption">NO. 004 · FOOTWEAR · :30 VIDEO</figcaption>
       </figure>
 
       <figure class="asset">
-        <div class="asset-frame" role="img" aria-label="Asset no. 005, reserved — in production">
-          <span class="asset-pending">NO. 005 · IN PRODUCTION</span>
+        <div class="asset-frame">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011117_5e56c63b-2bb8-4e5d-b223-6cc68f25344f.png" alt="Amber whiskey bottle with rim light on espresso brown" loading="lazy" width="928" height="1152">
         </div>
         <figcaption class="asset-caption">NO. 005 · SPIRITS · KEY VISUAL</figcaption>
       </figure>
 
       <figure class="asset">
-        <div class="asset-frame" role="img" aria-label="Asset no. 006, reserved — in production">
-          <span class="asset-pending">NO. 006 · IN PRODUCTION</span>
+        <div class="asset-frame">
+          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011119_a821a96d-64d9-4215-85f0-753cffb3f538.png" alt="Cotton t-shirt frozen mid-billow on crimson red" loading="lazy" width="928" height="1152">
         </div>
         <figcaption class="asset-caption">NO. 006 · APPAREL · :15 VIDEO</figcaption>
       </figure>
