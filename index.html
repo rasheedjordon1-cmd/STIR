@@ -1,0 +1,563 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STIR — AI-native creative production</title>
+<meta name="description" content="Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23F2F0EB'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%231D4ED8'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F2F0EB;
+    --ink: #111110;
+    --ink-60: #5C5A55;
+    --stamp: #1D4ED8;
+    --line: #C9C6BF;
+    --display: "Archivo", sans-serif;
+    --body: "Inter", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+    --space: 8px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--stamp);
+    outline-offset: 2px;
+  }
+
+  a { color: var(--stamp); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---- Spec-field label vocabulary (caps, tracked, small) ---- */
+  .field-label {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  .field-value {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  /* ---- Section scaffolding ---- */
+  .section { padding-top: 112px; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    border-top: 1px solid var(--ink);
+    padding-top: 12px;
+    margin-bottom: 40px;
+  }
+  .section-no {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-60);
+  }
+
+  /* ================= SPEC (hero) ================= */
+  .hero { padding-top: 96px; }
+
+  .spec-sheet {
+    border: 1px solid var(--ink);
+    background: var(--paper);
+  }
+
+  .spec-masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 24px;
+    padding: 32px 32px 24px;
+  }
+
+  .logotype {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(40px, 8vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .logotype sup {
+    font-size: 0.28em;
+    font-weight: 600;
+    vertical-align: 1.6em;
+    letter-spacing: 0;
+  }
+
+  .tagline {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 12px;
+    color: var(--ink);
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    padding-top: 10px;
+  }
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--stamp);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  .spec-rows { border-top: 1px solid var(--ink); }
+
+  .spec-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+    padding: 14px 32px;
+    border-top: 1px solid var(--line);
+  }
+  .spec-row:first-child { border-top: 0; }
+
+  .spec-actions {
+    display: flex;
+    gap: 16px;
+    padding: 24px 32px;
+    border-top: 1px solid var(--ink);
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    border-radius: 0;
+    padding: 12px 28px;
+    cursor: pointer;
+    display: inline-block;
+  }
+  .btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+  }
+  .btn-primary { background: var(--ink); color: var(--paper); }
+  .btn-primary:hover { background: var(--stamp); border-color: var(--stamp); }
+
+  .hero-notes {
+    margin-top: 24px;
+    max-width: 52ch;
+  }
+  .hero-notes p { color: var(--ink-60); }
+  .hero-notes .proof { margin-top: 8px; }
+
+  /* Print-in load sequence */
+  @media (prefers-reduced-motion: no-preference) {
+    .print-in {
+      opacity: 0;
+      transform: translateY(-4px);
+      animation: print-in 0.28s ease-out forwards;
+    }
+    @keyframes print-in {
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  /* ================= OUTPUT ================= */
+  .output-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .asset { margin: 0; }
+
+  .asset-frame {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border: 1px solid var(--line);
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0 10px,
+        var(--line) 10px 11px
+      );
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .asset-frame video,
+  .asset-frame img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .asset-pending {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--ink-60);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    padding: 6px 12px;
+  }
+
+  .asset-caption {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--ink-60);
+    padding-top: 10px;
+    display: inline-block;
+  }
+  .asset:hover .asset-caption,
+  .asset:focus-within .asset-caption {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ================= PROCESS ================= */
+  .process-row {
+    display: grid;
+    grid-template-columns: 64px 180px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    padding: 20px 0;
+    border-top: 1px solid var(--line);
+  }
+  .process-row:last-of-type { border-bottom: 1px solid var(--line); }
+
+  .process-no {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--ink-60);
+  }
+  .process-desc { color: var(--ink-60); }
+  .process-desc strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .price {
+    margin-top: 40px;
+    font-family: var(--mono);
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  /* ================= CONTACT ================= */
+  .request-field {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 24px;
+    align-items: baseline;
+    border: 1px solid var(--ink);
+    padding: 24px 32px;
+  }
+  .request-field .field-value { font-size: 15px; }
+  .request-field a { color: var(--stamp); }
+
+  /* ================= FOOTER ================= */
+  .footer {
+    margin-top: 128px;
+    border-top: 1px solid var(--ink);
+    padding: 24px 0 48px;
+  }
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--ink-60);
+  }
+  .footer-logo {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0;
+    color: var(--ink);
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* ================= Mobile ================= */
+  @media (max-width: 720px) {
+    .section { padding-top: 96px; }
+
+    .spec-masthead {
+      flex-direction: column;
+      padding: 24px 20px 20px;
+    }
+    .status { padding-top: 0; }
+
+    .spec-row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 12px 20px;
+    }
+    .spec-actions { padding: 20px; }
+    .btn { flex: 1; text-align: center; }
+
+    .output-grid {
+      grid-template-columns: 1fr;
+      /* full-bleed on mobile */
+      margin-left: -24px;
+      margin-right: -24px;
+    }
+    .asset-frame { border-left: 0; border-right: 0; }
+    .asset-caption { padding-left: 24px; }
+
+    .process-row { grid-template-columns: 40px 1fr; }
+    .process-desc { grid-column: 2; }
+
+    .request-field {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      padding: 20px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- ============ 01 · SPEC ============ -->
+  <header class="hero wrap">
+    <h1 class="sr-only">STIR — AI-native creative production</h1>
+
+    <div class="spec-sheet" aria-label="Studio specification">
+      <div class="spec-masthead print-in" style="animation-delay: 0ms">
+        <div>
+          <div class="logotype" aria-hidden="true">STIR<sup>®</sup></div>
+          <div class="tagline">AI-native creative production</div>
+        </div>
+        <div class="status">
+          <span class="status-dot" aria-hidden="true"></span>
+          ACCEPTING
+        </div>
+      </div>
+
+      <dl class="spec-rows">
+        <div class="spec-row print-in" style="animation-delay: 90ms">
+          <dt class="field-label">Output</dt>
+          <dd class="field-value">15–30 assets / month</dd>
+        </div>
+        <div class="spec-row print-in" style="animation-delay: 180ms">
+          <dt class="field-label">Formats</dt>
+          <dd class="field-value">video · image · motion</dd>
+        </div>
+        <div class="spec-row print-in" style="animation-delay: 270ms">
+          <dt class="field-label">Turnaround</dt>
+          <dd class="field-value">72h first concepts</dd>
+        </div>
+        <div class="spec-row print-in" style="animation-delay: 360ms">
+          <dt class="field-label">Direction</dt>
+          <dd class="field-value">human</dd>
+        </div>
+        <div class="spec-row print-in" style="animation-delay: 450ms">
+          <dt class="field-label">Production</dt>
+          <dd class="field-value">machine</dd>
+        </div>
+        <div class="spec-row print-in" style="animation-delay: 540ms">
+          <dt class="field-label">Est.</dt>
+          <dd class="field-value">Brooklyn, NY</dd>
+        </div>
+      </dl>
+
+      <div class="spec-actions print-in" style="animation-delay: 630ms">
+        <a class="btn btn-primary" href="#output">View output</a>
+        <a class="btn" href="#contact">Start a request</a>
+      </div>
+    </div>
+
+    <div class="hero-notes">
+      <p>Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.</p>
+      <p class="proof">The operator behind LABAY Market's digital transformation.</p>
+    </div>
+  </header>
+
+  <!-- ============ 02 · OUTPUT ============ -->
+  <section class="section wrap" id="output" aria-labelledby="output-label">
+    <div class="section-head">
+      <span class="section-no">02</span>
+      <h2 class="field-label" id="output-label">Output</h2>
+    </div>
+
+    <div class="output-grid">
+      <!--
+        Drop real work into these slots: replace .asset-frame contents with
+        <video muted playsinline loop preload="none" poster="...">
+          <source src="..." type="video/mp4">
+        </video>
+        Keep each file under 4MB. Update the caption to the real record.
+      -->
+      <figure class="asset">
+        <div class="asset-frame" role="img" aria-label="Asset no. 001, reserved — in production">
+          <span class="asset-pending">NO. 001 · IN PRODUCTION</span>
+        </div>
+        <figcaption class="asset-caption">NO. 001 · BEVERAGE · :15 VIDEO</figcaption>
+      </figure>
+
+      <figure class="asset">
+        <div class="asset-frame" role="img" aria-label="Asset no. 002, reserved — in production">
+          <span class="asset-pending">NO. 002 · IN PRODUCTION</span>
+        </div>
+        <figcaption class="asset-caption">NO. 002 · GROCERY · KEY VISUAL</figcaption>
+      </figure>
+
+      <figure class="asset">
+        <div class="asset-frame" role="img" aria-label="Asset no. 003, reserved — in production">
+          <span class="asset-pending">NO. 003 · IN PRODUCTION</span>
+        </div>
+        <figcaption class="asset-caption">NO. 003 · SKINCARE · :06 LOOP</figcaption>
+      </figure>
+
+      <figure class="asset">
+        <div class="asset-frame" role="img" aria-label="Asset no. 004, reserved — in production">
+          <span class="asset-pending">NO. 004 · IN PRODUCTION</span>
+        </div>
+        <figcaption class="asset-caption">NO. 004 · FOOTWEAR · :30 VIDEO</figcaption>
+      </figure>
+
+      <figure class="asset">
+        <div class="asset-frame" role="img" aria-label="Asset no. 005, reserved — in production">
+          <span class="asset-pending">NO. 005 · IN PRODUCTION</span>
+        </div>
+        <figcaption class="asset-caption">NO. 005 · SPIRITS · KEY VISUAL</figcaption>
+      </figure>
+
+      <figure class="asset">
+        <div class="asset-frame" role="img" aria-label="Asset no. 006, reserved — in production">
+          <span class="asset-pending">NO. 006 · IN PRODUCTION</span>
+        </div>
+        <figcaption class="asset-caption">NO. 006 · APPAREL · :15 VIDEO</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ 03 · PROCESS ============ -->
+  <section class="section wrap" id="process" aria-labelledby="process-label">
+    <div class="section-head">
+      <span class="section-no">03</span>
+      <h2 class="field-label" id="process-label">Process</h2>
+    </div>
+
+    <div class="process-row">
+      <span class="process-no">01</span>
+      <span class="field-label">Brief</span>
+      <p class="process-desc">A 30-minute call. You bring the product; <strong>we leave with the brief.</strong></p>
+    </div>
+    <div class="process-row">
+      <span class="process-no">02</span>
+      <span class="field-label">Production</span>
+      <p class="process-desc">First concepts land <strong>within 72 hours.</strong></p>
+    </div>
+    <div class="process-row">
+      <span class="process-no">03</span>
+      <span class="field-label">Engine</span>
+      <p class="process-desc">A monthly cadence of <strong>15–30 finished assets.</strong></p>
+    </div>
+
+    <p class="price">Engines from $3,500/mo.</p>
+  </section>
+
+  <!-- ============ 04 · CONTACT ============ -->
+  <section class="section wrap" id="contact" aria-labelledby="contact-label">
+    <div class="section-head">
+      <span class="section-no">04</span>
+      <h2 class="field-label" id="contact-label">Contact</h2>
+    </div>
+
+    <div class="request-field">
+      <span class="field-label">Request →</span>
+      <span class="field-value"><a href="mailto:rasheedjordon1@gmail.com">rasheedjordon1@gmail.com</a></span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span class="footer-logo">STIR<sup style="font-size:0.6em">®</sup></span>
+    <span>2026</span>
+    <span>PRODUCED IN BROOKLYN</span>
+  </div>
+</footer>
+
+<script>
+  // Hover/tap plays any asset video that has been dropped into a slot.
+  // No-op while slots hold placeholders.
+  document.querySelectorAll('.asset').forEach(function (asset) {
+    var video = asset.querySelector('video');
+    if (!video) return;
+    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    function play() { if (!reduced.matches) video.play(); }
+    function stop() { video.pause(); video.currentTime = 0; }
+    asset.addEventListener('mouseenter', play);
+    asset.addEventListener('mouseleave', stop);
+    asset.addEventListener('focusin', play);
+    asset.addEventListener('focusout', stop);
+    asset.addEventListener('touchstart', function () {
+      video.paused ? play() : stop();
+    }, { passive: true });
+  });
+</script>
+
+</body>
+</html>
