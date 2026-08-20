@@ -3,566 +3,1067 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — AI-native creative production</title>
-<meta name="description" content="Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23F2F0EB'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%231D4ED8'/%3E%3C/svg%3E">
+<title>STIR — Make what’s worth knowing travel</title>
+<meta name="description" content="STIR finds what makes businesses worth talking about, then builds the brand, content and digital systems that help it travel. Brooklyn, New York.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FFFFFF'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+
+<!--
+  ══════════════════════════════════════════════════════════════════
+  TYPOGRAPHY — TEMPORARY FALLBACK IN USE
+  Intended face: Founders Grotesk (Condensed for display, Text for body).
+  Font files are NOT in this repository, so Archivo Variable (width axis
+  set condensed for display voices) stands in. It is tokenized:
+  swap --font-stack once the Founders Grotesk files are provided and
+  remove this Google Fonts request.
+  ══════════════════════════════════════════════════════════════════
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --paper: #F2F0EB;
-    --ink: #111110;
-    --ink-60: #5C5A55;
-    --stamp: #1D4ED8;
-    --line: #C9C6BF;
-    --display: "Archivo", sans-serif;
-    --body: "Inter", sans-serif;
-    --mono: "IBM Plex Mono", monospace;
-    --space: 8px;
-  }
+/* ════════════════════════════════════════════════════════════════
+   STIR — HOMEPAGE ART DIRECTION, ROUND 01
+   Locked palette. White is the environment. Blue and Red are withheld.
+   ════════════════════════════════════════════════════════════════ */
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --white:  #FFFFFF;
+  --ink:    #11110F;
+  --blue:   #0451AB;
+  --red:    #F21B16;
 
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-  }
+  --ink-60: rgba(17, 17, 15, 0.60);   /* editorial secondary */
+  --ink-35: rgba(17, 17, 15, 0.35);   /* hairlines on white  */
+  --ink-04: rgba(17, 17, 15, 0.04);   /* placeholder ground  */
+  --wht-70: rgba(255, 255, 255, 0.70);
+  --wht-35: rgba(255, 255, 255, 0.35);
+  --wht-07: rgba(255, 255, 255, 0.07);
 
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
+  /* TEMPORARY — replace with "Founders Grotesk" when files arrive */
+  --font-stack: "Archivo", "Helvetica Neue", Arial, sans-serif;
 
-  :focus-visible {
-    outline: 2px solid var(--stamp);
-    outline-offset: 2px;
-  }
+  /* Layout system: 12 col desktop / 8 tablet / 4 mobile */
+  --max-w: 1520px;
+  --gutter: clamp(20px, 3.2vw, 48px);
+  --col-gap: clamp(16px, 1.6vw, 32px);
 
-  a { color: var(--stamp); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  /* Type scale — display carries the identity */
+  --t-hero:    clamp(3.35rem, 10.8vw, 10.6rem);  /* hero headline        */
+  --t-giant:   clamp(2.75rem, 8.2vw, 8.0rem);    /* section statements   */
+  --t-big:     clamp(2.1rem, 5.6vw, 5.4rem);     /* sub-statements       */
+  --t-metric:  clamp(7rem, 24vw, 23rem);         /* 10M+                 */
+  --t-body:    clamp(1.0rem, 1.05vw + 0.6rem, 1.2rem);
+  --t-utility: 0.72rem;
 
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
 
-  /* ---- Spec-field label vocabulary (caps, tracked, small) ---- */
-  .field-label {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink);
-  }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-  .field-value {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink);
-  }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
-  /* ---- Section scaffolding ---- */
-  .section { padding-top: 112px; }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    border-top: 1px solid var(--ink);
-    padding-top: 12px;
-    margin-bottom: 40px;
-  }
-  .section-no {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-60);
-  }
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--font-stack);
+  font-weight: 400;
+  font-stretch: 100%;
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 
-  /* ================= SPEC (hero) ================= */
-  .hero { padding-top: 96px; }
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
 
-  .spec-sheet {
-    border: 1px solid var(--ink);
-    background: var(--paper);
-  }
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+::selection { background: var(--blue); color: var(--white); }
 
-  .spec-masthead {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-    padding: 32px 32px 24px;
-  }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 
-  .logotype {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: clamp(40px, 8vw, 72px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-  }
-  .logotype sup {
-    font-size: 0.28em;
-    font-weight: 600;
-    vertical-align: 1.6em;
-    letter-spacing: 0;
-  }
+/* ── Shell + grid ─────────────────────────────────────────────── */
+.shell {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+}
+@media (max-width: 1023px) { .grid { grid-template-columns: repeat(8, 1fr); } }
+@media (max-width: 639px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
 
-  .tagline {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-top: 12px;
-    color: var(--ink);
-  }
+/* ── Type voices ──────────────────────────────────────────────── */
+/* Display: monumental, condensed, tight, architectural */
+.display {
+  font-weight: 640;
+  font-stretch: 82%;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+/* Utility: small, tracked, quiet infrastructure */
+.utility {
+  font-size: var(--t-utility);
+  font-weight: 520;
+  font-stretch: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+}
+/* Editorial body */
+.editorial {
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-60);
+  max-width: 46ch;
+}
+.editorial strong { color: var(--ink); font-weight: 520; }
 
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    padding-top: 10px;
-  }
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--stamp);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
+/* ── CTA vocabulary ───────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+  border: 1px solid var(--ink);
+  padding: 1.05em 1.7em;
+  font-size: 0.78rem;
+  font-weight: 560;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.cta .arrow { transition: transform 0.3s var(--ease); }
+.cta:hover, .cta:focus-visible { background: var(--ink); color: var(--white); }
+.cta:hover .arrow, .cta:focus-visible .arrow { transform: translateX(0.35em); }
 
-  .spec-rows { border-top: 1px solid var(--ink); }
+.cta-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.8em;
+  font-size: 0.78rem;
+  font-weight: 560;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid currentColor;
+}
+.cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
 
-  .spec-row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    padding: 14px 32px;
-    border-top: 1px solid var(--line);
-  }
-  .spec-row:first-child { border-top: 0; }
+/* ── Placeholder frames (no stock, no fabricated imagery) ─────── */
+.ph {
+  position: relative;
+  border: 1px solid var(--ink-35);
+  background:
+    linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--ink-04) calc(50% - 0.5px), var(--ink-04) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    var(--ink-04);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px;
+  overflow: hidden;
+}
+.ph .ph-id   { color: var(--ink); }
+.ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.66rem; letter-spacing: 0.1em; }
+.ph--on-blue { border-color: var(--wht-35); background: var(--wht-07); }
+.ph--on-blue .ph-id   { color: var(--white); }
+.ph--on-blue .ph-note { color: var(--wht-70); }
+/* The signal-red object marker inside the hero artwork territory */
+.ph-signal {
+  position: absolute;
+  width: clamp(14px, 1.6vw, 24px);
+  height: clamp(14px, 1.6vw, 24px);
+  background: var(--red);
+}
 
-  .spec-actions {
-    display: flex;
-    gap: 16px;
-    padding: 24px 32px;
-    border-top: 1px solid var(--ink);
-    flex-wrap: wrap;
+/* ── Reveal (foundational only; art-directed motion comes later) ─ */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
   }
+  .reveal.is-in { opacity: 1; transform: none; }
+}
 
-  .btn {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid var(--ink);
-    border-radius: 0;
-    padding: 12px 28px;
-    cursor: pointer;
-    display: inline-block;
-  }
-  .btn:hover {
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-  }
-  .btn-primary { background: var(--ink); color: var(--paper); }
-  .btn-primary:hover { background: var(--stamp); border-color: var(--stamp); }
+/* ════════════════════════════════════════════════════════════════
+   NAVIGATION — restrained, editorial
+   ════════════════════════════════════════════════════════════════ */
+.nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+}
+.nav-inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-block: clamp(20px, 2.4vw, 34px);
+}
+.nav-logo {
+  font-weight: 700;
+  font-stretch: 82%;
+  font-size: 1.35rem;
+  letter-spacing: 0.02em;
+  color: var(--red);
+  line-height: 1;
+}
+.nav-links {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(24px, 3vw, 48px);
+}
+.nav-links a {
+  font-size: var(--t-utility);
+  font-weight: 540;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink);
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s var(--ease);
+}
+.nav-links a:hover, .nav-links a:focus-visible { border-bottom-color: var(--ink); }
+.nav-links a.nav-start { color: var(--ink); }
 
-  .hero-notes {
-    margin-top: 24px;
-    max-width: 52ch;
-  }
-  .hero-notes p { color: var(--ink-60); }
-  .hero-notes .proof { margin-top: 8px; }
+/* ════════════════════════════════════════════════════════════════
+   01 — HERO  ·  POSITION
+   Enormous, spacious, editorial-cover. Artwork invades, no card.
+   ════════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: clamp(110px, 16vh, 190px);
+  padding-bottom: clamp(28px, 4vh, 56px);
+}
+.hero-grid { flex: 1; align-content: start; }
 
-  /* Print-in load sequence */
-  @media (prefers-reduced-motion: no-preference) {
-    .print-in {
-      opacity: 0;
-      transform: translateY(-4px);
-      animation: print-in 0.28s ease-out forwards;
-    }
-    @keyframes print-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-  }
+.hero-headline {
+  grid-column: 1 / 11;
+  position: relative;
+  z-index: 2;
+  font-size: var(--t-hero);
+}
+.hero-headline .line { display: block; }
+.hero-headline .line-2 { margin-left: 0.55em; } /* stepped, not centered */
 
-  /* ================= OUTPUT ================= */
-  .output-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
+/* Artwork territory ~40% of the hero, tucked under the headline,
+   bleeding to the right edge of the shell — invading, not framed. */
+.hero-art {
+  grid-column: 7 / 13;
+  margin-top: calc(var(--t-hero) * -0.62);
+  margin-right: calc(var(--gutter) * -1);
+  aspect-ratio: 5 / 4;
+  z-index: 1;
+}
+.hero-art .ph-signal { top: 46%; left: 47%; }
 
-  .asset { margin: 0; }
+.hero-support {
+  grid-column: 1 / 5;
+  align-self: end;
+  margin-top: clamp(40px, 6vh, 96px);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vh, 40px);
+}
 
-  .asset-frame {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border: 1px solid var(--line);
-    background: var(--line);
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
-  .asset-frame video,
-  .asset-frame img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.hero-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: clamp(40px, 7vh, 88px);
+  color: var(--ink-60);
+}
 
-  .asset-pending {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--ink-60);
-    background: var(--paper);
-    border: 1px solid var(--line);
-    padding: 6px 12px;
-  }
+/* ════════════════════════════════════════════════════════════════
+   02 — BELIEF  ·  a pause, then a realization
+   Typography IS the visual. No cards. No illustration.
+   ════════════════════════════════════════════════════════════════ */
+.belief {
+  padding-top: clamp(140px, 26vh, 300px);
+  padding-bottom: clamp(140px, 26vh, 300px);
+}
+.belief-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+.belief-a {
+  grid-column: 1 / 10;
+  font-size: var(--t-giant);
+}
+/* The pause — deliberate emptiness between statement and response */
+.belief-gap { grid-column: 1 / -1; height: clamp(110px, 22vh, 280px); }
 
-  .asset-caption {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    color: var(--ink-60);
-    padding-top: 10px;
-    display: inline-block;
-  }
-  .asset:hover .asset-caption,
-  .asset:focus-within .asset-caption {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
+.belief-b {
+  grid-column: 5 / 13;
+  font-size: var(--t-giant);
+}
+.belief-b .blue { color: var(--blue); }
 
-  /* ================= PROCESS ================= */
-  .process-row {
-    display: grid;
-    grid-template-columns: 64px 180px 1fr;
-    gap: 24px;
-    align-items: baseline;
-    padding: 20px 0;
-    border-top: 1px solid var(--line);
-  }
-  .process-row:last-of-type { border-bottom: 1px solid var(--line); }
+.belief-support {
+  grid-column: 7 / 12;
+  margin-top: clamp(56px, 9vh, 120px);
+}
 
-  .process-no {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink-60);
-  }
-  .process-desc { color: var(--ink-60); }
-  .process-desc strong {
-    color: var(--ink);
-    font-weight: 500;
-  }
+/* ════════════════════════════════════════════════════════════════
+   03 — FLAGSHIP PROOF  ·  full STIR Blue environment
+   LABAY keeps its own identity; STIR is only the frame.
+   ════════════════════════════════════════════════════════════════ */
+.proof {
+  background: var(--blue);
+  color: var(--white);
+  padding-top: clamp(72px, 10vh, 140px);
+  padding-bottom: clamp(96px, 14vh, 200px);
+}
+.proof-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--wht-35);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.proof-meta { text-align: right; color: var(--wht-70); }
 
-  .price {
+.proof-title {
+  font-size: var(--t-giant);
+  margin-bottom: clamp(64px, 11vh, 160px);
+}
+
+.proof-body { align-items: start; }
+
+/* Sticky statement column: the metric holds while media progresses */
+.proof-stick {
+  grid-column: 1 / 7;
+  position: sticky;
+  top: clamp(48px, 8vh, 96px);
+}
+.proof-metric {
+  font-size: var(--t-metric);
+  font-weight: 660;
+  font-stretch: 78%;
+  line-height: 0.82;
+  letter-spacing: -0.02em;
+  margin-left: -0.03em; /* optical alignment of the 1 */
+}
+.proof-metric-label {
+  margin-top: 20px;
+  color: var(--wht-70);
+}
+.proof-statement {
+  margin-top: clamp(48px, 7vh, 88px);
+  font-size: clamp(1.25rem, 2vw, 1.9rem);
+  font-weight: 560;
+  font-stretch: 88%;
+  text-transform: uppercase;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
+  max-width: 22ch;
+}
+
+.proof-media {
+  grid-column: 8 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 6vh, 88px);
+}
+.proof-media .ph { width: 100%; }
+/* Varied crops so the column breathes — not a uniform gallery */
+.pm-1 { aspect-ratio: 4 / 5; }
+.pm-2 { aspect-ratio: 16 / 9; width: 86%; align-self: flex-end; }
+.pm-3 { aspect-ratio: 1 / 1; width: 78%; }
+.pm-4 { aspect-ratio: 3 / 4; width: 88%; align-self: flex-end; }
+.pm-tag { margin-top: 10px; color: var(--wht-70); }
+
+/* ════════════════════════════════════════════════════════════════
+   04 — METHOD  ·  FIND. BUILD. RUN.
+   A monumental editorial index. Not three cards.
+   ════════════════════════════════════════════════════════════════ */
+.method {
+  padding-top: clamp(120px, 18vh, 240px);
+  padding-bottom: clamp(120px, 18vh, 240px);
+}
+.method-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+.method-intro {
+  grid-column: 5 / 12;
+  margin-bottom: clamp(72px, 11vh, 160px);
+}
+
+.method-index { grid-column: 1 / -1; }
+
+.method-row {
+  border-top: 1px solid var(--ink);
+  transition: background 0.35s var(--ease), color 0.35s var(--ease);
+}
+.method-row:last-child { border-bottom: 1px solid var(--ink); }
+
+.method-row-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  align-items: baseline;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding-block: clamp(28px, 4.5vh, 56px);
+}
+.method-no {
+  grid-column: 1 / 2;
+  font-size: var(--t-utility);
+  font-weight: 520;
+  letter-spacing: 0.14em;
+  color: var(--ink-60);
+  transition: color 0.35s var(--ease);
+}
+.method-word {
+  grid-column: 2 / 8;
+  font-size: var(--t-big);
+  font-weight: 640;
+  font-stretch: 82%;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+}
+/* Signal Red indicator — present only on the active row */
+.method-dot {
+  width: 0.16em; height: 0.16em;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.method-line {
+  grid-column: 8 / 12;
+  font-size: var(--t-body);
+  color: var(--ink-60);
+  transition: color 0.35s var(--ease);
+}
+
+.method-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s var(--ease);
+}
+.method-detail > div { overflow: hidden; }
+.method-detail-inner {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  padding-bottom: clamp(36px, 5vh, 64px);
+}
+.method-caps {
+  grid-column: 8 / 12;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.method-caps li {
+  font-size: var(--t-utility);
+  font-weight: 520;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  border-bottom: 1px solid var(--ink-35);
+  padding-bottom: 10px;
+}
+
+/* Default hover */
+@media (hover: hover) {
+  .method-row:not(.is-active):hover { background: var(--ink-04); }
+}
+/* Active state: STIR Blue field, white text, red indicator */
+.method-row.is-active {
+  background: var(--blue);
+  color: var(--white);
+  border-top-color: var(--blue);
+  margin-inline: calc(var(--gutter) * -1);
+  padding-inline: var(--gutter);
+}
+.method-row.is-active + .method-row { border-top-color: var(--ink); }
+.method-row.is-active .method-no,
+.method-row.is-active .method-line { color: var(--wht-70); }
+.method-row.is-active .method-dot { opacity: 1; transform: none; }
+.method-row.is-active .method-caps li { border-bottom-color: var(--wht-35); }
+.method-row.is-active .method-detail { grid-template-rows: 1fr; }
+
+/* ════════════════════════════════════════════════════════════════
+   05 — OBSERVATIONS  ·  how STIR thinks
+   Exhibition spreads, not blog cards.
+   ════════════════════════════════════════════════════════════════ */
+.obs {
+  padding-top: clamp(100px, 15vh, 200px);
+  padding-bottom: clamp(140px, 22vh, 280px);
+}
+.obs-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.obs-title {
+  grid-column: 1 / 9;
+  font-size: var(--t-giant);
+  margin-bottom: clamp(96px, 15vh, 220px);
+}
+
+/* Spread 001 — artwork left and tall, proposition right and high */
+.obs-spread { align-items: start; }
+.spread-1 .obs-art {
+  grid-column: 1 / 7;
+  aspect-ratio: 4 / 5;
+  margin-left: calc(var(--gutter) * -1); /* bleeds left */
+}
+.spread-1 .obs-text {
+  grid-column: 8 / 13;
+  padding-top: clamp(24px, 6vh, 96px);
+}
+
+/* Spread 002 — inverted geometry: proposition left, wide artwork right, lower */
+.spread-2 { margin-top: clamp(120px, 20vh, 280px); }
+.spread-2 .obs-text {
+  grid-column: 1 / 6;
+  padding-top: 0;
+}
+.spread-2 .obs-art {
+  grid-column: 6 / 13;
+  aspect-ratio: 16 / 10;
+  margin-top: clamp(80px, 14vh, 200px);
+  margin-right: calc(var(--gutter) * -1); /* bleeds right */
+}
+
+.obs-index { color: var(--ink-60); margin-bottom: 24px; }
+.obs-headline {
+  font-size: var(--t-big);
+  margin-bottom: clamp(32px, 4vh, 56px);
+}
+.obs-cta { color: var(--ink); }
+
+/* ════════════════════════════════════════════════════════════════
+   06 — CONVERSION  ·  the interruption
+   Signal Red at full field. The question is the visual.
+   ════════════════════════════════════════════════════════════════ */
+.convert {
+  background: var(--red);
+  color: var(--white);
+  min-height: 96svh;
+  display: flex;
+  align-items: stretch;
+}
+.convert .shell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: clamp(48px, 7vh, 96px);
+  padding-bottom: clamp(48px, 7vh, 96px);
+}
+.convert-label { color: var(--white); }
+.convert-q {
+  font-size: var(--t-hero);
+  margin-top: clamp(40px, 8vh, 120px);
+}
+.convert-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.convert-copy {
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 38ch;
+}
+.convert .cta {
+  border-color: var(--white);
+  color: var(--white);
+}
+.convert .cta:hover, .convert .cta:focus-visible {
+  background: var(--white);
+  color: var(--red);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER — deliberately quiet; the red section is the ending
+   ════════════════════════════════════════════════════════════════ */
+.footer { padding-block: clamp(40px, 6vh, 72px); }
+.footer-grid { row-gap: 24px; align-items: baseline; }
+.footer-logo {
+  grid-column: 1 / 3;
+  font-weight: 700;
+  font-stretch: 82%;
+  font-size: 1rem;
+  color: var(--red);
+}
+.footer-place { grid-column: 3 / 6; color: var(--ink-60); }
+.footer-links {
+  grid-column: 6 / 9;
+  display: flex;
+  gap: 28px;
+}
+.footer-links a { color: var(--ink); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.footer-links a:hover, .footer-links a:focus-visible { border-bottom-color: var(--ink); }
+.footer-line { grid-column: 9 / 11; color: var(--ink-60); }
+.footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
+
+/* ════════════════════════════════════════════════════════════════
+   TABLET — 8 columns · recomposed, not shrunk
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  .hero-headline { grid-column: 1 / 9; }
+  .hero-art {
+    grid-column: 3 / 9;
+    margin-top: calc(var(--t-hero) * -0.35);
+  }
+  .hero-support { grid-column: 1 / 6; }
+
+  .belief-label  { grid-column: 1 / 4; }
+  .belief-a      { grid-column: 1 / 9; }
+  .belief-b      { grid-column: 2 / 9; }
+  .belief-support{ grid-column: 3 / 8; }
+
+  .proof-stick   { grid-column: 1 / -1; position: static; margin-bottom: clamp(56px, 8vh, 96px); }
+  .proof-media   { grid-column: 1 / -1; }
+  .pm-2 { width: 92%; }
+  .pm-3 { width: 84%; }
+
+  .method-label  { grid-column: 1 / 4; }
+  .method-intro  { grid-column: 1 / 8; }
+  .method-word   { grid-column: 2 / 6; }
+  .method-line   { grid-column: 6 / 9; }
+  .method-caps   { grid-column: 6 / 9; }
+
+  .obs-label { grid-column: 1 / 4; }
+  .obs-title { grid-column: 1 / 8; }
+  .spread-1 .obs-art  { grid-column: 1 / 6; }
+  .spread-1 .obs-text { grid-column: 6 / 9; }
+  .spread-2 .obs-text { grid-column: 1 / 5; }
+  .spread-2 .obs-art  { grid-column: 4 / 9; }
+
+  .footer-logo  { grid-column: 1 / 2; }
+  .footer-place { grid-column: 2 / 5; }
+  .footer-links { grid-column: 5 / 8; }
+  .footer-line  { display: none; }
+  .footer-copy  { grid-column: 8 / 9; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE — 4 columns · fully recomposed
+   Headline first; artwork receives its own vertical territory.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 639px) {
+  :root { --gutter: 18px; }
+
+  .nav-logo { font-size: 1.15rem; }
+  .nav-links { gap: 18px; }
+
+  .hero {
+    min-height: 0;
+    padding-top: 108px;
+  }
+  .hero-headline {
+    grid-column: 1 / -1;
+    font-size: clamp(3rem, 15.5vw, 4.6rem);
+  }
+  .hero-headline .line-2 { margin-left: 0; }
+  .hero-support {
+    grid-column: 1 / -1;
     margin-top: 40px;
-    font-family: var(--mono);
-    font-size: 15px;
-    color: var(--ink);
   }
-
-  /* ================= CONTACT ================= */
-  .request-field {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    align-items: baseline;
-    border: 1px solid var(--ink);
-    padding: 24px 32px;
+  /* Artwork gets its own full-width chapter below the copy */
+  .hero-art {
+    grid-column: 1 / -1;
+    order: 3;
+    margin-top: 56px;
+    margin-inline: calc(var(--gutter) * -1);
+    aspect-ratio: 4 / 5;
   }
-  .request-field .field-value { font-size: 15px; }
-  .request-field a { color: var(--stamp); }
+  .hero-support { order: 2; }
+  .hero-foot { margin-top: 48px; }
 
-  /* ================= FOOTER ================= */
-  .footer {
-    margin-top: 128px;
-    border-top: 1px solid var(--ink);
-    padding: 24px 0 48px;
+  .belief { padding-block: clamp(110px, 20vh, 160px); }
+  .belief-label   { grid-column: 1 / -1; margin-bottom: 56px; }
+  .belief-a       { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
+  .belief-gap     { height: clamp(80px, 14vh, 120px); }
+  .belief-b       { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); text-indent: 1.2em; }
+  .belief-support { grid-column: 1 / -1; margin-top: 64px; }
+
+  .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .proof-meta { text-align: left; }
+  .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
+  .proof-metric { font-size: clamp(6rem, 30vw, 9rem); }
+  .pm-1, .pm-2, .pm-3, .pm-4 { width: 100%; align-self: auto; }
+  .pm-2 { margin-inline: calc(var(--gutter) * -1); width: auto; }
+
+  .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
+  .method-row-head {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 14px;
+    padding-block: 30px;
   }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: var(--ink-60);
-  }
-  .footer-logo {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0;
-    color: var(--ink);
-  }
+  .method-no   { grid-column: 1 / -1; }
+  .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
+  .method-line { grid-column: 1 / -1; }
+  .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+  .method-caps { grid-column: 1 / -1; }
 
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
+  .obs { padding-bottom: 140px; }
+  .obs-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .obs-title { grid-column: 1 / -1; font-size: clamp(2.9rem, 14vw, 4rem); margin-bottom: 96px; }
+  /* Observations become full-width editorial stories */
+  .obs-spread .obs-art,
+  .obs-spread .obs-text { grid-column: 1 / -1; }
+  .spread-1 .obs-art { margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
+  .spread-1 .obs-text { padding-top: 40px; }
+  .spread-2 { margin-top: 140px; }
+  .spread-2 .obs-text { order: 1; }
+  .spread-2 .obs-art  { order: 2; margin-top: 40px; margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
+  .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
 
-  /* ================= Mobile ================= */
-  @media (max-width: 720px) {
-    .section { padding-top: 96px; }
+  .convert-q { font-size: clamp(3rem, 15.5vw, 4.6rem); }
+  .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
 
-    .spec-masthead {
-      flex-direction: column;
-      padding: 24px 20px 20px;
-    }
-    .status { padding-top: 0; }
-
-    .spec-row {
-      grid-template-columns: 1fr;
-      gap: 4px;
-      padding: 12px 20px;
-    }
-    .spec-actions { padding: 20px; }
-    .btn { flex: 1; text-align: center; }
-
-    .output-grid {
-      grid-template-columns: 1fr;
-      /* full-bleed on mobile */
-      margin-left: -24px;
-      margin-right: -24px;
-    }
-    .asset-frame { border-left: 0; border-right: 0; }
-    .asset-caption { padding-left: 24px; }
-
-    .process-row { grid-template-columns: 40px 1fr; }
-    .process-desc { grid-column: 2; }
-
-    .request-field {
-      grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 20px;
-    }
-  }
+  .footer-grid { row-gap: 18px; }
+  .footer-logo, .footer-place, .footer-links, .footer-copy { grid-column: 1 / -1; text-align: left; }
+  .footer-line { display: block; grid-column: 1 / -1; }
+}
 </style>
 </head>
 <body>
 
+<!-- ════════ NAVIGATION ════════ -->
+<header class="nav">
+  <div class="shell nav-inner">
+    <a href="index.html" class="nav-logo" aria-label="STIR — Home">STIR</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="nav-start">Start&nbsp;&nbsp;→</a>
+    </nav>
+  </div>
+</header>
+
 <main>
 
-  <!-- ============ 01 · SPEC ============ -->
-  <header class="hero wrap">
-    <h1 class="sr-only">STIR — AI-native creative production</h1>
+  <!-- ════════ 01 · HERO — POSITION ════════ -->
+  <section class="hero shell" aria-label="STIR — position">
+    <div class="grid hero-grid">
+      <h1 class="hero-headline display reveal">
+        <span class="line">Make what’s</span>
+        <span class="line line-2">worth knowing</span>
+        <span class="line">travel.</span>
+      </h1>
 
-    <div class="spec-sheet" aria-label="Studio specification">
-      <div class="spec-masthead print-in" style="animation-delay: 0ms">
-        <div>
-          <div class="logotype" aria-hidden="true">STIR<sup>®</sup></div>
-          <div class="tagline">AI-native creative production</div>
-        </div>
-        <div class="status">
-          <span class="status-dot" aria-hidden="true"></span>
-          ACCEPTING
-        </div>
-      </div>
-
-      <dl class="spec-rows">
-        <div class="spec-row print-in" style="animation-delay: 90ms">
-          <dt class="field-label">Output</dt>
-          <dd class="field-value">15–30 assets / month</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 180ms">
-          <dt class="field-label">Formats</dt>
-          <dd class="field-value">video · image · motion</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 270ms">
-          <dt class="field-label">Turnaround</dt>
-          <dd class="field-value">72h first concepts</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 360ms">
-          <dt class="field-label">Direction</dt>
-          <dd class="field-value">human</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 450ms">
-          <dt class="field-label">Production</dt>
-          <dd class="field-value">machine</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 540ms">
-          <dt class="field-label">Est.</dt>
-          <dd class="field-value">Brooklyn, NY</dd>
-        </div>
-      </dl>
-
-      <div class="spec-actions print-in" style="animation-delay: 630ms">
-        <a class="btn btn-primary" href="#output">View output</a>
-        <a class="btn" href="#contact">Start a request</a>
-      </div>
-    </div>
-
-    <div class="hero-notes">
-      <p>Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.</p>
-      <p class="proof">The operator behind LABAY Market's digital transformation.</p>
-    </div>
-  </header>
-
-  <!-- ============ 02 · OUTPUT ============ -->
-  <section class="section wrap" id="output" aria-labelledby="output-label">
-    <div class="section-head">
-      <span class="section-no">02</span>
-      <h2 class="field-label" id="output-label">Output</h2>
-    </div>
-
-    <div class="output-grid">
       <!--
-        TEMPORARY: mock assets are hotlinked from Higgsfield's CDN while this
-        sandbox cannot download them. Localize before launch: save each image
-        to assets/<slug>.jpg (compressed, ~200KB) and point src back to it.
-        Drop real work into these slots: replace .asset-frame contents with
-        <video muted playsinline loop preload="none" poster="...">
-          <source src="..." type="video/mp4">
-        </video>
-        Keep each file under 4MB. Update the caption to the real record.
+        ARTWORK PLACEHOLDER — final hero illustration:
+        two monumental simplified human hands passing a tiny Signal Red
+        bulletin/object between them. The red marker below indicates the
+        approximate position of the red object within the crop.
+        Territory: ~40% of the hero. Invades the layout; not an image card.
       -->
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011106_b8d36656-c4bf-49bf-87b1-36ec69e4037e.png" width="720" height="720" aria-label="Sparkling water can with frozen splash on cobalt blue — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011750_f8a41767-0a61-4776-9166-cca05c6447a4.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 001 · BEVERAGE · :15 VIDEO</figcaption>
-      </figure>
+      <div class="ph hero-art reveal" role="img"
+           aria-label="Artwork placeholder: two monumental hands passing a small Signal Red object">
+        <span class="utility ph-id">Hero artwork</span>
+        <span class="ph-signal" aria-hidden="true"></span>
+        <span class="utility ph-note">Two monumental hands · handoff of a Signal&nbsp;Red object · crop bleeds right</span>
+      </div>
 
-      <figure class="asset">
-        <div class="asset-frame">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011108_e148dbb9-76cc-4193-a63d-16b61d6e9d3b.png" alt="Stacked fresh oranges on warm red-orange" loading="lazy" width="928" height="1152">
-        </div>
-        <figcaption class="asset-caption">NO. 002 · GROCERY · KEY VISUAL</figcaption>
-      </figure>
+      <div class="hero-support reveal">
+        <p class="editorial">STIR finds what makes businesses worth talking about, then builds the brand, content and digital systems that help it travel.</p>
+        <a class="cta" href="contact.html">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
 
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011110_ee74357b-6a4d-48d3-ad9b-9c48b2b0ce71.png" width="720" height="720" aria-label="Frosted cream jar with cream smear on pale sage — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011753_1717872d-50fa-43c7-8f4e-8300d5d1314e.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 003 · SKINCARE · :06 LOOP</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011115_9d78b8d8-b503-406f-a7c1-599256cd4a48.png" width="720" height="720" aria-label="Running sneaker floating on acid yellow — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011756_64b90ae0-23e1-4c77-8772-787751a152de.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 004 · FOOTWEAR · :30 VIDEO</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011117_5e56c63b-2bb8-4e5d-b223-6cc68f25344f.png" alt="Amber whiskey bottle with rim light on espresso brown" loading="lazy" width="928" height="1152">
-        </div>
-        <figcaption class="asset-caption">NO. 005 · SPIRITS · KEY VISUAL</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011119_a821a96d-64d9-4215-85f0-753cffb3f538.png" width="720" height="720" aria-label="Cotton t-shirt frozen mid-billow on crimson red — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011758_6febe99a-35b5-44a0-b151-61ba790e2482.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 006 · APPAREL · :15 VIDEO</figcaption>
-      </figure>
+    <div class="hero-foot utility">
+      <span>Brooklyn, New York</span>
+      <span aria-hidden="true">Scroll ↓</span>
     </div>
   </section>
 
-  <!-- ============ 03 · PROCESS ============ -->
-  <section class="section wrap" id="process" aria-labelledby="process-label">
-    <div class="section-head">
-      <span class="section-no">03</span>
-      <h2 class="field-label" id="process-label">Process</h2>
-    </div>
+  <!-- ════════ 02 · BELIEF ════════ -->
+  <section class="belief shell" aria-labelledby="belief-label">
+    <div class="grid">
+      <p class="utility belief-label" id="belief-label">01 / What we believe</p>
 
-    <div class="process-row">
-      <span class="process-no">01</span>
-      <span class="field-label">Brief</span>
-      <p class="process-desc">A 30-minute call. You bring the product; <strong>we leave with the brief.</strong></p>
-    </div>
-    <div class="process-row">
-      <span class="process-no">02</span>
-      <span class="field-label">Production</span>
-      <p class="process-desc">First concepts land <strong>within 72 hours.</strong></p>
-    </div>
-    <div class="process-row">
-      <span class="process-no">03</span>
-      <span class="field-label">Engine</span>
-      <p class="process-desc">A monthly cadence of <strong>15–30 finished assets.</strong></p>
-    </div>
+      <h2 class="display belief-a reveal">Most businesses don’t&nbsp;need more&nbsp;content.</h2>
 
-    <p class="price">Engines from $3,500/mo.</p>
+      <div class="belief-gap" aria-hidden="true"></div>
+
+      <p class="display belief-b reveal">They need <span class="blue">something worth talking&nbsp;about.</span></p>
+
+      <p class="editorial belief-support reveal">The interesting part is usually already there — in the product, the people, the history, the neighborhood or the way the business actually operates. Our job is to find it, build around it and help it travel.</p>
+    </div>
   </section>
 
-  <!-- ============ 04 · CONTACT ============ -->
-  <section class="section wrap" id="contact" aria-labelledby="contact-label">
-    <div class="section-head">
-      <span class="section-no">04</span>
-      <h2 class="field-label" id="contact-label">Contact</h2>
+  <!-- ════════ 03 · FLAGSHIP PROOF — LABAY ════════ -->
+  <section class="proof" aria-labelledby="proof-title">
+    <div class="shell">
+      <div class="proof-head utility">
+        <span>Proof / 001</span>
+        <span class="proof-meta">Brooklyn, New York<br>2025—Ongoing</span>
+      </div>
+
+      <h2 class="display proof-title reveal" id="proof-title">Labay<br>Market.</h2>
+
+      <div class="grid proof-body">
+        <div class="proof-stick">
+          <p class="proof-metric reveal">10M+</p>
+          <p class="utility proof-metric-label">Organic views</p>
+          <p class="proof-statement reveal">We didn’t invent Labay’s story. We built the system that helped more people see&nbsp;it.</p>
+        </div>
+
+        <!--
+          LABAY MEDIA PLACEHOLDERS — to be replaced with real LABAY
+          artifacts. LABAY keeps its own visual identity; do NOT recolor
+          assets into STIR palette. STIR Blue is only the frame.
+        -->
+        <div class="proof-media">
+          <figure class="reveal">
+            <div class="ph ph--on-blue pm-1">
+              <span class="utility ph-id">Labay media 01</span>
+              <span class="utility ph-note">Vertical · in-store culture, real footage</span>
+            </div>
+            <figcaption class="utility pm-tag">01 / Culture</figcaption>
+          </figure>
+          <figure class="reveal">
+            <div class="ph ph--on-blue pm-2">
+              <span class="utility ph-id">Labay media 02</span>
+              <span class="utility ph-note">Wide · content still or film frame</span>
+            </div>
+            <figcaption class="utility pm-tag">02 / Content</figcaption>
+          </figure>
+          <figure class="reveal">
+            <div class="ph ph--on-blue pm-3">
+              <span class="utility ph-id">Labay media 03</span>
+              <span class="utility ph-note">Square · product / commerce artifact</span>
+            </div>
+            <figcaption class="utility pm-tag">03 / Commerce</figcaption>
+          </figure>
+          <figure class="reveal">
+            <div class="ph ph--on-blue pm-4">
+              <span class="utility ph-id">Labay media 04</span>
+              <span class="utility ph-note">Portrait · distribution / platform surface</span>
+            </div>
+            <figcaption class="utility pm-tag">04 / Distribution</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 04 · METHOD — FIND. BUILD. RUN. ════════ -->
+  <section class="method shell" aria-labelledby="method-label">
+    <div class="grid">
+      <p class="utility method-label" id="method-label">02 / How we work</p>
+      <p class="editorial method-intro reveal">One operating system, three movements. Find the thing worth knowing, build it into something people recognize, then put the whole system into motion.</p>
+
+      <div class="method-index reveal" id="method-index">
+
+        <div class="method-row is-active">
+          <button class="method-row-head" type="button" aria-expanded="true" aria-controls="method-find">
+            <span class="method-no">01</span>
+            <span class="method-word">Find <span class="method-dot" aria-hidden="true"></span></span>
+            <span class="method-line">Find the thing worth knowing.</span>
+          </button>
+          <div class="method-detail" id="method-find">
+            <div>
+              <div class="method-detail-inner">
+                <ul class="method-caps">
+                  <li>Positioning</li>
+                  <li>Cultural insight</li>
+                  <li>Opportunity</li>
+                  <li>Narrative</li>
+                  <li>Audience</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="method-row">
+          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-build">
+            <span class="method-no">02</span>
+            <span class="method-word">Build <span class="method-dot" aria-hidden="true"></span></span>
+            <span class="method-line">Turn it into something people recognize.</span>
+          </button>
+          <div class="method-detail" id="method-build">
+            <div>
+              <div class="method-detail-inner">
+                <ul class="method-caps">
+                  <li>Brand systems</li>
+                  <li>Digital experiences</li>
+                  <li>Content worlds</li>
+                  <li>Campaigns</li>
+                  <li>Commerce</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="method-row">
+          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-run">
+            <span class="method-no">03</span>
+            <span class="method-word">Run <span class="method-dot" aria-hidden="true"></span></span>
+            <span class="method-line">Put the system into motion.</span>
+          </button>
+          <div class="method-detail" id="method-run">
+            <div>
+              <div class="method-detail-inner">
+                <ul class="method-caps">
+                  <li>Content</li>
+                  <li>Distribution</li>
+                  <li>Launches</li>
+                  <li>Growth</li>
+                  <li>Creative operations</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 05 · OBSERVATIONS ════════ -->
+  <section class="obs shell" aria-labelledby="obs-label">
+    <div class="grid">
+      <p class="utility obs-label" id="obs-label">03 / Observations</p>
+      <h2 class="display obs-title reveal">We have opinions.</h2>
     </div>
 
-    <div class="request-field">
-      <span class="field-label">Request →</span>
-      <span class="field-value"><a href="mailto:rasheedjordon1@gmail.com">rasheedjordon1@gmail.com</a></span>
+    <!-- Observation 001 — artwork leads, proposition answers -->
+    <article class="grid obs-spread spread-1">
+      <!--
+        OBSERVATION ARTWORK 01 placeholder — conceptual STIR illustration:
+        an enormous eye unable to see a mango held extremely close to it.
+      -->
+      <div class="ph obs-art reveal" role="img"
+           aria-label="Artwork placeholder: an enormous eye unable to see a mango held extremely close to it">
+        <span class="utility ph-id">Observation artwork 01</span>
+        <span class="utility ph-note">Enormous eye · mango too close to see · 4:5 crop, bleeds left</span>
+      </div>
+      <div class="obs-text reveal">
+        <p class="utility obs-index">Observation / 001</p>
+        <h3 class="display obs-headline">Sometimes you’re too close to see what’s interesting.</h3>
+        <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+    </article>
+
+    <!-- Observation 002 — proposition leads, artwork answers lower -->
+    <article class="grid obs-spread spread-2">
+      <div class="obs-text reveal">
+        <p class="utility obs-index">Observation / 002</p>
+        <h3 class="display obs-headline">The kids don’t want the store. They want the brand.</h3>
+        <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <!--
+        OBSERVATION ARTWORK 02 placeholder — conceptual STIR
+        inheritance / succession illustration.
+      -->
+      <div class="ph obs-art reveal" role="img"
+           aria-label="Artwork placeholder: STIR inheritance and succession illustration">
+        <span class="utility ph-id">Observation artwork 02</span>
+        <span class="utility ph-note">Inheritance / succession concept · 16:10 crop, bleeds right</span>
+      </div>
+    </article>
+  </section>
+
+  <!-- ════════ 06 · CONVERSION — SIGNAL RED ════════ -->
+  <section class="convert" aria-labelledby="convert-q">
+    <div class="shell">
+      <div>
+        <p class="utility convert-label">Your turn.</p>
+        <h2 class="display convert-q" id="convert-q">What are<br>we not<br>seeing yet?</h2>
+      </div>
+      <div class="convert-foot reveal">
+        <p class="editorial convert-copy">There’s probably something inside your business people would care about. Let’s find it.</p>
+        <a class="cta" href="contact.html">Tell us about the business <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
     </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <span class="footer-logo">STIR<sup style="font-size:0.6em">®</sup></span>
-    <span>2026</span>
-    <span>PRODUCED IN BROOKLYN</span>
+<!-- ════════ FOOTER — quiet ════════ -->
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo" aria-hidden="true">STIR</span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://instagram.com" rel="noopener">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Make it travel.</span>
+    <span class="footer-copy">© 2026 STIR</span>
   </div>
 </footer>
 
 <script>
-  // Hover/tap plays any asset video that has been dropped into a slot.
-  // No-op while slots hold placeholders.
-  document.querySelectorAll('.asset').forEach(function (asset) {
-    var video = asset.querySelector('video');
-    if (!video) return;
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function play() { if (!reduced.matches) video.play(); }
-    function stop() { video.pause(); video.currentTime = 0; }
-    asset.addEventListener('mouseenter', play);
-    asset.addEventListener('mouseleave', stop);
-    asset.addEventListener('focusin', play);
-    asset.addEventListener('focusout', stop);
-    asset.addEventListener('touchstart', function () {
-      video.paused ? play() : stop();
-    }, { passive: true });
+/* Foundational behavior only — advanced motion is art-directed later. */
+
+/* Reveal on entry (respects prefers-reduced-motion via CSS gating) */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Method index — one active row at a time (default + active states only) */
+(function () {
+  var rows = document.querySelectorAll('#method-index .method-row');
+  rows.forEach(function (row) {
+    var btn = row.querySelector('.method-row-head');
+    btn.addEventListener('click', function () {
+      if (row.classList.contains('is-active')) return;
+      rows.forEach(function (r) {
+        r.classList.remove('is-active');
+        r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
+      });
+      row.classList.add('is-active');
+      btn.setAttribute('aria-expanded', 'true');
+    });
   });
+})();
 </script>
 
 </body>
