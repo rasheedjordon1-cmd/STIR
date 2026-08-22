@@ -3,60 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — Make what’s worth knowing travel</title>
-<meta name="description" content="STIR finds what makes businesses worth talking about, then builds the brand, content and digital systems that help it travel. Brooklyn, New York.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FFFFFF'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+<title>STIR — Attention should pay</title>
+<meta name="description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue. Independent growth + creative practice, Brooklyn, New York.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FAF2E6'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
 
 <!--
   ══════════════════════════════════════════════════════════════════
-  TYPOGRAPHY — TEMPORARY FALLBACK IN USE
-  Intended face: Founders Grotesk (Condensed for display, Text for body).
-  Font files are NOT in this repository, so Archivo Variable (width axis
-  set condensed for display voices) stands in. It is tokenized:
-  swap --font-stack once the Founders Grotesk files are provided and
-  remove this Google Fonts request.
+  TYPOGRAPHY — TEMPORARY DISPLAY FALLBACK IN USE
+  Intended display face: Founders Grotesk Condensed. Font files are
+  NOT in this repository, so Archivo Variable (width axis condensed)
+  stands in. Swap --font-display once files are provided.
+  Editorial serif: Newsreader. Utility mono: IBM Plex Mono.
   ══════════════════════════════════════════════════════════════════
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
 <style>
 /* ════════════════════════════════════════════════════════════════
-   STIR — HOMEPAGE ART DIRECTION, ROUND 01
-   Locked palette. White is the environment. Blue and Red are withheld.
+   STIR — ROUND 03
+   One material surface: warm ivory sampled from the Desire Line
+   artwork. Red = commercial action. Blue = proof. The evidence is
+   the hero.
    ════════════════════════════════════════════════════════════════ */
 
 :root {
-  --white:  #FFFFFF;
-  --ink:    #11110F;
-  --blue:   #0451AB;
-  --red:    #F21B16;
+  --ivory:  #FAF2E6;                     /* sampled from artwork field */
+  --ink:    #161310;
+  --blue:   #0451AB;                     /* proof environment only     */
+  --red:    #F21B16;                     /* matches the mastermark     */
 
-  --ink-60: rgba(17, 17, 15, 0.60);   /* editorial secondary */
-  --ink-35: rgba(17, 17, 15, 0.35);   /* hairlines on white  */
-  --ink-04: rgba(17, 17, 15, 0.04);   /* placeholder ground  */
+  --ink-70: rgba(22, 19, 16, 0.72);
+  --ink-60: rgba(22, 19, 16, 0.58);
+  --ink-35: rgba(22, 19, 16, 0.32);
+  --ink-05: rgba(22, 19, 16, 0.05);
   --wht-70: rgba(255, 255, 255, 0.70);
   --wht-35: rgba(255, 255, 255, 0.35);
   --wht-07: rgba(255, 255, 255, 0.07);
 
   /* TEMPORARY — replace with "Founders Grotesk" when files arrive */
-  --font-stack: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
 
-  /* Layout system: 12 col desktop / 8 tablet / 4 mobile */
   --max-w: 1520px;
   --gutter: clamp(20px, 3.2vw, 48px);
   --col-gap: clamp(16px, 1.6vw, 32px);
-  /* Distance from shell edge to true viewport edge — artwork is allowed
-     to break the grid and bleed all the way out. */
   --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
 
-  /* Type scale — display carries the identity */
-  --t-hero:    clamp(3.35rem, 10.8vw, 10.6rem);  /* hero headline        */
-  --t-giant:   clamp(2.75rem, 8.2vw, 8.0rem);    /* section statements   */
-  --t-big:     clamp(2.1rem, 5.6vw, 5.4rem);     /* sub-statements       */
-  --t-metric:  clamp(7rem, 24vw, 23rem);         /* 10M+                 */
-  --t-body:    clamp(1.0rem, 1.05vw + 0.6rem, 1.2rem);
+  --t-hero:    clamp(3rem, 8vw, 7.7rem);
+  --t-giant:   clamp(2.75rem, 8.2vw, 8.0rem);
+  --t-big:     clamp(2.1rem, 5.6vw, 5.4rem);
+  --t-metric:  clamp(7rem, 24vw, 23rem);
+  --t-body:    clamp(1.05rem, 1vw + 0.65rem, 1.25rem);
   --t-utility: 0.72rem;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -68,9 +68,9 @@ html { scroll-behavior: smooth; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
-  background: var(--white);
+  background: var(--ivory);
   color: var(--ink);
-  font-family: var(--font-stack);
+  font-family: var(--font-display);
   font-weight: 400;
   font-stretch: 100%;
   font-size: var(--t-body);
@@ -83,7 +83,7 @@ a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; }
 
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
-::selection { background: var(--blue); color: var(--white); }
+::selection { background: var(--ink); color: var(--ivory); }
 
 .sr-only {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
@@ -107,77 +107,89 @@ img, video { max-width: 100%; display: block; }
 /* ── Type voices ──────────────────────────────────────────────── */
 /* Display: monumental, condensed, tight, architectural */
 .display {
-  font-weight: 640;
-  font-stretch: 82%;
+  font-weight: 660;
+  font-stretch: 80%;
   text-transform: uppercase;
-  line-height: 0.92;
-  letter-spacing: -0.015em;
+  line-height: 0.94;
+  letter-spacing: -0.012em;
   text-wrap: balance;
 }
-/* Utility: small, tracked, quiet infrastructure */
+/* Utility: publishing metadata, not tech UI */
 .utility {
+  font-family: var(--font-mono);
   font-size: var(--t-utility);
-  font-weight: 520;
-  font-stretch: 100%;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
 }
-/* Editorial body */
+/* Editorial: the precise, commercial voice */
 .editorial {
-  font-size: var(--t-body);
-  line-height: 1.6;
-  color: var(--ink-60);
-  max-width: 46ch;
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.06);
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink-70);
+  max-width: 44ch;
 }
-.editorial strong { color: var(--ink); font-weight: 520; }
+.editorial strong { color: var(--ink); font-weight: 500; }
 
-/* ── CTA vocabulary ───────────────────────────────────────────── */
+/* ── CTA vocabulary — red = commercial action ─────────────────── */
 .cta {
   display: inline-flex;
   align-items: center;
   gap: 0.9em;
   border: 1px solid var(--ink);
-  padding: 1.05em 1.7em;
-  font-size: 0.78rem;
-  font-weight: 560;
+  padding: 1.1em 1.7em;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+  letter-spacing: 0.09em;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
 }
 .cta .arrow { transition: transform 0.3s var(--ease); }
-/* Action = signal: primary actions answer in Signal Red */
-.cta:hover, .cta:focus-visible { background: var(--red); border-color: var(--red); color: var(--white); }
-.cta:hover .arrow, .cta:focus-visible .arrow { transform: translateX(0.35em); }
+.cta:hover, .cta:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
+.cta:hover .arrow, .cta:focus-visible .arrow { transform: translate(0.22em, -0.22em); }
 
 .cta-line {
   display: inline-flex;
   align-items: baseline;
   gap: 0.8em;
-  font-size: 0.78rem;
-  font-weight: 560;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.09em;
   padding-bottom: 0.5em;
-  border-bottom: 1px solid currentColor;
+  position: relative;
+  transition: color 0.2s var(--ease);
+}
+.cta-line::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
 }
 .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
-.cta-line { transition: color 0.2s var(--ease); }
 .cta-line:hover, .cta-line:focus-visible { color: var(--red); }
+.cta-line:hover::after, .cta-line:focus-visible::after { transform: scaleX(0.55); }
 .cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
 
 /* ── Annotation system ────────────────────────────────────────── */
-/* Artifact numbers, proof labels, locations, dates, tiny captions.
-   The red mark is signal: it flags a discovery or important object. */
 .ann {
   display: inline-flex;
   align-items: baseline;
   gap: 0.7em;
+  font-family: var(--font-mono);
   font-size: var(--t-utility);
-  font-weight: 520;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
-  line-height: 1.4;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
 }
 .ann-mark {
   flex: none;
@@ -193,8 +205,8 @@ img, video { max-width: 100%; display: block; }
   position: relative;
   border: 1px solid var(--ink-35);
   background:
-    linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--ink-04) calc(50% - 0.5px), var(--ink-04) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    var(--ink-04);
+    linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--ink-05) calc(50% - 0.5px), var(--ink-05) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+    var(--ink-05);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -202,19 +214,12 @@ img, video { max-width: 100%; display: block; }
   overflow: hidden;
 }
 .ph .ph-id   { color: var(--ink); }
-.ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.66rem; letter-spacing: 0.1em; }
+.ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.64rem; }
 .ph--on-blue { border-color: var(--wht-35); background: var(--wht-07); }
-.ph--on-blue .ph-id   { color: var(--white); }
+.ph--on-blue .ph-id   { color: #fff; }
 .ph--on-blue .ph-note { color: var(--wht-70); }
-/* The signal-red object marker inside the hero artwork territory */
-.ph-signal {
-  position: absolute;
-  width: clamp(14px, 1.6vw, 24px);
-  height: clamp(14px, 1.6vw, 24px);
-  background: var(--red);
-}
 
-/* ── Reveal (foundational only; art-directed motion comes later) ─ */
+/* ── Reveal (foundational; respects reduced motion) ───────────── */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     opacity: 0;
@@ -225,7 +230,7 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   NAVIGATION — restrained, editorial
+   NAVIGATION — mastermark left, quiet mono system right
    ════════════════════════════════════════════════════════════════ */
 .nav {
   position: absolute;
@@ -234,91 +239,201 @@ img, video { max-width: 100%; display: block; }
 }
 .nav-inner {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
-  padding-block: clamp(20px, 2.4vw, 34px);
+  padding-block: clamp(22px, 2.6vw, 36px);
 }
-.nav-logo {
-  font-weight: 700;
-  font-stretch: 82%;
-  font-size: 1.35rem;
-  letter-spacing: 0.02em;
-  color: var(--red);
-  line-height: 1;
-}
+.nav-logo img { height: clamp(24px, 2.2vw, 32px); width: auto; }
 .nav-links {
   display: flex;
-  align-items: baseline;
-  gap: clamp(24px, 3vw, 48px);
+  align-items: center;
+  gap: clamp(22px, 2.6vw, 44px);
 }
 .nav-links a {
+  font-family: var(--font-mono);
   font-size: var(--t-utility);
-  font-weight: 540;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.09em;
   color: var(--ink);
+  position: relative;
   padding-bottom: 3px;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s var(--ease);
 }
-.nav-links a:hover, .nav-links a:focus-visible { border-bottom-color: var(--ink); }
-.nav-links a.nav-start { color: var(--ink); }
+.nav-links a:not(.nav-start)::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.nav-links a:not(.nav-start):hover::after,
+.nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
+/* START A PROJECT — slightly stronger: thin rectangle, red on hover */
+.nav-start {
+  border: 1px solid var(--ink);
+  padding: 0.7em 1.1em !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.nav-start .arrow { transition: transform 0.3s var(--ease); }
+.nav-start:hover, .nav-start:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
+.nav-start:hover .arrow, .nav-start:focus-visible .arrow { transform: translate(0.18em, -0.18em); }
 
 /* ════════════════════════════════════════════════════════════════
-   01 — HERO  ·  POSITION
-   Enormous, spacious, editorial-cover. Artwork invades, no card.
+   01 — HERO · ATTENTION SHOULD PAY.
+   One continuous surface. The artwork occupies the negative space;
+   no card, no frame, no border. The evidence is the hero.
    ════════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: max(100svh, 720px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  padding-top: clamp(110px, 16vh, 190px);
-  padding-bottom: clamp(28px, 4vh, 56px);
 }
-.hero-grid { flex: 1; align-content: start; }
 
-.hero-headline {
-  grid-column: 1 / 11;
+/* Desire Line artwork — feathered into the page surface */
+.hero-art {
+  position: absolute;
+  top: clamp(64px, 9vh, 120px);
+  right: 0;
+  width: min(68vw, 1060px);
+  height: auto;
+  z-index: 1;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 9%, #000 100%),
+    linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 9%, #000 100%),
+    linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.hero-inner {
   position: relative;
   z-index: 2;
-  font-size: var(--t-hero);
-}
-.hero-headline .line { display: block; }
-.hero-headline .line-2 { margin-left: 0.55em; } /* stepped, not centered */
-
-/* Artwork territory ~40% of the hero, tucked under the headline,
-   bleeding to the right edge of the shell — invading, not framed. */
-.hero-art {
-  grid-column: 7 / 13;
-  margin-top: calc(var(--t-hero) * -0.62);
-  margin-right: calc(var(--bleed) * -1); /* runs to the true viewport edge */
-  aspect-ratio: 5 / 4;
-  z-index: 1;
-}
-.hero-art .ph-signal { top: 46%; left: 47%; }
-
-.hero-support {
-  grid-column: 1 / 5;
-  align-self: end;
-  margin-top: clamp(40px, 6vh, 96px);
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: clamp(24px, 3vh, 40px);
+  padding-top: clamp(120px, 17vh, 190px);
+  padding-bottom: clamp(20px, 2.5vh, 32px);
 }
 
-.hero-foot {
+/* Copy mass — left five columns of the invisible grid */
+.hero-copy { max-width: 46%; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--red);
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.eyebrow .arr { padding-inline: 0.35em; }
+
+.hero-headline {
+  font-size: var(--t-hero);
+  line-height: 0.95;
+  /* The statement owns its own width — it may reach into the ivory,
+     never wrap, never clip */
+  width: max-content;
+  max-width: none;
+}
+.hl-line { display: block; overflow: hidden; }
+.hl-line > span { display: block; }
+
+.hero-prop {
+  margin-top: clamp(28px, 4vh, 48px);
+  max-width: 34ch;
+}
+
+.hero-cta-row {
+  margin-top: clamp(28px, 4vh, 48px);
   display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  margin-top: clamp(40px, 7vh, 88px);
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.hero-microcopy {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
   color: var(--ink-60);
 }
 
+/* Foot: trusted-by (left) · authored note (right) */
+.hero-foot {
+  margin-top: auto;
+  padding-top: clamp(32px, 5vh, 64px);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+}
+.hero-trusted .t-label { color: var(--ink-60); margin-bottom: 6px; }
+.hero-trusted .t-list  { color: var(--ink); }
+.hero-note {
+  border-left: 1px solid var(--ink-35);
+  padding-left: 16px;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.6;
+  color: var(--ink);
+  text-align: left;
+}
+.hero-note .quiet { color: var(--ink-60); margin-top: 10px; }
+
+/* Below-the-fold transition — a page index, not a scroll gimmick */
+.hero-index {
+  margin-top: clamp(20px, 3vh, 36px);
+  color: var(--ink-60);
+}
+.hero-index .down { display: inline-block; padding-left: 0.5em; }
+
+/* Load choreography — one orchestrated entrance, then stillness */
+@media (prefers-reduced-motion: no-preference) {
+  .hl-line > span {
+    transform: translateY(112%);
+    animation: hl-rise 0.85s var(--ease) forwards;
+  }
+  .hl-line:nth-child(2) > span { animation-delay: 0.1s; }
+  @keyframes hl-rise { to { transform: none; } }
+
+  .eyebrow, .hero-prop, .hero-cta-row, .hero-foot, .hero-index {
+    opacity: 0;
+    animation: fade-up 0.8s var(--ease) forwards;
+  }
+  .eyebrow       { animation-delay: 0.05s; }
+  .hero-prop     { animation-delay: 0.35s; }
+  .hero-cta-row  { animation-delay: 0.45s; }
+  .hero-foot     { animation-delay: 0.6s; }
+  .hero-index    { animation-delay: 0.7s; }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .hero-art {
+    opacity: 0;
+    animation: art-in 1.4s var(--ease) 0.25s forwards;
+  }
+  @keyframes art-in { to { opacity: 1; } }
+}
+
 /* ════════════════════════════════════════════════════════════════
-   02 — BELIEF  ·  a pause, then a realization
-   Typography IS the visual. No cards. No illustration.
+   02 — BELIEF · a pause, then a realization
    ════════════════════════════════════════════════════════════════ */
 .belief {
   padding-top: clamp(140px, 26vh, 300px);
@@ -334,26 +449,22 @@ img, video { max-width: 100%; display: block; }
   grid-column: 1 / 10;
   font-size: var(--t-giant);
 }
-/* The pause — deliberate emptiness between statement and response */
 .belief-gap { grid-column: 1 / -1; height: clamp(110px, 22vh, 280px); }
-
 .belief-b {
   grid-column: 5 / 13;
   font-size: var(--t-giant);
 }
-
 .belief-support {
   grid-column: 7 / 12;
   margin-top: clamp(56px, 9vh, 120px);
 }
 
 /* ════════════════════════════════════════════════════════════════
-   03 — FLAGSHIP PROOF  ·  full STIR Blue environment
-   LABAY keeps its own identity; STIR is only the frame.
+   03 — FLAGSHIP PROOF · full STIR Blue environment
    ════════════════════════════════════════════════════════════════ */
 .proof {
   background: var(--blue);
-  color: var(--white);
+  color: #fff;
   padding-top: clamp(72px, 10vh, 140px);
   padding-bottom: clamp(96px, 14vh, 200px);
 }
@@ -373,8 +484,6 @@ img, video { max-width: 100%; display: block; }
 }
 
 .proof-body { align-items: start; }
-
-/* Sticky statement column: the metric holds while media progresses */
 .proof-stick {
   grid-column: 1 / 7;
   position: sticky;
@@ -386,12 +495,9 @@ img, video { max-width: 100%; display: block; }
   font-stretch: 78%;
   line-height: 0.82;
   letter-spacing: -0.02em;
-  margin-left: -0.03em; /* optical alignment of the 1 */
+  margin-left: -0.03em;
 }
-.proof-metric-label {
-  margin-top: 20px;
-  color: var(--wht-70);
-}
+.proof-metric-label { margin-top: 20px; color: var(--wht-70); }
 .proof-statement {
   margin-top: clamp(48px, 7vh, 88px);
   font-size: clamp(1.25rem, 2vw, 1.9rem);
@@ -403,16 +509,13 @@ img, video { max-width: 100%; display: block; }
   max-width: 22ch;
 }
 
-/* Evidence field — an asymmetric composition of artifacts, not a
-   gallery. Each slot holds a different medium: vertical video,
-   photography, a social artifact, campaign imagery. */
+/* Evidence field — asymmetric artifacts, not a gallery */
 .proof-evidence {
   grid-column: 7 / 13;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   column-gap: var(--col-gap);
 }
-.ev { grid-row: auto; }
 .ev .ph { width: 100%; }
 .ev-1 { grid-column: 1 / 4; }
 .ev-1 .ph { aspect-ratio: 9 / 16; }
@@ -423,7 +526,7 @@ img, video { max-width: 100%; display: block; }
 .ev-4 {
   grid-column: 1 / 7;
   margin-top: clamp(72px, 12vh, 170px);
-  margin-right: calc(var(--bleed) * -1); /* campaign frame breaks the grid */
+  margin-right: calc(var(--bleed) * -1);
 }
 .ev-4 .ph { aspect-ratio: 16 / 9; }
 
@@ -434,20 +537,22 @@ img, video { max-width: 100%; display: block; }
   align-items: baseline;
   gap: 20px;
 }
-.ev-cap .ann { color: var(--white); }
+.ev-cap .ann { color: #fff; }
 .ev-cap .ev-meta {
+  font-family: var(--font-mono);
   font-size: var(--t-utility);
-  font-weight: 520;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.09em;
   color: var(--wht-70);
   text-align: right;
   flex: none;
 }
 
 /* ════════════════════════════════════════════════════════════════
-   04 — METHOD  ·  FIND. BUILD. RUN.
-   A monumental editorial index. Not three cards.
+   04 — METHOD · FIND. BUILD. RUN.
+   An editorial operating framework. Interaction motif: attention
+   wears a path — each row's red line is drawn by use.
    ════════════════════════════════════════════════════════════════ */
 .method {
   padding-top: clamp(120px, 18vh, 240px);
@@ -467,10 +572,25 @@ img, video { max-width: 100%; display: block; }
 .method-index { grid-column: 1 / -1; }
 
 .method-row {
+  position: relative;
   border-top: 1px solid var(--ink);
-  transition: background 0.35s var(--ease), color 0.35s var(--ease);
 }
 .method-row:last-child { border-bottom: 1px solid var(--ink); }
+/* The desire-line: a red path drawn across the row by attention */
+.method-row::after {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.method-row:hover::after,
+.method-row.is-active::after { transform: scaleX(1); }
 
 .method-row-head {
   width: 100%;
@@ -488,25 +608,26 @@ img, video { max-width: 100%; display: block; }
 }
 .method-no {
   grid-column: 1 / 2;
+  font-family: var(--font-mono);
   font-size: var(--t-utility);
-  font-weight: 520;
-  letter-spacing: 0.14em;
+  font-weight: 500;
+  letter-spacing: 0.09em;
   color: var(--ink-60);
-  transition: color 0.35s var(--ease);
+  transition: color 0.3s var(--ease);
 }
 .method-word {
   grid-column: 2 / 8;
   font-size: var(--t-big);
-  font-weight: 640;
-  font-stretch: 82%;
+  font-weight: 660;
+  font-stretch: 80%;
   text-transform: uppercase;
   line-height: 0.95;
   letter-spacing: -0.01em;
   display: inline-flex;
   align-items: baseline;
   gap: 0.45em;
+  transition: transform 0.45s var(--ease);
 }
-/* Signal Red indicator — present only on the active row */
 .method-dot {
   width: 0.16em; height: 0.16em;
   background: var(--red);
@@ -516,15 +637,16 @@ img, video { max-width: 100%; display: block; }
 }
 .method-line {
   grid-column: 8 / 12;
+  font-family: var(--font-serif);
   font-size: var(--t-body);
   color: var(--ink-60);
-  transition: color 0.35s var(--ease);
+  transition: color 0.3s var(--ease);
 }
 
 .method-detail {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.5s var(--ease);
+  transition: grid-template-rows 0.55s var(--ease);
 }
 .method-detail > div { overflow: hidden; }
 .method-detail-inner {
@@ -541,26 +663,43 @@ img, video { max-width: 100%; display: block; }
   gap: 10px;
 }
 .method-caps li {
+  font-family: var(--font-mono);
   font-size: var(--t-utility);
-  font-weight: 520;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.09em;
   border-bottom: 1px solid var(--ink-35);
   padding-bottom: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
 }
 
-/* No fields, no fills — the index stays editorial. State is carried
-   by the Signal Red mark and the opened capability list only. */
+/* Hover: the word leans in, the number answers in red */
 @media (hover: hover) {
-  .method-row:not(.is-active) .method-row-head:hover .method-no { color: var(--red); }
+  .method-row:hover .method-no { color: var(--red); }
+  .method-row:hover .method-word { transform: translateX(0.35ch); }
+  .method-row:hover .method-line { color: var(--ink); }
 }
+/* Active: path drawn, red index, capabilities surface in sequence */
 .method-row.is-active .method-no { color: var(--red); }
+.method-row.is-active .method-word { transform: translateX(0.35ch); }
 .method-row.is-active .method-dot { opacity: 1; transform: none; }
 .method-row.is-active .method-detail { grid-template-rows: 1fr; }
+.method-row.is-active .method-caps li { opacity: 1; transform: none; }
+.method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
+.method-row.is-active .method-caps li:nth-child(2) { transition-delay: 0.16s; }
+.method-row.is-active .method-caps li:nth-child(3) { transition-delay: 0.22s; }
+.method-row.is-active .method-caps li:nth-child(4) { transition-delay: 0.28s; }
+.method-row.is-active .method-caps li:nth-child(5) { transition-delay: 0.34s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .method-row::after, .method-word, .method-caps li { transition: none; }
+  .method-caps li { opacity: 1; transform: none; }
+}
 
 /* ════════════════════════════════════════════════════════════════
-   05 — OBSERVATIONS  ·  how STIR thinks
-   Exhibition spreads, not blog cards.
+   05 — OBSERVATIONS · exhibition spreads, not blog cards
    ════════════════════════════════════════════════════════════════ */
 .obs {
   padding-top: clamp(100px, 15vh, 200px);
@@ -578,12 +717,11 @@ img, video { max-width: 100%; display: block; }
   margin-bottom: clamp(96px, 15vh, 220px);
 }
 
-/* Spread 001 — artwork left and tall, proposition crosses onto it */
 .obs-spread { align-items: start; }
 .spread-1 .obs-art {
   grid-column: 1 / 7;
   aspect-ratio: 4 / 5;
-  margin-left: calc(var(--bleed) * -1); /* bleeds to the viewport edge */
+  margin-left: calc(var(--bleed) * -1);
   z-index: 1;
 }
 .spread-1 .obs-text {
@@ -592,11 +730,8 @@ img, video { max-width: 100%; display: block; }
   position: relative;
   z-index: 2;
 }
-/* The headline is allowed to break the grid and overlap the artwork */
 .spread-1 .obs-headline { margin-left: -18%; }
 
-/* Spread 002 — inverted geometry: proposition left, wide artwork
-   slides underneath it and out the right edge */
 .spread-2 { margin-top: clamp(120px, 20vh, 280px); }
 .spread-2 .obs-text {
   grid-column: 1 / 6;
@@ -605,10 +740,10 @@ img, video { max-width: 100%; display: block; }
   z-index: 2;
 }
 .spread-2 .obs-art {
-  grid-column: 5 / 13; /* tucks under the text column */
+  grid-column: 5 / 13;
   aspect-ratio: 16 / 10;
   margin-top: clamp(80px, 14vh, 200px);
-  margin-right: calc(var(--bleed) * -1); /* bleeds to the viewport edge */
+  margin-right: calc(var(--bleed) * -1);
   z-index: 1;
 }
 
@@ -620,12 +755,11 @@ img, video { max-width: 100%; display: block; }
 .obs-cta { color: var(--ink); }
 
 /* ════════════════════════════════════════════════════════════════
-   06 — CONVERSION  ·  the interruption
-   Signal Red at full field. The question is the visual.
+   06 — CONVERSION · Signal Red at full field
    ════════════════════════════════════════════════════════════════ */
 .convert {
   background: var(--red);
-  color: var(--white);
+  color: #fff;
   min-height: 96svh;
   display: flex;
   align-items: stretch;
@@ -638,9 +772,9 @@ img, video { max-width: 100%; display: block; }
   padding-top: clamp(48px, 7vh, 96px);
   padding-bottom: clamp(48px, 7vh, 96px);
 }
-.convert-label { color: var(--white); }
+.convert-label { color: #fff; }
 .convert-q {
-  font-size: var(--t-hero);
+  font-size: var(--t-giant);
   margin-top: clamp(40px, 8vh, 120px);
 }
 .convert-foot {
@@ -650,31 +784,17 @@ img, video { max-width: 100%; display: block; }
   gap: 40px;
   flex-wrap: wrap;
 }
-.convert-copy {
-  color: rgba(255, 255, 255, 0.82);
-  max-width: 38ch;
-}
-.convert .cta {
-  border-color: var(--white);
-  color: var(--white);
-}
-.convert .cta:hover, .convert .cta:focus-visible {
-  background: var(--white);
-  color: var(--red);
-}
+.convert-copy { color: rgba(255, 255, 255, 0.85); max-width: 38ch; }
+.convert .cta { border-color: #fff; color: #fff; }
+.convert .cta:hover, .convert .cta:focus-visible { background: #fff; border-color: #fff; color: var(--red); }
 
 /* ════════════════════════════════════════════════════════════════
-   FOOTER — deliberately quiet; the red section is the ending
+   FOOTER — deliberately quiet
    ════════════════════════════════════════════════════════════════ */
 .footer { padding-block: clamp(40px, 6vh, 72px); }
-.footer-grid { row-gap: 24px; align-items: baseline; }
-.footer-logo {
-  grid-column: 1 / 3;
-  font-weight: 700;
-  font-stretch: 82%;
-  font-size: 1rem;
-  color: var(--red);
-}
+.footer-grid { row-gap: 24px; align-items: center; }
+.footer-logo { grid-column: 1 / 3; }
+.footer-logo img { height: 18px; width: auto; }
 .footer-place { grid-column: 3 / 6; color: var(--ink-60); }
 .footer-links {
   grid-column: 6 / 9;
@@ -687,15 +807,31 @@ img, video { max-width: 100%; display: block; }
 .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
 
 /* ════════════════════════════════════════════════════════════════
-   TABLET — 8 columns · recomposed, not shrunk
+   TABLET — 8 columns · recomposed
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
-  .hero-headline { grid-column: 1 / 9; }
+  .hero { min-height: 0; }
+  .hero-copy { max-width: 72%; }
+  /* Artwork receives its own territory in the flow, still frameless */
   .hero-art {
-    grid-column: 3 / 9;
-    margin-top: calc(var(--t-hero) * -0.35);
+    position: static;
+    order: 2;
+    width: 92%;
+    align-self: flex-end;
+    margin-top: clamp(40px, 6vh, 72px);
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0, #000 8%, #000 100%),
+      linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image:
+      linear-gradient(to right, transparent 0, #000 8%, #000 100%),
+      linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
   }
-  .hero-support { grid-column: 1 / 6; }
+  .hero-inner { display: contents; }
+  .hero { display: flex; flex-direction: column; padding-top: clamp(110px, 15vh, 160px); }
+  .hero-copy, .hero-foot, .hero-index { padding-inline: var(--gutter); }
+  .hero-copy { order: 1; }
+  .hero-foot { order: 3; margin-top: clamp(40px, 6vh, 72px); }
+  .hero-index { order: 4; margin-bottom: 24px; }
 
   .belief-label  { grid-column: 1 / 4; }
   .belief-a      { grid-column: 1 / 9; }
@@ -728,37 +864,21 @@ img, video { max-width: 100%; display: block; }
 
 /* ════════════════════════════════════════════════════════════════
    MOBILE — 4 columns · fully recomposed
-   Headline first; artwork receives its own vertical territory.
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 639px) {
   :root { --gutter: 18px; }
 
-  .nav-logo { font-size: 1.15rem; }
-  .nav-links { gap: 18px; }
+  .nav-logo img { height: 22px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-start) { display: none; } /* headline first; menu returns with the ABOUT/CONTACT build */
+  .nav-start { padding: 0.6em 0.9em !important; }
 
-  .hero {
-    min-height: 0;
-    padding-top: 108px;
-  }
-  .hero-headline {
-    grid-column: 1 / -1;
-    font-size: clamp(3rem, 15.5vw, 4.6rem);
-  }
-  .hero-headline .line-2 { margin-left: 0; }
-  .hero-support {
-    grid-column: 1 / -1;
-    margin-top: 40px;
-  }
-  /* Artwork gets its own full-width chapter below the copy */
-  .hero-art {
-    grid-column: 1 / -1;
-    order: 3;
-    margin-top: 56px;
-    margin-inline: calc(var(--gutter) * -1);
-    aspect-ratio: 4 / 5;
-  }
-  .hero-support { order: 2; }
-  .hero-foot { margin-top: 48px; }
+  .hero { padding-top: 96px; }
+  .hero-copy { max-width: 100%; }
+  .hero-headline { font-size: clamp(3rem, 15vw, 4.4rem); }
+  .hero-art { width: 100%; margin-inline: 0; }
+  .hero-foot { flex-direction: column; align-items: flex-start; gap: 28px; }
+  .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 14px; }
 
   .belief { padding-block: clamp(110px, 20vh, 160px); }
   .belief-label   { grid-column: 1 / -1; margin-bottom: 56px; }
@@ -771,7 +891,6 @@ img, video { max-width: 100%; display: block; }
   .proof-meta { text-align: left; }
   .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
   .proof-metric { font-size: clamp(6rem, 30vw, 9rem); }
-  /* Evidence becomes a staggered vertical sequence, never uniform */
   .proof-evidence { grid-template-columns: repeat(4, 1fr); }
   .ev-1 { grid-column: 1 / 4; }
   .ev-2 { grid-column: 1 / -1; margin-top: 48px; }
@@ -798,7 +917,6 @@ img, video { max-width: 100%; display: block; }
   .obs { padding-bottom: 140px; }
   .obs-label { grid-column: 1 / -1; margin-bottom: 48px; }
   .obs-title { grid-column: 1 / -1; font-size: clamp(2.9rem, 14vw, 4rem); margin-bottom: 96px; }
-  /* Observations become full-width editorial stories */
   .obs-spread .obs-art,
   .obs-spread .obs-text { grid-column: 1 / -1; }
   .spread-1 .obs-art { margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
@@ -823,56 +941,62 @@ img, video { max-width: 100%; display: block; }
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo" aria-label="STIR — Home">STIR</a>
+    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
     <nav class="nav-links" aria-label="Primary">
+      <a href="#proof">Work</a>
+      <a href="#method">Capabilities</a>
       <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="contact.html" class="nav-start">Start&nbsp;&nbsp;→</a>
+      <a href="#contact" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
     </nav>
   </div>
 </header>
 
 <main>
 
-  <!-- ════════ 01 · HERO — POSITION ════════ -->
-  <section class="hero shell" aria-label="STIR — position">
-    <div class="grid hero-grid">
-      <h1 class="hero-headline display reveal">
-        <span class="line">Make what’s</span>
-        <span class="line line-2">worth knowing</span>
-        <span class="line">travel.</span>
-      </h1>
+  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
+  <section class="hero" aria-label="STIR — attention should pay">
+    <!-- LOCKED ASSET: Desire Line artwork. Do not crop the start of the
+         line, obscure the doorway, or place type over the worn path. -->
+    <img class="hero-art" src="assets/hero-desire-line.webp"
+         width="1280" height="853"
+         alt="A worn pedestrian desire line crossing an empty ivory field toward a small anonymous black doorway with a Signal Red threshold">
 
-      <!--
-        ARTWORK PLACEHOLDER — final hero illustration:
-        two monumental simplified human hands passing a tiny Signal Red
-        bulletin/object between them. The red marker below indicates the
-        approximate position of the red object within the crop.
-        Territory: ~40% of the hero. Invades the layout; not an image card.
-      -->
-      <div class="ph hero-art reveal" role="img"
-           aria-label="Artwork placeholder: two monumental hands passing a small Signal Red object">
-        <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 001 — Hero artwork</span>
-        <span class="ph-signal" aria-hidden="true"></span>
-        <span class="utility ph-note">Two monumental hands · handoff of a Signal&nbsp;Red object · bleeds off the right edge, overlaps headline</span>
+    <div class="shell hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Attention <span class="arr" aria-hidden="true">→</span> Demand <span class="arr" aria-hidden="true">→</span> Revenue</p>
+
+        <h1 class="display hero-headline">
+          <span class="hl-line"><span>Attention</span></span>
+          <span class="hl-line"><span>should pay.</span></span>
+        </h1>
+
+        <p class="editorial hero-prop">STIR builds the content, strategy and systems that turn attention into demand&nbsp;— and demand into revenue.</p>
+
+        <div class="hero-cta-row">
+          <a class="cta" href="#contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+          <p class="hero-microcopy">For businesses ready to create demand.</p>
+        </div>
       </div>
 
-      <div class="hero-support reveal">
-        <p class="editorial">STIR finds what makes businesses worth talking about, then builds the brand, content and digital systems that help it travel.</p>
-        <a class="cta" href="contact.html">Start a conversation <span class="arrow" aria-hidden="true">→</span></a>
+      <div class="hero-foot">
+        <div class="hero-trusted">
+          <p class="utility t-label">Trusted by operators across industries</p>
+          <p class="utility t-list">Consumer brands&nbsp;&nbsp;·&nbsp;&nbsp;Restaurants&nbsp;&nbsp;·&nbsp;&nbsp;Logistics&nbsp;&nbsp;·&nbsp;&nbsp;Industrial&nbsp;&nbsp;·&nbsp;&nbsp;Services</p>
+        </div>
+        <div class="hero-note">
+          <p>Ordinary business,<br>extraordinary demand.</p>
+          <p class="quiet">Evidence is everywhere.</p>
+        </div>
       </div>
-    </div>
 
-    <div class="hero-foot utility">
-      <span>Brooklyn, New York</span>
-      <span aria-hidden="true">Scroll ↓</span>
+      <p class="utility hero-index">01 — Demand <span class="down" aria-hidden="true">↓</span></p>
     </div>
   </section>
 
   <!-- ════════ 02 · BELIEF ════════ -->
   <section class="belief shell" aria-labelledby="belief-label">
     <div class="grid">
-      <p class="utility belief-label" id="belief-label">01 / What we believe</p>
+      <p class="utility belief-label" id="belief-label">01 / Demand</p>
 
       <h2 class="display belief-a reveal">Most businesses don’t&nbsp;need more&nbsp;content.</h2>
 
@@ -880,12 +1004,12 @@ img, video { max-width: 100%; display: block; }
 
       <p class="display belief-b reveal">They need something worth talking&nbsp;about.</p>
 
-      <p class="editorial belief-support reveal">The interesting part is usually already there — in the product, the people, the history, the neighborhood or the way the business actually operates. Our job is to find it, build around it and help it travel.</p>
+      <p class="editorial belief-support reveal">The interesting part is usually already there — in the product, the people, the history, the neighborhood or the way the business actually operates. Our job is to find it, build around it and turn the attention it earns into demand.</p>
     </div>
   </section>
 
   <!-- ════════ 03 · FLAGSHIP PROOF — LABAY ════════ -->
-  <section class="proof" aria-labelledby="proof-title">
+  <section class="proof" id="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility">
         <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
@@ -954,9 +1078,9 @@ img, video { max-width: 100%; display: block; }
   </section>
 
   <!-- ════════ 04 · METHOD — FIND. BUILD. RUN. ════════ -->
-  <section class="method shell" aria-labelledby="method-label">
+  <section class="method shell" id="method" aria-labelledby="method-label">
     <div class="grid">
-      <p class="utility method-label" id="method-label">02 / How we work</p>
+      <p class="utility method-label" id="method-label">02 / Method</p>
       <p class="editorial method-intro reveal">One operating system, three movements. Find the thing worth knowing, build it into something people recognize, then put the whole system into motion.</p>
 
       <div class="method-index reveal" id="method-index">
@@ -1035,12 +1159,7 @@ img, video { max-width: 100%; display: block; }
       <h2 class="display obs-title reveal">We have opinions.</h2>
     </div>
 
-    <!-- Observation 001 — artwork leads, proposition answers -->
     <article class="grid obs-spread spread-1">
-      <!--
-        OBSERVATION ARTWORK 01 placeholder — conceptual STIR illustration:
-        an enormous eye unable to see a mango held extremely close to it.
-      -->
       <div class="ph obs-art reveal" role="img"
            aria-label="Artwork placeholder: an enormous eye unable to see a mango held extremely close to it">
         <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 002 — Observation artwork 01</span>
@@ -1053,17 +1172,12 @@ img, video { max-width: 100%; display: block; }
       </div>
     </article>
 
-    <!-- Observation 002 — proposition leads, artwork answers lower -->
     <article class="grid obs-spread spread-2">
       <div class="obs-text reveal">
         <p class="ann obs-index"><i class="ann-mark" aria-hidden="true"></i>Observation / 002</p>
         <h3 class="display obs-headline">The kids don’t want the store. They want the brand.</h3>
         <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
       </div>
-      <!--
-        OBSERVATION ARTWORK 02 placeholder — conceptual STIR
-        inheritance / succession illustration.
-      -->
       <div class="ph obs-art reveal" role="img"
            aria-label="Artwork placeholder: STIR inheritance and succession illustration">
         <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 003 — Observation artwork 02</span>
@@ -1073,7 +1187,7 @@ img, video { max-width: 100%; display: block; }
   </section>
 
   <!-- ════════ 06 · CONVERSION — SIGNAL RED ════════ -->
-  <section class="convert" aria-labelledby="convert-q">
+  <section class="convert" id="contact" aria-labelledby="convert-q">
     <div class="shell">
       <div>
         <p class="utility convert-label">Your turn.</p>
@@ -1081,7 +1195,7 @@ img, video { max-width: 100%; display: block; }
       </div>
       <div class="convert-foot reveal">
         <p class="editorial convert-copy">There’s probably something inside your business people would care about. Let’s find it.</p>
-        <a class="cta" href="contact.html">Tell us about the business <span class="arrow" aria-hidden="true">→</span></a>
+        <a class="cta" href="mailto:rasheedjordon1@gmail.com">Tell us about the business <span class="arrow" aria-hidden="true">↗</span></a>
       </div>
     </div>
   </section>
@@ -1091,21 +1205,21 @@ img, video { max-width: 100%; display: block; }
 <!-- ════════ FOOTER — quiet ════════ -->
 <footer class="footer shell">
   <div class="grid footer-grid utility">
-    <span class="footer-logo" aria-hidden="true">STIR</span>
+    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
     <span class="footer-place">Brooklyn, New&nbsp;York</span>
     <nav class="footer-links" aria-label="Footer">
       <a href="https://instagram.com" rel="noopener">Instagram</a>
       <a href="mailto:rasheedjordon1@gmail.com">Email</a>
     </nav>
-    <span class="footer-line">Make it travel.</span>
+    <span class="footer-line">Attention should pay.</span>
     <span class="footer-copy">© 2026 STIR</span>
   </div>
 </footer>
 
 <script>
-/* Foundational behavior only — advanced motion is art-directed later. */
+/* Foundational behavior; motion stays restrained and purposeful. */
 
-/* Reveal on entry (respects prefers-reduced-motion via CSS gating) */
+/* Reveal on entry */
 (function () {
   var els = document.querySelectorAll('.reveal');
   if (!('IntersectionObserver' in window)) {
@@ -1123,7 +1237,7 @@ img, video { max-width: 100%; display: block; }
   els.forEach(function (el) { io.observe(el); });
 })();
 
-/* Method index — one active row at a time (default + active states only) */
+/* Method index — one active row at a time */
 (function () {
   var rows = document.querySelectorAll('#method-index .method-row');
   rows.forEach(function (row) {
