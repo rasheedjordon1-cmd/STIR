@@ -47,6 +47,9 @@
   --max-w: 1520px;
   --gutter: clamp(20px, 3.2vw, 48px);
   --col-gap: clamp(16px, 1.6vw, 32px);
+  /* Distance from shell edge to true viewport edge — artwork is allowed
+     to break the grid and bleed all the way out. */
+  --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
 
   /* Type scale — display carries the identity */
   --t-hero:    clamp(3.35rem, 10.8vw, 10.6rem);  /* hero headline        */
@@ -61,7 +64,7 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: clip; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 body {
@@ -143,7 +146,8 @@ img, video { max-width: 100%; display: block; }
   transition: background 0.25s var(--ease), color 0.25s var(--ease);
 }
 .cta .arrow { transition: transform 0.3s var(--ease); }
-.cta:hover, .cta:focus-visible { background: var(--ink); color: var(--white); }
+/* Action = signal: primary actions answer in Signal Red */
+.cta:hover, .cta:focus-visible { background: var(--red); border-color: var(--red); color: var(--white); }
 .cta:hover .arrow, .cta:focus-visible .arrow { transform: translateX(0.35em); }
 
 .cta-line {
@@ -158,7 +162,31 @@ img, video { max-width: 100%; display: block; }
   border-bottom: 1px solid currentColor;
 }
 .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.cta-line { transition: color 0.2s var(--ease); }
+.cta-line:hover, .cta-line:focus-visible { color: var(--red); }
 .cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
+
+/* ── Annotation system ────────────────────────────────────────── */
+/* Artifact numbers, proof labels, locations, dates, tiny captions.
+   The red mark is signal: it flags a discovery or important object. */
+.ann {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.7em;
+  font-size: var(--t-utility);
+  font-weight: 520;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+}
+.ann-mark {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  background: var(--red);
+  align-self: center;
+}
+.ann-meta { color: var(--ink-60); }
 
 /* ── Placeholder frames (no stock, no fabricated imagery) ─────── */
 .ph {
@@ -265,7 +293,7 @@ img, video { max-width: 100%; display: block; }
 .hero-art {
   grid-column: 7 / 13;
   margin-top: calc(var(--t-hero) * -0.62);
-  margin-right: calc(var(--gutter) * -1);
+  margin-right: calc(var(--bleed) * -1); /* runs to the true viewport edge */
   aspect-ratio: 5 / 4;
   z-index: 1;
 }
@@ -313,7 +341,6 @@ img, video { max-width: 100%; display: block; }
   grid-column: 5 / 13;
   font-size: var(--t-giant);
 }
-.belief-b .blue { color: var(--blue); }
 
 .belief-support {
   grid-column: 7 / 12;
@@ -376,19 +403,47 @@ img, video { max-width: 100%; display: block; }
   max-width: 22ch;
 }
 
-.proof-media {
-  grid-column: 8 / 13;
-  display: flex;
-  flex-direction: column;
-  gap: clamp(40px, 6vh, 88px);
+/* Evidence field — an asymmetric composition of artifacts, not a
+   gallery. Each slot holds a different medium: vertical video,
+   photography, a social artifact, campaign imagery. */
+.proof-evidence {
+  grid-column: 7 / 13;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  column-gap: var(--col-gap);
 }
-.proof-media .ph { width: 100%; }
-/* Varied crops so the column breathes — not a uniform gallery */
-.pm-1 { aspect-ratio: 4 / 5; }
-.pm-2 { aspect-ratio: 16 / 9; width: 86%; align-self: flex-end; }
-.pm-3 { aspect-ratio: 1 / 1; width: 78%; }
-.pm-4 { aspect-ratio: 3 / 4; width: 88%; align-self: flex-end; }
-.pm-tag { margin-top: 10px; color: var(--wht-70); }
+.ev { grid-row: auto; }
+.ev .ph { width: 100%; }
+.ev-1 { grid-column: 1 / 4; }
+.ev-1 .ph { aspect-ratio: 9 / 16; }
+.ev-2 { grid-column: 4 / 7; margin-top: clamp(96px, 16vh, 220px); }
+.ev-2 .ph { aspect-ratio: 4 / 3; }
+.ev-3 { grid-column: 2 / 5; margin-top: clamp(56px, 9vh, 130px); }
+.ev-3 .ph { aspect-ratio: 4 / 5; }
+.ev-4 {
+  grid-column: 1 / 7;
+  margin-top: clamp(72px, 12vh, 170px);
+  margin-right: calc(var(--bleed) * -1); /* campaign frame breaks the grid */
+}
+.ev-4 .ph { aspect-ratio: 16 / 9; }
+
+.ev-cap {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+}
+.ev-cap .ann { color: var(--white); }
+.ev-cap .ev-meta {
+  font-size: var(--t-utility);
+  font-weight: 520;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--wht-70);
+  text-align: right;
+  flex: none;
+}
 
 /* ════════════════════════════════════════════════════════════════
    04 — METHOD  ·  FIND. BUILD. RUN.
@@ -494,23 +549,13 @@ img, video { max-width: 100%; display: block; }
   padding-bottom: 10px;
 }
 
-/* Default hover */
+/* No fields, no fills — the index stays editorial. State is carried
+   by the Signal Red mark and the opened capability list only. */
 @media (hover: hover) {
-  .method-row:not(.is-active):hover { background: var(--ink-04); }
+  .method-row:not(.is-active) .method-row-head:hover .method-no { color: var(--red); }
 }
-/* Active state: STIR Blue field, white text, red indicator */
-.method-row.is-active {
-  background: var(--blue);
-  color: var(--white);
-  border-top-color: var(--blue);
-  margin-inline: calc(var(--gutter) * -1);
-  padding-inline: var(--gutter);
-}
-.method-row.is-active + .method-row { border-top-color: var(--ink); }
-.method-row.is-active .method-no,
-.method-row.is-active .method-line { color: var(--wht-70); }
+.method-row.is-active .method-no { color: var(--red); }
 .method-row.is-active .method-dot { opacity: 1; transform: none; }
-.method-row.is-active .method-caps li { border-bottom-color: var(--wht-35); }
 .method-row.is-active .method-detail { grid-template-rows: 1fr; }
 
 /* ════════════════════════════════════════════════════════════════
@@ -533,32 +578,41 @@ img, video { max-width: 100%; display: block; }
   margin-bottom: clamp(96px, 15vh, 220px);
 }
 
-/* Spread 001 — artwork left and tall, proposition right and high */
+/* Spread 001 — artwork left and tall, proposition crosses onto it */
 .obs-spread { align-items: start; }
 .spread-1 .obs-art {
   grid-column: 1 / 7;
   aspect-ratio: 4 / 5;
-  margin-left: calc(var(--gutter) * -1); /* bleeds left */
+  margin-left: calc(var(--bleed) * -1); /* bleeds to the viewport edge */
+  z-index: 1;
 }
 .spread-1 .obs-text {
-  grid-column: 8 / 13;
+  grid-column: 7 / 13;
   padding-top: clamp(24px, 6vh, 96px);
+  position: relative;
+  z-index: 2;
 }
+/* The headline is allowed to break the grid and overlap the artwork */
+.spread-1 .obs-headline { margin-left: -18%; }
 
-/* Spread 002 — inverted geometry: proposition left, wide artwork right, lower */
+/* Spread 002 — inverted geometry: proposition left, wide artwork
+   slides underneath it and out the right edge */
 .spread-2 { margin-top: clamp(120px, 20vh, 280px); }
 .spread-2 .obs-text {
   grid-column: 1 / 6;
   padding-top: 0;
+  position: relative;
+  z-index: 2;
 }
 .spread-2 .obs-art {
-  grid-column: 6 / 13;
+  grid-column: 5 / 13; /* tucks under the text column */
   aspect-ratio: 16 / 10;
   margin-top: clamp(80px, 14vh, 200px);
-  margin-right: calc(var(--gutter) * -1); /* bleeds right */
+  margin-right: calc(var(--bleed) * -1); /* bleeds to the viewport edge */
+  z-index: 1;
 }
 
-.obs-index { color: var(--ink-60); margin-bottom: 24px; }
+.obs-index { color: var(--ink-60); margin-bottom: 24px; display: flex; }
 .obs-headline {
   font-size: var(--t-big);
   margin-bottom: clamp(32px, 4vh, 56px);
@@ -649,9 +703,8 @@ img, video { max-width: 100%; display: block; }
   .belief-support{ grid-column: 3 / 8; }
 
   .proof-stick   { grid-column: 1 / -1; position: static; margin-bottom: clamp(56px, 8vh, 96px); }
-  .proof-media   { grid-column: 1 / -1; }
-  .pm-2 { width: 92%; }
-  .pm-3 { width: 84%; }
+  .proof-evidence { grid-column: 1 / -1; }
+  .ev-2 { margin-top: clamp(64px, 10vh, 140px); }
 
   .method-label  { grid-column: 1 / 4; }
   .method-intro  { grid-column: 1 / 8; }
@@ -718,8 +771,16 @@ img, video { max-width: 100%; display: block; }
   .proof-meta { text-align: left; }
   .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
   .proof-metric { font-size: clamp(6rem, 30vw, 9rem); }
-  .pm-1, .pm-2, .pm-3, .pm-4 { width: 100%; align-self: auto; }
-  .pm-2 { margin-inline: calc(var(--gutter) * -1); width: auto; }
+  /* Evidence becomes a staggered vertical sequence, never uniform */
+  .proof-evidence { grid-template-columns: repeat(4, 1fr); }
+  .ev-1 { grid-column: 1 / 4; }
+  .ev-2 { grid-column: 1 / -1; margin-top: 48px; }
+  .ev-2 .ph { margin-inline: calc(var(--gutter) * -1); }
+  .ev-3 { grid-column: 2 / -1; margin-top: 48px; }
+  .ev-4 { grid-column: 1 / -1; margin-top: 48px; margin-right: 0; }
+  .ev-4 .ph { margin-inline: calc(var(--gutter) * -1); }
+  .ev-cap { flex-direction: column; gap: 4px; }
+  .ev-cap .ev-meta { text-align: left; }
 
   .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
   .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
@@ -742,6 +803,7 @@ img, video { max-width: 100%; display: block; }
   .obs-spread .obs-text { grid-column: 1 / -1; }
   .spread-1 .obs-art { margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
   .spread-1 .obs-text { padding-top: 40px; }
+  .spread-1 .obs-headline { margin-left: 0; }
   .spread-2 { margin-top: 140px; }
   .spread-2 .obs-text { order: 1; }
   .spread-2 .obs-art  { order: 2; margin-top: 40px; margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
@@ -790,9 +852,9 @@ img, video { max-width: 100%; display: block; }
       -->
       <div class="ph hero-art reveal" role="img"
            aria-label="Artwork placeholder: two monumental hands passing a small Signal Red object">
-        <span class="utility ph-id">Hero artwork</span>
+        <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 001 — Hero artwork</span>
         <span class="ph-signal" aria-hidden="true"></span>
-        <span class="utility ph-note">Two monumental hands · handoff of a Signal&nbsp;Red object · crop bleeds right</span>
+        <span class="utility ph-note">Two monumental hands · handoff of a Signal&nbsp;Red object · bleeds off the right edge, overlaps headline</span>
       </div>
 
       <div class="hero-support reveal">
@@ -816,7 +878,7 @@ img, video { max-width: 100%; display: block; }
 
       <div class="belief-gap" aria-hidden="true"></div>
 
-      <p class="display belief-b reveal">They need <span class="blue">something worth talking&nbsp;about.</span></p>
+      <p class="display belief-b reveal">They need something worth talking&nbsp;about.</p>
 
       <p class="editorial belief-support reveal">The interesting part is usually already there — in the product, the people, the history, the neighborhood or the way the business actually operates. Our job is to find it, build around it and help it travel.</p>
     </div>
@@ -826,7 +888,7 @@ img, video { max-width: 100%; display: block; }
   <section class="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility">
-        <span>Proof / 001</span>
+        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
         <span class="proof-meta">Brooklyn, New York<br>2025—Ongoing</span>
       </div>
 
@@ -840,38 +902,51 @@ img, video { max-width: 100%; display: block; }
         </div>
 
         <!--
-          LABAY MEDIA PLACEHOLDERS — to be replaced with real LABAY
-          artifacts. LABAY keeps its own visual identity; do NOT recolor
-          assets into STIR palette. STIR Blue is only the frame.
+          LABAY EVIDENCE SLOTS — to be replaced with real LABAY
+          artifacts: vertical video, photography, social artifacts,
+          campaign imagery. LABAY keeps its own visual identity; do NOT
+          recolor assets into STIR palette. STIR Blue is only the frame.
         -->
-        <div class="proof-media">
-          <figure class="reveal">
-            <div class="ph ph--on-blue pm-1">
-              <span class="utility ph-id">Labay media 01</span>
-              <span class="utility ph-note">Vertical · in-store culture, real footage</span>
+        <div class="proof-evidence">
+          <figure class="ev ev-1 reveal">
+            <div class="ph ph--on-blue">
+              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 001 — Culture</span>
+              <span class="utility ph-note">Vertical video 9:16 · in-store culture, real footage</span>
             </div>
-            <figcaption class="utility pm-tag">01 / Culture</figcaption>
+            <figcaption class="ev-cap">
+              <span class="ann">The market as a gathering place, not a set.</span>
+              <span class="ev-meta">Brooklyn, NY · 2025</span>
+            </figcaption>
           </figure>
-          <figure class="reveal">
-            <div class="ph ph--on-blue pm-2">
-              <span class="utility ph-id">Labay media 02</span>
-              <span class="utility ph-note">Wide · content still or film frame</span>
+          <figure class="ev ev-2 reveal">
+            <div class="ph ph--on-blue">
+              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 002 — Content</span>
+              <span class="utility ph-note">Photography 4:3 · film frame or still from the series</span>
             </div>
-            <figcaption class="utility pm-tag">02 / Content</figcaption>
+            <figcaption class="ev-cap">
+              <span class="ann">Serialized short-form built from daily operations.</span>
+              <span class="ev-meta">Organic social · 2025</span>
+            </figcaption>
           </figure>
-          <figure class="reveal">
-            <div class="ph ph--on-blue pm-3">
-              <span class="utility ph-id">Labay media 03</span>
-              <span class="utility ph-note">Square · product / commerce artifact</span>
+          <figure class="ev ev-3 reveal">
+            <div class="ph ph--on-blue">
+              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 003 — Commerce</span>
+              <span class="utility ph-note">Social artifact 4:5 · post, comment thread or storefront</span>
             </div>
-            <figcaption class="utility pm-tag">03 / Commerce</figcaption>
+            <figcaption class="ev-cap">
+              <span class="ann">The counter, the product, the price — unstyled.</span>
+              <span class="ev-meta">In situ · 2025</span>
+            </figcaption>
           </figure>
-          <figure class="reveal">
-            <div class="ph ph--on-blue pm-4">
-              <span class="utility ph-id">Labay media 04</span>
-              <span class="utility ph-note">Portrait · distribution / platform surface</span>
+          <figure class="ev ev-4 reveal">
+            <div class="ph ph--on-blue">
+              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 004 — Distribution</span>
+              <span class="utility ph-note">Campaign imagery 16:9 · breaks the grid, bleeds right</span>
             </div>
-            <figcaption class="utility pm-tag">04 / Distribution</figcaption>
+            <figcaption class="ev-cap">
+              <span class="ann">One story, resized for every surface it travels through.</span>
+              <span class="ev-meta">Multi-platform · 2025—ongoing</span>
+            </figcaption>
           </figure>
         </div>
       </div>
@@ -968,11 +1043,11 @@ img, video { max-width: 100%; display: block; }
       -->
       <div class="ph obs-art reveal" role="img"
            aria-label="Artwork placeholder: an enormous eye unable to see a mango held extremely close to it">
-        <span class="utility ph-id">Observation artwork 01</span>
-        <span class="utility ph-note">Enormous eye · mango too close to see · 4:5 crop, bleeds left</span>
+        <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 002 — Observation artwork 01</span>
+        <span class="utility ph-note">Enormous eye · mango too close to see · bleeds off the left edge, headline overlaps</span>
       </div>
       <div class="obs-text reveal">
-        <p class="utility obs-index">Observation / 001</p>
+        <p class="ann obs-index"><i class="ann-mark" aria-hidden="true"></i>Observation / 001</p>
         <h3 class="display obs-headline">Sometimes you’re too close to see what’s interesting.</h3>
         <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
       </div>
@@ -981,7 +1056,7 @@ img, video { max-width: 100%; display: block; }
     <!-- Observation 002 — proposition leads, artwork answers lower -->
     <article class="grid obs-spread spread-2">
       <div class="obs-text reveal">
-        <p class="utility obs-index">Observation / 002</p>
+        <p class="ann obs-index"><i class="ann-mark" aria-hidden="true"></i>Observation / 002</p>
         <h3 class="display obs-headline">The kids don’t want the store. They want the brand.</h3>
         <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
       </div>
@@ -991,8 +1066,8 @@ img, video { max-width: 100%; display: block; }
       -->
       <div class="ph obs-art reveal" role="img"
            aria-label="Artwork placeholder: STIR inheritance and succession illustration">
-        <span class="utility ph-id">Observation artwork 02</span>
-        <span class="utility ph-note">Inheritance / succession concept · 16:10 crop, bleeds right</span>
+        <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 003 — Observation artwork 02</span>
+        <span class="utility ph-note">Inheritance / succession concept · slides under the text, bleeds off the right edge</span>
       </div>
     </article>
   </section>
