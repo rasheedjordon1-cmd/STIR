@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STIR — Attention should pay</title>
 <meta name="description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue. Independent growth + creative practice, Brooklyn, New York.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23FAF2E6'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
 
 <!--
   ══════════════════════════════════════════════════════════════════
   TYPOGRAPHY — TEMPORARY DISPLAY FALLBACK IN USE
   Intended display face: Founders Grotesk Condensed. Font files are
   NOT in this repository, so Archivo Variable (width axis condensed)
-  stands in. Swap --font-display once files are provided.
-  Editorial serif: Newsreader. Utility mono: IBM Plex Mono.
+  stands in — it also provides the clean body voice at normal width.
+  Serif (Newsreader) is a selective editorial accent only.
+  Utility mono: IBM Plex Mono.
   ══════════════════════════════════════════════════════════════════
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,22 +23,26 @@
 
 <style>
 /* ════════════════════════════════════════════════════════════════
-   STIR — ROUND 03
-   One material surface: warm ivory sampled from the Desire Line
-   artwork. Red = commercial action. Blue = proof. The evidence is
-   the hero.
+   STIR — ROUND 04
+   Semantic color roles:
+   COBALT — world / visual environment.  IVORY — information /
+   breathing room.  INK — structure / typography.  SIGNAL RED —
+   activation and commercial significance only. Red is never
+   atmosphere.
    ════════════════════════════════════════════════════════════════ */
 
 :root {
-  --ivory:  #FAF2E6;                     /* sampled from artwork field */
-  --ink:    #161310;
-  --blue:   #0451AB;                     /* proof environment only     */
-  --red:    #F21B16;                     /* matches the mastermark     */
+  --ivory:   #FAF2E6;
+  --ink:     #161310;
+  --cobalt:  #0451AB;                    /* matches the artwork field  */
+  --red:     #F21B16;                    /* activation only            */
 
   --ink-70: rgba(22, 19, 16, 0.72);
   --ink-60: rgba(22, 19, 16, 0.58);
   --ink-35: rgba(22, 19, 16, 0.32);
   --ink-05: rgba(22, 19, 16, 0.05);
+  --ivory-75: rgba(250, 242, 230, 0.78);
+  --ivory-40: rgba(250, 242, 230, 0.40);
   --wht-70: rgba(255, 255, 255, 0.70);
   --wht-35: rgba(255, 255, 255, 0.35);
   --wht-07: rgba(255, 255, 255, 0.07);
@@ -52,11 +57,11 @@
   --col-gap: clamp(16px, 1.6vw, 32px);
   --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
 
-  --t-hero:    clamp(3rem, 8vw, 7.7rem);
+  --t-hero:    clamp(2.8rem, 7.2vw, 6.9rem);   /* ~10% below Round 03 */
   --t-giant:   clamp(2.75rem, 8.2vw, 8.0rem);
   --t-big:     clamp(2.1rem, 5.6vw, 5.4rem);
-  --t-metric:  clamp(7rem, 24vw, 23rem);
-  --t-body:    clamp(1.05rem, 1vw + 0.65rem, 1.25rem);
+  --t-metric:  clamp(6.5rem, 20vw, 19rem);
+  --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
   --t-utility: 0.72rem;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -105,7 +110,7 @@ img, video { max-width: 100%; display: block; }
 @media (max-width: 639px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
 
 /* ── Type voices ──────────────────────────────────────────────── */
-/* Display: monumental, condensed, tight, architectural */
+/* Display: monumental, condensed, declarative */
 .display {
   font-weight: 660;
   font-stretch: 80%;
@@ -114,7 +119,27 @@ img, video { max-width: 100%; display: block; }
   letter-spacing: -0.012em;
   text-wrap: balance;
 }
-/* Utility: publishing metadata, not tech UI */
+/* Body: clear, direct, commercial — someone explaining something
+   across a table */
+.body {
+  font-family: var(--font-display);
+  font-stretch: 100%;
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-70);
+  max-width: 46ch;
+}
+.body strong { color: var(--ink); font-weight: 560; }
+/* Editorial serif: selective accent only (hero proposition, thesis) */
+.editorial {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.08);
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink-70);
+  max-width: 44ch;
+}
+/* Utility: publishing metadata, used only where it means something */
 .utility {
   font-family: var(--font-mono);
   font-size: var(--t-utility);
@@ -123,18 +148,8 @@ img, video { max-width: 100%; display: block; }
   letter-spacing: 0.09em;
   line-height: 1.5;
 }
-/* Editorial: the precise, commercial voice */
-.editorial {
-  font-family: var(--font-serif);
-  font-size: calc(var(--t-body) * 1.06);
-  font-weight: 400;
-  line-height: 1.62;
-  color: var(--ink-70);
-  max-width: 44ch;
-}
-.editorial strong { color: var(--ink); font-weight: 500; }
 
-/* ── CTA vocabulary — red = commercial action ─────────────────── */
+/* ── CTA vocabulary — red appears at the moment of action ─────── */
 .cta {
   display: inline-flex;
   align-items: center;
@@ -163,7 +178,6 @@ img, video { max-width: 100%; display: block; }
   letter-spacing: 0.09em;
   padding-bottom: 0.5em;
   position: relative;
-  transition: color 0.2s var(--ease);
 }
 .cta-line::after {
   content: "";
@@ -171,15 +185,24 @@ img, video { max-width: 100%; display: block; }
   left: 0; right: 0; bottom: 0;
   height: 1px;
   background: currentColor;
-  transform-origin: left;
-  transition: transform 0.4s var(--ease);
 }
+/* Activation mark: a tiny red square arrives on hover */
+.cta-line::before {
+  content: "";
+  width: 0.5em; height: 0.5em;
+  background: var(--red);
+  align-self: center;
+  flex: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  margin-right: -0.3em;
+}
+.cta-line:hover::before, .cta-line:focus-visible::before { opacity: 1; transform: none; }
 .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
-.cta-line:hover, .cta-line:focus-visible { color: var(--red); }
-.cta-line:hover::after, .cta-line:focus-visible::after { transform: scaleX(0.55); }
 .cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
 
-/* ── Annotation system ────────────────────────────────────────── */
+/* ── Annotation (used sparingly — structural, not decorative) ─── */
 .ann {
   display: inline-flex;
   align-items: baseline;
@@ -198,15 +221,12 @@ img, video { max-width: 100%; display: block; }
   background: var(--red);
   align-self: center;
 }
-.ann-meta { color: var(--ink-60); }
 
-/* ── Placeholder frames (no stock, no fabricated imagery) ─────── */
+/* ── Development placeholder frames (final art drops in later) ── */
 .ph {
   position: relative;
   border: 1px solid var(--ink-35);
-  background:
-    linear-gradient(to bottom right, transparent calc(50% - 0.5px), var(--ink-05) calc(50% - 0.5px), var(--ink-05) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
-    var(--ink-05);
+  background: var(--ink-05);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -215,11 +235,11 @@ img, video { max-width: 100%; display: block; }
 }
 .ph .ph-id   { color: var(--ink); }
 .ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.64rem; }
-.ph--on-blue { border-color: var(--wht-35); background: var(--wht-07); }
-.ph--on-blue .ph-id   { color: #fff; }
-.ph--on-blue .ph-note { color: var(--wht-70); }
+.ph--on-cobalt { border-color: var(--wht-35); background: var(--wht-07); }
+.ph--on-cobalt .ph-id   { color: #fff; }
+.ph--on-cobalt .ph-note { color: var(--wht-70); }
 
-/* ── Reveal (foundational; respects reduced motion) ───────────── */
+/* ── Reveal (respects reduced motion) ─────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     opacity: 0;
@@ -230,7 +250,7 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   NAVIGATION — mastermark left, quiet mono system right
+   NAVIGATION — ivory system over the cobalt world
    ════════════════════════════════════════════════════════════════ */
 .nav {
   position: absolute;
@@ -255,7 +275,7 @@ img, video { max-width: 100%; display: block; }
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: var(--ink);
+  color: var(--ivory);
   position: relative;
   padding-bottom: 3px;
 }
@@ -264,16 +284,15 @@ img, video { max-width: 100%; display: block; }
   position: absolute;
   left: 0; right: 0; bottom: 0;
   height: 1px;
-  background: var(--ink);
+  background: var(--ivory);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.35s var(--ease);
 }
 .nav-links a:not(.nav-start):hover::after,
 .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
-/* START A PROJECT — slightly stronger: thin rectangle, red on hover */
 .nav-start {
-  border: 1px solid var(--ink);
+  border: 1px solid var(--ivory);
   padding: 0.7em 1.1em !important;
   display: inline-flex;
   align-items: center;
@@ -286,45 +305,59 @@ img, video { max-width: 100%; display: block; }
 
 /* ════════════════════════════════════════════════════════════════
    01 — HERO · ATTENTION SHOULD PAY.
-   One continuous surface. The artwork occupies the negative space;
-   no card, no frame, no border. The evidence is the hero.
+   Full cobalt environment. The illustration sits full-bleed behind
+   the interface — one composition, no frame, no feather.
    ════════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: max(100svh, 720px);
+  background: var(--cobalt);
+  color: var(--ivory);
+  min-height: max(100svh, 700px);
   display: flex;
   flex-direction: column;
 }
 
-/* Desire Line artwork — feathered into the page surface */
+/*
+  HERO ARTWORK — assets/hero-stir-attention.webp
+  Cobalt world · enormous cropped observer entering upper-right ·
+  eye looking toward a tiny ordinary storefront, center-right ·
+  Signal Red threshold. Left territory stays clean for interface.
+  Swap this file to update the hero; keep observer + storefront
+  in frame (object-position tuned below).
+*/
 .hero-art {
   position: absolute;
-  top: clamp(64px, 9vh, 120px);
-  right: 0;
-  width: min(68vw, 1060px);
-  height: auto;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
   z-index: 1;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 9%, #000 100%),
-    linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 9%, #000 100%),
-    linear-gradient(to bottom, transparent 0, #000 7%, #000 90%, transparent 100%);
-  mask-composite: intersect;
+}
+/* Legibility scrim for the nav zone only — not a treatment of the
+   artwork, just enough contrast where type crosses the observer */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: clamp(90px, 14vh, 150px);
+  background: linear-gradient(to bottom, rgba(3, 40, 105, 0.55), transparent);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .hero-inner {
   position: relative;
   z-index: 2;
+  width: 100%; /* flex column + auto margins would otherwise shrink-wrap */
   flex: 1;
   display: flex;
   flex-direction: column;
   padding-top: clamp(120px, 17vh, 190px);
-  padding-bottom: clamp(20px, 2.5vh, 32px);
+  padding-bottom: clamp(24px, 3.5vh, 44px);
 }
 
-/* Copy mass — left five columns of the invisible grid */
+/* Copy territory — the clean cobalt left */
 .hero-copy { max-width: 46%; }
 
 .eyebrow {
@@ -333,7 +366,7 @@ img, video { max-width: 100%; display: block; }
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: var(--red);
+  color: var(--ivory);
   margin-bottom: clamp(20px, 3vh, 36px);
 }
 .eyebrow .arr { padding-inline: 0.35em; }
@@ -341,8 +374,7 @@ img, video { max-width: 100%; display: block; }
 .hero-headline {
   font-size: var(--t-hero);
   line-height: 0.95;
-  /* The statement owns its own width — it may reach into the ivory,
-     never wrap, never clip */
+  color: var(--ivory);
   width: max-content;
   max-width: none;
 }
@@ -351,89 +383,66 @@ img, video { max-width: 100%; display: block; }
 
 .hero-prop {
   margin-top: clamp(28px, 4vh, 48px);
-  max-width: 34ch;
+  color: var(--ivory-75);
+  max-width: 36ch;
+}
+.hero-prop strong { color: var(--ivory); font-weight: 500; }
+
+.hero-cta {
+  margin-top: clamp(28px, 4.5vh, 52px);
+  color: var(--ivory);
 }
 
-.hero-cta-row {
-  margin-top: clamp(28px, 4vh, 48px);
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  flex-wrap: wrap;
-}
-.hero-microcopy {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--ink-60);
-}
-
-/* Foot: trusted-by (left) · authored note (right) */
-.hero-foot {
-  margin-top: auto;
-  padding-top: clamp(32px, 5vh, 64px);
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  gap: 40px;
-}
-.hero-trusted .t-label { color: var(--ink-60); margin-bottom: 6px; }
-.hero-trusted .t-list  { color: var(--ink); }
-.hero-note {
-  border-left: 1px solid var(--ink-35);
-  padding-left: 16px;
-  font-family: var(--font-mono);
-  font-size: var(--t-utility);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  line-height: 1.6;
-  color: var(--ink);
-  text-align: left;
-}
-.hero-note .quiet { color: var(--ink-60); margin-top: 10px; }
-
-/* Below-the-fold transition — a page index, not a scroll gimmick */
+/* Below-the-fold index — quiet, structural */
 .hero-index {
-  margin-top: clamp(20px, 3vh, 36px);
-  color: var(--ink-60);
+  margin-top: auto;
+  color: var(--ivory-75);
 }
-.hero-index .down { display: inline-block; padding-left: 0.5em; }
+.hero-index .hi-label {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ivory-40);
+}
+.hero-index .down {
+  display: block;
+  margin-top: 14px;
+}
 
-/* Load choreography — one orchestrated entrance, then stillness */
+/* Load choreography — arrive confidently, then stop performing */
 @media (prefers-reduced-motion: no-preference) {
+  .nav-inner {
+    opacity: 0;
+    animation: fade-up 0.6s var(--ease) 0.1s forwards;
+  }
+  .hero-art {
+    opacity: 0;
+    transform: scale(1.015);
+    animation: art-settle 1s var(--ease) 0.2s forwards;
+  }
+  @keyframes art-settle { to { opacity: 1; transform: none; } }
+
   .hl-line > span {
     transform: translateY(112%);
-    animation: hl-rise 0.85s var(--ease) forwards;
+    animation: hl-rise 0.8s var(--ease) 0.4s forwards;
   }
-  .hl-line:nth-child(2) > span { animation-delay: 0.1s; }
+  .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
   @keyframes hl-rise { to { transform: none; } }
 
-  .eyebrow, .hero-prop, .hero-cta-row, .hero-foot, .hero-index {
+  .eyebrow, .hero-prop, .hero-cta, .hero-index {
     opacity: 0;
-    animation: fade-up 0.8s var(--ease) forwards;
+    animation: fade-up 0.7s var(--ease) forwards;
   }
-  .eyebrow       { animation-delay: 0.05s; }
-  .hero-prop     { animation-delay: 0.35s; }
-  .hero-cta-row  { animation-delay: 0.45s; }
-  .hero-foot     { animation-delay: 0.6s; }
-  .hero-index    { animation-delay: 0.7s; }
+  .eyebrow     { animation-delay: 0.3s; }
+  .hero-prop   { animation-delay: 0.7s; }
+  .hero-cta    { animation-delay: 0.85s; }
+  .hero-index  { animation-delay: 0.95s; }
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: none; }
   }
-
-  .hero-art {
-    opacity: 0;
-    animation: art-in 1.4s var(--ease) 0.25s forwards;
-  }
-  @keyframes art-in { to { opacity: 1; } }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   02 — BELIEF · a pause, then a realization
+   02 — THESIS · a pause, then a realization
    ════════════════════════════════════════════════════════════════ */
 .belief {
   padding-top: clamp(140px, 26vh, 300px);
@@ -460,11 +469,11 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   03 — FLAGSHIP PROOF · full STIR Blue environment
+   03 — PROOF · ivory section, one large cobalt evidence field
+   (Option B: the page stays ivory; cobalt returns as a block of
+   evidence rather than a second full environment.)
    ════════════════════════════════════════════════════════════════ */
 .proof {
-  background: var(--blue);
-  color: #fff;
   padding-top: clamp(72px, 10vh, 140px);
   padding-bottom: clamp(96px, 14vh, 200px);
 }
@@ -472,11 +481,11 @@ img, video { max-width: 100%; display: block; }
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  border-top: 1px solid var(--wht-35);
+  border-top: 1px solid var(--ink);
   padding-top: 12px;
   margin-bottom: clamp(48px, 8vh, 110px);
 }
-.proof-meta { text-align: right; color: var(--wht-70); }
+.proof-meta { text-align: right; color: var(--ink-60); }
 
 .proof-title {
   font-size: var(--t-giant);
@@ -497,7 +506,7 @@ img, video { max-width: 100%; display: block; }
   letter-spacing: -0.02em;
   margin-left: -0.03em;
 }
-.proof-metric-label { margin-top: 20px; color: var(--wht-70); }
+.proof-metric-label { margin-top: 20px; color: var(--ink-60); }
 .proof-statement {
   margin-top: clamp(48px, 7vh, 88px);
   font-size: clamp(1.25rem, 2vw, 1.9rem);
@@ -509,9 +518,14 @@ img, video { max-width: 100%; display: block; }
   max-width: 22ch;
 }
 
-/* Evidence field — asymmetric artifacts, not a gallery */
+/* The cobalt evidence field — bleeds off the right edge */
 .proof-evidence {
   grid-column: 7 / 13;
+  background: var(--cobalt);
+  color: #fff;
+  margin-right: calc(var(--bleed) * -1);
+  padding: clamp(28px, 3.5vw, 64px);
+  padding-right: clamp(28px, 3.5vw, 64px);
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   column-gap: var(--col-gap);
@@ -523,11 +537,7 @@ img, video { max-width: 100%; display: block; }
 .ev-2 .ph { aspect-ratio: 4 / 3; }
 .ev-3 { grid-column: 2 / 5; margin-top: clamp(56px, 9vh, 130px); }
 .ev-3 .ph { aspect-ratio: 4 / 5; }
-.ev-4 {
-  grid-column: 1 / 7;
-  margin-top: clamp(72px, 12vh, 170px);
-  margin-right: calc(var(--bleed) * -1);
-}
+.ev-4 { grid-column: 1 / 7; margin-top: clamp(72px, 12vh, 170px); }
 .ev-4 .ph { aspect-ratio: 16 / 9; }
 
 .ev-cap {
@@ -537,22 +547,13 @@ img, video { max-width: 100%; display: block; }
   align-items: baseline;
   gap: 20px;
 }
-.ev-cap .ann { color: #fff; }
-.ev-cap .ev-meta {
-  font-family: var(--font-mono);
-  font-size: var(--t-utility);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  color: var(--wht-70);
-  text-align: right;
-  flex: none;
-}
+.ev-cap .cap { color: #fff; }
+.ev-cap .ev-meta { color: var(--wht-70); text-align: right; flex: none; }
 
 /* ════════════════════════════════════════════════════════════════
-   04 — METHOD · FIND. BUILD. RUN.
-   An editorial operating framework. Interaction motif: attention
-   wears a path — each row's red line is drawn by use.
+   04 — WHAT WE DO · FIND / BUILD / RUN
+   Editorial index. Default: 1px ink rule. Hover: the word leans in,
+   contrast rises. Active: a tiny Signal Red marker + services unfold.
    ════════════════════════════════════════════════════════════════ */
 .method {
   padding-top: clamp(120px, 18vh, 240px);
@@ -571,26 +572,8 @@ img, video { max-width: 100%; display: block; }
 
 .method-index { grid-column: 1 / -1; }
 
-.method-row {
-  position: relative;
-  border-top: 1px solid var(--ink);
-}
+.method-row { border-top: 1px solid var(--ink); }
 .method-row:last-child { border-bottom: 1px solid var(--ink); }
-/* The desire-line: a red path drawn across the row by attention */
-.method-row::after {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.6s var(--ease);
-}
-.method-row:hover::after,
-.method-row.is-active::after { transform: scaleX(1); }
 
 .method-row-head {
   width: 100%;
@@ -637,7 +620,6 @@ img, video { max-width: 100%; display: block; }
 }
 .method-line {
   grid-column: 8 / 12;
-  font-family: var(--font-serif);
   font-size: var(--t-body);
   color: var(--ink-60);
   transition: color 0.3s var(--ease);
@@ -675,16 +657,17 @@ img, video { max-width: 100%; display: block; }
   transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
 }
 
-/* Hover: the word leans in, the number answers in red */
+/* Hover: contrast, not color */
 @media (hover: hover) {
-  .method-row:hover .method-no { color: var(--red); }
+  .method-row:hover .method-no { color: var(--ink); }
   .method-row:hover .method-word { transform: translateX(0.35ch); }
   .method-row:hover .method-line { color: var(--ink); }
 }
-/* Active: path drawn, red index, capabilities surface in sequence */
-.method-row.is-active .method-no { color: var(--red); }
+/* Active: the red marker appears; services unfold in sequence */
+.method-row.is-active .method-no { color: var(--ink); }
 .method-row.is-active .method-word { transform: translateX(0.35ch); }
 .method-row.is-active .method-dot { opacity: 1; transform: none; }
+.method-row.is-active .method-line { color: var(--ink); }
 .method-row.is-active .method-detail { grid-template-rows: 1fr; }
 .method-row.is-active .method-caps li { opacity: 1; transform: none; }
 .method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
@@ -694,12 +677,13 @@ img, video { max-width: 100%; display: block; }
 .method-row.is-active .method-caps li:nth-child(5) { transition-delay: 0.34s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .method-row::after, .method-word, .method-caps li { transition: none; }
+  .method-word, .method-caps li { transition: none; }
   .method-caps li { opacity: 1; transform: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   05 — OBSERVATIONS · exhibition spreads, not blog cards
+   05 — ONE THOUGHT · a single interstitial observation
+   (The fuller Observations index moves to About / future Insights.)
    ════════════════════════════════════════════════════════════════ */
 .obs {
   padding-top: clamp(100px, 15vh, 200px);
@@ -709,37 +693,21 @@ img, video { max-width: 100%; display: block; }
   grid-column: 1 / 4;
   border-top: 1px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(48px, 8vh, 110px);
-}
-.obs-title {
-  grid-column: 1 / 9;
-  font-size: var(--t-giant);
-  margin-bottom: clamp(96px, 15vh, 220px);
+  margin-bottom: clamp(72px, 12vh, 160px);
 }
 
 .obs-spread { align-items: start; }
-.spread-1 .obs-art {
-  grid-column: 1 / 7;
-  aspect-ratio: 4 / 5;
-  margin-left: calc(var(--bleed) * -1);
-  z-index: 1;
-}
-.spread-1 .obs-text {
-  grid-column: 7 / 13;
-  padding-top: clamp(24px, 6vh, 96px);
-  position: relative;
-  z-index: 2;
-}
-.spread-1 .obs-headline { margin-left: -18%; }
-
-.spread-2 { margin-top: clamp(120px, 20vh, 280px); }
-.spread-2 .obs-text {
+.obs-text {
   grid-column: 1 / 6;
-  padding-top: 0;
   position: relative;
   z-index: 2;
 }
-.spread-2 .obs-art {
+.obs-headline {
+  font-size: var(--t-big);
+  margin-bottom: clamp(32px, 4vh, 56px);
+}
+.obs-cta { color: var(--ink); }
+.obs-art {
   grid-column: 5 / 13;
   aspect-ratio: 16 / 10;
   margin-top: clamp(80px, 14vh, 200px);
@@ -747,35 +715,20 @@ img, video { max-width: 100%; display: block; }
   z-index: 1;
 }
 
-.obs-index { color: var(--ink-60); margin-bottom: 24px; display: flex; }
-.obs-headline {
-  font-size: var(--t-big);
-  margin-bottom: clamp(32px, 4vh, 56px);
-}
-.obs-cta { color: var(--ink); }
-
 /* ════════════════════════════════════════════════════════════════
-   06 — CONVERSION · Signal Red at full field
+   06 — CTA · quiet ivory; red appears only at the action
    ════════════════════════════════════════════════════════════════ */
 .convert {
-  background: var(--red);
-  color: #fff;
-  min-height: 96svh;
-  display: flex;
-  align-items: stretch;
+  padding-top: clamp(100px, 16vh, 220px);
+  padding-bottom: clamp(120px, 20vh, 260px);
 }
-.convert .shell {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: clamp(48px, 7vh, 96px);
-  padding-bottom: clamp(48px, 7vh, 96px);
+.convert-head {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
 }
-.convert-label { color: #fff; }
 .convert-q {
   font-size: var(--t-giant);
-  margin-top: clamp(40px, 8vh, 120px);
 }
 .convert-foot {
   display: flex;
@@ -783,10 +736,9 @@ img, video { max-width: 100%; display: block; }
   align-items: flex-end;
   gap: 40px;
   flex-wrap: wrap;
+  margin-top: clamp(56px, 9vh, 120px);
 }
-.convert-copy { color: rgba(255, 255, 255, 0.85); max-width: 38ch; }
-.convert .cta { border-color: #fff; color: #fff; }
-.convert .cta:hover, .convert .cta:focus-visible { background: #fff; border-color: #fff; color: var(--red); }
+.convert-copy { max-width: 38ch; }
 
 /* ════════════════════════════════════════════════════════════════
    FOOTER — deliberately quiet
@@ -807,31 +759,32 @@ img, video { max-width: 100%; display: block; }
 .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
 
 /* ════════════════════════════════════════════════════════════════
-   TABLET — 8 columns · recomposed
+   TABLET — recomposed: the illustration becomes its own scene
+   below the copy; observer + storefront stay uncropped
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
   .hero { min-height: 0; }
-  .hero-copy { max-width: 72%; }
-  /* Artwork receives its own territory in the flow, still frameless */
+  .hero::after { display: none; }
+  /* Copy and index become direct flex items of .hero so the flow is
+     copy → artwork (its own uncropped scene) → index */
+  .hero-inner { display: contents; }
+  .hero-copy, .hero-index { padding-inline: var(--gutter); }
+  .hero-copy {
+    order: 1;
+    max-width: 80%;
+    padding-top: clamp(110px, 15vh, 160px);
+  }
   .hero-art {
     position: static;
     order: 2;
-    width: 92%;
-    align-self: flex-end;
-    margin-top: clamp(40px, 6vh, 72px);
-    -webkit-mask-image:
-      linear-gradient(to right, transparent 0, #000 8%, #000 100%),
-      linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
-    mask-image:
-      linear-gradient(to right, transparent 0, #000 8%, #000 100%),
-      linear-gradient(to bottom, transparent 0, #000 6%, #000 94%, transparent 100%);
+    width: 100%;
+    height: auto;
+    margin-top: clamp(44px, 7vh, 80px);
   }
-  .hero-inner { display: contents; }
-  .hero { display: flex; flex-direction: column; padding-top: clamp(110px, 15vh, 160px); }
-  .hero-copy, .hero-foot, .hero-index { padding-inline: var(--gutter); }
-  .hero-copy { order: 1; }
-  .hero-foot { order: 3; margin-top: clamp(40px, 6vh, 72px); }
-  .hero-index { order: 4; margin-bottom: 24px; }
+  .hero-index {
+    order: 3;
+    margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
+  }
 
   .belief-label  { grid-column: 1 / 4; }
   .belief-a      { grid-column: 1 / 9; }
@@ -839,7 +792,7 @@ img, video { max-width: 100%; display: block; }
   .belief-support{ grid-column: 3 / 8; }
 
   .proof-stick   { grid-column: 1 / -1; position: static; margin-bottom: clamp(56px, 8vh, 96px); }
-  .proof-evidence { grid-column: 1 / -1; }
+  .proof-evidence { grid-column: 1 / -1; margin-left: calc(var(--gutter) * -1); }
   .ev-2 { margin-top: clamp(64px, 10vh, 140px); }
 
   .method-label  { grid-column: 1 / 4; }
@@ -849,11 +802,8 @@ img, video { max-width: 100%; display: block; }
   .method-caps   { grid-column: 6 / 9; }
 
   .obs-label { grid-column: 1 / 4; }
-  .obs-title { grid-column: 1 / 8; }
-  .spread-1 .obs-art  { grid-column: 1 / 6; }
-  .spread-1 .obs-text { grid-column: 6 / 9; }
-  .spread-2 .obs-text { grid-column: 1 / 5; }
-  .spread-2 .obs-art  { grid-column: 4 / 9; }
+  .obs-text  { grid-column: 1 / 5; }
+  .obs-art   { grid-column: 4 / 9; }
 
   .footer-logo  { grid-column: 1 / 2; }
   .footer-place { grid-column: 2 / 5; }
@@ -863,22 +813,21 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   MOBILE — 4 columns · fully recomposed
+   MOBILE — headline first; illustration is its own controlled
+   scene; CTA stays close
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 639px) {
   :root { --gutter: 18px; }
 
   .nav-logo img { height: 22px; }
   .nav-links { gap: 16px; }
-  .nav-links a:not(.nav-start) { display: none; } /* headline first; menu returns with the ABOUT/CONTACT build */
+  .nav-links a:not(.nav-start) { display: none; } /* menu returns with the ABOUT/CONTACT build */
   .nav-start { padding: 0.6em 0.9em !important; }
 
-  .hero { padding-top: 96px; }
+  .hero-inner { padding-top: 96px; }
   .hero-copy { max-width: 100%; }
-  .hero-headline { font-size: clamp(3rem, 15vw, 4.4rem); }
-  .hero-art { width: 100%; margin-inline: 0; }
-  .hero-foot { flex-direction: column; align-items: flex-start; gap: 28px; }
-  .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+  .hero-art { margin-top: 44px; }
 
   .belief { padding-block: clamp(110px, 20vh, 160px); }
   .belief-label   { grid-column: 1 / -1; margin-bottom: 56px; }
@@ -890,14 +839,16 @@ img, video { max-width: 100%; display: block; }
   .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
   .proof-meta { text-align: left; }
   .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
-  .proof-metric { font-size: clamp(6rem, 30vw, 9rem); }
-  .proof-evidence { grid-template-columns: repeat(4, 1fr); }
+  .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
+  .proof-evidence {
+    grid-template-columns: repeat(4, 1fr);
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 24px 18px 40px;
+  }
   .ev-1 { grid-column: 1 / 4; }
-  .ev-2 { grid-column: 1 / -1; margin-top: 48px; }
-  .ev-2 .ph { margin-inline: calc(var(--gutter) * -1); }
-  .ev-3 { grid-column: 2 / -1; margin-top: 48px; }
-  .ev-4 { grid-column: 1 / -1; margin-top: 48px; margin-right: 0; }
-  .ev-4 .ph { margin-inline: calc(var(--gutter) * -1); }
+  .ev-2 { grid-column: 1 / -1; margin-top: 40px; }
+  .ev-3 { grid-column: 2 / -1; margin-top: 40px; }
+  .ev-4 { grid-column: 1 / -1; margin-top: 40px; }
   .ev-cap { flex-direction: column; gap: 4px; }
   .ev-cap .ev-meta { text-align: left; }
 
@@ -915,19 +866,17 @@ img, video { max-width: 100%; display: block; }
   .method-caps { grid-column: 1 / -1; }
 
   .obs { padding-bottom: 140px; }
-  .obs-label { grid-column: 1 / -1; margin-bottom: 48px; }
-  .obs-title { grid-column: 1 / -1; font-size: clamp(2.9rem, 14vw, 4rem); margin-bottom: 96px; }
-  .obs-spread .obs-art,
-  .obs-spread .obs-text { grid-column: 1 / -1; }
-  .spread-1 .obs-art { margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
-  .spread-1 .obs-text { padding-top: 40px; }
-  .spread-1 .obs-headline { margin-left: 0; }
-  .spread-2 { margin-top: 140px; }
-  .spread-2 .obs-text { order: 1; }
-  .spread-2 .obs-art  { order: 2; margin-top: 40px; margin-inline: calc(var(--gutter) * -1); aspect-ratio: 4 / 5; }
+  .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
+  .obs-text { grid-column: 1 / -1; }
+  .obs-art  {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    margin-inline: calc(var(--gutter) * -1);
+    aspect-ratio: 4 / 5;
+  }
   .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
 
-  .convert-q { font-size: clamp(3rem, 15.5vw, 4.6rem); }
+  .convert-q { font-size: clamp(2.7rem, 13.5vw, 4rem); }
   .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
 
   .footer-grid { row-gap: 18px; }
@@ -941,7 +890,7 @@ img, video { max-width: 100%; display: block; }
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
+    <a href="index.html" class="nav-logo"><img src="assets/stir-mark-ivory.png" alt="STIR — Home"></a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#proof">Work</a>
       <a href="#method">Capabilities</a>
@@ -955,11 +904,15 @@ img, video { max-width: 100%; display: block; }
 
   <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
   <section class="hero" aria-label="STIR — attention should pay">
-    <!-- LOCKED ASSET: Desire Line artwork. Do not crop the start of the
-         line, obscure the doorway, or place type over the worn path. -->
-    <img class="hero-art" src="assets/hero-desire-line.webp"
-         width="1280" height="853"
-         alt="A worn pedestrian desire line crossing an empty ivory field toward a small anonymous black doorway with a Signal Red threshold">
+    <!--
+      HERO ASSET SLOT: assets/hero-stir-attention.webp
+      Enormous observer entering upper-right · tiny ordinary
+      storefront with Signal Red threshold · clean cobalt left.
+      Drop updated artwork here; no structural change needed.
+    -->
+    <img class="hero-art" src="assets/hero-stir-attention.webp"
+         width="1800" height="1346" fetchpriority="high"
+         alt="An enormous observer leans in from the upper right of a deep cobalt field, eye fixed on a tiny ordinary storefront with a small Signal Red threshold">
 
     <div class="shell hero-inner">
       <div class="hero-copy">
@@ -972,31 +925,17 @@ img, video { max-width: 100%; display: block; }
 
         <p class="editorial hero-prop">STIR builds the content, strategy and systems that turn attention into demand&nbsp;— and demand into revenue.</p>
 
-        <div class="hero-cta-row">
-          <a class="cta" href="#contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
-          <p class="hero-microcopy">For businesses ready to create demand.</p>
-        </div>
+        <p class="hero-cta"><a class="cta-line" href="#contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a></p>
       </div>
 
-      <div class="hero-foot">
-        <div class="hero-trusted">
-          <p class="utility t-label">Trusted by operators across industries</p>
-          <p class="utility t-list">Consumer brands&nbsp;&nbsp;·&nbsp;&nbsp;Restaurants&nbsp;&nbsp;·&nbsp;&nbsp;Logistics&nbsp;&nbsp;·&nbsp;&nbsp;Industrial&nbsp;&nbsp;·&nbsp;&nbsp;Services</p>
-        </div>
-        <div class="hero-note">
-          <p>Ordinary business,<br>extraordinary demand.</p>
-          <p class="quiet">Evidence is everywhere.</p>
-        </div>
-      </div>
-
-      <p class="utility hero-index">01 — Demand <span class="down" aria-hidden="true">↓</span></p>
+      <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
     </div>
   </section>
 
-  <!-- ════════ 02 · BELIEF ════════ -->
+  <!-- ════════ 02 · THESIS ════════ -->
   <section class="belief shell" aria-labelledby="belief-label">
     <div class="grid">
-      <p class="utility belief-label" id="belief-label">01 / Demand</p>
+      <p class="utility belief-label" id="belief-label">02 / Thesis</p>
 
       <h2 class="display belief-a reveal">Most businesses don’t&nbsp;need more&nbsp;content.</h2>
 
@@ -1004,11 +943,11 @@ img, video { max-width: 100%; display: block; }
 
       <p class="display belief-b reveal">They need something worth talking&nbsp;about.</p>
 
-      <p class="editorial belief-support reveal">The interesting part is usually already there — in the product, the people, the history, the neighborhood or the way the business actually operates. Our job is to find it, build around it and turn the attention it earns into demand.</p>
+      <p class="editorial belief-support reveal">The interesting part is usually already there. We find it, build the story around it, put it in front of the right people and give them a reason to act.</p>
     </div>
   </section>
 
-  <!-- ════════ 03 · FLAGSHIP PROOF — LABAY ════════ -->
+  <!-- ════════ 03 · PROOF — LABAY ════════ -->
   <section class="proof" id="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility">
@@ -1026,49 +965,50 @@ img, video { max-width: 100%; display: block; }
         </div>
 
         <!--
-          LABAY EVIDENCE SLOTS — to be replaced with real LABAY
-          artifacts: vertical video, photography, social artifacts,
-          campaign imagery. LABAY keeps its own visual identity; do NOT
-          recolor assets into STIR palette. STIR Blue is only the frame.
+          LABAY EVIDENCE SLOTS — replace with real LABAY artifacts:
+          vertical video, photography, social artifacts, campaign
+          imagery. LABAY keeps its own visual identity; do NOT recolor
+          client work into the STIR palette. The cobalt field is the
+          frame; the artifacts are the proof.
         -->
         <div class="proof-evidence">
           <figure class="ev ev-1 reveal">
-            <div class="ph ph--on-blue">
-              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 001 — Culture</span>
-              <span class="utility ph-note">Vertical video 9:16 · in-store culture, real footage</span>
+            <div class="ph ph--on-cobalt">
+              <span class="utility ph-id">Labay — vertical video slot</span>
+              <span class="utility ph-note">9:16 · real in-store footage</span>
             </div>
-            <figcaption class="ev-cap">
-              <span class="ann">The market as a gathering place, not a set.</span>
+            <figcaption class="ev-cap utility">
+              <span class="cap">The market as a gathering place, not a set.</span>
               <span class="ev-meta">Brooklyn, NY · 2025</span>
             </figcaption>
           </figure>
           <figure class="ev ev-2 reveal">
-            <div class="ph ph--on-blue">
-              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 002 — Content</span>
-              <span class="utility ph-note">Photography 4:3 · film frame or still from the series</span>
+            <div class="ph ph--on-cobalt">
+              <span class="utility ph-id">Labay — photography slot</span>
+              <span class="utility ph-note">4:3 · still from the series</span>
             </div>
-            <figcaption class="ev-cap">
-              <span class="ann">Serialized short-form built from daily operations.</span>
+            <figcaption class="ev-cap utility">
+              <span class="cap">Serialized short-form built from daily operations.</span>
               <span class="ev-meta">Organic social · 2025</span>
             </figcaption>
           </figure>
           <figure class="ev ev-3 reveal">
-            <div class="ph ph--on-blue">
-              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 003 — Commerce</span>
-              <span class="utility ph-note">Social artifact 4:5 · post, comment thread or storefront</span>
+            <div class="ph ph--on-cobalt">
+              <span class="utility ph-id">Labay — social artifact slot</span>
+              <span class="utility ph-note">4:5 · post or comment thread</span>
             </div>
-            <figcaption class="ev-cap">
-              <span class="ann">The counter, the product, the price — unstyled.</span>
+            <figcaption class="ev-cap utility">
+              <span class="cap">The counter, the product, the price — unstyled.</span>
               <span class="ev-meta">In situ · 2025</span>
             </figcaption>
           </figure>
           <figure class="ev ev-4 reveal">
-            <div class="ph ph--on-blue">
-              <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>EV / 004 — Distribution</span>
-              <span class="utility ph-note">Campaign imagery 16:9 · breaks the grid, bleeds right</span>
+            <div class="ph ph--on-cobalt">
+              <span class="utility ph-id">Labay — campaign slot</span>
+              <span class="utility ph-note">16:9 · campaign imagery</span>
             </div>
-            <figcaption class="ev-cap">
-              <span class="ann">One story, resized for every surface it travels through.</span>
+            <figcaption class="ev-cap utility">
+              <span class="cap">One story, resized for every surface it travels through.</span>
               <span class="ev-meta">Multi-platform · 2025—ongoing</span>
             </figcaption>
           </figure>
@@ -1077,11 +1017,11 @@ img, video { max-width: 100%; display: block; }
     </div>
   </section>
 
-  <!-- ════════ 04 · METHOD — FIND. BUILD. RUN. ════════ -->
+  <!-- ════════ 04 · WHAT WE DO — FIND / BUILD / RUN ════════ -->
   <section class="method shell" id="method" aria-labelledby="method-label">
     <div class="grid">
-      <p class="utility method-label" id="method-label">02 / Method</p>
-      <p class="editorial method-intro reveal">One operating system, three movements. Find the thing worth knowing, build it into something people recognize, then put the whole system into motion.</p>
+      <p class="utility method-label" id="method-label">04 / What we do</p>
+      <p class="body method-intro reveal">We make the work, put it in front of the right people and build the system that turns their attention into business. More calls. More orders. More bookings. More customers.</p>
 
       <div class="method-index reveal" id="method-index">
 
@@ -1089,17 +1029,17 @@ img, video { max-width: 100%; display: block; }
           <button class="method-row-head" type="button" aria-expanded="true" aria-controls="method-find">
             <span class="method-no">01</span>
             <span class="method-word">Find <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Find the thing worth knowing.</span>
+            <span class="method-line">Find what’s worth attention.</span>
           </button>
           <div class="method-detail" id="method-find">
             <div>
               <div class="method-detail-inner">
                 <ul class="method-caps">
                   <li>Positioning</li>
-                  <li>Cultural insight</li>
-                  <li>Opportunity</li>
-                  <li>Narrative</li>
                   <li>Audience</li>
+                  <li>Offer</li>
+                  <li>Content opportunities</li>
+                  <li>Growth opportunities</li>
                 </ul>
               </div>
             </div>
@@ -1110,17 +1050,17 @@ img, video { max-width: 100%; display: block; }
           <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-build">
             <span class="method-no">02</span>
             <span class="method-word">Build <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Turn it into something people recognize.</span>
+            <span class="method-line">Make the work people notice.</span>
           </button>
           <div class="method-detail" id="method-build">
             <div>
               <div class="method-detail-inner">
                 <ul class="method-caps">
-                  <li>Brand systems</li>
-                  <li>Digital experiences</li>
-                  <li>Content worlds</li>
+                  <li>Brand identity</li>
+                  <li>Websites</li>
+                  <li>Photography + video</li>
+                  <li>Short-form content</li>
                   <li>Campaigns</li>
-                  <li>Commerce</li>
                 </ul>
               </div>
             </div>
@@ -1131,17 +1071,17 @@ img, video { max-width: 100%; display: block; }
           <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-run">
             <span class="method-no">03</span>
             <span class="method-word">Run <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Put the system into motion.</span>
+            <span class="method-line">Keep it working, week after week.</span>
           </button>
           <div class="method-detail" id="method-run">
             <div>
               <div class="method-detail-inner">
                 <ul class="method-caps">
-                  <li>Content</li>
-                  <li>Distribution</li>
-                  <li>Launches</li>
-                  <li>Growth</li>
-                  <li>Creative operations</li>
+                  <li>Content calendars</li>
+                  <li>Social distribution</li>
+                  <li>Paid media</li>
+                  <li>Campaign launches</li>
+                  <li>Lead + sales systems</li>
                 </ul>
               </div>
             </div>
@@ -1152,51 +1092,42 @@ img, video { max-width: 100%; display: block; }
     </div>
   </section>
 
-  <!-- ════════ 05 · OBSERVATIONS ════════ -->
+  <!-- ════════ 05 · ONE THOUGHT ════════
+       (Observation 001 — the eye/mango "too close to see it" idea —
+       now lives in the hero's observer artwork. The fuller
+       Observations index moves to About / future Insights.) -->
   <section class="obs shell" aria-labelledby="obs-label">
     <div class="grid">
-      <p class="utility obs-label" id="obs-label">03 / Observations</p>
-      <h2 class="display obs-title reveal">We have opinions.</h2>
+      <p class="utility obs-label" id="obs-label">05 / Observation</p>
     </div>
 
-    <article class="grid obs-spread spread-1">
-      <div class="ph obs-art reveal" role="img"
-           aria-label="Artwork placeholder: an enormous eye unable to see a mango held extremely close to it">
-        <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 002 — Observation artwork 01</span>
-        <span class="utility ph-note">Enormous eye · mango too close to see · bleeds off the left edge, headline overlaps</span>
-      </div>
+    <article class="grid obs-spread">
       <div class="obs-text reveal">
-        <p class="ann obs-index"><i class="ann-mark" aria-hidden="true"></i>Observation / 001</p>
-        <h3 class="display obs-headline">Sometimes you’re too close to see what’s interesting.</h3>
-        <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
-      </div>
-    </article>
-
-    <article class="grid obs-spread spread-2">
-      <div class="obs-text reveal">
-        <p class="ann obs-index"><i class="ann-mark" aria-hidden="true"></i>Observation / 002</p>
         <h3 class="display obs-headline">The kids don’t want the store. They want the brand.</h3>
         <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
       </div>
+      <!--
+        ILLUSTRATION ASSET SLOT: assets/illustration-spread.webp
+        Inheritance / succession concept · 16:10 · slides under the
+        text and bleeds off the right edge. Final art drops in here.
+      -->
       <div class="ph obs-art reveal" role="img"
-           aria-label="Artwork placeholder: STIR inheritance and succession illustration">
-        <span class="ann ph-id"><i class="ann-mark" aria-hidden="true"></i>Fig / 003 — Observation artwork 02</span>
-        <span class="utility ph-note">Inheritance / succession concept · slides under the text, bleeds off the right edge</span>
+           aria-label="Illustration slot: STIR inheritance and succession artwork">
+        <span class="utility ph-id">Illustration slot — succession</span>
+        <span class="utility ph-note">16:10 · bleeds off the right edge</span>
       </div>
     </article>
   </section>
 
-  <!-- ════════ 06 · CONVERSION — SIGNAL RED ════════ -->
-  <section class="convert" id="contact" aria-labelledby="convert-q">
-    <div class="shell">
-      <div>
-        <p class="utility convert-label">Your turn.</p>
-        <h2 class="display convert-q" id="convert-q">What are<br>we not<br>seeing yet?</h2>
-      </div>
-      <div class="convert-foot reveal">
-        <p class="editorial convert-copy">There’s probably something inside your business people would care about. Let’s find it.</p>
-        <a class="cta" href="mailto:rasheedjordon1@gmail.com">Tell us about the business <span class="arrow" aria-hidden="true">↗</span></a>
-      </div>
+  <!-- ════════ 06 · CTA — quiet ivory, red only at the action ════════ -->
+  <section class="convert shell" id="contact" aria-labelledby="convert-q">
+    <div class="convert-head">
+      <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
+    </div>
+    <h2 class="display convert-q reveal">What are<br>we not<br>seeing yet?</h2>
+    <div class="convert-foot reveal">
+      <p class="body convert-copy">There’s probably something inside your business people would care about. Let’s find it.</p>
+      <a class="cta" href="mailto:rasheedjordon1@gmail.com">Tell us about the business <span class="arrow" aria-hidden="true">↗</span></a>
     </div>
   </section>
 
@@ -1237,7 +1168,7 @@ img, video { max-width: 100%; display: block; }
   els.forEach(function (el) { io.observe(el); });
 })();
 
-/* Method index — one active row at a time */
+/* FIND / BUILD / RUN — one active row at a time */
 (function () {
   var rows = document.querySelectorAll('#method-index .method-row');
   rows.forEach(function (row) {
