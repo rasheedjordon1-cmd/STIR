@@ -530,15 +530,23 @@ img, video { max-width: 100%; display: block; }
   grid-template-columns: repeat(6, 1fr);
   column-gap: var(--col-gap);
 }
-.ev .ph { width: 100%; }
+/* Real LABAY artifacts — each keeps its native shape and identity */
+.ev-media {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  background: var(--wht-07);
+}
 .ev-1 { grid-column: 1 / 4; }
-.ev-1 .ph { aspect-ratio: 9 / 16; }
+.ev-1 .ev-media { aspect-ratio: 9 / 16; }
 .ev-2 { grid-column: 4 / 7; margin-top: clamp(96px, 16vh, 220px); }
-.ev-2 .ph { aspect-ratio: 4 / 3; }
+.ev-2 .ev-media { aspect-ratio: 3 / 4; }
 .ev-3 { grid-column: 2 / 5; margin-top: clamp(56px, 9vh, 130px); }
-.ev-3 .ph { aspect-ratio: 4 / 5; }
+.ev-3 .ev-media { aspect-ratio: 1 / 1; }
+.ev-5 { grid-column: 4 / 7; margin-top: clamp(56px, 9vh, 130px); }
+.ev-5 .ev-media { aspect-ratio: 4 / 5; }
 .ev-4 { grid-column: 1 / 7; margin-top: clamp(72px, 12vh, 170px); }
-.ev-4 .ph { aspect-ratio: 16 / 9; }
+.ev-4 .ev-media { aspect-ratio: 16 / 9; object-position: center 42%; }
 
 .ev-cap {
   margin-top: 12px;
@@ -848,6 +856,7 @@ img, video { max-width: 100%; display: block; }
   .ev-1 { grid-column: 1 / 4; }
   .ev-2 { grid-column: 1 / -1; margin-top: 40px; }
   .ev-3 { grid-column: 2 / -1; margin-top: 40px; }
+  .ev-5 { grid-column: 1 / 4; margin-top: 40px; }
   .ev-4 { grid-column: 1 / -1; margin-top: 40px; }
   .ev-cap { flex-direction: column; gap: 4px; }
   .ev-cap .ev-meta { text-align: left; }
@@ -965,51 +974,57 @@ img, video { max-width: 100%; display: block; }
         </div>
 
         <!--
-          LABAY EVIDENCE SLOTS — replace with real LABAY artifacts:
-          vertical video, photography, social artifacts, campaign
-          imagery. LABAY keeps its own visual identity; do NOT recolor
-          client work into the STIR palette. The cobalt field is the
-          frame; the artifacts are the proof.
+          LABAY EVIDENCE — real artifacts. LABAY keeps its own visual
+          identity; nothing is recolored into the STIR palette. The
+          cobalt field is the frame; the artifacts are the proof.
         -->
         <div class="proof-evidence">
           <figure class="ev ev-1 reveal">
-            <div class="ph ph--on-cobalt">
-              <span class="utility ph-id">Labay — vertical video slot</span>
-              <span class="utility ph-note">9:16 · real in-store footage</span>
-            </div>
-            <figcaption class="ev-cap utility">
-              <span class="cap">The market as a gathering place, not a set.</span>
-              <span class="ev-meta">Brooklyn, NY · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="ev ev-2 reveal">
-            <div class="ph ph--on-cobalt">
-              <span class="utility ph-id">Labay — photography slot</span>
-              <span class="utility ph-note">4:3 · still from the series</span>
-            </div>
+            <video class="ev-media" autoplay muted loop playsinline
+                   preload="metadata" width="720" height="1280"
+                   poster="assets/labay/labay-social-01-poster.webp"
+                   aria-label="Short-form vertical video shot at Labay Market">
+              <source src="assets/labay/labay-social-01.mp4" type="video/mp4">
+            </video>
             <figcaption class="ev-cap utility">
               <span class="cap">Serialized short-form built from daily operations.</span>
               <span class="ev-meta">Organic social · 2025</span>
             </figcaption>
           </figure>
+          <figure class="ev ev-2 reveal">
+            <img class="ev-media" src="assets/labay/labay-production-bts.webp"
+                 width="1600" height="2133" loading="lazy" decoding="async"
+                 alt="A film crew records an interview on the Brooklyn street corner outside Labay Market, coconuts in hand">
+            <figcaption class="ev-cap utility">
+              <span class="cap">Shot on the corner, not in a studio.</span>
+              <span class="ev-meta">Production · Brooklyn · 2025</span>
+            </figcaption>
+          </figure>
           <figure class="ev ev-3 reveal">
-            <div class="ph ph--on-cobalt">
-              <span class="utility ph-id">Labay — social artifact slot</span>
-              <span class="utility ph-note">4:5 · post or comment thread</span>
-            </div>
+            <img class="ev-media" src="assets/labay/labay-coconut.webp"
+                 width="554" height="554" loading="lazy" decoding="async"
+                 alt="Gloved hands split a fresh coconut with a machete, water bursting out, in front of crates of plantains and bananas">
             <figcaption class="ev-cap utility">
               <span class="cap">The counter, the product, the price — unstyled.</span>
               <span class="ev-meta">In situ · 2025</span>
             </figcaption>
           </figure>
-          <figure class="ev ev-4 reveal">
-            <div class="ph ph--on-cobalt">
-              <span class="utility ph-id">Labay — campaign slot</span>
-              <span class="utility ph-note">16:9 · campaign imagery</span>
-            </div>
+          <figure class="ev ev-5 reveal">
+            <img class="ev-media" src="assets/labay/labay-timeout-cover.webp"
+                 width="399" height="501" loading="lazy" decoding="async"
+                 alt="Time Out New York cover, December 2024 — NYC's Best Eats, featuring Righteous Eats' Jaeki Cho">
             <figcaption class="ev-cap utility">
-              <span class="cap">One story, resized for every surface it travels through.</span>
-              <span class="ev-meta">Multi-platform · 2025—ongoing</span>
+              <span class="cap">Time Out New York — NYC’s Best Eats.</span>
+              <span class="ev-meta">Press · December 2024</span>
+            </figcaption>
+          </figure>
+          <figure class="ev ev-4 reveal">
+            <img class="ev-media" src="assets/labay/labay-market-interior.webp"
+                 width="1216" height="922" loading="lazy" decoding="async"
+                 alt="Inside Labay Market: a customer holds up a breadfruit among stocked shelves of Caribbean groceries">
+            <figcaption class="ev-cap utility">
+              <span class="cap">The market as a gathering place, not a set.</span>
+              <span class="ev-meta">Brooklyn, NY · 2025</span>
             </figcaption>
           </figure>
         </div>
@@ -1166,6 +1181,16 @@ img, video { max-width: 100%; display: block; }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Evidence video — no autoplay for users who prefer reduced motion */
+(function () {
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.ev-media[autoplay]').forEach(function (v) {
+      v.removeAttribute('autoplay');
+      v.pause();
+    });
+  }
 })();
 
 /* FIND / BUILD / RUN — one active row at a time */
