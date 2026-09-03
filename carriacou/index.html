@@ -289,7 +289,13 @@ b,strong{font-weight:500}
 .comp-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
 @media(min-width:960px){.comp-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s7)}}
 .rows{border-top:1px solid var(--line-strong)}
-.row{display:grid;gap:var(--s2);padding:var(--s4) 0;border-bottom:1px solid var(--line)}
+.row{position:relative;display:grid;gap:var(--s2);padding:var(--s4) 0;border-bottom:1px solid var(--line)}
+.row::before{content:"";position:absolute;inset:0 calc(-1 * var(--s3));background:#E3EAEE;opacity:0;transition:opacity 240ms var(--ease-micro);pointer-events:none;z-index:-1}
+.row::after{content:"";position:absolute;left:calc(-1 * var(--s3));top:var(--s3);bottom:var(--s3);width:2px;background:var(--amber);transform:scaleY(0);transform-origin:50% 0;transition:transform 240ms var(--ease-state)}
+.row-doc{display:block;margin-top:var(--s2);font-size:14px;color:var(--slate);opacity:0;transform:translateY(-4px);transition:opacity 240ms var(--ease-micro),transform 240ms var(--ease-state)}
+@media(hover:hover){.row:hover::before,.row:focus-within::before{opacity:1;transition-duration:var(--dur-micro)}.row:hover::after,.row:focus-within::after{transform:none;transition-duration:var(--dur-state)}.row:hover .row-doc,.row:focus-within .row-doc{opacity:1;transform:none;transition-duration:var(--dur-state)}}
+@media(hover:none){.row-doc{opacity:1;transform:none}}
+.rows{isolation:isolate}
 @media(min-width:640px){.row{grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:var(--s4)}}
 .row dt{font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:18px;line-height:1.15;letter-spacing:-.01em}
 .row dd{text-wrap:pretty;max-width:56ch}
@@ -328,7 +334,13 @@ b,strong{font-weight:500}
 @media(min-width:768px){.serve-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6)}}
 .serve{padding-top:var(--s4)}
 .serve ul{margin-top:var(--s3);columns:2;column-gap:var(--s4)}
-.serve li{padding:6px 0;border-bottom:1px solid var(--line);break-inside:avoid}
+.serve li{position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);padding:8px 0;border-bottom:1px solid var(--line);break-inside:avoid;transition:color var(--dur-state) var(--ease-state)}
+.serve li::before{content:"";position:absolute;left:calc(-1 * var(--s3));top:8px;bottom:8px;width:2px;background:var(--amber);transform:scaleY(0);transform-origin:50% 0;transition:transform var(--dur-state) var(--ease-state)}
+.serve .tag{flex:none;font-size:13px;color:var(--slate);font-variant-numeric:tabular-nums;opacity:0;transform:translateX(6px);transition:opacity var(--dur-state) var(--ease-micro),transform var(--dur-state) var(--ease-state)}
+.serve li.live::before,.serve li:hover::before{transform:none}
+.serve li.live .tag,.serve li:hover .tag{opacity:1;transform:none}
+.serve li.live{color:var(--deep)}
+@media(max-width:599px){.serve ul{columns:1}}
 .fit{margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid var(--line-strong)}
 
 /* Ownership */
@@ -458,6 +470,8 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
   .route .path,.route .path-2{stroke-dashoffset:0;animation:none!important}
   .route .reefer{offset-distance:100%;animation:none!important}
   .cap-grid i,.tk-mini .u{transition:none}
+  .row-doc,.serve .tag{opacity:1;transform:none}
+  .serve li::before,.row::after{display:none}
   .stamp{transition:none}
   .mag .btn{transform:none!important}
 }
@@ -702,14 +716,14 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
         <p class="lead"><span class="mask"><span>Any warehouse can keep a box cold. The money is lost at the receiving door: a missed appointment, a short ASN, a lot code that doesn't match the paperwork. This operation is built around that door.</span></span></p>
       </div>
       <dl class="rows">
-        <div class="row"><dt>Delivery appointments</dt><dd data-authorize="process">Every outbound load is scheduled against the DC's receiving window before it leaves the dock. The appointment number rides on the bill of lading.</dd></div>
-        <div class="row"><dt>OTIF</dt><dd data-authorize="process">Loads are built and dispatched to land on time and in full. A late load and a short load cost you the same chargeback, so both are treated as failures here, not at your retailer's deduction desk.</dd></div>
-        <div class="row"><dt>ASN and EDI</dt><dd>Advance ship notices and EDI transmission: <span class="tk" data-fact="edi-asn">TK</span>. Whether notices originate from this warehouse or from your team is being confirmed and will be stated here plainly.</dd></div>
-        <div class="row"><dt>Lot codes and rotation</dt><dd data-authorize="process">Every pallet is received against a lot code and rotated FIFO or FEFO, whichever your retailer's routing guide calls for.</dd></div>
-        <div class="row"><dt>Temperature record</dt><dd>Zone temperatures are logged by <span class="tk" data-fact="monitoring">TK</span>. The record is available for any load on request.</dd></div>
-        <div class="row"><dt>Recall traceability</dt><dd data-authorize="process">Lot-level trace from receipt to the DC door. If a lot is pulled, you know which pallets, which loads, and which docks.</dd></div>
-        <div class="row"><dt>Lumper coordination</dt><dd data-authorize="process">Unloading and lumper fees at the DC are coordinated ahead of the appointment, so the driver isn't negotiating at the door.</dd></div>
-        <div class="row"><dt>Routing guide compliance</dt><dd>Retail routing guide handling: <span class="tk" data-fact="routing-guide">TK</span>.</dd></div>
+        <div class="row"><dt>Delivery appointments</dt><dd data-authorize="process">Every outbound load is scheduled against the DC's receiving window before it leaves the dock. The appointment number rides on the bill of lading.<span class="row-doc">On the load: the appointment number and window travel on the bill of lading.</span></dd></div>
+        <div class="row"><dt>OTIF</dt><dd data-authorize="process">Loads are built and dispatched to land on time and in full. A late load and a short load cost you the same chargeback, so both are treated as failures here, not at your retailer's deduction desk.<span class="row-doc">Scored by: your retailer's vendor scorecard, delivery by delivery.</span></dd></div>
+        <div class="row"><dt>ASN and EDI</dt><dd>Advance ship notices and EDI transmission: <span class="tk" data-fact="edi-asn">TK</span>. Whether notices originate from this warehouse or from your team is being confirmed and will be stated here plainly.<span class="row-doc">On the wire: an 856 advance ship notice tells the DC what is on the truck before it arrives.</span></dd></div>
+        <div class="row"><dt>Lot codes and rotation</dt><dd data-authorize="process">Every pallet is received against a lot code and rotated FIFO or FEFO, whichever your retailer's routing guide calls for.<span class="row-doc">On the record: lot code and receipt date against every pallet position.</span></dd></div>
+        <div class="row"><dt>Temperature record</dt><dd>Zone temperatures are logged by <span class="tk" data-fact="monitoring">TK</span>. The record is available for any load on request.<span class="row-doc">On request: the zone log for the days your product was in the building.</span></dd></div>
+        <div class="row"><dt>Recall traceability</dt><dd data-authorize="process">Lot-level trace from receipt to the DC door. If a lot is pulled, you know which pallets, which loads, and which docks.<span class="row-doc">On request: pallets, loads, and docks for any lot, from receipt to the DC door.</span></dd></div>
+        <div class="row"><dt>Lumper coordination</dt><dd data-authorize="process">Unloading and lumper fees at the DC are coordinated ahead of the appointment, so the driver isn't negotiating at the door.<span class="row-doc">On the receipt: the lumper fee is agreed before the appointment, not at the door.</span></dd></div>
+        <div class="row"><dt>Routing guide compliance</dt><dd>Retail routing guide handling: <span class="tk" data-fact="routing-guide">TK</span>.<span class="row-doc">Checked against: pallet height, label placement, and the appointment rules in the guide.</span></dd></div>
       </dl>
     </div>
   </div>
@@ -772,13 +786,13 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
       <div class="serve">
         <h3 class="h3">CPG brands</h3>
         <ul>
-          <li>Frozen entrées and sides</li><li>Ice cream and frozen desserts</li><li>Frozen and fresh protein</li><li>Dairy and plant-based dairy</li><li>Fresh produce</li><li>Beverage, cold and shelf-stable</li><li>Supplements and powders</li><li>Snacks and shelf-stable grocery</li>
+          <li><span>Frozen entrées and sides</span><span class="tag">Freezer</span></li><li><span>Ice cream and frozen desserts</span><span class="tag">Freezer</span></li><li><span>Frozen and fresh protein</span><span class="tag">Freezer or cooler</span></li><li><span>Dairy and plant-based dairy</span><span class="tag">Cooler</span></li><li><span>Fresh produce</span><span class="tag">Cooler</span></li><li><span>Beverage, cold and shelf-stable</span><span class="tag">Cooler or dry</span></li><li><span>Supplements and powders</span><span class="tag">Dry</span></li><li><span>Snacks and shelf-stable grocery</span><span class="tag">Dry</span></li>
         </ul>
       </div>
       <div class="serve">
         <h3 class="h3">Grocery retail supply</h3>
         <ul>
-          <li>Grocery DC replenishment</li><li>Regional distributor drops</li><li>Direct-store delivery staging</li><li>Overflow and seasonal build-up</li><li>Promotional and display product</li><li>Cross-dock <span class="tk" data-fact="cross-dock">TK</span></li>
+          <li><span>Grocery DC replenishment</span><span class="tag">Store and deliver</span></li><li><span>Regional distributor drops</span><span class="tag">Deliver</span></li><li><span>Direct-store delivery staging</span><span class="tag">Store</span></li><li><span>Overflow and seasonal build-up</span><span class="tag">Store</span></li><li><span>Promotional and display product</span><span class="tag">Store</span></li><li><span>Cross-dock <span class="tk" data-fact="cross-dock">TK</span></span><span class="tag">Receive and deliver</span></li>
         </ul>
       </div>
     </div>

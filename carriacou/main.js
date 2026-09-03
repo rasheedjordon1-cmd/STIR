@@ -242,6 +242,18 @@
     w.addEventListener('pointerleave', () => { w.classList.remove('live'); b.style.transform = ''; });
   });
 
+  /* ---------- Reading line: on touch screens the categories answer with their zone, one at a time ---------- */
+  (function readingLine() {
+    const sec = $('#serves'); if (!sec || fine || rm || !('IntersectionObserver' in window)) return;
+    const items = $$('#serves li'); if (!items.length) return;
+    let i = -1, timer = 0;
+    const step = () => { if (i >= 0) items[i].classList.remove('live'); i = (i + 1) % items.length; items[i].classList.add('live'); };
+    const start = () => { if (timer) return; step(); timer = setInterval(step, 1600); };
+    const stop = () => { if (!timer) return; clearInterval(timer); timer = 0; };
+    new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop()), { threshold: 0.2 }).observe(sec);
+    d.addEventListener('visibilitychange', () => { if (d.hidden) stop(); });
+  })();
+
   /* ---------- Load ticket: every answer changes the drawing ---------- */
   const quote = $('#quote'), form = $('#quote-form'), ticket = $('#ticket');
   const SVG = 'http://www.w3.org/2000/svg';

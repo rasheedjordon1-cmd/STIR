@@ -16,7 +16,7 @@ Phone: the position is right, the value is `TK`. It sits in the sticky header on
 - The headline mask-rise in M-01 was cut during build. Lighthouse put LCP at 1.7 s on simulated slow 4G with the headline as the LCP element; the brief's budget is 1.5 s and the brief's own governing case is the buyer on LTE. The headline now paints at first render. The outline still draws, the zones still fill in sequence, the subhead and actions still rise after the outline, and the temperature countdown still finishes last. The plan-view holds the choreography; the headline does not.
 - The hover lift, the fade-and-slide on every section, and the tagline word-reveal that the repo's generic landing-page skill mandates were never built.
 
-Everything that remains is listed in `PLAN.md` section 4 with the fact it reveals, including the two added after the first review: the load ticket (M-15) and the dock appointment (M-16). Both obey the same rule: nothing in the ticket moves unless an answer changed it. M-05 and the M-01 countdowns are built and tested but stay inert until real numbers exist, because a counter that runs to a placeholder reveals nothing.
+Everything that remains is listed in `PLAN.md` section 4 with the fact it reveals, including the four added after the first review: the load ticket (M-15), the dock appointment (M-16), the row disclosure (M-17), and the reading line (M-18). Both obey the same rule: nothing in the ticket moves unless an answer changed it. M-05 and the M-01 countdowns are built and tested but stay inert until real numbers exist, because a counter that runs to a placeholder reveals nothing.
 
 ## 3. Anything on the Section 14 ban list?
 
@@ -32,7 +32,7 @@ Scanned the rendered body text and the stylesheet.
 | One coloured word in the headline | none |
 | Identical rounded cards with soft shadow | no `border-radius`, no `box-shadow` in the file |
 | Fade-and-slide-up on every section | mask-rise once per section, one direction, no fade |
-| Hover lift on every card | none; only the freezer column has a hover state, and it is a fact |
+| Hover lift on every card | none; nothing lifts. Compliance rows and category items have a hover state that discloses a line of fact (M-17, M-18); the freezer column alone has the frost bloom |
 | Monospace for small data labels | none |
 | Warm cream ground, serif display, clay accent | Frost ground, Archivo throughout, Amber rationed |
 | Stock warehouse photography | no photography at all |
