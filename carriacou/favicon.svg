@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <style>
+    .g{fill:#F5F8F9}.l{stroke:#0B1F2A}
+    @media (prefers-color-scheme: dark){.g{fill:#0B1F2A}.l{stroke:#F5F8F9}}
+  </style>
+  <rect class="g" width="32" height="32"/>
+  <rect class="l" x="4" y="4" width="24" height="18" fill="none" stroke-width="2"/>
+  <path class="l" d="M12 4v18M20 4v18" fill="none" stroke-width="1.25"/>
+  <path class="l" d="M7 24v5M13 24v5M19 24v5M25 24v5" stroke-width="2"/>
+  <rect x="21" y="5" width="6" height="16" fill="#E8A00D"/>
+</svg>

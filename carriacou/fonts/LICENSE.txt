@@ -1,0 +1,3 @@
+Archivo, by Omnibus-Type. Licensed under the SIL Open Font License, Version 1.1.
+https://github.com/Omnibus-Type/Archivo
+Two instances cut from the Google Fonts latin subset of the variable font with fontTools: archivo-display.woff2 (width 125, weight 700) and archivo-text.woff2 (width 100, weight 400 to 500).
