@@ -1,11 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <style>
-    .g{fill:#F5F8F9}.l{stroke:#0B1F2A}
-    @media (prefers-color-scheme: dark){.g{fill:#0B1F2A}.l{stroke:#F5F8F9}}
-  </style>
+  <style>.g{fill:#F5F8F9}.l{fill:#0B1F2A;stroke:#0B1F2A}@media (prefers-color-scheme: dark){.g{fill:#0B1F2A}.l{fill:#F5F8F9;stroke:#F5F8F9}}</style>
   <rect class="g" width="32" height="32"/>
-  <rect class="l" x="4" y="4" width="24" height="18" fill="none" stroke-width="2"/>
-  <path class="l" d="M12 4v18M20 4v18" fill="none" stroke-width="1.25"/>
-  <path class="l" d="M7 24v5M13 24v5M19 24v5M25 24v5" stroke-width="2"/>
-  <rect x="21" y="5" width="6" height="16" fill="#E8A00D"/>
+  <g class="l" transform="translate(5.11 6) scale(0.2)" stroke-width="5" stroke-linejoin="round"><path d="M6.5 51.3V48.7Q6.5 35.4 7.5 26.4Q8.5 17.4 11.0 11.7Q13.5 6.1 17.8 3.1Q22.1 0.1 28.6 -1.0Q35.1 -2.1 44.2 -2.1H64.7Q75.2 -2.1 82.3 -0.8Q89.5 0.5 93.9 4.2Q98.3 7.9 100.3 15.2Q102.3 22.5 102.3 34.4H92.5Q92.5 25.0 91.2 19.8Q89.9 14.5 86.8 12.2Q83.6 9.8 78.3 9.3Q72.9 8.7 64.7 8.7H44.2Q37.0 8.7 32.0 9.3Q27.0 9.8 23.9 11.8Q20.8 13.8 19.1 18.1Q17.5 22.4 16.9 29.8Q16.3 37.2 16.3 48.7V51.3Q16.3 62.4 16.9 69.7Q17.5 77.0 19.1 81.3Q20.8 85.7 23.9 87.8Q27.0 90.0 32.0 90.6Q37.0 91.3 44.2 91.3H64.7Q72.9 91.3 78.3 90.8Q83.6 90.4 86.8 88.2Q89.9 85.9 91.2 80.8Q92.5 75.6 92.5 66.2H102.3Q102.3 78.2 100.3 85.4Q98.3 92.5 93.9 96.1Q89.5 99.7 82.3 100.9Q75.2 102.1 64.7 102.1H44.2Q32.8 102.1 25.4 100.1Q18.1 98.1 13.9 92.8Q9.8 87.4 8.2 77.4Q6.5 67.4 6.5 51.3Z"/></g>
+  <rect x="24.5" y="26" width="5" height="3" fill="#E8A00D"/>
 </svg>

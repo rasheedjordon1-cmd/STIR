@@ -103,6 +103,12 @@ Budgets from the brief: JS is 5.7 KB gzipped against a 60 KB ceiling. Total tran
 
 Browser notes. Thermal scrub and route draw run on CSS scroll timelines in Chrome, Edge, and Safari 26; Firefox falls back to an IntersectionObserver with fifty thresholds writing one custom property, which is the only scroll-linked code path and contains no scroll listener. Hanging punctuation is Safari-only. `size-adjust` fallback metrics are honoured everywhere except older Safari, where the swap will show a small shift.
 
+## Logo
+
+The header, footer, 404, confirmation page, OG image, and favicon carry the Carriacou wordmark as inline SVG in `currentColor`, so it sets Deep Cold on Frost and Frost on Deep Cold with no second file. The header uses the word alone at 20 px cap height; the footer and OG image carry the full lockup with the tracked LOGISTICS line. The favicon is the wordmark's C with the Amber dock tab.
+
+The vectors in `assets/logo-lockup.svg` and `assets/logo-word.svg` are a typeset stand-in built from Michroma (SIL OFL), condensed and stroked to the supplied mark's measured proportions and weight, because the master file did not arrive as a file. The construction matches the mark closely; the R's leg and the C terminals will differ slightly. Replace the two `<path d="…">` values with the master outlines when the vector file arrives, or send the file and it is a five-minute swap. Do not ship the stand-in to print.
+
 ## What I would push back on
 
 - **Temperatures before anything else.** The page is designed around a fact it does not have. Get the three set points and ranges this week; nothing else moves the needle as much.
