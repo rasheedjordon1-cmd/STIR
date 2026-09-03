@@ -77,7 +77,7 @@ How to close them: replace the `TK` text. For the animated ones also fill the da
 
 Twelve claims are marked `data-authorize` for the founder to approve or strike before launch. They are the Section 5 offer, not facts, and the page prints them as written in the brief: month to month, no annual contract; quoted in one business day; built for 5 pallets and 500; and five process commitments in the compliance section (appointments booked before dispatch, OTIF handling, lot-code rotation, lot-level recall trace, lumper coordination). If any of these will not be met every time, strike it. A struck process row is better than a chargeback conversation.
 
-Also pending: the form posts to `/quote`, which does not exist yet. Wire it to the founder's inbox (a static-form service or a mail relay). Until then the designed failure state shows and points to the phone, which is also `TK`. The `og:image` URL is relative and needs the production domain. JSON-LD omits postal code, geo, telephone, and hours until verified; the ZIP discrepancy (07608 vs 06708) in the brief still needs a yes from the founder.
+The form is wired to Netlify Forms with a honeypot; the founder's notification email is set in the Netlify UI (see `DEPLOY.md`). The canonical, `og:image`, JSON-LD, sitemap, and robots URLs are stamped from the site URL at deploy by the one-line build command in `netlify.toml`. JSON-LD omits postal code, geo, telephone, and hours until verified; the ZIP discrepancy (07608 vs 06708) in the brief still needs a yes from the founder.
 
 Cut from the architecture for lack of confirmed input: Proof (H), Inventory visibility (I), and the Visibility row of the offer.
 

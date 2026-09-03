@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Received | Carriacou Logistics</title>
+<meta name="robots" content="noindex">
+<link rel="canonical" href="__SITE_URL__/quote-received/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../fonts/archivo-display.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/archivo-text.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-display.woff2) format("woff2");font-weight:700;font-stretch:125%;font-display:swap}
+@font-face{font-family:"Archivo";src:url(../fonts/archivo-text.woff2) format("woff2");font-weight:400 500;font-stretch:100%;font-display:swap}
+@font-face{font-family:"Archivo Fallback";src:local("Arial"),local("Liberation Sans");ascent-override:87.8%;descent-override:21%;line-gap-override:0%;size-adjust:98.2%}
+@font-face{font-family:"Archivo Fallback Wide";src:local("Arial Bold"),local("Arial");font-weight:700;ascent-override:87.8%;descent-override:21%;line-gap-override:0%;size-adjust:126.3%}
+:root{--frost:#F5F8F9;--deep:#0B1F2A;--galv:#98A4AB;--amber:#E8A00D;--slate:#4F6169;--line:rgba(11,31,42,.16)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--frost);color:var(--deep);font-family:"Archivo","Archivo Fallback",Arial,sans-serif;font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;min-height:100vh;display:grid;grid-template-rows:auto 1fr}
+::selection{background:var(--amber);color:var(--deep)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+.hdr{height:56px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 24px}
+.wordmark{display:flex;align-items:center;gap:10px;font-family:"Archivo","Archivo Fallback Wide",Arial,sans-serif;font-stretch:125%;font-weight:700;font-size:14px;text-decoration:none;color:inherit}
+.wordmark svg{width:22px;height:22px}
+main{max-width:1280px;width:100%;margin:0 auto;padding:64px 24px 128px}
+@media(min-width:768px){main{padding:96px 48px 160px}}
+.box{max-width:60ch;border:1.5px solid var(--deep);padding:32px}
+h1{font-family:"Archivo","Archivo Fallback Wide",Arial,sans-serif;font-stretch:125%;font-weight:700;font-size:clamp(32px,4vw,56px);line-height:1;letter-spacing:-.03em;margin:0 0 16px -.04em}
+p{margin:0;text-wrap:pretty}
+p+p{margin-top:12px}
+.tk{color:var(--slate);border-bottom:1px dashed var(--galv);cursor:help;white-space:nowrap}
+a.num{font-variant-numeric:tabular-nums;color:inherit;text-underline-offset:.18em}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:12px 20px;margin-top:24px;border:1.5px solid var(--deep);background:transparent;color:var(--deep);font-weight:500;text-decoration:none;transition:background-color 140ms cubic-bezier(.33,1,.68,1),color 140ms cubic-bezier(.33,1,.68,1)}
+.btn:hover{background:var(--deep);color:var(--frost)}
+.btn:active{transform:translateY(1px)}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <a class="wordmark" href="../" aria-label="Carriacou Logistics, home">
+    <svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="20" height="16" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.5 1v12M14.5 1v12M1 13h20" fill="none" stroke="currentColor" stroke-width="1"/><path d="M3 17v4M8 17v4M14 17v4M19 17v4" stroke="currentColor" stroke-width="1.5"/></svg>
+    <span>Carriacou Logistics</span>
+  </a>
+</header>
+<main>
+  <div class="box">
+    <h1>Received.</h1>
+    <p>Your request is with the warehouse. <span data-authorize="quote-turnaround">You'll have a rate within one business day.</span></p>
+    <p>If it's urgent, call <a class="num" href="tel:"><span class="tk" data-fact="phone" title="Phone number pending confirmation">TK</span></a>.</p>
+    <a class="btn" href="../">Back to the facility plan</a>
+  </div>
+</main>
+</body>
+</html>

@@ -8,7 +8,9 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Freezer, cooler, and dry pallet storage in Waterbury, Connecticut">
 <meta property="og:description" content="85 South Leonard Street. Four docks. Pallet positions by the month. Refrigerated delivery into the DC window.">
-<meta property="og:image" content="og.png">
+<link rel="canonical" href="__SITE_URL__/">
+<meta property="og:url" content="__SITE_URL__/">
+<meta property="og:image" content="__SITE_URL__/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
@@ -419,6 +421,8 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "Warehouse"],
   "name": "Carriacou Logistics",
+  "url": "__SITE_URL__/",
+  "image": "__SITE_URL__/og.png",
   "description": "Multi-temperature public warehouse in Waterbury, Connecticut. Freezer, cooler, and dry pallet storage by the month, four loading docks, refrigerated pickup and delivery.",
   "address": {
     "@type": "PostalAddress",
@@ -776,8 +780,10 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
     </div>
     <div class="quote-grid">
       <div>
-        <form class="form" id="quote-form" action="/quote" method="post" novalidate>
+        <form class="form" id="quote-form" name="quote" method="post" action="/quote-received/" data-netlify="true" data-netlify-honeypot="company-website" novalidate>
+          <input type="hidden" name="form-name" value="quote">
           <input type="hidden" name="intent" id="f-intent" value="rate">
+          <p class="sr" aria-hidden="true"><label>Leave this field empty <input name="company-website" tabindex="-1" autocomplete="off"></label></p>
           <fieldset>
             <legend>Temperature needed</legend>
             <div class="seg" id="seg-temp">

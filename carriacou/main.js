@@ -320,9 +320,10 @@
       const fd = new FormData(form);
       const pick = n => { const el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.nextElementSibling.textContent : ''; };
       try {
-        const res = await fetch(form.action, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+        /* Netlify Forms: post URL-encoded to the page itself; form-name is a hidden field in the markup. */
+        const res = await fetch(location.pathname, { method: 'POST', body: new URLSearchParams(fd).toString(), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
         if (!res.ok) throw new Error(res.status);
-        $('#form-ok-copy').textContent = (fd.get('intent') === 'tour' ? 'A dock tour request' : 'A rate request') + ' for ' + pick('pallets').toLowerCase() + ' positions of ' + pick('temp').toLowerCase() + ' storage for ' + fd.get('product').trim() + ' is with the warehouse. Confirmation goes to ' + fd.get('email').trim() + '.';
+        $('#form-ok-copy').textContent = (fd.get('intent') === 'tour' ? 'A dock tour request' : 'A rate request') + ' for ' + pick('pallets').toLowerCase() + ' positions of ' + pick('temp').toLowerCase() + ' storage for ' + fd.get('product').trim() + ' is with the warehouse. The reply goes to ' + fd.get('email').trim() + '.';
         form.classList.add('sent'); $('#form-ok').classList.add('show');
         $('#form-ok').focus && $('#form-ok').setAttribute('tabindex', '-1'); $('#form-ok').focus();
       } catch (err) {
