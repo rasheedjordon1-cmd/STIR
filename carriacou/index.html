@@ -144,7 +144,7 @@ b,strong{font-weight:500}
 
 /* Hero */
 .hero{padding:var(--s6) 0 var(--s8)}
-.hero-grid{display:grid;gap:var(--s6) var(--s6);align-items:center}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6) var(--s6);align-items:center}
 @media(min-width:960px){.hero{padding:var(--s7) 0 var(--s9)}.hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.hero-copy{position:relative;z-index:2;margin-right:calc(-1 * var(--s5))}}
 .hero-copy .lead{margin-top:var(--s4)}
 .hero-cta{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s4);margin-top:var(--s5);align-items:center}
@@ -232,7 +232,7 @@ b,strong{font-weight:500}
 }
 @keyframes scrubCold{from{opacity:1}to{opacity:0}}
 @keyframes scrubWarm{from{opacity:0}to{opacity:1}}
-.zone-grid{display:grid;border-top:1px solid var(--line-strong)}
+.zone-grid{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line-strong)}
 @media(min-width:768px){.zone-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .zone{position:relative;padding:var(--s4) 0 var(--s5);border-bottom:1px solid var(--line)}
 @media(min-width:768px){.zone{padding:var(--s5) var(--s4) var(--s6) 0}.zone+.zone{padding-left:var(--s4);border-left:1px solid var(--line)}.zone:last-child{padding-right:0}}
@@ -261,9 +261,10 @@ b,strong{font-weight:500}
 .shutter i{position:absolute;left:0;right:0;background:var(--galv);border-bottom:1px solid rgba(11,31,42,.5);transform-origin:50% 0;transition:transform 180ms var(--ease-state)}
 .shutter.open i{transform:scaleY(0)}
 .shutter.done{display:none}
-.fac-grid{display:grid;gap:var(--s6);align-items:start}
+.fac-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6);align-items:start}
 @media(min-width:960px){.fac-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s7)}}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4) var(--s4)}
+@media(max-width:359px){.stats{grid-template-columns:minmax(0,1fr)}}
 .stat{padding-top:var(--s3);border-top:1px solid var(--line-dark)}
 .stat .big{display:block}
 .stat .big small{display:inline-block;font-family:var(--sans);font-stretch:100%;font-weight:400;font-size:16px;margin-left:6px;color:var(--galv)}
@@ -277,14 +278,14 @@ b,strong{font-weight:500}
 .light .spec dt,.light .spec dd{border-bottom-color:var(--line)}
 .light .spec dt{color:var(--slate)}
 .cap{margin-top:var(--s6);padding-top:var(--s3);border-top:1px solid var(--line-dark)}
-.cap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:3px;margin-top:var(--s3);max-width:640px}
+.cap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:3px;margin-top:var(--s3);max-width:min(100%,640px)}
 .cap-grid i{display:block;aspect-ratio:1;border:1px solid rgba(245,248,249,.35);background:var(--frost);opacity:0;transform:scale(.6);transition:opacity 220ms var(--ease-reveal),transform 220ms var(--ease-reveal)}
 .cap-grid i.on{opacity:1;transform:none}
 .cap-grid.pending i{opacity:1;transform:none;background:transparent}
 .cap .big{display:inline-block}
 
 /* Compliance */
-.comp-grid{display:grid;gap:var(--s6)}
+.comp-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
 @media(min-width:960px){.comp-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s7)}}
 .rows{border-top:1px solid var(--line-strong)}
 .row{display:grid;gap:var(--s2);padding:var(--s4) 0;border-bottom:1px solid var(--line)}
@@ -293,7 +294,7 @@ b,strong{font-weight:500}
 .row dd{text-wrap:pretty;max-width:56ch}
 
 /* Storage + delivery (dark) */
-.del-grid{display:grid;gap:var(--s6)}
+.del-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
 @media(min-width:960px){.del-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s7);align-items:start}}
 .steps{counter-reset:step;border-top:1px solid var(--line-dark)}
 .step{display:grid;grid-template-columns:48px minmax(0,1fr);gap:var(--s3);padding:var(--s4) 0;border-bottom:1px solid var(--line-dark)}
@@ -322,7 +323,7 @@ b,strong{font-weight:500}
 .route-note{margin-top:var(--s3);color:var(--galv);font-size:14px;max-width:48ch;text-wrap:pretty}
 
 /* Who this serves */
-.serve-grid{display:grid;gap:var(--s5);border-top:1px solid var(--line-strong)}
+.serve-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s5);border-top:1px solid var(--line-strong)}
 @media(min-width:768px){.serve-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6)}}
 .serve{padding-top:var(--s4)}
 .serve ul{margin-top:var(--s3);columns:2;column-gap:var(--s4)}
@@ -334,7 +335,7 @@ b,strong{font-weight:500}
 .own .rule{display:block;width:48px;height:3px;background:var(--spice);margin-bottom:var(--s4)}
 
 /* Form */
-.quote-grid{display:grid;gap:var(--s6)}
+.quote-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
 @media(min-width:960px){.quote-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--s7);align-items:start}}
 .form{display:grid;gap:var(--s5)}
 fieldset{border:0;padding:0;margin:0;min-width:0}
@@ -386,7 +387,7 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
 
 /* Footer */
 .ftr{padding:var(--s7) 0 var(--s8)}
-.ftr-grid{display:grid;gap:var(--s5)}
+.ftr-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s5)}
 @media(min-width:768px){.ftr-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s5)}}
 .ftr h2{font-size:14px;font-weight:500;color:var(--galv);margin-bottom:var(--s2)}
 .ftr address{font-style:normal;font-variant-numeric:tabular-nums}
@@ -783,7 +784,7 @@ legend{padding:0;font-weight:500;margin-bottom:var(--s2)}
         <form class="form" id="quote-form" name="quote" method="post" action="/quote-received/" data-netlify="true" data-netlify-honeypot="company-website" novalidate>
           <input type="hidden" name="form-name" value="quote">
           <input type="hidden" name="intent" id="f-intent" value="rate">
-          <p class="sr" aria-hidden="true"><label>Leave this field empty <input name="company-website" tabindex="-1" autocomplete="off"></label></p>
+          <p class="sr" aria-hidden="true"><label>Leave this field empty <input name="company-website" tabindex="-1" autocomplete="off" style="width:1px;height:1px;padding:0;border:0"></label></p>
           <fieldset>
             <legend>Temperature needed</legend>
             <div class="seg" id="seg-temp">
