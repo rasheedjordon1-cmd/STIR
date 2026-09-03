@@ -162,6 +162,9 @@ A drafted plan, not an icon. viewBox 960 × 600. Deep Cold hairlines (0.75 and 1
 | M-13 | Field Choreography | focus / blur / input / submit | 140 label, 320 validation | Floating label on transform, underline `scaleX`, inline messages saying what to fix, designed success and error states | Form state at every step |
 | M-14 | Section Reveal | section enters, once | 560 | Mask wrapper `overflow: hidden`, child rises from `translateY(100%)`. One direction across the page. No hover lift anywhere | Reading order |
 
+| M-15 | Load Ticket | every form input | 320 state changes, pallets glide with a 10 ms stagger, route 480 | The right column is a drafted ticket that reuses the plan-view. Temperature fills the zone Amber; pallet count draws the buyer's pallets inside that zone; retail DC draws a route stub from Dock 3; pickup and delivery parks a reefer at Dock 2; company sets the ticket header. Send stamps it Received with the real time. Mobile pins a compact strip under the header until the stamp | What the buyer's order looks like in this building, and that the request was received |
+| M-16 | Dock Appointment | the Book a dock tour tab | 320 | Same form, second mode. A strip of the next ten business days (real dates) and a morning or afternoon window. Picking a day rolls Dock 1's door up and parks the visitor's trailer. Copy says the time is confirmed by phone because receiving hours are unverified | When the visit is, and where in the building it starts |
+
 Load curtain: cut. It costs LCP and reveals nothing.
 
 Reduced motion: a single `@media (prefers-reduced-motion: reduce)` block sets every animated element to its final state and JS checks the same query before installing any observer or listener. Counters print their final value.

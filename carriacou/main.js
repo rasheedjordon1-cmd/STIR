@@ -87,11 +87,6 @@
     d.addEventListener('keydown', e => { if (e.key === 'Escape' && pv.classList.contains('has-sel')) select(null); });
   }
   $$('[data-prefill]').forEach(a => a.addEventListener('click', () => setTemp(a.dataset.prefill)));
-  $$('[data-intent="tour"]').forEach(a => a.addEventListener('click', () => {
-    $('#f-intent').value = 'tour';
-    $('#quote-title').textContent = 'Book a dock tour.';
-    $('#f-submit').textContent = 'Request a dock tour';
-  }));
 
   /* ---------- M-12 Reticle cursor over the plan, desktop only ---------- */
   const wrap = $('#pv-wrap'), ret = $('#pv-reticle'), retLbl = $('#pv-reticle-lbl');
@@ -247,85 +242,159 @@
     w.addEventListener('pointerleave', () => { w.classList.remove('live'); b.style.transform = ''; });
   });
 
-  /* ---------- M-11 Live footprint ---------- */
-  const fpGrid = $('#fp-grid'), fpCount = $('#fp-count'), fpNote = $('#fp-note');
-  const fpMap = { '1-5': 5, '6-20': 20, '21-50': 50, '50+': 50 };
-  function footprint(val) {
-    const n = fpMap[val] || 0, more = val === '50+';
-    const total = n + (more ? 10 : 0);
-    while (fpGrid.children.length < total) fpGrid.appendChild(d.createElement('i'));
-    while (fpGrid.children.length > total) fpGrid.lastChild.remove();
-    const cells = Array.from(fpGrid.children);
-    cells.forEach((c, i) => {
-      c.classList.toggle('more', i >= n);
-      c.style.transitionDelay = rm ? '0ms' : (i * 10) + 'ms';
+  /* ---------- Load ticket: every answer changes the drawing ---------- */
+  const quote = $('#quote'), form = $('#quote-form'), ticket = $('#ticket');
+  const SVG = 'http://www.w3.org/2000/svg';
+  const val = n => { const el = form.elements[n]; return el && typeof el.value === 'string' ? el.value.trim() : ''; };
+  const optLabel = n => { const el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.nextElementSibling.textContent.trim() : ''; };
+  const setRow = (id, text, empty) => {
+    const dd = $('#' + id); if (!dd || dd.textContent === text) return;
+    dd.textContent = text; dd.classList.toggle('empty', !!empty);
+    if (!rm) { dd.classList.remove('up'); void dd.offsetWidth; dd.classList.add('up'); }
+  };
+  const zoneX = { freezer: 48, cooler: 336, dry: 624 };
+  const palletMap = { '1-5': 5, '6-20': 20, '21-50': 50, '50+': 50 };
+  const pal = $('#tk-pallets');
+  function drawPallets(temp, range) {
+    const n = palletMap[range] || 0, more = range === '50+' ? 10 : 0, total = n + more;
+    const on = temp === 'mixed' ? ['freezer', 'cooler', 'dry'] : (zoneX[temp] ? [temp] : []);
+    while (pal.children.length < total) { const r = d.createElementNS(SVG, 'rect'); r.setAttribute('class', 'u'); r.setAttribute('width', '20'); r.setAttribute('height', '16'); pal.appendChild(r); }
+    while (pal.children.length > total) pal.lastChild.remove();
+    const cells = Array.from(pal.children);
+    if (!on.length) { cells.forEach(u => u.classList.remove('on')); return; }
+    cells.forEach((u, i) => {
+      const zi = i % on.length, k = Math.floor(i / on.length);
+      u.style.setProperty('--x', (zoneX[on[zi]] + (k % 12) * 24 + 2) + 'px');
+      u.style.setProperty('--y', (128 + Math.floor(k / 12) * 20 + 2) + 'px');
+      u.classList.toggle('more', i >= n);
+      u.style.transitionDelay = rm ? '0ms' : (i * 10) + 'ms';
     });
-    requestAnimationFrame(() => cells.forEach(c => c.classList.add('on')));
-    fpCount.innerHTML = (more ? '50+' : n) + '<small>positions</small>';
-    fpNote.textContent = !n ? 'Pick a pallet range and this draws to match. One square is one pallet position.'
-      : more ? 'More than 50 positions. The dashed squares stand for the rest; we size it on the call.'
-      : n + ' pallet positions, drawn one square each. Change the range and it redraws.';
+    requestAnimationFrame(() => cells.forEach(u => u.classList.add('on')));
   }
-  $$('input[name="pallets"]').forEach(r => r.addEventListener('change', () => footprint(r.value)));
-  /* Beside the field on small screens, in its own column on wide ones. */
-  const fpHome = $('#fp') && $('#fp').parentNode, fpAnchor = $('#seg-pallets') && $('#seg-pallets').closest('fieldset');
-  const placeFp = () => { const fp = $('#fp'); if (!fp || !fpAnchor) return; if (matchMedia('(max-width: 959px)').matches) fpAnchor.after(fp); else fpHome.appendChild(fp); };
-  placeFp(); matchMedia('(max-width: 959px)').addEventListener('change', placeFp);
+  const setZone = temp => ['freezer', 'cooler', 'dry'].forEach(z => { const el = $('#tkz-' + z); el.classList.toggle('on', temp === z); el.classList.toggle('half', temp === 'mixed'); });
+  let dayText = '';
+  function update() {
+    if (!form || !ticket) return;
+    const mode = quote.dataset.mode, temp = val('temp'), pallets = val('pallets'), product = val('product');
+    const retail = val('retail'), delivery = val('delivery'), start = val('start'), win = val('tour-window');
+    const company = val('company'), name = val('name'), email = val('email');
+    $('#tk-kind').textContent = mode === 'tour' ? 'Dock appointment' : 'Rate request';
+    const co = $('#tk-co'); co.textContent = company || 'Your company'; co.classList.toggle('empty', !company);
+    setZone(temp); drawPallets(temp, pallets);
+    const zName = temp === 'mixed' ? 'Mixed' : (zones[temp] ? zones[temp].name : '');
+    const zTemp = zones[temp] ? (tk(zones[temp].setpoint) ? 'TK °F' : zones[temp].setpoint + ' °F') : '';
+    setRow('tr-zone', zName ? zName + (zTemp ? ', ' + zTemp : '') : 'Not set', !zName);
+    setRow('tr-pallets', pallets ? optLabel('pallets') : 'Not set', !pallets);
+    setRow('tr-product', product || 'Not set', !product);
+    setRow('tr-retail', retail ? optLabel('retail') : 'Not set', !retail);
+    setRow('tr-delivery', delivery ? optLabel('delivery') : 'Not set', !delivery);
+    setRow('tr-start', start ? optLabel('start') : 'Not set', !start);
+    setRow('tr-day', dayText || 'Not set', !dayText);
+    setRow('tr-window', win ? optLabel('tour-window') : 'Not set', !win);
+    setRow('tr-contact', name || email ? [name, email].filter(Boolean).join(', ') : 'Not set', !(name || email));
+    const sum = [zName, pallets ? optLabel('pallets') + ' positions' : ''].filter(Boolean).join(', ');
+    $('#tk-sum').textContent = sum || (mode === 'tour' ? 'Pick a zone, a count, and a day' : 'Nothing chosen yet');
+    const rt = mode === 'rate' && retail === 'yes'; $('#tk-rt').classList.toggle('on', rt); $('#tk-rt-lbl').classList.toggle('on', rt);
+    const rf = mode === 'rate' && delivery === 'yes'; $('#tk-trl2').classList.toggle('on', rf); $('#tk-trl2-lbl').classList.toggle('on', rf);
+    const vs = mode === 'tour' && !!dayText; $('#tk-door1').classList.toggle('open', vs); $('#tk-trl1').classList.toggle('on', vs); $('#tk-trl1-lbl').classList.toggle('on', vs);
+  }
+
+  /* Day strip: the next ten business days, real dates, never a decorative calendar */
+  const days = $('#days'), hiddenDay = $('#f-tour-day');
+  if (days) {
+    const wd = new Intl.DateTimeFormat('en-US', { weekday: 'short' }), md = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+    const long = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    const t = new Date(); t.setHours(12, 0, 0, 0); let n = 0;
+    const iso = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+    while (n < 10) {
+      t.setDate(t.getDate() + 1); if (t.getDay() === 0 || t.getDay() === 6) continue; n++;
+      const lab = d.createElement('label'); lab.className = 'opt day';
+      const inp = d.createElement('input'); inp.type = 'radio'; inp.name = 'tour-day-pick'; inp.value = iso(t); inp.dataset.long = long.format(t);
+      const sp = d.createElement('span'); const sm = d.createElement('small'); sm.textContent = wd.format(t); sp.appendChild(sm); sp.appendChild(d.createTextNode(md.format(t)));
+      lab.appendChild(inp); lab.appendChild(sp); days.appendChild(lab);
+      inp.addEventListener('change', () => { hiddenDay.value = inp.value; dayText = inp.dataset.long; check('tour-day'); update(); });
+    }
+  }
+
+  /* Mode: rate or tour. Two honest tabs. */
+  function setMode(m) {
+    quote.dataset.mode = m;
+    $('#f-intent').value = m;
+    $$('.tab').forEach(t => { const on = t.dataset.modeSet === m; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    $('#f-submit').textContent = m === 'tour' ? 'Request the visit' : 'Send for a rate';
+    $('#quote-panel').setAttribute('aria-labelledby', m === 'tour' ? 'tab-tour' : 'tab-rate');
+    update();
+  }
+  $$('.tab').forEach(t => {
+    t.addEventListener('click', () => setMode(t.dataset.modeSet));
+    t.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const other = $$('.tab').find(x => x !== t); other.focus(); setMode(other.dataset.modeSet); } });
+  });
+  $$('[data-intent="tour"]').forEach(a => a.addEventListener('click', () => setMode('tour')));
+  if (form) { form.addEventListener('input', update); form.addEventListener('change', update); update(); }
 
   /* ---------- M-13 Field choreography + submit ---------- */
-  const form = $('#quote-form');
+  const rules = {
+    temp: { group: true, msg: 'Pick the temperature your product needs.' },
+    pallets: { group: true, msg: 'Pick a pallet range. A rough number is fine.' },
+    product: { modes: ['rate'], msg: 'Say what the product is, in a few words.' },
+    'tour-day': { hidden: true, modes: ['tour'], msg: 'Pick a day for the visit.' },
+    company: { msg: 'The company the rate is for.' },
+    name: { msg: 'Your name, so we know who to ask for.' },
+    email: { msg: 'A work email, so the rate has somewhere to go.', bad: 'That email is missing an @ or a domain.' }
+  };
+  const msgFor = n => $('#msg-' + n);
+  const setMsg = (n, text, bad) => {
+    const m = msgFor(n); if (!m) return;
+    m.textContent = text || ''; m.classList.toggle('show', !!text);
+    const r = rules[n];
+    const field = (r.group || r.hidden) ? m.closest('fieldset') : m.closest('.field');
+    if (field) field.classList.toggle('err', !!bad);
+    if (!r.group && !r.hidden) { const i = form.elements[n]; if (i) i.setAttribute('aria-invalid', bad ? 'true' : 'false'); }
+  };
+  function check(n) {
+    const r = rules[n];
+    if (r.modes && !r.modes.includes(quote.dataset.mode)) { setMsg(n, '', false); return true; }
+    if (r.group) { const ok = !!form.querySelector('input[name="' + n + '"]:checked'); setMsg(n, ok ? '' : r.msg, !ok); return ok; }
+    if (r.hidden) { const ok = !!hiddenDay.value; setMsg(n, ok ? '' : r.msg, !ok); return ok; }
+    const i = form.elements[n]; const v = i.value.trim();
+    if (!v) { setMsg(n, r.msg, true); return false; }
+    if (n === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { setMsg(n, r.bad, true); return false; }
+    setMsg(n, '', false); return true;
+  }
   if (form) {
-    const rules = {
-      temp: { group: true, msg: 'Pick the temperature your product needs.' },
-      pallets: { group: true, msg: 'Pick a pallet range. A rough number is fine.' },
-      product: { msg: 'Say what the product is, in a few words.' },
-      company: { msg: 'The company the rate is for.' },
-      name: { msg: 'Your name, so we know who to ask for.' },
-      email: { msg: 'A work email, so the rate has somewhere to go.', bad: 'That email is missing an @ or a domain.' }
-    };
-    const msgFor = n => $('#msg-' + n);
-    const setMsg = (n, text, bad) => {
-      const m = msgFor(n); if (!m) return;
-      m.textContent = text || '';
-      m.classList.toggle('show', !!text);
-      const field = rules[n].group ? m.closest('fieldset') : m.closest('.field');
-      if (field) field.classList.toggle('err', !!bad);
-      if (!rules[n].group) { const i = form.elements[n]; if (i) i.setAttribute('aria-invalid', bad ? 'true' : 'false'); }
-    };
-    function check(n) {
-      const r = rules[n];
-      if (r.group) {
-        const ok = !!form.querySelector('input[name="' + n + '"]:checked');
-        setMsg(n, ok ? '' : r.msg, !ok); return ok;
-      }
-      const i = form.elements[n]; const v = i.value.trim();
-      if (!v) { setMsg(n, r.msg, true); return false; }
-      if (n === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { setMsg(n, r.bad, true); return false; }
-      setMsg(n, '', false); return true;
-    }
     Object.keys(rules).forEach(n => {
-      if (rules[n].group) form.querySelectorAll('input[name="' + n + '"]').forEach(i => i.addEventListener('change', () => check(n)));
-      else { const i = form.elements[n]; i.addEventListener('blur', () => { if (i.value.trim() || i.dataset.touched) check(n); i.dataset.touched = '1'; }); i.addEventListener('input', () => { if (i.dataset.touched) check(n); }); }
+      const r = rules[n];
+      if (r.group) form.querySelectorAll('input[name="' + n + '"]').forEach(i => i.addEventListener('change', () => check(n)));
+      else if (!r.hidden) { const i = form.elements[n]; i.addEventListener('blur', () => { if (i.value.trim() || i.dataset.touched) check(n); i.dataset.touched = '1'; }); i.addEventListener('input', () => { if (i.dataset.touched) check(n); }); }
     });
     form.addEventListener('submit', async e => {
       e.preventDefault();
       const bad = Object.keys(rules).filter(n => !check(n));
       if (bad.length) {
-        const first = bad[0];
-        const target = rules[first].group ? form.querySelector('input[name="' + first + '"]') : form.elements[first];
+        const first = bad[0], r = rules[first];
+        const target = r.group ? form.querySelector('input[name="' + first + '"]') : r.hidden ? form.querySelector('input[name="tour-day-pick"]') : form.elements[first];
         target && target.focus();
         return;
       }
       const btn = $('#f-submit'); btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
-      const fd = new FormData(form);
-      const pick = n => { const el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.nextElementSibling.textContent : ''; };
+      const fd = new FormData(form); fd.delete('tour-day-pick');
+      const mode = quote.dataset.mode, email = fd.get('email').trim();
       try {
         /* Netlify Forms: post URL-encoded to the page itself; form-name is a hidden field in the markup. */
         const res = await fetch(location.pathname, { method: 'POST', body: new URLSearchParams(fd).toString(), headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
         if (!res.ok) throw new Error(res.status);
-        $('#form-ok-copy').textContent = (fd.get('intent') === 'tour' ? 'A dock tour request' : 'A rate request') + ' for ' + pick('pallets').toLowerCase() + ' positions of ' + pick('temp').toLowerCase() + ' storage for ' + fd.get('product').trim() + ' is with the warehouse. The reply goes to ' + fd.get('email').trim() + '.';
-        form.classList.add('sent'); $('#form-ok').classList.add('show');
-        $('#form-ok').focus && $('#form-ok').setAttribute('tabindex', '-1'); $('#form-ok').focus();
+        const now = new Date();
+        $('#stamp-time').textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + ', ' + now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        if (mode === 'tour') {
+          $('#form-ok-copy').textContent = 'Your visit on ' + dayText + ', ' + optLabel('tour-window').toLowerCase() + ', is with the warehouse. Dock 1.';
+          $('#form-ok-next').innerHTML = 'We confirm the time by phone and by email to ' + email.replace(/</g, '&lt;') + '. If it\'s sooner than that, call <a class="num text-link" href="tel:"><span class="tk" data-fact="phone">TK</span></a>.';
+        } else {
+          $('#form-ok-copy').textContent = 'A rate request for ' + optLabel('pallets').toLowerCase() + ' positions of ' + optLabel('temp').toLowerCase() + ' storage' + (fd.get('product').trim() ? ' for ' + fd.get('product').trim() : '') + ' is with the warehouse. The reply goes to ' + email + '.';
+          $('#form-ok-next').innerHTML = '<span data-authorize="quote-turnaround">You\'ll have a rate within one business day.</span> If it\'s urgent, call <a class="num text-link" href="tel:"><span class="tk" data-fact="phone">TK</span></a>.';
+        }
+        form.classList.add('sent'); $('#form-ok').classList.add('show'); ticket.classList.add('stamped');
+        quote.scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'start' });
+        $('#form-ok').setAttribute('tabindex', '-1'); $('#form-ok').focus({ preventScroll: true });
       } catch (err) {
         $('#form-fail').classList.add('show');
         $('#form-fail').setAttribute('tabindex', '-1'); $('#form-fail').focus();
