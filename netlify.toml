@@ -1,0 +1,12 @@
+# STIR — static site, no build step.
+# Connect this repo in Netlify and deploy; forms on /contact.html are
+# picked up automatically (Netlify Forms). Add an email notification
+# in Site settings → Forms to receive each inquiry.
+
+[build]
+  publish = "."
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

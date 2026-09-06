@@ -3,566 +3,456 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — AI-native creative production</title>
-<meta name="description" content="Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23F2F0EB'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%231D4ED8'/%3E%3C/svg%3E">
+<title>STIR — Attention should pay</title>
+<meta name="description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue. Independent growth + creative practice, Brooklyn, New York.">
+<!-- TODO at deploy: replace SITE_URL below with the production domain -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="STIR — Attention should pay">
+<meta property="og:description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue.">
+<meta property="og:image" content="SITE_URL/assets/og-stir.jpg">
+<meta property="og:url" content="SITE_URL/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="STIR — Attention should pay">
+<meta name="twitter:description" content="Attention → Demand → Revenue. Independent growth + creative practice, Brooklyn.">
+<meta name="twitter:image" content="SITE_URL/assets/og-stir.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+
+<!--
+  Typography: Founders Grotesk (licensed, self-hosted in assets/fonts).
+  Newsreader = selective editorial serif accent. IBM Plex Mono = utility.
+-->
+<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/hero-stir-attention.webp" as="image" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper: #F2F0EB;
-    --ink: #111110;
-    --ink-60: #5C5A55;
-    --stamp: #1D4ED8;
-    --line: #C9C6BF;
-    --display: "Archivo", sans-serif;
-    --body: "Inter", sans-serif;
-    --mono: "IBM Plex Mono", monospace;
-    --space: 8px;
-  }
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-  }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--stamp);
-    outline-offset: 2px;
-  }
-
-  a { color: var(--stamp); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* ---- Spec-field label vocabulary (caps, tracked, small) ---- */
-  .field-label {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink);
-  }
-
-  .field-value {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink);
-  }
-
-  /* ---- Section scaffolding ---- */
-  .section { padding-top: 112px; }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    border-top: 1px solid var(--ink);
-    padding-top: 12px;
-    margin-bottom: 40px;
-  }
-  .section-no {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-60);
-  }
-
-  /* ================= SPEC (hero) ================= */
-  .hero { padding-top: 96px; }
-
-  .spec-sheet {
-    border: 1px solid var(--ink);
-    background: var(--paper);
-  }
-
-  .spec-masthead {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-    padding: 32px 32px 24px;
-  }
-
-  .logotype {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: clamp(40px, 8vw, 72px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-  }
-  .logotype sup {
-    font-size: 0.28em;
-    font-weight: 600;
-    vertical-align: 1.6em;
-    letter-spacing: 0;
-  }
-
-  .tagline {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-top: 12px;
-    color: var(--ink);
-  }
-
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    padding-top: 10px;
-  }
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--stamp);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
-
-  .spec-rows { border-top: 1px solid var(--ink); }
-
-  .spec-row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    padding: 14px 32px;
-    border-top: 1px solid var(--line);
-  }
-  .spec-row:first-child { border-top: 0; }
-
-  .spec-actions {
-    display: flex;
-    gap: 16px;
-    padding: 24px 32px;
-    border-top: 1px solid var(--ink);
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid var(--ink);
-    border-radius: 0;
-    padding: 12px 28px;
-    cursor: pointer;
-    display: inline-block;
-  }
-  .btn:hover {
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-  }
-  .btn-primary { background: var(--ink); color: var(--paper); }
-  .btn-primary:hover { background: var(--stamp); border-color: var(--stamp); }
-
-  .hero-notes {
-    margin-top: 24px;
-    max-width: 52ch;
-  }
-  .hero-notes p { color: var(--ink-60); }
-  .hero-notes .proof { margin-top: 8px; }
-
-  /* Print-in load sequence */
-  @media (prefers-reduced-motion: no-preference) {
-    .print-in {
-      opacity: 0;
-      transform: translateY(-4px);
-      animation: print-in 0.28s ease-out forwards;
-    }
-    @keyframes print-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-  }
-
-  /* ================= OUTPUT ================= */
-  .output-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .asset { margin: 0; }
-
-  .asset-frame {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border: 1px solid var(--line);
-    background: var(--line);
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
-  .asset-frame video,
-  .asset-frame img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .asset-pending {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--ink-60);
-    background: var(--paper);
-    border: 1px solid var(--line);
-    padding: 6px 12px;
-  }
-
-  .asset-caption {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    color: var(--ink-60);
-    padding-top: 10px;
-    display: inline-block;
-  }
-  .asset:hover .asset-caption,
-  .asset:focus-within .asset-caption {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  /* ================= PROCESS ================= */
-  .process-row {
-    display: grid;
-    grid-template-columns: 64px 180px 1fr;
-    gap: 24px;
-    align-items: baseline;
-    padding: 20px 0;
-    border-top: 1px solid var(--line);
-  }
-  .process-row:last-of-type { border-bottom: 1px solid var(--line); }
-
-  .process-no {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink-60);
-  }
-  .process-desc { color: var(--ink-60); }
-  .process-desc strong {
-    color: var(--ink);
-    font-weight: 500;
-  }
-
-  .price {
-    margin-top: 40px;
-    font-family: var(--mono);
-    font-size: 15px;
-    color: var(--ink);
-  }
-
-  /* ================= CONTACT ================= */
-  .request-field {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    align-items: baseline;
-    border: 1px solid var(--ink);
-    padding: 24px 32px;
-  }
-  .request-field .field-value { font-size: 15px; }
-  .request-field a { color: var(--stamp); }
-
-  /* ================= FOOTER ================= */
-  .footer {
-    margin-top: 128px;
-    border-top: 1px solid var(--ink);
-    padding: 24px 0 48px;
-  }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: var(--ink-60);
-  }
-  .footer-logo {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0;
-    color: var(--ink);
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-
-  /* ================= Mobile ================= */
-  @media (max-width: 720px) {
-    .section { padding-top: 96px; }
-
-    .spec-masthead {
-      flex-direction: column;
-      padding: 24px 20px 20px;
-    }
-    .status { padding-top: 0; }
-
-    .spec-row {
-      grid-template-columns: 1fr;
-      gap: 4px;
-      padding: 12px 20px;
-    }
-    .spec-actions { padding: 20px; }
-    .btn { flex: 1; text-align: center; }
-
-    .output-grid {
-      grid-template-columns: 1fr;
-      /* full-bleed on mobile */
-      margin-left: -24px;
-      margin-right: -24px;
-    }
-    .asset-frame { border-left: 0; border-right: 0; }
-    .asset-caption { padding-left: 24px; }
-
-    .process-row { grid-template-columns: 40px 1fr; }
-    .process-desc { grid-column: 2; }
-
-    .request-field {
-      grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 20px;
-    }
-  }
-</style>
+<link rel="stylesheet" href="assets/stir.css">
 </head>
 <body>
 
+<!-- ════════ NAVIGATION ════════ -->
+<header class="nav">
+  <div class="shell nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/stir-mark-ivory.png" alt="STIR — Home"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#proof">Work</a>
+      <a href="#method">Capabilities</a>
+      <a href="about.html">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="contact.html" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile menu overlay -->
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="assets/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
 <main>
 
-  <!-- ============ 01 · SPEC ============ -->
-  <header class="hero wrap">
-    <h1 class="sr-only">STIR — AI-native creative production</h1>
+  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
+  <section class="hero" aria-label="STIR — attention should pay">
+    <!--
+      HERO ASSET SLOT: assets/hero-stir-attention.webp
+      Enormous observer entering upper-right · tiny ordinary
+      storefront with Signal Red threshold · clean cobalt left.
+      Drop updated artwork here; no structural change needed.
+    -->
+    <img class="hero-art" src="assets/hero-stir-attention.webp"
+         width="1800" height="1346" fetchpriority="high"
+         alt="An enormous observer leans in from the upper right of a deep cobalt field, eye fixed on a tiny ordinary storefront with a small Signal Red threshold">
 
-    <div class="spec-sheet" aria-label="Studio specification">
-      <div class="spec-masthead print-in" style="animation-delay: 0ms">
-        <div>
-          <div class="logotype" aria-hidden="true">STIR<sup>®</sup></div>
-          <div class="tagline">AI-native creative production</div>
+    <div class="shell hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Attention <span class="arr" aria-hidden="true">→</span> Demand <span class="arr" aria-hidden="true">→</span> Revenue</p>
+
+        <h1 class="display hero-headline">
+          <span class="hl-line"><span>Attention</span></span>
+          <span class="hl-line"><span>should pay.</span></span>
+        </h1>
+
+        <p class="editorial hero-prop">STIR builds the content, strategy and systems that turn attention into demand&nbsp;— and demand into revenue.</p>
+
+        <p class="hero-cta"><a class="cta-line" href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a></p>
+      </div>
+
+      <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
+    </div>
+  </section>
+
+  <!-- ════════ 02 · THESIS ════════ -->
+  <section class="belief shell" aria-labelledby="belief-label">
+    <div class="grid">
+      <p class="utility belief-label" id="belief-label">02 / Thesis</p>
+
+      <h2 class="display belief-a reveal">Most businesses don’t&nbsp;need more&nbsp;content.</h2>
+
+      <div class="belief-gap" aria-hidden="true"></div>
+
+      <p class="display belief-b reveal">They need something worth talking&nbsp;about.</p>
+
+      <p class="editorial belief-support reveal">The interesting part is usually already there. We find it, build the story around it, put it in front of the right people and give them a reason to act.</p>
+    </div>
+  </section>
+
+  <!-- ════════ 03 · PROOF — LABAY ════════ -->
+  <section class="proof" id="proof" aria-labelledby="proof-title">
+    <div class="shell">
+      <div class="proof-head utility">
+        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
+        <span class="proof-meta">Brooklyn, New York<br>2025—Ongoing</span>
+      </div>
+
+      <h2 class="display proof-title reveal" id="proof-title">Labay<br>Market.</h2>
+
+      <div class="grid proof-body">
+        <div class="proof-lead">
+          <p class="proof-metric reveal">10M+</p>
+          <p class="utility proof-metric-label">Organic views</p>
         </div>
-        <div class="status">
-          <span class="status-dot" aria-hidden="true"></span>
-          ACCEPTING
+        <div class="proof-statement-wrap">
+          <p class="proof-statement reveal">We didn’t invent Labay’s story. We built the system that helped more people see&nbsp;it.</p>
+        </div>
+      </div>
+    </div>
+
+    <!--
+      LABAY EVIDENCE REEL — real artifacts at their NATIVE aspect
+      ratios, one shared height, nothing cropped to fit a slot.
+      New artifacts drop in as additional .reel-item figures with no
+      layout work. LABAY keeps its own visual identity; nothing is
+      recolored into the STIR palette.
+    -->
+    <div class="shell">
+      <div class="proof-reel-band reveal">
+        <div class="reel-head">
+          <span class="utility reel-counter"><span id="reel-pos">01</span> / <span id="reel-total">05</span></span>
+          <div class="reel-nav">
+            <button class="reel-btn" type="button" data-dir="-1" aria-label="Previous artifact">←</button>
+            <button class="reel-btn" type="button" data-dir="1" aria-label="Next artifact">→</button>
+          </div>
+        </div>
+        <div class="reel" id="proof-reel" aria-label="Labay evidence — scroll horizontally">
+          <figure class="reel-item">
+            <video class="ev-media" muted loop playsinline data-autoplay
+                   preload="none" width="720" height="1280"
+                   poster="assets/labay/labay-social-01-poster.webp"
+                   aria-label="Short-form vertical video shot at Labay Market">
+              <source src="assets/labay/labay-social-01.mp4" type="video/mp4">
+            </video>
+            <figcaption class="ev-cap utility">
+              <span class="cap">Serialized short-form built from daily operations.</span>
+              <span class="ev-meta">Organic social · 2025</span>
+            </figcaption>
+          </figure>
+          <figure class="reel-item">
+            <img class="ev-media" src="assets/labay/labay-production-bts.webp"
+                 width="1600" height="2133" loading="lazy" decoding="async"
+                 alt="A film crew records an interview on the Brooklyn street corner outside Labay Market, coconuts in hand">
+            <figcaption class="ev-cap utility">
+              <span class="cap">Shot on the corner, not in a studio.</span>
+              <span class="ev-meta">Production · Brooklyn · 2025</span>
+            </figcaption>
+          </figure>
+          <figure class="reel-item">
+            <img class="ev-media" src="assets/labay/labay-coconut.webp"
+                 width="554" height="554" loading="lazy" decoding="async"
+                 alt="Gloved hands split a fresh coconut with a machete, water bursting out, in front of crates of plantains and bananas">
+            <figcaption class="ev-cap utility">
+              <span class="cap">The counter, the product, the price — unstyled.</span>
+              <span class="ev-meta">In situ · 2025</span>
+            </figcaption>
+          </figure>
+          <figure class="reel-item">
+            <img class="ev-media" src="assets/labay/labay-timeout-cover.webp"
+                 width="399" height="501" loading="lazy" decoding="async"
+                 alt="Time Out New York cover, December 2024 — NYC's Best Eats, featuring Righteous Eats' Jaeki Cho">
+            <figcaption class="ev-cap utility">
+              <span class="cap">Time Out New York — NYC’s Best Eats.</span>
+              <span class="ev-meta">Press · December 2024</span>
+            </figcaption>
+          </figure>
+          <figure class="reel-item">
+            <img class="ev-media" src="assets/labay/labay-market-interior.webp"
+                 width="1216" height="922" loading="lazy" decoding="async"
+                 alt="Inside Labay Market: a customer holds up a breadfruit among stocked shelves of Caribbean groceries">
+            <figcaption class="ev-cap utility">
+              <span class="cap">The market as a gathering place, not a set.</span>
+              <span class="ev-meta">Brooklyn, NY · 2025</span>
+            </figcaption>
+          </figure>
         </div>
       </div>
 
-      <dl class="spec-rows">
-        <div class="spec-row print-in" style="animation-delay: 90ms">
-          <dt class="field-label">Output</dt>
-          <dd class="field-value">15–30 assets / month</dd>
+      <!-- The payoff — the headline's promise, cashed -->
+      <div class="grid proof-payoff">
+        <h3 class="display payoff-title reveal">It paid.</h3>
+        <div class="payoff-body reveal">
+          <p class="body">The attention turned into brand partnerships&nbsp;— <strong>Nike, Red&nbsp;Bull and TurboTax</strong> came to the market.</p>
+          <p class="utility payoff-creators">Also in the system&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
         </div>
-        <div class="spec-row print-in" style="animation-delay: 180ms">
-          <dt class="field-label">Formats</dt>
-          <dd class="field-value">video · image · motion</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 270ms">
-          <dt class="field-label">Turnaround</dt>
-          <dd class="field-value">72h first concepts</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 360ms">
-          <dt class="field-label">Direction</dt>
-          <dd class="field-value">human</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 450ms">
-          <dt class="field-label">Production</dt>
-          <dd class="field-value">machine</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 540ms">
-          <dt class="field-label">Est.</dt>
-          <dd class="field-value">Brooklyn, NY</dd>
-        </div>
-      </dl>
-
-      <div class="spec-actions print-in" style="animation-delay: 630ms">
-        <a class="btn btn-primary" href="#output">View output</a>
-        <a class="btn" href="#contact">Start a request</a>
       </div>
     </div>
+  </section>
 
-    <div class="hero-notes">
-      <p>Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.</p>
-      <p class="proof">The operator behind LABAY Market's digital transformation.</p>
+  <!-- ════════ 04 · WHAT WE DO — FIND / BUILD / RUN ════════ -->
+  <section class="method shell" id="method" aria-labelledby="method-label">
+    <div class="grid">
+      <p class="utility method-label" id="method-label">04 / What we do</p>
+      <p class="body method-intro reveal">We make the work, put it in front of the right people and build the system that turns their attention into business. More calls. More orders. More bookings. More customers.</p>
+
+      <div class="method-index reveal" id="method-index">
+
+        <div class="method-row is-active">
+          <button class="method-row-head" type="button" aria-expanded="true" aria-controls="method-find">
+            <span class="method-no">01</span>
+            <span class="method-word">Find <span class="method-dot" aria-hidden="true"></span></span>
+            <span class="method-line">Find what’s worth attention.</span>
+          </button>
+          <div class="method-detail" id="method-find">
+            <div>
+              <div class="method-detail-inner">
+                <ul class="method-caps">
+                  <li>Positioning</li>
+                  <li>Audience</li>
+                  <li>Offer</li>
+                  <li>Content opportunities</li>
+                  <li>Growth opportunities</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="method-row">
+          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-build">
+            <span class="method-no">02</span>
+            <span class="method-word">Build <span class="method-dot" aria-hidden="true"></span></span>
+            <span class="method-line">Make the work people notice.</span>
+          </button>
+          <div class="method-detail" id="method-build">
+            <div>
+              <div class="method-detail-inner">
+                <ul class="method-caps">
+                  <li>Brand identity</li>
+                  <li>Websites</li>
+                  <li>Photography + video</li>
+                  <li>Short-form content</li>
+                  <li>Campaigns</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="method-row">
+          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-run">
+            <span class="method-no">03</span>
+            <span class="method-word">Run <span class="method-dot" aria-hidden="true"></span></span>
+            <span class="method-line">Keep it working, week after week.</span>
+          </button>
+          <div class="method-detail" id="method-run">
+            <div>
+              <div class="method-detail-inner">
+                <ul class="method-caps">
+                  <li>Content calendars</li>
+                  <li>Social distribution</li>
+                  <li>Paid media</li>
+                  <li>Campaign launches</li>
+                  <li>Lead + sales systems</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </header>
+  </section>
 
-  <!-- ============ 02 · OUTPUT ============ -->
-  <section class="section wrap" id="output" aria-labelledby="output-label">
-    <div class="section-head">
-      <span class="section-no">02</span>
-      <h2 class="field-label" id="output-label">Output</h2>
+  <!-- ════════ 05 · ONE THOUGHT ════════
+       (Observation 001 — the eye/mango "too close to see it" idea —
+       now lives in the hero's observer artwork. The fuller
+       Observations index moves to About / future Insights.) -->
+  <section class="obs shell" aria-labelledby="obs-label">
+    <div class="grid">
+      <p class="utility obs-label" id="obs-label">05 / Observation</p>
     </div>
 
-    <div class="output-grid">
+    <article class="grid obs-spread">
+      <div class="obs-text reveal">
+        <h3 class="display obs-headline">The kids don’t want the store. They want the brand.</h3>
+        <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
       <!--
-        TEMPORARY: mock assets are hotlinked from Higgsfield's CDN while this
-        sandbox cannot download them. Localize before launch: save each image
-        to assets/<slug>.jpg (compressed, ~200KB) and point src back to it.
-        Drop real work into these slots: replace .asset-frame contents with
-        <video muted playsinline loop preload="none" poster="...">
-          <source src="..." type="video/mp4">
-        </video>
-        Keep each file under 4MB. Update the caption to the real record.
+        ILLUSTRATION ASSET SLOT: assets/illustration-spread.webp
+        Inheritance / succession concept · 16:10 · slides under the
+        text and bleeds off the right edge. Final art drops in here.
       -->
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011106_b8d36656-c4bf-49bf-87b1-36ec69e4037e.png" width="720" height="720" aria-label="Sparkling water can with frozen splash on cobalt blue — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011750_f8a41767-0a61-4776-9166-cca05c6447a4.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 001 · BEVERAGE · :15 VIDEO</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011108_e148dbb9-76cc-4193-a63d-16b61d6e9d3b.png" alt="Stacked fresh oranges on warm red-orange" loading="lazy" width="928" height="1152">
-        </div>
-        <figcaption class="asset-caption">NO. 002 · GROCERY · KEY VISUAL</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011110_ee74357b-6a4d-48d3-ad9b-9c48b2b0ce71.png" width="720" height="720" aria-label="Frosted cream jar with cream smear on pale sage — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011753_1717872d-50fa-43c7-8f4e-8300d5d1314e.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 003 · SKINCARE · :06 LOOP</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011115_9d78b8d8-b503-406f-a7c1-599256cd4a48.png" width="720" height="720" aria-label="Running sneaker floating on acid yellow — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011756_64b90ae0-23e1-4c77-8772-787751a152de.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 004 · FOOTWEAR · :30 VIDEO</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011117_5e56c63b-2bb8-4e5d-b223-6cc68f25344f.png" alt="Amber whiskey bottle with rim light on espresso brown" loading="lazy" width="928" height="1152">
-        </div>
-        <figcaption class="asset-caption">NO. 005 · SPIRITS · KEY VISUAL</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011119_a821a96d-64d9-4215-85f0-753cffb3f538.png" width="720" height="720" aria-label="Cotton t-shirt frozen mid-billow on crimson red — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011758_6febe99a-35b5-44a0-b151-61ba790e2482.mp4" type="video/mp4">
-          </video>
-        </div>
-        <figcaption class="asset-caption">NO. 006 · APPAREL · :15 VIDEO</figcaption>
-      </figure>
-    </div>
+      <div class="ph obs-art reveal" role="img"
+           aria-label="Illustration slot: STIR inheritance and succession artwork">
+        <span class="utility ph-id">Illustration slot — succession</span>
+        <span class="utility ph-note">16:10 · bleeds off the right edge</span>
+      </div>
+    </article>
   </section>
 
-  <!-- ============ 03 · PROCESS ============ -->
-  <section class="section wrap" id="process" aria-labelledby="process-label">
-    <div class="section-head">
-      <span class="section-no">03</span>
-      <h2 class="field-label" id="process-label">Process</h2>
+  <!-- ════════ 06 · CTA — quiet ivory, red only at the action ════════ -->
+  <section class="convert shell" id="contact" aria-labelledby="convert-q">
+    <div class="convert-head">
+      <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
     </div>
-
-    <div class="process-row">
-      <span class="process-no">01</span>
-      <span class="field-label">Brief</span>
-      <p class="process-desc">A 30-minute call. You bring the product; <strong>we leave with the brief.</strong></p>
-    </div>
-    <div class="process-row">
-      <span class="process-no">02</span>
-      <span class="field-label">Production</span>
-      <p class="process-desc">First concepts land <strong>within 72 hours.</strong></p>
-    </div>
-    <div class="process-row">
-      <span class="process-no">03</span>
-      <span class="field-label">Engine</span>
-      <p class="process-desc">A monthly cadence of <strong>15–30 finished assets.</strong></p>
-    </div>
-
-    <p class="price">Engines from $3,500/mo.</p>
-  </section>
-
-  <!-- ============ 04 · CONTACT ============ -->
-  <section class="section wrap" id="contact" aria-labelledby="contact-label">
-    <div class="section-head">
-      <span class="section-no">04</span>
-      <h2 class="field-label" id="contact-label">Contact</h2>
-    </div>
-
-    <div class="request-field">
-      <span class="field-label">Request →</span>
-      <span class="field-value"><a href="mailto:rasheedjordon1@gmail.com">rasheedjordon1@gmail.com</a></span>
+    <h2 class="display convert-q reveal">What are<br>we not<br>seeing yet?</h2>
+    <div class="convert-foot reveal">
+      <p class="body convert-copy">There’s probably something inside your business people would care about. Let’s find it.</p>
+      <a class="cta" href="contact.html">Tell us about the business <span class="arrow" aria-hidden="true">↗</span></a>
     </div>
   </section>
 
 </main>
 
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <span class="footer-logo">STIR<sup style="font-size:0.6em">®</sup></span>
-    <span>2026</span>
-    <span>PRODUCED IN BROOKLYN</span>
+<!-- ════════ FOOTER — quiet ════════ -->
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
   </div>
 </footer>
 
 <script>
-  // Hover/tap plays any asset video that has been dropped into a slot.
-  // No-op while slots hold placeholders.
-  document.querySelectorAll('.asset').forEach(function (asset) {
-    var video = asset.querySelector('video');
-    if (!video) return;
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function play() { if (!reduced.matches) video.play(); }
-    function stop() { video.pause(); video.currentTime = 0; }
-    asset.addEventListener('mouseenter', play);
-    asset.addEventListener('mouseleave', stop);
-    asset.addEventListener('focusin', play);
-    asset.addEventListener('focusout', stop);
-    asset.addEventListener('touchstart', function () {
-      video.paused ? play() : stop();
-    }, { passive: true });
+/* Foundational behavior; motion stays restrained and purposeful. */
+
+/* Reveal on entry */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (el) { el.classList.add('is-in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Evidence video — loads and plays only when the reel is in view;
+   never autoplays for users who prefer reduced motion */
+(function () {
+  var vids = document.querySelectorAll('video[data-autoplay]');
+  if (!vids.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.play().catch(function () {}); }
+      else { e.target.pause(); }
+    });
+  }, { threshold: 0.25 });
+  vids.forEach(function (v) { io.observe(v); });
+})();
+
+/* Mobile menu overlay */
+(function () {
+  var btn = document.querySelector('.nav-menu');
+  var overlay = document.getElementById('nav-overlay');
+  if (!btn || !overlay) return;
+  var close = overlay.querySelector('.nav-overlay-close');
+  function setOpen(open) {
+    overlay.hidden = !open;
+    overlay.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function () { setOpen(true); });
+  close.addEventListener('click', function () { setOpen(false); });
+  overlay.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { setOpen(false); });
   });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
+  });
+})();
+
+/* Evidence reel — arrows step between artifacts; counter follows scroll */
+(function () {
+  var reel = document.getElementById('proof-reel');
+  if (!reel) return;
+  var items = Array.prototype.slice.call(reel.querySelectorAll('.reel-item'));
+  var pos = document.getElementById('reel-pos');
+  var total = document.getElementById('reel-total');
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  total.textContent = pad(items.length);
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function currentIndex() {
+    var x = reel.scrollLeft;
+    var best = 0, bestDist = Infinity;
+    items.forEach(function (it, i) {
+      var d = Math.abs(it.offsetLeft - reel.offsetLeft - x);
+      if (d < bestDist) { bestDist = d; best = i; }
+    });
+    return best;
+  }
+
+  document.querySelectorAll('.reel-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var next = Math.min(items.length - 1, Math.max(0, currentIndex() + parseInt(btn.dataset.dir, 10)));
+      reel.scrollTo({ left: items[next].offsetLeft - reel.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  });
+
+  var ticking = false;
+  reel.addEventListener('scroll', function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      pos.textContent = pad(currentIndex() + 1);
+      ticking = false;
+    });
+  }, { passive: true });
+})();
+
+/* FIND / BUILD / RUN — one active row at a time */
+(function () {
+  var rows = document.querySelectorAll('#method-index .method-row');
+  rows.forEach(function (row) {
+    var btn = row.querySelector('.method-row-head');
+    btn.addEventListener('click', function () {
+      if (row.classList.contains('is-active')) return;
+      rows.forEach(function (r) {
+        r.classList.remove('is-active');
+        r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
+      });
+      row.classList.add('is-active');
+      btn.setAttribute('aria-expanded', 'true');
+    });
+  });
+})();
 </script>
 
 </body>

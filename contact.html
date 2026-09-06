@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STIR — Start a project</title>
+<meta name="description" content="Tell us about the business. STIR turns attention into demand — and demand into revenue. Brooklyn, New York.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stir.css">
+</head>
+<body>
+
+<header class="nav nav--ink">
+  <div class="shell nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#proof">Work</a>
+      <a href="index.html#method">Capabilities</a>
+      <a href="about.html">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="contact.html" class="nav-start" aria-current="page">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="assets/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="index.html#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="index.html#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
+<main>
+  <section class="page shell" aria-labelledby="contact-title">
+    <div class="grid">
+      <p class="utility page-label">Contact</p>
+      <h1 class="display page-title" id="contact-title">Tell us about<br>the business.</h1>
+
+      <div class="contact-info reveal">
+        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see.</p>
+        <div class="contact-links utility">
+          <a href="mailto:rasheedjordon1@gmail.com">Email us directly</a>
+          <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">@builtbystir</a>
+          <span>Brooklyn, New&nbsp;York</span>
+        </div>
+      </div>
+
+      <!-- Netlify Forms: works automatically once deployed on Netlify.
+           Submissions appear in the Netlify dashboard; add an email
+           notification there to receive each inquiry. -->
+      <form class="contact-form reveal" name="start-a-project" method="POST"
+            action="/contact.html?sent=1"
+            data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
+        <input type="hidden" name="form-name" value="start-a-project">
+        <p class="sr-only" aria-hidden="true">
+          <label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+        <div class="field">
+          <label class="utility" for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label class="utility" for="f-business">Business</label>
+          <input id="f-business" name="business" type="text" required autocomplete="organization">
+        </div>
+        <div class="field">
+          <label class="utility" for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" required autocomplete="email">
+        </div>
+        <div class="field">
+          <label class="utility" for="f-about">What does the business do?</label>
+          <textarea id="f-about" name="about" rows="4" required></textarea>
+        </div>
+        <div class="form-foot">
+          <button class="cta" type="submit">Send it <span class="arrow" aria-hidden="true">↗</span></button>
+          <p class="utility form-note">We read everything. We reply to the interesting&nbsp;ones fast.</p>
+        </div>
+      </form>
+
+      <div class="contact-form form-success" id="form-success" role="status">
+        <h2 class="display">Received.</h2>
+        <p class="body">We’re reading it. If there’s something there, you’ll hear from us soon.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
+  </div>
+</footer>
+
+<script>
+/* Reveal on entry */
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Success state after Netlify redirect (?sent=1) */
+(function () {
+  if (window.location.search.indexOf('sent=1') === -1) return;
+  var form = document.getElementById('contact-form');
+  var ok = document.getElementById('form-success');
+  if (form) form.style.display = 'none';
+  if (ok) ok.classList.add('is-shown');
+})();
+
+/* Mobile menu overlay */
+(function () {
+  var btn = document.querySelector('.nav-menu');
+  var overlay = document.getElementById('nav-overlay');
+  if (!btn || !overlay) return;
+  var close = overlay.querySelector('.nav-overlay-close');
+  function setOpen(open) {
+    overlay.hidden = !open;
+    overlay.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function () { setOpen(true); });
+  close.addEventListener('click', function () { setOpen(false); });
+  overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) setOpen(false); });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STIR — About</title>
+<meta name="description" content="STIR is an independent growth and creative practice in Brooklyn, New York. We find what makes a business worth attention and build the system that turns that attention into revenue.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stir.css">
+<style>
+/* Page-specific: About */
+.about-intro { grid-column: 1 / 8; }
+.about-facts {
+  grid-column: 9 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--ink-60);
+}
+.about-block { margin-top: clamp(96px, 15vh, 200px); }
+.about-block .b-label { grid-column: 1 / 4; border-top: 1px solid var(--ink); padding-top: 12px; }
+.about-block .b-title { grid-column: 1 / 10; font-size: var(--t-big); margin-top: clamp(32px, 5vh, 56px); }
+.about-block .b-copy  { grid-column: 5 / 11; margin-top: clamp(32px, 5vh, 56px); }
+.about-roster { grid-column: 5 / 12; margin-top: clamp(24px, 4vh, 40px); color: var(--ink-60); line-height: 2.1; }
+/*
+  ILLUSTRATION ASSET SLOT: assets/illustration-city.webp
+  Cobalt rooftop city — attention hidden in every window.
+  Full-bleed band between story blocks; drops in with no
+  structural change.
+*/
+.about-art {
+  margin-top: clamp(96px, 15vh, 200px);
+  margin-inline: calc(var(--bleed) * -1);
+  aspect-ratio: 21 / 9;
+}
+.about-cta { margin-top: clamp(96px, 15vh, 200px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+@media (max-width: 1023px) {
+  .about-intro { grid-column: 1 / -1; }
+  .about-facts { grid-column: 1 / -1; margin-top: 40px; flex-direction: row; gap: 32px; flex-wrap: wrap; }
+  .about-block .b-title { grid-column: 1 / -1; }
+  .about-block .b-copy  { grid-column: 1 / -1; }
+  .about-roster { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+
+<header class="nav nav--ink">
+  <div class="shell nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#proof">Work</a>
+      <a href="index.html#method">Capabilities</a>
+      <a href="about.html" aria-current="page">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="contact.html" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="assets/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="index.html#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="index.html#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
+<main>
+  <section class="page shell" aria-labelledby="about-title">
+    <div class="grid">
+      <p class="utility page-label">About</p>
+      <h1 class="display page-title" id="about-title">Ordinary businesses.<br>Extraordinary demand.</h1>
+
+      <!-- DRAFT COPY — founder review before launch -->
+      <div class="about-intro reveal">
+        <p class="editorial">STIR is an independent growth and creative practice in Brooklyn, New York. We work with businesses most agencies overlook — markets, restaurants, operators, creators — because the interesting part is usually already there. Our job is to find it, make it impossible to ignore, and build the system that turns the attention into revenue.</p>
+      </div>
+      <div class="about-facts utility reveal">
+        <span>Independent</span>
+        <span>Brooklyn, New&nbsp;York</span>
+        <span>Est.&nbsp;2025</span>
+        <span>@builtbystir</span>
+      </div>
+
+      <div class="grid about-block" style="grid-column: 1 / -1;">
+        <p class="utility b-label">What we believe</p>
+        <h2 class="display b-title reveal">People can’t buy what they don’t&nbsp;see.</h2>
+        <p class="body b-copy reveal">And being seen is only useful if something happens next. So we don’t sell content. We make the work, put it in front of the right people and build the system that turns their attention into business — more calls, more orders, more bookings, more customers.</p>
+      </div>
+
+      <div class="grid about-block" style="grid-column: 1 / -1;">
+        <p class="utility b-label">The work so far</p>
+        <h2 class="display b-title reveal">It’s already working.</h2>
+        <p class="body b-copy reveal">Our work with <strong>Labay Market</strong> earned 10M+ organic views — and the attention turned into brand partnerships with <strong>Nike, Red&nbsp;Bull and TurboTax</strong>. We’ve worked with creators including Kemoy Martin, MarcoEatsWorld and Nicolas Nuvan, and more join the system every season.</p>
+        <p class="utility about-roster reveal">Labay Market&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
+      </div>
+    </div>
+
+    <!-- ILLUSTRATION SLOT — assets/illustration-city.webp (cobalt rooftops) -->
+    <div class="ph about-art reveal" role="img" aria-label="Illustration slot: cobalt city rooftops, attention hidden in every window">
+      <span class="utility ph-id">Illustration slot — the city</span>
+      <span class="utility ph-note">Cobalt rooftops · 21:9 crop · full-bleed band</span>
+    </div>
+
+    <div class="about-cta reveal">
+      <a class="cta" href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="cta-line" href="index.html#proof">See the proof <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+(function () {
+  var btn = document.querySelector('.nav-menu');
+  var overlay = document.getElementById('nav-overlay');
+  if (!btn || !overlay) return;
+  var close = overlay.querySelector('.nav-overlay-close');
+  function setOpen(open) {
+    overlay.hidden = !open;
+    overlay.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function () { setOpen(true); });
+  close.addEventListener('click', function () { setOpen(false); });
+  overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) setOpen(false); });
+})();
+</script>
+
+</body>
+</html>
