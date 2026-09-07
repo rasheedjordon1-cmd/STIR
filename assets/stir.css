@@ -88,6 +88,8 @@ body {
 
 a { color: inherit; text-decoration: none; }
 img, video { max-width: 100%; display: block; }
+/* Art images size from their CSS aspect-ratio, not the HTML height attr */
+.obs-art, .about-art { height: auto; }
 
 :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 ::selection { background: var(--ink); color: var(--ivory); }

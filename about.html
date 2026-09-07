@@ -36,7 +36,10 @@
 .about-art {
   margin-top: clamp(96px, 15vh, 200px);
   margin-inline: calc(var(--bleed) * -1);
+  width: calc(100% + var(--bleed) * 2);
   aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 58%;
 }
 .about-cta { margin-top: clamp(96px, 15vh, 200px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
 @media (max-width: 1023px) {
@@ -108,11 +111,10 @@
       </div>
     </div>
 
-    <!-- ILLUSTRATION SLOT — assets/illustration-city.webp (cobalt rooftops) -->
-    <div class="ph about-art reveal" role="img" aria-label="Illustration slot: cobalt city rooftops, attention hidden in every window">
-      <span class="utility ph-id">Illustration slot — the city</span>
-      <span class="utility ph-note">Cobalt rooftops · 21:9 crop · full-bleed band</span>
-    </div>
+    <!-- ILLUSTRATION: assets/illustration-city.webp — every window a business -->
+    <img class="about-art reveal" src="assets/illustration-city.webp"
+         width="2000" height="1497" loading="lazy" decoding="async"
+         alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
 
     <div class="about-cta reveal">
       <a class="cta" href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
