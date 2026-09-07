@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STIR — Start a project</title>
+<meta name="description" content="Tell us about the business. STIR turns attention into demand — and demand into revenue. Brooklyn, New York.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/stir.css">
+</head>
+<body>
+
+<header class="nav nav--ink">
+  <div class="shell nav-inner">
+    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#proof">Work</a>
+      <a href="index.html#method">Capabilities</a>
+      <a href="about.html">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="contact.html" class="nav-start" aria-current="page">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="assets/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="index.html#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="index.html#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
+<main>
+  <section class="page shell" aria-labelledby="contact-title">
+    <div class="grid">
+      <p class="utility page-label" data-reveal="structural">Contact</p>
+      <h1 class="display page-title" data-reveal="editorial" id="contact-title">What are we<br>looking at?</h1>
+
+      <div class="contact-info reveal">
+        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see.</p>
+        <div class="contact-links utility">
+          <a href="mailto:rasheedjordon1@gmail.com">Email us directly</a>
+          <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">@builtbystir</a>
+          <span>Brooklyn, New&nbsp;York</span>
+        </div>
+      </div>
+
+      <!-- Netlify Forms. Keeps the original form name so existing
+           notifications and past submissions stay intact. -->
+      <form class="contact-form reveal" name="start-a-project" method="POST"
+            action="/contact.html?sent=1"
+            data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
+        <input type="hidden" name="form-name" value="start-a-project">
+        <p class="sr-only" aria-hidden="true">
+          <label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
+        </p>
+
+        <div class="q-block">
+          <span class="utility q-no">01</span>
+          <div class="q-body">
+            <label class="q-label" for="f-business">Your business</label>
+            <span class="utility q-hint">Name it, and what it actually does.</span>
+            <input id="f-business" name="business" type="text" required autocomplete="organization">
+          </div>
+        </div>
+
+        <fieldset class="q-block" style="border:0;padding:0;margin:0;">
+          <span class="utility q-no">02</span>
+          <div class="q-body">
+            <legend class="q-label" style="padding:0;">What’s happening right now?</legend>
+            <span class="utility q-hint">Pick the closest.</span>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="situation" value="We need more customers" required><span>We need more customers</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re launching something"><span>We’re launching something</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our brand isn’t connecting"><span>Our brand isn’t connecting</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our content isn’t working"><span>Our content isn’t working</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re growing and need a system"><span>We’re growing and need a system</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Something else"><span>Something else</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="q-block">
+          <span class="utility q-no">03</span>
+          <div class="q-body">
+            <label class="q-label" for="f-show">Show us.</label>
+            <span class="utility q-hint">Website, Instagram, TikTok — wherever the business lives.</span>
+            <input id="f-show" name="show_us" type="text" inputmode="url" autocomplete="url" placeholder="instagram.com/…">
+          </div>
+        </div>
+
+        <div class="q-block">
+          <span class="utility q-no">04</span>
+          <div class="q-body">
+            <label class="q-label" for="f-blind">What do you think we’re not seeing yet?</label>
+            <span class="utility q-hint">Optional. Usually the most interesting answer.</span>
+            <textarea id="f-blind" name="not_seeing" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <span class="utility q-no">05</span>
+          <div class="q-body">
+            <label class="q-label" for="f-name">Where do we reply?</label>
+            <span class="utility q-hint">We read everything. We reply to the interesting ones fast.</span>
+            <div class="q-pair">
+              <div>
+                <span class="utility q-sub">Name</span>
+                <input id="f-name" name="name" type="text" required autocomplete="name">
+              </div>
+              <div>
+                <span class="utility q-sub">Email</span>
+                <input id="f-email" name="email" type="email" required autocomplete="email">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="send-row">
+          <button class="cta" type="submit">Send it to STIR <span class="arrow" aria-hidden="true">→</span></button>
+          <span class="send-rail" aria-hidden="true"></span>
+        </div>
+      </form>
+
+      <div class="contact-form form-success" id="form-success" role="status">
+        <h2 class="display">We’ve got it.</h2>
+        <p class="body">We’re reading it now. If there’s something there, you’ll hear from us — usually within a couple of days.</p>
+        <p class="utility contact-note">Brooklyn, New&nbsp;York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+      </div>
+
+      <div class="contact-form form-success" id="form-error" role="alert">
+        <h2 class="display">That didn’t send.</h2>
+        <p class="body">Something went wrong on our end. Email us directly at
+          <a href="mailto:rasheedjordon1@gmail.com" style="border-bottom:1px solid currentColor">rasheedjordon1@gmail.com</a>
+          and we’ll pick it up from there.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
+  </div>
+</footer>
+
+<script>
+/* Reveal on entry */
+(function () {
+  var els = document.querySelectorAll('.reveal, [data-reveal]');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!('IntersectionObserver' in window) || reduce) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); if (e.target.getAttribute('data-reveal') === 'structural') setTimeout(function(){ e.target.classList.add('sig-spent'); }, 900); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Form submission — posts to Netlify Forms without a page reload so the
+   success state is immediate. Falls back to a normal POST without JS. */
+(function () {
+  var form = document.getElementById('contact-form');
+  if (!form) return;
+  var ok = document.getElementById('form-success');
+  var bad = document.getElementById('form-error');
+  var btn = form.querySelector('button[type="submit"]');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function show(el) {
+    form.style.display = 'none';
+    el.classList.add('is-shown');
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (btn) { btn.disabled = true; btn.firstChild.nodeValue = 'Sending '; }
+    form.classList.add('is-sending');
+    var travelled = new Promise(function (go) { setTimeout(go, reduceMotion ? 0 : 620); });
+    Promise.all([travelled, fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })]).then(function (res) {
+      if (!res[1].ok) throw new Error(res[1].status);
+      show(ok);
+    }).catch(function () {
+      show(bad);
+    });
+  });
+
+  /* Also honor the redirect path, in case a submission lands that way */
+  if (window.location.search.indexOf('sent=1') !== -1) show(ok);
+})();
+
+/* Mobile menu overlay */
+(function () {
+  var btn = document.querySelector('.nav-menu');
+  var overlay = document.getElementById('nav-overlay');
+  if (!btn || !overlay) return;
+  var close = overlay.querySelector('.nav-overlay-close');
+  function setOpen(open) {
+    overlay.hidden = !open;
+    overlay.classList.toggle('is-open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', function () { setOpen(true); });
+  close.addEventListener('click', function () { setOpen(false); });
+  overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) setOpen(false); });
+})();
+</script>
+
+</body>
+</html>
