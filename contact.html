@@ -46,7 +46,7 @@
   <section class="page shell" aria-labelledby="contact-title">
     <div class="grid">
       <p class="utility page-label" data-reveal="structural">Contact</p>
-      <h1 class="display page-title" data-reveal="editorial" id="contact-title">Tell us about<br>the business.</h1>
+      <h1 class="display page-title" data-reveal="editorial" id="contact-title">What are we<br>looking at?</h1>
 
       <div class="contact-info reveal">
         <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see.</p>
@@ -57,9 +57,8 @@
         </div>
       </div>
 
-      <!-- Netlify Forms: works automatically once deployed on Netlify.
-           Submissions appear in the Netlify dashboard; add an email
-           notification there to receive each inquiry. -->
+      <!-- Netlify Forms. Keeps the original form name so existing
+           notifications and past submissions stay intact. -->
       <form class="contact-form reveal" name="start-a-project" method="POST"
             action="/contact.html?sent=1"
             data-netlify="true" netlify-honeypot="bot-field" id="contact-form">
@@ -67,31 +66,78 @@
         <p class="sr-only" aria-hidden="true">
           <label>Don’t fill this out: <input name="bot-field" tabindex="-1" autocomplete="off"></label>
         </p>
-        <div class="field">
-          <label class="utility" for="f-name">Name</label>
-          <input id="f-name" name="name" type="text" required autocomplete="name">
+
+        <div class="q-block">
+          <span class="utility q-no">01</span>
+          <div class="q-body">
+            <label class="q-label" for="f-business">Your business</label>
+            <span class="utility q-hint">Name it, and what it actually does.</span>
+            <input id="f-business" name="business" type="text" required autocomplete="organization">
+          </div>
         </div>
-        <div class="field">
-          <label class="utility" for="f-business">Business</label>
-          <input id="f-business" name="business" type="text" required autocomplete="organization">
+
+        <fieldset class="q-block" style="border:0;padding:0;margin:0;">
+          <span class="utility q-no">02</span>
+          <div class="q-body">
+            <legend class="q-label" style="padding:0;">What’s happening right now?</legend>
+            <span class="utility q-hint">Pick the closest.</span>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="situation" value="We need more customers" required><span>We need more customers</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re launching something"><span>We’re launching something</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our brand isn’t connecting"><span>Our brand isn’t connecting</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our content isn’t working"><span>Our content isn’t working</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re growing and need a system"><span>We’re growing and need a system</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Something else"><span>Something else</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="q-block">
+          <span class="utility q-no">03</span>
+          <div class="q-body">
+            <label class="q-label" for="f-show">Show us.</label>
+            <span class="utility q-hint">Website, Instagram, TikTok — wherever the business lives.</span>
+            <input id="f-show" name="show_us" type="text" inputmode="url" autocomplete="url" placeholder="instagram.com/…">
+          </div>
         </div>
-        <div class="field">
-          <label class="utility" for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" required autocomplete="email">
+
+        <div class="q-block">
+          <span class="utility q-no">04</span>
+          <div class="q-body">
+            <label class="q-label" for="f-blind">What do you think we’re not seeing yet?</label>
+            <span class="utility q-hint">Optional. Usually the most interesting answer.</span>
+            <textarea id="f-blind" name="not_seeing" rows="3"></textarea>
+          </div>
         </div>
-        <div class="field">
-          <label class="utility" for="f-about">What does the business do?</label>
-          <textarea id="f-about" name="about" rows="4" required></textarea>
+
+        <div class="q-block">
+          <span class="utility q-no">05</span>
+          <div class="q-body">
+            <label class="q-label" for="f-name">Where do we reply?</label>
+            <span class="utility q-hint">We read everything. We reply to the interesting ones fast.</span>
+            <div class="q-pair">
+              <div>
+                <span class="utility q-sub">Name</span>
+                <input id="f-name" name="name" type="text" required autocomplete="name">
+              </div>
+              <div>
+                <span class="utility q-sub">Email</span>
+                <input id="f-email" name="email" type="email" required autocomplete="email">
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="form-foot">
-          <button class="cta" type="submit">Send it <span class="arrow" aria-hidden="true">↗</span></button>
-          <p class="utility form-note">We read everything. We reply to the interesting&nbsp;ones fast.</p>
+
+        <div class="send-row">
+          <button class="cta" type="submit">Send it to STIR <span class="arrow" aria-hidden="true">→</span></button>
+          <span class="send-rail" aria-hidden="true"></span>
         </div>
       </form>
 
       <div class="contact-form form-success" id="form-success" role="status">
-        <h2 class="display">Received.</h2>
-        <p class="body">We’re reading it. If there’s something there, you’ll hear from us soon.</p>
+        <h2 class="display">We’ve got it.</h2>
+        <p class="body">We’re reading it now. If there’s something there, you’ll hear from us — usually within a couple of days.</p>
+        <p class="utility contact-note">Brooklyn, New&nbsp;York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
       </div>
 
       <div class="contact-form form-success" id="form-error" role="alert">
@@ -137,6 +183,7 @@
   var ok = document.getElementById('form-success');
   var bad = document.getElementById('form-error');
   var btn = form.querySelector('button[type="submit"]');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function show(el) {
     form.style.display = 'none';
@@ -147,12 +194,14 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (btn) { btn.disabled = true; btn.firstChild.nodeValue = 'Sending '; }
-    fetch('/', {
+    form.classList.add('is-sending');
+    var travelled = new Promise(function (go) { setTimeout(go, reduceMotion ? 0 : 620); });
+    Promise.all([travelled, fetch('/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams(new FormData(form)).toString()
-    }).then(function (r) {
-      if (!r.ok) throw new Error(r.status);
+    })]).then(function (res) {
+      if (!res[1].ok) throw new Error(res[1].status);
       show(ok);
     }).catch(function () {
       show(bad);

@@ -1314,3 +1314,199 @@ img, video { max-width: 100%; display: block; }
 .reel { cursor: grab; }
 .reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
 .reel.is-dragging .ev-media { pointer-events: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   OUTCOMES — what you leave with.
+   Deliberately a different rhythm from the FIND/BUILD/RUN index
+   that precedes it: three vertical columns, not full-width rows.
+   ════════════════════════════════════════════════════════════════ */
+.outcomes {
+  padding-top: clamp(110px, 16vh, 220px);
+  padding-bottom: clamp(120px, 18vh, 240px);
+}
+.outcomes-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.outcomes-title {
+  grid-column: 1 / 9;
+  font-size: var(--t-big);
+}
+.outcomes-lede {
+  grid-column: 1 / 7;
+  margin-top: clamp(28px, 4vh, 48px);
+}
+.outcomes-set {
+  grid-column: 1 / -1;
+  margin-top: clamp(72px, 11vh, 150px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--col-gap);
+  row-gap: clamp(56px, 8vh, 80px);
+}
+.outcome { border-top: 1px solid var(--ink); padding-top: 16px; }
+.outcome-no { color: var(--ink-60); display: flex; margin-bottom: clamp(28px, 4vh, 48px); }
+.outcome-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+.outcome-q {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.5;
+  color: var(--ink);
+  margin-top: 14px;
+  max-width: 22ch;
+}
+.outcome-list { margin-top: clamp(20px, 3vh, 32px); color: var(--ink-60); max-width: 26ch; }
+.outcomes-foot {
+  grid-column: 1 / -1;
+  margin-top: clamp(56px, 8vh, 110px);
+  color: var(--ink-60);
+}
+@media (max-width: 1023px) {
+  .outcomes-title, .outcomes-lede { grid-column: 1 / -1; }
+  .outcomes-set { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 639px) {
+  .outcomes-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .outcomes-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  .outcomes-set { grid-template-columns: 1fr; row-gap: 44px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — a conversation, not a form.
+   ════════════════════════════════════════════════════════════════ */
+.q-block {
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+.q-no { color: var(--ink-60); padding-top: 4px; }
+.q-body { min-width: 0; }
+.q-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.8vw, 1.6rem);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  display: block;
+  margin-bottom: 4px;
+}
+.q-hint { color: var(--ink-60); margin-bottom: 18px; display: block; }
+
+/* Editorial inputs — rules, not boxes */
+.q-body input[type="text"],
+.q-body input[type="email"],
+.q-body input[type="url"],
+.q-body textarea {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 8px 0 14px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.q-body textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+.q-body input:focus,
+.q-body textarea:focus { outline: none; border-bottom-color: var(--red); }
+.q-body input:focus-visible,
+.q-body textarea:focus-visible { outline: none; }
+
+/* Two fields on one rule (name + email) */
+.q-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); row-gap: 20px; }
+@media (max-width: 639px) { .q-pair { grid-template-columns: 1fr; } }
+.q-sub { color: var(--ink-60); display: block; margin-bottom: 2px; }
+
+/* Selectable situations — editorial rows, red indicator, never
+   colour alone (the label also goes to full Ink and shifts 2px) */
+.opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
+@media (max-width: 639px) { .opts { grid-template-columns: 1fr; } }
+.opt { position: relative; display: block; }
+.opt input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  margin: 0;
+}
+.opt span {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85em;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink-35);
+  color: var(--ink-60);
+  cursor: pointer;
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.opt span::before {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  align-self: center;
+  box-shadow: inset 0 0 0 1px var(--ink-35);
+  background: transparent;
+  transition: background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.opt:hover span { color: var(--ink); }
+.opt input:checked + span {
+  color: var(--ink);
+  font-weight: 500;
+  transform: translateX(2px);
+}
+.opt input:checked + span::before {
+  background: var(--red);
+  box-shadow: inset 0 0 0 1px var(--red);
+}
+.opt input:focus-visible + span {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+/* Submit: the signal travels, then confirmation */
+.send-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: clamp(16px, 2.5vh, 28px);
+}
+.send-rail {
+  position: relative;
+  height: 1px;
+  background: var(--ink-35);
+  flex: 1 1 160px;
+  min-width: 120px;
+  overflow: hidden;
+}
+.send-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  form.is-sending .send-rail::after {
+    transform: scaleX(1);
+    transition: transform 0.6s var(--ease);
+  }
+}
+form.is-sending .cta { opacity: 0.55; pointer-events: none; }
+
+.contact-note { color: var(--ink-60); margin-top: clamp(40px, 6vh, 72px); }
