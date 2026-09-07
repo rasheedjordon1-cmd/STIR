@@ -616,7 +616,7 @@ img, video { max-width: 100%; display: block; }
 
 .method-index { grid-column: 1 / -1; }
 
-.method-row { border-top: 1px solid var(--ink); }
+.method-row { border-top: 1px solid var(--ink); position: relative; }
 .method-row:last-child { border-bottom: 1px solid var(--ink); }
 
 .method-row-head {
@@ -1114,3 +1114,203 @@ img, video { max-width: 100%; display: block; }
   .page-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
   .payoff-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   MOTION SYSTEM — one small library, reused everywhere.
+   BLUE HOLDS · RED MOVES · IVORY REVEALS · BLACK EXPLAINS
+
+   Four primitives:
+     A  .sig-line / .sig-*      Signal Red enters when something acts
+     B  [data-reveal=registration]  print-registration resolve (art)
+     C  [data-reveal=editorial]     masked rise (typography)
+     D  [data-reveal=structural]    red progression (systems)
+
+   Every primitive is inert under prefers-reduced-motion: content
+   arrives complete, only the movement is dropped.
+   ════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ── C · Editorial reveal — typography rises out of a mask ───── */
+  /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
+     intersection rect, so IntersectionObserver would never fire. */
+  [data-reveal="editorial"] {
+    opacity: 0;
+    transform: translateY(14px);
+    -webkit-mask-image: linear-gradient(#000, #000);
+            mask-image: linear-gradient(#000, #000);
+    -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
+    -webkit-mask-position: 0 100%;    mask-position: 0 100%;
+    -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.7s var(--ease),
+      -webkit-mask-size 0.7s var(--ease),
+      mask-size 0.7s var(--ease);
+  }
+  [data-reveal="editorial"].is-in {
+    opacity: 1;
+    transform: none;
+    -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
+  }
+
+  /* ── B · Registration reveal — plates settling into register ─── */
+  [data-reveal="registration"] {
+    opacity: 0;
+    transform: translate(4px, 2px);
+    transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
+  }
+  [data-reveal="registration"].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* Images carry a mis-registered cobalt plate that resolves */
+  img[data-reveal="registration"] {
+    box-shadow: 5px 3px 0 0 var(--cobalt);
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.8s var(--ease),
+      box-shadow 0.8s var(--ease);
+  }
+  img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+
+  /* ── D · Structural reveal — a red signal draws the rule ─────── */
+  [data-reveal="structural"] { position: relative; }
+  [data-reveal="structural"]::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -1px;
+    height: 2px;
+    width: 100%;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s var(--ease);
+  }
+  [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+  /* the signal passes through, it does not stay */
+  [data-reveal="structural"].is-in.sig-spent::before {
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+}
+
+/* ── A · Signal line — the shared "this is actionable" primitive ─ */
+.sig-line {
+  position: relative;
+}
+.sig-line::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.sig-line:hover::after,
+.sig-line:focus-visible::after,
+.sig-line[aria-current]::after,
+.sig-line.is-active::after { transform: scaleX(1); }
+
+/* Nav: active page gets a small permanent red marker (never colour alone —
+   it pairs with the underline and aria-current) */
+.nav-links a[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -12px; top: 50%;
+  width: 5px; height: 5px;
+  margin-top: -2px;
+  background: var(--red);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   THESIS — quantity → reduction → significance
+   "more content" briefly accumulates behind itself, then collapses.
+   ════════════════════════════════════════════════════════════════ */
+.accum {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+}
+.accum i {
+  position: absolute;
+  inset: 0;
+  font-style: normal;
+  pointer-events: none;
+  opacity: 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .belief-a.is-in .accum i:nth-of-type(1) { animation: accum-a 1.15s var(--ease) 0.25s both; }
+  .belief-a.is-in .accum i:nth-of-type(2) { animation: accum-b 1.15s var(--ease) 0.3s both; }
+  @keyframes accum-a {
+    0%   { opacity: 0; transform: none; }
+    28%  { opacity: 0.22; transform: translate(0.18em, 0.1em); color: var(--cobalt); }
+    100% { opacity: 0; transform: none; }
+  }
+  @keyframes accum-b {
+    0%   { opacity: 0; transform: none; }
+    28%  { opacity: 0.14; transform: translate(0.36em, 0.2em); color: var(--ink); }
+    100% { opacity: 0; transform: none; }
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METHOD — FIND / BUILD / RUN reads as one system.
+   A structural spine runs the index; Signal Red progresses to the
+   active stage. Progress height is set from JS (--sig-progress).
+   ════════════════════════════════════════════════════════════════ */
+.method-index { position: relative; padding-left: 0; }
+.method-index::before,
+.method-index::after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 0;
+  width: 1px;
+}
+.method-index::before {
+  bottom: 0;
+  background: var(--ink-35);
+}
+.method-index::after {
+  width: 2px;
+  left: -18.5px;
+  height: var(--sig-progress, 0px);
+  background: var(--red);
+  transition: height 0.5s var(--ease);
+}
+/* Stage markers on the spine */
+.method-row { --dot: var(--ink-35); }
+.method-row::before {
+  content: "";
+  position: absolute;
+  left: -21px;
+  top: calc(clamp(28px, 4.5vh, 56px) + 0.35em);
+  width: 7px; height: 7px;
+  background: var(--ivory);
+  box-shadow: 0 0 0 1px var(--dot);
+  transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.method-row.is-active { --dot: var(--red); }
+.method-row.is-active::before { background: var(--red); box-shadow: 0 0 0 1px var(--red); }
+
+@media (max-width: 639px) {
+  .method-index::before, .method-index::after { left: -10px; }
+  .method-index::after { left: -10.5px; }
+  .method-row::before { left: -13px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METRIC — 10M+ counts up when it arrives (tabular so it can't jitter)
+   ════════════════════════════════════════════════════════════════ */
+.proof-metric { font-variant-numeric: tabular-nums; }
+
+/* ════════════════════════════════════════════════════════════════
+   REEL — drag to examine the evidence
+   ════════════════════════════════════════════════════════════════ */
+.reel { cursor: grab; }
+.reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.reel.is-dragging .ev-media { pointer-events: none; }

@@ -83,8 +83,8 @@
 <main>
   <section class="page shell" aria-labelledby="about-title">
     <div class="grid">
-      <p class="utility page-label">About</p>
-      <h1 class="display page-title" id="about-title">Ordinary businesses.<br>Extraordinary demand.</h1>
+      <p class="utility page-label" data-reveal="structural">About</p>
+      <h1 class="display page-title" data-reveal="editorial" id="about-title">Ordinary businesses.<br>Extraordinary demand.</h1>
 
       <!-- DRAFT COPY — founder review before launch -->
       <div class="about-intro reveal">
@@ -98,21 +98,21 @@
       </div>
 
       <div class="grid about-block" style="grid-column: 1 / -1;">
-        <p class="utility b-label">What we believe</p>
-        <h2 class="display b-title reveal">People can’t buy what they don’t&nbsp;see.</h2>
+        <p class="utility b-label" data-reveal="structural">What we believe</p>
+        <h2 class="display b-title" data-reveal="editorial">People can’t buy what they don’t&nbsp;see.</h2>
         <p class="body b-copy reveal">And being seen is only useful if something happens next. So we don’t sell content. We make the work, put it in front of the right people and build the system that turns their attention into business — more calls, more orders, more bookings, more customers.</p>
       </div>
 
       <div class="grid about-block" style="grid-column: 1 / -1;">
-        <p class="utility b-label">The work so far</p>
-        <h2 class="display b-title reveal">It’s already working.</h2>
+        <p class="utility b-label" data-reveal="structural">The work so far</p>
+        <h2 class="display b-title" data-reveal="editorial">It’s already working.</h2>
         <p class="body b-copy reveal">Our work with <strong>Labay Market</strong> earned 10M+ organic views — and the attention turned into brand partnerships with <strong>Nike, Red&nbsp;Bull and TurboTax</strong>. We’ve worked with creators including Kemoy Martin, MarcoEatsWorld and Nicolas Nuvan, and more join the system every season.</p>
         <p class="utility about-roster reveal">Labay Market&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
       </div>
     </div>
 
     <!-- ILLUSTRATION: assets/illustration-city.webp — every window a business -->
-    <img class="about-art reveal" src="assets/illustration-city.webp"
+    <img class="about-art" data-reveal="registration" src="assets/illustration-city.webp"
          width="2000" height="1497" loading="lazy" decoding="async"
          alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
 
@@ -138,10 +138,11 @@
 
 <script>
 (function () {
-  var els = document.querySelectorAll('.reveal');
-  if (!('IntersectionObserver' in window)) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
+  var els = document.querySelectorAll('.reveal, [data-reveal]');
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!('IntersectionObserver' in window) || reduce) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
   var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); if (e.target.getAttribute('data-reveal') === 'structural') setTimeout(function(){ e.target.classList.add('sig-spent'); }, 900); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(function (el) { io.observe(el); });
 })();
