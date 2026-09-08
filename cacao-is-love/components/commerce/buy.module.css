@@ -1,0 +1,109 @@
+.module { display: grid; gap: var(--s-5); }
+
+.head { display: grid; gap: var(--s-2); }
+.priceRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-4);
+  border-top: var(--hair) solid var(--rule-strong);
+  border-bottom: var(--hair) solid var(--rule);
+  padding-block: var(--s-3);
+}
+
+.facts { display: grid; gap: 0; }
+.factRow {
+  display: grid;
+  grid-template-columns: minmax(96px, 0.7fr) minmax(0, 2fr);
+  gap: var(--s-4);
+  padding-block: var(--s-2);
+  border-bottom: var(--hair) solid var(--rule);
+}
+.factKey { color: var(--fg-meta); }
+
+/* ---- availability ---- */
+.status { display: flex; align-items: center; gap: var(--s-3); }
+.dot { width: 7px; height: 7px; flex: 0 0 7px; }
+.dotIn { background: var(--green); }
+.dotLow { background: var(--pod); }
+.dotOut { background: var(--fg-meta); }
+
+/* ---- option toggle ---- */
+.options { display: grid; gap: var(--s-3); }
+@media (min-width: 520px) { .options { grid-template-columns: 1fr 1fr; } }
+
+.optionInput {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.option {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  border: var(--hair) solid var(--rule-strong);
+  padding: var(--s-4);
+  cursor: pointer;
+  background: transparent;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  min-height: 84px;
+}
+.option:hover { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+.optionInput:checked + .option { background: var(--fg); color: var(--bg); }
+.optionInput:checked + .option .optionSub { color: var(--bg); opacity: 0.72; }
+.optionInput:focus-visible + .option { outline: 2px solid var(--accent); outline-offset: 3px; }
+.optionSub { color: var(--fg-meta); }
+
+/* ---- gift note ---- */
+.gift {
+  border-left: 2px solid var(--marker);
+  padding: var(--s-4);
+  background: color-mix(in srgb, var(--fg) 4%, transparent);
+  display: grid;
+  gap: var(--s-3);
+  animation: giftIn var(--dur) var(--ease);
+}
+@keyframes giftIn { from { opacity: 0; transform: translateY(-4px); } }
+
+.field { display: grid; gap: 6px; }
+.input, .textarea {
+  width: 100%;
+  background: var(--bg);
+  border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--radius-ctl);
+  padding: var(--s-3);
+  font-size: var(--fs-body);
+  min-height: 48px;
+  color: var(--fg);
+}
+.textarea { min-height: 76px; resize: vertical; line-height: 1.5; font-family: var(--font-serif); }
+.input::placeholder, .textarea::placeholder { color: var(--fg-meta); opacity: 0.8; }
+.counter { justify-self: end; color: var(--fg-meta); }
+
+/* ---- actions ---- */
+.actions { display: flex; gap: var(--s-3); align-items: stretch; flex-wrap: wrap; }
+.actions > :last-child { flex: 1 1 220px; }
+
+.micro { display: grid; gap: var(--s-1); color: var(--fg-meta); }
+
+/* ---- waitlist ---- */
+.waitlist { display: grid; gap: var(--s-4); }
+.waitRow { display: grid; gap: var(--s-3); }
+@media (min-width: 520px) { .waitRow { grid-template-columns: 1fr 1fr; } }
+.optional { color: var(--fg-meta); }
+.success {
+  border: var(--hair) solid var(--marker);
+  border-left-width: 3px;
+  padding: var(--s-4);
+  display: grid;
+  gap: var(--s-2);
+}
+.srOnly {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}

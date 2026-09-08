@@ -1,0 +1,212 @@
+/* ---------------- Header ---------------- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--paper);
+  border-bottom: var(--hair) solid var(--rule);
+}
+.brandLink { display: inline-flex; align-items: center; min-height: 44px; }
+.headerInner {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+@media (min-width: 900px) { .headerInner { gap: var(--s-5); } }
+.nav { display: none; }
+@media (min-width: 900px) {
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 2.4vw, 34px);
+  }
+}
+.navLink {
+  color: var(--fg);
+  padding-block: 10px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  position: relative;
+}
+.navLink::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: 8px;
+  border-bottom: var(--hair) solid var(--pod);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease);
+}
+.navLink:hover::after, .navLink[aria-current='page']::after { transform: scaleX(1); }
+
+.headerRight { display: flex; align-items: center; gap: var(--s-2); }
+@media (min-width: 900px) { .headerRight { gap: var(--s-3); } }
+
+/* SHOP is not a peer of the editorial links — a hairline box lifts it out of
+   the row without turning it into a shouting button. */
+.shopLink {
+  border: var(--hair) solid var(--ink);
+  padding: 0 var(--s-3);
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  color: var(--ink);
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+.shopLink:hover { background: var(--ink); color: var(--paper); }
+
+/* Below 380px the header cannot hold five controls without overflowing.
+   SHOP drops out there: the hero CTA, the menu sheet and the sticky bar all
+   still reach the product, so nothing is lost but the crowding. */
+@media (max-width: 379px) { .shopLink { display: none; } }
+
+.cartBtn {
+  display: inline-flex;
+  white-space: nowrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding-inline: var(--s-2);
+  color: var(--ink);
+}
+.cartCount {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  min-width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  background: var(--pod);
+  color: var(--paper);
+  padding-inline: 5px;
+}
+.cartCountZero { background: transparent; color: var(--ink-55); }
+
+.menuBtn { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--s-2); }
+@media (min-width: 900px) { .menuBtn { display: none; } }
+
+/* ---------------- Mobile sheet ---------------- */
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  padding: var(--gutter);
+  animation: sheetIn var(--dur) var(--ease);
+}
+@keyframes sheetIn { from { opacity: 0; transform: translateY(-8px); } }
+.sheetTop { display: flex; align-items: center; justify-content: space-between; height: calc(var(--header-h) - var(--gutter) + 8px); }
+.sheetNav { margin-top: var(--s-8); display: grid; gap: var(--s-2); }
+.sheetLink {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(2rem, 11vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: var(--tr-head);
+  text-transform: uppercase;
+  padding-block: var(--s-2);
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-4);
+}
+.sheetNum { color: var(--green); }
+.sheetFoot { margin-top: auto; padding-top: var(--s-7); border-top: var(--hair) solid var(--rule); display: grid; gap: var(--s-4); }
+.sheetSecondary { display: flex; flex-wrap: wrap; gap: var(--s-5); color: var(--ink-55); }
+
+/* ---------------- Cart drawer ---------------- */
+.scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: color-mix(in srgb, var(--ink) 45%, transparent);
+  animation: fade var(--dur) var(--ease);
+}
+@keyframes fade { from { opacity: 0; } }
+
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 71;
+  width: min(430px, 100%);
+  background: var(--paper);
+  border-left: var(--hair) solid var(--ink);
+  display: flex;
+  flex-direction: column;
+  animation: drawerIn var(--dur) var(--ease);
+}
+@keyframes drawerIn { from { transform: translateX(16px); opacity: 0; } }
+
+.drawerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--s-5) var(--s-5) var(--s-4);
+  border-bottom: var(--hair) solid var(--ink);
+}
+.drawerBody { flex: 1; overflow-y: auto; padding: var(--s-5); }
+.drawerEmpty { color: var(--ink-55); padding-block: var(--s-8); }
+
+.line { display: grid; gap: var(--s-3); padding-block: var(--s-5); border-bottom: var(--hair) solid var(--rule); }
+.line:first-child { padding-top: 0; }
+.lineTop { display: flex; justify-content: space-between; gap: var(--s-4); align-items: baseline; }
+.lineNote {
+  border-left: 2px solid var(--green);
+  padding: var(--s-2) var(--s-3);
+  background: var(--paper-deep);
+}
+.lineControls { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
+.remove { color: var(--ink-55); text-decoration: underline; text-underline-offset: 3px; min-height: 44px; }
+.remove:hover { color: var(--pod); }
+
+.drawerFoot { border-top: var(--hair) solid var(--ink); padding: var(--s-5); display: grid; gap: var(--s-4); }
+.subtotal { display: flex; justify-content: space-between; align-items: baseline; }
+
+/* ---------------- Sticky mobile CTA ---------------- */
+.sticky {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 40;
+  background: var(--paper);
+  border-top: var(--hair) solid var(--ink);
+  padding: var(--s-2) var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  transform: translateY(110%);
+  transition: transform var(--dur) var(--ease);
+  padding-bottom: max(var(--s-2), env(safe-area-inset-bottom));
+}
+.stickyIn { transform: none; }
+.stickyMeta { flex: 1; min-width: 0; }
+.stickyName { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 900px) { .sticky { display: none; } }
+
+/* ---------------- Footer ---------------- */
+.footer { background: var(--ink); color: var(--paper); padding-block: var(--s-10) var(--s-8); }
+.footerGrid {
+  display: grid;
+  gap: var(--s-8);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 760px) {
+  .footerGrid { grid-template-columns: 1.4fr 1fr 1fr; gap: var(--s-7); }
+}
+.footerCol { display: grid; gap: var(--s-3); align-content: start; }
+.footerLink { color: var(--paper-deep); min-height: 44px; display: inline-flex; align-items: center; }
+.footerLink:hover { color: var(--blue); }
+.footerBottom {
+  margin-top: var(--s-10);
+  padding-top: var(--s-4);
+  border-top: var(--hair) solid color-mix(in srgb, var(--paper) 24%, transparent);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  justify-content: space-between;
+  color: var(--blue);
+}
