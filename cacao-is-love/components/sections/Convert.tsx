@@ -65,7 +65,7 @@ export function EmailCapture() {
         />
         <div>
           {done ? (
-            <p className="t-serif" role="status" style={{ color: 'var(--paper-deep)' }}>
+            <p className="t-serif" role="status" style={{ color: 'var(--fg-2)' }}>
               You are in. We will write when there is something worth saying.
             </p>
           ) : (
@@ -77,7 +77,7 @@ export function EmailCapture() {
                 setDone(true)
               }}
             >
-              <p className="t-serif" style={{ color: 'var(--paper-deep)', marginBottom: 'var(--s-3)' }}>
+              <p className="t-serif" style={{ color: 'var(--fg-2)', marginBottom: 'var(--s-3)' }}>
                 {site.email.supporting}
               </p>
               <div className={s.emailField}>

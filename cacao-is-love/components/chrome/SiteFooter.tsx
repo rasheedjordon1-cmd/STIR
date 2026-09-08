@@ -10,13 +10,13 @@ export function SiteFooter() {
         <div className={s.footerGrid}>
           <div className={s.footerCol}>
             <Mastermark height={28} />
-            <p className="t-serif" style={{ color: 'var(--paper-deep)', maxWidth: '30ch' }}>
+            <p className="t-serif" style={{ color: 'var(--fg-2)', maxWidth: '30ch' }}>
               {site.tagline}
             </p>
           </div>
 
           <nav className={s.footerCol} aria-label="Footer — sections">
-            <p className="t-label" style={{ color: 'var(--blue)' }}>
+            <p className="t-label" style={{ color: 'var(--fg-meta)' }}>
               READ
             </p>
             {site.nav.map((item) => (
@@ -27,7 +27,7 @@ export function SiteFooter() {
           </nav>
 
           <nav className={s.footerCol} aria-label="Footer — information">
-            <p className="t-label" style={{ color: 'var(--blue)' }}>
+            <p className="t-label" style={{ color: 'var(--fg-meta)' }}>
               INFORMATION
             </p>
             <Link href={site.shopHref} className={`t-label ${s.footerLink}`}>

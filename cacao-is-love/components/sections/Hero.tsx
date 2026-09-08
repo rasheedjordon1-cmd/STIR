@@ -23,7 +23,7 @@ export function Hero() {
             </h1>
 
             <div className={s.heroLines}>
-              <p className="t-lede" style={{ color: 'var(--ink)' }}>
+              <p className="t-lede" style={{ color: 'var(--fg)' }}>
                 {hero.supporting}
               </p>
               <p className="t-lede">{hero.secondLine}</p>

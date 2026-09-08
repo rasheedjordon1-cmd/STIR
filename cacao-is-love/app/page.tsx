@@ -43,7 +43,7 @@ export default function HomePage() {
       <FieldNotes />
       <BuyChapter
         id="buy-final"
-        ground="deep"
+        ground="paper"
         eyebrow="CHAPTER 12"
         lines={['ONE BAG.', 'ABOUT EIGHT CUPS.']}
         withPlate={false}

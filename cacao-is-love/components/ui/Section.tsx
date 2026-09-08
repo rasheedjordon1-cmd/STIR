@@ -1,12 +1,14 @@
 import type { ReactNode } from 'react'
 import s from './ui.module.css'
 
-export type Ground = 'paper' | 'deep' | 'kraft' | 'ink'
+export type Ground = 'paper' | 'deep' | 'kraft' | 'clay' | 'forest' | 'ink'
 
 const grounds: Record<Ground, string> = {
   paper: 'ground-paper',
   deep: 'ground-deep',
   kraft: 'ground-kraft',
+  clay: 'ground-clay',
+  forest: 'ground-forest',
   ink: 'ground-ink',
 }
 

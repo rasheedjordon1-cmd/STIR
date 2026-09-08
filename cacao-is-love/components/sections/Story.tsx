@@ -14,7 +14,7 @@ import s from './sections.module.css'
 /* -------- 07 · HOW TO MAKE IT ------------------------------------------- */
 export function HowToMake() {
   return (
-    <Section id="make" ground="deep" labelledBy="make-title">
+    <Section id="make" ground="kraft" labelledBy="make-title">
       <ChapterHeader
         number={making.eyebrow}
         eyebrow="PREPARATION"
@@ -96,7 +96,7 @@ export function FounderNote() {
 /* -------- 09 · SOURCE --------------------------------------------------- */
 export function Source() {
   return (
-    <Section id="source" ground="ink" labelledBy="source-title">
+    <Section id="source" ground="forest" labelledBy="source-title">
       <Chapter
         side="right"
         rail={<SpecimenRail title="ORIGIN RECORD" entries={origin.records} />}
@@ -104,7 +104,7 @@ export function Source() {
         <ChapterHeader number="CHAPTER 09" eyebrow="PROVENANCE" id="source-title" lines={origin.headline} />
         <div className="measure" style={{ marginTop: 'var(--s-6)', display: 'grid', gap: 'var(--s-4)' }}>
           {origin.body.map((p, i) => (
-            <p key={i} className="t-serif" style={{ color: 'var(--paper-deep)' }}>
+            <p key={i} className="t-serif" style={{ color: 'var(--fg-2)' }}>
               {p}
             </p>
           ))}
@@ -122,7 +122,7 @@ export function Source() {
 /* -------- 10 · MAKE TWO CUPS -------------------------------------------- */
 export function MakeTwoCups({ buyHref = '#buy' }: { buyHref?: string }) {
   return (
-    <Section id="maketwo" ground="kraft" labelledBy="maketwo-title">
+    <Section id="maketwo" ground="clay" labelledBy="maketwo-title">
       <div className={s.makeTwoGrid}>
         <div>
           <ChapterHeader
@@ -138,7 +138,7 @@ export function MakeTwoCups({ buyHref = '#buy' }: { buyHref?: string }) {
               </p>
             ))}
           </div>
-          <p className="t-serif measure" style={{ marginTop: 'var(--s-5)', color: 'var(--ink-70)' }}>
+          <p className="t-serif measure" style={{ marginTop: 'var(--s-5)', color: 'var(--fg-2)' }}>
             {makeTwo.body}
           </p>
           <div style={{ marginTop: 'var(--s-6)' }}>
@@ -173,7 +173,7 @@ export function MakeTwoCups({ buyHref = '#buy' }: { buyHref?: string }) {
 /* -------- 11 · NOTES FROM THE NEIGHBORHOOD ------------------------------ */
 export function FieldNotes() {
   return (
-    <Section id="people" ground="paper" labelledBy="people-title">
+    <Section id="people" ground="deep" labelledBy="people-title">
       <ChapterHeader
         number="CHAPTER 11"
         eyebrow="SOCIAL"
@@ -189,7 +189,7 @@ export function FieldNotes() {
               <p className={`t-meta ${s.noteWho}`}>{note.location}</p>
             </div>
             <div>
-              <p className="t-label" style={{ color: 'var(--green)' }}>
+              <p className="t-label" style={{ color: 'var(--marker)' }}>
                 THEIR CUP
               </p>
               <div className={s.theirCup}>

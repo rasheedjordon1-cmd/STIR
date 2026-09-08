@@ -24,8 +24,8 @@
 /* ---- availability ---- */
 .status { display: flex; align-items: center; gap: var(--s-3); }
 .dot { width: 7px; height: 7px; flex: 0 0 7px; }
-.dotIn { background: var(--green); }
-.dotLow { background: var(--pod); }
+.dotIn { background: var(--marker); }
+.dotLow { background: var(--accent); }
 .dotOut { background: var(--fg-meta); }
 
 /* ---- option toggle ---- */
@@ -42,6 +42,7 @@
   border: 0;
 }
 .option {
+  border-radius: var(--radius);
   display: grid;
   gap: 4px;
   align-content: start;
@@ -60,7 +61,8 @@
 
 /* ---- gift note ---- */
 .gift {
-  border-left: 2px solid var(--marker);
+  border-left: 3px solid var(--marker);
+  border-radius: var(--radius-ctl);
   padding: var(--s-4);
   background: color-mix(in srgb, var(--fg) 4%, transparent);
   display: grid;
@@ -98,6 +100,7 @@
 .success {
   border: var(--hair) solid var(--marker);
   border-left-width: 3px;
+  border-radius: var(--radius-ctl);
   padding: var(--s-4);
   display: grid;
   gap: var(--s-2);

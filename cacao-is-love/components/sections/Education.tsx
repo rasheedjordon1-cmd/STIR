@@ -10,7 +10,7 @@ import s from './sections.module.css'
 /* -------- 02 · PRODUCT TRUTH -------------------------------------------- */
 export function ProductTruth() {
   return (
-    <Section id="truth" ground="kraft" labelledBy="truth-title">
+    <Section id="truth" ground="clay" labelledBy="truth-title">
       <div className={s.truthGrid}>
         <Reveal>
           <p className={`t-h3 ${s.truthKicker}`}>{productTruth.kicker}</p>
@@ -19,7 +19,7 @@ export function ProductTruth() {
           </h2>
           <div className={s.truthLines}>
             {productTruth.lines.map((l) => (
-              <p key={l} className="t-lede" style={{ color: 'var(--ink-70)' }}>
+              <p key={l} className="t-lede" style={{ color: 'var(--fg-2)' }}>
                 {l}
               </p>
             ))}
@@ -31,7 +31,7 @@ export function ProductTruth() {
             {productTruth.facts.map((f) => (
               <div key={f.label} className={s.truthFact}>
                 <span className="t-label">{f.label}</span>
-                <span className="t-meta" style={{ color: 'var(--ink)' }}>
+                <span className="t-meta" style={{ color: 'var(--fg)' }}>
                   {f.value}
                 </span>
               </div>
@@ -99,7 +99,7 @@ export function WhatIsCacao() {
 /* -------- 04 · CACAO / COFFEE ------------------------------------------- */
 export function CoffeeNeighbor() {
   return (
-    <Section id="coffee" ground="ink" labelledBy="coffee-title">
+    <Section id="coffee" ground="forest" labelledBy="coffee-title">
       <Chapter side="right" rail={<SpecimenRail title="COMPARISON" entries={[
         { label: 'SUBJECT A', value: 'Coffee' },
         { label: 'SUBJECT B', value: 'Whole cacao' },
@@ -111,7 +111,7 @@ export function CoffeeNeighbor() {
           id="coffee-title"
           lines={coffeeNeighbor.headline}
         />
-        <p className="t-lede measure" style={{ marginTop: 'var(--s-5)', color: 'var(--paper-deep)' }}>
+        <p className="t-lede measure" style={{ marginTop: 'var(--s-5)', color: 'var(--fg-2)' }}>
           {coffeeNeighbor.lede}
         </p>
 
@@ -136,7 +136,7 @@ export function CoffeeNeighbor() {
           </tbody>
         </table>
 
-        <p className={`t-serif ${s.compareClosing} measure`} style={{ color: 'var(--paper-deep)' }}>
+        <p className={`t-serif ${s.compareClosing} measure`} style={{ color: 'var(--fg-2)' }}>
           {coffeeNeighbor.closing}
         </p>
       </Chapter>

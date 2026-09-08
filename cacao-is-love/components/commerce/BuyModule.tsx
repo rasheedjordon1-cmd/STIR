@@ -47,7 +47,7 @@ function AvailabilityLine({ availability }: { availability: Availability }) {
   }
   if (availability === 'low_stock' && product.unitsRemaining) {
     return (
-      <p className={`t-label ${s.status}`} style={{ color: 'var(--pod)' }}>
+      <p className={`t-label ${s.status}`} style={{ color: 'var(--accent)' }}>
         <span className={`${s.dot} ${s.dotLow}`} aria-hidden />
         LAST {product.unitsRemaining} BAGS OF THIS HARVEST
       </p>

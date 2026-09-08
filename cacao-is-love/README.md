@@ -60,22 +60,39 @@ pale blue passes at 5.80:1, so blue speaks and pod survives only as a filled
 button. Every ratio in the token file was measured, not estimated.
 
 ```
-paper #F2EDE1 · paper-deep #E8E0CE · kraft #C9B896 · ink #171310
-green #3F5B45 · blue #7E93A3 · blue-deep #4E6675 · pod #A6331F
+paper #F5EFE1 · paper-deep #EBE2CE · kraft #D4BC93 · ink #1B1512
+clay  #A03D24 · forest    #2E4636 · bloom #E0A05A · shell #F2D9B8
 ```
 
-Colour sequences the narrative — each chapter takes a ground — and the hot note
-is reserved for **actions and availability only**.
+Colour sequences the narrative — each chapter takes a ground, and two of them
+(**clay** and **forest**) are saturated full-bleed fields rather than tinted
+cream. That is deliberate: the first pass was ~85% cream with hairline rules and
+read institutional, like a museum catalogue rather than something you want to
+drink. Warmth in a food brand comes from committed colour, softened geometry and
+type with a voice.
+
+Clay is a narrow ground on purpose — only cream (5.75:1) and shell (4.83:1)
+clear AA on it — so its semantic map offers nothing else, and its CTA inverts to
+a cream fill with clay text.
 
 ### Type
 
-- **Archivo** — structural sans: nav, labels, product data, headings.
-- **Newsreader** — editorial serif with true italics: long-form, the founder note.
+- **Fraunces** — the voice: headlines and long-form. Its `SOFT` and `WONK` axes
+  are set explicitly (`SOFT 80, WONK 1` at display sizes); at its defaults it is
+  sharp and high-contrast, which reads fashion-magazine rather than warm.
+- **Archivo** — the discipline: nav, labels, product data, UI.
 - **IBM Plex Mono** — record-keeping only: plate numbers, weights, origin fields.
 - **The mastermark** is the handwritten logotype. It is the homepage `h1`. It is
   never redrawn in code and never approximated with a typeface — see below.
 
-Radius is `0` everywhere except form controls at `2px`.
+Radius: `12px` on plates and cards, `8px` on inputs, pill on buttons. The first
+pass used `0` everywhere, which is precise and cold; buttons carry the largest
+share of the softness signal.
+
+**No component references the raw palette.** Every colour, including inline
+styles, resolves through a semantic token, so a section can change ground
+without a single component edit and nothing can be left stranded on a failing
+pairing.
 
 ---
 

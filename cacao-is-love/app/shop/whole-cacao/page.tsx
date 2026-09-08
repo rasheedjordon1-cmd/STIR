@@ -59,13 +59,15 @@ export default function ProductPage() {
       </Section>
 
       <ProductTruth />
+      {/* Social proof sits high on the PDP rather than at the bottom: it is the
+          cheapest trust available and it costs nothing to read on the way down. */}
+      <FieldNotes />
       <WhatIsCacao />
       <HowToMake />
       <WhyPeopleDrink />
       <CoffeeNeighbor />
-      <Source />
       <FounderNote />
-      <FieldNotes />
+      <Source />
       <Faq />
       <BuyChapter
         id="pdp-final"

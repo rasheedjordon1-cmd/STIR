@@ -57,11 +57,11 @@ export function CartDrawer() {
 
                   {line.giftNote && (
                     <div className={s.lineNote}>
-                      <p className="t-label" style={{ color: 'var(--green)' }}>
+                      <p className="t-label" style={{ color: 'var(--marker)' }}>
                         SECOND BAG — FOR {line.giftNote.to.toUpperCase()}
                       </p>
                       {line.giftNote.message && (
-                        <p className="t-meta" style={{ color: 'var(--ink-70)' }}>
+                        <p className="t-meta" style={{ color: 'var(--fg-2)' }}>
                           “{line.giftNote.message}”
                         </p>
                       )}

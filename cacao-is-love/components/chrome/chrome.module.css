@@ -35,7 +35,7 @@
   content: '';
   position: absolute;
   left: 0; right: 0; bottom: 8px;
-  border-bottom: var(--hair) solid var(--pod);
+  border-bottom: var(--hair) solid var(--accent);
   transform: scaleX(0);
   transform-origin: left;
   transition: transform var(--dur) var(--ease);
@@ -48,6 +48,7 @@
 /* SHOP is not a peer of the editorial links — a hairline box lifts it out of
    the row without turning it into a shouting button. */
 .shopLink {
+  border-radius: var(--radius-btn);
   border: var(--hair) solid var(--ink);
   padding: 0 var(--s-3);
   min-height: 40px;
@@ -74,13 +75,14 @@
   color: var(--ink);
 }
 .cartCount {
+  border-radius: var(--radius-btn);
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   min-width: 20px;
   height: 20px;
   display: grid;
   place-items: center;
-  background: var(--pod);
+  background: var(--accent-bg);
   color: var(--paper);
   padding-inline: 5px;
 }
@@ -115,7 +117,7 @@
   align-items: baseline;
   gap: var(--s-4);
 }
-.sheetNum { color: var(--green); }
+.sheetNum { color: var(--marker); }
 .sheetFoot { margin-top: auto; padding-top: var(--s-7); border-top: var(--hair) solid var(--rule); display: grid; gap: var(--s-4); }
 .sheetSecondary { display: flex; flex-wrap: wrap; gap: var(--s-5); color: var(--ink-55); }
 
@@ -156,13 +158,14 @@
 .line:first-child { padding-top: 0; }
 .lineTop { display: flex; justify-content: space-between; gap: var(--s-4); align-items: baseline; }
 .lineNote {
-  border-left: 2px solid var(--green);
+  border-radius: var(--radius-ctl);
+  border-left: 3px solid var(--marker);
   padding: var(--s-2) var(--s-3);
   background: var(--paper-deep);
 }
 .lineControls { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
 .remove { color: var(--ink-55); text-decoration: underline; text-underline-offset: 3px; min-height: 44px; }
-.remove:hover { color: var(--pod); }
+.remove:hover { color: var(--accent); }
 
 .drawerFoot { border-top: var(--hair) solid var(--ink); padding: var(--s-5); display: grid; gap: var(--s-4); }
 .subtotal { display: flex; justify-content: space-between; align-items: baseline; }
@@ -199,7 +202,7 @@
 }
 .footerCol { display: grid; gap: var(--s-3); align-content: start; }
 .footerLink { color: var(--paper-deep); min-height: 44px; display: inline-flex; align-items: center; }
-.footerLink:hover { color: var(--blue); }
+.footerLink:hover { color: var(--accent); }
 .footerBottom {
   margin-top: var(--s-10);
   padding-top: var(--s-4);
@@ -208,5 +211,5 @@
   flex-wrap: wrap;
   gap: var(--s-4);
   justify-content: space-between;
-  color: var(--blue);
+  color: var(--fg-meta);
 }

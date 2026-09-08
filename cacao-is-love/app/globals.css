@@ -44,7 +44,11 @@ a { color: inherit; text-decoration: none; }
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
-.ground-ink :focus-visible { outline-color: var(--blue); }
+/* On the dark and saturated grounds the clay accent is not legible as a ring,
+   so the focus indicator follows the ground's own accent. */
+.ground-ink :focus-visible,
+.ground-forest :focus-visible { outline-color: var(--bloom); }
+.ground-clay :focus-visible { outline-color: var(--paper); }
 
 .skip-link {
   position: absolute;
@@ -73,7 +77,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- type vocabulary ---------- */
 .t-display {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 144;
   font-weight: 600;
   font-size: var(--fs-display);
   line-height: var(--lh-display);
@@ -81,7 +86,8 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
 }
 .t-h1 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 120;
   font-weight: 600;
   font-size: var(--fs-h1);
   line-height: var(--lh-head);
@@ -90,10 +96,11 @@ a { color: inherit; text-decoration: none; }
   text-wrap: balance;
 }
 .t-h2 {
-  font-family: var(--font-sans);
+  font-family: var(--font-display);
+  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 96;
   font-weight: 600;
   font-size: var(--fs-h2);
-  line-height: 1.06;
+  line-height: 1.08;
   letter-spacing: var(--tr-head);
   text-transform: uppercase;
   text-wrap: balance;
@@ -108,6 +115,7 @@ a { color: inherit; text-decoration: none; }
 }
 .t-lede {
   font-family: var(--font-serif);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0, 'opsz' 16;
   font-size: var(--fs-lede);
   line-height: var(--lh-serif);
   color: var(--fg-2);
@@ -115,6 +123,7 @@ a { color: inherit; text-decoration: none; }
 }
 .t-serif {
   font-family: var(--font-serif);
+  font-variation-settings: 'SOFT' 50, 'WONK' 0, 'opsz' 16;
   font-size: var(--fs-lede);
   line-height: var(--lh-serif);
   text-wrap: pretty;

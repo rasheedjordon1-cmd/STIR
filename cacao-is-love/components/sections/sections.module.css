@@ -14,7 +14,7 @@
 }
 .heroEyebrow {
   display: flex; align-items: center; gap: var(--s-3);
-  color: var(--green); margin-bottom: var(--s-6);
+  color: var(--marker); margin-bottom: var(--s-6);
 }
 .heroEyebrow::after { content: ''; flex: 1; border-bottom: var(--hair) solid var(--rule); }
 .heroMark { margin-bottom: var(--s-6); display: block; }
@@ -50,8 +50,8 @@
   border-bottom: var(--hair) solid var(--rule);
   color: var(--ink);
 }
-.contentsRow:hover .contentsLabel { color: var(--pod); }
-.contentsNum { color: var(--green); flex-shrink: 0; }
+.contentsRow:hover .contentsLabel { color: var(--accent); }
+.contentsNum { color: var(--marker); flex-shrink: 0; }
 .contentsLead { flex: 1; border-bottom: var(--hair) dotted var(--rule); transform: translateY(-4px); min-width: 16px; }
 .contentsLabel { flex-shrink: 0; transition: color var(--dur) var(--ease); }
 
@@ -72,6 +72,7 @@
 @media (min-width: 760px) { .flow { grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2.4vw, 32px); } }
 .flowItem { display: grid; gap: var(--s-3); align-content: start; position: relative; }
 .flowFrame {
+  border-radius: var(--radius);
   border: var(--hair) solid var(--rule-strong);
   aspect-ratio: 1 / 1;
   display: grid; place-items: center;
@@ -184,7 +185,7 @@
 .noteQuote { font-family: var(--font-serif); font-size: var(--fs-lede); line-height: 1.55; }
 .noteWho { color: var(--fg-meta); }
 .theirCup { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: baseline; margin-top: var(--s-2); }
-.cupChip { border: var(--hair) solid var(--rule); padding: 3px var(--s-2); color: var(--fg-2); }
+.cupChip { border: var(--hair) solid var(--rule); border-radius: var(--radius-btn); padding: 4px var(--s-3); color: var(--fg-2); }
 
 /* ---------------- Email ---------------- */
 .emailGrid { display: grid; gap: var(--s-7); }
@@ -193,12 +194,14 @@
 .emailField { display: flex; gap: 0; }
 .emailInput {
   flex: 1; min-width: 0; min-height: 56px;
+  border-radius: var(--radius-btn) 0 0 var(--radius-btn);
+  padding-left: var(--s-5);
   background: transparent; color: var(--fg);
   border: var(--hair) solid var(--rule-strong); border-right: 0;
-  padding: var(--s-3) var(--s-4); border-radius: var(--radius-ctl) 0 0 var(--radius-ctl);
+  padding: var(--s-3) var(--s-4);
 }
 .emailInput::placeholder { color: var(--fg-meta); }
-@media (max-width: 519px) { .emailField { display: grid; gap: var(--s-3); } .emailInput { border-right: var(--hair) solid var(--rule-strong); border-radius: var(--radius-ctl); } }
+@media (max-width: 519px) { .emailField { display: grid; gap: var(--s-3); } .emailInput { border-right: var(--hair) solid var(--rule-strong); border-radius: var(--radius-btn); } }
 
 /* ---------------- FAQ ---------------- */
 .faq { margin-top: var(--s-7); border-top: var(--hair) solid var(--rule-strong); }

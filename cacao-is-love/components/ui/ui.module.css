@@ -80,6 +80,7 @@
 .plateFrame {
   position: relative;
   border: var(--hair) solid var(--rule-strong);
+  border-radius: var(--radius);
   background: color-mix(in srgb, var(--fg) 4%, transparent);
   overflow: hidden;
 }
@@ -98,6 +99,7 @@
   background: var(--bg);
   padding: var(--s-2) var(--s-3);
   border: var(--hair) solid var(--rule);
+  border-radius: var(--radius-ctl);
   text-align: center;
 }
 
@@ -124,7 +126,7 @@
   font-size: var(--fs-label);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  border-radius: var(--radius);
+  border-radius: var(--radius-btn);
   border: var(--hair) solid transparent;
   transition: background-color var(--dur) var(--ease),
               color var(--dur) var(--ease),
@@ -153,6 +155,7 @@
 .btnOutline:hover { background: var(--fg); color: var(--bg); }
 
 .btnQuiet {
+  border-radius: 0;
   background: transparent;
   color: var(--fg);
   border-color: transparent;
@@ -193,6 +196,7 @@
 /* Reserved space until the handwritten asset is supplied. Never a font
    approximation — the mark is drawn by hand or it is not shown. */
 .mastermarkFallback {
+  border-radius: var(--radius-btn);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -205,6 +209,7 @@
 .mastermarkFallback .t-label { font-size: 0.625rem; letter-spacing: 0.1em; }
 
 .mastermarkDisplay {
+  border-radius: var(--radius);
   position: relative;
   display: grid;
   place-items: center;
