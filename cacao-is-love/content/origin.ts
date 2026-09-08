@@ -7,6 +7,8 @@
  *   A guessed field is a false sourcing claim.
  */
 
+import { photo } from './photography'
+
 export interface OriginRecord {
   label: string
   value: string | null
@@ -35,7 +37,17 @@ export const origin = {
   ],
 
   plates: [
-    { plate: 'PL. 09', caption: 'Origin — photograph pending', src: null, alt: '' },
-    { plate: 'PL. 10', caption: 'Origin — photograph pending', src: null, alt: '' },
+    {
+      plate: 'PL. 09',
+      caption: 'Cacao pod, opened',
+      src: photo('podSplit'),
+      alt: 'A cacao pod split open to show the pulp and beans inside.',
+    },
+    {
+      plate: 'PL. 10',
+      caption: 'Beans drying',
+      src: photo('beansDrying'),
+      alt: 'Cacao beans drying in the sun on wooden trays.',
+    },
   ],
 }

@@ -2,6 +2,7 @@ import { making } from '@/content/making'
 import { founder } from '@/content/founder'
 import { origin } from '@/content/origin'
 import { makeTwo, fieldNotes } from '@/content/people'
+import { photo } from '@/content/photography'
 import { Section, Chapter } from '@/components/ui/Section'
 import { ChapterHeader } from '@/components/ui/ChapterHeader'
 import { SpecimenRail } from '@/components/ui/SpecimenRail'
@@ -31,7 +32,7 @@ export function HowToMake() {
               <span className={`t-meta ${s.stepNum}`}>{step.n}</span>
               <h3 className="t-h3">{step.title}</h3>
             </div>
-            <Plate ratio="3 / 2" plate={step.plate} caption={step.meta} src={null} />
+            <Plate ratio="3 / 2" plate={step.plate} caption={step.meta} src={step.src} alt={step.alt} />
             <p className={s.stepBody}>{step.body}</p>
           </Reveal>
         ))}
@@ -147,8 +148,22 @@ export function MakeTwoCups({ buyHref = '#buy' }: { buyHref?: string }) {
           </div>
         </div>
         <div className={s.pair}>
-          <Plate plate="PL. 12" caption="One for you" src={null} ratio="3 / 4" />
-          <Plate plate="PL. 13" caption="One to share" src={null} ratio="3 / 4" />
+          <Plate
+            plate="PL. 12"
+            caption="One for you"
+            src={photo('oneCup')}
+            alt="A single mug of cacao on a table."
+            ratio="3 / 4"
+            sizes="(min-width: 900px) 20vw, 50vw"
+          />
+          <Plate
+            plate="PL. 13"
+            caption="One to share"
+            src={photo('twoCups')}
+            alt="Two mugs of cacao side by side."
+            ratio="3 / 4"
+            sizes="(min-width: 900px) 20vw, 50vw"
+          />
         </div>
       </div>
     </Section>

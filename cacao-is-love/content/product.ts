@@ -5,6 +5,8 @@
  *   Nothing in this file is a claim about sourcing. See origin.ts for that.
  */
 
+import { photo } from './photography'
+
 export type Availability = 'in_stock' | 'low_stock' | 'sold_out'
 
 export interface PurchaseOption {
@@ -77,14 +79,14 @@ export const product: Product = {
   ],
 
   gallery: [
-    { id: 'g1', role: 'product',     plate: 'PL. 01', caption: '250 g — whole cacao, Colombia',        src: null, alt: 'The CACAO IS LOVE bag, front.' },
-    { id: 'g2', role: 'texture',     plate: 'PL. 02', caption: 'Broken block, close',                   src: null, alt: 'A block of whole cacao broken to show its texture.' },
-    { id: 'g3', role: 'preparation', plate: 'PL. 03', caption: 'Chop — a knife and a board',            src: null, alt: 'Cacao being chopped on a wooden board.' },
-    { id: 'g4', role: 'preparation', plate: 'PL. 04', caption: 'Melt — low heat, hot water',            src: null, alt: 'Cacao melting into hot water in a pot.' },
-    { id: 'g5', role: 'origin',      plate: 'PL. 05', caption: 'Colombia — origin record',              src: null, alt: 'Documentary photograph from the origin region.' },
-    { id: 'g6', role: 'comparison',  plate: 'PL. 06', caption: 'Cacao beside coffee',                   src: null, alt: 'A cup of cacao next to a cup of coffee.' },
-    { id: 'g7', role: 'voice',       plate: 'PL. 07', caption: 'A cup, made somebody else’s way',  src: null, alt: 'A person holding a mug of cacao.' },
-    { id: 'g8', role: 'packaging',   plate: 'PL. 08', caption: 'Back of bag — ingredients',             src: null, alt: 'The back of the bag showing the ingredient panel.' },
+    { id: 'g1', role: 'product',     plate: 'PL. 01', caption: '250 g — whole cacao, Colombia',        src: photo('productFlat'), alt: 'The CACAO IS LOVE bag, front.' },
+    { id: 'g2', role: 'texture',     plate: 'PL. 02', caption: 'Broken block, close',                   src: photo('texture'), alt: 'A block of whole cacao broken to show its texture.' },
+    { id: 'g3', role: 'preparation', plate: 'PL. 03', caption: 'Chop — a knife and a board',            src: photo('chop'), alt: 'Cacao being chopped on a wooden board.' },
+    { id: 'g4', role: 'preparation', plate: 'PL. 04', caption: 'Melt — low heat, hot water',            src: photo('melt'), alt: 'Cacao melting into hot water in a pot.' },
+    { id: 'g5', role: 'origin',      plate: 'PL. 05', caption: 'Colombia — origin record',              src: photo('originTree'), alt: 'Documentary photograph from the origin region.' },
+    { id: 'g6', role: 'comparison',  plate: 'PL. 06', caption: 'Cacao beside coffee',                   src: photo('comparison'), alt: 'A cup of cacao next to a cup of coffee.' },
+    { id: 'g7', role: 'voice',       plate: 'PL. 07', caption: 'A cup, made somebody else’s way',  src: photo('cupInHands'), alt: 'A person holding a mug of cacao.' },
+    { id: 'g8', role: 'packaging',   plate: 'PL. 08', caption: 'Back of bag — ingredients',             src: photo('pouchBack'), alt: 'The back of the bag showing the ingredient panel.' },
   ],
 }
 

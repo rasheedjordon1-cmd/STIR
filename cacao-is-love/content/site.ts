@@ -1,3 +1,5 @@
+import { photo } from './photography'
+
 /** SITE — navigation, contents, shipping, and the email capture. */
 
 export const site = {
@@ -36,7 +38,12 @@ export const site = {
     secondLine: 'Made simply. Shared freely.',
     primaryCta: 'SHOP CACAO',
     secondaryCta: 'WHAT IS CACAO?',
-    plate: { plate: 'PL. 00', caption: 'Whole cacao, 250 g — Colombia', src: null, alt: '' },
+    plate: {
+      plate: 'PL. 00',
+      caption: 'Whole cacao, 250 g — Colombia',
+      src: photo('productFront'),
+      alt: 'A bag of whole cacao on a kitchen counter.',
+    },
   },
 
   /** PLACEHOLDER — set real shipping terms before launch. */

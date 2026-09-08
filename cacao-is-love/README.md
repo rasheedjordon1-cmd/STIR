@@ -114,12 +114,24 @@ Everything a real launch needs to replace is listed in
 | What | Where |
 |---|---|
 | Mastermark | `public/mastermark.svg`, then flip `HAS_ASSET` in `ui/Mastermark.tsx` |
-| Photography | `src` fields across `content/*.ts` |
+| Photography | `content/photography.ts` — drop files in `public/photo/`, add the key to `AVAILABLE` |
 | Price, shipping, contact | `content/product.ts`, `content/site.ts` |
 | Origin facts | `content/origin.ts` — **all null. Never guess.** |
 | Testimonials | `content/people.ts` — **all sample data.** |
 | Checkout | `chrome/CartDrawer.tsx`, marked `SWAP POINT` |
 | Email / waitlist capture | `BuyModule.tsx` and `sections/Convert.tsx`, marked `SWAP POINT` |
+
+### Photography lands one file at a time
+
+`content/photography.ts` is the single registry for all 14 image slots. Every
+slot already has its aspect ratio, plate number, caption and alt text, and an
+unset slot renders as a numbered picture-box rather than a broken image. So
+adding a photograph is two lines — drop the file in `public/photo/` under the
+listed filename, add its key to `AVAILABLE` — with no component or layout work.
+
+Two rules while imagery is interim: packaging stays **unbranded** (a mocked-up
+label would be inventing an identity the brand does not have yet), and origin
+imagery is never captioned as though it documents a specific farm.
 
 Unset origin fields render as a visible blank line in the record — an unfilled
 form field, which is honest. A guessed field is a false sourcing claim, so the
