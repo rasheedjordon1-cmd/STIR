@@ -33,6 +33,15 @@ const files = {
   podSplit: 'pod-split.png', //          1:1  pod opened
   beansDrying: 'beans-drying.png', //    1:1  drying trays
   kitchen: 'kitchen.png', //             4:5  founder note
+
+  /* Nicolas at the trees. These are the real provenance and founder
+     photographs — the first images on the site that actually document the
+     supply chain rather than illustrate it. When they land, the provenance
+     section's cream half takes `originNicolas` and the founder section takes
+     `founderNicolas`, and the interim captions below can name what is really
+     shown instead of hedging. */
+  founderNicolas: 'nicolas-pod.webp', //  16:9  founder note, close, hands on a pod
+  originNicolas: 'nicolas-trees.webp', // 9:16  provenance, full figure under the trees
   oneCup: 'one-cup.png', //              3:4  make two
   twoCups: 'two-cups.png', //            3:4  make two
 } as const
@@ -44,6 +53,8 @@ export type PhotoKey = keyof typeof files
  * Everything not listed here renders as an empty plate, by design.
  */
 const AVAILABLE: readonly PhotoKey[] = [
+  // 'founderNicolas',
+  // 'originNicolas',
   // 'chop',
   // 'melt',
   // 'originTree',

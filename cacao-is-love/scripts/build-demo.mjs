@@ -84,6 +84,13 @@ const STEPS = [
   ['03', 'MAKE IT YOURS', prepMake, 'Honey, cinnamon, salt, oat milk, chilli, nothing at all. This is the part where it stops being our drink and becomes yours.'],
 ]
 
+const COMPOUNDS = [
+  ['THEOBROMINE', 'Cacao\u2019s own stimulant. Slower on than caffeine, and slower off.'],
+  ['MAGNESIUM', 'A mineral cacao is naturally rich in.'],
+  ['ANANDAMIDE', 'Named from \u0101nanda, the Sanskrit for joy.'],
+  ['IRON + ANTIOXIDANTS', 'Also naturally present in the whole bean.'],
+]
+
 const NOTES = [
   ['AMIR + JUNE', 'JACKSON HEIGHTS, NY', ['oat milk', 'cinnamon', 'honey']],
   ['NAME', 'CITY, STATE', ['—', '—']],
@@ -201,12 +208,28 @@ const BODY = `
   </div>
 </section>
 
+<section id="composition" class="field-ink field" aria-labelledby="composition-title">
+  <div class="shell">
+    <div class="compGrid">
+      <div>
+        ${tag('CH. 03 \u2014 COMPOSITION')}
+        <h2 id="composition-title" class="t-h1" style="margin-top:var(--s-4)">WHAT\u2019S IN IT.</h2>
+        <p class="t-lede measure" style="margin-top:var(--s-4)">Simply ground cacao beans, with nothing added.</p>
+        <p class="t-meta compFootnote">This is a food, not a supplement. We list what is in the bean and leave the claims to somebody qualified to make them.</p>
+      </div>
+      <dl class="compList">
+        ${COMPOUNDS.map(([c, n], i) => `<div class="compRow reveal" style="--reveal-delay:${i * 60}ms"><dt class="compMark" aria-hidden="true">${seed(14)}</dt><dt class="t-h3 compName">${c}</dt><dd class="t-body compNote">${n}</dd></div>`).join('')}
+      </dl>
+    </div>
+  </div>
+</section>
+
 <section id="source" class="field-green" aria-labelledby="source-title">
   <div class="provSplit">
     <div class="provArtSide"><img src="${A.prov}" alt="" style="width:100%;height:auto"></div>
     <div class="provCopySide">
       <div class="provCopyInner">
-        ${tag('CH. 03 — ORIGIN')}
+        ${tag('CH. 04 \u2014 ORIGIN')}
         <h2 id="source-title" class="t-display">GROWN IN COLOMBIA.</h2>
         <p class="t-lede">Where the cacao begins.</p>
         <div class="provMeta">
@@ -236,11 +259,11 @@ const BODY = `
   <div class="shell">
     <div class="nicGrid">
       <div class="nicCopy">
-        ${tag('CH. 04 — WORLDVIEW')}
+        ${tag('CH. 05 \u2014 WORLDVIEW')}
         <h2 id="nicolas-title" class="t-display">CURIOSITY IS WHERE IT STARTS.</h2>
-        <blockquote class="t-quote nicQuote">“Good things are meant to be shared, especially among neighbors.”</blockquote>
-        <p class="t-body measure">Placeholder. This is where Nicolas’s note goes, written the way he talks — a question he had, the trip he took to answer it, the person who handed him the first cup.</p>
-        <p class="t-body measure">It should not read like an About page. It should read like a message from somebody who found something out and wanted to tell you about it.</p>
+        <blockquote class="t-quote nicQuote">“I’m sharing this with you because good things are meant to be shared, especially among neighbors.”</blockquote>
+        <p class="t-body measure">I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.</p>
+        <p class="t-body measure">This is a gift — it’s an invitation to slow down, connect with yourself, and experience the gentle magic that indigenous cultures have honored for thousands of years.</p>
         <p class="t-meta nicSign">${shard(13)}NICOLAS NUVAN · FOUNDER</p>
       </div>
       <div class="nicArt"><img src="${A.curiosity}" alt="" style="width:100%;height:auto"></div>
@@ -254,7 +277,7 @@ const BODY = `
 
 <section id="buy" class="field-cream field" aria-labelledby="buy-title">
   <div class="shell">
-    ${tag('CH. 08 — THE COUNTER')}
+    ${tag('CH. 06 \u2014 THE COUNTER')}
     <div class="buyGrid" style="margin-top:var(--s-6)">
       <figure class="figure">
         <div class="figureMedia cut-br" style="aspect-ratio:4/5">

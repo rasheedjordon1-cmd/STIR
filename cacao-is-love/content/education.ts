@@ -37,6 +37,49 @@ export const whyPeopleDrinkIt = {
     'We do not make health claims. Cacao is a food. If you are pregnant, on medication, or sensitive to caffeine, ask someone qualified.',
 }
 
+/**
+ * COMPOSITION — what is in the bean.
+ *
+ * ⚠ READ BEFORE CHANGING. Nicolas's original site describes these compounds as
+ *   "a gentle, heart-opening stimulant", "for relaxation" and "the bliss
+ *   molecule". Those are structure/function claims: they tell a reader what the
+ *   product will do to them, which is regulated for food in the US and is also
+ *   the exact wellness register the brand brief rules out.
+ *
+ *   `note` below describes each compound or its name instead — every compound
+ *   from his list is kept, nothing is invented, and no effect is promised.
+ *   `originalNote` is his wording, verbatim, so it can be restored in one edit
+ *   if it clears review. Do not ship `originalNote` without that review.
+ */
+export const composition = {
+  headline: 'WHAT’S IN IT.',
+  lede: 'Simply ground cacao beans, with nothing added.',
+  rows: [
+    {
+      compound: 'THEOBROMINE',
+      note: 'Cacao’s own stimulant. Slower on than caffeine, and slower off.',
+      originalNote: 'A gentle, heart-opening stimulant.',
+    },
+    {
+      compound: 'MAGNESIUM',
+      note: 'A mineral cacao is naturally rich in.',
+      originalNote: 'For relaxation.',
+    },
+    {
+      compound: 'ANANDAMIDE',
+      note: 'Named from ānanda, the Sanskrit for joy.',
+      originalNote: 'The “bliss molecule”.',
+    },
+    {
+      compound: 'IRON + ANTIOXIDANTS',
+      note: 'Also naturally present in the whole bean.',
+      originalNote: 'Iron and antioxidants.',
+    },
+  ],
+  footnote:
+    'This is a food, not a supplement. We list what is in the bean and leave the claims to somebody qualified to make them.',
+}
+
 export const productTruth = {
   kicker: 'ONE INGREDIENT.',
   headline: 'WHOLE CACAO.',

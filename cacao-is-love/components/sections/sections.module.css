@@ -249,3 +249,22 @@
 /* ---------------- PDP gallery ---------------- */
 .galleryGrid { display: grid; gap: var(--s-4); grid-template-columns: 1fr 1fr; }
 .galleryLead { grid-column: 1 / -1; }
+
+/* ---------------- 03 · COMPOSITION ---------------- */
+.compGrid { display: grid; gap: var(--s-8); }
+@media (min-width: 900px) {
+  .compGrid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 5vw, 88px); align-items: start; }
+}
+.compFootnote { margin-top: var(--s-6); padding-top: var(--s-4); border-top: var(--hair) solid var(--rule); max-width: 46ch; }
+.compList { display: grid; }
+.compRow {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: var(--s-2) var(--s-4);
+  padding-block: var(--s-5);
+  border-top: var(--rule-w) solid var(--rule-strong);
+}
+.compRow:last-child { border-bottom: var(--rule-w) solid var(--rule-strong); }
+.compMark { display: flex; align-items: center; height: 1.2em; color: var(--fg); }
+.compName { color: var(--fg); }
+.compNote { grid-column: 2; color: var(--fg-2); font-size: var(--fs-small); max-width: 44ch; }

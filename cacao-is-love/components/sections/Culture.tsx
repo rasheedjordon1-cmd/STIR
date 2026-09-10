@@ -20,14 +20,12 @@ export function Nicolas() {
     <Section id="nicolas" field="cream" labelledBy="nicolas-title">
       <div className={s.nicGrid}>
         <div className={s.nicCopy}>
-          <Tag>CH. 04 — WORLDVIEW</Tag>
+          <Tag>CH. 05 — WORLDVIEW</Tag>
           <h2 id="nicolas-title" className="t-display">
             CURIOSITY IS WHERE IT STARTS.
           </h2>
           {/* The one place the serif is allowed to speak. */}
-          <blockquote className={`t-quote ${s.nicQuote}`}>
-            “Good things are meant to be shared, especially among neighbors.”
-          </blockquote>
+          <blockquote className={`t-quote ${s.nicQuote}`}>“{founder.quote}”</blockquote>
           {founder.note.map((p, i) => (
             <p key={i} className="t-body measure">
               {p}

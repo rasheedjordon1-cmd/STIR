@@ -75,7 +75,7 @@ export function ProductImage() {
 export function Purchase({
   id = 'buy',
   field = 'cream',
-  tag = 'CH. 08 — THE COUNTER',
+  tag = 'CH. 06 — THE COUNTER',
   as = 'h2',
 }: {
   id?: string

@@ -154,6 +154,30 @@ education chapter instead, which is the same role the brief gives it.
 | **Preparation 02 and 03**, drawn | To finish the row started by BREAK. |
 | **Mastermark, current cut** | The specimen's mastermark carries a star device inside the O counters. The supplied PNG does not — worth confirming which is current. |
 
+## Copy and claims
+
+Nicolas's own words carry the founder section, close to verbatim
+(`content/founder.ts`). They are deliberately not rewritten: the section works
+because it is testimony in his voice, and the typography does the elevating.
+Note the register — "gentle magic" and "something ancient and beautiful" would
+land in the ceremonial-wellness lane the brief rules out if the *brand* said
+them; in a named founder's first person they read as personal experience.
+Keep them in the note, keep them out of product copy.
+
+`content/education.ts` carries a **composition** panel listing theobromine,
+magnesium, anandamide, iron and antioxidants.
+
+⚠ **Read before editing that panel.** The original site describes these as "a
+gentle, heart-opening stimulant", "for relaxation" and "the bliss molecule".
+Those are structure/function claims — they tell a reader what the product will
+do to them, which is regulated for food in the US and is also the register the
+brand brief rules out. Every compound is kept and nothing is invented, but each
+`note` describes the compound or its name rather than promising an effect
+(anandamide is genuinely named from *ānanda*, the Sanskrit for joy, which is
+more interesting than the nickname anyway). Each row also carries
+`originalNote` — his wording, verbatim — so it can be restored in one edit if
+it clears review. **Do not ship `originalNote` without that review.**
+
 ## Commerce — unchanged
 
 The buy module remains a state machine driven by `product.availability`:

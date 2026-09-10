@@ -11,7 +11,7 @@ import {
 } from '@/components/cil/CilAssets'
 import { PrepMelt, PrepMake } from '@/components/cil/CilArt'
 import { Reveal } from '@/components/ui/Reveal'
-import { whatIsCacao, coffeeNeighbor, whyPeopleDrinkIt } from '@/content/education'
+import { whatIsCacao, coffeeNeighbor, whyPeopleDrinkIt, composition } from '@/content/education'
 import { origin } from '@/content/origin'
 import { making } from '@/content/making'
 import { product } from '@/content/product'
@@ -66,6 +66,40 @@ export function WhatIsCacao() {
   )
 }
 
+/* -------- 03 · COMPOSITION — ink field ---------------------------------
+   Type and data only. The utility table is the section, which is the whole
+   point of a shelf-edge information system: the facts are the design. */
+export function Composition() {
+  return (
+    <Section id="composition" field="ink" labelledBy="composition-title">
+      <div className={s.compGrid}>
+        <div>
+          <Tag>CH. 03 — COMPOSITION</Tag>
+          <h2 id="composition-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
+            {composition.headline}
+          </h2>
+          <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
+            {composition.lede}
+          </p>
+          <p className={`t-meta ${s.compFootnote}`}>{composition.footnote}</p>
+        </div>
+
+        <dl className={s.compList}>
+          {composition.rows.map((r, i) => (
+            <Reveal key={r.compound} delay={i * 60} className={s.compRow}>
+              <dt className={s.compMark} aria-hidden>
+                <SeedChamber size={14} />
+              </dt>
+              <dt className={`t-h3 ${s.compName}`}>{r.compound}</dt>
+              <dd className={`t-body ${s.compNote}`}>{r.note}</dd>
+            </Reveal>
+          ))}
+        </dl>
+      </div>
+    </Section>
+  )
+}
+
 /* -------- 04 · PROVENANCE — a cream / green split field -----------------
    The supplied artwork's hands are MARKET GREEN, so the illustration cannot sit
    on a green field without disappearing, and recolouring it either erases the
@@ -81,7 +115,7 @@ export function Provenance() {
         </div>
         <div className={s.provCopySide}>
           <div className={s.provCopyInner}>
-            <Tag>CH. 03 — ORIGIN</Tag>
+            <Tag>CH. 04 — ORIGIN</Tag>
             <h2 id="source-title" className="t-display">
               GROWN IN COLOMBIA.
             </h2>

@@ -3,6 +3,7 @@ import { Marquee } from '@/components/sections/Marquee'
 import { ProductField, ProductImage, Purchase } from '@/components/sections/Product'
 import {
   WhatIsCacao,
+  Composition,
   Provenance,
   Preparation,
   CoffeeNeighbor,
@@ -33,6 +34,7 @@ export default function ProductPage() {
       <FieldNotes />
       <ProductImage />
       <WhatIsCacao />
+      <Composition />
       <Preparation />
       <Provenance />
       <CoffeeNeighbor />
