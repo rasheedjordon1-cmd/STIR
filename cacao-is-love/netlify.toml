@@ -1,0 +1,56 @@
+# Netlify configuration for the CACAO IS LOVE storefront.
+#
+# This file sits inside cacao-is-love/ rather than at the repository root on
+# purpose: the root also holds the STIR site, and a root-level config would
+# quietly decide what the whole repo deploys.
+#
+# Connecting the repo in Netlify: set Base directory to `cacao-is-love` and
+# Netlify reads everything below from here. Nothing else needs configuring.
+
+[build]
+  command = "npm run build:static"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # Opt into the static export. See next.config.mjs — the default build stays
+  # server-capable so a real checkout can be added later without a rewrite.
+  STATIC_EXPORT = "true"
+
+# Next emits content-hashed filenames under /_next/static, so they can be
+# cached permanently.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Brand assets and photography are stable but not content-hashed: cache for a
+# day and let a deploy invalidate them.
+[[headers]]
+  for = "/photo/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/cil/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/brand/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+[[headers]]
+  for = "/poster/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
+
+# This is a demo build, not a live store — keep it out of search results until
+# it is. Delete this block when the site goes live.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -243,13 +243,58 @@ Verified in a headless browser at 320 / 390 / 768 / 1440 on both routes:
 
 ---
 
+## Deploying to Netlify
+
+The site has no route handlers and no server actions, so it exports to plain
+files. Both routes prerender; nothing needs a server.
+
+```bash
+npm run build:static     # -> out/
+npm run preview:static   # serve out/ at :4173 to check it locally
+```
+
+**Two ways to get it live.**
+
+*Fastest — no account setup.* Drag `out/` (or the zip built from it) onto
+[app.netlify.com/drop](https://app.netlify.com/drop). Live in about thirty
+seconds on a `*.netlify.app` URL, no repo connection.
+
+*Durable — rebuilds on push.* Connect this repo in Netlify and set
+**Base directory** to `cacao-is-love`. Everything else comes from
+`netlify.toml`: build command, publish directory, Node version, cache headers.
+
+`netlify.toml` deliberately lives in this folder rather than the repository
+root, because the root also holds the STIR site and a root-level config would
+quietly decide what the whole repo deploys.
+
+### Two things in that config to know about
+
+- **Static export is opt-in** (`STATIC_EXPORT=true`), not baked into
+  `next.config.mjs`. The default `npm run build` stays server-capable, so
+  wiring a real checkout later — Shopify Storefront API, a webhook — does not
+  need the config unpicked first. Static export also forces
+  `images.unoptimized`, which costs nothing here because every asset is already
+  encoded to the size its slot renders at.
+- **`X-Robots-Tag: noindex, nofollow`** is set on everything. This is a demo
+  build, not a live store, and it should not turn up in search results.
+  **Delete that header block when the site goes live.**
+
+Verified against the built export, not just the dev server: both routes at
+320/390/768/1440, every image loading, no 4xx on any request, no JS errors,
+cart opens and closes, client-side navigation works, and a cold deep link
+straight to `/shop/whole-cacao/` serves correctly.
+
+---
+
 ## Shareable demo
 
 ```bash
 node scripts/build-demo.mjs     # -> demo/cacao-is-love.html
 ```
 
-Emits one self-contained HTML file (~2.1 MB) with every image inlined as a data
+This is the single-file build, which exists because an Artifact takes one file.
+**For Netlify, prefer the static export above** — it carries both routes and
+real navigation. Emits one self-contained HTML file with every image inlined as a data
 URI, so it can be published, emailed or opened straight off disk with no server.
 
 It reuses the **real** stylesheets verbatim — tokens, globals and all four CSS
