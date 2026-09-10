@@ -305,11 +305,11 @@
   display: flex; align-items: center; gap: var(--s-3);
   padding-block: var(--s-4);
   text-align: left;
-  font-family: var(--font-grotesk);
-  font-weight: 800; font-stretch: 100%;
-  font-optical-sizing: none; font-variation-settings: 'opsz' 48;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-optical-sizing: none;
   font-size: var(--fs-nav-mega);
-  line-height: 1.02; letter-spacing: var(--tr-head);
+  line-height: 1.02; letter-spacing: var(--tr-display);
   text-transform: uppercase;
   color: var(--cil-ink);
   transition: color var(--dur-nav) var(--ease-nav);

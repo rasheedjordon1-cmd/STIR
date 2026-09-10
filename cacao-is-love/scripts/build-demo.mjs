@@ -22,10 +22,11 @@ const b64 = (p, mime) => `data:${mime};base64,${readFileSync(p).toString('base64
    It must never reach a font CDN: the brief forbids it, and a single portable
    file that needs the network to render its own typography is not portable. */
 const FONT_FACES = `
+@font-face{font-family:'Bevellier';src:url(${b64('app/fonts/Bevellier-Variable.woff2','font/woff2')}) format('woff2-variations');font-weight:100 900;font-display:swap}
 @font-face{font-family:'BricolageGrotesque';src:url(${b64('app/fonts/BricolageGrotesque-Variable.woff2','font/woff2')}) format('woff2-variations');font-weight:200 800;font-stretch:75% 100%;font-display:swap}
 @font-face{font-family:'IBMPlexMono';src:url(${b64('app/fonts/IBMPlexMono-Regular.woff2','font/woff2')}) format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'IBMPlexMono';src:url(${b64('app/fonts/IBMPlexMono-Medium.woff2','font/woff2')}) format('woff2');font-weight:500;font-display:swap}
-:root{--font-bricolage:'BricolageGrotesque';--font-plex-mono:'IBMPlexMono'}
+:root{--font-bevellier:'Bevellier';--font-bricolage:'BricolageGrotesque';--font-plex-mono:'IBMPlexMono'}
 `
 
 /* ---------- stylesheets, in cascade order ---------- */
@@ -208,7 +209,7 @@ const BODY = `
       <div class="heroCopy">
         <p class="t-label heroEyebrow">${seed(13)}A GIFT FROM CURIOSITY</p>
         <img class="heroMark" src="${A.mmInk}" alt="Cacao Is Love" style="width:100%;max-width:560px;height:auto">
-        <h1 id="hero-title" class="t-h1 heroHead">CACAO, MADE TO BE SHARED.</h1>
+        <h1 id="hero-title" class="t-statement heroHead">CACAO, MADE TO BE SHARED.</h1>
         <div class="heroSupport">
           <p class="t-lede">100% whole cacao.</p>
           <p class="t-lede">Grown in Colombia.</p>

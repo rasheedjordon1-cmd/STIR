@@ -14,6 +14,33 @@ import './globals.css'
    Rebuild the subsets with: python3 scripts/build-fonts.py fonts-src
    ========================================================================== */
 
+/* VOICE 01 — IDENTITY (stand-in).
+   Bevellier, Indian Type Foundry via Fontshare. Condensed, tight-fitting, with
+   flared terminals — it shares the mastermark's density and compression in a
+   way a neutral grotesk does not, so the wordmark and the headline below it
+   finally read as family.
+
+   IT IS NOT CIL. It stands in the identity slot until the CIL alphabet exists
+   as a font; --font-display still resolves --font-cil-display FIRST, so the
+   real face wins the moment it is declared.
+
+   ONE AXIS ONLY (wght 100–900) and its default instance is 100 — Thin. Every
+   rule that uses this family must state a weight or it renders as a hairline.
+   There is no width axis, which is why the condensed label register stays on
+   Bricolage.
+
+   LICENCE: ITF, not OFL. The embedded notice requires crediting ITF in design
+   and production credits. Confirm the current Fontshare terms before launch. */
+const bevellier = localFont({
+  src: [{ path: './fonts/Bevellier-Variable.woff2', style: 'normal' }],
+  weight: '100 900',
+  variable: '--font-bevellier',
+  display: 'swap',
+  preload: true,
+  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
+  adjustFontFallback: false,
+})
+
 /* VOICE 02 — LANGUAGE.
    One variable file carries the whole readable site: opsz 12–96, wght 200–800,
    wdth 75–100. Declaring the ranges lets font-weight and font-stretch drive
@@ -47,11 +74,10 @@ const plexMono = localFont({
   adjustFontFallback: false,
 })
 
-/* VOICE 01 — IDENTITY. Deliberately absent.
-   The CIL alphabet was supplied as a reference drawing, not a font file. Its
-   authoritative form on this site is the Mastermark artwork. When a real
-   .woff2 lands, add it here as --font-cil-display and every display line in
-   the system picks it up through --font-display in tokens.css.
+/* THE CIL ALPHABET is still not a font file. It was supplied as a reference
+   drawing; its authoritative form on this site remains the Mastermark artwork.
+   When a real .woff2 lands, declare it here and every display line in the
+   system picks it up ahead of Bevellier through --font-display:
 
    const cilDisplay = localFont({
      src: [{ path: './fonts/CILDisplay.woff2' }],
@@ -82,7 +108,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${bevellier.variable} ${bricolage.variable} ${plexMono.variable}`}>
       <body>
         <CartProvider>
           <a href="#main" className="skip-link">

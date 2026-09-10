@@ -27,7 +27,7 @@ export function Hero() {
 
             <MastermarkDisplay tone="ink" priority maxWidth={560} className={s.heroMark} />
 
-            <h1 id="hero-title" className={`t-h1 ${s.heroHead}`}>
+            <h1 id="hero-title" className={`t-statement ${s.heroHead}`}>
               {hero.headline}
             </h1>
 

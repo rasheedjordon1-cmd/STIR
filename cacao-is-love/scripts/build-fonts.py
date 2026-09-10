@@ -30,6 +30,7 @@ UNICODES = ','.join([
 
 JOBS = [
     # (source path, output name, keep variable axes)
+    (SRC / 'Bevellier' / 'Bevellier-Variable.ttf', 'Bevellier-Variable.woff2', True),
     (SRC / 'Bricolage_Grotesque' / 'BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf',
      'BricolageGrotesque-Variable.woff2', True),
     (SRC / 'IBM_Plex_Mono' / 'IBMPlexMono-Regular.ttf', 'IBMPlexMono-Regular.woff2', False),

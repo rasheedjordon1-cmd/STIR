@@ -70,12 +70,12 @@
    ordering is not guaranteed and this must not depend on winning that race. */
 .truthMega {
   display: grid;
-  font-family: var(--font-grotesk);
+  /* CH. 01's headline is identity scale, so it takes the identity voice. */
+  font-family: var(--font-display);
   font-weight: 800;
-  font-stretch: 100%;
   text-transform: uppercase;
   line-height: var(--lh-mega);
-  letter-spacing: var(--tr-mega);
+  letter-spacing: var(--tr-display);
   font-size: clamp(1.9rem, 8.4vw, 3.25rem);
 }
 @media (min-width: 900px) {

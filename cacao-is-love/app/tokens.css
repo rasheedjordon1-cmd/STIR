@@ -54,17 +54,19 @@
      02  BRICOLAGE    — LANGUAGE.    Everything a person reads as a sentence.
      03  IBM PLEX MONO— INFORMATION. Anything a person reads as a record.
 
-     VOICE 01 IS NOT YET A FONT FILE. The supplied bundle contains Bricolage
-     Grotesque and IBM Plex Mono only; the CIL alphabet exists as a reference
-     drawing and as the mastermark artwork, not as a distributable face. So:
+     VOICE 01 IS STILL NOT THE CIL ALPHABET. That exists as a reference drawing
+     and as the mastermark artwork, not as a distributable face. So:
        · the authoritative CIL letterforms ship as the Mastermark asset,
-       · --font-display resolves to --font-cil-display FIRST and falls back
-         to Bricolage's display register,
+       · --font-display resolves --font-cil-display FIRST and stands in with
+         BEVELLIER — condensed and tight-fitting, so it rhymes with the
+         mastermark instead of sitting under it as a neutral default,
        · when a real .woff2 arrives, declare it as --font-cil-display in
          app/layout.tsx and every display line inherits it. One edit.
-     Do not approximate the CIL alphabet with a substitute and call it CIL.  */
+     Bevellier is a stand-in, never called CIL. It carries display type only:
+     one axis (wght 100–900, DEFAULT 100), no optical size, no width. Every
+     rule using it must state a weight or it renders as a hairline.          */
 
-  --font-display: var(--font-cil-display, var(--font-bricolage)), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-cil-display, var(--font-bevellier)), "Helvetica Neue", Arial, sans-serif;
   --font-grotesk: var(--font-bricolage), "Helvetica Neue", Arial, sans-serif;
   --font-mono:    var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
   /* RETIRED VOICE — the serif is gone from the system. The token survives so
@@ -78,7 +80,7 @@
   --wdth-display: 100;
   --wdth-text:     100;
   --wdth-label:    82;   /* shelf-edge condensation, in range */
-  --opsz-display:  96;
+  /* Bevellier has no opsz axis; display type sets weight and tracking only. */
   --opsz-text:     16;
   --opsz-ui:       14;
 
@@ -94,6 +96,7 @@
   --fs-meta:    0.75rem;
 
   /* Navigation is its own scale. It is neither a heading nor a caption. */
+  --fs-brandline: clamp(1.25rem, 1.7vw, 1.5rem);
   --fs-nav:       0.8125rem;
   --fs-nav-mega:  clamp(2.5rem, 11vw, 4.25rem);
   --fs-mega-item: clamp(1.125rem, 1.4vw, 1.375rem);
@@ -104,6 +107,9 @@
   --lh-body:    1.6;
 
   --tr-mega:    -0.035em;
+  /* Bevellier already fits tight; Bricolage's display tracking would collide
+     the letterforms. Display type gets its own value. */
+  --tr-display: -0.018em;
   --tr-head:    -0.02em;
   --tr-label:   0.1em;
   --tr-meta:    0.04em;
