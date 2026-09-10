@@ -48,6 +48,10 @@ const A = {
   podHalf: b64('public/cil/micro-split-pod-half.webp', 'image/webp'),
   prepBreak: b64('public/cil/prep-break.webp', 'image/webp'),
   curiousFinger: b64('public/cil/micro-curious-finger.webp', 'image/webp'),
+  nicolas: b64('public/photo/nicolas-pod.webp', 'image/webp'),
+  originPodBranch: b64('public/photo/origin-pod-branch.webp', 'image/webp'),
+  originAtTheTrees: b64('public/photo/origin-at-the-trees.webp', 'image/webp'),
+  originTwoPods: b64('public/photo/origin-two-pods.webp', 'image/webp'),
 }
 
 /* ---------- CIL micro-marks (same geometry as CilMarks.tsx) ---------- */
@@ -241,6 +245,16 @@ const BODY = `
   </div>
 </section>
 
+<section class="field-ink">
+  <ul class="plateStrip">
+    ${[
+      [A.originPodBranch, 'PL. 04', 'POD ON THE BRANCH', 'Two hands holding a ripening cacao pod hanging from a branch.'],
+      [A.originAtTheTrees, 'PL. 05', 'AT THE TREES', 'Nicolas standing beneath a cacao tree, looking up at the pods.'],
+      [A.originTwoPods, 'PL. 06', 'TWO PODS, BACKLIT', 'A hand reaching for two cacao pods on the trunk, lit from behind.'],
+    ].map(([src, pl, cap, alt], i) => `<li class="plateItem reveal" style="--reveal-delay:${i * 80}ms"><div class="plateMedia"><img src="${src}" alt="${alt}" loading="lazy"></div><div class="plateCap"><span class="t-meta">${pl}</span><span class="t-meta">${cap}</span></div></li>`).join('')}
+  </ul>
+</section>
+
 <section id="make" class="field-cream field" aria-labelledby="make-title">
   <div class="shell">
     <div class="prepHead">
@@ -266,7 +280,15 @@ const BODY = `
         <p class="t-body measure">This is a gift — it’s an invitation to slow down, connect with yourself, and experience the gentle magic that indigenous cultures have honored for thousands of years.</p>
         <p class="t-meta nicSign">${shard(13)}NICOLAS NUVAN · FOUNDER</p>
       </div>
-      <div class="nicArt"><img src="${A.curiosity}" alt="" style="width:100%;height:auto"></div>
+      <div class="nicArt">
+        <figure class="figure">
+          <div class="figureMedia cut-br" style="aspect-ratio:4/3">
+            <img src="${A.nicolas}" alt="Nicolas smiling as he holds a ripening cacao pod still attached to the tree.">
+          </div>
+          <figcaption class="figureCap"><span class="t-meta">PL. 07</span><span class="t-meta figureCapRight">Nicolas, at the trees</span></figcaption>
+        </figure>
+        <img class="nicMark" src="${A.curiosity}" alt="" style="width:100%;height:auto">
+      </div>
     </div>
   </div>
 </section>

@@ -154,6 +154,27 @@ education chapter instead, which is the same role the brief gives it.
 | **Preparation 02 and 03**, drawn | To finish the row started by BREAK. |
 | **Mastermark, current cut** | The specimen's mastermark carries a star device inside the O counters. The supplied PNG does not — worth confirming which is current. |
 
+## Photography
+
+Four documentary photographs from the trees now carry the origin and founder
+chapters — the first images on the site that document the supply chain rather
+than illustrate it.
+
+- **Origin, documented** (`components/sections/Learn.tsx` → `OriginPlates`) is a
+  full-bleed contact strip of three frames, butted edge to edge on the ink field
+  with utility captions. Deliberately a strip, not a gallery.
+- **The founder chapter** carries his portrait above the CURIOSITY 001
+  illustration, which is the pairing the brief asks for.
+
+⚠ **Captions describe what is shown, never where.** The region and producer in
+`origin.ts` are still unconfirmed, so "Pod on the branch" is safe and naming a
+farm or region is not — until that record says otherwise.
+
+Encoding note: these frames carry heavy film grain, which does not compress.
+Cropping each to the aspect its slot actually renders at — rather than shipping
+pixels CSS would discard — took the set from 1.29MB to 865KB at the same
+on-screen quality.
+
 ## Copy and claims
 
 Nicolas's own words carry the founder section, close to verbatim

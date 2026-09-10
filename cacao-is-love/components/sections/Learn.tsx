@@ -141,6 +141,32 @@ export function Provenance() {
   )
 }
 
+/* -------- 04b · ORIGIN, DOCUMENTED -------------------------------------
+   The evidence for the chapter above. Full bleed, butted edges, captions in
+   utility type — a contact strip, not a gallery. */
+export function OriginPlates() {
+  const plates = origin.plates.filter((p) => p.src)
+  if (!plates.length) return null
+  return (
+    <Section field="ink" flush wide>
+      <ul className={s.plateStrip}>
+        {plates.map((p, i) => (
+          <Reveal key={p.plate} as="li" delay={i * 80} className={s.plateItem}>
+            <div className={s.plateMedia}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={p.src as string} alt={p.alt} loading="lazy" />
+            </div>
+            <div className={s.plateCap}>
+              <span className="t-meta">{p.plate}</span>
+              <span className="t-meta">{p.caption}</span>
+            </div>
+          </Reveal>
+        ))}
+      </ul>
+    </Section>
+  )
+}
+
 /* -------- 05 · PREPARATION — cream -------------------------------------- */
 export function Preparation() {
   return (

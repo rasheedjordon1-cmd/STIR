@@ -1,7 +1,13 @@
 import { Hero } from '@/components/sections/Hero'
 import { Marquee } from '@/components/sections/Marquee'
 import { ProductField, ProductImage, Purchase } from '@/components/sections/Product'
-import { WhatIsCacao, Composition, Provenance, Preparation } from '@/components/sections/Learn'
+import {
+  WhatIsCacao,
+  Composition,
+  Provenance,
+  OriginPlates,
+  Preparation,
+} from '@/components/sections/Learn'
 import { Nicolas, Poster, FieldNotes, EmailCapture } from '@/components/sections/Culture'
 import { site } from '@/content/site'
 
@@ -24,6 +30,7 @@ export default function HomePage() {
       <WhatIsCacao />
       <Composition />
       <Provenance />
+      <OriginPlates />
       <Preparation />
       <Nicolas />
       <Poster />

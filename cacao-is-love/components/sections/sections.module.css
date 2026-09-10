@@ -268,3 +268,18 @@
 .compMark { display: flex; align-items: center; height: 1.2em; color: var(--fg); }
 .compName { color: var(--fg); }
 .compNote { grid-column: 2; color: var(--fg-2); font-size: var(--fs-small); max-width: 44ch; }
+
+/* ---------------- 04b · ORIGIN, DOCUMENTED ---------------- */
+.plateStrip { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 760px) { .plateStrip { grid-template-columns: repeat(3, 1fr); } }
+.plateItem { display: grid; }
+.plateMedia { position: relative; aspect-ratio: 3 / 4; overflow: hidden; }
+.plateMedia > img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.plateCap {
+  display: flex; justify-content: space-between; gap: var(--s-4);
+  padding: var(--s-3) var(--gutter) var(--s-5);
+}
+@media (min-width: 760px) { .plateCap { padding-inline: var(--s-5); } }
+
+/* the Curiosity mark sits under the portrait rather than replacing it */
+.nicMark { margin-top: var(--s-6); max-width: 260px; }

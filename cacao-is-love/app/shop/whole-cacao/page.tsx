@@ -5,6 +5,7 @@ import {
   WhatIsCacao,
   Composition,
   Provenance,
+  OriginPlates,
   Preparation,
   CoffeeNeighbor,
   WhyPeopleDrink,
@@ -37,6 +38,7 @@ export default function ProductPage() {
       <Composition />
       <Preparation />
       <Provenance />
+      <OriginPlates />
       <CoffeeNeighbor />
       <WhyPeopleDrink />
       <Nicolas />

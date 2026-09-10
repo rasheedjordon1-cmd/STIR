@@ -17,13 +17,11 @@ import { photo } from './photography'
 export const founder = {
   name: 'Nicolas Nuvan',
   role: 'Founder',
-  /* Interim image only — a stand-in kitchen scene, never presented as Nicolas.
-     Replace with a real photograph of him before launch. */
   portrait: {
-    plate: 'PL. 11',
-    caption: 'Portrait pending',
-    src: photo('kitchen'),
-    alt: 'A kitchen counter with cacao being poured into a mug.',
+    plate: 'PL. 07',
+    caption: 'Nicolas, at the trees',
+    src: photo('founderNicolas'),
+    alt: 'Nicolas smiling as he holds a ripening cacao pod still attached to the tree.',
   },
   note: [
     'I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.',

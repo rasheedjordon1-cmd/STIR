@@ -36,18 +36,26 @@ export const origin = {
     'We are filling in this record as we go, and we will publish it here as it is confirmed. Nothing on this page is a guess.',
   ],
 
+  /* Real photographs from the trees. Captions describe what is shown, never
+     where — the region and producer above are still unconfirmed. */
   plates: [
     {
-      plate: 'PL. 09',
-      caption: 'Cacao pod, opened',
-      src: photo('podSplit'),
-      alt: 'A cacao pod split open to show the pulp and beans inside.',
+      plate: 'PL. 04',
+      caption: 'Pod on the branch',
+      src: photo('originPodBranch'),
+      alt: 'Two hands holding a ripening cacao pod hanging from a branch.',
     },
     {
-      plate: 'PL. 10',
-      caption: 'Beans drying',
-      src: photo('beansDrying'),
-      alt: 'Cacao beans drying in the sun on wooden trays.',
+      plate: 'PL. 05',
+      caption: 'At the trees',
+      src: photo('originAtTheTrees'),
+      alt: 'Nicolas standing beneath a cacao tree, looking up at the pods.',
+    },
+    {
+      plate: 'PL. 06',
+      caption: 'Two pods, backlit',
+      src: photo('originTwoPods'),
+      alt: 'A hand reaching for two cacao pods on the trunk, lit from behind.',
     },
   ],
 }

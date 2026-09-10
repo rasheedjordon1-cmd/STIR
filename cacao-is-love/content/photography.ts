@@ -15,9 +15,10 @@
  * ⚠ Interim art direction: warm cream / kraft / cacao-brown, documentary, film
  *   grain, natural light, unstyled. Packaging must stay UNBRANDED until the
  *   mastermark exists — a mocked-up label would be inventing an identity.
- * ⚠ Origin imagery is illustrative until real photographs from the actual
- *   supply chain replace it. Do not caption interim origin images as if they
- *   document a specific farm.
+ * ⚠ The origin photographs are real, but the region and producer are still
+ *   unconfirmed, so captions describe WHAT IS SHOWN and never where. "Pod on
+ *   the branch" is safe; naming a farm or region is not, until origin.ts says
+ *   so.
  */
 
 const files = {
@@ -40,8 +41,10 @@ const files = {
      section's cream half takes `originNicolas` and the founder section takes
      `founderNicolas`, and the interim captions below can name what is really
      shown instead of hedging. */
-  founderNicolas: 'nicolas-pod.webp', //  16:9  founder note, close, hands on a pod
-  originNicolas: 'nicolas-trees.webp', // 9:16  provenance, full figure under the trees
+  founderNicolas: 'nicolas-pod.webp', //      4:3  founder note, close, hands on a pod
+  originPodBranch: 'origin-pod-branch.webp', //3:4  hands on a pod, no face
+  originAtTheTrees: 'origin-at-the-trees.webp',//3:4 full figure, the place
+  originTwoPods: 'origin-two-pods.webp', //    3:4  two pods, backlit
   oneCup: 'one-cup.png', //              3:4  make two
   twoCups: 'two-cups.png', //            3:4  make two
 } as const
@@ -53,8 +56,10 @@ export type PhotoKey = keyof typeof files
  * Everything not listed here renders as an empty plate, by design.
  */
 const AVAILABLE: readonly PhotoKey[] = [
-  // 'founderNicolas',
-  // 'originNicolas',
+  'founderNicolas',
+  'originPodBranch',
+  'originAtTheTrees',
+  'originTwoPods',
   // 'chop',
   // 'melt',
   // 'originTree',

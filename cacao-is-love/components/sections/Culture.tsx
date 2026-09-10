@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Section } from '@/components/ui/Section'
 import { Tag } from '@/components/ui/Utility'
 import { CuriosityTellMeMore } from '@/components/cil/CilAssets'
+import { Figure } from '@/components/ui/Figure'
 import { SeedChamber, CupRim, CacaoShard } from '@/components/cil/CilMarks'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
@@ -37,7 +38,18 @@ export function Nicolas() {
           </p>
         </div>
         <div className={s.nicArt}>
-          <CuriosityTellMeMore alt="" sizes="(min-width: 900px) 30vw, 70vw" />
+          {founder.portrait.src && (
+            <Figure
+              src={founder.portrait.src}
+              alt={founder.portrait.alt}
+              ratio="4 / 3"
+              plate={founder.portrait.plate}
+              caption={founder.portrait.caption}
+              sizes="(min-width: 900px) 40vw, 100vw"
+              cut
+            />
+          )}
+          <CuriosityTellMeMore alt="" sizes="(min-width: 900px) 22vw, 55vw" className={s.nicMark} />
         </div>
       </div>
     </Section>
