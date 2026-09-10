@@ -25,6 +25,12 @@
       "skillPath": "skills/taste-skill/SKILL.md",
       "computedHash": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e"
     },
+    "draw-your-font": {
+      "source": "danilo-znamerovszkij/draw-your-font",
+      "sourceType": "github",
+      "skillPath": "skills/draw-your-font/SKILL.md",
+      "computedHash": "d9e77549bb177b7075aa40978eed9521202df26d26838892368734e8b4f192dd"
+    },
     "emil-design-eng": {
       "source": "emilkowalski/skills",
       "sourceType": "github",
