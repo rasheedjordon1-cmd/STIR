@@ -1,53 +1,33 @@
 import { Hero } from '@/components/sections/Hero'
-import {
-  ProductTruth,
-  WhatIsCacao,
-  CoffeeNeighbor,
-  WhyPeopleDrink,
-} from '@/components/sections/Education'
-import {
-  HowToMake,
-  FounderNote,
-  Source,
-  MakeTwoCups,
-  FieldNotes,
-} from '@/components/sections/Story'
-import { BuyChapter, EmailCapture } from '@/components/sections/Convert'
+import { Marquee } from '@/components/sections/Marquee'
+import { ProductField, ProductImage, Purchase } from '@/components/sections/Product'
+import { WhatIsCacao, Provenance, Preparation } from '@/components/sections/Learn'
+import { Nicolas, Poster, FieldNotes, EmailCapture } from '@/components/sections/Culture'
+import { site } from '@/content/site'
 
 /**
- * HOMEPAGE — the canonical conversion surface.
+ * HOMEPAGE
  *
- * The order follows the brand thesis: curiosity → question → discovery →
- * person/place → understanding → taste → connection → purchase.
+ * The colour rhythm is the storytelling:
+ *   CREAM → INK → RED → CREAM → GREEN → CREAM → RED(poster) → CREAM → GREEN
  *
- * Two deliberate departures from a conventional DTC homepage:
- *  1. CACAO / COFFEE sits before the benefits grid. The biggest barrier is not
- *     "is this good for me" but "where does this fit in my day" — coffee is the
- *     slot everyone already has, so give them the slot before the reasons.
- *  2. The first purchase ask arrives at chapter 06, after the education, not in
- *     the hero. The hero invites; the ask is earned.
+ * Someone makes a cup, someone shares it, a conversation starts — the page is
+ * built in that order, and the commerce is never more than one screen away.
  */
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <ProductTruth />
+      <Marquee items={site.marquee} field="ink" />
+      <ProductField />
+      <ProductImage />
       <WhatIsCacao />
-      <CoffeeNeighbor />
-      <WhyPeopleDrink />
-      <BuyChapter id="buy" ground="paper" eyebrow="CHAPTER 06" lines={['THE BAG.']} />
-      <HowToMake />
-      <FounderNote />
-      <Source />
-      <MakeTwoCups buyHref="#buy" />
+      <Provenance />
+      <Preparation />
+      <Nicolas />
+      <Poster />
+      <Purchase />
       <FieldNotes />
-      <BuyChapter
-        id="buy-final"
-        ground="paper"
-        eyebrow="CHAPTER 12"
-        lines={['ONE BAG.', 'ABOUT EIGHT CUPS.']}
-        withPlate={false}
-      />
       <EmailCapture />
     </>
   )

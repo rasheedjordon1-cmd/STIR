@@ -6,6 +6,7 @@ import { site } from '@/content/site'
 import { useCart } from '@/lib/cart'
 import { Button } from '@/components/ui/Button'
 import { QtyControl } from '@/components/chrome/CartDrawer'
+import { SeedChamber } from '@/components/cil/CilMarks'
 import s from './buy.module.css'
 
 /**
@@ -40,22 +41,22 @@ function AvailabilityLine({ availability }: { availability: Availability }) {
   if (availability === 'sold_out') {
     return (
       <p className={`t-label ${s.status}`}>
-        <span className={`${s.dot} ${s.dotOut}`} aria-hidden />
+        <SeedChamber size={13} />
         BETWEEN HARVESTS
       </p>
     )
   }
   if (availability === 'low_stock' && product.unitsRemaining) {
     return (
-      <p className={`t-label ${s.status}`} style={{ color: 'var(--accent)' }}>
-        <span className={`${s.dot} ${s.dotLow}`} aria-hidden />
+      <p className={`t-label ${s.status} ${s.statusLow}`}>
+        <SeedChamber size={13} />
         LAST {product.unitsRemaining} BAGS OF THIS HARVEST
       </p>
     )
   }
   return (
     <p className={`t-label ${s.status}`}>
-      <span className={`${s.dot} ${s.dotIn}`} aria-hidden />
+      <SeedChamber size={13} />
       IN STOCK — SHIPS IN 1–2 DAYS
     </p>
   )
@@ -105,14 +106,15 @@ function PurchaseBlock({
   return (
     <div className={s.module} id={id}>
       <div className={s.head}>
-        <p className="t-label" style={{ color: 'var(--marker)' }}>
+        <p className={`t-label ${s.eyebrow}`}>
+          <SeedChamber size={12} />
           {product.descriptor.toUpperCase()}
         </p>
-        <Heading className={compact ? 't-h3' : 't-h2'}>{product.name}</Heading>
+        <Heading className={compact ? 't-h3' : 't-h1'}>{product.name}</Heading>
       </div>
 
       <div className={s.priceRow}>
-        <span className="t-h3">{formatPrice(product.price)}</span>
+        <span className={s.price}>{formatPrice(product.price)}</span>
         <span className="t-meta">
           {product.weightGrams} G · {product.originCountry.toUpperCase()}
         </span>
@@ -135,11 +137,9 @@ function PurchaseBlock({
                 onChange={() => setOptionId(o.id)}
               />
               <label className={s.option} htmlFor={`${uid}-${o.id}`}>
-                <span className="t-h3">{o.label}</span>
+                <span className={s.optionName}>{o.label}</span>
                 <span className={`t-meta ${s.optionSub}`}>{o.sublabel}</span>
-                <span className={`t-meta ${s.optionSub}`}>
-                  {formatPrice(product.price * o.quantity)}
-                </span>
+                <span className={s.optionPrice}>{formatPrice(product.price * o.quantity)}</span>
               </label>
             </div>
           ))}
@@ -188,7 +188,7 @@ function PurchaseBlock({
 
       <div className={s.actions}>
         <QtyControl value={quantity} onChange={setQuantity} label={option.label} />
-        <Button variant="solid" size="lg" onClick={handleAdd}>
+        <Button variant="primary" lg cut onClick={handleAdd}>
           ADD TO BAG — {formatPrice(total)}
         </Button>
       </div>
@@ -223,11 +223,11 @@ export function WaitlistBlock({ id = 'waitlist', as: Heading = 'h2' }: { id?: st
         <p className="t-label" style={{ color: 'var(--marker)' }}>
           {product.descriptor.toUpperCase()}
         </p>
-        <Heading className="t-h2">{product.name}</Heading>
+        <Heading className="t-h1">{product.name}</Heading>
       </div>
 
       <div className={s.priceRow}>
-        <span className="t-h3">{formatPrice(product.price)}</span>
+        <span className={s.price}>{formatPrice(product.price)}</span>
         <span className="t-meta">
           {product.weightGrams} G · {product.originCountry.toUpperCase()}
         </span>
@@ -243,7 +243,8 @@ export function WaitlistBlock({ id = 'waitlist', as: Heading = 'h2' }: { id?: st
 
       {done ? (
         <div className={s.success} role="status">
-          <p className="t-label" style={{ color: 'var(--marker)' }}>
+          <p className={`t-label ${s.eyebrow}`}>
+            <SeedChamber size={12} />
             YOU ARE ON THE LIST
           </p>
           <p className="t-serif">
@@ -291,7 +292,7 @@ export function WaitlistBlock({ id = 'waitlist', as: Heading = 'h2' }: { id?: st
               />
             </div>
           </div>
-          <Button type="submit" variant="solid" size="lg" block>
+          <Button type="submit" variant="primary" lg block cut>
             JOIN THE NEXT DROP
           </Button>
           <p className="t-meta">

@@ -6,8 +6,6 @@
 import { photo } from './photography'
 
 export const founder = {
-  eyebrow: 'CHAPTER 08',
-  headline: 'I GOT CURIOUS.',
   name: 'Nicolas Nuvan',
   role: 'Founder',
   /* Interim image only — a stand-in kitchen scene, never presented as Nicolas.

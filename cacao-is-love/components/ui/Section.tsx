@@ -1,60 +1,41 @@
 import type { ReactNode } from 'react'
 import s from './ui.module.css'
 
-export type Ground = 'paper' | 'deep' | 'kraft' | 'clay' | 'forest' | 'ink'
+export type Field = 'cream' | 'red' | 'green' | 'ink'
 
-const grounds: Record<Ground, string> = {
-  paper: 'ground-paper',
-  deep: 'ground-deep',
-  kraft: 'ground-kraft',
-  clay: 'ground-clay',
-  forest: 'ground-forest',
-  ink: 'ground-ink',
+const fields: Record<Field, string> = {
+  cream: 'field-cream',
+  red: 'field-red',
+  green: 'field-green',
+  ink: 'field-ink',
 }
 
 /**
- * A chapter of the site. `ground` remaps every semantic colour token to a
- * contrast-validated pairing, so colour sequences the narrative rather than
- * decorating it.
+ * A field of colour. Every major section makes a colour decision — the rhythm
+ * of those decisions is part of the storytelling, not decoration.
  */
 export function Section({
   id,
-  ground = 'paper',
+  field = 'cream',
   tight = false,
-  children,
+  flush = false,
+  wide = false,
   labelledBy,
+  children,
 }: {
   id?: string
-  ground?: Ground
+  field?: Field
   tight?: boolean
-  children: ReactNode
+  flush?: boolean
+  /** Full-width sections that manage their own inset. */
+  wide?: boolean
   labelledBy?: string
-}) {
-  return (
-    <section
-      id={id}
-      aria-labelledby={labelledBy}
-      className={`${grounds[ground]} ${s.section} ${tight ? s.sectionTight : ''}`}
-    >
-      <div className="shell">{children}</div>
-    </section>
-  )
-}
-
-/** Two-column chapter: specimen rail + body. Rail side alternates for asymmetry. */
-export function Chapter({
-  rail,
-  side = 'left',
-  children,
-}: {
-  rail?: ReactNode
-  side?: 'left' | 'right'
   children: ReactNode
 }) {
+  const pad = flush ? s.fieldFlush : tight ? `${s.field} ${s.fieldTight}` : s.field
   return (
-    <div className={`${s.chapterGrid} ${side === 'right' ? s.railRight : ''}`}>
-      {rail ? <div className={s.rail}>{rail}</div> : <div className={s.rail} aria-hidden />}
-      <div className={s.body}>{children}</div>
-    </div>
+    <section id={id} aria-labelledby={labelledBy} className={`${fields[field]} ${pad}`}>
+      {wide ? children : <div className="shell">{children}</div>}
+    </section>
   )
 }

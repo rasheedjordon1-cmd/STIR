@@ -1,186 +1,154 @@
-/* ---------------- Header ---------------- */
+/* ============================================================================
+   CHROME — grocery package header × editorial masthead
+   ========================================================================== */
+
 .header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--paper);
-  border-bottom: var(--hair) solid var(--rule);
+  position: sticky; top: 0; z-index: 60;
+  background: var(--cil-cream);
+  border-bottom: var(--rule-w) solid var(--cil-ink);
 }
-.brandLink { display: inline-flex; align-items: center; min-height: 44px; }
 .headerInner {
   height: var(--header-h);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between;
   gap: var(--s-3);
 }
-@media (min-width: 900px) { .headerInner { gap: var(--s-5); } }
+@media (min-width: 900px) { .headerInner { gap: var(--s-6); } }
+
+.brandLink { display: inline-flex; align-items: center; min-height: 44px; flex: 0 0 auto; }
+
 .nav { display: none; }
-@media (min-width: 900px) {
-  .nav {
-    display: flex;
-    align-items: center;
-    gap: clamp(18px, 2.4vw, 34px);
-  }
-}
+@media (min-width: 900px) { .nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); } }
+
+/* Hover reveals a Seed Chamber and rules the item in CIL red. */
 .navLink {
-  color: var(--fg);
-  padding-block: 10px;
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
+  color: var(--cil-ink);
+  display: inline-flex; align-items: center; gap: 0;
+  min-height: 40px; padding-block: 10px;
   position: relative;
 }
+.navMark {
+  width: 0; overflow: hidden; display: inline-flex; align-items: center;
+  opacity: 0; color: var(--cil-red);
+  transition: width var(--dur) var(--ease), opacity var(--dur) var(--ease),
+              margin-right var(--dur) var(--ease);
+}
+.navLink:hover .navMark, .navLink:focus-visible .navMark { width: 13px; opacity: 1; margin-right: 6px; }
 .navLink::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 8px;
-  border-bottom: var(--hair) solid var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
+  content: ''; position: absolute; left: 0; right: 0; bottom: 6px;
+  border-bottom: var(--rule-w) solid var(--cil-red);
+  transform: scaleX(0); transform-origin: left;
   transition: transform var(--dur) var(--ease);
 }
 .navLink:hover::after, .navLink[aria-current='page']::after { transform: scaleX(1); }
 
-.headerRight { display: flex; align-items: center; gap: var(--s-2); }
+.headerRight { display: flex; align-items: center; gap: var(--s-2); flex: 0 0 auto; }
 @media (min-width: 900px) { .headerRight { gap: var(--s-3); } }
 
-/* SHOP is not a peer of the editorial links — a hairline box lifts it out of
-   the row without turning it into a shouting button. */
 .shopLink {
-  border-radius: var(--radius-btn);
-  border: var(--hair) solid var(--ink);
-  padding: 0 var(--s-3);
-  min-height: 40px;
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  color: var(--ink);
-  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  background: var(--cil-red); color: var(--cil-cream);
+  min-height: 40px; display: inline-flex; align-items: center;
+  padding: 0 var(--s-4); white-space: nowrap;
+  transition: background-color var(--dur) var(--ease);
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
 }
-.shopLink:hover { background: var(--ink); color: var(--paper); }
-
-/* Below 380px the header cannot hold five controls without overflowing.
-   SHOP drops out there: the hero CTA, the menu sheet and the sticky bar all
-   still reach the product, so nothing is lost but the crowding. */
+.shopLink:hover { background: var(--cil-ink); }
 @media (max-width: 379px) { .shopLink { display: none; } }
 
 .cartBtn {
-  display: inline-flex;
-  white-space: nowrap;
-  align-items: center;
-  gap: 6px;
-  min-height: 44px;
-  padding-inline: var(--s-2);
-  color: var(--ink);
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 44px; padding-inline: var(--s-2);
+  color: var(--cil-ink); white-space: nowrap;
 }
 .cartCount {
-  border-radius: var(--radius-btn);
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
-  min-width: 20px;
-  height: 20px;
-  display: grid;
-  place-items: center;
-  background: var(--accent-bg);
-  color: var(--paper);
-  padding-inline: 5px;
+  font-family: var(--font-mono); font-size: var(--fs-meta);
+  min-width: 22px; height: 22px; display: grid; place-items: center;
+  background: var(--cil-ink); color: var(--cil-cream); padding-inline: 5px;
 }
-.cartCountZero { background: transparent; color: var(--ink-55); }
+.cartCountZero { background: transparent; color: var(--ink-soft); box-shadow: inset 0 0 0 1px var(--rule); }
 
 .menuBtn { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--s-2); }
 @media (min-width: 900px) { .menuBtn { display: none; } }
 
 /* ---------------- Mobile sheet ---------------- */
 .sheet {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  background: var(--paper);
-  display: flex;
-  flex-direction: column;
-  padding: var(--gutter);
+  position: fixed; inset: 0; z-index: 70;
+  background: var(--cil-cream);
+  display: flex; flex-direction: column; padding: var(--gutter);
   animation: sheetIn var(--dur) var(--ease);
 }
-@keyframes sheetIn { from { opacity: 0; transform: translateY(-8px); } }
-.sheetTop { display: flex; align-items: center; justify-content: space-between; height: calc(var(--header-h) - var(--gutter) + 8px); }
-.sheetNav { margin-top: var(--s-8); display: grid; gap: var(--s-2); }
+@keyframes sheetIn { from { opacity: 0; transform: translateY(-6px); } }
+.sheetTop { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
+.sheetNav { margin-top: var(--s-8); display: grid; gap: var(--s-1); }
 .sheetLink {
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: clamp(2rem, 11vw, 3rem);
-  line-height: 1.06;
-  letter-spacing: var(--tr-head);
-  text-transform: uppercase;
-  padding-block: var(--s-2);
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-4);
+  font-family: var(--font-grotesk); font-weight: 900; font-stretch: 108%;
+  font-size: clamp(2.25rem, 12vw, 3.25rem); line-height: 1.02;
+  letter-spacing: var(--tr-head); text-transform: uppercase;
+  padding-block: var(--s-2); display: flex; align-items: center; gap: var(--s-4);
 }
-.sheetNum { color: var(--marker); }
-.sheetFoot { margin-top: auto; padding-top: var(--s-7); border-top: var(--hair) solid var(--rule); display: grid; gap: var(--s-4); }
-.sheetSecondary { display: flex; flex-wrap: wrap; gap: var(--s-5); color: var(--ink-55); }
+.sheetNum { color: var(--cil-red); flex: 0 0 auto; display: flex; }
+.sheetFoot { margin-top: auto; padding-top: var(--s-6); border-top: var(--rule-w) solid var(--cil-ink); display: grid; gap: var(--s-4); }
+.sheetSecondary { display: flex; flex-wrap: wrap; gap: var(--s-5); color: var(--ink-soft); }
 
-/* ---------------- Cart drawer ---------------- */
-.scrim {
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  background: color-mix(in srgb, var(--ink) 45%, transparent);
-  animation: fade var(--dur) var(--ease);
-}
+/* ---------------- Cart drawer — a printed order slip ---------------- */
+.scrim { position: fixed; inset: 0; z-index: 80; background: color-mix(in srgb, var(--cil-ink) 55%, transparent); animation: fade var(--dur) var(--ease); }
 @keyframes fade { from { opacity: 0; } }
 
 .drawer {
-  position: fixed;
-  top: 0; right: 0; bottom: 0;
-  z-index: 71;
-  width: min(430px, 100%);
-  background: var(--paper);
-  border-left: var(--hair) solid var(--ink);
-  display: flex;
-  flex-direction: column;
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 81;
+  width: min(440px, 100%);
+  background: var(--cil-cream); color: var(--cil-ink);
+  border-left: var(--rule-w) solid var(--cil-ink);
+  display: flex; flex-direction: column;
   animation: drawerIn var(--dur) var(--ease);
 }
-@keyframes drawerIn { from { transform: translateX(16px); opacity: 0; } }
+@keyframes drawerIn { from { transform: translateX(14px); opacity: 0; } }
 
-.drawerTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.slipHead {
   padding: var(--s-5) var(--s-5) var(--s-4);
-  border-bottom: var(--hair) solid var(--ink);
+  border-bottom: var(--rule-w) solid var(--cil-ink);
+  display: grid; gap: var(--s-3);
 }
-.drawerBody { flex: 1; overflow-y: auto; padding: var(--s-5); }
-.drawerEmpty { color: var(--ink-55); padding-block: var(--s-8); }
+.slipHeadTop { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
+.slipRule { border: 0; border-top: var(--hair) dashed var(--rule-strong); }
 
-.line { display: grid; gap: var(--s-3); padding-block: var(--s-5); border-bottom: var(--hair) solid var(--rule); }
-.line:first-child { padding-top: 0; }
-.lineTop { display: flex; justify-content: space-between; gap: var(--s-4); align-items: baseline; }
-.lineNote {
-  border-radius: var(--radius-ctl);
-  border-left: 3px solid var(--marker);
-  padding: var(--s-2) var(--s-3);
-  background: var(--paper-deep);
+.drawerBody { flex: 1; overflow-y: auto; padding: 0 var(--s-5); }
+.drawerEmpty { color: var(--ink-soft); padding-block: var(--s-8); }
+
+.line { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: var(--s-4); padding-block: var(--s-5); border-bottom: var(--hair) dashed var(--rule-strong); }
+.lineThumb { width: 64px; height: 80px; object-fit: cover; background: color-mix(in srgb, var(--cil-ink) 8%, transparent); }
+.lineMain { display: grid; gap: var(--s-2); min-width: 0; }
+.lineTop { display: flex; justify-content: space-between; gap: var(--s-3); align-items: baseline; }
+.lineNote { border-left: var(--rule-w) solid var(--cil-green); padding: var(--s-2) var(--s-3); background: color-mix(in srgb, var(--cil-green) 8%, transparent); }
+.lineControls { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
+.remove { color: var(--ink-soft); text-decoration: underline; text-underline-offset: 3px; min-height: 44px; }
+.remove:hover { color: var(--cil-red); }
+
+/* MAKE TWO? — a small upsell device on the slip. */
+.upsell {
+  margin-block: var(--s-4);
+  border: var(--rule-w) solid var(--cil-ink);
+  padding: var(--s-4);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
 }
-.lineControls { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); }
-.remove { color: var(--ink-55); text-decoration: underline; text-underline-offset: 3px; min-height: 44px; }
-.remove:hover { color: var(--accent); }
+.upsellCopy { display: grid; gap: 2px; }
+.upsellBtn {
+  font-family: var(--font-grotesk); font-weight: 800; font-size: var(--fs-label);
+  letter-spacing: var(--tr-label); text-transform: uppercase;
+  background: var(--cil-ink); color: var(--cil-cream);
+  min-height: 40px; padding: 0 var(--s-4); white-space: nowrap;
+}
+.upsellBtn:hover { background: var(--cil-red); }
 
-.drawerFoot { border-top: var(--hair) solid var(--ink); padding: var(--s-5); display: grid; gap: var(--s-4); }
+.drawerFoot { border-top: var(--rule-w) solid var(--cil-ink); padding: var(--s-5); display: grid; gap: var(--s-4); }
 .subtotal { display: flex; justify-content: space-between; align-items: baseline; }
 
 /* ---------------- Sticky mobile CTA ---------------- */
 .sticky {
-  position: fixed;
-  left: 0; right: 0; bottom: 0;
-  z-index: 40;
-  background: var(--paper);
-  border-top: var(--hair) solid var(--ink);
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  background: var(--cil-cream);
+  border-top: var(--rule-w) solid var(--cil-ink);
   padding: var(--s-2) var(--gutter);
-  display: flex;
-  align-items: center;
-  gap: var(--s-4);
+  display: flex; align-items: center; gap: var(--s-4);
   transform: translateY(110%);
   transition: transform var(--dur) var(--ease);
   padding-bottom: max(var(--s-2), env(safe-area-inset-bottom));
@@ -191,25 +159,15 @@
 @media (min-width: 900px) { .sticky { display: none; } }
 
 /* ---------------- Footer ---------------- */
-.footer { background: var(--ink); color: var(--paper); padding-block: var(--s-10) var(--s-8); }
-.footerGrid {
-  display: grid;
-  gap: var(--s-8);
-  grid-template-columns: 1fr;
-}
-@media (min-width: 760px) {
-  .footerGrid { grid-template-columns: 1.4fr 1fr 1fr; gap: var(--s-7); }
-}
+.footer { background: var(--cil-ink); color: var(--cil-cream); padding-block: var(--s-10) var(--s-7); }
+.footerGrid { display: grid; gap: var(--s-8); grid-template-columns: 1fr; }
+@media (min-width: 760px) { .footerGrid { grid-template-columns: 1.5fr 1fr 1fr; gap: var(--s-7); } }
 .footerCol { display: grid; gap: var(--s-3); align-content: start; }
-.footerLink { color: var(--paper-deep); min-height: 44px; display: inline-flex; align-items: center; }
-.footerLink:hover { color: var(--accent); }
+.footerLink { color: var(--cream-soft); min-height: 40px; display: inline-flex; align-items: center; gap: 6px; }
+.footerLink:hover { color: var(--cil-cream); }
 .footerBottom {
-  margin-top: var(--s-10);
-  padding-top: var(--s-4);
-  border-top: var(--hair) solid color-mix(in srgb, var(--paper) 24%, transparent);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--s-4);
-  justify-content: space-between;
-  color: var(--fg-meta);
+  margin-top: var(--s-9); padding-top: var(--s-4);
+  border-top: var(--hair) solid color-mix(in srgb, var(--cil-cream) 28%, transparent);
+  display: flex; flex-wrap: wrap; gap: var(--s-4); justify-content: space-between;
+  color: var(--cream-dim);
 }

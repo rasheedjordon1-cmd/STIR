@@ -3,13 +3,11 @@ import { photo } from './photography'
 /** PREPARATION — removes the "I will never actually use it" objection. */
 
 export const making = {
-  eyebrow: 'CHAPTER 07',
-  headline: ['THREE STEPS.', 'NO CEREMONY REQUIRED.'],
   lede: 'If you can make a cup of tea, you can make this. There is no correct way and nobody is watching.',
   steps: [
     {
       n: '01',
-      title: 'CHOP',
+      title: 'BREAK',
       body: 'Take about 25–30 g off the block — roughly a two-finger piece. Chop it small so it melts evenly.',
       meta: '25–30 G PER CUP',
       plate: 'PL. 03',
@@ -18,7 +16,7 @@ export const making = {
     },
     {
       n: '02',
-      title: 'MELT',
+      title: 'MELT + MIX',
       body: 'Warm 200 ml of water or milk on low heat. Add the cacao and stir until it goes smooth and glossy. Do not boil it.',
       meta: '200 ML · LOW HEAT',
       plate: 'PL. 04',

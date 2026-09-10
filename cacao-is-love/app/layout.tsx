@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Archivo, Fraunces, IBM_Plex_Mono } from 'next/font/google'
+import { Archivo, Newsreader, IBM_Plex_Mono } from 'next/font/google'
 import { CartProvider } from '@/lib/cart'
 import { SiteHeader } from '@/components/chrome/SiteHeader'
 import { SiteFooter } from '@/components/chrome/SiteFooter'
@@ -8,22 +8,22 @@ import { StickyCta } from '@/components/chrome/StickyCta'
 import { site } from '@/content/site'
 import './globals.css'
 
-/* The discipline. Archivo keeps nav, labels and product data institutional. */
+/* TYPE B + C — one blunt grotesk carries both the heavy headings and the
+   compact utility type, using its weight and width axes. */
 const archivo = Archivo({
   subsets: ['latin'],
-  weight: ['500', '600'],
+  axes: ['wdth'],
   variable: '--font-archivo',
   display: 'swap',
 })
 
-/* The voice. Fraunces carries the headlines and the long-form: a variable
-   serif with SOFT and WONK axes, so it can be warm and a little particular
-   without tipping into retro pastiche. */
-const fraunces = Fraunces({
+/* TYPE D — the rare human serif. Quotes and Nicolas's note only; it no longer
+   carries the brand. */
+const newsreader = Newsreader({
   subsets: ['latin'],
+  weight: ['400'],
   style: ['normal', 'italic'],
-  axes: ['SOFT', 'WONK', 'opsz'],
-  variable: '--font-fraunces',
+  variable: '--font-newsreader',
   display: 'swap',
 })
 
@@ -51,14 +51,14 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#F5EFE1',
+  themeColor: '#F2E8D3',
   width: 'device-width',
   initialScale: 1,
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${archivo.variable} ${fraunces.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${newsreader.variable} ${plexMono.variable}`}>
       <body>
         <CartProvider>
           <a href="#main" className="skip-link">

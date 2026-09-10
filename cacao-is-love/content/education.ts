@@ -1,8 +1,7 @@
 /** EDUCATION — category explanation. Plainspoken, no health claims. */
 
 export const whatIsCacao = {
-  eyebrow: 'CHAPTER 03',
-  headline: ['WAIT.', 'WHAT IS CACAO?'],
+  headline: 'WHAT ARE YOU ACTUALLY DRINKING?',
   lede:
     'Chocolate starts as a fruit. Cacao is that fruit, before anybody adds sugar to it. That is the whole idea.',
   steps: [
@@ -15,8 +14,7 @@ export const whatIsCacao = {
 }
 
 export const coffeeNeighbor = {
-  eyebrow: 'CHAPTER 04',
-  headline: ['YOUR COFFEE', 'HAS A NEIGHBOR.'],
+  headline: ['YOUR COFFEE HAS A NEIGHBOR.'],
   lede: 'We are not asking you to break up with coffee. We drink coffee. This just sits in a different part of the day.',
   rows: [
     { attribute: 'THE LIFT',   coffee: 'Caffeine. Fast up, and a floor to it later.',   cacao: 'Theobromine, with a little caffeine. Slower on, slower off.' },
@@ -28,8 +26,7 @@ export const coffeeNeighbor = {
 }
 
 export const whyPeopleDrinkIt = {
-  eyebrow: 'CHAPTER 05',
-  headline: ['WHY PEOPLE', 'DRINK IT.'],
+  headline: ['WHY PEOPLE DRINK IT.'],
   blocks: [
     { n: '01', title: 'GENTLE ENERGY',        body: 'It lifts, but it does not shove. Most people describe it as steady rather than sharp.' },
     { n: '02', title: 'WHOLE FOOD',           body: 'One ingredient, in the form it came in. Nothing stripped out to make it cheaper.' },
@@ -41,7 +38,6 @@ export const whyPeopleDrinkIt = {
 }
 
 export const productTruth = {
-  eyebrow: 'CHAPTER 02',
   kicker: 'ONE INGREDIENT.',
   headline: 'WHOLE CACAO.',
   lines: ['Nothing added.', 'Nothing taken away.'],

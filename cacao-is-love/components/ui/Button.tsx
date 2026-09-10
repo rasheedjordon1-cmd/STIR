@@ -2,35 +2,44 @@ import Link from 'next/link'
 import type { ComponentProps, ReactNode } from 'react'
 import s from './ui.module.css'
 
-type Variant = 'solid' | 'outline' | 'quiet'
+type Variant = 'primary' | 'secondary' | 'quiet'
 
 const variants: Record<Variant, string> = {
-  solid: s.btnSolid,
-  outline: s.btnOutline,
+  primary: s.btnPrimary,
+  secondary: s.btnSecondary,
   quiet: s.btnQuiet,
 }
 
-function classes(variant: Variant, block?: boolean, size?: 'md' | 'lg', extra?: string) {
-  return [s.btn, variants[variant], block ? s.btnBlock : '', size === 'lg' ? s.btnLg : '', extra]
+function cls(variant: Variant, o: { block?: boolean; lg?: boolean; cut?: boolean; extra?: string }) {
+  return [
+    s.btn,
+    variants[variant],
+    o.block ? s.btnBlock : '',
+    o.lg ? s.btnLg : '',
+    o.cut && variant !== 'quiet' ? s.btnCut : '',
+    o.extra,
+  ]
     .filter(Boolean)
     .join(' ')
 }
 
 export function Button({
-  variant = 'solid',
+  variant = 'primary',
   block,
-  size = 'md',
+  lg,
+  cut,
   className,
   children,
   ...rest
 }: {
   variant?: Variant
   block?: boolean
-  size?: 'md' | 'lg'
+  lg?: boolean
+  cut?: boolean
   children: ReactNode
 } & ComponentProps<'button'>) {
   return (
-    <button className={classes(variant, block, size, className)} {...rest}>
+    <button className={cls(variant, { block, lg, cut, extra: className })} {...rest}>
       {children}
     </button>
   )
@@ -38,9 +47,10 @@ export function Button({
 
 export function ButtonLink({
   href,
-  variant = 'solid',
+  variant = 'primary',
   block,
-  size = 'md',
+  lg,
+  cut,
   className,
   children,
   ...rest
@@ -48,12 +58,15 @@ export function ButtonLink({
   href: string
   variant?: Variant
   block?: boolean
-  size?: 'md' | 'lg'
+  lg?: boolean
+  cut?: boolean
   children: ReactNode
 } & Omit<ComponentProps<typeof Link>, 'href'>) {
   return (
-    <Link href={href} className={classes(variant, block, size, className)} {...rest}>
+    <Link href={href} className={cls(variant, { block, lg, cut, extra: className })} {...rest}>
       {children}
     </Link>
   )
 }
+
+export const quietMark = s.quietMark

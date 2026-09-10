@@ -1,80 +1,46 @@
 import type { Metadata } from 'next'
-import { product } from '@/content/product'
-import { Section, Chapter } from '@/components/ui/Section'
-import { SpecimenRail } from '@/components/ui/SpecimenRail'
-import { ProductGallery } from '@/components/sections/Gallery'
-import { BuyModule } from '@/components/commerce/BuyModule'
+import { Marquee } from '@/components/sections/Marquee'
+import { ProductField, ProductImage, Purchase } from '@/components/sections/Product'
 import {
-  ProductTruth,
   WhatIsCacao,
+  Provenance,
+  Preparation,
   CoffeeNeighbor,
   WhyPeopleDrink,
-} from '@/components/sections/Education'
-import { HowToMake, FounderNote, Source, FieldNotes } from '@/components/sections/Story'
-import { BuyChapter, Faq } from '@/components/sections/Convert'
-import { origin } from '@/content/origin'
-import s from '@/components/sections/sections.module.css'
+} from '@/components/sections/Learn'
+import { Nicolas, Poster, FieldNotes, Faq } from '@/components/sections/Culture'
+import { site } from '@/content/site'
 
 export const metadata: Metadata = {
   title: '100% Whole Cacao — 250 g',
   description:
-    'One ingredient. Whole cacao from Colombia, 250 g. Nothing added, nothing taken away.',
+    'One ingredient. Whole cacao, grown in Colombia. 250 g. Made simply, shared freely.',
 }
 
 /**
- * PRODUCT DETAIL PAGE — the deep cut.
+ * PRODUCT DETAIL PAGE
  *
- * It reuses the homepage's education components rather than re-authoring them,
- * so there is one source of truth for every claim. What is unique to this page
- * is the top: a gallery that teaches, the full origin record, the spec table,
- * and the FAQ that closes out remaining objections.
+ * The purchase counter comes first and carries the page's h1. Everything below
+ * it is the same education the homepage uses — one source of truth per claim —
+ * plus the reference material that does not earn homepage space.
  */
 export default function ProductPage() {
   return (
     <>
-      <Section ground="paper" tight>
-        <Chapter
-          rail={
-            <SpecimenRail
-              title="RECORD"
-              entries={[
-                { label: 'PRODUCT', value: product.descriptor },
-                { label: 'NET WEIGHT', value: `${product.weightGrams} g` },
-                { label: 'INGREDIENTS', value: product.ingredients.join(', ') },
-                { label: 'ORIGIN', value: product.originCountry },
-                /* The rest of the origin record is deliberately unfilled until
-                   confirmed — a blank line is honest, a guess is not. */
-                ...origin.records.filter((r) => r.label !== 'COUNTRY'),
-              ]}
-            />
-          }
-        >
-          <div className={s.buyGrid}>
-            <ProductGallery />
-            <div style={{ position: 'sticky', top: 'calc(var(--header-h) + 24px)' }}>
-              <BuyModule id="pdp-buy" as="h1" />
-            </div>
-          </div>
-        </Chapter>
-      </Section>
-
-      <ProductTruth />
-      {/* Social proof sits high on the PDP rather than at the bottom: it is the
-          cheapest trust available and it costs nothing to read on the way down. */}
+      <Purchase id="pdp-buy" tag="PL. 03 — THE BAG" as="h1" />
+      <Marquee items={site.marquee} field="ink" />
+      <ProductField />
       <FieldNotes />
+      <ProductImage />
       <WhatIsCacao />
-      <HowToMake />
-      <WhyPeopleDrink />
+      <Preparation />
+      <Provenance />
       <CoffeeNeighbor />
-      <FounderNote />
-      <Source />
+      <WhyPeopleDrink />
+      <Nicolas />
+      <Poster />
       <Faq />
-      <BuyChapter
-        id="pdp-final"
-        ground="deep"
-        eyebrow="CHAPTER 12"
-        lines={['READY WHEN', 'YOU ARE.']}
-      />
+      <Purchase id="pdp-final" field="ink" tag="READY WHEN YOU ARE" />
     </>
   )
 }

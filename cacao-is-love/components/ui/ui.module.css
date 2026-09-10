@@ -1,230 +1,93 @@
 /* ============================================================================
-   UI PRIMITIVES — shared module for the system's structural vocabulary.
+   PRIMITIVES — CIL system
    ========================================================================== */
 
-/* ---------- Section / Chapter ---------- */
-.section { padding-block: var(--chapter-y); position: relative; }
-.sectionTight { padding-block: clamp(48px, 6vw, 96px); }
+.field { padding-block: var(--field-y); position: relative; }
+.fieldTight { padding-block: clamp(40px, 5vw, 80px); }
+.fieldFlush { padding-block: 0; }
 
-.chapterGrid {
+/* ---------- Utility table — supermarket shelf-edge information ---------- */
+.utility { display: grid; width: 100%; }
+.utilityRow {
   display: grid;
-  gap: var(--s-7);
-  grid-template-areas: "body" "rail";
-}
-.rail { grid-area: rail; }
-.body { grid-area: body; min-width: 0; }
-
-@media (min-width: 900px) {
-  .chapterGrid {
-    grid-template-areas: "rail body";
-    grid-template-columns: var(--rail-w) minmax(0, 1fr);
-    column-gap: clamp(32px, 5vw, 80px);
-    align-items: start;
-  }
-  .railRight {
-    grid-template-areas: "body rail";
-    grid-template-columns: minmax(0, 1fr) var(--rail-w);
-  }
-}
-
-/* ---------- ChapterHeader ---------- */
-.chapterHead {
-  border-top: var(--hair) solid var(--rule-strong);
-  padding-top: var(--s-3);
-  margin-bottom: var(--s-7);
-  display: flex;
-  align-items: baseline;
-  gap: var(--s-4);
-  flex-wrap: wrap;
-}
-.chapterNum { color: var(--marker); flex-shrink: 0; }
-.chapterEyebrow { color: var(--fg-meta); }
-
-/* ---------- SpecimenRail ---------- */
-/* Desktop: a true margin column of record entries.
-   Mobile: collapses to a two-column metadata table above the body. */
-.specimen {
-  border-top: var(--hair) solid var(--rule);
-  padding-top: var(--s-3);
-}
-.specimenTitle {
-  color: var(--fg-meta);
-  margin-bottom: var(--s-4);
-}
-.specimenList { display: grid; gap: 0; }
-.specimenRow {
-  display: grid;
-  grid-template-columns: minmax(88px, 0.9fr) minmax(0, 1.4fr);
+  grid-template-columns: 18px minmax(90px, 0.8fr) minmax(0, 1.6fr);
   gap: var(--s-3);
-  padding-block: var(--s-2);
-  border-bottom: var(--hair) solid var(--rule);
   align-items: baseline;
+  padding-block: var(--s-4);
+  border-bottom: var(--rule-w) solid var(--rule-strong);
 }
-.specimenKey { color: var(--fg-meta); }
-.specimenVal {
-  font-family: var(--font-mono);
-  font-size: var(--fs-meta);
-  letter-spacing: var(--tr-meta);
-  color: var(--fg);
-  font-variant-numeric: tabular-nums;
-}
-/* An unset record is a visible blank line, not a fabricated value. */
-.specimenEmpty { color: var(--fg-meta); opacity: 0.55; }
+.utilityRow:first-child { border-top: var(--rule-w) solid var(--rule-strong); }
+.utilityMark { display: flex; align-items: center; height: 1em; color: var(--fg); }
+.utilityKey { color: var(--fg); }
+.utilityVal { text-align: right; color: var(--fg); font-size: var(--fs-small); }
 
-@media (min-width: 900px) {
-  .specimenRow { grid-template-columns: 1fr; gap: 2px; padding-block: var(--s-3); }
-}
-
-/* ---------- Plate ---------- */
-.plate { display: block; }
-.plateFrame {
-  position: relative;
-  border: var(--hair) solid var(--rule-strong);
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--fg) 4%, transparent);
-  overflow: hidden;
-}
-.plateFrame > img { width: 100%; height: 100%; object-fit: cover; }
-
-.plateEmpty {
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  color: var(--fg-meta);
-}
-.plateEmptyMark { position: absolute; inset: 0; width: 100%; height: 100%; }
-.plateEmptyLabel {
-  position: relative;
-  background: var(--bg);
-  padding: var(--s-2) var(--s-3);
-  border: var(--hair) solid var(--rule);
-  border-radius: var(--radius-ctl);
-  text-align: center;
-}
-
-.plateCaption {
-  display: flex;
-  gap: var(--s-4);
-  align-items: baseline;
-  justify-content: space-between;
-  padding-top: var(--s-2);
-  margin-top: var(--s-2);
+/* ---------- Figure — real photography, no empty boxes ---------- */
+.figure { display: block; position: relative; }
+.figureMedia { position: relative; overflow: hidden; background: color-mix(in srgb, var(--fg) 8%, transparent); }
+.figureMedia > img { width: 100%; height: 100%; object-fit: cover; }
+.figureCap {
+  display: flex; gap: var(--s-4); align-items: baseline; justify-content: space-between;
+  padding-top: var(--s-3); margin-top: var(--s-3);
   border-top: var(--hair) solid var(--rule);
 }
-.plateNum { color: var(--marker); flex-shrink: 0; }
-.plateText { color: var(--fg-meta); text-align: right; }
+.figureCapRight { text-align: right; }
 
-/* ---------- Button ---------- */
+/* ---------- Button — substantial, square, uppercase utility ---------- */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-flex; align-items: center; justify-content: center;
   gap: var(--s-3);
-  font-family: var(--font-sans);
-  font-weight: 600;
-  font-size: var(--fs-label);
-  letter-spacing: var(--tr-label);
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-size: 0.8125rem;
+  font-stretch: 96%;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  border-radius: var(--radius-btn);
-  border: var(--hair) solid transparent;
-  transition: background-color var(--dur) var(--ease),
-              color var(--dur) var(--ease),
-              border-color var(--dur) var(--ease),
-              transform var(--dur-fast) var(--ease);
+  border-radius: var(--radius);
+  border: var(--rule-w) solid transparent;
+  min-height: 52px;
+  padding: 0 var(--s-6);
   text-align: center;
-  min-height: 48px;              /* touch target */
-  padding: var(--s-4) var(--s-6);
   position: relative;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease),
+              border-color var(--dur) var(--ease), transform var(--dur-fast) var(--ease);
 }
+@media (min-width: 900px) { .btn { min-height: 56px; } }
 .btn:active { transform: translateY(1px); }
-.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.45; pointer-events: none; }
+.btn[disabled], .btn[aria-disabled='true'] { opacity: 0.4; pointer-events: none; }
 
-.btnSolid {
-  background: var(--accent-bg);
-  color: var(--accent-fg);
-  border-color: var(--accent-bg);
-}
-.btnSolid:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.btnPrimary { background: var(--btn-bg); color: var(--btn-fg); border-color: var(--btn-bg); }
+.btnPrimary:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
 
-.btnOutline {
-  background: transparent;
-  color: var(--fg);
-  border-color: var(--rule-strong);
-}
-.btnOutline:hover { background: var(--fg); color: var(--bg); }
+.btnSecondary { background: transparent; color: var(--fg); border-color: var(--fg); }
+.btnSecondary:hover { background: var(--fg); color: var(--bg); }
 
 .btnQuiet {
-  border-radius: 0;
-  background: transparent;
-  color: var(--fg);
-  border-color: transparent;
-  padding-inline: 0;
-  min-height: 44px;
+  background: transparent; color: var(--fg); border-color: transparent;
+  padding-inline: 0; min-height: 44px; gap: var(--s-2);
 }
 .btnQuiet::after {
-  content: '';
-  position: absolute;
-  left: 0; right: 0; bottom: 10px;
-  border-bottom: var(--hair) solid var(--accent);
-  transform-origin: left;
-  transition: transform var(--dur) var(--ease);
+  content: ''; position: absolute; left: 0; right: 0; bottom: 8px;
+  border-bottom: var(--rule-w) solid var(--accent);
+  transform-origin: left; transition: transform var(--dur) var(--ease);
 }
-.btnQuiet:hover::after { transform: scaleX(0.4); }
+.btnQuiet:hover::after { transform: scaleX(0.42); }
+/* CIL MICRO 006 approaches the link on hover. */
+.btnQuiet .quietMark { transition: transform var(--dur) var(--ease); }
+.btnQuiet:hover .quietMark { transform: translateX(10px); }
 
+.btnLg { min-height: 58px; font-size: 0.875rem; }
 .btnBlock { width: 100%; }
-.btnLg { min-height: 56px; font-size: 0.75rem; }
+/* SOFT OUTSIDE, CUT INSIDE — reserved for the primary commerce action. */
+.btnCut { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%); }
 
 /* ---------- Reveal ---------- */
 .reveal {
-  opacity: 0;
-  transform: translateY(8px);
-  transition: opacity var(--dur-reveal) var(--ease),
-              transform var(--dur-reveal) var(--ease);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
 }
 .revealIn { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
 
-@media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; }
-}
-
-/* ---------- Mastermark ---------- */
-.mastermarkImg { height: var(--mm-h, 28px); width: auto; }
-.mastermarkImgDisplay { height: clamp(64px, 11vw, 150px); width: auto; }
-
-/* Reserved space until the handwritten asset is supplied. Never a font
-   approximation — the mark is drawn by hand or it is not shown. */
-.mastermarkFallback {
-  border-radius: var(--radius-btn);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border: var(--hair) solid var(--rule-strong);
-  padding-inline: var(--s-3);
-  color: var(--fg);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-.mastermarkFallback .t-label { font-size: 0.625rem; letter-spacing: 0.1em; }
-
-.mastermarkDisplay {
-  border-radius: var(--radius);
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 100%;
-  max-width: 560px;
-  height: clamp(96px, 13vw, 168px);
-  border: var(--hair) solid var(--rule-strong);
-  color: var(--fg);
-}
-.mastermarkCross { position: absolute; inset: 0; width: 100%; height: 100%; }
-.mastermarkDisplayLabel {
-  position: relative;
-  background: var(--bg);
-  padding: var(--s-2) var(--s-3);
-  border: var(--hair) solid var(--rule);
-  color: var(--fg-meta);
-  text-align: center;
-}
+/* ---------- Chapter tag — seasoning only ---------- */
+.chapterTag { display: inline-flex; align-items: center; gap: var(--s-2); color: var(--fg-meta); }

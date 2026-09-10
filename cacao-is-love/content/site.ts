@@ -20,31 +20,24 @@ export const site = {
     { label: 'CONTACT', href: 'mailto:hello@example.com' }, // PLACEHOLDER
   ],
 
-  /** The CONTENTS rail. Doubles as the fast-orientation device in the hero. */
-  contents: [
-    { n: '01', label: 'THE PRODUCT',      href: '#truth'   },
-    { n: '02', label: 'WHAT IS CACAO',    href: '#cacao'   },
-    { n: '03', label: 'CACAO / COFFEE',   href: '#coffee'  },
-    { n: '04', label: 'WHY PEOPLE DRINK', href: '#why'     },
-    { n: '05', label: 'HOW TO MAKE IT',   href: '#make'    },
-    { n: '06', label: 'NICOLAS',          href: '#nicolas' },
-    { n: '07', label: 'SOURCE',           href: '#source'  },
-    { n: '08', label: 'THE NEIGHBORHOOD', href: '#people'  },
-  ],
-
   hero: {
     eyebrow: 'A GIFT FROM CURIOSITY',
-    supporting: '100% whole cacao from Colombia.',
-    secondLine: 'Made simply. Shared freely.',
-    primaryCta: 'SHOP CACAO',
+    headline: 'CACAO, MADE TO BE SHARED.',
+    supporting: '100% whole cacao.',
+    secondLine: 'Grown in Colombia.',
+    primaryCta: 'MAKE A CUP',
     secondaryCta: 'WHAT IS CACAO?',
-    plate: {
-      plate: 'PL. 00',
-      caption: 'Whole cacao, 250 g — Colombia',
-      src: photo('productFront'),
-      alt: 'A bag of whole cacao on a kitchen counter.',
-    },
   },
+
+  /** The product-truth strip under the hero. Keep every item short. */
+  marquee: [
+    'ONE INGREDIENT',
+    'WHOLE CACAO',
+    'GROWN IN COLOMBIA',
+    'MADE TO SHARE',
+    'NOTHING ADDED',
+    '250 G',
+  ],
 
   /** PLACEHOLDER — set real shipping terms before launch. */
   shipping: [
@@ -54,8 +47,8 @@ export const site = {
   ],
 
   email: {
-    eyebrow: 'CHAPTER 13',
-    headline: ['GOOD THINGS', 'ARE MEANT', 'TO BE SHARED.'],
+    eyebrow: 'STAY CLOSE',
+    headline: ['GOOD THINGS ARE MEANT TO BE SHARED.'],
     supporting: 'Next drops, cacao, stories, and things worth knowing about.',
     cta: 'JOIN THE NEIGHBORHOOD',
     note: 'No discount codes. We send when there is something to say.',

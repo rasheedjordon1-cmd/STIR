@@ -32,13 +32,13 @@ export function StickyCta({ waitlistHref = '#waitlist' }: { waitlistHref?: strin
       </div>
       {soldOut ? (
         <a href={waitlistHref} className="t-label" style={{ display: 'contents' }}>
-          <Button variant="solid" tabIndex={shown ? 0 : -1}>
+          <Button variant="primary" tabIndex={shown ? 0 : -1}>
             JOIN THE NEXT DROP
           </Button>
         </a>
       ) : (
         <Button
-          variant="solid"
+          variant="primary"
           tabIndex={shown ? 0 : -1}
           onClick={() =>
             add({

@@ -1,165 +1,163 @@
 /* ============================================================================
-   CACAO IS LOVE — DESIGN TOKENS  (v2 — warmth pass)
+   CACAO IS LOVE — DESIGN TOKENS  (v3 — CIL system)
    ----------------------------------------------------------------------------
-   Two layers:
-   1. PALETTE  — raw material. Never referenced directly by a component.
-   2. SEMANTIC — remapped per "ground". Components only ever use these.
+   Four colours. No fifth colour, no gradients, no tints outside the family.
 
-   v2 changes the brand's temperature, not its logic. The first pass was ~85%
-   cream with hairline rules, which read institutional — a museum catalogue
-   rather than something you want to drink. Warmth in food brands comes from
-   large fields of committed colour, softened geometry and type with a voice,
-   so v2 adds two saturated full-bleed grounds (clay, forest), a real corner
-   radius, and a display face with character.
+   The palette is deliberately narrow and the measured contrast makes it
+   narrower still:
 
-   The contrast contract is unchanged and still measured, not estimated.
-   Clay is a deliberately narrow ground: only cream and shell clear AA on it,
-   so its semantic map offers nothing else.
+     cream on red    4.77  AA          red on green   1.36  FAIL
+     cream on green  6.50  AA          ink on green   2.34  FAIL
+     cream on ink   15.19  AA          ink on red     3.18  large only
+     ink on cream   15.19  AA          green on ink   2.34  FAIL
+     red on cream    4.77  AA
+     green on cream  6.50  AA
+
+   So: RED and GREEN fields carry CREAM TYPE ONLY. Hierarchy on those grounds
+   comes from weight and scale, not colour — which is how packaging works
+   anyway. The ground classes encode that; a component cannot reach a failing
+   pairing because the failing pairing is never mapped.
    ========================================================================== */
 
 :root {
-  /* ---- 1. PALETTE ------------------------------------------------------- */
-  --paper:        #F5EFE1;  /* warm cream, a touch warmer than v1            */
-  --paper-deep:   #EBE2CE;  /* secondary ground                              */
-  --kraft:        #D4BC93;  /* warmer, more saturated blocking ground        */
-  --ink:          #1B1512;  /* cacao black-brown                             */
-  --ink-70:       #4E453C;  /* secondary text on light        8.18:1 AA      */
-  --ink-55:       #6E6257;  /* metadata on light              5.16:1 AA      */
+  /* ---- 1. PALETTE — the whole brand ------------------------------------- */
+  --cil-red:    #B63A22;  /* deep warm cacao-pod red                         */
+  --cil-green:  #235C36;  /* deep agricultural market green                  */
+  --cil-cream:  #F2E8D3;  /* warm uncoated paper                             */
+  --cil-ink:    #17130F;  /* soft almost-black                               */
 
-  --clay:         #A03D24;  /* THE brand ground — pod red, full-bleed        */
-  --clay-deep:    #8A3320;  /* clay as text on light          7.11:1 AA      */
-  --forest:       #2E4636;  /* botanical ground                             */
-  --forest-lite:  #6F8A72;  /* forest as accent on ink        4.78:1 AA      */
-  --bloom:        #E0A05A;  /* warm amber — accent on dark grounds           */
-  --shell:        #F2D9B8;  /* soft cream — secondary text on clay/forest    */
+  /* Working tints — mixtures of the four, never new hues. */
+  --red-deep:   #8E2C19;  /* red as text on cream          6.84  AA          */
+  --green-deep: #17401F;  /* green as text on cream        9.64  AA          */
+  --ink-soft:   #3A322A;  /* secondary text on cream      10.34  AA          */
+  --cream-soft: #DED3BC;  /* secondary text on green/ink   5.33 / 12.45      */
+  --cream-dim:  #C9BFAC;  /* metadata on ink              10.15  AA          */
 
-  /* ---- 2. SEMANTIC (default ground: paper) ------------------------------ */
-  --bg:           var(--paper);
-  --fg:           var(--ink);
-  --fg-2:         var(--ink-70);
-  --fg-meta:      var(--ink-55);
-  --accent:       var(--clay-deep);
-  --accent-bg:    var(--clay);
-  --accent-fg:    var(--paper);
-  --marker:       var(--forest);
-  --rule:         color-mix(in srgb, var(--ink) 16%, transparent);
-  --rule-strong:  var(--ink);
-  --selection:    color-mix(in srgb, var(--clay) 22%, transparent);
+  /* ---- 2. SEMANTIC (default ground: cream) ------------------------------ */
+  --bg:          var(--cil-cream);
+  --fg:          var(--cil-ink);
+  --fg-2:        var(--ink-soft);
+  --fg-meta:     var(--ink-soft);
+  --accent:      var(--red-deep);
+  --btn-bg:      var(--cil-red);
+  --btn-fg:      var(--cil-cream);
+  --marker:      var(--cil-green);
+  --rule:        color-mix(in srgb, var(--cil-ink) 22%, transparent);
+  --rule-strong: var(--cil-ink);
+  --selection:   color-mix(in srgb, var(--cil-red) 26%, transparent);
 
   /* ---- TYPE ------------------------------------------------------------- */
-  /* Fraunces carries the voice; Archivo keeps the information disciplined. */
-  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-sans:  var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
-  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
-  --font-mono:  var(--font-mono-plex), ui-monospace, "SF Mono", Menlo, monospace;
+  /* A — the mastermark, used as letterform art. Never retyped in a font.
+     B — heavy blunt grotesk for live headings.
+     C — compact grotesk + mono for utility and product data.
+     D — quiet serif, rare, human moments only.                              */
+  --font-grotesk: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    var(--font-mono-plex), ui-monospace, "SF Mono", Menlo, monospace;
+  --font-serif:   var(--font-newsreader), Georgia, serif;
 
-  --fs-display: clamp(2.75rem, 10.5vw, 7rem);
-  --fs-h1:      clamp(2.125rem, 6.6vw, 4.5rem);
-  --fs-h2:      clamp(1.75rem, 4.2vw, 3rem);
-  --fs-h3:      clamp(1.0625rem, 1.9vw, 1.4375rem);
-  --fs-lede:    clamp(1.0625rem, 1.5vw, 1.3125rem);
+  --fs-mega:    clamp(3rem, 12vw, 9rem);
+  --fs-display: clamp(2.5rem, 7.5vw, 5.5rem);
+  --fs-h1:      clamp(2.125rem, 5.4vw, 4rem);
+  --fs-h2:      clamp(1.75rem, 3.8vw, 2.75rem);
+  --fs-h3:      clamp(1.0625rem, 1.7vw, 1.3125rem);
+  --fs-lede:    clamp(1.0625rem, 1.4vw, 1.25rem);
   --fs-body:    1rem;
   --fs-small:   0.875rem;
   --fs-label:   0.6875rem;
   --fs-meta:    0.75rem;
 
-  --lh-display: 0.94;
-  --lh-head:    1.04;
-  --lh-body:    1.62;
-  --lh-serif:   1.65;
+  --lh-mega:    0.86;
+  --lh-display: 0.9;
+  --lh-head:    0.98;
+  --lh-body:    1.6;
 
-  --tr-display: -0.02em;
-  --tr-head:    -0.015em;
-  --tr-label:   0.12em;
-  --tr-meta:    0.02em;
+  --tr-mega:    -0.035em;
+  --tr-head:    -0.02em;
+  --tr-label:   0.1em;
+  --tr-meta:    0.04em;
 
-  --measure:    64ch;
+  --measure:    58ch;
 
-  /* ---- SPACE (4px base) ------------------------------------------------- */
+  /* ---- SPACE ------------------------------------------------------------ */
   --s-1: 4px;   --s-2: 8px;   --s-3: 12px;  --s-4: 16px;
   --s-5: 24px;  --s-6: 32px;  --s-7: 40px;  --s-8: 56px;
-  --s-9: 72px;  --s-10: 96px; --s-11: 128px;
+  --s-9: 72px;  --s-10: 96px; --s-11: 128px; --s-12: 160px;
 
-  --chapter-y:  clamp(72px, 9vw, 152px);
-  --gutter:     clamp(20px, 4vw, 40px);
-  --shell:      1280px;
-  --rail-w:     clamp(140px, 13vw, 190px);
+  --field-y:  clamp(64px, 8vw, 136px);
+  --gutter:   clamp(20px, 3.6vw, 44px);
+  --shell:    1440px;
 
-  /* ---- FORM ------------------------------------------------------------- */
-  /* v1 was radius 0, which is precise and cold. Softened deliberately: enough
-     to read as friendly, well short of the pill-shaped retro register. */
-  --radius:     12px;  /* plates, cards, option toggles */
-  --radius-ctl: 8px;   /* inputs */
-  --radius-btn: 999px; /* buttons — the strongest single softness signal */
+  /* ---- FORM — square. The softness lives in the letterforms, not the UI. -- */
+  --radius:     0;
+  --radius-ctl: 3px;
+  --cut:        14px;   /* SOFT OUTSIDE, CUT INSIDE — corner-cut depth */
   --hair:       1px;
-  --header-h:   58px;
-  --sticky-h:   64px;
+  --rule-w:     2px;
+  --header-h:   64px;
+  --sticky-h:   68px;
 
   /* ---- MOTION ----------------------------------------------------------- */
-  --ease:       cubic-bezier(0.2, 0.6, 0.2, 1);
-  --dur-fast:   150ms;
-  --dur:        260ms;
-  --dur-reveal: 480ms;
+  --ease:     cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur:      220ms;
+  --dur-slow: 300ms;
 }
 
 /* ============================================================================
-   GROUNDS — the contrast contract.
+   FIELDS — every major section makes a colour decision.
    ========================================================================== */
 
-.ground-paper {
-  --bg: var(--paper);       --fg: var(--ink);          --fg-2: var(--ink-70);
-  --fg-meta: var(--ink-55); --accent: var(--clay-deep);--accent-bg: var(--clay);
-  --accent-fg: var(--paper);--marker: var(--forest);
-  --rule: color-mix(in srgb, var(--ink) 16%, transparent);
-  --rule-strong: var(--ink);
+.field-cream {
+  --bg: var(--cil-cream);   --fg: var(--cil-ink);      --fg-2: var(--ink-soft);
+  --fg-meta: var(--ink-soft);
+  --accent: var(--red-deep); --marker: var(--cil-green);
+  --btn-bg: var(--cil-red);  --btn-fg: var(--cil-cream);
+  --rule: color-mix(in srgb, var(--cil-ink) 22%, transparent);
+  --rule-strong: var(--cil-ink);
 }
 
-.ground-deep {
-  --bg: var(--paper-deep);  --fg: var(--ink);          --fg-2: var(--ink-70);
-  --fg-meta: var(--ink-55); --accent: var(--clay-deep);--accent-bg: var(--clay);
-  --accent-fg: var(--paper);--marker: var(--forest);
-  --rule: color-mix(in srgb, var(--ink) 18%, transparent);
-  --rule-strong: var(--ink);
+/* RED: cream type only. Hierarchy by weight and scale. */
+.field-red {
+  --bg: var(--cil-red);      --fg: var(--cil-cream);   --fg-2: var(--cil-cream);
+  --fg-meta: var(--cil-cream);
+  --accent: var(--cil-cream); --marker: var(--cil-cream);
+  --btn-bg: var(--cil-cream); --btn-fg: var(--cil-ink);
+  --rule: color-mix(in srgb, var(--cil-cream) 38%, transparent);
+  --rule-strong: var(--cil-cream);
 }
 
-/* Kraft: only ink and ink-70 clear AA, so --fg-meta is promoted to ink-70. */
-.ground-kraft {
-  --bg: var(--kraft);       --fg: var(--ink);          --fg-2: var(--ink-70);
-  --fg-meta: var(--ink-70); --accent: var(--ink);      --accent-bg: var(--ink);
-  --accent-fg: var(--paper);--marker: var(--forest);
-  --rule: color-mix(in srgb, var(--ink) 28%, transparent);
-  --rule-strong: var(--ink);
+/* GREEN: cream type only, with cream-soft available for secondary at 5.33. */
+.field-green {
+  --bg: var(--cil-green);    --fg: var(--cil-cream);   --fg-2: var(--cream-soft);
+  --fg-meta: var(--cream-soft);
+  --accent: var(--cil-cream); --marker: var(--cil-cream);
+  --btn-bg: var(--cil-cream); --btn-fg: var(--cil-ink);
+  --rule: color-mix(in srgb, var(--cil-cream) 34%, transparent);
+  --rule-strong: var(--cil-cream);
 }
 
-/* Clay: the loud one. Only paper (5.75) and shell (4.83) clear AA here, so
-   nothing else is offered. The CTA inverts — cream fill, clay text. */
-.ground-clay {
-  --bg: var(--clay);        --fg: var(--paper);        --fg-2: var(--shell);
-  --fg-meta: var(--shell);  --accent: var(--shell);    --accent-bg: var(--paper);
-  --accent-fg: var(--clay); --marker: var(--shell);
-  --rule: color-mix(in srgb, var(--paper) 32%, transparent);
-  --rule-strong: var(--paper);
+/* INK: the roomiest dark ground. Red survives here as large display only. */
+.field-ink {
+  --bg: var(--cil-ink);      --fg: var(--cil-cream);   --fg-2: var(--cream-soft);
+  --fg-meta: var(--cream-dim);
+  --accent: var(--cil-cream); --marker: var(--cil-cream);
+  --btn-bg: var(--cil-cream); --btn-fg: var(--cil-ink);
+  --rule: color-mix(in srgb, var(--cil-cream) 26%, transparent);
+  --rule-strong: var(--cil-cream);
 }
 
-/* Forest: warmer than pure ink and roomier than clay. Amber carries the CTA. */
-.ground-forest {
-  --bg: var(--forest);      --fg: var(--paper);        --fg-2: var(--shell);
-  --fg-meta: var(--kraft);  --accent: var(--bloom);    --accent-bg: var(--bloom);
-  --accent-fg: var(--ink);  --marker: var(--bloom);
-  --rule: color-mix(in srgb, var(--paper) 26%, transparent);
-  --rule-strong: var(--paper);
-}
-
-.ground-ink {
-  --bg: var(--ink);         --fg: var(--paper);        --fg-2: var(--paper-deep);
-  --fg-meta: var(--kraft);  --accent: var(--bloom);    --accent-bg: var(--clay);
-  --accent-fg: var(--paper);--marker: var(--forest-lite);
-  --rule: color-mix(in srgb, var(--paper) 24%, transparent);
-  --rule-strong: var(--paper);
-}
-
-.ground-paper, .ground-deep, .ground-kraft,
-.ground-clay, .ground-forest, .ground-ink {
+.field-cream, .field-red, .field-green, .field-ink {
   background: var(--bg);
   color: var(--fg);
+}
+
+/* Very low-opacity print tooth on the saturated fields only. */
+.field-red, .field-green, .field-ink { position: relative; }
+.field-red::before, .field-green::before, .field-ink::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }

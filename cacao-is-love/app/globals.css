@@ -7,151 +7,132 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--header-h) + 16px);
+  scroll-padding-top: calc(var(--header-h) + 8px);
 }
 
 body {
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--font-sans);
+  background: var(--cil-cream);
+  color: var(--cil-ink);
+  font-family: var(--font-grotesk);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   font-synthesis-weight: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  /* Room for the sticky mobile buy bar so it never covers the last line. */
   padding-bottom: var(--sticky-h);
 }
 @media (min-width: 900px) { body { padding-bottom: 0; } }
 
 img, svg, video { display: block; max-width: 100%; }
 img, video { height: auto; }
-
 button, input, select, textarea { font: inherit; color: inherit; }
 button { background: none; border: 0; cursor: pointer; }
-
-h1, h2, h3, h4, p, figure, ul, ol { margin: 0; }
+h1, h2, h3, h4, p, figure, ul, ol, dl { margin: 0; }
 ul, ol { list-style: none; padding: 0; }
-
 a { color: inherit; text-decoration: none; }
-
 ::selection { background: var(--selection); }
 
 /* ---------- focus ---------- */
 :focus { outline: none; }
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-/* On the dark and saturated grounds the clay accent is not legible as a ring,
-   so the focus indicator follows the ground's own accent. */
-.ground-ink :focus-visible,
-.ground-forest :focus-visible { outline-color: var(--bloom); }
-.ground-clay :focus-visible { outline-color: var(--paper); }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
 .skip-link {
-  position: absolute;
-  left: var(--s-4);
-  top: -100px;
-  z-index: 100;
-  background: var(--ink);
-  color: var(--paper);
+  position: absolute; left: var(--s-4); top: -100px; z-index: 200;
+  background: var(--cil-ink); color: var(--cil-cream);
   padding: var(--s-3) var(--s-5);
-  font-size: var(--fs-label);
-  letter-spacing: var(--tr-label);
-  text-transform: uppercase;
-  transition: top var(--dur) var(--ease);
+  font-size: var(--fs-label); letter-spacing: var(--tr-label); text-transform: uppercase;
+  font-weight: 700;
 }
 .skip-link:focus-visible { top: var(--s-4); }
 
-/* ---------- layout primitives ---------- */
-.shell {
-  width: 100%;
-  max-width: var(--shell);
-  margin-inline: auto;
-  padding-inline: var(--gutter);
-}
-
+/* ---------- layout ---------- */
+.shell { width: 100%; max-width: var(--shell); margin-inline: auto; padding-inline: var(--gutter); }
+.shell-wide { width: 100%; padding-inline: var(--gutter); }
 .measure { max-width: var(--measure); }
 
-/* ---------- type vocabulary ---------- */
-.t-display {
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 144;
-  font-weight: 600;
-  font-size: var(--fs-display);
-  line-height: var(--lh-display);
-  letter-spacing: var(--tr-display);
-  text-transform: uppercase;
-}
-.t-h1 {
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 120;
-  font-weight: 600;
-  font-size: var(--fs-h1);
-  line-height: var(--lh-head);
-  letter-spacing: var(--tr-head);
+/* 12-column base. Sections opt into asymmetric splits rather than one
+   repeating centred grid. */
+.grid12 { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gutter); }
+@media (max-width: 899px) { .grid12 { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ---------- TYPE SYSTEM B — heavy blunt grotesk ---------- */
+.t-mega, .t-display, .t-h1, .t-h2 {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-stretch: 112%;
   text-transform: uppercase;
   text-wrap: balance;
 }
-.t-h2 {
-  font-family: var(--font-display);
-  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 96;
-  font-weight: 600;
-  font-size: var(--fs-h2);
-  line-height: 1.08;
-  letter-spacing: var(--tr-head);
-  text-transform: uppercase;
-  text-wrap: balance;
-}
+.t-mega    { font-size: var(--fs-mega);    line-height: var(--lh-mega);    letter-spacing: var(--tr-mega); font-weight: 900; }
+.t-display { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: var(--tr-mega); font-weight: 900; }
+.t-h1      { font-size: var(--fs-h1);      line-height: var(--lh-head);    letter-spacing: var(--tr-head); }
+.t-h2      { font-size: var(--fs-h2);      line-height: var(--lh-head);    letter-spacing: var(--tr-head); }
+
 .t-h3 {
-  font-family: var(--font-sans);
-  font-weight: 600;
+  font-family: var(--font-grotesk);
+  font-weight: 700;
   font-size: var(--fs-h3);
   line-height: 1.2;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.005em;
   text-transform: uppercase;
 }
-.t-lede {
-  font-family: var(--font-serif);
-  font-variation-settings: 'SOFT' 50, 'WONK' 0, 'opsz' 16;
-  font-size: var(--fs-lede);
-  line-height: var(--lh-serif);
-  color: var(--fg-2);
-  text-wrap: pretty;
-}
-.t-serif {
-  font-family: var(--font-serif);
-  font-variation-settings: 'SOFT' 50, 'WONK' 0, 'opsz' 16;
-  font-size: var(--fs-lede);
-  line-height: var(--lh-serif);
-  text-wrap: pretty;
-}
-.t-body { color: var(--fg-2); text-wrap: pretty; }
 
-/* micro-label: the institutional voice of the whole system */
+/* ---------- TYPE SYSTEM C — utility ---------- */
+/* Supermarket shelf-edge / public-information / warehouse label. */
 .t-label {
-  font-family: var(--font-sans);
-  font-weight: 600;
+  font-family: var(--font-grotesk);
+  font-weight: 700;
   font-size: var(--fs-label);
+  font-stretch: 92%;
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
-  line-height: 1.3;
+  line-height: 1.25;
 }
-/* mono: reserved for record-keeping — numbers, weights, plate marks */
 .t-meta {
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   letter-spacing: var(--tr-meta);
-  line-height: 1.5;
+  text-transform: uppercase;
+  line-height: 1.45;
   color: var(--fg-meta);
   font-variant-numeric: tabular-nums;
+}
+.t-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* ---------- body ---------- */
+.t-lede { font-size: var(--fs-lede); line-height: 1.5; color: var(--fg-2); text-wrap: pretty; }
+.t-body { color: var(--fg-2); text-wrap: pretty; }
+
+/* ---------- TYPE SYSTEM D — rare human serif ---------- */
+.t-serif {
+  font-family: var(--font-serif);
+  font-size: var(--fs-lede);
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+.t-quote {
+  font-family: var(--font-serif);
+  font-size: clamp(1.375rem, 2.6vw, 2rem);
+  line-height: 1.3;
+  font-style: italic;
+  text-wrap: balance;
 }
 
 /* ---------- rules ---------- */
 .hr        { border: 0; border-top: var(--hair) solid var(--rule); }
-.hr-strong { border: 0; border-top: var(--hair) solid var(--rule-strong); }
+.hr-strong { border: 0; border-top: var(--rule-w) solid var(--rule-strong); }
+
+/* ---------- SOFT OUTSIDE, CUT INSIDE ----------
+   The mastermark's letterforms are soft on the outside and cut on the inside.
+   Applied to the interface as a single corner cut, used sparingly. */
+.cut-br { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%); }
+.cut-tl { clip-path: polygon(var(--cut) 0, 100% 0, 100% 100%, 0 100%, 0 var(--cut)); }
+.cut-tr { clip-path: polygon(0 0, calc(100% - var(--cut)) 0, 100% var(--cut), 100% 100%, 0 100%); }
 
 /* ---------- motion ---------- */
 @media (prefers-reduced-motion: reduce) {
@@ -161,4 +142,9 @@ a { color: inherit; text-decoration: none; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
