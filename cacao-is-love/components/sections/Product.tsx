@@ -1,6 +1,6 @@
 import { Section } from '@/components/ui/Section'
 import { UtilityTable, Tag } from '@/components/ui/Utility'
-import { SplitPodHalf } from '@/components/cil/CilMarks'
+import { SplitPodHalfMark } from '@/components/cil/CilAssets'
 import { BuyModule } from '@/components/commerce/BuyModule'
 import { Figure } from '@/components/ui/Figure'
 import { product, formatPrice } from '@/content/product'
@@ -45,10 +45,10 @@ export function ProductField() {
 /* -------- 02 · PRODUCT IMAGE — near full bleed -------------------------- */
 export function ProductImage() {
   return (
-    <Section field="cream" wide>
+    <Section field="ink" wide>
       <div className="shell">
         <div className={s.packWrap}>
-          <SplitPodHalf size={168} className={s.podCrop} />
+          <SplitPodHalfMark size={200} className={s.podCrop} />
           <div className={s.packMedia}>
             <Image
               src="/photo/pack-wood.webp"

@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { Section } from '@/components/ui/Section'
 import { Tag } from '@/components/ui/Utility'
-import { CuriosityTellMeMore } from '@/components/cil/CilArt'
+import { CuriosityTellMeMore } from '@/components/cil/CilAssets'
 import { SeedChamber, CupRim, CacaoShard } from '@/components/cil/CilMarks'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
@@ -39,7 +39,7 @@ export function Nicolas() {
           </p>
         </div>
         <div className={s.nicArt}>
-          <CuriosityTellMeMore title="Tell me more" />
+          <CuriosityTellMeMore alt="" sizes="(min-width: 900px) 30vw, 70vw" />
         </div>
       </div>
     </Section>
@@ -65,7 +65,7 @@ export function Poster() {
 /* -------- NOTES FROM THE NEIGHBORHOOD ----------------------------------- */
 export function FieldNotes() {
   return (
-    <Section id="people" field="cream" labelledBy="people-title">
+    <Section id="people" field="ink" labelledBy="people-title">
       <Tag>THE NEIGHBORHOOD</Tag>
       <h2 id="people-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
         HOW PEOPLE MAKE IT.

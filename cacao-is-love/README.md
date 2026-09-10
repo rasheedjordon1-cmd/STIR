@@ -88,19 +88,48 @@ never more than one or two on a screen.
 interface as a single corner cut (`.cut-br`, `.cut-tl`, `.cut-tr`, and the
 primary button), not as a general rounding. Corners are otherwise square.
 
-### Interim illustrations
+### Supplied artwork
 
-`components/cil/CilArt.tsx` stands in for the commissioned assets (EDU 001,
-PROVENANCE 001, CURIOSITY 001, the preparation hands) and is drawn to the same
-rules so the page reads as one system today.
+`components/cil/CilAssets.tsx` serves the delivered illustrations: **PROVENANCE
+001 — HAND + POD**, **EDU 001** (whole cacao / cocoa powder), **CURIOSITY 001 —
+TELL ME MORE**, and the **DOUBLE STEAM** and **SPLIT POD HALF** micro-assets.
 
-⚠ **Hands do not survive reduction to geometric masses at this scale** — they
-read as blobs. The first attempt at PROVENANCE 001 (hand + pod) and the
-preparation hands failed on exactly that, so the interim versions lead with the
-object: the pod on the branch, the block snapped in two, the cup and what goes
-in it. When the real hand artwork arrives, drop it into the same viewBoxes.
+They arrived on a near-white ground (`#FDFCF2`), which is far lighter than PAPER
+CREAM, so dropping them in as rectangles would have shown a bright box on every
+field. The pipeline lifts each one onto an alpha channel and snaps its colours
+to the canonical palette:
 
----
+- Coverage is recovered from each pixel's distance to the background, the flat
+  ink underneath is un-blended out of the antialiasing, that ink is classified,
+  and the result is re-emitted with the coverage as alpha. Classifying colours
+  directly would have jagged every edge.
+- The source red and green drift slightly off brand (`#C11A1A` / `#2A6636`), so
+  they are snapped to CIL RED and MARKET GREEN. The powder's brown maps to INK,
+  keeping the four-colour rule.
+- EDU 001 arrives as one landscape plate holding both panels; it is split on the
+  widest empty column run so each half can be laid out and labelled separately.
+- Flat two- and three-colour art compresses far better losslessly: 416KB for the
+  whole set.
+
+**The hands are MARKET GREEN, and that is a layout constraint.** Any of this
+artwork on a green field disappears, and recolouring it either erases the cream
+cut lines that separate the fingers or drops the red seeds onto green at 1.36:1.
+So the provenance section is a **cream / green split field** — artwork on the
+cream half, cream type on the green half — which keeps the green in the colour
+rhythm and the red pod as the chromatic focal point, with the artwork exactly as
+drawn.
+
+### Still interim
+
+`components/cil/CilArt.tsx` holds the three preparation steps (BREAK, MELT +
+MIX, MAKE IT YOURS), drawn to the same rules, plus the Seed Chamber, Cacao
+Shard, Cup Rim and Curious Finger micro-marks in `CilMarks.tsx`.
+
+⚠ Hands do not survive reduction to geometric masses at this scale — they read
+as blobs, which is exactly what the first attempt at the preparation hands did.
+The interim versions lead with the object instead: the block snapped in two, the
+pan and spoon, the cup and what goes in it. Drop the real artwork into the same
+viewBoxes when it lands.
 
 ## Commerce — unchanged
 
@@ -141,5 +170,5 @@ Verified in a headless browser at 320 / 390 / 768 / 1440 on both routes:
 - Motion is 150–300ms and physical: the Seed Chamber slides into nav items, the
   Curious Finger advances toward a link, the poster scales 1.5% on hover, the
   marquee pauses on hover. All of it disabled under `prefers-reduced-motion`.
-- Both routes prerender static. Photography is webp and self-hosted; the four
-  supplied assets were optimised from 9.7MB to 0.92MB.
+- Both routes prerender static. Photography is webp and self-hosted, optimised
+  from 9.7MB to 0.92MB; the illustration set is lossless webp at 416KB.

@@ -1,14 +1,13 @@
 import { Section } from '@/components/ui/Section'
 import { Tag } from '@/components/ui/Utility'
-import { DoubleSteam, CacaoShard, SeedChamber } from '@/components/cil/CilMarks'
+import { CacaoShard, SeedChamber } from '@/components/cil/CilMarks'
 import {
   EduWholeCacao,
   EduCocoaPowder,
   ProvenanceHandPod,
-  PrepBreak,
-  PrepMelt,
-  PrepMake,
-} from '@/components/cil/CilArt'
+  DoubleSteamMark,
+} from '@/components/cil/CilAssets'
+import { PrepBreak, PrepMelt, PrepMake } from '@/components/cil/CilArt'
 import { Reveal } from '@/components/ui/Reveal'
 import { whatIsCacao, coffeeNeighbor, whyPeopleDrinkIt } from '@/content/education'
 import { origin } from '@/content/origin'
@@ -43,7 +42,7 @@ export function WhatIsCacao() {
             { Art: EduCocoaPowder, name: 'COCOA POWDER', sub: 'Processed powder form.' },
           ].map(({ Art, name, sub }, i) => (
             <Reveal key={name} delay={i * 80} className={s.eduPanel}>
-              <Art title={name} />
+              <Art alt="" sizes="(min-width: 900px) 26vw, 42vw" />
               <div className={s.eduPanelLabel}>
                 <span className="t-h3">{name}</span>
                 <span className={`t-meta ${s.eduPanelSub}`}>{sub}</span>
@@ -56,32 +55,39 @@ export function WhatIsCacao() {
   )
 }
 
-/* -------- 04 · PROVENANCE — green field --------------------------------- */
+/* -------- 04 · PROVENANCE — a cream / green split field -----------------
+   The supplied artwork's hands are MARKET GREEN, so the illustration cannot sit
+   on a green field without disappearing, and recolouring it either erases the
+   cut lines that separate the fingers or drops the red seeds onto green at
+   1.36:1. Splitting the field keeps the green, keeps the red pod as the
+   chromatic focal point, and leaves the artwork exactly as drawn. */
 export function Provenance() {
   return (
-    <Section id="source" field="green" labelledBy="source-title">
-      <div className={s.provGrid}>
-        <div className={s.provArt}>
-          <ProvenanceHandPod title="A hand holding a cacao pod" />
+    <Section id="source" field="green" flush wide labelledBy="source-title">
+      <div className={s.provSplit}>
+        <div className={s.provArtSide}>
+          <ProvenanceHandPod alt="" sizes="(min-width: 900px) 38vw, 78vw" />
         </div>
-        <div className={s.provCopy}>
-          <Tag>CH. 03 — ORIGIN</Tag>
-          <h2 id="source-title" className="t-display">
-            GROWN IN COLOMBIA.
-          </h2>
-          <p className="t-lede measure">Where the cacao begins.</p>
-          <div className={s.provMeta}>
-            {origin.records
-              .filter((r) => r.value)
-              .map((r) => (
-                <div key={r.label} className={s.provMetaItem}>
-                  <span className="t-label">{r.label}</span>
-                  <span className="t-meta">{r.value}</span>
-                </div>
-              ))}
-            <div className={s.provMetaItem}>
-              <span className="t-label">FORM</span>
-              <span className="t-meta">WHOLE CACAO</span>
+        <div className={s.provCopySide}>
+          <div className={s.provCopyInner}>
+            <Tag>CH. 03 — ORIGIN</Tag>
+            <h2 id="source-title" className="t-display">
+              GROWN IN COLOMBIA.
+            </h2>
+            <p className="t-lede">Where the cacao begins.</p>
+            <div className={s.provMeta}>
+              {origin.records
+                .filter((r) => r.value)
+                .map((r) => (
+                  <div key={r.label} className={s.provMetaItem}>
+                    <span className="t-label">{r.label}</span>
+                    <span className="t-meta">{r.value}</span>
+                  </div>
+                ))}
+              <div className={s.provMetaItem}>
+                <span className="t-label">FORM</span>
+                <span className="t-meta">WHOLE CACAO</span>
+              </div>
             </div>
           </div>
         </div>
@@ -95,7 +101,7 @@ export function Preparation() {
   return (
     <Section id="make" field="cream" labelledBy="make-title">
       <div className={s.prepHead}>
-        <DoubleSteam size={30} />
+        <DoubleSteamMark size={44} />
         <h2 id="make-title" className="t-display">
           MAKE CACAO.
         </h2>

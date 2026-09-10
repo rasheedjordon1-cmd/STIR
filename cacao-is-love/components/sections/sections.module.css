@@ -93,7 +93,7 @@
 .packCap { display: flex; justify-content: space-between; gap: var(--s-4); padding-top: var(--s-3); margin-top: var(--s-3); border-top: var(--rule-w) solid var(--rule-strong); }
 @media (min-width: 900px) { .packCap { width: 78vw; max-width: 1180px; margin-left: auto; } }
 /* SPLIT POD HALF crops off the left edge of the field. */
-.podCrop { position: absolute; left: calc(var(--gutter) * -1); top: 12%; color: var(--cil-red); opacity: 0.9; pointer-events: none; }
+.podCrop { position: absolute; left: calc(var(--gutter) * -1.4); top: 10%; z-index: 1; pointer-events: none; }
 @media (max-width: 899px) { .podCrop { display: none; } }
 
 /* ---------------- 03 · WHAT IS CACAO (5 / 7) ---------------- */
@@ -103,18 +103,31 @@
 }
 .eduArt { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 44px); align-items: end; }
 .eduPanel { display: grid; gap: var(--s-4); }
-.eduPanel svg { width: 100%; height: auto; color: var(--fg); }
+.eduPanel img { width: 100%; height: auto; }
 .eduPanelLabel { display: grid; gap: 2px; padding-top: var(--s-3); border-top: var(--rule-w) solid var(--rule-strong); }
 .eduPanelSub { color: var(--fg-2); }
 
-/* ---------------- 04 · PROVENANCE (green, 7 / 5) ---------------- */
-.provGrid { display: grid; gap: var(--s-8); align-items: center; }
+/* ---------------- 04 · PROVENANCE (cream / green split field) ---------------- */
+.provSplit { display: grid; }
 @media (min-width: 900px) {
-  .provGrid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 5vw, 88px); }
+  .provSplit { grid-template-columns: minmax(0, 42fr) minmax(0, 58fr); align-items: stretch; }
 }
-.provArt { color: var(--cil-cream); }
-.provArt svg { width: 100%; max-width: 460px; height: auto; }
-.provCopy { display: grid; gap: var(--s-5); }
+/* The cream half sits above the field's print-tooth overlay. */
+.provArtSide {
+  position: relative;
+  z-index: 1;
+  background: var(--cil-cream);
+  display: grid;
+  place-items: center;
+  padding: clamp(44px, 6vw, 96px) var(--gutter);
+}
+.provArtSide img { max-width: 460px; }
+.provCopySide {
+  padding: clamp(52px, 7vw, 120px) var(--gutter);
+  display: grid;
+  align-content: center;
+}
+.provCopyInner { display: grid; gap: var(--s-5); max-width: 34rem; }
 .provMeta { display: flex; flex-wrap: wrap; gap: var(--s-6); padding-top: var(--s-4); border-top: var(--rule-w) solid var(--rule-strong); }
 .provMetaItem { display: grid; gap: 2px; }
 
