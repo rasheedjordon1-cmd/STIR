@@ -1,9 +1,19 @@
 /* ============================================================================
-   CHROME — grocery package header × editorial masthead
+   NAVIGATION
+
+   Three typographic voices, three jobs, and nothing in the navigation is
+   allowed to do two of them:
+     IDENTITY     the mastermark and the mega brandline
+     LANGUAGE     the nav words and the menu labels
+     INFORMATION  chapter codes, bag count, entry records
+
+   Height comes from --header-h (60 mobile / 76 desktop) so nothing measures
+   the masthead twice.
    ========================================================================== */
 
+.navZone { position: sticky; top: 0; z-index: 60; }
+
 .header {
-  position: sticky; top: 0; z-index: 60;
   background: var(--cil-cream);
   border-bottom: var(--rule-w) solid var(--cil-ink);
 }
@@ -12,82 +22,352 @@
   display: flex; align-items: center; justify-content: space-between;
   gap: var(--s-3);
 }
-@media (min-width: 900px) { .headerInner { gap: var(--s-6); } }
+@media (min-width: 1000px) { .headerInner { gap: var(--s-6); } }
 
-.brandLink { display: inline-flex; align-items: center; min-height: 44px; flex: 0 0 auto; }
+.brandLink {
+  display: inline-flex; align-items: center;
+  min-height: 44px; flex: 0 0 auto;
+  transition: opacity var(--dur-fast) var(--ease-nav);
+}
+.brandLink:hover { opacity: 0.78; }
+
+/* ---------------- Primary items ---------------- */
 
 .nav { display: none; }
-@media (min-width: 900px) { .nav { display: flex; align-items: center; gap: clamp(14px, 2vw, 30px); } }
+@media (min-width: 1000px) {
+  .nav { display: flex; align-items: center; gap: clamp(10px, 1.6vw, 26px); }
+}
 
-/* Hover reveals a Seed Chamber and rules the item in CIL red. */
+/* LANGUAGE voice. The nav is not a caption and not a heading, so it has its
+   own step on the scale. Width 82 is inside Bricolage's 75–100 range. */
 .navLink {
+  font-family: var(--font-grotesk);
+  font-weight: 700;
+  font-size: var(--fs-nav);
+  font-stretch: 82%;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' var(--opsz-ui);
+  letter-spacing: var(--tr-nav);
+  text-transform: uppercase;
   color: var(--cil-ink);
-  display: inline-flex; align-items: center; gap: 0;
-  min-height: 40px; padding-block: 10px;
+  display: inline-flex; align-items: center;
+  height: calc(var(--header-h) - 2px);
+  padding-inline: 2px;
   position: relative;
 }
+
+/* The mark arrives from zero width, so nothing on the row moves except the
+   gap it opens for itself. */
 .navMark {
-  width: 0; overflow: hidden; display: inline-flex; align-items: center;
+  width: 0; overflow: hidden;
+  display: inline-flex; align-items: center;
   opacity: 0; color: var(--cil-red);
-  transition: width var(--dur) var(--ease), opacity var(--dur) var(--ease),
-              margin-right var(--dur) var(--ease);
+  transition: width var(--dur-nav) var(--ease-nav),
+              opacity var(--dur-nav) var(--ease-nav),
+              margin-right var(--dur-nav) var(--ease-nav);
 }
-.navLink:hover .navMark, .navLink:focus-visible .navMark { width: 13px; opacity: 1; margin-right: 6px; }
+.navLink:hover .navMark,
+.navLink:focus-visible .navMark,
+.navLinkOpen .navMark { width: 17px; opacity: 1; margin-right: 7px; }
+
+/* The word itself gains weight rather than colour. Weight is a variable axis,
+   so this interpolates instead of snapping between two cut files. */
+.navWord {
+  transition: font-variation-settings var(--dur-nav) var(--ease-nav);
+}
+.navLink:hover .navWord,
+.navLink:focus-visible .navWord,
+.navLinkOpen .navWord { font-variation-settings: 'opsz' var(--opsz-ui), 'wght' 800; }
+
+/* A rule in CIL red, drawn from the left, sitting on the masthead's own edge. */
 .navLink::after {
-  content: ''; position: absolute; left: 0; right: 0; bottom: 6px;
+  content: ''; position: absolute; left: 0; right: 0; bottom: -2px;
   border-bottom: var(--rule-w) solid var(--cil-red);
   transform: scaleX(0); transform-origin: left;
-  transition: transform var(--dur) var(--ease);
+  transition: transform var(--dur-nav) var(--ease-nav);
 }
-.navLink:hover::after, .navLink[aria-current='page']::after { transform: scaleX(1); }
+.navLink:hover::after,
+.navLinkOpen::after,
+.navLink[aria-current='page']::after { transform: scaleX(1); }
+
+/* ---------------- Right cluster ---------------- */
 
 .headerRight { display: flex; align-items: center; gap: var(--s-2); flex: 0 0 auto; }
-@media (min-width: 900px) { .headerRight { gap: var(--s-3); } }
+@media (min-width: 1000px) { .headerRight { gap: var(--s-3); } }
 
-.shopLink {
+/* SHOP is a merchandise block, not a button and not a pill. Square corners,
+   full red ground, cream type at 4.77:1. It reads as a printed sticker on the
+   masthead, which is the one place the site allows itself a hard sell. */
+.shopBlock {
+  font-family: var(--font-grotesk);
+  font-weight: 800;
+  font-size: var(--fs-nav);
+  font-stretch: 82%;
+  font-optical-sizing: none;
+  font-variation-settings: 'opsz' var(--opsz-ui);
+  letter-spacing: var(--tr-nav);
+  text-transform: uppercase;
   background: var(--cil-red); color: var(--cil-cream);
-  min-height: 40px; display: inline-flex; align-items: center;
-  padding: 0 var(--s-4); white-space: nowrap;
-  transition: background-color var(--dur) var(--ease);
-  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 9px), calc(100% - 9px) 100%, 0 100%);
+  height: 40px; display: inline-flex; align-items: center;
+  padding: 0 clamp(14px, 1.6vw, 22px);
+  white-space: nowrap;
+  border-radius: 0;
+  transition: background-color var(--dur-nav) var(--ease-nav);
 }
-.shopLink:hover { background: var(--cil-ink); }
-@media (max-width: 379px) { .shopLink { display: none; } }
+.shopBlock:hover { background: var(--cil-ink); }
+@media (min-width: 1000px) { .shopBlock { height: 44px; } }
+/* At 320 the masthead cannot carry mastermark + SHOP + BAG + MENU. SHOP is
+   the one that lives in the sheet instead, pinned above the fold there. */
+@media (max-width: 379px) { .shopBlock { display: none; } }
 
-.cartBtn {
-  display: inline-flex; align-items: center; gap: 6px;
+.bagBtn {
+  display: inline-flex; align-items: center; gap: 7px;
   min-height: 44px; padding-inline: var(--s-2);
   color: var(--cil-ink); white-space: nowrap;
+  font-family: var(--font-grotesk);
+  font-weight: 700; font-size: var(--fs-nav); font-stretch: 82%;
+  font-optical-sizing: none; font-variation-settings: 'opsz' var(--opsz-ui);
+  letter-spacing: var(--tr-nav); text-transform: uppercase;
 }
+.bagBtn:hover { color: var(--cil-red); }
+@media (max-width: 379px) { .bagWord { display: none; } }
+
+/* INFORMATION voice — the count is a record, so it is set in the mono. */
 .cartCount {
-  font-family: var(--font-mono); font-size: var(--fs-meta);
+  font-family: var(--font-mono); font-weight: 500; font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums;
   min-width: 22px; height: 22px; display: grid; place-items: center;
   background: var(--cil-ink); color: var(--cil-cream); padding-inline: 5px;
+  transition: background-color var(--dur-nav) var(--ease-nav);
 }
 .cartCountZero { background: transparent; color: var(--ink-soft); box-shadow: inset 0 0 0 1px var(--rule); }
 
-.menuBtn { display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--s-2); }
-@media (min-width: 900px) { .menuBtn { display: none; } }
+.menuBtn {
+  display: inline-flex; align-items: center;
+  min-height: 44px; padding-inline: var(--s-2);
+  font-family: var(--font-grotesk);
+  font-weight: 700; font-size: var(--fs-nav); font-stretch: 82%;
+  font-optical-sizing: none; font-variation-settings: 'opsz' var(--opsz-ui);
+  letter-spacing: var(--tr-nav); text-transform: uppercase;
+}
+@media (min-width: 1000px) { .menuBtn { display: none; } }
+
+/* ---------------- Mega menus ---------------- */
+
+.megaWrap {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--cil-cream);
+  border-bottom: var(--rule-w) solid var(--cil-ink);
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity var(--dur-nav-out) var(--ease-nav),
+              transform var(--dur-nav-out) var(--ease-nav),
+              visibility 0s linear var(--dur-nav-out);
+}
+.megaWrap[data-open='true'] {
+  opacity: 1; transform: none; visibility: visible; pointer-events: auto;
+  transition: opacity var(--dur-nav) var(--ease-nav),
+              transform var(--dur-nav) var(--ease-nav),
+              visibility 0s;
+}
+@media (max-width: 999px) { .megaWrap { display: none; } }
+
+.mega {
+  display: grid;
+  grid-template-columns: 40fr 60fr;
+  min-height: var(--mega-min-h);
+}
+/* [hidden] loses to display:grid. It has cost a bug on this project before. */
+.mega[hidden] { display: none; }
+
+.megaBrand {
+  background: var(--bg); color: var(--fg);
+  padding: var(--s-6) var(--gutter) var(--s-7);
+  display: grid; grid-template-rows: auto 1fr;
+  gap: var(--s-5);
+  position: relative; overflow: hidden;
+}
+.megaPlate { color: var(--fg-meta); position: relative; z-index: 1; }
+.megaBrandCopy {
+  display: grid; gap: var(--s-3); align-content: end;
+  max-width: 34ch; position: relative; z-index: 1;
+}
+.megaBrandline { color: var(--fg); }
+.megaBrandNote { color: var(--fg-2); font-size: var(--fs-small); line-height: 1.45; text-wrap: pretty; }
+
+/* The mark is cropped off the panel's edge — it is a fragment of a larger
+   drawing, not an icon sitting in a box. */
+.megaBrandMark {
+  position: absolute; right: -34px; bottom: -30px;
+  color: var(--fg);
+  display: flex; align-items: flex-end;
+  pointer-events: none;
+}
+
+.megaBody {
+  padding: var(--s-6) var(--gutter) var(--s-6);
+  display: grid; gap: var(--s-4); align-content: start;
+}
+.megaRecord { color: var(--fg-meta); }
+
+.megaList { display: grid; }
+.megaLink {
+  display: grid;
+  grid-template-columns: 66px minmax(0, 1fr);
+  gap: var(--s-4);
+  align-items: baseline;
+  padding-block: var(--s-3);
+  border-top: var(--hair) solid var(--rule);
+  position: relative;
+}
+.megaList li:last-child .megaLink { border-bottom: var(--hair) solid var(--rule); }
+
+/* INFORMATION voice. Fixed column, tabular, so the codes stack like a ledger. */
+.megaCh {
+  font-family: var(--font-mono); font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums; letter-spacing: var(--tr-meta);
+  color: var(--fg-meta); white-space: nowrap;
+  transition: color var(--dur-nav) var(--ease-nav);
+}
+.megaLinkMain { display: grid; gap: 3px; min-width: 0; }
+
+/* LANGUAGE voice. Hover moves the weight axis and slides the row, so the
+   feedback is typographic — no colour swap, no background plate. */
+.megaLabel {
+  font-family: var(--font-grotesk);
+  font-weight: 700; font-size: var(--fs-mega-item);
+  font-stretch: 92%; text-transform: uppercase;
+  letter-spacing: -0.005em; line-height: 1.1;
+  font-optical-sizing: none; font-variation-settings: 'opsz' 20;
+  transition: font-variation-settings var(--dur-nav) var(--ease-nav);
+}
+.megaNote { font-size: var(--fs-small); color: var(--fg-2); line-height: 1.4; text-wrap: pretty; }
+
+@media (min-width: 1180px) {
+  /* Three columns: code, label, note — one ledger line per entry.
+     Baseline alignment here stacks each item's ascent on the next item's
+     descent and inflates every row by ~24px; centring holds the same read
+     and keeps all four panels within a single height, so sliding across the
+     nav does not make the panel jump. */
+  .megaLink {
+    grid-template-columns: 66px minmax(0, 15rem) minmax(0, 1fr);
+    align-items: center;
+    padding-block: var(--s-3);
+  }
+  .megaLinkMain { display: contents; }
+}
+
+.megaLink::before {
+  content: ''; position: absolute; left: 0; top: -1px; height: 2px; width: 0;
+  background: var(--cil-red);
+  transition: width var(--dur-nav) var(--ease-nav);
+}
+.megaLink:hover::before, .megaLink:focus-visible::before { width: 100%; }
+.megaLink:hover .megaLabel,
+.megaLink:focus-visible .megaLabel { font-variation-settings: 'opsz' 20, 'wght' 800; }
+.megaLink:hover .megaCh, .megaLink:focus-visible .megaCh { color: var(--cil-red); }
 
 /* ---------------- Mobile sheet ---------------- */
+
 .sheet {
   position: fixed; inset: 0; z-index: 70;
-  background: var(--cil-cream);
-  display: flex; flex-direction: column; padding: var(--gutter);
-  animation: sheetIn var(--dur) var(--ease);
+  background: var(--cil-cream); color: var(--cil-ink);
+  display: flex; flex-direction: column;
+  animation: sheetIn var(--dur-nav) var(--ease-nav);
 }
-@keyframes sheetIn { from { opacity: 0; transform: translateY(-6px); } }
-.sheetTop { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
-.sheetNav { margin-top: var(--s-8); display: grid; gap: var(--s-1); }
+@keyframes sheetIn { from { opacity: 0; transform: translateY(-8px); } }
+
+.sheetTop {
+  display: flex; align-items: center; justify-content: space-between;
+  height: var(--header-h); padding-inline: var(--gutter);
+  border-bottom: var(--rule-w) solid var(--cil-ink);
+  flex: 0 0 auto;
+}
+.sheetClose {
+  font-family: var(--font-grotesk); font-weight: 700;
+  font-size: var(--fs-nav); font-stretch: 82%;
+  font-optical-sizing: none; font-variation-settings: 'opsz' var(--opsz-ui);
+  letter-spacing: var(--tr-nav); text-transform: uppercase;
+  min-height: 44px; padding-inline: var(--s-2); margin-right: calc(var(--s-2) * -1);
+}
+
+.sheetScroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-inline: var(--gutter); }
+
+.sheetNav { display: grid; }
+.sheetGroup { border-bottom: var(--hair) solid var(--rule); }
+
+/* IDENTITY-scale type doing a LANGUAGE job — this is the one place the two
+   meet, because on a phone the navigation IS the page. */
 .sheetLink {
-  font-family: var(--font-grotesk); font-weight: 900; font-stretch: 108%;
-  font-size: clamp(2.25rem, 12vw, 3.25rem); line-height: 1.02;
-  letter-spacing: var(--tr-head); text-transform: uppercase;
-  padding-block: var(--s-2); display: flex; align-items: center; gap: var(--s-4);
+  width: 100%;
+  display: flex; align-items: center; gap: var(--s-3);
+  padding-block: var(--s-4);
+  text-align: left;
+  font-family: var(--font-grotesk);
+  font-weight: 800; font-stretch: 100%;
+  font-optical-sizing: none; font-variation-settings: 'opsz' 48;
+  font-size: var(--fs-nav-mega);
+  line-height: 1.02; letter-spacing: var(--tr-head);
+  text-transform: uppercase;
+  color: var(--cil-ink);
+  transition: color var(--dur-nav) var(--ease-nav);
 }
-.sheetNum { color: var(--cil-red); flex: 0 0 auto; display: flex; }
-.sheetFoot { margin-top: auto; padding-top: var(--s-6); border-top: var(--rule-w) solid var(--cil-ink); display: grid; gap: var(--s-4); }
-.sheetSecondary { display: flex; flex-wrap: wrap; gap: var(--s-5); color: var(--ink-soft); }
+.sheetMark { color: var(--cil-red); flex: 0 0 30px; display: flex; align-items: center; justify-content: center; }
+.sheetWord { flex: 1; min-width: 0; }
+.sheetSign {
+  font-family: var(--font-mono); font-weight: 500;
+  font-size: 1.5rem; line-height: 1; color: var(--cil-red);
+  flex: 0 0 auto; width: 24px; text-align: right;
+}
+.sheetLinkOpen { color: var(--cil-red); }
+
+.sheetSub { padding-bottom: var(--s-4); display: grid; }
+.sheetSub[hidden] { display: none; }
+.sheetSubLink {
+  display: flex; align-items: baseline; gap: var(--s-4);
+  min-height: 44px; padding-block: var(--s-2);
+  font-family: var(--font-grotesk); font-weight: 600;
+  font-size: 0.9375rem; text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+}
+.sheetSubLink:hover, .sheetSubLink:focus-visible { color: var(--cil-ink); }
+.sheetSubCh {
+  font-family: var(--font-mono); font-size: var(--fs-meta);
+  font-variant-numeric: tabular-nums; letter-spacing: var(--tr-meta);
+  color: var(--fg-meta); flex: 0 0 62px;
+}
+
+.sheetSecondary {
+  display: flex; flex-wrap: wrap; gap: var(--s-5);
+  padding-block: var(--s-6);
+  font-family: var(--font-grotesk); font-weight: 700;
+  font-size: var(--fs-label); font-stretch: 82%;
+  letter-spacing: var(--tr-label); text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* SHOP is pinned. On a phone the conversion moment never scrolls away. */
+.sheetFoot {
+  flex: 0 0 auto;
+  border-top: var(--rule-w) solid var(--cil-ink);
+  padding: var(--s-4) var(--gutter);
+  padding-bottom: max(var(--s-4), env(safe-area-inset-bottom));
+  display: grid; gap: var(--s-3);
+}
+.sheetShop {
+  background: var(--cil-red); color: var(--cil-cream);
+  min-height: 52px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-grotesk); font-weight: 800;
+  font-size: 0.875rem; font-stretch: 82%;
+  letter-spacing: var(--tr-nav); text-transform: uppercase;
+  border-radius: 0;
+  transition: background-color var(--dur-nav) var(--ease-nav);
+}
+.sheetShop:hover { background: var(--cil-ink); }
+.sheetTagline { text-align: center; }
 
 /* ---------------- Cart drawer — a printed order slip ---------------- */
 .scrim { position: fixed; inset: 0; z-index: 80; background: color-mix(in srgb, var(--cil-ink) 55%, transparent); animation: fade var(--dur) var(--ease); }

@@ -17,6 +17,17 @@ import { readFileSync, writeFileSync } from 'node:fs'
 const css = (p) => readFileSync(p, 'utf8')
 const b64 = (p, mime) => `data:${mime};base64,${readFileSync(p).toString('base64')}`
 
+/* ---------- type ----------
+   The demo carries the same subset files the app ships, inlined as data URIs.
+   It must never reach a font CDN: the brief forbids it, and a single portable
+   file that needs the network to render its own typography is not portable. */
+const FONT_FACES = `
+@font-face{font-family:'BricolageGrotesque';src:url(${b64('app/fonts/BricolageGrotesque-Variable.woff2','font/woff2')}) format('woff2-variations');font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:'IBMPlexMono';src:url(${b64('app/fonts/IBMPlexMono-Regular.woff2','font/woff2')}) format('woff2');font-weight:400;font-display:swap}
+@font-face{font-family:'IBMPlexMono';src:url(${b64('app/fonts/IBMPlexMono-Medium.woff2','font/woff2')}) format('woff2');font-weight:500;font-display:swap}
+:root{--font-bricolage:'BricolageGrotesque';--font-plex-mono:'IBMPlexMono'}
+`
+
 /* ---------- stylesheets, in cascade order ---------- */
 const STYLES = [
   'app/tokens.css',
@@ -61,6 +72,11 @@ const cupRim = (s = 13) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" 
 const finger = (s = 16) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="9.4" width="9" height="6.6" rx="3.3" fill="currentColor"/><rect x="10.4" y="10.4" width="10.2" height="4.6" rx="2.3" fill="currentColor"/><rect x="5.4" y="14.2" width="7.6" height="4.4" rx="2.2" fill="currentColor"/><path d="M13.4 12.7h6" stroke="var(--bg)" stroke-width="1.1" stroke-linecap="round"/><path d="M7.2 13.6h4.4" stroke="var(--bg)" stroke-width="1.1" stroke-linecap="round"/></svg>`
 
 /* ---------- preparation artwork (same paths as CilArt.tsx) ---------- */
+/* Navigation marks. Vectors, not the drawn rasters: these land on red, green
+   and ink grounds and must inherit the field rather than carry baked-in ink. */
+const steam = (s = 17) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M9 20c-3-3.4 2.2-5.3-.8-8.8M16 20c-3-3.4 2.2-5.3-.8-8.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>`
+const podMark = (s = 17) => `<svg viewBox="0 0 120 200" height="${s}" width="${(s * 0.6).toFixed(1)}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M0 0c44 14 78 52 84 100s-24 88-84 100Z" fill="currentColor"/><g fill="var(--bg)"><ellipse cx="30" cy="62" rx="11" ry="15"/><ellipse cx="41" cy="100" rx="11" ry="15"/><ellipse cx="30" cy="138" rx="11" ry="15"/></g></svg>`
+
 const prepBreak = `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor"><path d="M26 74h86l-14 44 16 44H26a10 10 0 0 1-10-10V84a10 10 0 0 1 10-10Z"/><g transform="rotate(9 178 118)"><path d="M136 74h78a10 10 0 0 1 10 10v68a10 10 0 0 1-10 10h-80l16-44Z"/></g></g><g stroke="var(--bg)" stroke-width="6"><path d="M16 118h84M144 122h84"/><path d="M62 74v88"/><path d="M186 70v92"/></g><g fill="currentColor"><path d="M40 190l30 8-6 26-30-8Z"/><path d="M92 196l24 6-5 21-24-6Z" transform="rotate(-12 104 210)"/><path d="M150 192l26 7-5 22-26-7Z" transform="rotate(8 163 206)"/></g></svg>`
 const prepMelt = `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><path d="M96 62c-12-14 9-22-3-36M132 62c-12-14 9-22-3-36"/></g><g fill="currentColor"><path d="M42 86h144v72a44 44 0 0 1-44 44H86a44 44 0 0 1-44-44Z"/><rect x="182" y="96" width="52" height="20" rx="10"/></g><path d="M42 112h144" stroke="var(--bg)" stroke-width="6"/><g fill="var(--bg)"><rect x="106" y="60" width="14" height="86" rx="7" transform="rotate(14 113 103)"/><ellipse cx="126" cy="150" rx="18" ry="12" transform="rotate(14 126 150)"/></g></svg>`
 const prepMake = `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"><path d="M88 48c-12-14 9-22-3-36M124 48c-12-14 9-22-3-36"/></g><g fill="currentColor"><path d="M40 78h124l-10 96a26 26 0 0 1-26 22H76a26 26 0 0 1-26-22Z"/><path d="M166 96h14a30 30 0 0 1 0 60h-20"/></g><path d="M46 100h112" stroke="var(--bg)" stroke-width="6"/><circle cx="180" cy="126" r="15" fill="var(--bg)"/><rect x="186" y="176" width="46" height="15" rx="7.5" fill="currentColor" transform="rotate(-24 209 183)"/><path d="M196 44c10 10-6 18 4 28" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round"/><g fill="currentColor"><circle cx="26" cy="150" r="6"/><circle cx="16" cy="176" r="4.5"/><circle cx="34" cy="188" r="3.5"/></g></svg>`
@@ -101,31 +117,88 @@ const NOTES = [
   ['NAME', 'CITY, STATE', ['—', '—']],
 ]
 
+/* Mirrors content/navigation.ts. The demo cannot import the TS module, so this
+   is a SNAPSHOT — re-run after changing the navigation model. */
+const MENUS = [
+  { key: 'cacao', label: 'CACAO', href: '#cacao', field: 'red',
+    line: 'ONE INGREDIENT.', note: 'Whole cacao. Nothing added, nothing taken out.',
+    mark: (s) => seed(s), big: () => seed(132),
+    links: [['CH. 01', 'THE CACAO', '#truth', 'What is actually in the bag.'],
+            ['CH. 02', 'THE CATEGORY', '#cacao', 'Cacao is not cocoa powder, and not a chocolate bar.'],
+            ['CH. 03', 'COMPOSITION', '#composition', 'The compounds the whole bean carries.'],
+            ['', 'CACAO &amp; COFFEE', '#coffee', 'How the cup compares to the one you already drink.']] },
+  { key: 'source', label: 'SOURCE', href: '#source', field: 'green',
+    line: 'GROWN IN COLOMBIA.', note: 'One country, named. The rest of the record stays blank until it is confirmed.',
+    mark: (s) => podMark(s), big: () => podMark(116),
+    links: [['CH. 04', 'ORIGIN', '#source', 'Where the cacao comes from, and what we can prove.'],
+            ['CH. 05', 'WORLDVIEW', '#nicolas', 'Nicolas, in his own words.'],
+            ['', 'WHY THIS EXISTS', '#why', 'The reason for a single bag.']] },
+  { key: 'make', label: 'MAKE', href: '#make', field: 'ink',
+    line: 'MADE TO BE SHARED.', note: 'Break it, steam it, stir it. Four steps and a pot.',
+    mark: (s) => steam(s), big: () => steam(124),
+    links: [['', 'MAKE A CUP', '#make', 'The method, start to finish.'],
+            ['', 'QUESTIONS', '#buy', 'Storage, strength, sweetening, shipping.'],
+            ['CH. 06', 'THE COUNTER', '#buy', '250 g of whole cacao.']] },
+  { key: 'people', label: 'PEOPLE', href: '#people', field: 'green',
+    line: 'CACAO IS LOVE.', note: 'A bag is usually bought for someone else. That is the whole idea.',
+    mark: (s) => cupRim(s), big: () => cupRim(124),
+    links: [['', 'THE NEIGHBORHOOD', '#people', 'Who is drinking it.'],
+            ['CH. 05', 'NICOLAS', '#nicolas', 'The person who started it.'],
+            ['', 'STAY CLOSE', '#newsletter', 'Next drops, and nothing else.']] },
+]
+
+const menuRecord = (m) => {
+  const ch = m.links.map((l) => l[0]).filter(Boolean).map((c) => c.replace('CH. ', ''))
+  const count = String(m.links.length).padStart(2, '0') + ' ENTRIES'
+  if (!ch.length) return count
+  const span = ch.length === 1 ? 'CH. ' + ch[0] : 'CH. ' + ch[0] + '\u2013' + ch[ch.length - 1]
+  return span + ' \u00b7 ' + count
+}
+
+const megaPanels = MENUS.map((m, i) => `
+  <div id="mega-${m.key}" class="mega" aria-label="${m.label} menu" hidden>
+    <div class="megaBrand field-${m.field}">
+      <p class="t-meta megaPlate">${String(i + 1).padStart(2, '0')} / ${String(MENUS.length).padStart(2, '0')} &#183; ${m.label}</p>
+      <div class="megaBrandCopy">
+        <p class="t-brandline megaBrandline">${m.line}</p>
+        <p class="megaBrandNote">${m.note}</p>
+      </div>
+      <div class="megaBrandMark" aria-hidden="true">${m.big()}</div>
+    </div>
+    <div class="megaBody">
+      <p class="t-meta megaRecord">${menuRecord(m)}</p>
+      <ul class="megaList">
+        ${m.links.map(([ch, label, href, note]) => `<li><a href="${href}" class="megaLink"><span class="megaCh">${ch || '&#8212;'}</span><span class="megaLinkMain"><span class="megaLabel">${label}</span><span class="megaNote">${note}</span></span></a></li>`).join('')}
+      </ul>
+    </div>
+  </div>`).join('')
+
 const tag = (t) => `<span class="t-meta chapterTag">${seed(11)}${t}</span>`
 
 /* ---------- markup ---------- */
 const BODY = `
 <a href="#main" class="skip-link">Skip to content</a>
 
-<header class="header">
-  <div class="shell headerInner">
-    <a href="#main" class="brandLink" aria-label="Cacao Is Love — home">
-      <img src="${A.mmInk}" alt="Cacao Is Love" style="height:30px;width:auto">
-    </a>
-    <nav class="nav" aria-label="Primary">
-      ${[['CACAO', '#cacao'], ['SOURCE', '#source'], ['MAKE', '#make'], ['PEOPLE', '#people']]
-        .map(([l, h]) => `<a href="${h}" class="t-label navLink"><span class="navMark" aria-hidden="true">${seed(13)}</span>${l}</a>`)
-        .join('')}
-    </nav>
-    <div class="headerRight">
-      <a href="#buy" class="t-label shopLink">SHOP</a>
-      <button type="button" class="t-label cartBtn" data-open-cart aria-label="Open bag, 0 items">
-        BAG <span class="cartCount cartCountZero" data-count>0</span>
-      </button>
-      <button type="button" class="t-label menuBtn" data-open-menu aria-expanded="false" aria-controls="mobile-menu">MENU</button>
+<div class="navZone" data-nav-zone>
+  <header class="header">
+    <div class="shell headerInner">
+      <a href="#main" class="brandLink" aria-label="Cacao Is Love — home">
+        <img src="${A.mmInk}" alt="Cacao Is Love" style="height:30px;width:auto">
+      </a>
+      <nav class="nav" aria-label="Primary">
+        ${MENUS.map((m) => `<a href="${m.href}" class="navLink" data-trigger="${m.key}" aria-expanded="false" aria-controls="mega-${m.key}"><span class="navMark" aria-hidden="true">${m.mark(17)}</span><span class="navWord">${m.label}</span></a>`).join('')}
+      </nav>
+      <div class="headerRight">
+        <a href="#buy" class="shopBlock">SHOP</a>
+        <button type="button" class="bagBtn" data-open-cart aria-label="Open bag, 0 items">
+          <span class="bagWord">BAG</span> <span class="cartCount cartCountZero" data-count>0</span>
+        </button>
+        <button type="button" class="menuBtn" data-open-menu aria-expanded="false" aria-controls="mobile-menu">MENU</button>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
+  <div class="megaWrap" data-mega-wrap data-open="false">${megaPanels}</div>
+</div>
 
 <main id="main">
 
@@ -447,16 +520,32 @@ const BODY = `
 
 <div class="sheet" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" hidden>
   <div class="sheetTop">
-    <img src="${A.mmInk}" alt="Cacao Is Love" style="height:28px;width:auto">
-    <button type="button" class="t-label" data-close-menu style="min-height:44px;padding-inline:8px">CLOSE</button>
+    <img src="${A.mmInk}" alt="Cacao Is Love" style="height:26px;width:auto">
+    <button type="button" class="sheetClose" data-close-menu>CLOSE</button>
   </div>
-  <nav class="sheetNav" aria-label="Primary">
-    ${[['CACAO', '#cacao'], ['SOURCE', '#source'], ['MAKE', '#make'], ['PEOPLE', '#people'], ['SHOP', '#buy']]
-      .map(([l, h]) => `<a href="${h}" class="sheetLink" data-close-menu><span class="sheetNum" aria-hidden="true">${seed(16)}</span>${l}</a>`)
-      .join('')}
-  </nav>
+  <div class="sheetScroll">
+    <nav aria-label="Primary">
+      <ul class="sheetNav">
+        ${MENUS.map((m) => `<li class="sheetGroup">
+          <button type="button" class="sheetLink" data-sheet-toggle="${m.key}" aria-expanded="false" aria-controls="sheet-${m.key}">
+            <span class="sheetMark" aria-hidden="true">${m.mark(26)}</span>
+            <span class="sheetWord">${m.label}</span>
+            <span class="sheetSign" aria-hidden="true">+</span>
+          </button>
+          <ul id="sheet-${m.key}" class="sheetSub" hidden>
+            <li><a href="${m.href}" class="sheetSubLink" data-close-menu><span class="sheetSubCh">&#8212;</span><span>OVERVIEW</span></a></li>
+            ${m.links.map(([ch, label, href]) => `<li><a href="${href}" class="sheetSubLink" data-close-menu><span class="sheetSubCh">${ch || '&#8212;'}</span><span>${label}</span></a></li>`).join('')}
+          </ul>
+        </li>`).join('')}
+      </ul>
+    </nav>
+    <div class="sheetSecondary">
+      <a href="#buy" data-close-menu>FAQ</a><a href="#nicolas" data-close-menu>ABOUT</a><a href="#newsletter" data-close-menu>CONTACT</a>
+    </div>
+  </div>
   <div class="sheetFoot">
-    <p class="t-meta">100% whole cacao from Colombia.</p>
+    <a href="#buy" class="sheetShop" data-close-menu>SHOP WHOLE CACAO</a>
+    <p class="t-meta sheetTagline">100% whole cacao from Colombia.</p>
   </div>
 </div>
 
@@ -624,17 +713,82 @@ const JS = `
   function openMenu() {
     menu.hidden = false; document.body.style.overflow = 'hidden';
     $('[data-open-menu]').setAttribute('aria-expanded', 'true');
-    $('[data-close-menu]').focus();
+    $('.sheetClose').focus();
     document.addEventListener('keydown', onKeyMenu);
     menu.addEventListener('keydown', menuTrap);
   }
   function closeMenu() {
-    menu.hidden = true; document.body.style.overflow = '';
+    menu.hidden = true;
+    /* Collapse every group so the sheet reopens in its resting state. */
+    Array.prototype.forEach.call(document.querySelectorAll('[data-sheet-toggle]'), function (b) {
+      b.setAttribute('aria-expanded', 'false');
+      b.classList.remove('sheetLinkOpen');
+      b.querySelector('.sheetSign').textContent = '+';
+      document.getElementById('sheet-' + b.getAttribute('data-sheet-toggle')).hidden = true;
+    }); document.body.style.overflow = '';
     $('[data-open-menu]').setAttribute('aria-expanded', 'false');
     document.removeEventListener('keydown', onKeyMenu);
     menu.removeEventListener('keydown', menuTrap);
   }
   function onKeyMenu(e) { if (e.key === 'Escape') closeMenu(); }
+
+  /* ---- mega menus ---- hover intent in, grace out, Escape to close. */
+  var megaWrap = $('[data-mega-wrap]'), navZone = $('[data-nav-zone]'), megaTimer = null, megaKey = null;
+  function megaClear() { if (megaTimer) clearTimeout(megaTimer); megaTimer = null; }
+  function megaSet(key) {
+    megaKey = key;
+    megaWrap.setAttribute('data-open', key ? 'true' : 'false');
+    Array.prototype.forEach.call(document.querySelectorAll('.mega'), function (el) {
+      el.hidden = el.id !== 'mega-' + key;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-trigger]'), function (el) {
+      var on = el.getAttribute('data-trigger') === key;
+      el.setAttribute('aria-expanded', on ? 'true' : 'false');
+      el.classList.toggle('navLinkOpen', on);
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-trigger]'), function (el) {
+    var key = el.getAttribute('data-trigger');
+    el.addEventListener('mouseenter', function () {
+      megaClear();
+      megaTimer = setTimeout(function () { megaSet(key); }, 100);
+    });
+    el.addEventListener('focus', function () { megaClear(); megaSet(key); });
+    el.addEventListener('click', function () { megaClear(); megaSet(null); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown') return;
+      e.preventDefault(); megaSet(key);
+      var first = document.querySelector('#mega-' + key + ' a');
+      if (first) first.focus();
+    });
+  });
+  navZone.addEventListener('mouseenter', megaClear);
+  navZone.addEventListener('mouseleave', function () {
+    megaClear();
+    megaTimer = setTimeout(function () { megaSet(null); }, 160);
+  });
+  megaWrap.addEventListener('click', function (e) { if (e.target.closest('a')) megaSet(null); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Escape' || !megaKey) return;
+    var back = document.querySelector('[data-trigger="' + megaKey + '"]');
+    megaSet(null);
+    if (back) back.focus();
+  });
+
+  /* ---- sheet accordion ---- one group open at a time. */
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sheet-toggle]'), function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-sheet-toggle');
+      var wasOpen = btn.getAttribute('aria-expanded') === 'true';
+      Array.prototype.forEach.call(document.querySelectorAll('[data-sheet-toggle]'), function (b) {
+        var on = !wasOpen && b === btn;
+        b.setAttribute('aria-expanded', on ? 'true' : 'false');
+        b.classList.toggle('sheetLinkOpen', on);
+        b.querySelector('.sheetSign').textContent = on ? '\u2212' : '+';
+        document.getElementById('sheet-' + b.getAttribute('data-sheet-toggle')).hidden = !on;
+      });
+    });
+  });
 
   /* ---- buy module ---- */
   var qty = 1, state = 'in_stock';
@@ -744,11 +898,8 @@ const uEscapes = (t) => t.replace(/[^\x00-\x7F]/g, (c) => '\\u' + c.codePointAt(
 
 const html = `<title>Cacao Is Love</title>
 <meta name="description" content="100% whole cacao, grown in Colombia. Made simply. Shared freely.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400&family=Newsreader:ital,opsz,wght@0,6..72,400;1,6..72,400&display=swap" rel="stylesheet">
 <style>
-:root{--font-archivo:'Archivo';--font-mono-plex:'IBM Plex Mono';--font-newsreader:'Newsreader'}
+${FONT_FACES}
 ${STYLES}
 ${DEMO_CSS}
 </style>

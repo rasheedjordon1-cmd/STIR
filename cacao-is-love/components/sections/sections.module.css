@@ -71,8 +71,8 @@
 .truthMega {
   display: grid;
   font-family: var(--font-grotesk);
-  font-weight: 900;
-  font-stretch: 112%;
+  font-weight: 800;
+  font-stretch: 100%;
   text-transform: uppercase;
   line-height: var(--lh-mega);
   letter-spacing: var(--tr-mega);

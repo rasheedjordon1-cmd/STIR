@@ -7,3 +7,8 @@ next-env.d.ts
 .env*.local
 .netlify/
 cacao-is-love-netlify.zip
+
+# Font sources: the upstream TTF bundle. Kept out of the repo — app/fonts/
+# carries the subset WOFF2 the site actually ships, plus the OFL copies.
+# Rebuild with: python3 scripts/build-fonts.py <path-to-bundle>
+fonts-src/

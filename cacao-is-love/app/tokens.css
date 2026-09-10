@@ -46,14 +46,41 @@
   --rule-strong: var(--cil-ink);
   --selection:   color-mix(in srgb, var(--cil-red) 26%, transparent);
 
-  /* ---- TYPE ------------------------------------------------------------- */
-  /* A — the mastermark, used as letterform art. Never retyped in a font.
-     B — heavy blunt grotesk for live headings.
-     C — compact grotesk + mono for utility and product data.
-     D — quiet serif, rare, human moments only.                              */
-  --font-grotesk: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
-  --font-mono:    var(--font-mono-plex), ui-monospace, "SF Mono", Menlo, monospace;
-  --font-serif:   var(--font-newsreader), Georgia, serif;
+  /* ---- TYPE — THREE VOICES ----------------------------------------------
+     The system carries three voices and no more. Each has one job; where
+     two could do a job, the job belongs to exactly one of them.
+
+     01  CIL DISPLAY  — IDENTITY.    Brand phrases only. 10–20% of language.
+     02  BRICOLAGE    — LANGUAGE.    Everything a person reads as a sentence.
+     03  IBM PLEX MONO— INFORMATION. Anything a person reads as a record.
+
+     VOICE 01 IS NOT YET A FONT FILE. The supplied bundle contains Bricolage
+     Grotesque and IBM Plex Mono only; the CIL alphabet exists as a reference
+     drawing and as the mastermark artwork, not as a distributable face. So:
+       · the authoritative CIL letterforms ship as the Mastermark asset,
+       · --font-display resolves to --font-cil-display FIRST and falls back
+         to Bricolage's display register,
+       · when a real .woff2 arrives, declare it as --font-cil-display in
+         app/layout.tsx and every display line inherits it. One edit.
+     Do not approximate the CIL alphabet with a substitute and call it CIL.  */
+
+  --font-display: var(--font-cil-display, var(--font-bricolage)), "Helvetica Neue", Arial, sans-serif;
+  --font-grotesk: var(--font-bricolage), "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+  /* RETIRED VOICE — the serif is gone from the system. The token survives so
+     .t-serif / .noteQuote keep resolving; they now render as Bricolage at a
+     low optical size, which is the family's humanist register. */
+  --font-serif:   var(--font-bricolage), Georgia, serif;
+
+  /* Bricolage axes: opsz 12–96, wght 200–800, wdth 75–100.
+     NOTE the width ceiling is 100 — the old system asked for 112% and got
+     silently clamped. Width is now a real, in-range instrument.            */
+  --wdth-display: 100;
+  --wdth-text:     100;
+  --wdth-label:    82;   /* shelf-edge condensation, in range */
+  --opsz-display:  96;
+  --opsz-text:     16;
+  --opsz-ui:       14;
 
   --fs-mega:    clamp(3rem, 12vw, 9rem);
   --fs-display: clamp(2.5rem, 7.5vw, 5.5rem);
@@ -66,6 +93,11 @@
   --fs-label:   0.6875rem;
   --fs-meta:    0.75rem;
 
+  /* Navigation is its own scale. It is neither a heading nor a caption. */
+  --fs-nav:       0.8125rem;
+  --fs-nav-mega:  clamp(2.5rem, 11vw, 4.25rem);
+  --fs-mega-item: clamp(1.125rem, 1.4vw, 1.375rem);
+
   --lh-mega:    0.86;
   --lh-display: 0.9;
   --lh-head:    0.98;
@@ -75,6 +107,7 @@
   --tr-head:    -0.02em;
   --tr-label:   0.1em;
   --tr-meta:    0.04em;
+  --tr-nav:     0.085em;
 
   --measure:    58ch;
 
@@ -93,14 +126,25 @@
   --cut:        14px;   /* SOFT OUTSIDE, CUT INSIDE — corner-cut depth */
   --hair:       1px;
   --rule-w:     2px;
-  --header-h:   64px;
+  --header-h:   60px;   /* mobile: brief band 58–64 */
+  --mega-min-h: 340px;  /* mega-menu panel: brief band 300–420 */
   --sticky-h:   68px;
 
   /* ---- MOTION ----------------------------------------------------------- */
-  --ease:     cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease:      cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-nav:  cubic-bezier(0.22, 1, 0.36, 1);   /* navigation only */
+  --dur-nav:   200ms;   /* mega-menu enter, brief band 180–240 */
+  --dur-nav-out: 120ms; /* exit is always faster than entry */
+  --hover-intent: 100ms;
   --dur-fast: 150ms;
   --dur:      220ms;
   --dur-slow: 300ms;
+}
+
+/* The masthead grows at the desk. 60 on a phone, 76 on a desktop — both
+   inside the brief's bands, and one token so nothing measures it twice. */
+@media (min-width: 1000px) {
+  :root { --header-h: 76px; }
 }
 
 /* ============================================================================
