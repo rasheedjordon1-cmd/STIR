@@ -156,7 +156,7 @@ function PurchaseBlock({
           <p className="t-meta">
             Tell us who it is for and we will write it on the bag.
           </p>
-          <div className={s.field}>
+          <div className={s.formField}>
             <label className="t-label" htmlFor={`${uid}-giftto`}>
               THEIR NAME
             </label>
@@ -169,7 +169,7 @@ function PurchaseBlock({
               autoComplete="off"
             />
           </div>
-          <div className={s.field}>
+          <div className={s.formField}>
             <label className="t-label" htmlFor={`${uid}-giftmsg`}>
               A LINE FROM YOU
             </label>
@@ -262,7 +262,7 @@ export function WaitlistBlock({ id = 'waitlist', as: Heading = 'h2' }: { id?: st
           }}
         >
           <div className={s.waitRow}>
-            <div className={s.field}>
+            <div className={s.formField}>
               <label className="t-label" htmlFor={`${uid}-email`}>
                 EMAIL
               </label>
@@ -277,7 +277,7 @@ export function WaitlistBlock({ id = 'waitlist', as: Heading = 'h2' }: { id?: st
                 placeholder="you@example.com"
               />
             </div>
-            <div className={s.field}>
+            <div className={s.formField}>
               <label className="t-label" htmlFor={`${uid}-phone`}>
                 MOBILE <span className={s.optional}>— OPTIONAL</span>
               </label>

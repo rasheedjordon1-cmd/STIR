@@ -172,3 +172,29 @@ Verified in a headless browser at 320 / 390 / 768 / 1440 on both routes:
   marquee pauses on hover. All of it disabled under `prefers-reduced-motion`.
 - Both routes prerender static. Photography is webp and self-hosted, optimised
   from 9.7MB to 0.92MB; the illustration set is lossless webp at 416KB.
+
+---
+
+## Shareable demo
+
+```bash
+node scripts/build-demo.mjs     # -> demo/cacao-is-love.html
+```
+
+Emits one self-contained HTML file (~2.1 MB) with every image inlined as a data
+URI, so it can be published, emailed or opened straight off disk with no server.
+
+It reuses the **real** stylesheets verbatim — tokens, globals and all four CSS
+modules — so what ships is the actual design system, not a re-creation. What it
+re-authors is the markup and the interactivity in vanilla JS, because the app is
+React and a single portable file cannot carry the framework. The working parts
+are the bag (add, quantity, remove, MAKE TWO upsell, gift note on the line), the
+mobile menu, the sticky buy bar, the scroll reveals, and a demo-only switcher
+for the three stock states.
+
+⚠ The copy in the demo is a **snapshot**. The app reads `content/*.ts`; the demo
+does not. Re-run the build after content changes.
+
+Two source bugs surfaced while building it, both fixed: `.field` meant two
+different things in two CSS modules, and `.nicArt svg` silently stopped applying
+when that illustration became an `<img>`, so its size cap had been lost.

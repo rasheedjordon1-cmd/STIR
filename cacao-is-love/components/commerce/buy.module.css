@@ -59,7 +59,7 @@
 }
 @keyframes giftIn { from { opacity: 0; transform: translateY(-4px); } }
 
-.field { display: grid; gap: 6px; }
+.formField { display: grid; gap: 6px; }
 .input, .textarea {
   width: 100%; background: var(--bg); color: var(--fg);
   border: var(--rule-w) solid var(--rule-strong);

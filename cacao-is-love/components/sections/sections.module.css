@@ -153,7 +153,7 @@
 .nicCopy { display: grid; gap: var(--s-5); }
 .nicQuote { border-left: var(--rule-w) solid var(--accent); padding-left: var(--s-5); }
 .nicArt { color: var(--fg); justify-self: center; }
-.nicArt svg { width: 100%; max-width: 300px; height: auto; }
+.nicArt img, .nicArt svg { width: 100%; max-width: 420px; height: auto; }
 .nicSign { display: flex; align-items: center; gap: var(--s-3); color: var(--fg-meta); }
 
 /* ---------------- 07 · POSTER ---------------- */
