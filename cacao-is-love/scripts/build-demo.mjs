@@ -23,10 +23,10 @@ const b64 = (p, mime) => `data:${mime};base64,${readFileSync(p).toString('base64
    file that needs the network to render its own typography is not portable. */
 const FONT_FACES = `
 @font-face{font-family:'Bevellier';src:url(${b64('app/fonts/Bevellier-Variable.woff2','font/woff2')}) format('woff2-variations');font-weight:100 900;font-display:swap}
-@font-face{font-family:'BricolageGrotesque';src:url(${b64('app/fonts/BricolageGrotesque-Variable.woff2','font/woff2')}) format('woff2-variations');font-weight:200 800;font-stretch:75% 100%;font-display:swap}
+@font-face{font-family:'Chillax';src:url(${b64('app/fonts/Chillax-Variable.woff2','font/woff2')}) format('woff2-variations');font-weight:200 700;font-display:swap}
 @font-face{font-family:'IBMPlexMono';src:url(${b64('app/fonts/IBMPlexMono-Regular.woff2','font/woff2')}) format('woff2');font-weight:400;font-display:swap}
 @font-face{font-family:'IBMPlexMono';src:url(${b64('app/fonts/IBMPlexMono-Medium.woff2','font/woff2')}) format('woff2');font-weight:500;font-display:swap}
-:root{--font-bevellier:'Bevellier';--font-bricolage:'BricolageGrotesque';--font-plex-mono:'IBMPlexMono'}
+:root{--font-bevellier:'Bevellier';--font-chillax:'Chillax';--font-plex-mono:'IBMPlexMono'}
 `
 
 /* ---------- stylesheets, in cascade order ---------- */

@@ -26,8 +26,8 @@ import './globals.css'
 
    ONE AXIS ONLY (wght 100–900) and its default instance is 100 — Thin. Every
    rule that uses this family must state a weight or it renders as a hairline.
-   There is no width axis, which is why the condensed label register stays on
-   Bricolage.
+   There is no width axis. Neither has the language voice, so nothing in this
+   system asks for a width any more.
 
    LICENCE: ITF, not OFL. The embedded notice requires crediting ITF in design
    and production credits. Confirm the current Fontshare terms before launch. */
@@ -42,22 +42,27 @@ const bevellier = localFont({
 })
 
 /* VOICE 02 — LANGUAGE.
-   One variable file carries the whole readable site: opsz 12–96, wght 200–800,
-   wdth 75–100. Declaring the ranges lets font-weight and font-stretch drive
-   the axes directly, so components never hand-write variation settings. */
-const bricolage = localFont({
-  src: [{ path: './fonts/BricolageGrotesque-Variable.woff2', style: 'normal' }],
-  weight: '200 800',
-  variable: '--font-bricolage',
+   Chillax, Indian Type Foundry via Fontshare. A soft geometric: rounded
+   terminals, open counters. The mastermark is SOFT OUTSIDE, CUT INSIDE and
+   Chillax answers the soft half of that, where Bevellier answers the dense
+   half. Between them they triangulate the mark instead of ignoring it.
+
+   TWO LIMITS, both real:
+   · wght 200–700, and its DEFAULT INSTANCE IS 700. Every rule must state its
+     weight — omitting it here renders BOLD, the opposite trap to Bevellier.
+     Nothing may ask for 800: it clamps to 700 and the source then lies.
+   · No width axis. The condensed label register cannot be a width any more,
+     so labels are cut by size and tracking instead. See .t-label.
+
+   LICENCE: ITF, not OFL. Same obligation as Bevellier — see app/fonts/README. */
+const chillax = localFont({
+  src: [{ path: './fonts/Chillax-Variable.woff2', style: 'normal' }],
+  weight: '200 700',
+  variable: '--font-chillax',
   display: 'swap',
   preload: true,
   fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
   adjustFontFallback: false,
-  /* next/font/local has no `stretch` option, so the width range goes in as a
-     raw descriptor. Without it the @font-face defaults to font-stretch: 100%,
-     any request for 82% falls outside the declared range, and the condensed
-     label register silently never renders. */
-  declarations: [{ prop: 'font-stretch', value: '75% 100%' }],
 })
 
 /* VOICE 03 — INFORMATION. Two cuts, no italics. Prices, weights, counts,
@@ -108,7 +113,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bevellier.variable} ${bricolage.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${bevellier.variable} ${chillax.variable} ${plexMono.variable}`}>
       <body>
         <CartProvider>
           <a href="#main" className="skip-link">

@@ -19,7 +19,6 @@ body {
   /* Variable axes carry every weight and width we use. A synthesised bold
      or oblique would be a different typeface pretending to be this one. */
   font-synthesis: none;
-  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
@@ -93,22 +92,28 @@ a { color: inherit; text-decoration: none; }
 .t-statement { font-size: var(--fs-h1); line-height: var(--lh-head); letter-spacing: var(--tr-display); }
 .t-brandline { font-size: var(--fs-brandline); line-height: 1.04; letter-spacing: -0.012em; }
 
-/* ---------- VOICE 02 — LANGUAGE ---------- */
+/* Section headings run in the display voice too. They are the brand speaking
+   in capitals; the language voice is what a person reads in sentences. Both
+   .t-display and .t-h1 are here because they do the same job — a section
+   heading, chosen between by length — and splitting them would set identical
+   work in two faces. */
 .t-h1, .t-h2, .t-display {
-  font-family: var(--font-grotesk);
+  font-family: var(--font-display);
   font-weight: 800;
-  font-stretch: 100%;
-  font-optical-sizing: auto;
+  font-optical-sizing: none;
   text-transform: uppercase;
   text-wrap: balance;
 }
-.t-display { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: var(--tr-mega); }
-.t-h1 { font-size: var(--fs-h1); line-height: var(--lh-head); letter-spacing: var(--tr-head); }
-.t-h2 { font-size: var(--fs-h2); line-height: var(--lh-head); letter-spacing: var(--tr-head); }
+.t-display { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: var(--tr-display); }
+.t-h1 { font-size: var(--fs-h1); line-height: var(--lh-head); letter-spacing: var(--tr-display); }
+.t-h2 { font-size: var(--fs-h2); line-height: var(--lh-head); letter-spacing: var(--tr-display); }
 
+/* ---------- VOICE 02 — LANGUAGE ----------
+   Chillax stops at wght 700. Every rule below states a weight, because this
+   family's default instance is 700 and an unstated weight renders BOLD. */
 .t-h3 {
   font-family: var(--font-grotesk);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-h3);
   line-height: 1.2;
   letter-spacing: 0.005em;
@@ -119,13 +124,11 @@ a { color: inherit; text-decoration: none; }
 .t-body { color: var(--fg-2); text-wrap: pretty; }
 
 /* The retired serif. These two classes stay so no component breaks; they now
-   read as Bricolage at a low optical size — the family's open, humanist end.
-   Emphasis comes from size and weight, never from a synthesised italic. */
+   read as Chillax, whose rounded forms carry the human register the serif was
+   there for. Emphasis is size and weight, never a synthesised italic. */
 .t-serif {
   font-family: var(--font-serif);
   font-weight: 400;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' var(--opsz-text);
   font-size: var(--fs-lede);
   line-height: 1.55;
   text-wrap: pretty;
@@ -133,8 +136,6 @@ a { color: inherit; text-decoration: none; }
 .t-quote {
   font-family: var(--font-serif);
   font-weight: 500;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' 24;
   font-size: clamp(1.375rem, 2.6vw, 2rem);
   line-height: 1.3;
   letter-spacing: -0.015em;
@@ -142,17 +143,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- VOICE 03 — INFORMATION ---------- */
-/* .t-label is the one deliberate crossover: it is set in the grotesk because
-   it labels interface, but it behaves like a record — condensed, tracked out,
-   never a sentence. Width 82 is inside Bricolage's 75–100 range; the previous
-   system asked for 92 and 112 against a family that does not go past 100. */
+/* .t-label labels interface but behaves like a record — small, tracked out,
+   never a sentence. It used to get its shelf-edge cut from a width axis;
+   Chillax has none, so the cut is size and tracking instead. Asking for a
+   font-stretch here would be a no-op that reads in the source like a
+   decision. */
 .t-label {
   font-family: var(--font-grotesk);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--fs-label);
-  font-stretch: 82%;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' var(--opsz-ui);
   letter-spacing: var(--tr-label);
   text-transform: uppercase;
   line-height: 1.25;

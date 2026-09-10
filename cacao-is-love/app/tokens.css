@@ -67,22 +67,18 @@
      rule using it must state a weight or it renders as a hairline.          */
 
   --font-display: var(--font-cil-display, var(--font-bevellier)), "Helvetica Neue", Arial, sans-serif;
-  --font-grotesk: var(--font-bricolage), "Helvetica Neue", Arial, sans-serif;
+  --font-grotesk: var(--font-chillax), "Helvetica Neue", Arial, sans-serif;
   --font-mono:    var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
   /* RETIRED VOICE — the serif is gone from the system. The token survives so
-     .t-serif / .noteQuote keep resolving; they now render as Bricolage at a
-     low optical size, which is the family's humanist register. */
-  --font-serif:   var(--font-bricolage), Georgia, serif;
+     .t-serif / .noteQuote keep resolving; they now render as Chillax, whose
+     rounded, open letterforms carry the human register the serif was for. */
+  --font-serif:   var(--font-chillax), Georgia, serif;
 
-  /* Bricolage axes: opsz 12–96, wght 200–800, wdth 75–100.
-     NOTE the width ceiling is 100 — the old system asked for 112% and got
-     silently clamped. Width is now a real, in-range instrument.            */
-  --wdth-display: 100;
-  --wdth-text:     100;
-  --wdth-label:    82;   /* shelf-edge condensation, in range */
+  /* NEITHER display nor language has a width axis any more, so nothing in
+     this system may ask for one. The label register is cut by size and
+     tracking instead — see .t-label. Any surviving font-stretch is a no-op
+     and a lie in the source; there should be none.                         */
   /* Bevellier has no opsz axis; display type sets weight and tracking only. */
-  --opsz-text:     16;
-  --opsz-ui:       14;
 
   --fs-mega:    clamp(3rem, 12vw, 9rem);
   --fs-display: clamp(2.5rem, 7.5vw, 5.5rem);
@@ -107,8 +103,8 @@
   --lh-body:    1.6;
 
   --tr-mega:    -0.035em;
-  /* Bevellier already fits tight; Bricolage's display tracking would collide
-     the letterforms. Display type gets its own value. */
+  /* Bevellier already fits tight; the old display tracking would collide the
+     letterforms. Display type gets its own value. */
   --tr-display: -0.018em;
   --tr-head:    -0.02em;
   --tr-label:   0.1em;

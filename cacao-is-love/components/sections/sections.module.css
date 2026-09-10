@@ -46,7 +46,7 @@
 .marqueeTrack { display: flex; width: max-content; animation: slide 42s linear infinite; }
 .marqueeGroup { display: flex; align-items: center; gap: var(--s-6); padding-right: var(--s-6); flex: 0 0 auto; }
 .marqueeItem { display: flex; align-items: center; gap: var(--s-4); white-space: nowrap; }
-.marqueeItem span { font-weight: 800; font-stretch: 96%; letter-spacing: 0.1em; font-size: 0.8125rem; text-transform: uppercase; }
+.marqueeItem span { font-weight: 700; letter-spacing: 0.1em; font-size: 0.8125rem; text-transform: uppercase; }
 @keyframes slide { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .marqueeTrack { animation: none; width: 100%; }

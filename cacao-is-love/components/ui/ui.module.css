@@ -37,9 +37,8 @@
   display: inline-flex; align-items: center; justify-content: center;
   gap: var(--s-3);
   font-family: var(--font-grotesk);
-  font-weight: 800;
+  font-weight: 700;
   font-size: 0.8125rem;
-  font-stretch: 96%;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   border-radius: var(--radius);

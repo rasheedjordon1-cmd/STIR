@@ -38,15 +38,13 @@
   .nav { display: flex; align-items: center; gap: clamp(10px, 1.6vw, 26px); }
 }
 
-/* LANGUAGE voice. The nav is not a caption and not a heading, so it has its
-   own step on the scale. Width 82 is inside Bricolage's 75–100 range. */
+/* LANGUAGE voice. The nav is neither a caption nor a heading, so it has its
+   own step on the scale. It rests at 500 so that hover has somewhere to go:
+   Chillax stops at 700, and a nav that rests at 700 cannot gain weight. */
 .navLink {
   font-family: var(--font-grotesk);
-  font-weight: 700;
+  font-weight: 500;
   font-size: var(--fs-nav);
-  font-stretch: 82%;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' var(--opsz-ui);
   letter-spacing: var(--tr-nav);
   text-transform: uppercase;
   color: var(--cil-ink);
@@ -77,7 +75,7 @@
 }
 .navLink:hover .navWord,
 .navLink:focus-visible .navWord,
-.navLinkOpen .navWord { font-variation-settings: 'opsz' var(--opsz-ui), 'wght' 800; }
+.navLinkOpen .navWord { font-variation-settings: 'wght' 700; }
 
 /* A rule in CIL red, drawn from the left, sitting on the masthead's own edge. */
 .navLink::after {
@@ -100,11 +98,8 @@
    masthead, which is the one place the site allows itself a hard sell. */
 .shopBlock {
   font-family: var(--font-grotesk);
-  font-weight: 800;
+  font-weight: 700;
   font-size: var(--fs-nav);
-  font-stretch: 82%;
-  font-optical-sizing: none;
-  font-variation-settings: 'opsz' var(--opsz-ui);
   letter-spacing: var(--tr-nav);
   text-transform: uppercase;
   background: var(--cil-red); color: var(--cil-cream);
@@ -125,8 +120,7 @@
   min-height: 44px; padding-inline: var(--s-2);
   color: var(--cil-ink); white-space: nowrap;
   font-family: var(--font-grotesk);
-  font-weight: 700; font-size: var(--fs-nav); font-stretch: 82%;
-  font-optical-sizing: none; font-variation-settings: 'opsz' var(--opsz-ui);
+  font-weight: 500; font-size: var(--fs-nav);
   letter-spacing: var(--tr-nav); text-transform: uppercase;
 }
 .bagBtn:hover { color: var(--cil-red); }
@@ -146,8 +140,7 @@
   display: inline-flex; align-items: center;
   min-height: 44px; padding-inline: var(--s-2);
   font-family: var(--font-grotesk);
-  font-weight: 700; font-size: var(--fs-nav); font-stretch: 82%;
-  font-optical-sizing: none; font-variation-settings: 'opsz' var(--opsz-ui);
+  font-weight: 500; font-size: var(--fs-nav);
   letter-spacing: var(--tr-nav); text-transform: uppercase;
 }
 @media (min-width: 1000px) { .menuBtn { display: none; } }
@@ -237,10 +230,9 @@
    feedback is typographic — no colour swap, no background plate. */
 .megaLabel {
   font-family: var(--font-grotesk);
-  font-weight: 700; font-size: var(--fs-mega-item);
-  font-stretch: 92%; text-transform: uppercase;
+  font-weight: 600; font-size: var(--fs-mega-item);
+  text-transform: uppercase;
   letter-spacing: -0.005em; line-height: 1.1;
-  font-optical-sizing: none; font-variation-settings: 'opsz' 20;
   transition: font-variation-settings var(--dur-nav) var(--ease-nav);
 }
 .megaNote { font-size: var(--fs-small); color: var(--fg-2); line-height: 1.4; text-wrap: pretty; }
@@ -266,7 +258,7 @@
 }
 .megaLink:hover::before, .megaLink:focus-visible::before { width: 100%; }
 .megaLink:hover .megaLabel,
-.megaLink:focus-visible .megaLabel { font-variation-settings: 'opsz' 20, 'wght' 800; }
+.megaLink:focus-visible .megaLabel { font-variation-settings: 'wght' 700; }
 .megaLink:hover .megaCh, .megaLink:focus-visible .megaCh { color: var(--cil-red); }
 
 /* ---------------- Mobile sheet ---------------- */
@@ -287,8 +279,7 @@
 }
 .sheetClose {
   font-family: var(--font-grotesk); font-weight: 700;
-  font-size: var(--fs-nav); font-stretch: 82%;
-  font-optical-sizing: none; font-variation-settings: 'opsz' var(--opsz-ui);
+  font-size: var(--fs-nav);
   letter-spacing: var(--tr-nav); text-transform: uppercase;
   min-height: 44px; padding-inline: var(--s-2); margin-right: calc(var(--s-2) * -1);
 }
@@ -344,7 +335,7 @@
   display: flex; flex-wrap: wrap; gap: var(--s-5);
   padding-block: var(--s-6);
   font-family: var(--font-grotesk); font-weight: 700;
-  font-size: var(--fs-label); font-stretch: 82%;
+  font-size: var(--fs-label);
   letter-spacing: var(--tr-label); text-transform: uppercase;
   color: var(--ink-soft);
 }
@@ -360,8 +351,8 @@
 .sheetShop {
   background: var(--cil-red); color: var(--cil-cream);
   min-height: 52px; display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-grotesk); font-weight: 800;
-  font-size: 0.875rem; font-stretch: 82%;
+  font-family: var(--font-grotesk); font-weight: 700;
+  font-size: 0.875rem;
   letter-spacing: var(--tr-nav); text-transform: uppercase;
   border-radius: 0;
   transition: background-color var(--dur-nav) var(--ease-nav);
@@ -412,7 +403,7 @@
 }
 .upsellCopy { display: grid; gap: 2px; }
 .upsellBtn {
-  font-family: var(--font-grotesk); font-weight: 800; font-size: var(--fs-label);
+  font-family: var(--font-grotesk); font-weight: 700; font-size: var(--fs-label);
   letter-spacing: var(--tr-label); text-transform: uppercase;
   background: var(--cil-ink); color: var(--cil-cream);
   min-height: 40px; padding: 0 var(--s-4); white-space: nowrap;
