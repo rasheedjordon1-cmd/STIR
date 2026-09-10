@@ -46,6 +46,8 @@ const A = {
   curiosity: b64('public/cil/curiosity-tell-me-more.webp', 'image/webp'),
   steam: b64('public/cil/micro-double-steam.webp', 'image/webp'),
   podHalf: b64('public/cil/micro-split-pod-half.webp', 'image/webp'),
+  prepBreak: b64('public/cil/prep-break.webp', 'image/webp'),
+  curiousFinger: b64('public/cil/micro-curious-finger.webp', 'image/webp'),
 }
 
 /* ---------- CIL micro-marks (same geometry as CilMarks.tsx) ---------- */
@@ -77,7 +79,7 @@ const UTILITY = [
 ]
 
 const STEPS = [
-  ['01', 'BREAK', prepBreak, 'Take about 25–30 g off the block — roughly a two-finger piece. Chop it small so it melts evenly.'],
+  ['01', 'BREAK', `<img src="${A.prepBreak}" alt="">`, 'Take about 25–30 g off the block — roughly a two-finger piece. Chop it small so it melts evenly.'],
   ['02', 'MELT + MIX', prepMelt, 'Warm 200 ml of water or milk on low heat. Add the cacao and stir until it goes smooth and glossy. Do not boil it.'],
   ['03', 'MAKE IT YOURS', prepMake, 'Honey, cinnamon, salt, oat milk, chilli, nothing at all. This is the part where it stops being our drink and becomes yours.'],
 ]
@@ -189,6 +191,7 @@ const BODY = `
         <h2 id="cacao-title" class="t-h1" style="margin-top:var(--s-5)">WHAT ARE YOU ACTUALLY DRINKING?</h2>
         <p class="t-lede measure" style="margin-top:var(--s-5)">Chocolate starts as a fruit. Cacao is that fruit, before anybody adds sugar to it. That is the whole idea.</p>
         <p class="t-body measure" style="margin-top:var(--s-4)">Not cocoa powder. Not a chocolate bar. The whole bean, still whole.</p>
+        <img class="eduCue" src="${A.curiousFinger}" alt="" style="height:64px;width:auto">
       </div>
       <div class="eduArt">
         <div class="eduPanel reveal"><img src="${A.eduWhole}" alt="" style="width:100%;height:auto"><div class="eduPanelLabel"><span class="t-h3">WHOLE CACAO</span><span class="t-meta eduPanelSub">Solid cacao mass.</span></div></div>

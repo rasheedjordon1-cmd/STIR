@@ -74,6 +74,9 @@
 /* CIL MICRO 006 approaches the link on hover. */
 .btnQuiet .quietMark { transition: transform var(--dur) var(--ease); }
 .btnQuiet:hover .quietMark { transform: translateX(10px); }
+/* The drawn Curious Finger points left, so it approaches the label from the
+   right rather than travelling away from it. */
+.btnQuiet:hover .quietMarkLeft { transform: translateX(-7px); }
 
 .btnLg { min-height: 58px; font-size: 0.875rem; }
 .btnBlock { width: 100%; }

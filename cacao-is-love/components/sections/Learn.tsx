@@ -6,8 +6,10 @@ import {
   EduCocoaPowder,
   ProvenanceHandPod,
   DoubleSteamMark,
+  PrepBreakArt,
+  CuriousFingerMark,
 } from '@/components/cil/CilAssets'
-import { PrepBreak, PrepMelt, PrepMake } from '@/components/cil/CilArt'
+import { PrepMelt, PrepMake } from '@/components/cil/CilArt'
 import { Reveal } from '@/components/ui/Reveal'
 import { whatIsCacao, coffeeNeighbor, whyPeopleDrinkIt } from '@/content/education'
 import { origin } from '@/content/origin'
@@ -15,7 +17,15 @@ import { making } from '@/content/making'
 import { product } from '@/content/product'
 import s from './sections.module.css'
 
-const PREP_ART = [PrepBreak, PrepMelt, PrepMake]
+/* Step 01 is the supplied artwork; 02 and 03 are still interim vectors, so the
+   art box below is a fixed height and each piece is centred in it — otherwise
+   the drawn landscape asset and the square vectors put their captions on three
+   different baselines. */
+const PREP_ART = [
+  (p: { title: string }) => <PrepBreakArt alt="" sizes="(min-width: 860px) 28vw, 80vw" />,
+  PrepMelt,
+  PrepMake,
+]
 
 /* -------- 03 · WHAT IS CACAO — cream, 5 / 7 ----------------------------- */
 export function WhatIsCacao() {
@@ -33,6 +43,7 @@ export function WhatIsCacao() {
           <p className="t-body measure" style={{ marginTop: 'var(--s-4)' }}>
             {whatIsCacao.footnote}
           </p>
+          <CuriousFingerMark size={64} className={s.eduCue} />
         </div>
 
         {/* CIL EDU 001 — let the artwork breathe, no card around it. */}

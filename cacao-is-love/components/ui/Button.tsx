@@ -70,3 +70,4 @@ export function ButtonLink({
 }
 
 export const quietMark = s.quietMark
+export const quietMarkLeft = s.quietMarkLeft

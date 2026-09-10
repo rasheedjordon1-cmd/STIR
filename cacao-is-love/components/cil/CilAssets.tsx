@@ -65,6 +65,32 @@ export const CuriosityTellMeMore = (p: AssetProps) => (
   <Art {...p} src="/cil/curiosity-tell-me-more.webp" width={900} height={681} />
 )
 
+/** Preparation 01 — BREAK. */
+export const PrepBreakArt = (p: AssetProps) => (
+  <Art {...p} src="/cil/prep-break.webp" width={820} height={300} />
+)
+
+/**
+ * CIL MICRO 006 — CURIOUS FINGER.
+ *
+ * The drawn hand points down and to the left, so it sits AFTER a link and
+ * approaches it on hover — see `.quietMarkLeft`. It is also carried at 26px
+ * rather than the ~16px the vector version used: raster detail this fine turns
+ * to a smudge below roughly 22px.
+ */
+export function CuriousFingerMark({ size = 26, className }: { size?: number; className?: string }) {
+  return (
+    <Image
+      src="/cil/micro-curious-finger.webp"
+      alt=""
+      width={300}
+      height={218}
+      className={className}
+      style={{ height: size, width: 'auto' }}
+    />
+  )
+}
+
 /** CIL MICRO 002 — DOUBLE STEAM. Preparation headings, warming cues. */
 export function DoubleSteamMark({ size = 34, className }: { size?: number; className?: string }) {
   return (

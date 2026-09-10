@@ -94,10 +94,12 @@ primary button), not as a general rounding. Corners are otherwise square.
 001 — HAND + POD**, **EDU 001** (whole cacao / cocoa powder), **CURIOSITY 001 —
 TELL ME MORE**, and the **DOUBLE STEAM** and **SPLIT POD HALF** micro-assets.
 
-They arrived on a near-white ground (`#FDFCF2`), which is far lighter than PAPER
-CREAM, so dropping them in as rectangles would have shown a bright box on every
-field. The pipeline lifts each one onto an alpha channel and snaps its colours
-to the canonical palette:
+`scripts/lift-cil-art.mjs` + `scripts/build-cil-assets.mjs` regenerate them from
+the source art (`node scripts/build-cil-assets.mjs`).
+
+They arrive on a near-white ground, far lighter than PAPER CREAM, so dropping
+them in as rectangles would show a bright box on every field. The pipeline lifts
+each one onto an alpha channel and snaps its colours to the canonical palette:
 
 - Coverage is recovered from each pixel's distance to the background, the flat
   ink underneath is un-blended out of the antialiasing, that ink is classified,
@@ -108,8 +110,12 @@ to the canonical palette:
   keeping the four-colour rule.
 - EDU 001 arrives as one landscape plate holding both panels; it is split on the
   widest empty column run so each half can be laid out and labelled separately.
-- Flat two- and three-colour art compresses far better losslessly: 416KB for the
-  whole set.
+- The ground is estimated from the **median of all border pixels**, not a corner
+  sample, and a dead-zone sits before the alpha ramp. One delivery had a faint
+  vignette; a corner sample left a visible rectangular halo once composited on
+  cream, and the residual few-percent alpha across the whole frame was most of
+  the file weight. Fixing it took the set from 416KB to **160KB**.
+- Flat two- and three-colour art compresses far better losslessly.
 
 **The hands are MARKET GREEN, and that is a layout constraint.** Any of this
 artwork on a green field disappears, and recolouring it either erases the cream
@@ -121,15 +127,32 @@ drawn.
 
 ### Still interim
 
-`components/cil/CilArt.tsx` holds the three preparation steps (BREAK, MELT +
-MIX, MAKE IT YOURS), drawn to the same rules, plus the Seed Chamber, Cacao
-Shard, Cup Rim and Curious Finger micro-marks in `CilMarks.tsx`.
+`components/cil/CilArt.tsx` holds preparation steps **02 (MELT + MIX)** and
+**03 (MAKE IT YOURS)** — step 01 is now the supplied artwork. `CilMarks.tsx`
+holds the Seed Chamber, Cacao Shard, Cup Rim and Curious Finger vectors.
 
-⚠ Hands do not survive reduction to geometric masses at this scale — they read
-as blobs, which is exactly what the first attempt at the preparation hands did.
-The interim versions lead with the object instead: the block snapped in two, the
-pan and spoon, the cup and what goes in it. Drop the real artwork into the same
-viewBoxes when it lands.
+Two rules learned the hard way, both encoded in the layout:
+
+- **The preparation art box is a fixed height** with each piece centred. The
+  supplied BREAK artwork is landscape and the interim vectors are square; without
+  it the three captions land on three different baselines.
+- **The art box paints in MARKET GREEN**, so the interim vectors sit in the same
+  colour family as the drawn asset. The drawing styles still differ — that closes
+  when 02 and 03 are drawn — but the row no longer reads as two systems.
+
+⚠ **Raster micro-marks do not survive inline sizes.** The supplied CURIOUS FINGER
+is unreadable at the ~16px the hero link needs, so that use keeps the vector
+(which also inherits the field colour); the drawn asset is carried at 64px in the
+education chapter instead, which is the same role the brief gives it.
+
+### What is still needed
+
+| Asset | Why it matters |
+|---|---|
+| **CIL display font** (`.woff2` / `.otf`) | The lettering specimen is a 1536×1024 **reference sheet**, not an asset source — its lockups crop to ~40px tall and go soft at any usable size. Live headings therefore run in Archivo. A font file is the single change that would put brand letterforms on every headline. |
+| **Horizontal lockup**, vector | The specimen labels it NAV / SMALL USE. The nav currently runs the stacked lockup at 30px, so each line is ~13px — cramped. |
+| **Preparation 02 and 03**, drawn | To finish the row started by BREAK. |
+| **Mastermark, current cut** | The specimen's mastermark carries a star device inside the O counters. The supplied PNG does not — worth confirming which is current. |
 
 ## Commerce — unchanged
 

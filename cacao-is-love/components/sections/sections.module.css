@@ -101,6 +101,8 @@
 @media (min-width: 900px) {
   .eduGrid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 5vw, 80px); align-items: center; }
 }
+.eduCue { margin-top: var(--s-6); }
+@media (max-width: 899px) { .eduCue { display: none; } }
 .eduArt { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 44px); align-items: end; }
 .eduPanel { display: grid; gap: var(--s-4); }
 .eduPanel img { width: 100%; height: auto; }
@@ -138,8 +140,19 @@
   .prepSteps { grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 3.5vw, 56px); align-items: start; }
 }
 .prepStep { display: grid; gap: var(--s-4); }
-.prepArt { color: var(--fg); }
-.prepArt svg { width: 100%; max-width: 260px; height: auto; }
+/* One art box height across the row, so a drawn landscape asset and the square
+   interim vectors still land their captions on a single baseline. */
+/* The interim vectors paint in currentColor, so putting the box in MARKET GREEN
+   puts them in the same colour family as the supplied BREAK artwork. The drawing
+   styles still differ — that gap closes when steps 02 and 03 are drawn — but the
+   row no longer reads as two unrelated systems. */
+.prepArt {
+  color: var(--cil-green);
+  height: clamp(140px, 17vw, 190px);
+  display: grid;
+  place-items: center;
+}
+.prepArt svg, .prepArt img { width: auto; max-width: 100%; max-height: 100%; height: auto; }
 .prepNum { display: flex; align-items: baseline; gap: var(--s-3); border-top: var(--rule-w) solid var(--rule-strong); padding-top: var(--s-3); }
 .prepBody { color: var(--fg-2); font-size: var(--fs-small); max-width: 34ch; }
 .prepDivider { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-8); color: var(--fg); }
