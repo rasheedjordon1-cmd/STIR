@@ -190,11 +190,14 @@
 .megaBrandline { color: var(--fg); }
 .megaBrandNote { color: var(--fg-2); font-size: var(--fs-small); line-height: 1.45; text-wrap: pretty; }
 
-/* The mark is cropped off the panel's edge — it is a fragment of a larger
-   drawing, not an icon sitting in a box. */
+/* Glyph scale, inset, not cropped. A cropped edge implies a larger drawing
+   continuing past the panel; there is no larger drawing yet, and implying one
+   with a blown-up UI glyph is the substitution the MICRO 2.0 system forbids.
+   When the object-tier artwork arrives this becomes a crop again. */
 .megaBrandMark {
-  position: absolute; right: -34px; bottom: -30px;
+  position: absolute; right: var(--gutter); bottom: var(--s-7);
   color: var(--fg);
+  opacity: 0.85;
   display: flex; align-items: flex-end;
   pointer-events: none;
 }

@@ -36,16 +36,31 @@ const INLINE_MARK = {
   people: CupRim,
 } as const
 
+/* The mega panel is an OBJECT TIER slot: MICRO 2.0 illustration belongs here,
+   at 60px+, with its authored palette and print texture.
+   
+   That artwork does not exist as files yet, and blowing a 24-unit glyph up to
+   132px to stand in for it is the exact substitution the system forbids —
+   rendered at that size it read as a flat leaf, not a cacao shard.
+   
+   So the slot holds a glyph at glyph scale until the artwork lands. Honest and
+   small beats large and fake.
+   
+   ONE THING TO SETTLE BEFORE THE ARTWORK GOES IN: these panels are red, green
+   and ink. The authored MICRO 2.0 palette is Espresso Ink on Paper Cream, which
+   on a green panel measured INVISIBLE when we tried it with the drawn Curious
+   Finger. The object tier needs either cream-ground colourways for saturated
+   fields, or these panels stay glyph tier permanently. */
 function PanelMark({ menu }: { menu: MegaMenu }) {
   switch (menu.key) {
     case 'cacao':
-      return <SeedChamber size={132} />
+      return <SeedChamber size={44} />
     case 'source':
-      return <SplitPodHalf size={116} />
+      return <SplitPodHalf size={44} />
     case 'make':
-      return <DoubleSteam size={124} />
+      return <DoubleSteam size={44} />
     case 'people':
-      return <CupRim size={124} />
+      return <CupRim size={44} />
   }
 }
 

@@ -67,15 +67,15 @@ const A = {
 }
 
 /* ---------- CIL micro-marks (same geometry as CilMarks.tsx) ---------- */
-const seed = (s = 13) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M12 5.4c3.1 1.9 4.6 4 4.6 6.6S15.1 16.7 12 18.6c-3.1-1.9-4.6-4-4.6-6.6S8.9 7.3 12 5.4Z" fill="currentColor"/><path d="M12 7.6v8.8" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round"/></svg>`
-const shard = (s = 14) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M8.6 2.4 20.4 6a2 2 0 0 1 1.4 2.3l-2 9.6a2 2 0 0 1-2.4 1.6L5.2 16.6a2 2 0 0 1-1.5-1.7L2.5 5.1a2 2 0 0 1 2.6-2.2Z" fill="currentColor"/><path d="M8.9 6.2 15.6 15" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round"/></svg>`
-const cupRim = (s = 13) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10.5" fill="currentColor"/><circle cx="12" cy="12" r="6.2" fill="var(--bg)"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></svg>`
+const seed = (s = 13) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.2C16.4 6 19.2 9.5 19.2 12.5 19.2 15.5 16.4 19 12 22.8 7.6 19 4.8 15.5 4.8 12.5 4.8 9.5 7.6 6 12 2.2Z" fill="currentColor"/><path d="M14.6 5.9c2.1 3.7-.3 6.7-2.4 9.4-1.5 2-2 3.4-1.1 5.3-2.9-1.8-2.5-4.5-.6-7.1 2.2-3 3.7-5.1 2.3-8Z" fill="var(--bg)"/></svg>`
+const shard = (s = 14) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M8.8 2.6 19.6 5.4a1.8 1.8 0 0 1 1.3 2.2l-2 9.4a1.8 1.8 0 0 1-2.2 1.4L5.4 15.8a1.8 1.8 0 0 1-1.3-1.6L3 5.2a1.8 1.8 0 0 1 2.4-2Z" fill="currentColor"/><path d="M17 4.2 11.4 11l3.4 1.5-6.2 6.2 1.8-6-3.4-1.2Z" fill="var(--bg)"/></svg>`
+const cupRim = (s = 13) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.6c5.1 0 9.2 2.1 9.2 4.7s-4.1 4.7-9.2 4.7S2.8 11.9 2.8 9.3 6.9 4.6 12 4.6Z" fill="currentColor"/><ellipse cx="12" cy="9.3" rx="5.6" ry="2.4" fill="var(--bg)"/><path d="M3.3 11.6c1.3 2.2 4.7 3.7 8.7 3.7s7.4-1.5 8.7-3.7l-1.1 5.6c-.5 2.6-3.4 4.2-7.6 4.2s-7.1-1.6-7.6-4.2Z" fill="currentColor"/></svg>`
 const finger = (s = 16) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="9.4" width="9" height="6.6" rx="3.3" fill="currentColor"/><rect x="10.4" y="10.4" width="10.2" height="4.6" rx="2.3" fill="currentColor"/><rect x="5.4" y="14.2" width="7.6" height="4.4" rx="2.2" fill="currentColor"/><path d="M13.4 12.7h6" stroke="var(--bg)" stroke-width="1.1" stroke-linecap="round"/><path d="M7.2 13.6h4.4" stroke="var(--bg)" stroke-width="1.1" stroke-linecap="round"/></svg>`
 
 /* ---------- preparation artwork (same paths as CilArt.tsx) ---------- */
 /* Navigation marks. Vectors, not the drawn rasters: these land on red, green
    and ink grounds and must inherit the field rather than carry baked-in ink. */
-const steam = (s = 17) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M9 20c-3-3.4 2.2-5.3-.8-8.8M16 20c-3-3.4 2.2-5.3-.8-8.8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>`
+const steam = (s = 17) => `<svg viewBox="0 0 24 24" width="${s}" height="${s}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M8.4 21.8c-3-3.8 1.4-5.6 1.4-8.4 0-2-2-3.1-2-5.4 0-2 1.2-3.4 3-4.4-.9 2-.5 3.4.7 5 1.3 1.8 2 3.2 2 5.2 0 3.4-4 5-5.1 8Z" fill="currentColor"/><path d="M16 21.8c-2.6-3.3 1.2-4.9 1.2-7.3 0-1.7-1.7-2.7-1.7-4.7 0-1.7 1-2.9 2.6-3.8-.8 1.7-.4 2.9.6 4.3 1.1 1.6 1.7 2.8 1.7 4.5 0 3-3.5 4.4-4.4 7Z" fill="currentColor"/></svg>`
 const podMark = (s = 17) => `<svg viewBox="0 0 120 200" height="${s}" width="${(s * 0.6).toFixed(1)}" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path d="M0 0c44 14 78 52 84 100s-24 88-84 100Z" fill="currentColor"/><g fill="var(--bg)"><ellipse cx="30" cy="62" rx="11" ry="15"/><ellipse cx="41" cy="100" rx="11" ry="15"/><ellipse cx="30" cy="138" rx="11" ry="15"/></g></svg>`
 
 const prepBreak = `<svg viewBox="0 0 240 240" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><g fill="currentColor"><path d="M26 74h86l-14 44 16 44H26a10 10 0 0 1-10-10V84a10 10 0 0 1 10-10Z"/><g transform="rotate(9 178 118)"><path d="M136 74h78a10 10 0 0 1 10 10v68a10 10 0 0 1-10 10h-80l16-44Z"/></g></g><g stroke="var(--bg)" stroke-width="6"><path d="M16 118h84M144 122h84"/><path d="M62 74v88"/><path d="M186 70v92"/></g><g fill="currentColor"><path d="M40 190l30 8-6 26-30-8Z"/><path d="M92 196l24 6-5 21-24-6Z" transform="rotate(-12 104 210)"/><path d="M150 192l26 7-5 22-26-7Z" transform="rotate(8 163 206)"/></g></svg>`
@@ -123,26 +123,26 @@ const NOTES = [
 const MENUS = [
   { key: 'cacao', label: 'CACAO', href: '#cacao', field: 'red',
     line: 'ONE INGREDIENT.', note: 'Whole cacao. Nothing added, nothing taken out.',
-    mark: (s) => seed(s), big: () => seed(132),
+    mark: (s) => seed(s), big: () => seed(44),
     links: [['CH. 01', 'THE CACAO', '#truth', 'What is actually in the bag.'],
             ['CH. 02', 'THE CATEGORY', '#cacao', 'Cacao is not cocoa powder, and not a chocolate bar.'],
             ['CH. 03', 'COMPOSITION', '#composition', 'The compounds the whole bean carries.'],
             ['', 'CACAO &amp; COFFEE', '#coffee', 'How the cup compares to the one you already drink.']] },
   { key: 'source', label: 'SOURCE', href: '#source', field: 'green',
     line: 'GROWN IN COLOMBIA.', note: 'One country, named. The rest of the record stays blank until it is confirmed.',
-    mark: (s) => podMark(s), big: () => podMark(116),
+    mark: (s) => podMark(s), big: () => podMark(44),
     links: [['CH. 04', 'ORIGIN', '#source', 'Where the cacao comes from, and what we can prove.'],
             ['CH. 05', 'WORLDVIEW', '#nicolas', 'Nicolas, in his own words.'],
             ['', 'WHY THIS EXISTS', '#why', 'The reason for a single bag.']] },
   { key: 'make', label: 'MAKE', href: '#make', field: 'ink',
     line: 'MADE TO BE SHARED.', note: 'Break it, steam it, stir it. Four steps and a pot.',
-    mark: (s) => steam(s), big: () => steam(124),
+    mark: (s) => steam(s), big: () => steam(44),
     links: [['', 'MAKE A CUP', '#make', 'The method, start to finish.'],
             ['', 'QUESTIONS', '#buy', 'Storage, strength, sweetening, shipping.'],
             ['CH. 06', 'THE COUNTER', '#buy', '250 g of whole cacao.']] },
   { key: 'people', label: 'PEOPLE', href: '#people', field: 'green',
     line: 'CACAO IS LOVE.', note: 'A bag is usually bought for someone else. That is the whole idea.',
-    mark: (s) => cupRim(s), big: () => cupRim(124),
+    mark: (s) => cupRim(s), big: () => cupRim(44),
     links: [['', 'THE NEIGHBORHOOD', '#people', 'Who is drinking it.'],
             ['CH. 05', 'NICOLAS', '#nicolas', 'The person who started it.'],
             ['', 'STAY CLOSE', '#newsletter', 'Next drops, and nothing else.']] },
