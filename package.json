@@ -1,0 +1,34 @@
+{
+  "name": "spicemart",
+  "version": "0.1.0",
+  "private": true,
+  "description": "SPICEMART \u2014 Grenada's homegrown commerce platform. Headless-commerce front-end prototype.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "brand:derive": "node scripts/derive-brand-assets.mjs",
+    "test:e2e": "node scripts/e2e.mjs",
+    "test:audit": "node scripts/audit.mjs"
+  },
+  "dependencies": {
+    "next": "^16.3.5",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
+    "@types/node": "^22.20.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.5",
+    "playwright-core": "^1.63.0",
+    "postcss": "^8.5.28",
+    "sharp": "^0.35.4",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3"
+  }
+}

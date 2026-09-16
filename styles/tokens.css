@@ -1,0 +1,96 @@
+/* ==========================================================================
+   SPICEMART — design tokens
+   Single source of truth for colour, type, space, radius, border and motion.
+   Consumed by Tailwind v4 via @theme (see globals.css) and by raw CSS.
+
+   Colour contrast notes (WCAG 2.2 AA) are recorded inline. Where a brand
+   colour cannot carry white text at body sizes, a separate *-ink token exists
+   for text use. Do not invent new colour values in components.
+   ========================================================================== */
+
+@theme {
+  /* ---- Brand surfaces ---------------------------------------------------- */
+  --color-breadfruit: #f7f2e6; /* app surface, warm paper */
+  --color-paper: #fffcf4; /* raised surface: cards, sheets, inputs */
+  --color-paper-sunk: #f1ead9; /* recessed: image wells, table zebra */
+
+  /* ---- Structure --------------------------------------------------------- */
+  --color-forest: #102515; /* primary ink + structural rules. 15.4:1 on paper */
+  --color-forest-muted: #515e50; /* secondary ink. 6.1:1 on breadfruit */
+  --color-forest-faint: #7d8879; /* tertiary ink — large text / non-essential only */
+  --color-line: #e2dbc7; /* hairline dividers */
+  --color-line-strong: #c4bca5; /* control borders, 3:1 vs paper */
+  --color-ink-line: #102515; /* decisive 1.5–2px structural rule */
+
+  /* ---- Action ------------------------------------------------------------ */
+  --color-leaf: #2e7d32; /* primary action. white text = 5.2:1 */
+  --color-leaf-deep: #1f5c23; /* hover / active / text-on-light. 7.5:1 */
+  --color-leaf-wash: #e8f1e4; /* selected + success surface */
+  --color-signal: #5dae35; /* sampled from supplied logo ground. INK ONLY on top */
+  --color-signal-wash: #eef6e5;
+
+  /* ---- Accents (functional, never decorative) ---------------------------- */
+  --color-turmeric: #f5b81c; /* promo + Spice Fair. forest text = 10.2:1 */
+  --color-turmeric-wash: #fdf1d3;
+  --color-nutmeg: #9e1b32; /* alerts, savings, unavailable. white = 7.9:1 */
+  --color-nutmeg-wash: #fbe9ec;
+  --color-teal: #00918c; /* fulfilment + pickup surfaces (large text only) */
+  --color-teal-ink: #00706c; /* teal at body text sizes. 5.9:1 on paper */
+  --color-teal-wash: #e0f2f1;
+  --color-cocoa: #4b2e20; /* vendor / editorial. white = 7.9:1 */
+  --color-cocoa-wash: #f0e7e0;
+
+  /* ---- Type -------------------------------------------------------------- */
+  --font-display: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
+  --font-sans: var(--font-hanken), 'Helvetica Neue', Arial, sans-serif;
+
+  --text-micro: 0.6875rem; /* 11px — uppercase labels only */
+  --text-micro--line-height: 1.2;
+  --text-xs: 0.75rem; /* 12px */
+  --text-xs--line-height: 1.35;
+  --text-sm: 0.8125rem; /* 13px — dense metadata */
+  --text-sm--line-height: 1.4;
+  --text-base: 0.9375rem; /* 15px — interface default */
+  --text-base--line-height: 1.5;
+  --text-md: 1.0625rem; /* 17px */
+  --text-md--line-height: 1.45;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.25;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.15;
+  --text-2xl: 1.875rem;
+  --text-2xl--line-height: 1.08;
+  --text-3xl: 2.5rem;
+  --text-3xl--line-height: 1.02;
+
+  /* ---- Radius — modest. Nothing is a pill except status chips ------------- */
+  --radius-chip: 3px;
+  --radius-control: 6px;
+  --radius-card: 10px;
+  --radius-module: 14px;
+
+  /* ---- Elevation — used only for things that float above the page --------- */
+  --shadow-pop: 0 2px 8px rgb(16 37 21 / 0.08);
+  --shadow-overlay: 0 12px 40px rgb(16 37 21 / 0.22);
+
+  /* ---- Motion ------------------------------------------------------------ */
+  --ease-out-quick: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --duration-tap: 110ms;
+  --duration-ui: 200ms;
+  --duration-drawer: 260ms;
+}
+
+:root {
+  /* Layout constants that are not Tailwind utilities. */
+  --header-h: 104px; /* mobile header block (logo row + search row) */
+  --bottom-nav-h: 60px;
+  --shell-max: 1400px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-h: 132px;
+    --bottom-nav-h: 0px;
+  }
+}
