@@ -1,5 +1,5 @@
 import { chromium } from 'playwright-core';
-const BASE = 'http://localhost:3000';
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const page = await ctx.newPage();
@@ -18,6 +18,9 @@ const suggestionCount = await page.locator('[role="option"]').count();
 check('search suggestions appear', suggestionCount > 0, `${suggestionCount} options`);
 await page.keyboard.press('Enter');
 await page.waitForURL('**/search?q=callaloo');
+// Results resolve through the commerce adapter, so wait for the grid rather
+// than counting on the first frame. This holds for both build modes.
+await page.waitForSelector('article', { timeout: 5000 });
 const resultCount = await page.locator('article').count();
 check('search results page renders', resultCount > 0, `${resultCount} cards`);
 

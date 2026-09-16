@@ -1,0 +1,25 @@
+# ==========================================================================
+# SPICEMART — Netlify
+#
+# This file configures the RECOMMENDED path: connect the repository to Netlify
+# and let it build. Netlify detects Next.js and installs its Next runtime, so
+# server rendering and the hourly ISR revalidation both work, and the
+# "next Spice Fair" copy never goes stale.
+#
+# If you are instead drag-and-dropping the static zip (npm run package), you do
+# not need this file — Netlify serves the folder as-is.
+# ==========================================================================
+
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # No Shopify credentials are set, so the app runs on its mock adapter and
+  # renders the honest "checkout not connected" state.
+
+[[headers]]
+  for = "/brand/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

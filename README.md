@@ -47,7 +47,9 @@ The cart drawer and the delivery-area sheet are global overlays, reachable from 
 ### Notable interactions
 
 - **Search** matches title, vendor, aisle and tags, with a keyboard-navigable combobox
-  (arrow keys, Enter, Escape) in the header.
+  (arrow keys, Enter, Escape) in the header. The results page reads its query on the
+  client, which costs nothing (a result page has no SEO value) and keeps the whole app
+  statically exportable.
 - **Add to cart** turns into a quantity stepper in place — no page change, no toast.
 - **Multibuy** applies automatically once the quantity is reached and shows the saving on
   the cart line.
@@ -229,6 +231,47 @@ npm run test:audit   # every route at 375/430/768/1280/1440: horizontal overflow
 npm run lint
 npm run typecheck
 npm run build
+```
+
+---
+
+## Deploying
+
+Two paths. Pick based on whether you want the date-relative content to stay fresh.
+
+### Recommended — connect the repository (full Next.js)
+
+Point Netlify at this repo. It detects Next.js and installs its Next runtime;
+`netlify.toml` sets the build command and Node version. Nothing else to configure —
+with no Shopify credentials set, the app runs on the mock adapter and renders the
+honest "checkout not connected" state.
+
+Server rendering and the hourly ISR revalidation both work, so "next Spice Fair"
+and the relative order dates stay correct without a rebuild.
+
+### Drag-and-drop — the static zip
+
+```bash
+npm run package        # -> dist/spicemart-prototype-<date>.zip  (~5.4 MB)
+```
+
+Drop the zip onto Netlify's deploy area. The archive root *is* the site root, so
+there is no build step and no configuration. All 102 pages are real HTML files,
+so pretty URLs and the 404 page work on any static host.
+
+**The one tradeoff:** a static export has no server, so anything relative to
+"today" is frozen at build time — the next Spice Fair, the "in 3 days" countdown,
+and the order history dates. Rebuild to refresh them. Everything else — search,
+filtering, sorting, the basket, serviceability, fulfilment gating, reordering —
+works identically, because it all runs in the browser.
+
+Verified: the exported bundle passes the same 21 interaction checks and the same
+responsive/accessibility audit as the server build.
+
+```bash
+npm run build:static                     # export to ./out
+node scripts/serve-static.mjs out        # serve it the way a host would
+BASE_URL=http://localhost:4321 npm run test:e2e
 ```
 
 ---

@@ -11,7 +11,9 @@
     "typecheck": "tsc --noEmit",
     "brand:derive": "node scripts/derive-brand-assets.mjs",
     "test:e2e": "node scripts/e2e.mjs",
-    "test:audit": "node scripts/audit.mjs"
+    "test:audit": "node scripts/audit.mjs",
+    "build:static": "STATIC_EXPORT=true next build",
+    "package": "node scripts/package-static.mjs"
   },
   "dependencies": {
     "next": "^16.3.5",

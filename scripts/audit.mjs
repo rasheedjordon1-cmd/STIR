@@ -6,7 +6,7 @@
  * heading-level jumps. Requires `npm run dev` to be running.
  */
 import { chromium } from 'playwright-core';
-const BASE = 'http://localhost:3000';
+const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 const ROUTES = ['/', '/search?q=rice', '/category/groceries', '/category/local', '/category/deals',
   '/product/parboiled-rice-10lb', '/product/ice-bag-5kg', '/cart', '/delivery', '/account',
   '/account/orders', '/rewards', '/spice-fair', '/spice-fair/sf-2026-10-03', '/system', '/nope'];
