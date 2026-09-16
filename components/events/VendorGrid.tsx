@@ -4,12 +4,12 @@ import { cx } from '@/lib/cx';
 import type { Vendor } from '@/types';
 
 const ACCENT: Record<Vendor['accent'], string> = {
-  leaf: 'border-leaf-deep/30 bg-leaf-wash',
-  signal: 'border-leaf-deep/30 bg-signal-wash',
-  turmeric: 'border-cocoa/30 bg-turmeric-wash',
-  nutmeg: 'border-nutmeg/30 bg-nutmeg-wash',
-  teal: 'border-teal-ink/30 bg-teal-wash',
-  cocoa: 'border-cocoa/30 bg-cocoa-wash',
+  leaf: 'border-leaf-deep/30 bg-surface-green-soft',
+  signal: 'border-leaf-deep/30 bg-surface-green-soft',
+  turmeric: 'border-cocoa/30 bg-surface-yellow-soft',
+  nutmeg: 'border-nutmeg/30 bg-surface-nutmeg-soft',
+  teal: 'border-teal-ink/30 bg-surface-teal-soft',
+  cocoa: 'border-cocoa/30 bg-surface-cocoa-soft',
 };
 
 /** Vendor line-up. Makers who also sell online link into the catalogue. */
@@ -26,16 +26,16 @@ export function VendorGrid({ vendors }: { vendors: Vendor[] }) {
                   Also online
                 </span>
               ) : (
-                <span className="label text-forest-muted">Stall only</span>
+                <span className="text-text-secondary text-xs font-semibold">Stall only</span>
               )}
             </div>
             <h3 className="text-md leading-tight">{vendor.name}</h3>
-            <p className="label text-forest-muted mt-1">
+            <p className="label text-text-secondary mt-1">
               {vendor.parish} · {vendor.category}
             </p>
-            <p className="text-forest-muted mt-1.5 text-sm">{vendor.blurb}</p>
+            <p className="text-text-secondary mt-1.5 text-sm">{vendor.blurb}</p>
             {vendor.sellsOnline ? (
-              <p className="text-leaf-deep mt-2 flex items-center gap-1 text-sm font-semibold">
+              <p className="text-state-success mt-2 flex items-center gap-1 text-sm font-semibold">
                 Shop their products
                 <Icon name="ChevronRight" size={14} />
               </p>
@@ -46,7 +46,7 @@ export function VendorGrid({ vendors }: { vendors: Vendor[] }) {
         const className = cx(
           'block h-full rounded-[var(--radius-card)] border p-3.5 transition-colors',
           ACCENT[vendor.accent],
-          vendor.sellsOnline && 'hover:border-forest',
+          vendor.sellsOnline && 'hover:border-border-default',
         );
 
         return (

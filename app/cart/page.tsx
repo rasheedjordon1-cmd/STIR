@@ -31,7 +31,7 @@ export default function CartPage() {
   return (
     <div className="shell py-6 pb-12">
       <nav aria-label="Breadcrumb" className="mb-3">
-        <ol className="text-forest-muted flex list-none items-center gap-1 text-sm">
+        <ol className="text-text-secondary flex list-none items-center gap-1 text-sm">
           <li>
             <Link href="/" className="hover:text-forest hover:underline">
               Home
@@ -48,7 +48,7 @@ export default function CartPage() {
         <div>
           <h1 className="text-2xl md:text-3xl">Your basket</h1>
           {hydrated ? (
-            <p className="text-forest-muted mt-1 text-md">
+            <p className="text-text-secondary mt-1 text-md">
               {lines.length === 0
                 ? 'Nothing in it yet.'
                 : `${pluralise(lines.length, 'line')} · ${pluralise(itemCount, 'item')}`}
@@ -56,7 +56,7 @@ export default function CartPage() {
           ) : null}
         </div>
         {lines.length > 0 ? (
-          <Button intent="quiet" size="sm" icon="Remove" onClick={clear}>
+          <Button intent="tertiary" size="sm" icon="Remove" onClick={clear}>
             Empty basket
           </Button>
         ) : null}
@@ -85,11 +85,11 @@ export default function CartPage() {
           <div className="flex flex-col gap-5">
             <section
               aria-label="Delivery location"
-              className="border-ink-line bg-paper rounded-[var(--radius-card)] border-2 p-3.5"
+              className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-3.5"
             >
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                 <div>
-                  <p className="label text-forest-muted">Delivering to</p>
+                  <p className="text-text-secondary text-xs font-semibold">Delivering to</p>
                   <p className="text-md font-bold">
                     {zone.area}, {zone.parish}
                   </p>
@@ -105,7 +105,7 @@ export default function CartPage() {
             </section>
 
             <section aria-label="Basket contents">
-              <h2 className="label text-forest-muted border-line mb-1 border-b pb-1.5">Items</h2>
+              <h2 className="label text-text-secondary border-border-subtle mb-1 border-b pb-1.5">Items</h2>
               <ul className="list-none">
                 {lines.map((line) => (
                   <CartLineRow key={line.lineId} line={line} />
@@ -120,9 +120,9 @@ export default function CartPage() {
 
           <aside
             aria-label="Order summary"
-            className="border-ink-line bg-paper rounded-[var(--radius-card)] border-2 p-4 lg:sticky lg:top-[calc(var(--header-h)+16px)]"
+            className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-4 lg:sticky lg:top-[calc(var(--header-h)+16px)]"
           >
-            <h2 className="text-md border-line mb-3 border-b pb-2">Order summary</h2>
+            <h2 className="text-md border-border-subtle mb-3 border-b pb-2">Order summary</h2>
             <CartSummary />
           </aside>
         </div>

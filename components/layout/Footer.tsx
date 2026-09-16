@@ -73,7 +73,7 @@ export function Footer() {
                 <a
                   key={network}
                   href="#"
-                  className="border-breadfruit/35 hover:border-breadfruit hover:bg-breadfruit/10 flex min-h-11 items-center rounded-[var(--radius-control)] border px-3 text-sm font-semibold"
+                  className="border-breadfruit/35 hover:border-breadfruit hover:bg-surface-page/10 flex min-h-11 items-center rounded-[var(--radius-control)] border px-3 text-sm font-semibold"
                 >
                   {network}
                 </a>

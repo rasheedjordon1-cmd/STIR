@@ -40,16 +40,16 @@ export function CartTotals() {
     <div className="flex flex-col gap-3">
       <dl className="num flex flex-col gap-1.5 text-sm">
         <div className="flex justify-between gap-4">
-          <dt className="text-forest-muted">Subtotal</dt>
+          <dt className="text-text-secondary">Subtotal</dt>
           <dd className="font-semibold">{formatMoney(totals.subtotal)}</dd>
         </div>
         {method === 'delivery' ? (
           <div className="flex justify-between gap-4">
-            <dt className="text-forest-muted">Delivery — {zone.area}</dt>
+            <dt className="text-text-secondary">Delivery — {zone.area}</dt>
             <dd className="font-semibold">
               {waived ? (
                 <>
-                  <span className="text-forest-faint mr-1 line-through">
+                  <span className="text-text-tertiary mr-1 line-through">
                     {formatMoney(zone.deliveryFee ?? FULFILLMENT.defaultDeliveryFee)}
                   </span>
                   Free
@@ -61,17 +61,17 @@ export function CartTotals() {
           </div>
         ) : (
           <div className="flex justify-between gap-4">
-            <dt className="text-forest-muted">Collection</dt>
+            <dt className="text-text-secondary">Collection</dt>
             <dd className="font-semibold">Free</dd>
           </div>
         )}
-        <div className="border-line mt-1 flex justify-between gap-4 border-t pt-2">
+        <div className="border-border-subtle mt-1 flex justify-between gap-4 border-t pt-2">
           <dt className="font-display text-md font-bold">Estimated total</dt>
           <dd className="font-display text-lg font-bold">{formatMoney(totals.total)}</dd>
         </div>
       </dl>
 
-      <p className="text-forest-muted flex items-center gap-1.5 text-xs">
+      <p className="text-text-secondary flex items-center gap-1.5 text-xs">
         <Icon name="Rewards" size={14} />
         Earns about{' '}
         <span className="num font-semibold">{totals.estimatedPoints.toLocaleString('en-US')}</span>{' '}
@@ -159,7 +159,7 @@ export function CartCheckout({
           {checkoutError}
         </Notice>
       ) : (
-        <p className="text-forest-muted text-center text-xs">
+        <p className="text-text-secondary text-center text-xs">
           Payment is handled by Shopify. Spicemart never sees your card details.
         </p>
       )}

@@ -16,7 +16,8 @@ export function CartButton({ className }: { className?: string }) {
       type="button"
       onClick={openCart}
       className={cx(
-        'border-forest bg-paper hover:bg-breadfruit relative flex min-h-11 items-center gap-2 rounded-[var(--radius-control)] border-2 px-2.5 transition-colors',
+        'border-border-strong bg-surface-card relative flex min-h-11 items-center gap-2.5 rounded-[var(--radius-control)] border px-3',
+        'transition-[background-color,transform] duration-[var(--duration-tap)] ease-[var(--ease-out-quint)] hover:bg-surface-page active:translate-y-px',
         className,
       )}
       aria-label={
@@ -28,13 +29,13 @@ export function CartButton({ className }: { className?: string }) {
       <span className="relative">
         <Icon name="Cart" size={22} />
         {hydrated && itemCount > 0 ? (
-          <span className="bg-nutmeg text-paper num absolute -top-1.5 -right-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-[11px] font-bold">
+          <span className="bg-nutmeg text-surface-card num anim-tick absolute -top-1.5 -right-2 flex h-[18px] min-w-[18px] items-center justify-center rounded-full px-1 text-[11px] font-bold">
             {itemCount > 99 ? '99+' : itemCount}
           </span>
         ) : null}
       </span>
       <span className="hidden text-left lg:block">
-        <span className="label text-forest-muted block">Basket</span>
+        <span className="text-text-secondary block text-xs">Basket</span>
         <span className="num block text-sm leading-tight font-bold">
           {hydrated ? formatMoney(totals.subtotal) : '—'}
         </span>

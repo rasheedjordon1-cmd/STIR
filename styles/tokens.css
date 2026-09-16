@@ -1,96 +1,173 @@
 /* ==========================================================================
-   SPICEMART — design tokens
-   Single source of truth for colour, type, space, radius, border and motion.
-   Consumed by Tailwind v4 via @theme (see globals.css) and by raw CSS.
+   SPICEMART — design tokens · Visual System V2
+   "Island utility modernism 2.0" — national commerce infrastructure with
+   neighbourhood-market warmth.
 
-   Colour contrast notes (WCAG 2.2 AA) are recorded inline. Where a brand
-   colour cannot carry white text at body sizes, a separate *-ink token exists
-   for text use. Do not invent new colour values in components.
+   Single source of truth for type, colour, surface, border, radius, shadow,
+   space and motion. Consumed by Tailwind v4 via @theme and by raw CSS.
+
+   V2 principles encoded here:
+   · surfaces and spacing carry hierarchy; borders are used sparingly
+   · three surface levels: open content, soft surface, active/operational
+   · accents mean something — they are never distributed evenly
+   · nothing is pure white or pure black
    ========================================================================== */
 
 @theme {
-  /* ---- Brand surfaces ---------------------------------------------------- */
-  --color-breadfruit: #f7f2e6; /* app surface, warm paper */
-  --color-paper: #fffcf4; /* raised surface: cards, sheets, inputs */
-  --color-paper-sunk: #f1ead9; /* recessed: image wells, table zebra */
+  /* ---- Type -------------------------------------------------------------
+     Display and utility are separate roles. The display stack is ordered so
+     licensed FK Grotesk Neue files can be dropped into /public/fonts later
+     and picked up with no component changes.                                */
+  --font-display: 'FK Grotesk Neue', var(--font-instrument), 'Helvetica Neue', Arial, sans-serif;
+  --font-ui: var(--font-hanken), 'Helvetica Neue', Arial, sans-serif;
+  /* Tailwind's default sans utility follows the utility face. */
+  --font-sans: var(--font-ui);
 
-  /* ---- Structure --------------------------------------------------------- */
-  --color-forest: #102515; /* primary ink + structural rules. 15.4:1 on paper */
-  --color-forest-muted: #515e50; /* secondary ink. 6.1:1 on breadfruit */
-  --color-forest-faint: #7d8879; /* tertiary ink — large text / non-essential only */
-  --color-line: #e2dbc7; /* hairline dividers */
-  --color-line-strong: #c4bca5; /* control borders, 3:1 vs paper */
-  --color-ink-line: #102515; /* decisive 1.5–2px structural rule */
-
-  /* ---- Action ------------------------------------------------------------ */
-  --color-leaf: #2e7d32; /* primary action. white text = 5.2:1 */
-  --color-leaf-deep: #1f5c23; /* hover / active / text-on-light. 7.5:1 */
-  --color-leaf-wash: #e8f1e4; /* selected + success surface */
-  --color-signal: #5dae35; /* sampled from supplied logo ground. INK ONLY on top */
-  --color-signal-wash: #eef6e5;
-
-  /* ---- Accents (functional, never decorative) ---------------------------- */
-  --color-turmeric: #f5b81c; /* promo + Spice Fair. forest text = 10.2:1 */
-  --color-turmeric-wash: #fdf1d3;
-  --color-nutmeg: #9e1b32; /* alerts, savings, unavailable. white = 7.9:1 */
-  --color-nutmeg-wash: #fbe9ec;
-  --color-teal: #00918c; /* fulfilment + pickup surfaces (large text only) */
-  --color-teal-ink: #00706c; /* teal at body text sizes. 5.9:1 on paper */
-  --color-teal-wash: #e0f2f1;
-  --color-cocoa: #4b2e20; /* vendor / editorial. white = 7.9:1 */
-  --color-cocoa-wash: #f0e7e0;
-
-  /* ---- Type -------------------------------------------------------------- */
-  --font-display: var(--font-archivo), 'Helvetica Neue', Arial, sans-serif;
-  --font-sans: var(--font-hanken), 'Helvetica Neue', Arial, sans-serif;
-
-  --text-micro: 0.6875rem; /* 11px — uppercase labels only */
-  --text-micro--line-height: 1.2;
-  --text-xs: 0.75rem; /* 12px */
-  --text-xs--line-height: 1.35;
-  --text-sm: 0.8125rem; /* 13px — dense metadata */
-  --text-sm--line-height: 1.4;
-  --text-base: 0.9375rem; /* 15px — interface default */
-  --text-base--line-height: 1.5;
-  --text-md: 1.0625rem; /* 17px */
-  --text-md--line-height: 1.45;
+  --text-micro: 0.6875rem;
+  --text-micro--line-height: 1.25;
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.4;
+  --text-sm: 0.8125rem;
+  --text-sm--line-height: 1.45;
+  --text-base: 0.9375rem; /* interface default */
+  --text-base--line-height: 1.55;
+  --text-md: 1.0625rem;
+  --text-md--line-height: 1.5;
   --text-lg: 1.25rem;
   --text-lg--line-height: 1.25;
   --text-xl: 1.5rem;
-  --text-xl--line-height: 1.15;
-  --text-2xl: 1.875rem;
-  --text-2xl--line-height: 1.08;
-  --text-3xl: 2.5rem;
-  --text-3xl--line-height: 1.02;
+  --text-xl--line-height: 1.12;
+  --text-2xl: 1.9375rem;
+  --text-2xl--line-height: 1.05;
+  --text-3xl: 2.625rem;
+  --text-3xl--line-height: 1;
 
-  /* ---- Radius — modest. Nothing is a pill except status chips ------------- */
-  --radius-chip: 3px;
-  --radius-control: 6px;
-  --radius-card: 10px;
-  --radius-module: 14px;
+  /* ---- Brand palette — unchanged from V1 -------------------------------- */
+  --color-breadfruit: #f7f2e6;
+  --color-forest: #102515;
+  --color-leaf: #2e7d32;
+  --color-leaf-deep: #1f5c23;
+  --color-signal: #5dae35; /* sampled from the supplied logo ground */
+  --color-turmeric: #f5b81c;
+  --color-nutmeg: #9e1b32;
+  --color-teal: #00918c;
+  --color-teal-ink: #00706c; /* teal at body text sizes */
+  --color-cocoa: #4b2e20;
 
-  /* ---- Elevation — used only for things that float above the page --------- */
-  --shadow-pop: 0 2px 8px rgb(16 37 21 / 0.08);
-  --shadow-overlay: 0 12px 40px rgb(16 37 21 / 0.22);
+  /* ---- Semantic surfaces ------------------------------------------------
+     Warm throughout. Pure white is never used: a card is a warmer paper,
+     not a brighter one.                                                     */
+  --color-surface-page: #f7f2e6;
+  --color-surface-card: #fdfaf2;
+  --color-surface-raised: #fffdf8; /* drawers, menus — the only lifted surface */
+  --color-surface-sunk: #f1e9d7; /* image stages, tonal bands */
+  --color-surface-inverse: #102515;
 
-  /* ---- Motion ------------------------------------------------------------ */
-  --ease-out-quick: cubic-bezier(0.22, 0.61, 0.36, 1);
-  --duration-tap: 110ms;
-  --duration-ui: 200ms;
-  --duration-drawer: 260ms;
+  --color-surface-green-soft: #e9f1e4;
+  --color-surface-yellow-soft: #fbf0d4;
+  --color-surface-teal-soft: #e1f1f0;
+  --color-surface-nutmeg-soft: #f9e8ec;
+  --color-surface-cocoa-soft: #f2e9e1;
+
+  /* Kept as aliases so V1 component classes keep resolving. */
+  --color-paper: var(--color-surface-card);
+  --color-paper-sunk: var(--color-surface-sunk);
+
+  /* ---- Borders — three levels, used deliberately ------------------------ */
+  --color-border-subtle: rgb(16 37 21 / 0.13);
+  --color-border-default: rgb(16 37 21 / 0.26);
+  --color-border-strong: rgb(16 37 21 / 0.82);
+  --color-border-inverse: rgb(247 242 230 / 0.22);
+
+  /* V1 aliases. */
+  --color-line: var(--color-border-subtle);
+  --color-line-strong: var(--color-border-default);
+  --color-ink-line: var(--color-border-strong);
+
+  /* ---- Text ------------------------------------------------------------- */
+  --color-text-primary: #102515; /* 14.5:1 on page */
+  --color-text-secondary: #4f5c4e; /* 6.3:1 on page */
+  --color-text-tertiary: #64705e; /* placeholders, was-prices. 4.6:1 on page */
+  --color-text-inverse: #f7f2e6;
+
+  --color-forest-muted: var(--color-text-secondary);
+  --color-forest-faint: var(--color-text-tertiary);
+
+  /* ---- State — meaning, not decoration ---------------------------------- */
+  --color-state-success: #1f5c23;
+  --color-state-warning: #6b4715; /* readable amber ink; Turmeric is a ground */
+  --color-state-danger: #9e1b32;
+  --color-state-info: #00706c;
+
+  /* V1 wash aliases. */
+  --color-leaf-wash: var(--color-surface-green-soft);
+  --color-signal-wash: var(--color-surface-green-soft);
+  --color-turmeric-wash: var(--color-surface-yellow-soft);
+  --color-nutmeg-wash: var(--color-surface-nutmeg-soft);
+  --color-teal-wash: var(--color-surface-teal-soft);
+  --color-cocoa-wash: var(--color-surface-cocoa-soft);
+
+  /* ---- Radius — controls read tighter than modules ---------------------- */
+  --radius-chip: 6px;
+  --radius-control: 9px;
+  --radius-card: 12px;
+  --radius-module: 16px;
+  --radius-pill: 999px;
+
+  /* ---- Elevation — quiet, wide, rare ------------------------------------ */
+  --shadow-raised: 0 1px 2px rgb(16 37 21 / 0.04), 0 10px 26px -14px rgb(16 37 21 / 0.14);
+  --shadow-sticky: 0 1px 0 rgb(16 37 21 / 0.07), 0 10px 24px -20px rgb(16 37 21 / 0.3);
+  --shadow-overlay: 0 24px 64px -22px rgb(16 37 21 / 0.32);
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-tap: 150ms;
+  --duration-ui: 180ms;
+  --duration-drawer: 230ms;
+
+  /* V1 alias. */
+  --ease-out-quick: var(--ease-out-quint);
 }
 
 :root {
-  /* Layout constants that are not Tailwind utilities. */
-  --header-h: 104px; /* mobile header block (logo row + search row) */
+  /* Header geometry. Used by scroll-padding and by every sticky sub-bar, so
+     these must stay in step with the header's real rendered height. */
+  --header-h: 104px;
+  --header-h-compact: 60px;
   --bottom-nav-h: 60px;
-  --shell-max: 1400px;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Content measure. 1440 is the composed desktop width; beyond that the
+     shell holds and the margins grow, so 1920 never looks stretched. */
+  --shell-max: 1440px;
+  --shell-gutter: 16px;
+
+  /* Section rhythm. Mobile is not a scaled-down desktop. */
+  --section-gap: 56px;
+  --section-head-gap: 20px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --shell-gutter: 28px;
+    --section-gap: 76px;
+    --section-head-gap: 28px;
+  }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --header-h: 132px;
+    --header-h: 136px;
+    --header-h-compact: 64px;
     --bottom-nav-h: 0px;
+    --shell-gutter: 40px;
+    --section-gap: 96px;
+    --section-head-gap: 32px;
+  }
+}
+
+@media (min-width: 1600px) {
+  :root {
+    --shell-gutter: 56px;
   }
 }

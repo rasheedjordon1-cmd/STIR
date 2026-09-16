@@ -16,7 +16,7 @@ export function StateGallery() {
   return (
     <div className="flex flex-col gap-8">
       <section>
-        <h3 className="label text-forest-muted border-line mb-3 border-b pb-1.5">Form controls</h3>
+        <h3 className="eyebrow border-border-subtle mb-3 border-b pb-2">Form controls</h3>
         <div className="grid gap-4 md:grid-cols-2">
           <Field label="Text input" hint="Labels are always visible and always associated.">
             {(props) => (
@@ -47,16 +47,16 @@ export function StateGallery() {
       </section>
 
       <section>
-        <h3 className="label text-forest-muted border-line mb-3 border-b pb-1.5">
+        <h3 className="eyebrow border-border-subtle mb-3 border-b pb-2">
           Quantity stepper
         </h3>
         <div className="flex flex-wrap items-end gap-4">
           <div className="w-[160px]">
-            <p className="label text-forest-muted mb-1">Default</p>
+            <p className="text-text-secondary mb-1.5 text-xs font-semibold">Default</p>
             <QuantityStepper quantity={quantity} onChange={setQuantity} label="Parboiled Rice" />
           </div>
           <div className="w-[140px]">
-            <p className="label text-forest-muted mb-1">Compact</p>
+            <p className="text-text-secondary mb-1.5 text-xs font-semibold">Compact</p>
             <QuantityStepper
               quantity={quantity}
               onChange={setQuantity}
@@ -68,7 +68,7 @@ export function StateGallery() {
       </section>
 
       <section>
-        <h3 className="label text-forest-muted border-line mb-3 border-b pb-1.5">Inline notices</h3>
+        <h3 className="eyebrow border-border-subtle mb-3 border-b pb-2">Inline notices</h3>
         <div className="grid gap-2 md:grid-cols-2">
           <Notice tone="info">Add EC$42.00 more to Grand Anse and delivery is free.</Notice>
           <Notice tone="ok">Location saved. Windows below now match this area.</Notice>
@@ -83,7 +83,7 @@ export function StateGallery() {
       </section>
 
       <section>
-        <h3 className="label text-forest-muted border-line mb-3 border-b pb-1.5">
+        <h3 className="eyebrow border-border-subtle mb-3 border-b pb-2">
           Empty, error and loading states
         </h3>
         <div className="grid gap-3 lg:grid-cols-2">
@@ -129,7 +129,7 @@ export function StateGallery() {
         </div>
 
         <div className="mt-3">
-          <p className="label text-forest-muted mb-2">Loading skeleton</p>
+          <p className="text-text-secondary mb-2 text-xs font-semibold">Loading skeleton</p>
           <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
             <ProductCardSkeleton />
             <ProductCardSkeleton />

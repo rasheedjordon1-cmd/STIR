@@ -70,7 +70,7 @@ export function CollectionView({
 
   return (
     <div>
-      <div className="border-line bg-breadfruit sticky top-[var(--header-h)] z-30 -mx-4 mb-4 border-b px-4 py-2.5 md:-mx-6 md:px-6">
+      <div className="border-border-subtle bg-surface-page sticky top-[var(--header-h-compact)] z-30 -mx-[var(--shell-gutter)] mb-5 border-b px-[var(--shell-gutter)] py-3">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
           <p className="num text-sm font-semibold" aria-live="polite">
             {pluralise(visible.length, 'product')}
@@ -88,8 +88,8 @@ export function CollectionView({
                     className={cx(
                       'flex min-h-10 items-center gap-1.5 rounded-[var(--radius-chip)] border px-2.5 text-sm font-semibold transition-colors',
                       on
-                        ? 'border-leaf-deep bg-leaf-wash text-leaf-deep'
-                        : 'border-line-strong bg-paper hover:border-forest',
+                        ? 'border-leaf bg-surface-green-soft text-state-success'
+                        : 'border-border-subtle bg-surface-card hover:border-border-default',
                     )}
                   >
                     <Icon name={refinement.icon} size={15} />
@@ -106,7 +106,7 @@ export function CollectionView({
                     setRefinements([]);
                     setCategory('all');
                   }}
-                  className="text-forest-muted hover:text-forest inline-flex min-h-10 items-center gap-1 px-1 text-sm font-semibold underline underline-offset-4"
+                  className="text-text-secondary hover:text-forest inline-flex min-h-10 items-center gap-1 px-1 text-sm font-semibold underline underline-offset-4"
                 >
                   <Icon name="Close" size={14} />
                   Clear
@@ -118,7 +118,7 @@ export function CollectionView({
           <div className="ml-auto flex items-center gap-2">
             {showCategoryFilter && categoriesPresent.length > 1 ? (
               <label className="flex items-center gap-1.5 text-sm">
-                <span className="label text-forest-muted whitespace-nowrap">Aisle</span>
+                <span className="text-text-secondary text-xs whitespace-nowrap">Aisle</span>
                 <Select
                   value={category}
                   onChange={(event) => setCategory(event.target.value)}
@@ -136,7 +136,7 @@ export function CollectionView({
             ) : null}
 
             <label className="flex items-center gap-1.5 text-sm">
-              <span className="label text-forest-muted whitespace-nowrap">Sort</span>
+              <span className="text-text-secondary text-xs whitespace-nowrap">Sort</span>
               <Select
                 value={sort}
                 onChange={(event) => setSort(event.target.value as SortKey)}
@@ -164,7 +164,7 @@ export function CollectionView({
               setRefinements([]);
               setCategory('all');
             }}
-            className="border-forest bg-paper hover:bg-breadfruit inline-flex min-h-11 items-center rounded-[var(--radius-control)] border px-4 text-base font-semibold"
+            className="border-forest bg-surface-card hover:bg-surface-page inline-flex min-h-11 items-center rounded-[var(--radius-control)] border px-4 text-base font-semibold"
           >
             Clear filters
           </button>

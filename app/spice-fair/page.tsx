@@ -34,7 +34,7 @@ export default function SpiceFairPage() {
       {/* ---- Hero ---------------------------------------------------------- */}
       <section className="bg-forest text-breadfruit on-dark">
         <div className="shell py-10 md:py-16">
-          <p className="label text-turmeric mb-4">
+          <p className="text-turmeric mb-4 text-sm font-semibold">
             {SPICE_FAIR.rhythm} · across Grenada · free entry
           </p>
           <h1 className="display text-[clamp(3rem,15vw,7rem)]">
@@ -56,10 +56,10 @@ export default function SpiceFairPage() {
           </p>
 
           {next ? (
-            <div className="border-breadfruit/25 mt-9 border-t pt-7">
+            <div className="border-border-inverse mt-9 border-t pt-7">
               <div className="grid gap-6 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-10">
                 <div>
-                  <p className="label text-breadfruit/65 mb-2">
+                  <p className="text-breadfruit/70 mb-2 text-sm font-semibold">
                     Next edition · {relativeDay(next.date)}
                   </p>
                   <p className="display text-[clamp(1.75rem,6vw,2.75rem)]">
@@ -106,8 +106,8 @@ export default function SpiceFairPage() {
                   </div>
                 </div>
 
-                <div className="border-breadfruit/25 bg-forest/40 rounded-[var(--radius-card)] border p-4">
-                  <h2 className="label text-turmeric mb-2.5">The rhythm</h2>
+                <div className="border-border-inverse bg-forest/40 rounded-[var(--radius-card)] border p-4">
+                  <h2 className="text-turmeric mb-2.5 text-sm font-semibold">The rhythm</h2>
                   <ul className="list-none space-y-2.5 text-sm">
                     {[
                       ['Every 1st and 3rd Saturday', 'Two editions a month, all year.'],
@@ -171,13 +171,13 @@ export default function SpiceFairPage() {
       </Section>
 
       {/* ---- Pickup -------------------------------------------------------- */}
-      <section id="pickup" className="bg-turmeric-wash border-ink-line border-y-2">
+      <section id="pickup" className="bg-surface-yellow-soft border-border-default border-y-2">
         <div className="shell py-10">
           <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)] lg:gap-12">
             <div>
-              <p className="label text-cocoa mb-2">Shop online. Pick up. Celebrate together.</p>
+              <p className="text-state-warning mb-2 text-sm font-semibold">Shop online. Pick up. Celebrate together.</p>
               <h2 className="text-2xl md:text-3xl">Collect an order at the fair</h2>
-              <p className="text-forest-muted mt-3 max-w-md">
+              <p className="text-text-secondary mt-3 max-w-md">
                 Do your weekly shop online during the week, then collect it from the tent at the
                 gate while you walk the stalls. No delivery fee, no waiting at home for a van.
               </p>
@@ -217,7 +217,7 @@ export default function SpiceFairPage() {
               ].map((step, index) => (
                 <li
                   key={step.title}
-                  className="border-cocoa/25 bg-paper flex gap-3 rounded-[var(--radius-card)] border p-3.5"
+                  className="border-cocoa/25 bg-surface-card flex gap-3 rounded-[var(--radius-card)] border p-3.5"
                 >
                   <span className="bg-turmeric text-forest font-display num flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold">
                     {index + 1}
@@ -227,7 +227,7 @@ export default function SpiceFairPage() {
                       <Icon name={step.icon} size={17} />
                       {step.title}
                     </h3>
-                    <p className="text-forest-muted mt-0.5 text-sm">{step.detail}</p>
+                    <p className="text-text-secondary mt-0.5 text-sm">{step.detail}</p>
                   </div>
                 </li>
               ))}
@@ -245,11 +245,11 @@ export default function SpiceFairPage() {
               {next.programming.map((item) => (
                 <li
                   key={item.title}
-                  className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-3.5"
+                  className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-3.5"
                 >
-                  <Icon name={item.icon as IconName} size={24} className="text-leaf-deep mb-2.5" />
+                  <Icon name={item.icon as IconName} size={24} className="text-state-success mb-2.5" />
                   <h3 className="text-md">{item.title}</h3>
-                  <p className="text-forest-muted mt-1 text-sm">{item.detail}</p>
+                  <p className="text-text-secondary mt-1 text-sm">{item.detail}</p>
                 </li>
               ))}
             </ul>
@@ -279,7 +279,7 @@ export default function SpiceFairPage() {
           <div className="grid gap-7 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] lg:gap-12">
             <div>
               <SectionHead eyebrow="Trade with us" title="Become a vendor" className="mb-3" />
-              <p className="text-forest-muted">
+              <p className="text-text-secondary">
                 Stall allocation runs about three weeks ahead of each edition. Priority goes to
                 Grenadian growers, makers and cooks — particularly anyone who has not had a retail
                 outlet before.
@@ -291,13 +291,13 @@ export default function SpiceFairPage() {
                   'Vendors who sell well at the fair can be listed on the Local shelf online.',
                 ].map((item) => (
                   <li key={item} className="flex gap-2">
-                    <Icon name="Check" size={16} className="text-leaf-deep mt-0.5 shrink-0" />
+                    <Icon name="Check" size={16} className="text-state-success mt-0.5 shrink-0" />
                     {item}
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-4">
+            <div className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-4">
               <VendorInterest />
             </div>
           </div>
@@ -312,7 +312,7 @@ export default function SpiceFairPage() {
             {SPICE_FAIR_FAQ.map((item) => (
               <details
                 key={item.q}
-                className="border-line-strong bg-paper group rounded-[var(--radius-card)] border"
+                className="border-border-subtle bg-surface-card group rounded-[var(--radius-card)] border"
               >
                 <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-3 px-3.5 py-3 font-bold">
                   {item.q}
@@ -322,7 +322,7 @@ export default function SpiceFairPage() {
                     className="shrink-0 transition-transform group-open:rotate-180"
                   />
                 </summary>
-                <p className="text-forest-muted border-line border-t px-3.5 py-3 text-sm">
+                <p className="text-text-secondary border-border-subtle border-t px-3.5 py-3 text-sm">
                   {item.a}
                 </p>
               </details>
@@ -364,11 +364,11 @@ export default function SpiceFairPage() {
       </Section>
 
       {/* ---- Back to shopping ---------------------------------------------- */}
-      <section className="border-ink-line bg-signal-wash border-t-2">
+      <section className="border-border-default bg-surface-green-soft border-t-2">
         <div className="shell flex flex-wrap items-center justify-between gap-4 py-8">
           <div>
             <h2 className="text-xl">The fair is the other half of the shop</h2>
-            <p className="text-forest-muted mt-1 max-w-lg text-sm">
+            <p className="text-text-secondary mt-1 max-w-lg text-sm">
               You never need to understand the fair to buy groceries. But if you shop the Local
               shelf during the week, you are already buying from the people standing behind these
               tables.
@@ -380,7 +380,7 @@ export default function SpiceFairPage() {
             </ButtonLink>
             <Link
               href="/"
-              className="text-forest-muted hover:text-forest inline-flex min-h-12 items-center text-sm font-semibold underline underline-offset-4"
+              className="text-text-secondary hover:text-forest inline-flex min-h-12 items-center text-sm font-semibold underline underline-offset-4"
             >
               Back to shopping
             </Link>

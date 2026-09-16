@@ -27,12 +27,12 @@ export function ProductBuyBox({ product }: { product: Product }) {
 
   if (soldOut) {
     return (
-      <div className="border-nutmeg/40 bg-nutmeg-wash rounded-[var(--radius-card)] border p-3">
+      <div className="border-nutmeg/40 bg-surface-nutmeg-soft rounded-[var(--radius-card)] border p-3">
         <p className="flex items-center gap-2 text-base font-bold">
           <Icon name="OutOfStock" size={19} />
           Out of stock
         </p>
-        <p className="text-forest-muted mt-1 text-sm">
+        <p className="text-text-secondary mt-1 text-sm">
           This line is not available right now. Nothing is backordered in the prototype, and we do
           not take payment for stock we do not hold.
         </p>
@@ -53,7 +53,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
           </div>
           <p className="num text-sm font-semibold">
             {formatMoney({ amount: effectiveLinePrice(product, inCart), currency: 'XCD' })}
-            <span className="text-forest-muted block text-xs font-medium">in your basket</span>
+            <span className="text-text-secondary block text-xs font-medium">in your basket</span>
           </p>
         </div>
         <Button intent="secondary" block size="lg" icon="Cart" onClick={openCart}>
@@ -66,14 +66,14 @@ export function ProductBuyBox({ product }: { product: Product }) {
   return (
     <div className="flex flex-col gap-2.5 sm:flex-row sm:items-center">
       <div className="sm:w-[160px]">
-        <label className="label text-forest-muted mb-1 block">Quantity</label>
-        <div className="border-forest flex h-12 items-stretch overflow-hidden rounded-[var(--radius-control)] border-2">
+        <label className="text-text-secondary mb-1.5 block text-sm font-semibold">Quantity</label>
+        <div className="border-border-strong flex h-12 items-stretch overflow-hidden rounded-[var(--radius-control)] border">
           <button
             type="button"
             onClick={() => setDraft((q) => Math.max(1, q - 1))}
             disabled={draft <= 1}
             aria-label="Decrease quantity"
-            className="hover:bg-breadfruit flex w-12 shrink-0 items-center justify-center disabled:opacity-35"
+            className="hover:bg-surface-page flex w-12 shrink-0 items-center justify-center transition-colors duration-[var(--duration-tap)] active:translate-y-px disabled:opacity-35"
           >
             <Icon name="QuantityDecrease" size={19} />
           </button>
@@ -84,7 +84,7 @@ export function ProductBuyBox({ product }: { product: Product }) {
             type="button"
             onClick={() => setDraft((q) => Math.min(99, q + 1))}
             aria-label="Increase quantity"
-            className="hover:bg-breadfruit flex w-12 shrink-0 items-center justify-center"
+            className="hover:bg-surface-page flex w-12 shrink-0 items-center justify-center"
           >
             <Icon name="QuantityIncrease" size={19} />
           </button>

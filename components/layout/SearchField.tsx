@@ -105,12 +105,13 @@ export function SearchField({
         </label>
         <div
           className={cx(
-            'border-forest bg-paper flex items-center gap-2 rounded-[var(--radius-control)] border-2 pr-1 pl-3',
-            'focus-within:outline-forest focus-within:outline-2 focus-within:outline-offset-2',
+            'border-border-default bg-surface-card flex items-center gap-2.5 rounded-[var(--radius-control)] border pr-1 pl-3.5',
+            'transition-colors duration-[var(--duration-tap)] hover:border-border-strong',
+            'focus-within:border-forest focus-within:outline-forest focus-within:outline-2 focus-within:outline-offset-2',
             size === 'lg' ? 'min-h-12' : 'min-h-11',
           )}
         >
-          <Icon name="Search" size={19} className="text-forest-muted shrink-0" />
+          <Icon name="Search" size={19} className="text-text-secondary shrink-0" />
           <input
             id={`${listId}-input`}
             type="search"
@@ -132,7 +133,7 @@ export function SearchField({
           />
           <button
             type="submit"
-            className="bg-leaf text-paper hover:bg-leaf-deep inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[4px] px-3 text-sm font-semibold"
+            className="bg-leaf text-surface-card hover:bg-leaf-deep inline-flex h-9 shrink-0 items-center gap-1.5 rounded-[6px] px-3.5 text-sm font-semibold transition-[background-color,transform] duration-[var(--duration-tap)] active:translate-y-px"
           >
             <Icon name="Search" size={16} />
             <span className="sr-only sm:not-sr-only">Search</span>
@@ -145,7 +146,7 @@ export function SearchField({
           id={listId}
           role="listbox"
           aria-label="Product suggestions"
-          className="border-ink-line bg-paper absolute top-[calc(100%+6px)] right-0 left-0 z-50 overflow-hidden rounded-[var(--radius-control)] border-2 shadow-[var(--shadow-pop)]"
+          className="border-border-default bg-surface-raised absolute top-[calc(100%+6px)] right-0 left-0 z-50 overflow-hidden rounded-[var(--radius-card)] border shadow-[var(--shadow-raised)]"
         >
           {suggestions.map((product, index) => (
             <li key={product.id} role="none">
@@ -160,12 +161,12 @@ export function SearchField({
                   setOpen(false);
                 }}
                 className={cx(
-                  'border-line flex w-full items-baseline gap-2 border-b px-3 py-2.5 text-left last:border-b-0',
-                  index === active ? 'bg-leaf-wash' : 'bg-paper',
+                  'border-border-subtle flex w-full items-baseline gap-2 border-b px-3.5 py-2.5 text-left last:border-b-0',
+                  index === active ? 'bg-surface-green-soft' : 'bg-transparent',
                 )}
               >
                 <span className="truncate text-sm font-semibold">{product.title}</span>
-                <span className="text-forest-muted ml-auto shrink-0 text-xs">{product.vendor}</span>
+                <span className="text-text-secondary ml-auto shrink-0 text-xs">{product.vendor}</span>
               </button>
             </li>
           ))}
@@ -173,7 +174,7 @@ export function SearchField({
             <button
               type="button"
               onClick={() => go(value.trim())}
-              className="bg-paper-sunk hover:bg-breadfruit w-full px-3 py-2.5 text-left text-sm font-semibold"
+              className="bg-surface-sunk hover:bg-surface-page w-full px-3.5 py-2.5 text-left text-sm font-semibold"
             >
               See all results for “{value.trim()}”
             </button>

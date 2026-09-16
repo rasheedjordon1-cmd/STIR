@@ -66,7 +66,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
     <>
       <div className="shell">
         <nav aria-label="Breadcrumb" className="py-3">
-          <ol className="text-forest-muted flex list-none flex-wrap items-center gap-1 text-sm">
+          <ol className="text-text-secondary flex list-none flex-wrap items-center gap-1 text-sm">
             <li>
               <Link href="/" className="hover:text-forest hover:underline">
                 Home
@@ -105,13 +105,13 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
               {vendor ? (
                 <Link
                   href={`/search?q=${encodeURIComponent(vendor.name)}`}
-                  className="text-leaf-deep inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 hover:underline"
+                  className="text-state-success inline-flex items-center gap-1.5 text-sm font-semibold underline-offset-4 hover:underline"
                 >
                   <Icon name="Vendor" size={15} />
                   {product.vendor}
                 </Link>
               ) : (
-                <p className="text-forest-muted text-sm font-semibold">{product.vendor}</p>
+                <p className="text-text-secondary text-sm font-semibold">{product.vendor}</p>
               )}
 
               <h1 className="mt-1 text-2xl md:text-3xl">{product.title}</h1>
@@ -121,7 +121,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
               </div>
 
               {product.multibuy ? (
-                <p className="bg-turmeric-wash border-cocoa/30 num mt-2.5 inline-flex items-center gap-2 rounded-[var(--radius-chip)] border px-2.5 py-1.5 text-sm font-bold">
+                <p className="bg-surface-yellow-soft border-cocoa/30 num mt-2.5 inline-flex items-center gap-2 rounded-[var(--radius-chip)] border px-2.5 py-1.5 text-sm font-bold">
                   <Icon name="Discount" size={15} />
                   {product.multibuy.label} — applied automatically in the basket
                 </p>
@@ -129,7 +129,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
 
               <p
                 className={`mt-2.5 flex items-center gap-1.5 text-sm font-semibold ${
-                  stock ? (product.inventoryStatus === 'out-of-stock' ? 'text-nutmeg' : 'text-cocoa') : 'text-leaf-deep'
+                  stock ? (product.inventoryStatus === 'out-of-stock' ? 'text-state-danger' : 'text-cocoa') : 'text-state-success'
                 }`}
               >
                 <Icon name={stock?.icon ?? 'Check'} size={16} />
@@ -143,10 +143,10 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
 
             <p className="text-md">{product.description}</p>
 
-            <dl className="border-line-strong grid grid-cols-2 gap-x-4 rounded-[var(--radius-card)] border p-3 text-sm sm:grid-cols-3">
+            <dl className="border-border-subtle grid grid-cols-2 gap-x-4 rounded-[var(--radius-card)] border p-3 text-sm sm:grid-cols-3">
               {details.map((detail) => (
-                <div key={detail.label} className="border-line border-b py-1.5 last:border-b-0 sm:border-b-0">
-                  <dt className="label text-forest-muted">{detail.label}</dt>
+                <div key={detail.label} className="border-border-subtle border-b py-1.5 last:border-b-0 sm:border-b-0">
+                  <dt className="text-text-secondary text-xs font-semibold">{detail.label}</dt>
                   <dd className="font-semibold">{detail.value}</dd>
                 </div>
               ))}
@@ -196,7 +196,7 @@ export default async function ProductPage({ params }: { params: Promise<{ handle
 
 function Detail({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <details className="border-line-strong bg-paper group rounded-[var(--radius-card)] border">
+    <details className="border-border-subtle bg-surface-card group rounded-[var(--radius-card)] border">
       <summary className="flex min-h-11 cursor-pointer items-center justify-between gap-3 px-3 py-2.5 text-sm font-bold">
         {title}
         <Icon
@@ -205,7 +205,7 @@ function Detail({ title, children }: { title: string; children: React.ReactNode 
           className="shrink-0 transition-transform group-open:rotate-180"
         />
       </summary>
-      <p className="text-forest-muted border-line border-t px-3 py-2.5 text-sm">{children}</p>
+      <p className="text-text-secondary border-border-subtle border-t px-3 py-2.5 text-sm">{children}</p>
     </details>
   );
 }

@@ -35,10 +35,10 @@ export function CartLineRow({ line, compact = false }: { line: ResolvedLine; com
         : `the ${collectable ? collectable.area : 'Spice Fair'} fair`;
 
   return (
-    <li className="border-line flex gap-3 border-b py-3 last:border-b-0">
+    <li className="border-border-subtle flex gap-3 border-b py-3 last:border-b-0">
       <Link
         href={`/product/${product.handle}`}
-        className="bg-paper-sunk border-line shrink-0 overflow-hidden rounded-[6px] border"
+        className="bg-surface-sunk border-border-subtle shrink-0 overflow-hidden rounded-[6px] border"
       >
         <ProductArt
           image={product.images[0]}
@@ -50,20 +50,20 @@ export function CartLineRow({ line, compact = false }: { line: ResolvedLine; com
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
-            <p className="text-forest-muted truncate text-xs font-semibold">{product.vendor}</p>
+            <p className="text-text-secondary truncate text-xs font-semibold">{product.vendor}</p>
             <h3 className="text-sm leading-snug font-semibold">
               <Link href={`/product/${product.handle}`} className="hover:underline">
                 {product.title}
               </Link>
             </h3>
-            <p className="text-forest-muted num text-xs">{product.unit}</p>
+            <p className="text-text-secondary num text-xs">{product.unit}</p>
           </div>
           <div className="shrink-0 text-right">
             <p className="num text-md font-display font-bold">
               {formatMoney({ amount: total, currency: 'XCD' })}
             </p>
             {saving ? (
-              <p className="num text-nutmeg text-xs font-semibold">
+              <p className="num text-state-danger text-xs font-semibold">
                 Multibuy −{formatMoney(saving)}
               </p>
             ) : null}
@@ -71,7 +71,7 @@ export function CartLineRow({ line, compact = false }: { line: ResolvedLine; com
         </div>
 
         {soldOut ? (
-          <p className="text-nutmeg flex items-center gap-1 text-xs font-semibold">
+          <p className="text-state-danger flex items-center gap-1 text-xs font-semibold">
             <Icon name="OutOfStock" size={13} />
             Out of stock — remove to check out
           </p>
@@ -94,7 +94,7 @@ export function CartLineRow({ line, compact = false }: { line: ResolvedLine; com
           <button
             type="button"
             onClick={() => setQuantity(product.id, 0)}
-            className="text-forest-muted hover:text-nutmeg inline-flex min-h-9 items-center gap-1 px-1 text-xs font-semibold underline-offset-4 hover:underline"
+            className="text-text-secondary hover:text-state-danger inline-flex min-h-9 items-center gap-1 px-1 text-xs font-semibold underline-offset-4 hover:underline"
           >
             <Icon name="Remove" size={14} />
             Remove

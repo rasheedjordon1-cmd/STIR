@@ -65,10 +65,10 @@ export default function DeliveryPage() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="border-line-strong bg-paper rounded-[var(--radius-control)] border px-3 py-2"
+              className="border-border-subtle bg-surface-card rounded-[var(--radius-control)] border px-3 py-2"
             >
               <p className="num font-display text-xl font-bold">{stat.value}</p>
-              <p className="label text-forest-muted">{stat.label}</p>
+              <p className="text-text-secondary text-xs font-semibold">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -76,18 +76,18 @@ export default function DeliveryPage() {
 
       <div className="shell pb-10">
         <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.7fr)] lg:gap-8">
-          <aside className="border-ink-line bg-paper rounded-[var(--radius-card)] border-2 p-4 lg:sticky lg:top-[calc(var(--header-h)+16px)]">
-            <h2 className="label text-forest-muted border-line mb-2.5 border-b pb-2">
+          <aside className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-4 lg:sticky lg:top-[calc(var(--header-h)+16px)]">
+            <h2 className="label text-text-secondary border-border-subtle mb-2.5 border-b pb-2">
               Your selection
             </h2>
             <p className="font-display text-xl font-bold tracking-tight">{zone.area}</p>
-            <p className="text-forest-muted text-sm">{zone.parish}</p>
+            <p className="text-text-secondary text-sm">{zone.parish}</p>
             <div className="mt-2.5">
               <ServiceStatusPill zone={zone} withDetail />
             </div>
-            {zone.note ? <p className="text-forest-muted mt-2.5 text-sm">{zone.note}</p> : null}
+            {zone.note ? <p className="text-text-secondary mt-2.5 text-sm">{zone.note}</p> : null}
 
-            <div className="border-line mt-4 border-t pt-4">
+            <div className="border-border-subtle mt-4 border-t pt-4">
               <FulfillmentPicker />
             </div>
 
@@ -131,7 +131,7 @@ export default function DeliveryPage() {
               <div className="flex flex-col gap-5">
                 {groups.map((group) => (
                   <div key={group.parish}>
-                    <h3 className="label text-forest-muted border-ink-line mb-2 border-b-2 pb-1.5">
+                    <h3 className="label text-text-secondary border-border-default mb-2 border-b-2 pb-1.5">
                       {group.parish}
                     </h3>
                     <ul className="grid list-none gap-2 sm:grid-cols-2">
@@ -147,8 +147,8 @@ export default function DeliveryPage() {
                               className={cx(
                                 'w-full rounded-[var(--radius-card)] border p-3 text-left transition-colors',
                                 selected
-                                  ? 'border-leaf-deep bg-leaf-wash border-2'
-                                  : 'border-line-strong bg-paper hover:border-forest',
+                                  ? 'border-leaf bg-surface-green-soft border-2'
+                                  : 'border-border-subtle bg-surface-card hover:border-border-default',
                               )}
                             >
                               <div className="flex items-start justify-between gap-2">
@@ -164,14 +164,14 @@ export default function DeliveryPage() {
                               </div>
                               <dl className="mt-2 space-y-0.5 text-sm">
                                 <div className="flex gap-1.5">
-                                  <dt className="text-forest-muted shrink-0">
+                                  <dt className="text-text-secondary shrink-0">
                                     {z.serviceStatus === 'delivery-available' ? 'Window' : 'Nearest'}
                                   </dt>
                                   <dd className="min-w-0 font-semibold">{copy.detail}</dd>
                                 </div>
                                 {z.deliveryFee ? (
                                   <div className="flex gap-1.5">
-                                    <dt className="text-forest-muted shrink-0">Fee</dt>
+                                    <dt className="text-text-secondary shrink-0">Fee</dt>
                                     <dd className="num font-semibold">
                                       {formatMoney(z.deliveryFee)}
                                       {z.freeDeliveryThreshold
@@ -182,7 +182,7 @@ export default function DeliveryPage() {
                                 ) : null}
                               </dl>
                               {z.note ? (
-                                <p className="text-forest-muted mt-1.5 text-xs">{z.note}</p>
+                                <p className="text-text-secondary mt-1.5 text-xs">{z.note}</p>
                               ) : null}
                             </button>
                           </li>
@@ -200,12 +200,12 @@ export default function DeliveryPage() {
                 {collectionPoints.map((point) => (
                   <li
                     key={point}
-                    className="border-line-strong bg-paper flex items-start gap-2.5 rounded-[var(--radius-card)] border p-3"
+                    className="border-border-subtle bg-surface-card flex items-start gap-2.5 rounded-[var(--radius-card)] border p-3"
                   >
-                    <Icon name="StorePickup" size={20} className="text-teal-ink mt-0.5 shrink-0" />
+                    <Icon name="StorePickup" size={20} className="text-state-info mt-0.5 shrink-0" />
                     <div>
                       <p className="text-sm font-bold">{point}</p>
-                      <p className="text-forest-muted text-sm">
+                      <p className="text-text-secondary text-sm">
                         Ready within 4 hours during opening times. No fee.
                       </p>
                     </div>
@@ -213,12 +213,12 @@ export default function DeliveryPage() {
                 ))}
               </ul>
 
-              <div className="border-cocoa/30 bg-turmeric-wash mt-3 rounded-[var(--radius-card)] border p-3.5">
+              <div className="border-cocoa/30 bg-surface-yellow-soft mt-3 rounded-[var(--radius-card)] border p-3.5">
                 <h3 className="flex items-center gap-2 text-md">
                   <Icon name="SpiceFairPickup" size={20} />
                   Spice Fair collection
                 </h3>
-                <p className="text-forest-muted mt-1.5 text-sm">
+                <p className="text-text-secondary mt-1.5 text-sm">
                   At editions with a collection tent you can pick an order up at the fair.{' '}
                   {collectable
                     ? `Collection is open now for ${formatEventDate(collectable.date)} at ${collectable.venue}, and closes ${FULFILLMENT.spiceFairCutoffHours} hours before doors.`

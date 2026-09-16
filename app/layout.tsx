@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Archivo, Hanken_Grotesk } from 'next/font/google';
+import { Hanken_Grotesk, Instrument_Sans } from 'next/font/google';
 import { AppShell } from '@/components/layout/AppShell';
 import { Footer } from '@/components/layout/Footer';
 import { Providers } from '@/components/providers/Providers';
@@ -7,13 +7,18 @@ import { BRAND } from '@/data/config';
 import { getCollectableEvent, getNextEvent } from '@/data/events';
 import '@/styles/globals.css';
 
-/* Display: a tight grotesk for brand moments and headings.
-   Interface: a warm humanist grotesk that holds up at 13–15px on cheap
-   phone screens. Both expose tabular figures, used on every price. */
-const archivo = Archivo({
+/* Display: Instrument Sans, loaded as a variable font so weights between 600
+   and 700 are available. Its softer, slightly humanist forms sit far closer to
+   the logo's rounded, organic "S" than Archivo's rectangular extra-bold did.
+   This is the prototype stand-in for FK Grotesk Neue — see --font-display in
+   styles/tokens.css, which is ordered so the licensed files supersede it with
+   no component changes.
+
+   Interface: Hanken Grotesk, unchanged. It holds up at 13–15px on inexpensive
+   phone screens, which is where most of this catalogue will be read. */
+const instrument = Instrument_Sans({
   subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-archivo',
+  variable: '--font-instrument',
   display: 'swap',
 });
 
@@ -61,7 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const fair = { next: getNextEvent(now), collectable: getCollectableEvent(now) };
 
   return (
-    <html lang="en-GD" className={`${archivo.variable} ${hanken.variable}`}>
+    <html lang="en-GD" className={`${instrument.variable} ${hanken.variable}`}>
       <body>
         <a
           href="#main"

@@ -177,28 +177,90 @@ point `mock.ts` at a different source — the adapter is the only thing that rea
 
 ---
 
-## Design system
+## Design system — Visual System V2
 
-**Grenadian marketplace modernism × mobile commerce utility.** Warm paper surfaces,
-Forest ink, decisive rules, compact product cards, flat colour, almost no shadow.
+**Island utility modernism.** National commerce infrastructure with neighbourhood-market
+warmth: soft enough to feel homegrown, structured enough to feel dependable, modern
+enough to feel like national infrastructure.
 
-- **Brand** — the supplied logo is authoritative. `scripts/derive-brand-assets.mjs`
-  crops it to its own clear space and separates the ink from its green ground to produce
-  light, dark and symbol-only treatments. Nothing is redrawn, distorted or outlined.
-  Re-run with `npm run brand:derive`.
-- **Signal Green `#5DAE35`** is sampled from the supplied artwork. It is a *ground*, not a
-  text colour: Paper on it measures 2.71 and is never used. Forest on it measures 5.84.
-- **Type** — Archivo for display and headings (tight tracking), Hanken Grotesk for the
-  interface. Prices, quantities and dates use tabular figures everywhere.
+V2 is a system-level refinement of a working V1, not a redesign. The information
+architecture, routes, data and every functional interaction are unchanged.
+
+### Typography — two roles
+
+| Token | Face | Carries |
+| --- | --- | --- |
+| `--font-display` | Instrument Sans (variable) | Brand moments, headings, prices, dates |
+| `--font-ui` | Hanken Grotesk | Body, navigation, buttons, search, product data, forms, cart, account, metadata |
+
+V1 used Archivo ExtraBold for display, which read as industrial and rectangular and
+fought the logo's rounded, organic "S". Instrument Sans at 700 with −0.04em tracking
+keeps the decisive scale but is softer and more commerce-friendly.
+
+**FK Grotesk Neue upgrade path:** `--font-display` is ordered
+`"FK Grotesk Neue", "Instrument Sans", …`. Drop licensed FK Grotesk Neue files into
+`/public/fonts`, add an `@font-face` block, and the whole system switches with **no
+component changes**. No licensed font is bundled today — Instrument Sans is served from
+Google Fonts via `next/font`.
+
+Uppercase is now reserved for labels that behave like signage. Section eyebrows, badges
+and metadata are sentence case — V1 made almost all of them uppercase, which turned
+emphasis into texture.
+
+### Surface and border hierarchy
+
+Three levels, because V1 outlined almost everything and a passive group of text weighed
+the same as the basket:
+
+| Level | Used for | Treatment |
+| --- | --- | --- |
+| **1 — Open content** | Section intros, editorial copy, maker stories, steps | No border. Spacing and typography only. |
+| **2 — Soft surface** | Product, category and event cards, informational modules | Warm surface, hairline at Forest 13%, `--radius-card`, no shadow at rest |
+| **3 — Active / operational** | Search, location, delivery module, fulfilment picker, basket, checkout | Stronger border, contained behaviour, visible focus, selective elevation |
+
+Border tokens: `--border-subtle` (Forest 13%), `--border-default` (26%),
+`--border-strong` (82%). Radii: chip 6, control 9, card 12, module 16.
+
+### Colour
+
+Palette unchanged. What is new is a semantic layer derived from it —
+`--surface-*`, `--border-*`, `--text-*`, `--state-*` — so components name meaning rather
+than hue. Roughly 70% warm neutral, 20% Forest structure, 8% Leaf commerce, 2% Turmeric /
+Nutmeg / Teal. Accents are never distributed evenly:
+
+- **Green** — commerce, availability, primary action
+- **Turmeric** — Spice Fair, timely notices
+- **Nutmeg** — deals, urgency, destructive
+- **Teal** — service and fulfilment information
+- **Cocoa** — heritage and food-supporting moments
+
+Nothing is pure white or pure black. Signal Green and Turmeric are *grounds* — they carry
+Forest ink, never light text; each has a paired `--state-*` ink for body copy.
+
+### Motion
+
+`--duration-tap` 150ms, `--duration-ui` 180ms, `--duration-drawer` 230ms, all on
+`cubic-bezier(0.22, 1, 0.36, 1)`. Every control settles 1px on press. Motion acknowledges
+an action; it never performs. All of it opts out under `prefers-reduced-motion`.
+
+### Brand
+
+The supplied logo is authoritative. `scripts/derive-brand-assets.mjs` crops it to its own
+clear space and separates the ink from its green ground to produce light, dark and
+symbol-only treatments. Nothing is redrawn, distorted or outlined. Re-run with
+`npm run brand:derive`.
+
+- **Signal Green `#5DAE35`** is sampled from the supplied artwork.
 - **Icons** — 59 custom SVGs on one grammar: 24px box, 1.75 stroke, round caps,
-  `currentColor`, no fills, silhouette first. No libraries, no emoji.
-- **Product artwork** — there is no product photography, and inventing photorealistic
-  shots would misrepresent an assortment that does not exist. Instead each product renders
-  a flat packaging graphic from its motif and one palette tint: honest about being
-  prototype content, and dense enough to scan in a grid.
+  `currentColor`. 16px for compact metadata, 20px for controls, 24px for navigation,
+  28–32px for category anchors.
+- **Product artwork** — flat packaging graphics generated from a motif and one palette
+  tint. There is no product photography, and inventing photorealistic shots would
+  misrepresent an assortment that does not exist yet.
 
-`/system` shows all of it, including **measured** contrast ratios computed at render time
-rather than asserted in a comment.
+`/system` documents all of it, including **measured** contrast ratios computed at render
+time and a **V1 → V2** comparison built from static specimens rather than duplicated
+production components.
 
 ### Accessibility
 

@@ -6,10 +6,12 @@ import { cx } from '@/lib/cx';
 import type { SpiceFairEvent } from '@/types';
 
 /* ==========================================================================
-   EventCard
-   One edition of the fair. Collection status is stated on every card,
-   because "can I collect my order here?" is the question that connects the
-   event back to the shop.
+   EventCard — V2
+   The date is the subject, set at display scale. V1 gave the edition number,
+   the date, the venue and the time four near-equal rows, which made an event
+   read like a product. Here the date leads, the venue supports it, and
+   collection status — the thing that connects the fair back to the shop — is
+   the only badge.
    ========================================================================== */
 
 export function EventCard({
@@ -26,18 +28,18 @@ export function EventCard({
   return (
     <article
       className={cx(
-        'flex h-full flex-col rounded-[var(--radius-card)] border p-3.5 transition-colors',
+        'group flex h-full flex-col rounded-[var(--radius-card)] p-4 transition-colors duration-[var(--duration-ui)]',
         tone === 'dark'
-          ? 'border-breadfruit/25 bg-forest text-breadfruit hover:border-turmeric'
-          : 'border-line-strong bg-paper hover:border-forest',
-        past && 'opacity-75',
+          ? 'border-border-inverse hover:border-turmeric/60 border'
+          : 'bg-surface-card border-border-subtle hover:border-border-default border',
+        past && 'opacity-70',
         className,
       )}
     >
-      <div className="mb-2.5 flex items-start justify-between gap-2">
-        <div>
-          <p className="label opacity-70">Edition {event.edition}</p>
-          <p className="font-display mt-0.5 text-lg leading-tight font-bold tracking-tight">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-xs font-semibold opacity-70">Edition {event.edition}</p>
+          <p className="font-display mt-1 text-xl leading-[1.05] font-bold tracking-[-0.035em]">
             {formatEventDate(event.date)}
           </p>
         </div>
@@ -55,7 +57,7 @@ export function EventCard({
       <dl className="flex flex-col gap-1.5 text-sm">
         <div className="flex items-start gap-2">
           <dt className="sr-only">Venue</dt>
-          <Icon name="LocationPin" size={16} className="mt-0.5 shrink-0 opacity-70" />
+          <Icon name="LocationPin" size={16} className="mt-0.5 shrink-0 opacity-60" />
           <dd>
             {event.venue}
             <span className="block opacity-70">
@@ -65,22 +67,26 @@ export function EventCard({
         </div>
         <div className="flex items-center gap-2">
           <dt className="sr-only">Time</dt>
-          <Icon name="Clock" size={16} className="shrink-0 opacity-70" />
+          <Icon name="Clock" size={16} className="shrink-0 opacity-60" />
           <dd className="num">{formatTimeRange(event.startTime, event.endTime)}</dd>
         </div>
       </dl>
 
-      <div className="mt-auto flex items-center justify-between gap-2 pt-3">
-        <span className="label opacity-70">{relativeDay(event.date)}</span>
+      <div className="mt-auto flex items-center justify-between gap-2 pt-4">
+        <span className="text-xs font-semibold opacity-70">{relativeDay(event.date)}</span>
         <Link
           href={`/spice-fair/${event.id}`}
           className={cx(
             'inline-flex min-h-9 items-center gap-1 text-sm font-semibold underline-offset-4 hover:underline',
-            tone === 'dark' ? 'text-turmeric' : 'text-leaf-deep',
+            tone === 'dark' ? 'text-turmeric' : 'text-state-success',
           )}
         >
           {past ? 'See what happened' : 'Event details'}
-          <Icon name="ChevronRight" size={15} />
+          <Icon
+            name="ChevronRight"
+            size={15}
+            className="transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out-quint)] group-hover:translate-x-0.5"
+          />
         </Link>
       </div>
     </article>

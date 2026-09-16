@@ -10,7 +10,7 @@ const BASE = process.env.BASE_URL ?? 'http://localhost:3000';
 const ROUTES = ['/', '/search?q=rice', '/category/groceries', '/category/local', '/category/deals',
   '/product/parboiled-rice-10lb', '/product/ice-bag-5kg', '/cart', '/delivery', '/account',
   '/account/orders', '/rewards', '/spice-fair', '/spice-fair/sf-2026-10-03', '/system', '/nope'];
-const WIDTHS = [375, 430, 768, 1280, 1440];
+const WIDTHS = [375, 430, 768, 1024, 1280, 1440, 1920];
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 const ctx = await browser.newContext();
 const page = await ctx.newPage();

@@ -7,7 +7,7 @@ export function Skeleton({ className }: { className?: string }) {
 
 export function ProductCardSkeleton() {
   return (
-    <div className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-2.5">
+    <div className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-2.5">
       <Skeleton className="mb-3 aspect-square w-full rounded-[6px]" />
       <Skeleton className="mb-2 h-3 w-1/2" />
       <Skeleton className="mb-1.5 h-3.5 w-full" />

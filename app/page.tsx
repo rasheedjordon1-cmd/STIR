@@ -7,7 +7,7 @@ import { LocalShelf } from '@/components/home/LocalShelf';
 import { ProductModule } from '@/components/home/ProductModule';
 import { SpiceFairFeature } from '@/components/home/SpiceFairFeature';
 import { TrustStrip } from '@/components/home/TrustStrip';
-import { Notice } from '@/components/ui/Notice';
+import { Icon } from '@/components/icons';
 import { HOME_CATEGORY_ORDER, getCategory } from '@/data/categories';
 import { PROTOTYPE_NOTICE } from '@/data/config';
 import { getUpcomingEvents } from '@/data/events';
@@ -55,8 +55,13 @@ export default async function HomePage() {
     <>
       <Hero />
 
-      <div className="shell pt-4">
-        <Notice tone="prototype">{PROTOTYPE_NOTICE}</Notice>
+      {/* Disclosure, integrated as a seam between the hero and the shop rather
+          than a floating warning box. */}
+      <div className="bg-surface-sunk border-border-subtle border-y">
+        <p className="shell text-text-secondary flex items-center gap-2 py-2.5 text-xs">
+          <Icon name="Info" size={14} className="shrink-0" />
+          {PROTOTYPE_NOTICE}
+        </p>
       </div>
 
       <CategoryTiles categories={categories} />

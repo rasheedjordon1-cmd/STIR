@@ -57,7 +57,7 @@ export function LocationSheet() {
       footer={
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
-            <p className="label text-forest-muted">Delivering to</p>
+            <p className="text-text-secondary text-xs font-semibold">Delivering to</p>
             <p className="truncate text-sm font-semibold">
               {zone.area}, {zone.parish}
             </p>
@@ -77,13 +77,13 @@ export function LocationSheet() {
       <div className="flex flex-col gap-5">
         <div
           className={cx(
-            'rounded-[var(--radius-card)] border-2 p-3',
-            copy.tone === 'ok' && 'border-leaf-deep/40 bg-leaf-wash',
-            copy.tone === 'caution' && 'border-cocoa/40 bg-turmeric-wash',
-            copy.tone === 'blocked' && 'border-nutmeg/50 bg-nutmeg-wash',
+            'rounded-[var(--radius-card)] border p-3',
+            copy.tone === 'ok' && 'border-leaf-deep/40 bg-surface-green-soft',
+            copy.tone === 'caution' && 'border-cocoa/40 bg-surface-yellow-soft',
+            copy.tone === 'blocked' && 'border-nutmeg/50 bg-surface-nutmeg-soft',
           )}
         >
-          <p className="label text-forest-muted">Currently selected</p>
+          <p className="text-text-secondary text-xs font-semibold">Currently selected</p>
           <p className="mt-0.5 text-lg font-bold">
             {zone.area}, {zone.parish}
           </p>
@@ -92,14 +92,14 @@ export function LocationSheet() {
             <span className="text-sm font-medium">{copy.detail}</span>
           </div>
           {zone.serviceStatus === 'delivery-available' ? (
-            <p className="text-forest-muted mt-2 text-sm">
+            <p className="text-text-secondary mt-2 text-sm">
               Delivery {formatMoney(zone.deliveryFee)}
               {zone.freeDeliveryThreshold
                 ? ` · free over ${formatMoney(zone.freeDeliveryThreshold)}`
                 : ''}
             </p>
           ) : null}
-          {zone.note ? <p className="text-forest-muted mt-2 text-sm">{zone.note}</p> : null}
+          {zone.note ? <p className="text-text-secondary mt-2 text-sm">{zone.note}</p> : null}
         </div>
 
         <div>
@@ -125,7 +125,7 @@ export function LocationSheet() {
 
             {groups.map((group) => (
               <div key={group.parish}>
-                <p className="label text-forest-muted border-line mb-1.5 border-b pb-1">
+                <p className="label text-text-secondary border-border-subtle mb-1.5 border-b pb-1">
                   {group.parish}
                 </p>
                 <ul className="flex flex-col">
@@ -139,21 +139,21 @@ export function LocationSheet() {
                           onClick={() => setZone(z.id)}
                           aria-current={selected ? 'true' : undefined}
                           className={cx(
-                            'border-line flex w-full min-h-11 items-center gap-3 border-b px-2 py-2.5 text-left',
-                            selected ? 'bg-leaf-wash' : 'hover:bg-paper',
+                            'border-border-subtle flex w-full min-h-11 items-center gap-3 border-b px-2 py-2.5 text-left',
+                            selected ? 'bg-surface-green-soft' : 'hover:bg-surface-card',
                           )}
                         >
                           <span
                             className={cx(
                               'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border',
-                              selected ? 'border-leaf-deep bg-leaf-deep text-paper' : 'border-line-strong',
+                              selected ? 'border-leaf-deep bg-leaf-deep text-paper' : 'border-border-subtle',
                             )}
                           >
                             {selected ? <Icon name="Check" size={12} /> : null}
                           </span>
                           <span className="min-w-0 flex-1">
                             <span className="block text-base font-semibold">{z.area}</span>
-                            <span className="text-forest-muted block text-sm">
+                            <span className="text-text-secondary block text-sm">
                               {zoneCopy.label} · {zoneCopy.detail}
                             </span>
                           </span>
@@ -167,9 +167,9 @@ export function LocationSheet() {
           </div>
         </div>
 
-        <div className="border-line border-t pt-4">
+        <div className="border-border-subtle border-t pt-4">
           <h3 className="text-md mb-1">Delivery details</h3>
-          <p className="text-forest-muted mb-3 text-sm">
+          <p className="text-text-secondary mb-3 text-sm">
             Saved on this device only. In the prototype nothing is sent anywhere.
           </p>
           <div className="flex flex-col gap-3">

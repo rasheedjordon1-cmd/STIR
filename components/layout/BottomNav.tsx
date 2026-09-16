@@ -31,7 +31,7 @@ export function BottomNav() {
   return (
     <nav
       aria-label="Primary"
-      className="border-ink-line bg-paper safe-bottom fixed inset-x-0 bottom-0 z-50 border-t-2 lg:hidden"
+      className="border-border-subtle bg-surface-raised safe-bottom fixed inset-x-0 bottom-0 z-50 border-t shadow-[var(--shadow-sticky)] lg:hidden"
     >
       <ul className="grid list-none grid-cols-5">
         {ITEMS.map((item) => {
@@ -43,14 +43,15 @@ export function BottomNav() {
                 aria-current={active ? 'page' : undefined}
                 className={cx(
                   'flex min-h-[60px] flex-col items-center justify-center gap-0.5 px-1 py-1.5 text-center',
-                  active ? 'text-leaf-deep' : 'text-forest-muted',
+                  'transition-colors duration-[var(--duration-tap)]',
+                  active ? 'text-state-success' : 'text-text-secondary',
                 )}
               >
                 <Icon name={item.icon} size={22} />
-                <span className="label">{item.label}</span>
+                <span className="text-[11px] font-semibold">{item.label}</span>
                 <span
                   aria-hidden
-                  className={cx('h-[3px] w-6 rounded-full', active ? 'bg-leaf-deep' : 'bg-transparent')}
+                  className={cx('h-[2px] w-6 rounded-full', active ? 'bg-leaf' : 'bg-transparent')}
                 />
               </Link>
             </li>

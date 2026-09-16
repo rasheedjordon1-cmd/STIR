@@ -40,19 +40,19 @@ export function OrderCard({ order, products }: { order: Order; products: Product
   const available = lines.filter((l) => l.product && l.product.inventoryStatus !== 'out-of-stock');
 
   return (
-    <article className="border-line-strong bg-paper rounded-[var(--radius-card)] border">
-      <header className="border-line flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b p-3.5">
+    <article className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border">
+      <header className="border-border-subtle flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b p-3.5">
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
           <div>
-            <p className="label text-forest-muted">Order</p>
+            <p className="text-text-secondary text-xs font-semibold">Order</p>
             <p className="num text-sm font-bold">{order.id}</p>
           </div>
           <div>
-            <p className="label text-forest-muted">Placed</p>
+            <p className="text-text-secondary text-xs font-semibold">Placed</p>
             <p className="num text-sm font-bold">{formatShortDate(order.date)}</p>
           </div>
           <div>
-            <p className="label text-forest-muted">Total</p>
+            <p className="text-text-secondary text-xs font-semibold">Total</p>
             <p className="num text-sm font-bold">{formatMoney(order.total)}</p>
           </div>
         </div>
@@ -62,7 +62,7 @@ export function OrderCard({ order, products }: { order: Order; products: Product
       </header>
 
       {order.tracking ? (
-        <div className="border-line bg-paper-sunk border-b p-3.5">
+        <div className="border-border-subtle bg-surface-sunk border-b p-3.5">
           <p className="mb-2 flex items-center gap-2 text-sm font-bold">
             <Icon name="OrderTracking" size={17} />
             {order.tracking.eta}
@@ -82,7 +82,7 @@ export function OrderCard({ order, products }: { order: Order; products: Product
                   <span
                     className={cx(
                       'truncate text-xs',
-                      current ? 'text-forest font-bold' : 'text-forest-muted',
+                      current ? 'text-forest font-bold' : 'text-text-secondary',
                     )}
                   >
                     {step}
@@ -95,7 +95,7 @@ export function OrderCard({ order, products }: { order: Order; products: Product
       ) : null}
 
       <div className="p-3.5">
-        <p className="text-forest-muted mb-2.5 flex items-center gap-1.5 text-sm">
+        <p className="text-text-secondary mb-2.5 flex items-center gap-1.5 text-sm">
           <Icon name={METHOD_ICON[order.fulfillmentMethod]} size={16} />
           {order.fulfillmentLocation}
         </p>
@@ -106,7 +106,7 @@ export function OrderCard({ order, products }: { order: Order; products: Product
               <li key={item.productId} className="relative">
                 <Link
                   href={`/product/${product.handle}`}
-                  className="border-line hover:border-forest block overflow-hidden rounded-[6px] border"
+                  className="border-border-subtle hover:border-border-default block overflow-hidden rounded-[6px] border"
                   title={`${product.title} × ${item.quantity}`}
                 >
                   <ProductArt image={product.images[0]} seed={product.handle} className="h-14 w-14" />

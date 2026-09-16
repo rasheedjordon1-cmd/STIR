@@ -30,14 +30,14 @@ export function StickyBuyBar({ product }: { product: Product }) {
     <>
       <div ref={sentinel} aria-hidden className="h-px" />
       <div
-        className={`border-ink-line bg-paper fixed inset-x-0 bottom-[var(--bottom-nav-h)] z-40 border-t-2 px-4 py-2.5 transition-transform duration-[var(--duration-ui)] lg:hidden ${
+        className={`border-border-subtle bg-surface-raised fixed inset-x-0 bottom-[var(--bottom-nav-h)] z-40 border-t px-4 py-2.5 shadow-[var(--shadow-sticky)] transition-transform duration-[var(--duration-ui)] lg:hidden ${
           visible ? 'translate-y-0' : 'translate-y-[130%]'
         }`}
       >
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
             <p className="truncate text-sm font-bold">{product.title}</p>
-            <p className="num text-forest-muted text-xs">
+            <p className="num text-text-secondary text-xs">
               {formatMoney(product.price)} · {product.unit}
             </p>
           </div>

@@ -12,11 +12,18 @@ import { cx } from '@/lib/cx';
 import type { Product } from '@/types';
 
 /* ==========================================================================
-   ProductCard
-   The most-repeated component in the product, so it is the one that has to be
-   densest. Fixed vertical rhythm: art, badges, vendor, title, price, status,
-   action. Every card is the same height in a row whatever its content, and
-   the action sits on the same baseline across the grid.
+   ProductCard — V2
+   The most-repeated component in the platform, so it sets the tone for
+   everything else.
+
+   V2 changes:
+   · a soft surface with a hairline instead of a hard outlined rectangle —
+     the card lifts on hover rather than shouting at rest
+   · a warm neutral image stage with consistent internal padding, so packshots
+     of different shapes sit on the same optical baseline
+   · hierarchy reordered to name → price → unit → vendor, so the number a
+     shopper is actually scanning for outranks the brand that made it
+   · at most two merchandising badges, sentence case
    ========================================================================== */
 
 export function ProductCard({
@@ -35,17 +42,22 @@ export function ProductCard({
   return (
     <article
       className={cx(
-        'group border-line-strong bg-paper hover:border-forest relative flex h-full flex-col rounded-[var(--radius-card)] border p-2.5 transition-colors',
+        'group border-border-subtle bg-surface-card relative flex h-full flex-col rounded-[var(--radius-card)] border p-2.5',
+        'transition-[border-color,box-shadow,transform] duration-[var(--duration-ui)] ease-[var(--ease-out-quint)]',
+        'hover:border-border-default hover:shadow-[var(--shadow-raised)] focus-within:border-border-default',
         className,
       )}
     >
       {/* The title link below spans the whole card, so the artwork needs no
           link of its own — one accessible name per card, not two. */}
-      <div className="bg-paper-sunk relative mb-2.5 overflow-hidden rounded-[6px]">
+      <div className="bg-surface-sunk relative mb-3 overflow-hidden rounded-[10px]">
         <ProductArt
           image={product.images[0]}
           seed={product.handle}
-          className={cx('aspect-square w-full', soldOut && 'opacity-55 saturate-50')}
+          className={cx(
+            'aspect-square w-full p-1.5 transition-transform duration-[var(--duration-ui)] ease-[var(--ease-out-quint)] group-hover:scale-[1.02]',
+            soldOut && 'opacity-50 saturate-50',
+          )}
         />
         {showFavorite ? (
           <FavoriteButton
@@ -66,9 +78,7 @@ export function ProductCard({
         ) : null}
       </div>
 
-      <p className="text-forest-muted mb-0.5 truncate text-xs font-semibold">{product.vendor}</p>
-
-      <h3 className="text-sm leading-snug font-semibold tracking-normal">
+      <h3 className="font-ui text-sm leading-snug font-semibold tracking-normal">
         <Link
           href={`/product/${product.handle}`}
           className="after:absolute after:inset-0 after:content-[''] hover:underline"
@@ -80,10 +90,12 @@ export function ProductCard({
       <div className="mt-auto pt-2">
         <PriceBlock product={product} size="sm" />
 
+        <p className="text-text-secondary mt-1 truncate text-xs">{product.vendor}</p>
+
         <p
           className={cx(
             'mt-1.5 flex min-h-4 items-center gap-1 text-xs font-semibold',
-            stock ? (soldOut ? 'text-nutmeg' : 'text-cocoa') : 'text-leaf-deep',
+            stock ? (soldOut ? 'text-state-danger' : 'text-state-warning') : 'text-state-success',
           )}
         >
           {stock ? (
@@ -100,7 +112,7 @@ export function ProductCard({
         </p>
 
         {/* The action sits above the card-wide link so it stays clickable. */}
-        <div className="relative z-10 mt-2">
+        <div className="relative z-10 mt-2.5">
           <AddToCart product={product} size="sm" />
         </div>
       </div>

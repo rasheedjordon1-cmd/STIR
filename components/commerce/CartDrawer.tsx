@@ -65,9 +65,9 @@ export function CartDrawer() {
         </EmptyState>
       ) : (
         <div className="flex flex-col gap-5">
-          <div className="border-line-strong bg-paper flex items-start justify-between gap-3 rounded-[var(--radius-control)] border p-3">
+          <div className="border-border-subtle bg-surface-card flex items-start justify-between gap-3 rounded-[var(--radius-control)] border p-3">
             <div className="min-w-0">
-              <p className="label text-forest-muted">Delivering to</p>
+              <p className="text-text-secondary text-xs font-semibold">Delivering to</p>
               <p className="truncate text-sm font-semibold">
                 {zone.area}, {zone.parish}
               </p>
@@ -80,7 +80,7 @@ export function CartDrawer() {
           <FulfillmentPicker compact />
 
           <div>
-            <h3 className="label text-forest-muted border-line mb-1 border-b pb-1.5">
+            <h3 className="label text-text-secondary border-border-subtle mb-1 border-b pb-1.5">
               {pluralise(lines.length, 'line')}
               {itemCount !== lines.length ? ` · ${pluralise(itemCount, 'item')}` : ''}
             </h3>
@@ -95,7 +95,7 @@ export function CartDrawer() {
 
           <div className="flex items-center gap-2">
             <Badge tone="neutral">Prototype</Badge>
-            <p className="text-forest-muted text-xs">
+            <p className="text-text-secondary text-xs">
               Basket is stored on this device only. No order is placed.
             </p>
           </div>

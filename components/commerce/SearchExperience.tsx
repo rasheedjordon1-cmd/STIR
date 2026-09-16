@@ -97,7 +97,7 @@ export function SearchExperience() {
         {!query ? (
           <div className="grid gap-6 pt-2 md:grid-cols-2">
             <section>
-              <h2 className="label text-forest-muted border-line mb-2.5 border-b pb-1.5">
+              <h2 className="label text-text-secondary border-border-subtle mb-2.5 border-b pb-1.5">
                 People search for
               </h2>
               <ul className="flex list-none flex-wrap gap-2">
@@ -105,7 +105,7 @@ export function SearchExperience() {
                   <li key={term}>
                     <Link
                       href={`/search?q=${encodeURIComponent(term)}`}
-                      className="border-line-strong bg-paper hover:border-forest inline-flex min-h-11 items-center rounded-[var(--radius-control)] border px-3.5 text-base font-semibold"
+                      className="border-border-subtle bg-surface-card hover:border-border-default inline-flex min-h-11 items-center rounded-[var(--radius-control)] border px-3.5 text-base font-semibold"
                     >
                       {term}
                     </Link>
@@ -114,7 +114,7 @@ export function SearchExperience() {
               </ul>
             </section>
             <section>
-              <h2 className="label text-forest-muted border-line mb-2.5 border-b pb-1.5">
+              <h2 className="label text-text-secondary border-border-subtle mb-2.5 border-b pb-1.5">
                 Or browse an aisle
               </h2>
               <ul className="flex list-none flex-wrap gap-2">
@@ -122,7 +122,7 @@ export function SearchExperience() {
                   <li key={category.handle}>
                     <Link
                       href={`/category/${category.handle}`}
-                      className="border-line-strong bg-paper hover:border-forest inline-flex min-h-11 items-center rounded-[var(--radius-control)] border px-3.5 text-base font-semibold"
+                      className="border-border-subtle bg-surface-card hover:border-border-default inline-flex min-h-11 items-center rounded-[var(--radius-control)] border px-3.5 text-base font-semibold"
                     >
                       {category.title}
                     </Link>

@@ -10,9 +10,9 @@ import type { DeliveryZone } from '@/types';
    ========================================================================== */
 
 const TONE: Record<string, { className: string; icon: IconName }> = {
-  ok: { className: 'bg-leaf-wash text-leaf-deep border-leaf-deep/35', icon: 'DeliveryVan' },
-  caution: { className: 'bg-turmeric-wash text-cocoa border-cocoa/40', icon: 'StorePickup' },
-  blocked: { className: 'bg-nutmeg-wash text-nutmeg border-nutmeg/40', icon: 'OutOfStock' },
+  ok: { className: 'bg-surface-green-soft text-state-success border-leaf-deep/35', icon: 'DeliveryVan' },
+  caution: { className: 'bg-surface-yellow-soft text-cocoa border-cocoa/40', icon: 'StorePickup' },
+  blocked: { className: 'bg-surface-nutmeg-soft text-state-danger border-nutmeg/40', icon: 'OutOfStock' },
 };
 
 export function ServiceStatusPill({
@@ -35,7 +35,7 @@ export function ServiceStatusPill({
       )}
     >
       <Icon name={tone.icon} size={14} />
-      <span className="label">{copy.label}</span>
+      <span className="text-xs font-semibold">{copy.label}</span>
       {withDetail ? <span className="text-sm font-medium normal-case">· {copy.detail}</span> : null}
     </span>
   );

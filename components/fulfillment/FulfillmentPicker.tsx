@@ -29,7 +29,7 @@ export function FulfillmentPicker({ compact = false }: { compact?: boolean }) {
 
   return (
     <fieldset className="min-w-0">
-      <legend className="label text-forest-muted mb-2">How would you like it?</legend>
+      <legend className="eyebrow text-text-secondary mb-2">How would you like it?</legend>
       <div className="flex flex-col gap-1.5">
         {options.map((option) => {
           const selected = method === option.method && option.available;
@@ -40,8 +40,8 @@ export function FulfillmentPicker({ compact = false }: { compact?: boolean }) {
                 'flex cursor-pointer items-start gap-2.5 rounded-[var(--radius-control)] border p-2.5 transition-colors',
                 !option.available && 'cursor-not-allowed opacity-70',
                 selected
-                  ? 'border-leaf-deep bg-leaf-wash border-2'
-                  : 'border-line-strong bg-paper hover:border-forest',
+                  ? 'border-leaf bg-surface-green-soft border-2'
+                  : 'border-border-subtle bg-surface-card hover:border-border-default',
               )}
             >
               <input
@@ -57,7 +57,7 @@ export function FulfillmentPicker({ compact = false }: { compact?: boolean }) {
                 aria-hidden
                 className={cx(
                   'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border',
-                  selected ? 'border-leaf-deep bg-leaf-deep text-paper' : 'border-line-strong',
+                  selected ? 'border-leaf bg-leaf text-surface-card' : 'border-border-subtle',
                 )}
               >
                 {selected ? <Icon name="Check" size={12} /> : null}
@@ -68,7 +68,7 @@ export function FulfillmentPicker({ compact = false }: { compact?: boolean }) {
                   <span className="text-base font-bold">{option.label}</span>
                   {option.available ? (
                     option.fee ? (
-                      <span className="num text-forest-muted ml-auto text-sm font-semibold">
+                      <span className="num text-text-secondary ml-auto text-sm font-semibold">
                         {option.feeWaived ? (
                           <>
                             <span className="line-through">{formatMoney(option.fee)}</span> Free
@@ -78,15 +78,15 @@ export function FulfillmentPicker({ compact = false }: { compact?: boolean }) {
                         )}
                       </span>
                     ) : (
-                      <span className="text-forest-muted ml-auto text-sm font-semibold">Free</span>
+                      <span className="text-text-secondary ml-auto text-sm font-semibold">Free</span>
                     )
                   ) : (
-                    <span className="label text-nutmeg ml-auto">Unavailable</span>
+                    <span className="label text-state-danger ml-auto">Unavailable</span>
                   )}
                 </span>
                 <span className="mt-0.5 block text-sm font-medium">{option.detail}</span>
                 {option.note && !compact ? (
-                  <span className="text-forest-muted mt-0.5 block text-xs">{option.note}</span>
+                  <span className="text-text-secondary mt-0.5 block text-xs">{option.note}</span>
                 ) : null}
               </span>
             </label>

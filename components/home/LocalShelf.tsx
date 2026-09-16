@@ -13,12 +13,12 @@ import type { Product, Vendor } from '@/types';
    ========================================================================== */
 
 const ACCENT: Record<Vendor['accent'], string> = {
-  leaf: 'bg-leaf-wash text-leaf-deep border-leaf-deep/30',
-  signal: 'bg-signal-wash text-leaf-deep border-leaf-deep/30',
-  turmeric: 'bg-turmeric-wash text-cocoa border-cocoa/30',
-  nutmeg: 'bg-nutmeg-wash text-nutmeg border-nutmeg/30',
-  teal: 'bg-teal-wash text-teal-ink border-teal-ink/30',
-  cocoa: 'bg-cocoa-wash text-cocoa border-cocoa/30',
+  leaf: 'bg-surface-green-soft text-state-success border-leaf-deep/15 hover:border-leaf-deep/40',
+  signal: 'bg-surface-green-soft text-state-success border-leaf-deep/15 hover:border-leaf-deep/40',
+  turmeric: 'bg-surface-yellow-soft text-state-warning border-cocoa/15 hover:border-cocoa/40',
+  nutmeg: 'bg-surface-nutmeg-soft text-state-danger border-nutmeg/15 hover:border-nutmeg/40',
+  teal: 'bg-surface-teal-soft text-state-info border-teal-ink/15 hover:border-teal-ink/40',
+  cocoa: 'bg-surface-cocoa-soft text-cocoa border-cocoa/15 hover:border-cocoa/40',
 };
 
 export function LocalShelf({ products, vendors }: { products: Product[]; vendors: Vendor[] }) {
@@ -39,14 +39,14 @@ export function LocalShelf({ products, vendors }: { products: Product[]; vendors
               <Link
                 href={`/search?q=${encodeURIComponent(vendor.name)}`}
                 className={cx(
-                  'hover:border-forest flex w-full flex-col gap-1.5 rounded-[var(--radius-card)] border p-3 transition-colors',
+                  'flex w-full flex-col gap-1.5 rounded-[var(--radius-card)] border p-3.5 transition-colors duration-[var(--duration-tap)]',
                   ACCENT[vendor.accent],
                 )}
               >
-                <Icon name="Vendor" size={22} />
+                <Icon name="Vendor" size={24} />
                 <span className="text-sm leading-tight font-bold">{vendor.name}</span>
-                <span className="label opacity-80">{vendor.parish}</span>
-                <span className="text-forest-muted mt-auto line-clamp-2 text-xs">{vendor.blurb}</span>
+                <span className="text-xs font-semibold opacity-75">{vendor.parish}</span>
+                <span className="text-text-secondary mt-auto line-clamp-2 text-xs">{vendor.blurb}</span>
               </Link>
             </li>
           ))}

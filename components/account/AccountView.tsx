@@ -66,11 +66,11 @@ export function AccountView({
   return (
     <div className="flex flex-col gap-8">
       {signedIn ? (
-        <div className="border-ink-line bg-paper flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border-2 p-4">
+        <div className="border-border-default bg-surface-card flex flex-wrap items-center justify-between gap-3 rounded-[var(--radius-card)] border p-4">
           <div>
-            <p className="label text-forest-muted">Signed in as</p>
+            <p className="text-text-secondary text-xs font-semibold">Signed in as</p>
             <p className="font-display text-xl font-bold tracking-tight">{name}</p>
-            <p className="text-forest-muted text-sm">Sample account · prototype only</p>
+            <p className="text-text-secondary text-sm">Sample account · prototype only</p>
           </div>
           <Button intent="secondary" size="sm" onClick={signOut}>
             Sign out of the preview
@@ -86,7 +86,7 @@ export function AccountView({
 
       <section
         aria-labelledby="location-heading"
-        className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-4"
+        className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-4"
       >
         <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <h2 id="location-heading" className="text-md">
@@ -109,9 +109,9 @@ export function AccountView({
             ['Phone', saved.phone],
             ['Instructions', saved.instructions],
           ].map(([label, value]) => (
-            <div key={label} className="border-line flex gap-2 border-b py-1">
-              <dt className="label text-forest-muted w-24 shrink-0 pt-0.5">{label}</dt>
-              <dd className={value ? 'font-medium' : 'text-forest-faint'}>{value || 'Not set'}</dd>
+            <div key={label} className="border-border-subtle flex gap-2 border-b py-1">
+              <dt className="label text-text-secondary w-24 shrink-0 pt-0.5">{label}</dt>
+              <dd className={value ? 'font-medium' : 'text-text-tertiary'}>{value || 'Not set'}</dd>
             </div>
           ))}
         </dl>
@@ -119,7 +119,7 @@ export function AccountView({
 
       {signedIn && activeOrder ? (
         <section aria-labelledby="active-heading">
-          <h2 id="active-heading" className="label text-forest-muted border-ink-line mb-3 border-b-2 pb-1.5">
+          <h2 id="active-heading" className="label text-text-secondary border-border-subtle mb-3 border-b pb-2">
             In motion
           </h2>
           <OrderCard order={activeOrder} products={products} />
@@ -129,7 +129,7 @@ export function AccountView({
       {signedIn ? (
         <section
           aria-labelledby="rewards-heading"
-          className="border-cocoa/30 bg-turmeric-wash rounded-[var(--radius-card)] border p-4"
+          className="border-cocoa/30 bg-surface-yellow-soft rounded-[var(--radius-card)] border p-4"
         >
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -140,7 +140,7 @@ export function AccountView({
                 {REWARDS_SUMMARY.points.toLocaleString('en-US')}
                 <span className="text-md ml-1.5 font-bold">points</span>
               </p>
-              <p className="text-forest-muted text-sm">
+              <p className="text-text-secondary text-sm">
                 {(REWARDS_SUMMARY.nextRewardAt - REWARDS_SUMMARY.points).toLocaleString('en-US')} to
                 the next reward
               </p>
@@ -174,13 +174,13 @@ export function AccountView({
       {next ? (
         <section
           aria-labelledby="fair-heading"
-          className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-4"
+          className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-4"
         >
           <h2 id="fair-heading" className="text-md flex items-center gap-2">
             <Icon name="MarketStall" size={20} />
             Event reminders
           </h2>
-          <p className="text-forest-muted mt-1.5 text-sm">
+          <p className="text-text-secondary mt-1.5 text-sm">
             The next Spice Fair is {formatEventDate(next.date)} at {next.venue}, {next.area}.{' '}
             {collectable
               ? 'Order collection is open for it.'
@@ -190,7 +190,7 @@ export function AccountView({
             <ButtonLink href={`/spice-fair/${next.id}`} size="sm" intent="secondary">
               Event details
             </ButtonLink>
-            <ButtonLink href="/spice-fair" size="sm" intent="quiet">
+            <ButtonLink href="/spice-fair" size="sm" intent="tertiary">
               All editions
             </ButtonLink>
           </div>
@@ -198,18 +198,18 @@ export function AccountView({
       ) : null}
 
       <section id="help" aria-labelledby="help-heading">
-        <h2 id="help-heading" className="label text-forest-muted border-ink-line mb-3 border-b-2 pb-1.5">
+        <h2 id="help-heading" className="label text-text-secondary border-border-subtle mb-3 border-b pb-2">
           Help and contact
         </h2>
         <ul className="grid list-none gap-2.5 md:grid-cols-3">
           {HELP.map((item) => (
             <li
               key={item.title}
-              className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-3.5"
+              className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-3.5"
             >
-              <Icon name={item.icon} size={22} className="text-leaf-deep mb-2" />
+              <Icon name={item.icon} size={22} className="text-state-success mb-2" />
               <h3 className="text-sm font-bold">{item.title}</h3>
-              <p className="text-forest-muted mt-1 text-sm">{item.body}</p>
+              <p className="text-text-secondary mt-1 text-sm">{item.body}</p>
             </li>
           ))}
         </ul>

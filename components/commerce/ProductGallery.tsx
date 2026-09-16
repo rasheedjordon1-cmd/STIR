@@ -16,13 +16,13 @@ export function ProductGallery({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col gap-2.5">
-      <div className="border-line-strong bg-paper overflow-hidden rounded-[var(--radius-card)] border">
+      <div className="bg-surface-sunk overflow-hidden rounded-[var(--radius-module)]">
         <ProductArt
           image={product.images[index]}
           seed={`${product.handle}-${index}`}
           face={index === 0 ? 'front' : 'back'}
           alt={product.images[index].alt}
-          className="aspect-square w-full"
+          className="aspect-square w-full p-6"
         />
       </div>
 
@@ -36,14 +36,14 @@ export function ProductGallery({ product }: { product: Product }) {
               aria-label={`Show ${image.alt}`}
               className={cx(
                 'block overflow-hidden rounded-[6px] border-2 transition-colors',
-                i === index ? 'border-forest' : 'border-line-strong hover:border-forest',
+                i === index ? 'border-forest' : 'border-border-subtle hover:border-border-default',
               )}
             >
               <ProductArt
                 image={image}
                 seed={`${product.handle}-${i}`}
                 face={i === 0 ? 'front' : 'back'}
-                className="h-16 w-16"
+                className="h-16 w-16 p-1"
               />
             </button>
           </li>

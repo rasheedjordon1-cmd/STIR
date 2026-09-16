@@ -94,7 +94,7 @@ export function Overlay({
         type="button"
         aria-label={`Close ${title.toLowerCase()}`}
         onClick={onClose}
-        className="anim-fade absolute inset-0 h-full w-full cursor-default bg-forest/45"
+        className="anim-fade absolute inset-0 h-full w-full cursor-default bg-forest/50"
         tabIndex={-1}
       />
       <div
@@ -105,19 +105,19 @@ export function Overlay({
         aria-describedby={description ? descriptionId : undefined}
         tabIndex={-1}
         className={cx(
-          'bg-breadfruit absolute flex flex-col outline-none',
+          'bg-surface-page absolute flex flex-col outline-none',
           side === 'right'
-            ? 'anim-drawer top-0 right-0 h-full w-full max-w-[26rem] border-l-2 border-ink-line shadow-[var(--shadow-overlay)]'
-            : 'anim-rise inset-x-0 bottom-0 max-h-[88vh] rounded-t-[var(--radius-module)] border-t-2 border-ink-line shadow-[var(--shadow-overlay)] sm:inset-x-auto sm:top-0 sm:right-0 sm:h-full sm:max-h-none sm:w-full sm:max-w-[30rem] sm:rounded-none sm:border-t-0 sm:border-l-2',
+            ? 'anim-drawer top-0 right-0 h-full w-full max-w-[27rem] border-l border-border-subtle shadow-[var(--shadow-overlay)]'
+            : 'anim-rise inset-x-0 bottom-0 max-h-[88vh] rounded-t-[var(--radius-module)] border-t border-border-subtle shadow-[var(--shadow-overlay)] sm:inset-x-auto sm:top-0 sm:right-0 sm:h-full sm:max-h-none sm:w-full sm:max-w-[30rem] sm:rounded-none sm:border-t-0 sm:border-l',
         )}
       >
-        <header className="border-line flex items-start justify-between gap-3 border-b px-4 py-3">
+        <header className="border-border-subtle flex items-start justify-between gap-3 border-b border-border-subtle px-4 py-3">
           <div className="min-w-0 pt-1">
             <h2 id={headingId} className="text-lg">
               {title}
             </h2>
             {description ? (
-              <p id={descriptionId} className="text-forest-muted mt-0.5 text-sm">
+              <p id={descriptionId} className="text-text-secondary mt-0.5 text-sm">
                 {description}
               </p>
             ) : null}
@@ -128,7 +128,7 @@ export function Overlay({
         <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-4">{children}</div>
 
         {footer ? (
-          <footer className="border-line bg-paper safe-bottom border-t px-4 py-3">{footer}</footer>
+          <footer className="border-border-subtle bg-surface-card safe-bottom border-t px-4 py-3">{footer}</footer>
         ) : null}
       </div>
     </div>

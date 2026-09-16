@@ -59,7 +59,7 @@ check('pickup-only zone shows collection only', /Collection only/i.test(sheetTex
 await page.keyboard.press('Escape');
 await page.waitForTimeout(300);
 const heroCard = await page.locator('aside[aria-label="Delivery availability"]').innerText();
-check('hero fulfilment card follows the zone', /collect from/i.test(heroCard) && /Grenville/.test(heroCard), heroCard.split('\n').slice(0,6).join(' | '));
+check('hero fulfilment card follows the zone', /collection only/i.test(heroCard) && /Grenville/.test(heroCard), heroCard.split('\n').slice(0,6).join(' | '));
 
 // 6. Fulfilment gating: delivery unavailable for a pickup-only zone
 await page.goto(BASE + '/cart', { waitUntil: 'networkidle' });

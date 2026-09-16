@@ -24,7 +24,7 @@ export function FrequentlyBought({ anchor, partners }: { anchor: Product; partne
   return (
     <section
       aria-labelledby="fbt-heading"
-      className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-3.5"
+      className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-3.5"
     >
       <h2 id="fbt-heading" className="text-md mb-3">
         Frequently bought together
@@ -33,8 +33,8 @@ export function FrequentlyBought({ anchor, partners }: { anchor: Product; partne
       <ul className="mb-3 flex list-none flex-wrap items-center gap-2">
         {all.map((product, index) => (
           <li key={product.id} className="flex items-center gap-2">
-            {index > 0 ? <Icon name="Add" size={15} className="text-forest-muted" /> : null}
-            <span className="border-line bg-paper-sunk block overflow-hidden rounded-[6px] border">
+            {index > 0 ? <Icon name="Add" size={15} className="text-text-secondary" /> : null}
+            <span className="border-border-subtle bg-surface-sunk block overflow-hidden rounded-[6px] border">
               <ProductArt image={product.images[0]} seed={product.handle} className="h-16 w-16" />
             </span>
           </li>
@@ -50,7 +50,7 @@ export function FrequentlyBought({ anchor, partners }: { anchor: Product; partne
         ))}
       </ul>
 
-      <div className="border-line flex items-center justify-between gap-3 border-t pt-3">
+      <div className="border-border-subtle flex items-center justify-between gap-3 border-t pt-3">
         <p className="num font-display text-md font-bold">
           {formatMoney({ amount: total, currency: 'XCD' })}
         </p>

@@ -61,7 +61,7 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
             </ol>
           </nav>
 
-          <p className="label text-turmeric mb-3">
+          <p className="text-turmeric mb-3 text-sm font-semibold">
             Edition {event.edition} · {relativeDay(event.date)}
           </p>
           <h1 className="display text-[clamp(2.25rem,9vw,4.5rem)]">
@@ -91,8 +91,8 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
                     : 'Not offered at this site',
               },
             ].map((row) => (
-              <div key={row.label} className="border-breadfruit/25 border-t pt-3">
-                <dt className="label text-breadfruit/65 flex items-center gap-1.5">
+              <div key={row.label} className="border-border-inverse border-t pt-3">
+                <dt className="text-breadfruit/70 flex items-center gap-1.5 text-xs font-semibold">
                   <Icon name={row.icon} size={14} />
                   {row.label}
                 </dt>
@@ -143,11 +143,11 @@ export default async function EventPage({ params }: { params: Promise<{ id: stri
             {event.programming.map((item) => (
               <li
                 key={item.title}
-                className="border-line-strong bg-paper rounded-[var(--radius-card)] border p-3.5"
+                className="border-border-subtle bg-surface-card rounded-[var(--radius-card)] border p-3.5"
               >
-                <Icon name={item.icon as IconName} size={24} className="text-leaf-deep mb-2.5" />
+                <Icon name={item.icon as IconName} size={24} className="text-state-success mb-2.5" />
                 <h3 className="text-md">{item.title}</h3>
-                <p className="text-forest-muted mt-1 text-sm">{item.detail}</p>
+                <p className="text-text-secondary mt-1 text-sm">{item.detail}</p>
               </li>
             ))}
           </ul>

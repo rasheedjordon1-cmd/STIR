@@ -2,115 +2,118 @@
 
 import Link from 'next/link';
 import { Icon } from '@/components/icons';
-import { Button } from '@/components/ui/Button';
-import { ServiceStatusPill } from '@/components/fulfillment/ServiceStatusPill';
+import { Button, TextAction } from '@/components/ui/Button';
 import { formatEventDate, formatMoney, relativeDay } from '@/lib/format';
-import { deliveryFeeFor } from '@/lib/fulfillment';
+import { deliveryFeeFor, serviceCopy } from '@/lib/fulfillment';
 import { useFair } from '@/lib/store/fair';
 import { useLocation } from '@/lib/store/location';
 import { useUI } from '@/lib/store/ui';
 import { cx } from '@/lib/cx';
 
 /* ==========================================================================
-   FulfillmentCard
-   The working half of the hero. Before a shopper adds anything, this states
-   exactly what Spicemart can do for their area — and when it cannot, it says
-   so and offers the collection route instead.
+   FulfillmentCard — V2
+   The working half of the hero, rebuilt as a live service-status surface
+   rather than a form.
+
+   V1 gave destination, window and fee three identical rows, so nothing led.
+   V2 states the status in a coloured rail across the top, sets the
+   destination at display scale as the subject of the card, and demotes the
+   fee and window to supporting metadata. The Spice Fair preview is a tonal
+   band fused to the bottom edge, not a separate card inside a card.
    ========================================================================== */
+
+const RAIL = {
+  ok: { surface: 'bg-leaf text-surface-card', icon: 'DeliveryVan' as const },
+  caution: { surface: 'bg-turmeric text-forest', icon: 'StorePickup' as const },
+  blocked: { surface: 'bg-nutmeg text-surface-card', icon: 'OutOfStock' as const },
+};
 
 export function FulfillmentCard({ className }: { className?: string }) {
   const { zone, confirmed, hydrated } = useLocation();
   const { openLocation } = useUI();
   const { next, collectable } = useFair();
   const { fee, threshold } = deliveryFeeFor(zone);
-
-  const rows = [
-    {
-      icon: 'LocationPin' as const,
-      label: 'Delivering to',
-      value: `${zone.area}, ${zone.parish}`,
-    },
-    zone.serviceStatus === 'delivery-available'
-      ? {
-          icon: 'Clock' as const,
-          label: 'Next window',
-          value: zone.deliveryWindow ?? 'Confirmed at checkout',
-        }
-      : {
-          icon: 'StorePickup' as const,
-          label: 'Collect from',
-          value: zone.pickupPoint ?? 'No collection point nearby',
-        },
-    zone.serviceStatus === 'delivery-available'
-      ? {
-          icon: 'DeliveryVan' as const,
-          label: 'Delivery',
-          value: `${formatMoney(fee)} · free over ${formatMoney(threshold)}`,
-        }
-      : {
-          icon: 'MapArea' as const,
-          label: 'Status',
-          value: zone.note ?? 'Delivery is not running here yet.',
-        },
-  ];
+  const copy = serviceCopy(zone);
+  const rail = RAIL[copy.tone];
+  const delivers = zone.serviceStatus === 'delivery-available';
 
   return (
     <aside
       className={cx(
-        'border-ink-line bg-paper rounded-[var(--radius-module)] border-2 p-4',
+        'border-border-default bg-surface-card overflow-hidden rounded-[var(--radius-module)] border',
         className,
       )}
       aria-label="Delivery availability"
     >
-      <div className="border-line flex items-center justify-between gap-3 border-b pb-3">
-        <h2 className="label">Your delivery</h2>
-        <ServiceStatusPill zone={zone} />
+      {/* Status rail — the one thing to read first. */}
+      <p className={cx('flex items-center gap-2 px-4 py-2.5 text-sm font-semibold', rail.surface)}>
+        <Icon name={rail.icon} size={17} />
+        {copy.label}
+        <span className="num ml-auto font-medium opacity-90">{copy.detail}</span>
+      </p>
+
+      <div className="p-4">
+        {/* Never say "delivering to" for an area we do not deliver to. */}
+        <p className="text-text-secondary text-xs">
+          {!hydrated || !confirmed
+            ? 'Showing prices for'
+            : delivers
+              ? 'Delivering to'
+              : 'Your area'}
+        </p>
+        <p className="font-display mt-0.5 text-xl leading-tight font-bold tracking-[-0.03em]">
+          {zone.area}
+        </p>
+        <p className="text-text-secondary num mt-1 text-sm">
+          {zone.parish}
+          {delivers ? (
+            <>
+              {' · '}
+              {formatMoney(fee)} delivery
+              <span className="text-text-tertiary"> · free over {formatMoney(threshold)}</span>
+            </>
+          ) : zone.pickupPoint ? (
+            <>
+              {' · '}collect at {zone.pickupPoint.replace(/^.*— /, '')}
+            </>
+          ) : null}
+        </p>
+
+        {zone.note ? (
+          <p className="text-text-secondary mt-2.5 text-sm">{zone.note}</p>
+        ) : null}
+
+        <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
+          <Button intent="secondary" size="sm" icon="MapArea" onClick={openLocation}>
+            {hydrated && confirmed ? 'Change area' : 'Choose your area'}
+          </Button>
+          <TextAction href="/delivery">All areas and windows</TextAction>
+        </div>
       </div>
 
-      <dl className="flex flex-col">
-        {rows.map((row) => (
-          <div key={row.label} className="border-line flex items-start gap-2.5 border-b py-2.5">
-            <Icon name={row.icon} size={18} className="text-forest-muted mt-0.5 shrink-0" />
-            <div className="min-w-0 flex-1">
-              <dt className="label text-forest-muted">{row.label}</dt>
-              <dd className="text-sm font-semibold">{row.value}</dd>
-            </div>
-          </div>
-        ))}
-      </dl>
-
-      <div className="mt-3 flex flex-wrap gap-2">
-        <Button intent="secondary" size="sm" icon="MapArea" onClick={openLocation}>
-          {hydrated && confirmed ? 'Change area' : 'Choose delivery area'}
-        </Button>
-        <Link
-          href="/delivery"
-          className="text-forest-muted hover:text-forest inline-flex min-h-9 items-center text-sm font-semibold underline underline-offset-4"
-        >
-          All areas and windows
-        </Link>
-      </div>
-
+      {/* Spice Fair preview — fused to the card, not floating inside it. */}
       {next ? (
         <Link
           href="/spice-fair"
-          className="bg-turmeric-wash border-cocoa/25 hover:border-cocoa mt-3 flex items-center gap-2.5 rounded-[var(--radius-control)] border p-2.5 transition-colors"
+          className="bg-surface-yellow-soft group hover:bg-turmeric/25 flex items-center gap-3 px-4 py-3 transition-colors duration-[var(--duration-tap)]"
         >
-          <span className="bg-turmeric text-forest flex h-9 w-9 shrink-0 items-center justify-center rounded-[var(--radius-chip)]">
-            <Icon name="MarketStall" size={19} />
-          </span>
+          <Icon name="MarketStall" size={20} className="text-state-warning shrink-0" />
           <span className="min-w-0 flex-1">
-            <span className="label text-cocoa block">
+            <span className="text-state-warning block text-xs font-semibold">
               Next Spice Fair · {relativeDay(next.date)}
             </span>
             <span className="block truncate text-sm font-semibold">
               {formatEventDate(next.date)} · {next.area}
             </span>
-            <span className="text-forest-muted block text-xs">
+            <span className="text-text-secondary block text-xs">
               {collectable ? 'Order collection open' : 'Market only — no order collection'}
             </span>
           </span>
-          <Icon name="ChevronRight" size={17} className="shrink-0" />
+          <Icon
+            name="ChevronRight"
+            size={18}
+            className="shrink-0 transition-transform duration-[var(--duration-tap)] ease-[var(--ease-out-quint)] group-hover:translate-x-0.5"
+          />
         </Link>
       ) : null}
     </aside>

@@ -31,7 +31,7 @@ export function AddToCart({
         type="button"
         disabled
         className={cx(
-          'border-line-strong bg-paper-sunk text-forest-muted flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-control)] border font-semibold',
+          'bg-surface-sunk text-text-secondary flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-control)] font-semibold',
           size === 'sm' ? 'h-11 text-sm' : 'h-11 text-base',
           className,
         )}
@@ -62,7 +62,8 @@ export function AddToCart({
       type="button"
       onClick={() => add(product.id)}
       className={cx(
-        'bg-leaf text-paper hover:bg-leaf-deep flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-control)] font-semibold transition-colors duration-[var(--duration-tap)]',
+        'bg-leaf text-surface-card hover:bg-leaf-deep flex w-full items-center justify-center gap-1.5 rounded-[var(--radius-control)] font-semibold',
+        'transition-[background-color,transform] duration-[var(--duration-tap)] ease-[var(--ease-out-quint)] active:translate-y-px',
         size === 'sm' ? 'h-11 text-sm' : 'h-11 text-base',
         className,
       )}

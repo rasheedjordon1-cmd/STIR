@@ -30,18 +30,18 @@ export function DealsModule({ products }: { products: Product[] }) {
           linkLabel="All deals"
         />
 
-        <div className="grid gap-2.5 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,2fr)]">
-          <article className="border-nutmeg/40 bg-nutmeg-wash flex flex-col justify-between gap-4 rounded-[var(--radius-card)] border p-4">
+        <div className="grid gap-3 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,2fr)]">
+          <article className="bg-surface-nutmeg-soft flex flex-col justify-between gap-5 rounded-[var(--radius-module)] p-5">
             <div>
-              <span className="bg-nutmeg text-paper label inline-flex items-center gap-1.5 rounded-[var(--radius-chip)] px-2 py-1">
+              <span className="bg-nutmeg text-surface-card inline-flex items-center gap-1.5 rounded-[var(--radius-chip)] px-2 py-1 text-xs font-semibold">
                 <Icon name="Discount" size={13} />
                 {lead.multibuy ? 'Multibuy' : 'Reduced'}
               </span>
               <h3 className="font-display mt-3 text-xl leading-tight font-bold tracking-tight">
                 {lead.title}
               </h3>
-              <p className="text-forest-muted mt-1 text-sm">{lead.vendor}</p>
-              <p className="num font-display text-nutmeg mt-3 text-3xl font-extrabold tracking-tight">
+              <p className="text-text-secondary mt-1 text-sm">{lead.vendor}</p>
+              <p className="num font-display text-state-danger mt-3 text-3xl font-extrabold tracking-tight">
                 {formatMoney(lead.multibuy ? lead.multibuy.price : lead.price)}
               </p>
               <p className="num text-sm font-semibold">
@@ -49,12 +49,12 @@ export function DealsModule({ products }: { products: Product[] }) {
                 {unit ? ` · ${unit}` : ''}
               </p>
               {saving ? (
-                <p className="num text-forest-muted mt-1 text-sm">
+                <p className="num text-text-secondary mt-1 text-sm">
                   Was {formatMoney(lead.compareAtPrice)} — you save {formatMoney(saving)}
                 </p>
               ) : null}
             </div>
-            <div className="border-nutmeg/25 bg-paper overflow-hidden rounded-[var(--radius-control)] border">
+            <div className="border-nutmeg/25 bg-surface-card overflow-hidden rounded-[var(--radius-control)] border">
               <ProductArt
                 image={lead.images[0]}
                 seed={lead.handle}
@@ -64,7 +64,7 @@ export function DealsModule({ products }: { products: Product[] }) {
 
             <div>
               <AddToCart product={lead} />
-              <ul className="text-forest-muted mt-3 list-none space-y-1.5 text-sm">
+              <ul className="text-text-secondary mt-3.5 list-none space-y-1.5 text-sm">
                 <li className="flex items-center gap-2">
                   <Icon name="Check" size={15} className="shrink-0" />
                   Unit price shown so sizes compare honestly
@@ -77,7 +77,7 @@ export function DealsModule({ products }: { products: Product[] }) {
             </div>
           </article>
 
-          <ul className="grid list-none grid-cols-2 gap-2.5 md:grid-cols-3 xl:grid-cols-4">
+          <ul className="grid list-none grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-4">
             {rest.slice(0, 8).map((product) => (
               <li key={product.id} className="flex">
                 <ProductCard product={product} className="w-full" />

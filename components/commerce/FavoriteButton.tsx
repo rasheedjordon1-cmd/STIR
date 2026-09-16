@@ -24,8 +24,9 @@ export function FavoriteButton({
       aria-pressed={saved}
       aria-label={saved ? `Remove ${title} from your list` : `Save ${title} to your list`}
       className={cx(
-        'border-line-strong bg-paper/90 hover:border-forest flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur-[1px] transition-colors',
-        saved ? 'text-nutmeg border-nutmeg/50' : 'text-forest-muted',
+        'bg-surface-card/85 flex h-9 w-9 items-center justify-center rounded-full',
+        'transition-[color,background-color,transform] duration-[var(--duration-tap)] ease-[var(--ease-out-quint)] active:scale-95',
+        saved ? 'text-state-danger' : 'text-text-secondary hover:text-text-primary',
         className,
       )}
     >

@@ -27,28 +27,41 @@ export function EmptyState({
   className?: string;
 }) {
   const Heading = `h${level}` as 'h1' | 'h2' | 'h3' | 'h4';
-  const border =
+  // V2: an empty state is a surface, not an outlined box. Only the icon well
+  // carries a hairline, which keeps the focal point without a second rectangle.
+  const surface =
     tone === 'blocked'
-      ? 'border-nutmeg/40 bg-nutmeg-wash'
+      ? 'bg-surface-nutmeg-soft'
       : tone === 'caution'
-        ? 'border-cocoa/30 bg-turmeric-wash'
-        : 'border-line-strong bg-paper';
+        ? 'bg-surface-yellow-soft'
+        : 'bg-surface-card';
   const mark =
-    tone === 'blocked' ? 'text-nutmeg' : tone === 'caution' ? 'text-cocoa' : 'text-forest-muted';
+    tone === 'blocked'
+      ? 'text-state-danger'
+      : tone === 'caution'
+        ? 'text-state-warning'
+        : 'text-text-secondary';
 
   return (
-    <div className={cx('rounded-[var(--radius-card)] border px-5 py-8 text-center', border, className)}>
+    <div
+      className={cx(
+        'rounded-[var(--radius-module)] px-5 py-10 text-center',
+        surface,
+        tone === 'neutral' && 'border border-border-subtle',
+        className,
+      )}
+    >
       <span
         className={cx(
-          'mb-3 inline-flex h-12 w-12 items-center justify-center rounded-full border border-current',
+          'bg-surface-card/70 mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full',
           mark,
         )}
       >
         <Icon name={icon} size={24} />
       </span>
-      <Heading className={level <= 2 ? 'text-xl' : 'text-md'}>{title}</Heading>
-      <p className="text-forest-muted mx-auto mt-1.5 max-w-sm text-sm">{body}</p>
-      {children ? <div className="mt-4 flex flex-wrap justify-center gap-2">{children}</div> : null}
+      <Heading className={level <= 2 ? 'text-xl' : 'text-lg'}>{title}</Heading>
+      <p className="text-text-secondary mx-auto mt-2 max-w-[46ch] text-base">{body}</p>
+      {children ? <div className="mt-5 flex flex-wrap justify-center gap-2">{children}</div> : null}
     </div>
   );
 }

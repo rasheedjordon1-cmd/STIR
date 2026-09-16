@@ -34,7 +34,7 @@ export function OrdersView({
   return (
     <div className="flex flex-col gap-8">
       <section aria-labelledby="orders-heading">
-        <h2 id="orders-heading" className="label text-forest-muted border-ink-line mb-3 border-b-2 pb-1.5">
+        <h2 id="orders-heading" className="label text-text-secondary border-border-subtle mb-3 border-b pb-2">
           {orders.length} orders
         </h2>
         <div className="flex flex-col gap-3">
