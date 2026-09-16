@@ -9,8 +9,11 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, rmSync, statSync } from 'node:fs';
 
+// Date plus the commit it was built from, so two builds on the same day are
+// never mistaken for each other once they are sitting in a downloads folder.
 const stamp = new Date().toISOString().slice(0, 10);
-const out = `dist/spicemart-prototype-${stamp}.zip`;
+const sha = execFileSync('git', ['rev-parse', '--short', 'HEAD']).toString().trim();
+const out = `dist/spicemart-prototype-${stamp}-${sha}.zip`;
 
 rmSync('out', { recursive: true, force: true });
 rmSync('dist', { recursive: true, force: true });
