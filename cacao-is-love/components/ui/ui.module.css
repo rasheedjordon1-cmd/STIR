@@ -93,3 +93,8 @@
 
 /* ---------- Chapter tag — seasoning only ---------- */
 .chapterTag { display: inline-flex; align-items: center; gap: var(--s-2); color: var(--fg-meta); }
+
+/* A control that cannot act says so. Used by CHECKOUT before an endpoint is
+   configured — half-opacity and not-allowed beats a button that silently
+   does nothing when pressed. */
+.btn:disabled, .btn[aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; }

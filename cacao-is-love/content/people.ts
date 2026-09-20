@@ -1,52 +1,25 @@
 /**
- * NOTES FROM THE NEIGHBORHOOD — human social proof.
+ * PEOPLE — sharing.
  *
- * ⚠⚠ SAMPLE DATA. These are structural placeholders, NOT real customers.
- *    Publishing invented testimonials is a legal and trust problem.
- *    Replace every entry below with a real, permissioned quote before launch,
- *    and delete any entry still marked `placeholder: true`.
+ * ⚠ THE TESTIMONIALS ARE GONE, AND THEY ARE NOT COMING BACK AS FICTION.
+ *   This file used to export three `fieldNotes` reading "NAME / CITY, STATE /
+ *   Placeholder quote — replace with a real, permissioned customer note", and
+ *   the section rendered them on the homepage and the product page. They were
+ *   live.
+ *
+ *   Invented social proof is a legal and trust problem, so the carousel is
+ *   removed rather than filled in. When real, permissioned quotes exist they
+ *   can come back as a new module — not by re-seeding this one.
+ *
+ * What replaces it is THE WAIT: two cups, a bag, an empty room. The second
+ * person is the point and they are outside the frame. The viewer finishes it.
+ * Nothing here describes the people in the photograph, because there are none
+ * and we would be inventing them.
  */
 
-export interface FieldNote {
-  id: string
-  name: string
-  location: string
-  quote: string
-  theirCup: string[]
-  placeholder: boolean
-}
-
-export const makeTwo = {
-  eyebrow: 'CHAPTER 10',
-  headline: ['MAKE TWO CUPS.'],
-  lines: ['One for you.', 'One for somebody else.'],
-  body:
-    'The second cup is the whole point. It is the difference between a thing you consume and a thing you share. Buy two bags and the second one has somebody’s name on it.',
-}
-
-export const fieldNotes: FieldNote[] = [
-  {
-    id: 'fn1',
-    name: 'AMIR + JUNE',
-    location: 'JACKSON HEIGHTS, NY',
-    quote: 'Placeholder quote — replace with a real, permissioned customer note.',
-    theirCup: ['oat milk', 'cinnamon', 'honey'],
-    placeholder: true,
-  },
-  {
-    id: 'fn2',
-    name: 'NAME',
-    location: 'CITY, STATE',
-    quote: 'Placeholder quote — replace with a real, permissioned customer note.',
-    theirCup: ['—', '—'],
-    placeholder: true,
-  },
-  {
-    id: 'fn3',
-    name: 'NAME',
-    location: 'CITY, STATE',
-    quote: 'Placeholder quote — replace with a real, permissioned customer note.',
-    theirCup: ['—', '—'],
-    placeholder: true,
-  },
-]
+export const people = {
+  eyebrow: 'CH. 05 — SHARING',
+  headline: 'TWO CUPS ARE BETTER THAN ONE.',
+  body: 'Cacao Is Love started with a simple idea: when you find something good, share it.',
+  caption: 'PL. 06 — TWO CUPS, ONE MORNING',
+} as const

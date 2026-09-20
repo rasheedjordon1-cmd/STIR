@@ -1,18 +1,20 @@
 /**
  * FOUNDER NOTE — first person, no "MEET OUR FOUNDER".
  *
- * These are Nicolas's own words, carried close to verbatim from his original
- * site. They are deliberately NOT rewritten: the section works because it is
- * testimony in his voice, and the typography does the elevating.
+ * ⚠ WHAT WAS REMOVED, AND WHY.
+ *   Nicolas's original site said cacao "opens creativity, deepens empathy, and
+ *   connects us to something ancient and beautiful", and described "the gentle
+ *   magic that indigenous cultures have honored for thousands of years".
  *
- * Note the register. In brand voice, "gentle magic" and "something ancient and
- * beautiful" would land in the ceremonial-wellness lane the brief rules out.
- * In a named founder's first person they read as personal experience, which is
- * a different claim entirely. Keep them in the note; keep them out of the
- * product copy.
+ *   The first is a structure/function claim: it tells a reader what the product
+ *   will do to them, which is regulated for food in the US. The second invokes
+ *   Indigenous cultures as atmosphere. Neither belongs on a product page, and
+ *   putting them in a founder's mouth does not make them safer — it makes them
+ *   harder to spot.
+ *
+ *   His closing line is kept verbatim and attributed, because it is a personal
+ *   statement about sharing rather than a claim about what cacao does.
  */
-
-import { photo } from './photography'
 
 export const founder = {
   name: 'Nicolas Nuvan',
@@ -20,14 +22,14 @@ export const founder = {
   portrait: {
     plate: 'PL. 07',
     caption: 'Nicolas, at the trees',
-    src: photo('founderNicolas'),
-    alt: 'Nicolas smiling as he holds a ripening cacao pod still attached to the tree.',
+    photo: 'founderNicolas',
   },
+  /** Verbatim, and presented as his words. Never restated as a brand fact. */
+  quote: 'Good things are meant to be shared, especially among neighbors.',
+  /** Supporting copy. States the brand's premise; invents no biography. */
   note: [
-    'I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.',
-    'This is a gift — it’s an invitation to slow down, connect with yourself, and experience the gentle magic that indigenous cultures have honored for thousands of years.',
+    'Cacao Is Love started with a simple idea: when you find something good, you share it.',
+    'The cacao comes from Colombia. It arrives as pieces you break apart, and it is meant for a cup you make for somebody else as often as you make it for yourself.',
   ],
-  /** His closing line, used as the pull quote. */
-  quote: 'I’m sharing this with you because good things are meant to be shared, especially among neighbors.',
   signoff: '— Nicolas',
-}
+} as const

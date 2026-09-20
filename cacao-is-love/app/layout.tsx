@@ -6,6 +6,7 @@ import { SiteFooter } from '@/components/chrome/SiteFooter'
 import { CartDrawer } from '@/components/chrome/CartDrawer'
 import { StickyCta } from '@/components/chrome/StickyCta'
 import { site } from '@/content/site'
+import { StructuredData } from '@/components/seo/StructuredData'
 import './globals.css'
 
 /* ============================================================================
@@ -90,19 +91,28 @@ const plexMono = localFont({
    })
 */
 
+/* The live origin. Set NEXT_PUBLIC_SITE_URL when a custom domain replaces it —
+   canonical and Open Graph URLs both resolve against this. */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL?.trim() || 'https://cacaoislove.netlify.app'
+
 export const metadata: Metadata = {
-  metadataBase: new URL('https://cacaoislove.example'), // PLACEHOLDER — set real domain
+  metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Cacao Is Love — 100% whole cacao from Colombia',
+    default: 'Cacao Is Love — 100% cacao from Colombia',
     template: '%s — Cacao Is Love',
   },
   description:
-    'One ingredient: whole cacao from Colombia. Learn what cacao is, where it comes from, and how to make a cup.',
+    'One ingredient: cacao, grown in Colombia. 250 g of pieces you break apart and melt into a cup.',
+  alternates: { canonical: '/' },
   openGraph: {
     title: 'Cacao Is Love',
-    description: '100% whole cacao from Colombia. Made simply. Shared freely.',
+    description: '100% cacao from Colombia. Made simply. Shared freely.',
     type: 'website',
+    url: SITE_URL,
+    siteName: 'Cacao Is Love',
+    images: [{ url: '/poster/one-more-cup-1024.webp', width: 1024, height: 1279, alt: 'Cacao Is Love — one more cup?' }],
   },
+  twitter: { card: 'summary_large_image' },
 }
 
 export const viewport: Viewport = {
@@ -125,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CartDrawer />
           <StickyCta />
         </CartProvider>
+        <StructuredData url={SITE_URL} />
         <span hidden aria-hidden>
           {site.brand}
         </span>

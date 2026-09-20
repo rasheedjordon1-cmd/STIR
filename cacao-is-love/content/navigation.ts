@@ -41,12 +41,12 @@ export const megaMenus: MegaMenu[] = [
     href: '/#cacao',
     field: 'red',
     brandline: 'ONE INGREDIENT.',
-    brandNote: 'Whole cacao. Nothing added, nothing taken out.',
+    brandNote: 'Cacao and nothing else. It comes as pieces you break apart.',
     links: [
       { ch: 'CH. 01', label: 'THE CACAO',    href: '/#truth',       note: 'What is actually in the bag.' },
       { ch: 'CH. 02', label: 'THE CATEGORY', href: '/#cacao',       note: 'Cacao is not cocoa powder, and not a chocolate bar.' },
-      { ch: 'CH. 03', label: 'COMPOSITION',  href: '/#composition', note: 'The compounds the whole bean carries.' },
-      {               label: 'CACAO & COFFEE', href: '/#coffee',    note: 'How the cup compares to the one you already drink.' },
+      { ch: 'CH. 02', label: 'THE COUNTER',  href: '/#counter',     note: 'The bag, the cup, and the price.' },
+      {               label: 'CACAO & COFFEE', href: '/shop/whole-cacao/#coffee', note: 'How the cup compares to the one you already drink.' },
     ],
   },
   {
@@ -57,9 +57,9 @@ export const megaMenus: MegaMenu[] = [
     brandline: 'GROWN IN COLOMBIA.',
     brandNote: 'One country, named. The rest of the record stays blank until it is confirmed.',
     links: [
-      { ch: 'CH. 04', label: 'ORIGIN',   href: '/#source',  note: 'Where the cacao comes from, and what we can prove.' },
-      { ch: 'CH. 05', label: 'WORLDVIEW', href: '/#nicolas', note: 'Nicolas, in his own words.' },
-      {               label: 'WHY THIS EXISTS', href: '/#why', note: 'The reason for a single bag.' },
+      { ch: 'CH. 03', label: 'ORIGIN',   href: '/#source',  note: 'Where the cacao comes from, and what we can prove.' },
+      { ch: 'CH. 06', label: 'WORLDVIEW', href: '/#nicolas', note: 'Nicolas, in his own words.' },
+      {               label: 'THE COUNTER',     href: '/#buy',  note: '250 g, and a button.' },
     ],
   },
   {
@@ -72,7 +72,7 @@ export const megaMenus: MegaMenu[] = [
     links: [
       {               label: 'MAKE A CUP', href: '/#make',                   note: 'The method, start to finish.' },
       {               label: 'QUESTIONS',  href: '/#faq',                    note: 'Storage, strength, sweetening, shipping.' },
-      { ch: 'CH. 06', label: 'THE COUNTER', href: '/shop/whole-cacao',       note: '250 g of whole cacao.' },
+      { ch: 'CH. 07', label: 'THE COUNTER', href: '/shop/whole-cacao/',      note: '250 g of cacao, in pieces.' },
     ],
   },
   {
@@ -84,8 +84,8 @@ export const megaMenus: MegaMenu[] = [
     brandNote: 'A bag is usually bought for someone else. That is the whole idea.',
     links: [
       {               label: 'THE NEIGHBORHOOD', href: '/#people',     note: 'Who is drinking it.' },
-      { ch: 'CH. 05', label: 'NICOLAS',          href: '/#nicolas',    note: 'The person who started it.' },
-      {               label: 'STAY CLOSE',       href: '/#newsletter', note: 'Next drops, and nothing else.' },
+      { ch: 'CH. 06', label: 'NICOLAS',          href: '/#nicolas',    note: 'The person who started it.' },
+      {               label: 'QUESTIONS',        href: '/#faq',        note: 'Storage, strength, sweetening.' },
     ],
   },
 ]

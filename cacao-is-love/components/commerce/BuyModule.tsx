@@ -57,7 +57,7 @@ function AvailabilityLine({ availability }: { availability: Availability }) {
   return (
     <p className={`t-label ${s.status}`}>
       <SeedChamber size={13} />
-      IN STOCK — SHIPS IN 1–2 DAYS
+      IN STOCK
     </p>
   )
 }
@@ -188,7 +188,7 @@ function PurchaseBlock({
 
       <div className={s.actions}>
         <QtyControl value={quantity} onChange={setQuantity} label={option.label} />
-        <Button variant="primary" lg cut onClick={handleAdd}>
+        <Button variant="primary" lg cut onClick={handleAdd} data-buy-cta>
           ADD TO BAG — {formatPrice(total)}
         </Button>
       </div>
@@ -197,13 +197,17 @@ function PurchaseBlock({
         {announcement}
       </p>
 
-      <div className={`t-meta ${s.micro}`}>
-        {site.shipping.map((row) => (
-          <span key={row.label}>
-            {row.label}: {row.value}
-          </span>
-        ))}
-      </div>
+      {/* Renders only once fulfilment is confirmed. See site.shipping — the
+          rows were placeholders and were displaying as though they were policy. */}
+      {site.shipping.length > 0 && (
+        <div className={`t-meta ${s.micro}`}>
+          {site.shipping.map((row) => (
+            <span key={row.label}>
+              {row.label}: {row.value}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   )
 }

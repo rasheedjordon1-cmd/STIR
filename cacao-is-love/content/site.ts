@@ -1,10 +1,8 @@
-import { photo } from './photography'
-
 /** SITE — navigation, contents, shipping, and the email capture. */
 
 export const site = {
   brand: 'CACAO IS LOVE',
-  tagline: '100% whole cacao from Colombia.',
+  tagline: '100% cacao from Colombia.',
 
   nav: [
     { label: 'CACAO',  href: '/#cacao'  },
@@ -15,36 +13,43 @@ export const site = {
   shopHref: '/shop/whole-cacao',
 
   secondaryNav: [
-    { label: 'FAQ',     href: '/shop/whole-cacao#faq' },
+    { label: 'FAQ',     href: '/#faq' },
     { label: 'ABOUT',   href: '/#nicolas' },
-    { label: 'CONTACT', href: 'mailto:hello@example.com' }, // PLACEHOLDER
+    /* CONTACT is intentionally absent. There is no verified address, and
+       hello@example.com was rendering in the live footer. Add it back here the
+       moment a real one exists — the footer renders this list as-is. */
   ],
 
   hero: {
     eyebrow: 'A GIFT FROM CURIOSITY',
     headline: 'CACAO, MADE TO BE SHARED.',
-    supporting: '100% whole cacao.',
+    supporting: '100% cacao.',
     secondLine: 'Grown in Colombia.',
-    primaryCta: 'MAKE A CUP',
-    secondaryCta: 'WHAT IS CACAO?',
+    thirdLine: 'Nothing added.',
+    primaryCta: 'GET THE CACAO',
+    secondaryCta: 'SEE HOW TO MAKE IT',
   },
 
   /** The product-truth strip under the hero. Keep every item short. */
   marquee: [
     'ONE INGREDIENT',
-    'WHOLE CACAO',
+    '100% CACAO',
     'GROWN IN COLOMBIA',
     'MADE TO SHARE',
     'NOTHING ADDED',
     '250 G',
   ],
 
-  /** PLACEHOLDER — set real shipping terms before launch. */
-  shipping: [
-    { label: 'SHIPS FROM', value: 'New York, NY' },
-    { label: 'DISPATCH',   value: '1–2 business days' },
-    { label: 'FREE OVER',  value: '$60' },
-  ],
+  /**
+   * FULFILMENT — renders only when populated.
+   *
+   * ⚠ Every row here is a promise to a customer. The previous values (New York,
+   *   1–2 business days, free over $60) were placeholders and were displaying
+   *   on the live buy module as though they were policy. Nothing goes back in
+   *   this array until it is confirmed; the buy module hides the block while it
+   *   is empty rather than guessing.
+   */
+  shipping: [] as { label: string; value: string }[],
 
   email: {
     eyebrow: 'STAY CLOSE',
@@ -55,7 +60,7 @@ export const site = {
   },
 
   footer: {
-    lines: ['CACAO IS LOVE', '100% WHOLE CACAO', 'COLOMBIA'],
+    lines: ['CACAO IS LOVE', '100% CACAO', 'COLOMBIA'],
     legal: '© ' + new Date().getFullYear() + ' Cacao Is Love. All rights reserved.',
   },
 }

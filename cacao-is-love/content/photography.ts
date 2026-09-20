@@ -1,72 +1,100 @@
 /**
- * PHOTOGRAPHY — one registry for every image slot on the site.
+ * PHOTOGRAPHY — one registry for every photograph on the site.
  *
- * The site is designed to be correct with no photography at all: an unset slot
- * renders as a numbered Plate with a picture-box mark, which reads as reserved
- * space rather than a broken image. That means photography can land one file at
- * a time instead of all at once.
+ * Each entry carries its intrinsic size and the widths that exist on disk, so
+ * <Photo> can emit a real srcset and reserve the right box before the file
+ * lands. Variants are produced by `node scripts/build-photos.mjs`; nothing here
+ * should name a file that script did not write.
  *
- * TO ADD AN IMAGE
- *   1. Drop the file in `public/photo/` using the filename below.
- *   2. Add its key to AVAILABLE.
- * That is the whole change. No component edits, no layout work — every slot
- * already has its aspect ratio, caption and plate number.
+ * ALT TEXT lives here, next to the photograph, because it describes the
+ * picture and not the layout — the same image means the same thing wherever it
+ * is placed. Decorative uses pass alt="" at the call site.
  *
- * ⚠ Interim art direction: warm cream / kraft / cacao-brown, documentary, film
- *   grain, natural light, unstyled. Packaging must stay UNBRANDED until the
- *   mastermark exists — a mocked-up label would be inventing an identity.
- * ⚠ The origin photographs are real, but the region and producer are still
- *   unconfirmed, so captions describe WHAT IS SHOWN and never where. "Pod on
- *   the branch" is safe; naming a farm or region is not, until origin.ts says
- *   so.
+ * CAPTION INTEGRITY: captions and alt text describe WHAT IS SHOWN, never where.
+ * The origin region and producer are still unconfirmed (see origin.ts), so
+ * "pod on the branch" is safe and naming a farm or region is not.
  */
 
-const files = {
-  productFront: 'product-front.png', //  4:5  hero, buy modules
-  productFlat: 'product-flat.png', //    4:3  gallery lead
-  texture: 'texture.png', //             1:1  broken block, macro
-  chop: 'chop.png', //                   3:2  step 01
-  melt: 'melt.png', //                   3:2  step 02
-  cupInHands: 'cup-in-hands.png', //     1:1  step 03, gallery
-  comparison: 'comparison.png', //       1:1  cacao beside coffee
-  pouchBack: 'pouch-back.png', //        1:1  ingredient panel
-  originTree: 'origin-tree.png', //      1:1  pods on the trunk
-  podSplit: 'pod-split.png', //          1:1  pod opened
-  beansDrying: 'beans-drying.png', //    1:1  drying trays
-  kitchen: 'kitchen.png', //             4:5  founder note
+export interface Photograph {
+  file: string
+  /** Intrinsic dimensions of the largest variant — reserves the box, kills CLS. */
+  w: number
+  h: number
+  /** Widths actually generated on disk. */
+  widths: number[]
+  dir?: string
+  alt: string
+}
 
-  /* Nicolas at the trees. These are the real provenance and founder
-     photographs — the first images on the site that actually document the
-     supply chain rather than illustrate it. When they land, the provenance
-     section's cream half takes `originNicolas` and the founder section takes
-     `founderNicolas`, and the interim captions below can name what is really
-     shown instead of hedging. */
-  founderNicolas: 'nicolas-pod.webp', //      4:3  founder note, close, hands on a pod
-  originPodBranch: 'origin-pod-branch.webp', //3:4  hands on a pod, no face
-  originAtTheTrees: 'origin-at-the-trees.webp',//3:4 full figure, the place
-  originTwoPods: 'origin-two-pods.webp', //    3:4  two pods, backlit
-  oneCup: 'one-cup.png', //              3:4  make two
-  twoCups: 'two-cups.png', //            3:4  make two
-} as const
+const defs = {
+  /* --- PRODUCT ------------------------------------------------------------ */
+  packStudio: {
+    file: 'pack-studio', w: 1024, h: 1536, widths: [640, 1024],
+    alt: 'The Cacao Is Love pouch upright, with the cacao pieces visible through the window in the front of the bag.',
+  },
+  packWood: {
+    file: 'pack-wood', w: 1122, h: 1402, widths: [640, 1024],
+    alt: 'The Cacao Is Love pouch standing on a wooden surface.',
+  },
 
-export type PhotoKey = keyof typeof files
+  /* --- THE COUNTER — product portrait, observed, still --------------------- */
+  counter: {
+    file: 'counter-green', w: 1024, h: 1536, widths: [640, 1024],
+    alt: 'The Cacao Is Love pouch on a green background beside a full cup of cacao, with broken pieces of cacao in front of it.',
+  },
 
-/**
- * Keys whose files are actually present in `public/photo/`.
- * Everything not listed here renders as an empty plate, by design.
- */
-const AVAILABLE: readonly PhotoKey[] = [
-  'founderNicolas',
-  'originPodBranch',
-  'originAtTheTrees',
-  'originTwoPods',
-  // 'chop',
-  // 'melt',
-  // 'originTree',
-  // 'pouchBack',
-  // 'kitchen',
-]
+  /* --- DOMESTIC LIFE ------------------------------------------------------ */
+  heroPass: {
+    file: 'hero-pass', w: 1536, h: 1024, widths: [640, 1024],
+    alt: 'A hand holding out a cup of cacao across a kitchen counter in daylight.',
+  },
+  /* THE BREAK. The reaching hand carries motion blur; the room is resolved.
+     That is the photograph, not a fault — do not crop the hand away and do not
+     lay text over the board. */
+  theBreak: {
+    file: 'break-kitchen', w: 1536, h: 1024, widths: [640, 1024],
+    alt: 'A hand reaching for a broken piece of cacao on a pale cutting board, with a small knife, the pouch and a cup alongside.',
+  },
+  /* THE WAIT. Two cups, nobody in frame. The second person is the point, and
+     they are outside the picture — keep both cups and the pouch in every crop. */
+  theWait: {
+    file: 'wait-two-cups', w: 1536, h: 1024, widths: [640, 1024],
+    alt: 'Two full cups of cacao and the Cacao Is Love pouch on a dining table in morning light, the chairs around it empty.',
+  },
 
-export function photo(key: PhotoKey): string | null {
-  return AVAILABLE.includes(key) ? `/photo/${files[key]}` : null
+  /* --- DOCUMENTARY PROVENANCE --------------------------------------------- */
+  founderNicolas: {
+    file: 'nicolas-pod', w: 1100, h: 825, widths: [640, 1024],
+    alt: 'Nicolas reaching up to a ripening cacao pod growing on a tree.',
+  },
+  originPodBranch: {
+    file: 'origin-pod-branch', w: 840, h: 1120, widths: [640],
+    alt: 'Two hands holding a ripening cacao pod hanging from a branch.',
+  },
+  originAtTheTrees: {
+    file: 'origin-at-the-trees', w: 840, h: 1120, widths: [640],
+    alt: 'A person standing beneath a cacao tree, looking up at the pods.',
+  },
+  originTwoPods: {
+    file: 'origin-two-pods', w: 840, h: 1120, widths: [640],
+    alt: 'A hand reaching for two cacao pods on a trunk, lit from behind.',
+  },
+
+  /* --- GRAPHIC ------------------------------------------------------------ */
+  oneMoreCup: {
+    file: 'one-more-cup', dir: '/poster', w: 1601, h: 2000, widths: [640, 1024, 1600],
+    alt: 'Cacao Is Love poster reading “One more cup?” over a cacao pod on the branch. Warning: one cup has a habit of becoming two.',
+  },
+} satisfies Record<string, Photograph>
+
+/* Declared in two steps on purpose: `satisfies` alone narrows each entry to
+   its own literal shape, so the optional `dir` vanishes from the union and
+   every read of it fails to compile. Keys are inferred from defs; the exported
+   value is widened back to the full interface. */
+export type PhotoKey = keyof typeof defs
+export const photos: Record<PhotoKey, Photograph> = defs
+
+export const photoSrc = (key: PhotoKey) => {
+  const p = photos[key]
+  return `${p.dir ?? '/photo'}/${p.file}-${p.widths[p.widths.length - 1]}.webp`
 }

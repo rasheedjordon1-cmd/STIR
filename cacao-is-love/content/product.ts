@@ -1,11 +1,14 @@
 /**
  * PRODUCT — single source of truth for the buy experience.
  *
- * ⚠ FIELDS MARKED "PLACEHOLDER" MUST BE SET BEFORE LAUNCH.
- *   Nothing in this file is a claim about sourcing. See origin.ts for that.
+ * Nothing in this file is a claim about sourcing. See origin.ts for that.
+ *
+ * ⚠ PRODUCT TRUTH. The descriptor is "100% cacao", not "whole cacao". The
+ *   photographs show short broken pieces; "whole" invited copy elsewhere to
+ *   describe a solid block, which the bag does not contain. The packaging also
+ *   reads "organic", "raw" and "ceremonial-grade" — none of those are repeated
+ *   here, because packaging artwork is not the same as an approved web claim.
  */
-
-import { photo } from './photography'
 
 export type Availability = 'in_stock' | 'low_stock' | 'sold_out'
 
@@ -24,7 +27,6 @@ export interface Product {
   descriptor: string
   originCountry: string
   weightGrams: number
-  /** PLACEHOLDER — set the real retail price. */
   price: number
   currency: string
   availability: Availability
@@ -34,32 +36,22 @@ export interface Product {
   nextDropLabel: string | null
   ingredients: string[]
   options: PurchaseOption[]
-  /** Image swap points. Drop files into /public and update the paths. */
-  gallery: GallerySlide[]
-}
-
-export interface GallerySlide {
-  id: string
-  /** The gallery teaches, it does not only flatter. Each slide carries a job. */
-  role: 'product' | 'texture' | 'preparation' | 'origin' | 'comparison' | 'voice' | 'packaging' | 'spec'
-  plate: string
-  caption: string
-  src: string | null
-  alt: string
 }
 
 export const product: Product = {
   slug: 'whole-cacao',
   name: 'CACAO IS LOVE',
-  descriptor: '100% Whole Cacao',
+  descriptor: '100% cacao',
   originCountry: 'Colombia',
   weightGrams: 250,
-  price: 28, // PLACEHOLDER
+  price: 28,
   currency: 'USD',
   availability: 'in_stock',
-  unitsRemaining: 41,
+  /* No live inventory feed. A number here would be invented, and it only
+     renders on low_stock anyway — leave it null until a real count exists. */
+  unitsRemaining: null,
   nextDropLabel: null,
-  ingredients: ['Whole cacao'],
+  ingredients: ['Cacao'],
 
   options: [
     {
@@ -78,16 +70,6 @@ export const product: Product = {
     },
   ],
 
-  gallery: [
-    { id: 'g1', role: 'product',     plate: 'PL. 01', caption: '250 g — whole cacao, Colombia',        src: photo('productFlat'), alt: 'The CACAO IS LOVE bag, front.' },
-    { id: 'g2', role: 'texture',     plate: 'PL. 02', caption: 'Broken block, close',                   src: photo('texture'), alt: 'A block of whole cacao broken to show its texture.' },
-    { id: 'g3', role: 'preparation', plate: 'PL. 03', caption: 'Chop — a knife and a board',            src: photo('chop'), alt: 'Cacao being chopped on a wooden board.' },
-    { id: 'g4', role: 'preparation', plate: 'PL. 04', caption: 'Melt — low heat, hot water',            src: photo('melt'), alt: 'Cacao melting into hot water in a pot.' },
-    { id: 'g5', role: 'origin',      plate: 'PL. 05', caption: 'Colombia — origin record',              src: photo('originTree'), alt: 'Documentary photograph from the origin region.' },
-    { id: 'g6', role: 'comparison',  plate: 'PL. 06', caption: 'Cacao beside coffee',                   src: photo('comparison'), alt: 'A cup of cacao next to a cup of coffee.' },
-    { id: 'g7', role: 'voice',       plate: 'PL. 07', caption: 'A cup, made somebody else’s way',  src: photo('cupInHands'), alt: 'A person holding a mug of cacao.' },
-    { id: 'g8', role: 'packaging',   plate: 'PL. 08', caption: 'Back of bag — ingredients',             src: photo('pouchBack'), alt: 'The back of the bag showing the ingredient panel.' },
-  ],
 }
 
 export const formatPrice = (amount: number, currency = product.currency) =>

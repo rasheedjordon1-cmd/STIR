@@ -15,7 +15,13 @@
 }
 .heroCopy { display: grid; align-content: center; gap: var(--s-5); position: relative; }
 .heroEyebrow { display: flex; align-items: center; gap: var(--s-3); color: var(--marker); }
+/* The mastermark is the brand's authority and stays large — but at 560px on a
+   390px screen it pushed GET THE CACAO a full screen below the fold. Capped by
+   viewport on phones so the primary CTA lands in the first scroll. */
 .heroMark { display: block; margin-bottom: var(--s-2); }
+@media (max-width: 899px) {
+  .heroMark { max-width: min(72vw, 330px); }
+}
 .heroHead { max-width: 14ch; }
 .heroSupport { display: grid; gap: 2px; color: var(--fg-2); }
 .heroCtas { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; margin-top: var(--s-2); }
@@ -283,3 +289,130 @@
 
 /* the Curiosity mark sits under the portrait rather than replacing it */
 .nicMark { margin-top: var(--s-6); max-width: 260px; }
+
+/* ============================================================================
+   CIL 2026 — NARRATIVE SECTIONS
+   Added with the photography pass. Every rule here exists because a specific
+   photograph has to survive a specific crop; see notes per block.
+   ========================================================================== */
+
+/* -------- HERO ---------------------------------------------------------- */
+/* <Photo> emits a plain <img>, so the fill behaviour the old next/image had is
+   done here instead. object-position holds the passed cup, not the ceiling. */
+.heroImg {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: 66% 45%;
+}
+
+/* -------- THE COUNTER --------------------------------------------------- */
+/* The photograph is the argument, so it takes ~62vw at the desk and the copy
+   sits beside it as a caption block rather than a second column of equal
+   weight. Below 900 the image leads and the commerce follows immediately —
+   ADD TO BAG must not need a scroll. */
+.counterGrid { display: grid; gap: var(--s-7); align-items: end; }
+@media (min-width: 900px) {
+  .counterGrid {
+    grid-template-columns: minmax(0, 62fr) minmax(0, 38fr);
+    gap: clamp(32px, 4vw, 72px);
+    align-items: center;
+  }
+}
+.counterFigure { margin: 0; line-height: 0; }
+/* The counter photograph is a 2:3 portrait. At 62vw that is over a screen and
+   a half tall, which buries the commerce copy beside it — so the frame is
+   capped and the crop holds the label and the cup rather than the backdrop. */
+.counterFigure {
+  overflow: hidden;
+  max-height: min(78vh, 720px);
+}
+.counterFigure img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; }
+@media (max-width: 899px) {
+  .counterFigure { max-height: 62vh; }
+  .counterFigure img { object-position: 50% 32%; }
+}
+.counterCopy { display: grid; gap: var(--s-4); align-content: center; justify-items: start; }
+.counterName { margin-top: var(--s-3); }
+.counterMeta { color: var(--fg-meta); }
+.counterLine { color: var(--fg-2); max-width: 24ch; }
+
+/* -------- MAKE / THE BREAK ---------------------------------------------- */
+/* The photograph runs wide and the method runs under it as a four-column
+   ledger. Deliberately NOT one image per step. */
+.makeGrid { display: grid; gap: var(--s-6); }
+@media (min-width: 900px) {
+  .makeGrid { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); gap: clamp(32px, 4vw, 72px); align-items: end; }
+}
+.makeCopy { align-self: end; }
+.makeFigure { margin: 0; position: relative; line-height: 0; }
+/* THE BREAK is 3:2 and its subject — the reaching hand and the board — sits
+   left of centre. On a phone the frame narrows, so the crop holds the left
+   two-thirds rather than centring and slicing the hand off. */
+.makeFigure img { width: 100%; height: auto; }
+@media (max-width: 899px) {
+  .makeFigure { aspect-ratio: 4 / 3; overflow: hidden; }
+  .makeFigure img { height: 100%; object-fit: cover; object-position: 32% 55%; }
+}
+.makeCaption {
+  position: absolute; left: var(--s-4); bottom: var(--s-4);
+  background: var(--cil-ink); color: var(--cil-cream);
+  padding: 5px var(--s-3); line-height: 1.4;
+}
+
+.method {
+  display: grid; gap: var(--s-6);
+  margin-top: var(--s-8);
+  border-top: var(--rule-w) solid var(--rule-strong);
+  padding-top: var(--s-5);
+}
+@media (min-width: 760px) { .method { grid-template-columns: repeat(2, 1fr); gap: var(--s-7) var(--s-8); } }
+@media (min-width: 1100px) { .method { grid-template-columns: repeat(4, 1fr); } }
+.methodStep { display: grid; gap: var(--s-2); align-content: start; }
+.methodNum { color: var(--accent); }
+.methodTitle { margin-top: 2px; }
+.methodBody { color: var(--fg-2); line-height: 1.55; text-wrap: pretty; }
+.methodMeta { color: var(--fg-meta); margin-top: var(--s-1); }
+
+/* -------- PEOPLE / THE WAIT --------------------------------------------- */
+/* Full bleed, copy laid into the frame's empty left third where the tablecloth
+   is. Both cups and the bag live in the right two-thirds, so the text never
+   covers them and no crop removes them. */
+.waitFigure { margin: 0; position: relative; line-height: 0; }
+.waitFigure img { width: 100%; height: auto; }
+.waitCopy {
+  display: grid; gap: var(--s-3);
+  padding: var(--s-7) var(--gutter) var(--s-8);
+  background: var(--cil-cream); color: var(--cil-ink);
+}
+@media (min-width: 900px) {
+  .waitCopy {
+    position: absolute; left: 0; bottom: 0;
+    width: min(46%, 520px);
+    padding: var(--s-7) var(--s-7) var(--s-7) var(--gutter);
+    background: color-mix(in srgb, var(--cil-cream) 94%, transparent);
+  }
+}
+.waitEyebrow { color: var(--fg-meta); }
+.waitHead { text-wrap: balance; }
+.waitBody { color: var(--fg-2); max-width: 34ch; }
+.waitPlate { color: var(--fg-meta); }
+
+/* -------- NICOLAS ------------------------------------------------------- */
+.nicFigure { margin: 0; line-height: 0; }
+.nicFigure img { width: 100%; height: auto; }
+.nicCap {
+  display: flex; justify-content: space-between; gap: var(--s-4);
+  padding-top: var(--s-3); margin-top: var(--s-3);
+  border-top: var(--hair) solid var(--rule);
+  line-height: 1.4;
+}
+
+/* -------- BUY MODULE FIGURE --------------------------------------------- */
+.buyFigure { margin: 0; line-height: 0; }
+.buyFigure img { width: 100%; height: auto; }
+.buyCap {
+  display: flex; justify-content: space-between; gap: var(--s-4);
+  padding-top: var(--s-3); margin-top: var(--s-3);
+  border-top: var(--rule-w) solid var(--rule-strong);
+  line-height: 1.4;
+}
+.emailError { color: var(--fg); font-weight: 600; margin-top: var(--s-2); }

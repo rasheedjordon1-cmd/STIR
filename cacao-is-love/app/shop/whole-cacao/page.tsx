@@ -1,30 +1,35 @@
 import type { Metadata } from 'next'
 import { Marquee } from '@/components/sections/Marquee'
-import { ProductField, ProductImage, Purchase } from '@/components/sections/Product'
+import { ProductField, TheCounter, Purchase } from '@/components/sections/Product'
 import {
   WhatIsCacao,
-  Composition,
   Provenance,
   OriginPlates,
   Preparation,
   CoffeeNeighbor,
-  WhyPeopleDrink,
 } from '@/components/sections/Learn'
-import { Nicolas, Poster, FieldNotes, Faq } from '@/components/sections/Culture'
+import { Nicolas, Poster, Faq } from '@/components/sections/Culture'
 import { site } from '@/content/site'
+import { product, formatPrice } from '@/content/product'
 
 export const metadata: Metadata = {
-  title: '100% Whole Cacao — 250 g',
+  title: `${product.descriptor} — ${product.weightGrams} g`,
   description:
-    'One ingredient. Whole cacao, grown in Colombia. 250 g. Made simply, shared freely.',
+    'One ingredient: cacao, grown in Colombia. 250 g of pieces you break apart and melt into a cup.',
+  alternates: { canonical: '/shop/whole-cacao/' },
+  openGraph: {
+    title: `${product.name} — ${product.descriptor}`,
+    description: `${product.weightGrams} g · ${formatPrice(product.price)} · Grown in Colombia.`,
+    type: 'website',
+  },
 }
 
 /**
  * PRODUCT DETAIL PAGE
  *
  * The purchase counter comes first and carries the page's h1. Everything below
- * it is the same education the homepage uses — one source of truth per claim —
- * plus the reference material that does not earn homepage space.
+ * is the same education the homepage uses — one source of truth per claim —
+ * plus the coffee comparison, which does not earn homepage space.
  */
 export default function ProductPage() {
   return (
@@ -32,15 +37,12 @@ export default function ProductPage() {
       <Purchase id="pdp-buy" tag="PL. 03 — THE BAG" as="h1" />
       <Marquee items={site.marquee} field="ink" />
       <ProductField />
-      <FieldNotes />
-      <ProductImage />
+      <TheCounter />
       <WhatIsCacao />
-      <Composition />
       <Preparation />
       <Provenance />
       <OriginPlates />
       <CoffeeNeighbor />
-      <WhyPeopleDrink />
       <Nicolas />
       <Poster />
       <Faq />

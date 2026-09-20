@@ -1,43 +1,40 @@
-import { photo } from './photography'
-
-/** PREPARATION — removes the "I will never actually use it" objection. */
+/**
+ * PREPARATION — removes the "I will never actually use it" objection.
+ *
+ * ⚠ PRODUCT TRUTH. The photographs show short, broken pieces, not a moulded
+ *   block. Every instruction here has to match what is in the bag, so the
+ *   old "take 25–30 g off the block — roughly a two-finger piece" is gone.
+ *   Quantities are kept because they are existing approved product guidance;
+ *   the physical description around them is corrected.
+ */
 
 export const making = {
+  headline: 'MAKE CACAO.',
   lede: 'If you can make a cup of tea, you can make this. There is no correct way and nobody is watching.',
   steps: [
     {
       n: '01',
       title: 'BREAK',
-      body: 'Take about 25–30 g off the block — roughly a two-finger piece. Chop it small so it melts evenly.',
+      body: 'Start with about 25–30 g of cacao. Break or chop the pieces smaller so they melt evenly.',
       meta: '25–30 G PER CUP',
-      plate: 'PL. 03',
-      src: photo('chop'),
-      alt: '',
     },
     {
       n: '02',
-      title: 'MELT + MIX',
-      body: 'Warm 200 ml of water or milk on low heat. Add the cacao and stir until it goes smooth and glossy. Do not boil it.',
+      title: 'WARM',
+      body: 'Warm about 200 ml of water or milk over low heat. Do not let it boil.',
       meta: '200 ML · LOW HEAT',
-      plate: 'PL. 04',
-      src: photo('melt'),
-      alt: '',
     },
     {
       n: '03',
+      title: 'MIX',
+      body: 'Add the cacao and stir until it goes smooth and glossy.',
+      meta: 'STIR UNTIL SMOOTH',
+    },
+    {
+      n: '04',
       title: 'MAKE IT YOURS',
-      body: 'Honey, cinnamon, salt, oat milk, chilli, nothing at all. This is the part where it stops being our drink and becomes yours.',
+      body: 'Honey, cinnamon, salt, oat milk, chilli, or nothing at all. This is the part where it stops being our drink and becomes yours.',
       meta: 'NO WRONG ANSWERS',
-      plate: 'PL. 07',
-      src: photo('cupInHands'),
-      alt: '',
     },
   ],
-  nicolasWay: {
-    label: 'NICOLAS’S WAY',
-    body: [
-      'Placeholder — Nicolas’s own preparation goes here, in his words. Keep it specific and a little bit particular: the pan he uses, the exact thing he adds, the time of day he drinks it.',
-      'Specificity is what makes this section believable. Replace this text before launch.',
-    ],
-  },
-}
+} as const

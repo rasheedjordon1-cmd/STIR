@@ -1,9 +1,9 @@
-import Image from 'next/image'
 import { site } from '@/content/site'
 import { product, formatPrice } from '@/content/product'
 import { MastermarkDisplay } from '@/components/cil/Mastermark'
 import { SeedChamber, CuriousFinger } from '@/components/cil/CilMarks'
 import { ButtonLink, quietMark } from '@/components/ui/Button'
+import { Photo } from '@/components/ui/Photo'
 import s from './sections.module.css'
 
 /**
@@ -34,6 +34,7 @@ export function Hero() {
             <div className={s.heroSupport}>
               <p className="t-lede">{hero.supporting}</p>
               <p className="t-lede">{hero.secondLine}</p>
+              <p className="t-lede">{hero.thirdLine}</p>
             </div>
 
             <div className={s.heroCtas}>
@@ -46,20 +47,21 @@ export function Hero() {
               </ButtonLink>
             </div>
 
+            {/* Weight and price only. "SHIPS IN 1–2 DAYS" was here and is not
+                confirmed fulfilment — a dispatch window is a promise, and this
+                is the first screen a customer reads it on. */}
             <p className="t-meta">
-              {product.weightGrams} G · {formatPrice(product.price)} · SHIPS IN 1–2 DAYS
+              {product.weightGrams} G · {formatPrice(product.price)}
             </p>
           </div>
 
           <div className={s.heroMedia}>
             <div className={s.heroMediaInner}>
-              <Image
-                src="/photo/hero-pass.webp"
-                alt="One person passing a mug of cacao to another across a sunlit table, beside a bag of Cacao Is Love."
-                fill
+              <Photo
+                name="heroPass"
                 priority
                 sizes="(min-width: 900px) 62vw, 100vw"
-                style={{ objectFit: 'cover', objectPosition: '66% 45%' }}
+                className={s.heroImg}
               />
             </div>
             <p className={`t-meta ${s.heroCaption}`}>PL. 01 — THE PASS</p>

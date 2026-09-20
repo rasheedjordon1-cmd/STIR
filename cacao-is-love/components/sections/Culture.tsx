@@ -10,9 +10,12 @@ import { SeedChamber, CupRim, CacaoShard } from '@/components/cil/CilMarks'
 import { Reveal } from '@/components/ui/Reveal'
 import { Button } from '@/components/ui/Button'
 import { founder } from '@/content/founder'
-import { fieldNotes } from '@/content/people'
+import { people } from '@/content/people'
+import { canSignup } from '@/content/commerce'
+import { SignupForm } from '@/components/commerce/SignupForm'
 import { faq } from '@/content/faq'
 import { site } from '@/content/site'
+import { Photo } from '@/components/ui/Photo'
 import s from './sections.module.css'
 
 /* -------- 06 · CURIOSITY / NICOLAS -------------------------------------- */
@@ -21,7 +24,7 @@ export function Nicolas() {
     <Section id="nicolas" field="cream" labelledBy="nicolas-title">
       <div className={s.nicGrid}>
         <div className={s.nicCopy}>
-          <Tag>CH. 05 — WORLDVIEW</Tag>
+          <Tag>CH. 06 — WORLDVIEW</Tag>
           <h2 id="nicolas-title" className="t-display">
             CURIOSITY IS WHERE IT STARTS.
           </h2>
@@ -38,17 +41,13 @@ export function Nicolas() {
           </p>
         </div>
         <div className={s.nicArt}>
-          {founder.portrait.src && (
-            <Figure
-              src={founder.portrait.src}
-              alt={founder.portrait.alt}
-              ratio="4 / 3"
-              plate={founder.portrait.plate}
-              caption={founder.portrait.caption}
-              sizes="(min-width: 900px) 40vw, 100vw"
-              cut
-            />
-          )}
+          <figure className={s.nicFigure}>
+            <Photo name="founderNicolas" sizes="(min-width: 900px) 40vw, 100vw" />
+            <figcaption className={`t-meta ${s.nicCap}`}>
+              <span>{founder.portrait.plate}</span>
+              <span>{founder.portrait.caption}</span>
+            </figcaption>
+          </figure>
           <CuriosityTellMeMore alt="" sizes="(min-width: 900px) 22vw, 55vw" className={s.nicMark} />
         </div>
       </div>
@@ -58,55 +57,46 @@ export function Nicolas() {
 
 /* -------- 07 · POSTER INTERRUPTION -------------------------------------- */
 export function Poster() {
+  /* A printed poster dropped into the page. Full bleed, no card, no frame, and
+     the headline is not repeated in live text beside it — the artwork already
+     carries its own typography, and setting it twice reads as a mistake. */
   return (
     <div className={`field-red ${s.poster}`}>
-      <Image
-        src="/poster/one-more-cup.webp"
-        alt="Cacao Is Love poster: One more cup? Warning — one cup has a habit of becoming two."
-        width={1122}
-        height={1402}
-        sizes="100vw"
-        style={{ width: '100%', height: 'auto' }}
-      />
+      <Photo name="oneMoreCup" sizes="100vw" />
     </div>
   )
 }
 
-/* -------- NOTES FROM THE NEIGHBORHOOD ----------------------------------- */
-export function FieldNotes() {
+/* -------- 09 · PEOPLE / THE WAIT ---------------------------------------
+   This replaced a testimonial carousel that was rendering three cards reading
+   "NAME / CITY, STATE / Placeholder quote". Nothing here describes the people
+   in the photograph, because there are none in it — the second person is
+   outside the frame and the viewer finishes the story.
+
+   Both cups and the bag survive every crop; that is the whole picture. */
+export function TheWait() {
   return (
-    <Section id="people" field="ink" labelledBy="people-title">
-      <Tag>THE NEIGHBORHOOD</Tag>
-      <h2 id="people-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
-        HOW PEOPLE MAKE IT.
-      </h2>
-      <ul className={s.notes}>
-        {fieldNotes.map((note, i) => (
-          <Reveal key={note.id} as="li" delay={i * 70} className={s.noteCard}>
-            <blockquote className={s.noteQuote}>“{note.quote}”</blockquote>
-            <div>
-              <p className="t-label">{note.name}</p>
-              <p className="t-meta">{note.location}</p>
-            </div>
-            <div className={s.theirCup}>
-              <CupRim size={13} />
-              {note.theirCup.map((c, j) => (
-                <span key={j} className={`t-meta ${s.cupChip}`}>
-                  {c}
-                </span>
-              ))}
-            </div>
-          </Reveal>
-        ))}
-      </ul>
+    <Section id="people" field="cream" flush wide labelledBy="people-title">
+      <figure className={s.waitFigure}>
+        <Photo name="theWait" sizes="100vw" />
+        <figcaption className={s.waitCopy}>
+          <span className={`t-meta ${s.waitEyebrow}`}>{people.eyebrow}</span>
+          <h2 id="people-title" className={`t-display ${s.waitHead}`}>
+            {people.headline}
+          </h2>
+          <p className={`t-lede ${s.waitBody}`}>{people.body}</p>
+          <span className={`t-meta ${s.waitPlate}`}>{people.caption}</span>
+        </figcaption>
+      </figure>
     </Section>
   )
 }
 
 /* -------- EMAIL --------------------------------------------------------- */
 export function EmailCapture() {
-  const [email, setEmail] = useState('')
-  const [done, setDone] = useState(false)
+  /* The whole section is conditional on a configured endpoint. A capture form
+     that cannot deliver is not a smaller version of a working one. */
+  if (!canSignup) return null
   return (
     <Section id="newsletter" field="green" labelledBy="email-title">
       <div className={s.emailGrid}>
@@ -117,43 +107,7 @@ export function EmailCapture() {
           </h2>
         </div>
         <div>
-          {done ? (
-            <p className="t-lede" role="status">
-              You are in. We write when there is something to say.
-            </p>
-          ) : (
-            <form
-              className={s.emailForm}
-              onSubmit={(e) => {
-                e.preventDefault()
-                // SWAP POINT — post to your ESP.
-                setDone(true)
-              }}
-            >
-              <p className="t-lede" style={{ marginBottom: 'var(--s-3)' }}>
-                {site.email.supporting}
-              </p>
-              <div className={s.emailField}>
-                <label className="sr-only" htmlFor="newsletter-email">
-                  Email address
-                </label>
-                <input
-                  id="newsletter-email"
-                  className={s.emailInput}
-                  type="email"
-                  required
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <Button type="submit" variant="primary" lg>
-                  {site.email.cta}
-                </Button>
-              </div>
-              <p className="t-meta">{site.email.note}</p>
-            </form>
-          )}
+          <SignupForm />
         </div>
       </div>
     </Section>

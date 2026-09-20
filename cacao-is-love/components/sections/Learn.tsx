@@ -6,26 +6,15 @@ import {
   EduCocoaPowder,
   ProvenanceHandPod,
   DoubleSteamMark,
-  PrepBreakArt,
   CuriousFingerMark,
 } from '@/components/cil/CilAssets'
-import { PrepMelt, PrepMake } from '@/components/cil/CilArt'
 import { Reveal } from '@/components/ui/Reveal'
-import { whatIsCacao, coffeeNeighbor, whyPeopleDrinkIt, composition } from '@/content/education'
+import { Photo } from '@/components/ui/Photo'
+import { whatIsCacao, coffeeNeighbor } from '@/content/education'
 import { origin } from '@/content/origin'
 import { making } from '@/content/making'
 import { product } from '@/content/product'
 import s from './sections.module.css'
-
-/* Step 01 is the supplied artwork; 02 and 03 are still interim vectors, so the
-   art box below is a fixed height and each piece is centred in it — otherwise
-   the drawn landscape asset and the square vectors put their captions on three
-   different baselines. */
-const PREP_ART = [
-  (p: { title: string }) => <PrepBreakArt alt="" sizes="(min-width: 860px) 28vw, 80vw" />,
-  PrepMelt,
-  PrepMake,
-]
 
 /* -------- 03 · WHAT IS CACAO — cream, 5 / 7 ----------------------------- */
 export function WhatIsCacao() {
@@ -49,8 +38,11 @@ export function WhatIsCacao() {
         {/* CIL EDU 001 — let the artwork breathe, no card around it. */}
         <div className={s.eduArt}>
           {[
-            { Art: EduWholeCacao, name: 'WHOLE CACAO', sub: 'Solid cacao mass.' },
-            { Art: EduCocoaPowder, name: 'COCOA POWDER', sub: 'Processed powder form.' },
+            /* "WHOLE CACAO" was the left label. The teaching point is that
+               nothing was pressed out — not that the bag holds a whole bean —
+               so the label says what the pieces actually are. */
+            { Art: EduWholeCacao, name: 'CACAO', sub: 'Everything the bean had, still in it.' },
+            { Art: EduCocoaPowder, name: 'COCOA POWDER', sub: 'Cocoa butter pressed out.' },
           ].map(({ Art, name, sub }, i) => (
             <Reveal key={name} delay={i * 80} className={s.eduPanel}>
               <Art alt="" sizes="(min-width: 900px) 26vw, 42vw" />
@@ -66,39 +58,6 @@ export function WhatIsCacao() {
   )
 }
 
-/* -------- 03 · COMPOSITION — ink field ---------------------------------
-   Type and data only. The utility table is the section, which is the whole
-   point of a shelf-edge information system: the facts are the design. */
-export function Composition() {
-  return (
-    <Section id="composition" field="ink" labelledBy="composition-title">
-      <div className={s.compGrid}>
-        <div>
-          <Tag>CH. 03 — COMPOSITION</Tag>
-          <h2 id="composition-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
-            {composition.headline}
-          </h2>
-          <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
-            {composition.lede}
-          </p>
-          <p className={`t-meta ${s.compFootnote}`}>{composition.footnote}</p>
-        </div>
-
-        <dl className={s.compList}>
-          {composition.rows.map((r, i) => (
-            <Reveal key={r.compound} delay={i * 60} className={s.compRow}>
-              <dt className={s.compMark} aria-hidden>
-                <SeedChamber size={14} />
-              </dt>
-              <dt className={`t-h3 ${s.compName}`}>{r.compound}</dt>
-              <dd className={`t-body ${s.compNote}`}>{r.note}</dd>
-            </Reveal>
-          ))}
-        </dl>
-      </div>
-    </Section>
-  )
-}
 
 /* -------- 04 · PROVENANCE — a cream / green split field -----------------
    The supplied artwork's hands are MARKET GREEN, so the illustration cannot sit
@@ -115,11 +74,11 @@ export function Provenance() {
         </div>
         <div className={s.provCopySide}>
           <div className={s.provCopyInner}>
-            <Tag>CH. 04 — ORIGIN</Tag>
+            <Tag>CH. 03 — ORIGIN</Tag>
             <h2 id="source-title" className="t-display">
               GROWN IN COLOMBIA.
             </h2>
-            <p className="t-lede">Where the cacao begins.</p>
+            <p className="t-lede">{origin.subhead}</p>
             <div className={s.provMeta}>
               {origin.records
                 .filter((r) => r.value)
@@ -130,8 +89,8 @@ export function Provenance() {
                   </div>
                 ))}
               <div className={s.provMetaItem}>
-                <span className="t-label">FORM</span>
-                <span className="t-meta">WHOLE CACAO</span>
+                <span className="t-label">PRODUCT</span>
+                <span className="t-meta">100% CACAO</span>
               </div>
             </div>
           </div>
@@ -145,7 +104,7 @@ export function Provenance() {
    The evidence for the chapter above. Full bleed, butted edges, captions in
    utility type — a contact strip, not a gallery. */
 export function OriginPlates() {
-  const plates = origin.plates.filter((p) => p.src)
+  const plates = origin.plates
   if (!plates.length) return null
   return (
     <Section field="ink" flush wide>
@@ -153,8 +112,7 @@ export function OriginPlates() {
         {plates.map((p, i) => (
           <Reveal key={p.plate} as="li" delay={i * 80} className={s.plateItem}>
             <div className={s.plateMedia}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={p.src as string} alt={p.alt} loading="lazy" />
+              <Photo name={p.photo} sizes="(min-width: 900px) 33vw, 100vw" />
             </div>
             <div className={s.plateCap}>
               <span className="t-meta">{p.plate}</span>
@@ -167,43 +125,48 @@ export function OriginPlates() {
   )
 }
 
-/* -------- 05 · PREPARATION — cream -------------------------------------- */
+/* -------- 05 · MAKE / THE BREAK — cream --------------------------------
+   The photograph carries behaviour, the list carries method. Deliberately NOT
+   one illustration per step: a literal four-panel recipe strip turns the page
+   into a food blog, and the interim step vectors it replaced never matched the
+   drawn artwork they sat beside.
+
+   THE BREAK has motion blur on the reaching hand and a resolved room behind
+   it. That is the photograph. Nothing is laid over the board, and no crop
+   removes the hand. */
 export function Preparation() {
   return (
     <Section id="make" field="cream" labelledBy="make-title">
-      <div className={s.prepHead}>
-        <DoubleSteamMark size={44} />
-        <h2 id="make-title" className="t-display">
-          MAKE CACAO.
-        </h2>
-      </div>
-      <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
-        {making.lede}
-      </p>
+      <div className={s.makeGrid}>
+        <div className={s.makeCopy}>
+          <Tag>CH. 04 — MAKE</Tag>
+          <div className={s.prepHead} style={{ marginTop: 'var(--s-4)' }}>
+            <DoubleSteamMark size={44} />
+            <h2 id="make-title" className="t-display">
+              {making.headline}
+            </h2>
+          </div>
+          <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
+            {making.lede}
+          </p>
+        </div>
 
-      <ol className={s.prepSteps}>
-        {making.steps.map((step, i) => {
-          const Art = PREP_ART[i]
-          return (
-            <Reveal key={step.n} as="li" delay={i * 90} className={s.prepStep}>
-              <div className={s.prepArt}>
-                <Art title={step.title} />
-              </div>
-              <div className={s.prepNum}>
-                <span className="t-meta">{step.n}</span>
-                <h3 className="t-h3">{step.title}</h3>
-              </div>
-              <p className={s.prepBody}>{step.body}</p>
-            </Reveal>
-          )
-        })}
+        <figure className={s.makeFigure}>
+          <Photo name="theBreak" sizes="(min-width: 900px) 58vw, 100vw" />
+          <figcaption className={`t-meta ${s.makeCaption}`}>PL. 05 — THE BREAK</figcaption>
+        </figure>
+      </div>
+
+      <ol className={s.method}>
+        {making.steps.map((step, i) => (
+          <Reveal key={step.n} as="li" delay={i * 80} className={s.methodStep}>
+            <span className={`t-meta ${s.methodNum}`}>{step.n}</span>
+            <h3 className={`t-h3 ${s.methodTitle}`}>{step.title}</h3>
+            <p className={s.methodBody}>{step.body}</p>
+            <span className={`t-meta ${s.methodMeta}`}>{step.meta}</span>
+          </Reveal>
+        ))}
       </ol>
-
-      <div className={s.prepDivider}>
-        <CacaoShard size={16} />
-        <span />
-        <span className="t-meta">{making.nicolasWay.label}</span>
-      </div>
     </Section>
   )
 }
@@ -241,29 +204,3 @@ export function CoffeeNeighbor() {
   )
 }
 
-/* -------- PDP only · WHY ------------------------------------------------ */
-export function WhyPeopleDrink() {
-  return (
-    <Section id="why" field="cream" labelledBy="why-title">
-      <Tag>REASONS</Tag>
-      <h2 id="why-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
-        {whyPeopleDrinkIt.headline.join(' ')}
-      </h2>
-      <ul className={s.why}>
-        {whyPeopleDrinkIt.blocks.map((b, i) => (
-          <Reveal key={b.n} as="li" delay={i * 70} className={s.whyItem}>
-            <span className="t-meta" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <SeedChamber size={11} />
-              {b.n}
-            </span>
-            <h3 className="t-h3">{b.title}</h3>
-            <p className={s.whyBody}>{b.body}</p>
-          </Reveal>
-        ))}
-      </ul>
-      <p className={`t-meta ${s.disclaimer}`}>
-        {whyPeopleDrinkIt.disclaimer} Contains {product.ingredients.join(', ').toLowerCase()} only.
-      </p>
-    </Section>
-  )
-}

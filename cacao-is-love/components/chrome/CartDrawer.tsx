@@ -4,7 +4,8 @@ import { useEffect, useRef } from 'react'
 import { useCart } from '@/lib/cart'
 import { useFocusTrap } from '@/lib/useFocusTrap'
 import { formatPrice, product } from '@/content/product'
-import { Button } from '@/components/ui/Button'
+import { Button, ButtonLink } from '@/components/ui/Button'
+import { commerce } from '@/content/commerce'
 import { SeedChamber } from '@/components/cil/CilMarks'
 import s from './chrome.module.css'
 
@@ -46,7 +47,7 @@ export function CartDrawer() {
             </button>
           </div>
           <p className="t-meta">
-            {count} {count === 1 ? 'ITEM' : 'ITEMS'} · SHIPS IN 1–2 DAYS
+            {count} {count === 1 ? 'ITEM' : 'ITEMS'}
           </p>
         </div>
 
@@ -59,7 +60,7 @@ export function CartDrawer() {
                 {lines.map((line) => (
                   <li key={line.id} className={s.line}>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src="/photo/pack-studio.webp" alt="" className={s.lineThumb} />
+                    <img src="/photo/pack-studio-640.webp" alt="" className={s.lineThumb} loading="lazy" />
                     <div className={s.lineMain}>
                       <div className={s.lineTop}>
                         <div>
@@ -128,10 +129,19 @@ export function CartDrawer() {
               <span className="t-h3">{formatPrice(subtotal)}</span>
             </div>
             <p className="t-meta">Shipping and taxes calculated at checkout.</p>
-            {/* SWAP POINT — wire to Shopify Storefront API checkout / Stripe. */}
-            <Button variant="primary" block lg cut>
-              CHECKOUT
-            </Button>
+            {/* Set NEXT_PUBLIC_CHECKOUT_URL to turn this on. Until it is set the
+                control is plainly unavailable rather than silently inert — a
+                customer pressing a dead CHECKOUT is the worst failure on the
+                site, and a disabled control at least tells the truth. */}
+            {commerce.checkoutUrl ? (
+              <ButtonLink href={commerce.checkoutUrl} variant="primary" block lg cut>
+                CHECKOUT
+              </ButtonLink>
+            ) : (
+              <Button variant="primary" block lg cut disabled aria-disabled="true">
+                CHECKOUT
+              </Button>
+            )}
           </div>
         )}
       </aside>

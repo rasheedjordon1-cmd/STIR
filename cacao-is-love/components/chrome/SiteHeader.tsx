@@ -373,7 +373,7 @@ export function SiteHeader() {
 
           <div className={s.sheetFoot}>
             <Link href={site.shopHref} className={s.sheetShop} onClick={() => setMenuOpen(false)}>
-              SHOP WHOLE CACAO
+              SHOP THE CACAO
             </Link>
             <p className={`t-meta ${s.sheetTagline}`}>{site.tagline}</p>
           </div>
