@@ -1,15 +1,22 @@
 /**
  * PREPARATION — removes the "I will never actually use it" objection.
  *
- * ⚠ PRODUCT TRUTH. The photographs show short, broken pieces, not a moulded
- *   block. Every instruction here has to match what is in the bag, so the
- *   old "take 25–30 g off the block — roughly a two-finger piece" is gone.
- *   Quantities are kept because they are existing approved product guidance;
- *   the physical description around them is corrected.
+ * THREE steps, each carrying a CIL illustration. This is the original
+ * structure and it stays: the four-step split and the swap to a photograph
+ * were redesign, not repair.
+ *
+ * ⚠ PRODUCT TRUTH is the one thing that changed. The photographs show short
+ *   broken pieces, not a moulded block, so "take 25–30 g off the block —
+ *   roughly a two-finger piece" is gone. The quantities are existing approved
+ *   product guidance and are kept; only the physical description around them
+ *   is corrected.
+ *
+ * ⚠ `nicolasWay` is not here. Its body was placeholder text, and the divider
+ *   rendered the label "NICOLAS'S WAY" above nothing at all. It comes back the
+ *   moment his own preparation exists in his own words.
  */
 
 export const making = {
-  headline: 'MAKE CACAO.',
   lede: 'If you can make a cup of tea, you can make this. There is no correct way and nobody is watching.',
   steps: [
     {
@@ -20,21 +27,15 @@ export const making = {
     },
     {
       n: '02',
-      title: 'WARM',
-      body: 'Warm about 200 ml of water or milk over low heat. Do not let it boil.',
+      title: 'MELT + MIX',
+      body: 'Warm 200 ml of water or milk on low heat. Add the cacao and stir until it goes smooth and glossy. Do not boil it.',
       meta: '200 ML · LOW HEAT',
     },
     {
       n: '03',
-      title: 'MIX',
-      body: 'Add the cacao and stir until it goes smooth and glossy.',
-      meta: 'STIR UNTIL SMOOTH',
-    },
-    {
-      n: '04',
       title: 'MAKE IT YOURS',
-      body: 'Honey, cinnamon, salt, oat milk, chilli, or nothing at all. This is the part where it stops being our drink and becomes yours.',
+      body: 'Honey, cinnamon, salt, oat milk, chilli, nothing at all. This is the part where it stops being our drink and becomes yours.',
       meta: 'NO WRONG ANSWERS',
     },
   ],
-} as const
+}

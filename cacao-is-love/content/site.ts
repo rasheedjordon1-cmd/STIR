@@ -13,7 +13,7 @@ export const site = {
   shopHref: '/shop/whole-cacao',
 
   secondaryNav: [
-    { label: 'FAQ',     href: '/#faq' },
+    { label: 'FAQ',     href: '/shop/whole-cacao/#faq' },
     { label: 'ABOUT',   href: '/#nicolas' },
     /* CONTACT is intentionally absent. There is no verified address, and
        hello@example.com was rendering in the live footer. Add it back here the
@@ -25,9 +25,8 @@ export const site = {
     headline: 'CACAO, MADE TO BE SHARED.',
     supporting: '100% cacao.',
     secondLine: 'Grown in Colombia.',
-    thirdLine: 'Nothing added.',
-    primaryCta: 'GET THE CACAO',
-    secondaryCta: 'SEE HOW TO MAKE IT',
+    primaryCta: 'MAKE A CUP',
+    secondaryCta: 'WHAT IS CACAO?',
   },
 
   /** The product-truth strip under the hero. Keep every item short. */

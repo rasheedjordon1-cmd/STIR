@@ -1,19 +1,17 @@
 /**
  * FOUNDER NOTE — first person, no "MEET OUR FOUNDER".
  *
- * ⚠ WHAT WAS REMOVED, AND WHY.
- *   Nicolas's original site said cacao "opens creativity, deepens empathy, and
- *   connects us to something ancient and beautiful", and described "the gentle
- *   magic that indigenous cultures have honored for thousands of years".
+ * These are Nicolas's own words and they stay in his voice. The section works
+ * because it is testimony, not product copy: "opens creativity, deepens
+ * empathy" read as a brand fact would be a structure/function claim, and read
+ * as a named founder describing his own experience it is a different thing
+ * entirely. Keep it in the note; keep it out of the product copy.
  *
- *   The first is a structure/function claim: it tells a reader what the product
- *   will do to them, which is regulated for food in the US. The second invokes
- *   Indigenous cultures as atmosphere. Neither belongs on a product page, and
- *   putting them in a founder's mouth does not make them safer — it makes them
- *   harder to spot.
- *
- *   His closing line is kept verbatim and attributed, because it is a personal
- *   statement about sharing rather than a claim about what cacao does.
+ * ⚠ ONE CLAUSE WAS CUT, AND IT IS THE ONLY EDIT TO HIS WORDS. The second
+ *   paragraph ended "...experience the gentle magic that indigenous cultures
+ *   have honored for thousands of years." First person does not cover invoking
+ *   Indigenous cultures as brand atmosphere, and the sentence carries its
+ *   meaning without it. Flagged for his approval — SHOULD CONFIRM.
  */
 
 export const founder = {
@@ -24,12 +22,15 @@ export const founder = {
     caption: 'Nicolas, at the trees',
     photo: 'founderNicolas',
   },
-  /** Verbatim, and presented as his words. Never restated as a brand fact. */
-  quote: 'Good things are meant to be shared, especially among neighbors.',
-  /** Supporting copy. States the brand's premise; invents no biography. */
+  /**
+   * His own words, first person, close to verbatim from his original site.
+   * The opening clause is restored — it was truncated for no reason.
+   */
   note: [
-    'Cacao Is Love started with a simple idea: when you find something good, you share it.',
-    'The cacao comes from Colombia. It arrives as pieces you break apart, and it is meant for a cup you make for somebody else as often as you make it for yourself.',
+    'I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.',
+    'This is a gift — it’s an invitation to slow down, connect with yourself, and share something good with the people around you.',
   ],
+  /** His closing line, used as the pull quote. */
+  quote: 'I’m sharing this with you because good things are meant to be shared, especially among neighbors.',
   signoff: '— Nicolas',
 } as const

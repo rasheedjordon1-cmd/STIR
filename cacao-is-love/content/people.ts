@@ -18,8 +18,8 @@
  */
 
 export const people = {
-  eyebrow: 'CH. 05 — SHARING',
+  eyebrow: 'THE NEIGHBORHOOD',
   headline: 'TWO CUPS ARE BETTER THAN ONE.',
-  body: 'Cacao Is Love started with a simple idea: when you find something good, share it.',
-  caption: 'PL. 06 — TWO CUPS, ONE MORNING',
+  body: 'Good things are meant to be shared.',
+  caption: 'PL. 06 — SUNDAY MORNING / BROOKLYN',
 } as const

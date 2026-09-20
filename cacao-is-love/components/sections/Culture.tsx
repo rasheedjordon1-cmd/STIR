@@ -24,7 +24,7 @@ export function Nicolas() {
     <Section id="nicolas" field="cream" labelledBy="nicolas-title">
       <div className={s.nicGrid}>
         <div className={s.nicCopy}>
-          <Tag>CH. 06 — WORLDVIEW</Tag>
+          <Tag>CH. 05 — WORLDVIEW</Tag>
           <h2 id="nicolas-title" className="t-display">
             CURIOSITY IS WHERE IT STARTS.
           </h2>
@@ -76,7 +76,7 @@ export function Poster() {
    Both cups and the bag survive every crop; that is the whole picture. */
 export function TheWait() {
   return (
-    <Section id="people" field="cream" flush wide labelledBy="people-title">
+    <Section id="people" field="ink" flush wide labelledBy="people-title">
       <figure className={s.waitFigure}>
         <Photo name="theWait" sizes="100vw" />
         <figcaption className={s.waitCopy}>

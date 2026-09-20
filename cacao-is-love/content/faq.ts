@@ -1,16 +1,15 @@
 /**
  * FAQ — objection handling. Restrained, factual, no health claims.
  *
- * ⚠ TWO ENTRIES WERE REMOVED.
- *   "When does it ship?" had the answer "PLACEHOLDER — set real dispatch and
- *   delivery windows before launch", and that string was rendering on the live
- *   site. There is no verified window, so the question is gone rather than
- *   answered vaguely. Put it back the moment fulfilment is confirmed.
+ * ⚠ ONE ENTRY IS MISSING AND ONLY ONE. "When does it ship?" had the answer
+ *   "PLACEHOLDER — set real dispatch and delivery windows before launch", and
+ *   that string was rendering on the live site. Put the question back the
+ *   moment fulfilment is confirmed; do not answer it vaguely in the meantime.
  *
- *   The caffeine answer used to explain that theobromine is "the compound most
- *   people are describing when they say it feels steadier than coffee". That is
- *   an effect claim wearing a hedge. It now answers the question that was
- *   actually asked and stops.
+ *   The caffeine question is restored. Its answer used to say theobromine is
+ *   "the compound most people are describing when they say it feels steadier
+ *   than coffee" — an effect claim wearing a hedge. It now answers what was
+ *   asked and stops.
  */
 
 export const faq = [
@@ -21,6 +20,10 @@ export const faq = [
   {
     q: 'Is it the same as cocoa powder?',
     a: 'No. Cocoa powder has had the cocoa butter pressed out of it. This has not, which is why it arrives as solid pieces rather than a powder.',
+  },
+  {
+    q: 'Does it have caffeine?',
+    a: 'A small amount, alongside theobromine, which is the stimulant cacao has most of. If you are sensitive to caffeine, start with a smaller piece.',
   },
   {
     q: 'How much do I use?',
@@ -49,5 +52,9 @@ export const faq = [
   {
     q: 'Where is it grown?',
     a: 'Colombia.',
+  },
+  {
+    q: 'What if it is sold out?',
+    a: 'Join the next drop on the product page and we will email you when the next harvest lands. We would rather run out than pad the bag with anything else.',
   },
 ]

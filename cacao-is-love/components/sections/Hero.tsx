@@ -34,7 +34,6 @@ export function Hero() {
             <div className={s.heroSupport}>
               <p className="t-lede">{hero.supporting}</p>
               <p className="t-lede">{hero.secondLine}</p>
-              <p className="t-lede">{hero.thirdLine}</p>
             </div>
 
             <div className={s.heroCtas}>

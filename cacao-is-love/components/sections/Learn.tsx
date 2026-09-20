@@ -6,15 +6,27 @@ import {
   EduCocoaPowder,
   ProvenanceHandPod,
   DoubleSteamMark,
+  PrepBreakArt,
   CuriousFingerMark,
 } from '@/components/cil/CilAssets'
+import { PrepMelt, PrepMake } from '@/components/cil/CilArt'
 import { Reveal } from '@/components/ui/Reveal'
 import { Photo } from '@/components/ui/Photo'
-import { whatIsCacao, coffeeNeighbor } from '@/content/education'
+import { whatIsCacao, coffeeNeighbor, whyPeopleDrinkIt, composition } from '@/content/education'
 import { origin } from '@/content/origin'
 import { making } from '@/content/making'
 import { product } from '@/content/product'
 import s from './sections.module.css'
+
+/* Step 01 is the supplied artwork; 02 and 03 are still interim vectors, so the
+   art box below is a fixed height and each piece is centred in it — otherwise
+   the drawn landscape asset and the square vectors put their captions on three
+   different baselines. */
+const PREP_ART = [
+  (p: { title: string }) => <PrepBreakArt alt="" sizes="(min-width: 860px) 28vw, 80vw" />,
+  PrepMelt,
+  PrepMake,
+]
 
 /* -------- 03 · WHAT IS CACAO — cream, 5 / 7 ----------------------------- */
 export function WhatIsCacao() {
@@ -59,6 +71,40 @@ export function WhatIsCacao() {
 }
 
 
+/* -------- 03 · COMPOSITION — ink field ---------------------------------
+   Type and data only. The utility table is the section, which is the whole
+   point of a shelf-edge information system: the facts are the design. */
+export function Composition() {
+  return (
+    <Section id="composition" field="ink" labelledBy="composition-title">
+      <div className={s.compGrid}>
+        <div>
+          <Tag>CH. 03 — COMPOSITION</Tag>
+          <h2 id="composition-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
+            {composition.headline}
+          </h2>
+          <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
+            {composition.lede}
+          </p>
+          <p className={`t-meta ${s.compFootnote}`}>{composition.footnote}</p>
+        </div>
+
+        <dl className={s.compList}>
+          {composition.rows.map((r, i) => (
+            <Reveal key={r.compound} delay={i * 60} className={s.compRow}>
+              <dt className={s.compMark} aria-hidden>
+                <SeedChamber size={14} />
+              </dt>
+              <dt className={`t-h3 ${s.compName}`}>{r.compound}</dt>
+              <dd className={`t-body ${s.compNote}`}>{r.note}</dd>
+            </Reveal>
+          ))}
+        </dl>
+      </div>
+    </Section>
+  )
+}
+
 /* -------- 04 · PROVENANCE — a cream / green split field -----------------
    The supplied artwork's hands are MARKET GREEN, so the illustration cannot sit
    on a green field without disappearing, and recolouring it either erases the
@@ -74,7 +120,7 @@ export function Provenance() {
         </div>
         <div className={s.provCopySide}>
           <div className={s.provCopyInner}>
-            <Tag>CH. 03 — ORIGIN</Tag>
+            <Tag>CH. 04 — ORIGIN</Tag>
             <h2 id="source-title" className="t-display">
               GROWN IN COLOMBIA.
             </h2>
@@ -125,48 +171,42 @@ export function OriginPlates() {
   )
 }
 
-/* -------- 05 · MAKE / THE BREAK — cream --------------------------------
-   The photograph carries behaviour, the list carries method. Deliberately NOT
-   one illustration per step: a literal four-panel recipe strip turns the page
-   into a food blog, and the interim step vectors it replaced never matched the
-   drawn artwork they sat beside.
-
-   THE BREAK has motion blur on the reaching hand and a resolved room behind
-   it. That is the photograph. Nothing is laid over the board, and no crop
-   removes the hand. */
+/* -------- 05 · PREPARATION — cream -------------------------------------- */
 export function Preparation() {
   return (
     <Section id="make" field="cream" labelledBy="make-title">
-      <div className={s.makeGrid}>
-        <div className={s.makeCopy}>
-          <Tag>CH. 04 — MAKE</Tag>
-          <div className={s.prepHead} style={{ marginTop: 'var(--s-4)' }}>
-            <DoubleSteamMark size={44} />
-            <h2 id="make-title" className="t-display">
-              {making.headline}
-            </h2>
-          </div>
-          <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
-            {making.lede}
-          </p>
-        </div>
-
-        <figure className={s.makeFigure}>
-          <Photo name="theBreak" sizes="(min-width: 900px) 58vw, 100vw" />
-          <figcaption className={`t-meta ${s.makeCaption}`}>PL. 05 — THE BREAK</figcaption>
-        </figure>
+      <div className={s.prepHead}>
+        <DoubleSteamMark size={44} />
+        <h2 id="make-title" className="t-display">
+          MAKE CACAO.
+        </h2>
       </div>
+      <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
+        {making.lede}
+      </p>
 
-      <ol className={s.method}>
-        {making.steps.map((step, i) => (
-          <Reveal key={step.n} as="li" delay={i * 80} className={s.methodStep}>
-            <span className={`t-meta ${s.methodNum}`}>{step.n}</span>
-            <h3 className={`t-h3 ${s.methodTitle}`}>{step.title}</h3>
-            <p className={s.methodBody}>{step.body}</p>
-            <span className={`t-meta ${s.methodMeta}`}>{step.meta}</span>
-          </Reveal>
-        ))}
+      <ol className={s.prepSteps}>
+        {making.steps.map((step, i) => {
+          const Art = PREP_ART[i]
+          return (
+            <Reveal key={step.n} as="li" delay={i * 90} className={s.prepStep}>
+              <div className={s.prepArt}>
+                <Art title={step.title} />
+              </div>
+              <div className={s.prepNum}>
+                <span className="t-meta">{step.n}</span>
+                <h3 className="t-h3">{step.title}</h3>
+              </div>
+              <p className={s.prepBody}>{step.body}</p>
+            </Reveal>
+          )
+        })}
       </ol>
+
+      {/* The NICOLAS'S WAY divider lived here. Its label rendered above a body
+          that was placeholder text, so the device pointed at nothing. It comes
+          back — rule, shard and all — the moment his own preparation exists in
+          his own words. See making.ts. */}
     </Section>
   )
 }
@@ -200,6 +240,33 @@ export function CoffeeNeighbor() {
           ))}
         </tbody>
       </table>
+    </Section>
+  )
+}
+
+/* -------- PDP only · WHY ------------------------------------------------ */
+export function WhyPeopleDrink() {
+  return (
+    <Section id="why" field="cream" labelledBy="why-title">
+      <Tag>REASONS</Tag>
+      <h2 id="why-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
+        {whyPeopleDrinkIt.headline.join(' ')}
+      </h2>
+      <ul className={s.why}>
+        {whyPeopleDrinkIt.blocks.map((b, i) => (
+          <Reveal key={b.n} as="li" delay={i * 70} className={s.whyItem}>
+            <span className="t-meta" style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <SeedChamber size={11} />
+              {b.n}
+            </span>
+            <h3 className="t-h3">{b.title}</h3>
+            <p className={s.whyBody}>{b.body}</p>
+          </Reveal>
+        ))}
+      </ul>
+      <p className={`t-meta ${s.disclaimer}`}>
+        {whyPeopleDrinkIt.disclaimer} Contains {product.ingredients.join(', ').toLowerCase()} only.
+      </p>
     </Section>
   )
 }

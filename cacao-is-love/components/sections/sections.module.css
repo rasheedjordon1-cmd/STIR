@@ -416,3 +416,31 @@
   line-height: 1.4;
 }
 .emailError { color: var(--fg); font-weight: 600; margin-top: var(--s-2); }
+
+/* THE COUNTER's commerce row, sitting under the plate caption inside the
+   existing packWrap frame — not a new section, just the earliest buy control. */
+.packBuy {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: var(--s-4) var(--s-6);
+  margin-top: var(--s-5);
+}
+@media (min-width: 900px) {
+  .packBuy { width: 78vw; max-width: 1180px; margin-left: auto; }
+}
+.packLine { color: var(--fg-2); max-width: 28ch; margin: 0; }
+
+/* The pack frame was built around a 4:5 photograph. THE COUNTER is 2:3, which
+   at 78vw runs past two screens tall and buries the caption and the buy row.
+   The frame is capped and the crop holds the label; the composition — bleed,
+   cropped pod, offset caption — is untouched.
+
+   `height`, not `max-height`: the image inside is height:100%, and a percentage
+   height cannot resolve against a parent whose own height is auto. With only a
+   max-height the image kept its intrinsic 1685px and simply overflowed, so the
+   frame showed the top of the photograph instead of a crop of it. */
+.packMedia { height: min(82vh, 720px); }
+.packMedia img { object-position: 50% 34%; }
+@media (max-width: 899px) {
+  .packMedia { height: 62vh; }
+  .packMedia img { object-position: 50% 28%; }
+}

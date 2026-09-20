@@ -1,3 +1,5 @@
+import { canSignup } from './commerce'
+
 /* ============================================================================
    NAVIGATION MODEL
 
@@ -34,7 +36,7 @@ export type MegaMenu = {
   links: MegaLink[]
 }
 
-export const megaMenus: MegaMenu[] = [
+const allMenus: MegaMenu[] = [
   {
     key: 'cacao',
     label: 'CACAO',
@@ -45,7 +47,7 @@ export const megaMenus: MegaMenu[] = [
     links: [
       { ch: 'CH. 01', label: 'THE CACAO',    href: '/#truth',       note: 'What is actually in the bag.' },
       { ch: 'CH. 02', label: 'THE CATEGORY', href: '/#cacao',       note: 'Cacao is not cocoa powder, and not a chocolate bar.' },
-      { ch: 'CH. 02', label: 'THE COUNTER',  href: '/#counter',     note: 'The bag, the cup, and the price.' },
+      { ch: 'CH. 03', label: 'COMPOSITION',  href: '/#composition', note: 'The compounds the bean carries.' },
       {               label: 'CACAO & COFFEE', href: '/shop/whole-cacao/#coffee', note: 'How the cup compares to the one you already drink.' },
     ],
   },
@@ -57,9 +59,9 @@ export const megaMenus: MegaMenu[] = [
     brandline: 'GROWN IN COLOMBIA.',
     brandNote: 'One country, named. The rest of the record stays blank until it is confirmed.',
     links: [
-      { ch: 'CH. 03', label: 'ORIGIN',   href: '/#source',  note: 'Where the cacao comes from, and what we can prove.' },
-      { ch: 'CH. 06', label: 'WORLDVIEW', href: '/#nicolas', note: 'Nicolas, in his own words.' },
-      {               label: 'THE COUNTER',     href: '/#buy',  note: '250 g, and a button.' },
+      { ch: 'CH. 04', label: 'ORIGIN',   href: '/#source',  note: 'Where the cacao comes from, and what we can prove.' },
+      { ch: 'CH. 05', label: 'WORLDVIEW', href: '/#nicolas', note: 'Nicolas, in his own words.' },
+      {               label: 'WHY THIS EXISTS', href: '/shop/whole-cacao/#why', note: 'The reason for a single bag.' },
     ],
   },
   {
@@ -71,8 +73,8 @@ export const megaMenus: MegaMenu[] = [
     brandNote: 'Break it, steam it, stir it. Four steps and a pot.',
     links: [
       {               label: 'MAKE A CUP', href: '/#make',                   note: 'The method, start to finish.' },
-      {               label: 'QUESTIONS',  href: '/#faq',                    note: 'Storage, strength, sweetening, shipping.' },
-      { ch: 'CH. 07', label: 'THE COUNTER', href: '/shop/whole-cacao/',      note: '250 g of cacao, in pieces.' },
+      {               label: 'QUESTIONS',  href: '/shop/whole-cacao/#faq',   note: 'Storage, strength, sweetening.' },
+      { ch: 'CH. 06', label: 'THE COUNTER', href: '/shop/whole-cacao/',      note: '250 g of cacao, in pieces.' },
     ],
   },
   {
@@ -84,8 +86,8 @@ export const megaMenus: MegaMenu[] = [
     brandNote: 'A bag is usually bought for someone else. That is the whole idea.',
     links: [
       {               label: 'THE NEIGHBORHOOD', href: '/#people',     note: 'Who is drinking it.' },
-      { ch: 'CH. 06', label: 'NICOLAS',          href: '/#nicolas',    note: 'The person who started it.' },
-      {               label: 'QUESTIONS',        href: '/#faq',        note: 'Storage, strength, sweetening.' },
+      { ch: 'CH. 05', label: 'NICOLAS',          href: '/#nicolas',    note: 'The person who started it.' },
+      {               label: 'STAY CLOSE',       href: '/#newsletter', note: 'Next drops, and nothing else.' },
     ],
   },
 ]
@@ -99,3 +101,14 @@ export function menuRecord(menu: MegaMenu): string {
   const span = nums.length === 1 ? `CH. ${nums[0]}` : `CH. ${nums[0]}–${nums[nums.length - 1]}`
   return `${span} · ${count}`
 }
+
+/**
+ * STAY CLOSE points at #newsletter, and the newsletter section only renders
+ * once a signup endpoint is configured. Rather than ship a menu row that
+ * scrolls nowhere, the row is filtered out while that is unset — the model
+ * keeps its original content and the menu stays honest either way.
+ */
+export const megaMenus: MegaMenu[] = allMenus.map((m) => ({
+  ...m,
+  links: m.links.filter((l) => canSignup || l.href !== '/#newsletter'),
+}))
