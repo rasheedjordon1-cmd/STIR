@@ -30,7 +30,9 @@ export function QuickAdd() {
     })
     open()
     /* The label confirms in place as well as opening the drawer, so the action
-       still reads as completed for anyone who dismisses the drawer quickly. */
+       still reads as completed for anyone who dismisses the drawer quickly.
+       The cart state is already updated by this point — the label is feedback,
+       never a gate on the transaction. */
     setJustAdded(true)
     window.setTimeout(() => setJustAdded(false), 2200)
   }
@@ -42,7 +44,7 @@ export function QuickAdd() {
   return (
     <Button variant="primary" lg cut onClick={handleAdd} data-buy-cta>
       <span aria-live="polite">
-        {justAdded ? 'ADDED TO BAG' : `ADD TO BAG — ${formatPrice(product.price)}`}
+        {justAdded ? 'IN THE BAG ◊' : `ADD TO BAG — ${formatPrice(product.price)}`}
       </span>
     </Button>
   )

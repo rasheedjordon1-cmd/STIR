@@ -113,13 +113,30 @@ export const composition = {
     'This is a food, not a supplement. We list what is in the bean and leave the claims to somebody qualified to make them.',
 }
 
+/**
+ * CH. 01 — the red poster.
+ *
+ * ⚠ THE SPEC TABLE IS GONE. This chapter used to restate CONTENTS / GROWN /
+ *   WEIGHT / PRICE directly under the headline — four facts the visitor had
+ *   already read in the hero, and would read again in the buy module. On a
+ *   phone it ate a whole viewport to say nothing new.
+ *
+ *   The chapter's job is not to list the SKU. It is to answer why the
+ *   simplicity is interesting. So the space now goes to the negative space and
+ *   the four verbs, and the two facts worth repeating sit as one quiet line.
+ *
+ * ⚠ CLAIM CHECK. "NO SUGAR / NO MILK POWDER / NO FLAVORING" is not used.
+ *   product.ingredients is ['Cacao'], which supports "nothing added" — it does
+ *   not independently confirm an absence list, and an absence list is the kind
+ *   of claim a label has to back. NOTHING ADDED. JUST CACAO. says the same
+ *   thing and is supported by the ingredient statement itself.
+ */
 export const productTruth = {
   kicker: 'ONE INGREDIENT.',
   headline: '100% CACAO.',
-  lines: ['Nothing added.', 'Nothing taken away.'],
-  facts: [
-    { label: 'CONTENTS', value: '100% cacao' },
-    { label: 'ORIGIN',   value: 'Colombia' },
-    { label: 'WEIGHT',   value: '250 g' },
-  ],
+  lines: ['Nothing added.', 'Just cacao.'],
+  /* The four verbs. This is the product's whole method, and it is short enough
+     to be the point rather than an instruction. */
+  verbs: ['BREAK IT.', 'MELT IT.', 'STIR IT.', 'SHARE IT.'],
+  foot: '250 G · GROWN IN COLOMBIA',
 }

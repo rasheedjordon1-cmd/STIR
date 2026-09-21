@@ -26,7 +26,9 @@ const OUT = 'public/photo'
 const SRC = process.argv[2]
 
 /* Source file -> semantic name. The narrative role is the filename, so a
-   component never references "3.jpg" and nobody has to remember which is which. */
+   component never references "3.jpg" and nobody has to remember which is which.
+   hero-pass and pack-wood are absent on purpose: both showed the superseded
+   packaging and were removed from the repository. */
 const MAP = {
   '1.jpg': 'break-kitchen',
   '2.jpg': 'counter-green',

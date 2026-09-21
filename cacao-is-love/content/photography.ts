@@ -32,10 +32,6 @@ const defs = {
     file: 'pack-studio', w: 1024, h: 1536, widths: [640, 1024],
     alt: 'The Cacao Is Love pouch upright, with the cacao pieces visible through the window in the front of the bag.',
   },
-  packWood: {
-    file: 'pack-wood', w: 1122, h: 1402, widths: [640, 1024],
-    alt: 'The Cacao Is Love pouch standing on a wooden surface.',
-  },
 
   /* --- THE COUNTER — product portrait, observed, still --------------------- */
   counter: {
@@ -43,11 +39,14 @@ const defs = {
     alt: 'The Cacao Is Love pouch on a green background beside a full cup of cacao, with broken pieces of cacao in front of it.',
   },
 
-  /* --- DOMESTIC LIFE ------------------------------------------------------ */
-  heroPass: {
-    file: 'hero-pass', w: 1536, h: 1024, widths: [640, 1024],
-    alt: 'A hand holding out a cup of cacao across a kitchen counter in daylight.',
-  },
+  /* --- DOMESTIC LIFE ------------------------------------------------------
+     ⚠ hero-pass and pack-wood were deleted, not merely unreferenced. Both
+       photographed the OLD bag — the hands-and-cup label reading "100% WHOLE
+       CACAO" — and hero-pass was the hero image, so obsolete packaging was the
+       first thing every visitor saw. The current bag carries the split-pod
+       photograph and "ORGANIC CEREMONIAL-GRADE CACAO". Nothing may reintroduce
+       the old artwork: not a fallback, not a responsive source, not a
+       thumbnail. */
   /* THE BREAK. The reaching hand carries motion blur; the room is resolved.
      That is the photograph, not a fault — do not crop the hand away and do not
      lay text over the board. */

@@ -91,7 +91,9 @@ export function Composition() {
 
         <dl className={s.compList}>
           {composition.rows.map((r, i) => (
-            <Reveal key={r.compound} delay={i * 60} className={s.compRow}>
+            /* The rule draws first, then the compound. A reference chart being
+               constructed — a different behavioural tone to CH. 01's poster. */
+            <Reveal key={r.compound} delay={i * 130} className={`${s.compRow} ${s.compDraw}`}>
               <dt className={s.compMark} aria-hidden>
                 <SeedChamber size={14} />
               </dt>
@@ -185,6 +187,20 @@ export function Preparation() {
         {making.lede}
       </p>
 
+      {/* Restored. The photograph was lost when this chapter went back to its
+          three illustrated steps; it belongs here and it is the only evidence
+          on the page that a person actually does this. The reaching hand
+          carries motion blur and the room is resolved — that is the frame, not
+          a fault, so no crop removes the hand and no text sits over the board. */}
+      <figure className={s.makeFigure}>
+        <Reveal variant="break">
+          <Photo name="theBreak" sizes="(min-width: 900px) 92vw, 100vw" />
+        </Reveal>
+        <Reveal as="figcaption" className={`t-meta ${s.makeCaption}`} delay={620}>
+          PL. 05 — THE BREAK
+        </Reveal>
+      </figure>
+
       <ol className={s.prepSteps}>
         {making.steps.map((step, i) => {
           const Art = PREP_ART[i]
@@ -217,7 +233,12 @@ export function CoffeeNeighbor() {
     <Section id="coffee" field="ink" labelledBy="coffee-title">
       <Tag>REFERENCE</Tag>
       <h2 id="coffee-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
-        {coffeeNeighbor.headline.join(' ')}
+        <span className={s.coffeeHead}>
+          YOUR COFFEE HAS A{' '}
+          <Reveal as="span" variant="pass" delay={220} className={s.coffeeNeighbor}>
+            NEIGHBOR.
+          </Reveal>
+        </span>
       </h2>
       <p className="t-lede measure" style={{ marginTop: 'var(--s-4)' }}>
         {coffeeNeighbor.lede}

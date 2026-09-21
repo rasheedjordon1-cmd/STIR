@@ -1,17 +1,30 @@
 import { site } from '@/content/site'
 import { product, formatPrice } from '@/content/product'
 import { MastermarkDisplay } from '@/components/cil/Mastermark'
-import { SeedChamber, CuriousFinger } from '@/components/cil/CilMarks'
+import { SeedChamber, DoubleSteam } from '@/components/cil/CilMarks'
 import { ButtonLink, quietMark } from '@/components/ui/Button'
-import { Photo } from '@/components/ui/Photo'
+import { Reveal, RevealLines } from '@/components/ui/Reveal'
 import s from './sections.module.css'
 
 /**
- * HERO — CIL HERO 001, THE PASS.
+ * HERO — the opening statement.
  *
- * 40 / 60. Copy left, photograph right, bleeding off the viewport edge. The
- * mastermark is the brand statement; the live headline sits under it in the
- * heavy grotesk. Text never crosses the busy part of the photograph.
+ * MASTERMARK ONCE, MESSAGE NEXT. The header already carries the mastermark, so
+ * on a phone this section does not repeat it: logo → logo → message is the
+ * wrong hierarchy and it was costing most of the first screen. The oversized
+ * mastermark stays on the desk, where it is composition rather than repetition.
+ *
+ * THE PHOTOGRAPH IS GONE, and deliberately. It showed the superseded bag — the
+ * hands-and-cup label reading "100% WHOLE CACAO" — so the first image on the
+ * site was the wrong product. The current product now arrives immediately
+ * below, full bleed, as PL. 01. Removing it also takes a screen off the phone
+ * and a request off every device.
+ *
+ * MOTION — the arrival reads NUDGE then REVEAL: the glyph settles onto the
+ * page like an object being placed, then the headline is pushed up line by
+ * line from behind its own crop. It resolves in about a second and stops.
+ * Nothing here waits on motion: the CTA is in the DOM and clickable from the
+ * first paint.
  */
 export function Hero() {
   const { hero } = site
@@ -19,51 +32,49 @@ export function Hero() {
     <section className={`field-cream ${s.hero}`} aria-labelledby="hero-title">
       <div className="shell">
         <div className={s.heroGrid}>
+          {/* Desktop composition only, and a CSS background on purpose: it is
+              decorative here — the same product arrives immediately below as
+              PL. 01 with real alt text — and a background declared inside a
+              min-width query is never fetched by a phone, which a
+              display:none <img> would still be. */}
+          <div className={s.heroMedia} aria-hidden />
           <div className={s.heroCopy}>
             <p className={`t-label ${s.heroEyebrow}`}>
-              <SeedChamber size={13} />
-              {hero.eyebrow}
+              <Reveal as="span" variant="nudge" immediate className={s.heroGlyph}>
+                <SeedChamber size={13} />
+              </Reveal>
+              <Reveal as="span" variant="rise" immediate delay={60}>
+                {hero.eyebrow}
+              </Reveal>
             </p>
 
+            {/* Desktop only — see the note above. */}
             <MastermarkDisplay tone="ink" priority maxWidth={560} className={s.heroMark} />
 
             <h1 id="hero-title" className={`t-statement ${s.heroHead}`}>
-              {hero.headline}
+              <RevealLines lines={hero.headlineLines} start={140} step={90} />
             </h1>
 
-            <div className={s.heroSupport}>
+            <Reveal className={s.heroSupport} immediate delay={440}>
               <p className="t-lede">{hero.supporting}</p>
               <p className="t-lede">{hero.secondLine}</p>
-            </div>
+            </Reveal>
 
-            <div className={s.heroCtas}>
-              <ButtonLink href={site.shopHref} variant="primary" lg cut>
+            <Reveal className={s.heroCtas} immediate delay={560}>
+              <ButtonLink href={site.shopHref} variant="primary" lg cut arrow>
                 {hero.primaryCta}
               </ButtonLink>
-              <ButtonLink href="#cacao" variant="quiet">
+              <ButtonLink href="#make" variant="quiet">
                 {hero.secondaryCta}
-                <CuriousFinger size={16} className={quietMark} />
+                <DoubleSteam size={16} className={quietMark} />
               </ButtonLink>
-            </div>
+            </Reveal>
 
-            {/* Weight and price only. "SHIPS IN 1–2 DAYS" was here and is not
-                confirmed fulfilment — a dispatch window is a promise, and this
-                is the first screen a customer reads it on. */}
-            <p className="t-meta">
+            {/* Weight and price only. A dispatch window is a promise and this
+                one is not confirmed — see site.shipping. */}
+            <Reveal as="p" className="t-meta" immediate delay={640}>
               {product.weightGrams} G · {formatPrice(product.price)}
-            </p>
-          </div>
-
-          <div className={s.heroMedia}>
-            <div className={s.heroMediaInner}>
-              <Photo
-                name="heroPass"
-                priority
-                sizes="(min-width: 900px) 62vw, 100vw"
-                className={s.heroImg}
-              />
-            </div>
-            <p className={`t-meta ${s.heroCaption}`}>PL. 01 — THE PASS</p>
+            </Reveal>
           </div>
         </div>
       </div>

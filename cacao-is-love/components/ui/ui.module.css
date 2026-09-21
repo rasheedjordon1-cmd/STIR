@@ -98,3 +98,81 @@
    configured — half-opacity and not-allowed beats a button that silently
    does nothing when pressed. */
 .btn:disabled, .btn[aria-disabled='true'] { opacity: 0.45; cursor: not-allowed; }
+
+/* ============================================================================
+   CIL MOTION — PASS · BREAK · REVEAL · NUDGE
+   transform / opacity / clip-path only. No layout properties are animated.
+   ========================================================================== */
+
+/* PASS — arrives from beside the frame. Used once, on the word NEIGHBOR. */
+.mPass { transform: translate3d(-0.6em, 0, 0); opacity: 0; }
+.mPass.revealIn { transform: none; opacity: 1; }
+
+/* BREAK — the covering field retracts and lets you see the photograph.
+   The clip goes on the IMAGE, never on the observed wrapper: an element whose
+   clip-path hides it completely stops its own IntersectionObserver from ever
+   reporting an intersection, so the reveal never fires and the photograph
+   stays invisible forever. That cost a debugging round; do not move it back.
+   No opacity either — BREAK is a cut, not a fade. */
+.mBreak { opacity: 1; transform: none; }
+.mBreak > :is(img, picture, div) { clip-path: inset(0 0 100% 0); }
+.mBreak.revealIn > :is(img, picture, div) {
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 720ms var(--ease-nav) var(--reveal-delay, 0ms);
+}
+
+/* REVEAL — a line pushed up from behind its own crop. */
+.mReveal { transform: translate3d(0, 110%, 0); opacity: 1; }
+.mReveal.revealIn { transform: none; }
+
+/* NUDGE — an object settling onto a printed page. Tiny, and it stops. */
+.mNudge { transform: translate3d(0, -3px, 0) rotate(-6deg); opacity: 0; }
+.mNudge.revealIn {
+  transform: none; opacity: 1;
+  transition: transform 340ms var(--ease-nav) var(--reveal-delay, 0ms),
+              opacity 220ms linear var(--reveal-delay, 0ms);
+}
+
+/* Line-crop scaffolding for RevealLines. */
+.lines { display: block; }
+.lineCrop { display: block; overflow: hidden; padding-bottom: 0.04em; }
+.lineInner { display: block; transition-duration: 620ms; }
+
+/* ---------------------------------------------------------------------------
+   REDUCED MOTION — land everything, immediately, in its final state.
+   The global block shortens durations; that is not enough on its own, because
+   a masked line or a clipped photograph would otherwise start off-screen and
+   arrive in 0.01ms as a flash. These rules remove the start state entirely.
+--------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .mPass, .mBreak, .mBreak > *, .mReveal, .mNudge {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    transition: none !important;
+  }
+  .lineCrop { overflow: visible; }
+}
+
+/* ---------------------------------------------------------------------------
+   CTA — NUDGE. A printed tab being pressed, not a button bouncing.
+   The corner cut deepens 3px, the label shifts 1px, the arrow moves 4px. No
+   scale, no elastic, no glow. Press state is :active as well as :hover, so a
+   finger gets the same feedback a cursor does.
+--------------------------------------------------------------------------- */
+.btnArrow { gap: 0.55em; }
+.btnArrowMark {
+  display: inline-block;
+  transition: transform 180ms var(--ease-nav);
+}
+.btn { transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease),
+                   clip-path 180ms var(--ease-nav); }
+.btnArrow:hover .btnArrowMark,
+.btnArrow:focus-visible .btnArrowMark { transform: translateX(4px); }
+.btnArrow:active .btnArrowMark { transform: translateX(2px); }
+.btnCut:active { clip-path: polygon(0 0, 100% 0, 100% calc(100% - 17px), calc(100% - 17px) 100%, 0 100%); }
+.btn:active { transform: translateY(1px); }
+@media (prefers-reduced-motion: reduce) {
+  .btnArrowMark { transition: none; }
+  .btn:active { transform: none; }
+}

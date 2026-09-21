@@ -23,10 +23,16 @@ export const site = {
   hero: {
     eyebrow: 'A GIFT FROM CURIOSITY',
     headline: 'CACAO, MADE TO BE SHARED.',
+    /* Broken by hand so each line can rise from its own crop. Three short
+       lines read better on a phone than two long ones wrapping unpredictably. */
+    headlineLines: ['CACAO,', 'MADE TO', 'BE SHARED.'],
     supporting: '100% cacao.',
     secondLine: 'Grown in Colombia.',
-    primaryCta: 'MAKE A CUP',
-    secondaryCta: 'WHAT IS CACAO?',
+    /* GET THE CACAO is the purchase action, because MAKE A CUP is ambiguous at
+       the point of sale — it reads like a recipe link. MAKE A CUP keeps its
+       charm as the secondary, where it now correctly points at MAKE. */
+    primaryCta: 'GET THE CACAO',
+    secondaryCta: 'MAKE A CUP',
   },
 
   /** The product-truth strip under the hero. Keep every item short. */

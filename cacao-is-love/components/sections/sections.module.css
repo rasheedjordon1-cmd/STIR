@@ -31,7 +31,6 @@
 .heroMedia { position: relative; margin-inline: calc(var(--gutter) * -1); }
 @media (min-width: 900px) {
   .heroMedia {
-    margin-right: calc(50% - 50vw);
     margin-left: 0;
     height: 100%;
     min-height: min(60vh, 580px);
@@ -343,7 +342,7 @@
   .makeGrid { grid-template-columns: minmax(0, 40fr) minmax(0, 60fr); gap: clamp(32px, 4vw, 72px); align-items: end; }
 }
 .makeCopy { align-self: end; }
-.makeFigure { margin: 0; position: relative; line-height: 0; }
+.makeFigure { margin: var(--s-7) 0 0; position: relative; line-height: 0; }
 /* THE BREAK is 3:2 and its subject — the reaching hand and the board — sits
    left of centre. On a phone the frame narrows, so the crop holds the left
    two-thirds rather than centring and slicing the hand off. */
@@ -444,3 +443,91 @@
   .packMedia { height: 62vh; }
   .packMedia img { object-position: 50% 28%; }
 }
+
+/* ============================================================================
+   OPENING PASS — mobile hierarchy
+   ========================================================================== */
+
+/* MASTERMARK ONCE. The header carries it; repeating it at 330px immediately
+   below was logo → logo → message and cost most of the first screen. It stays
+   on the desk, where it is composition rather than repetition. */
+@media (max-width: 899px) {
+  .heroMark { display: none; }
+}
+/* Mobile: one column, no media. Desktop: the copy holds the left and the
+   current bag holds the right, so the composition survives losing the old
+   photograph. */
+.heroGrid { display: block; }
+.heroMedia { display: none; }
+@media (min-width: 900px) {
+  .heroGrid {
+    display: grid;
+    grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+    gap: clamp(32px, 4vw, 72px);
+    align-items: center;
+  }
+  /* Both explicitly on row 1: the media is first in the DOM, and without a
+     row the copy auto-places into row 2 instead of beside it. */
+  .heroCopy { grid-column: 1; grid-row: 1; max-width: 22ch; }
+  .heroMedia {
+    display: block; grid-column: 2; grid-row: 1;
+    align-self: center;
+    min-height: min(76vh, 740px);
+    /* No edge bleed: `contain` centres the object in its box, and a box that
+       runs past the viewport pushes half the bag off-screen. */
+    /* `contain`, not `cover`: the bag is a 2:3 portrait and the column is
+       wider than it is tall, so cover crops to a zoomed band across the
+       label. The whole object on cream is the point. */
+    background-image: url('/photo/pack-studio-1024.webp');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+.heroEyebrow { display: flex; align-items: center; gap: 8px; }
+.heroGlyph { display: inline-flex; color: var(--marker); }
+.heroCopy { display: grid; gap: var(--s-5); align-content: start; }
+.heroHead { max-width: 16ch; }
+
+/* ---- CH. 01 — the red poster ------------------------------------------- */
+.truthPoster { display: grid; gap: var(--s-6); }
+@media (min-width: 900px) { .truthPoster { gap: var(--s-7); max-width: 26ch; } }
+.truthNegatives { display: grid; gap: 2px; }
+.truthVerbs {
+  display: grid; gap: 2px;
+  margin-top: var(--s-2);
+  padding-top: var(--s-5);
+  border-top: var(--rule-w) solid var(--fg);
+}
+.truthVerb {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 7vw, 2.25rem);
+  line-height: 1.04;
+  letter-spacing: var(--tr-display);
+  text-transform: uppercase;
+}
+@media (min-width: 900px) {
+  .truthVerbs { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-6); }
+  .truthVerb { font-size: clamp(1.375rem, 2vw, 1.875rem); }
+}
+.truthFoot { color: var(--fg-2); }
+
+/* ---- WHAT'S IN IT — the rule above each row draws in ------------------- */
+/* The row's own top border is replaced by a pseudo-element that scales from
+   the left, so the chart appears to be ruled before it is filled. */
+.compDraw { border-top-color: transparent !important; position: relative; }
+.compDraw::before {
+  content: ''; position: absolute; left: 0; right: 0; top: calc(var(--rule-w) * -1);
+  border-top: var(--rule-w) solid var(--rule-strong);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 520ms var(--ease-nav) var(--reveal-delay, 0ms);
+}
+.compDraw.revealIn::before { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) {
+  .compDraw::before { transform: scaleX(1); transition: none; }
+}
+
+/* ---- COFFEE — NEIGHBOR arrives next door ------------------------------- */
+.coffeeHead { display: inline; }
+.coffeeNeighbor { display: inline-block; }

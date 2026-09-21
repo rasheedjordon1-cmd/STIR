@@ -1,42 +1,53 @@
 import { Section } from '@/components/ui/Section'
-import { UtilityTable, Tag } from '@/components/ui/Utility'
+import { Tag } from '@/components/ui/Utility'
 import { BuyModule } from '@/components/commerce/BuyModule'
 import { QuickAdd } from '@/components/commerce/QuickAdd'
 import { SplitPodHalfMark } from '@/components/cil/CilAssets'
 import { Photo } from '@/components/ui/Photo'
+import { Reveal, RevealLines } from '@/components/ui/Reveal'
 import { product, formatPrice } from '@/content/product'
 import { productTruth } from '@/content/education'
 import s from './sections.module.css'
 
-/* -------- 01 · THE PRODUCT — red field ---------------------------------- */
+/* -------- CH. 01 · THE PRODUCT — red field ------------------------------
+   A typographic poster, not a product database. The spec table that used to
+   sit under the headline is gone; see productTruth for why.
+
+   MOTION — the chapter code resolves, then the two headline lines are pushed
+   up from behind their crops, then the negatives, then the four verbs in
+   sequence. Supermarket typography being set into place, one decision at a
+   time. It runs once on entry and stops. */
 export function ProductField() {
   return (
     <Section id="truth" field="red" labelledBy="truth-title">
-      <div className={s.truthGrid}>
-        <div>
-          <p className={`t-label ${s.truthKicker}`}>CH. 01 — THE CACAO</p>
-          {/* Packaging enlarged to architectural scale. */}
-          <h2 id="truth-title" className={s.truthMega}>
-            <span>{productTruth.kicker}</span>
-            <span>{productTruth.headline}</span>
-          </h2>
-          <div className={s.truthTail}>
-            {productTruth.lines.map((l) => (
-              <p key={l} className="t-h3">
-                {l}
-              </p>
-            ))}
-          </div>
+      <div className={s.truthPoster}>
+        <Reveal as="p" className={`t-label ${s.truthKicker}`}>
+          CH. 01 — THE CACAO
+        </Reveal>
+
+        <h2 id="truth-title" className={s.truthMega}>
+          <RevealLines lines={[productTruth.kicker, productTruth.headline]} step={110} />
+        </h2>
+
+        <div className={s.truthNegatives}>
+          {productTruth.lines.map((l, i) => (
+            <Reveal key={l} as="p" className="t-h3" delay={320 + i * 90}>
+              {l}
+            </Reveal>
+          ))}
         </div>
 
-        <UtilityTable
-          rows={[
-            { key: 'CONTENTS', value: '100% CACAO' },
-            { key: 'GROWN', value: product.originCountry.toUpperCase() },
-            { key: 'WEIGHT', value: `${product.weightGrams} G` },
-            { key: 'PRICE', value: formatPrice(product.price) },
-          ]}
-        />
+        <ul className={s.truthVerbs}>
+          {productTruth.verbs.map((v, i) => (
+            <Reveal key={v} as="li" variant="reveal" delay={560 + i * 80} className={s.truthVerb}>
+              {v}
+            </Reveal>
+          ))}
+        </ul>
+
+        <Reveal as="p" className={`t-meta ${s.truthFoot}`} delay={920}>
+          {productTruth.foot}
+        </Reveal>
       </div>
     </Section>
   )
@@ -59,7 +70,7 @@ export function ProductImage() {
       <div className="shell">
         <div className={s.packWrap}>
           <SplitPodHalfMark size={200} className={s.podCrop} />
-          <div className={s.packMedia}>
+          <Reveal variant="break" className={s.packMedia}>
             <Photo
               name="counter"
               sizes="(min-width: 900px) 78vw, 100vw"
@@ -67,13 +78,15 @@ export function ProductImage() {
                  inline style beats the module rule that caps this frame. */
               style={{ height: '100%', objectFit: 'cover' }}
             />
-          </div>
-          <div className={s.packCap}>
-            <span className="t-meta">PL. 02</span>
+          </Reveal>
+          {/* Labelled after the photograph was put down — 620ms behind the
+              BREAK, so the annotation reads as a second action. */}
+          <Reveal className={s.packCap} delay={620}>
+            <span className="t-meta">PL. 01</span>
             <span className="t-meta">
               CACAO IS LOVE / {product.weightGrams} G / {product.originCountry.toUpperCase()}
             </span>
-          </div>
+          </Reveal>
           <div className={s.packBuy}>
             <p className={`t-lede ${s.packLine}`}>One ingredient. Made for the cup.</p>
             <QuickAdd />

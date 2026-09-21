@@ -10,13 +10,17 @@ const variants: Record<Variant, string> = {
   quiet: s.btnQuiet,
 }
 
-function cls(variant: Variant, o: { block?: boolean; lg?: boolean; cut?: boolean; extra?: string }) {
+function cls(
+  variant: Variant,
+  o: { block?: boolean; lg?: boolean; cut?: boolean; arrow?: boolean; extra?: string },
+) {
   return [
     s.btn,
     variants[variant],
     o.block ? s.btnBlock : '',
     o.lg ? s.btnLg : '',
     o.cut && variant !== 'quiet' ? s.btnCut : '',
+    o.arrow ? s.btnArrow : '',
     o.extra,
   ]
     .filter(Boolean)
@@ -28,6 +32,7 @@ export function Button({
   block,
   lg,
   cut,
+  arrow,
   className,
   children,
   ...rest
@@ -36,11 +41,14 @@ export function Button({
   block?: boolean
   lg?: boolean
   cut?: boolean
+  /** Appends a → that NUDGEs on press. Purchase actions only. */
+  arrow?: boolean
   children: ReactNode
 } & ComponentProps<'button'>) {
   return (
-    <button className={cls(variant, { block, lg, cut, extra: className })} {...rest}>
+    <button className={cls(variant, { block, lg, cut, arrow, extra: className })} {...rest}>
       {children}
+      {arrow && <span className={s.btnArrowMark} aria-hidden>→</span>}
     </button>
   )
 }
@@ -51,6 +59,7 @@ export function ButtonLink({
   block,
   lg,
   cut,
+  arrow,
   className,
   children,
   ...rest
@@ -60,11 +69,13 @@ export function ButtonLink({
   block?: boolean
   lg?: boolean
   cut?: boolean
+  arrow?: boolean
   children: ReactNode
 } & Omit<ComponentProps<typeof Link>, 'href'>) {
   return (
-    <Link href={href} className={cls(variant, { block, lg, cut, extra: className })} {...rest}>
+    <Link href={href} className={cls(variant, { block, lg, cut, arrow, extra: className })} {...rest}>
       {children}
+      {arrow && <span className={s.btnArrowMark} aria-hidden>→</span>}
     </Link>
   )
 }

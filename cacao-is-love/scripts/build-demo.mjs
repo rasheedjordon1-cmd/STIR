@@ -45,13 +45,15 @@ const STYLES = [
   .replace(/\n{3,}/g, '\n\n')
 
 /* ---------- assets ---------- */
+/* ⚠ hero-pass and pack-wood are DELETED — both photographed the superseded
+   bag. These slots now carry current packaging. Never point them back. */
 const A = {
   mmInk: b64('public/brand/mastermark-ink.png', 'image/png'),
   mmCream: b64('public/brand/mastermark-cream.png', 'image/png'),
-  hero: b64('public/photo/hero-pass.webp', 'image/webp'),
-  packStudio: b64('public/photo/pack-studio.webp', 'image/webp'),
-  packWood: b64('public/photo/pack-wood.webp', 'image/webp'),
-  poster: b64('public/poster/one-more-cup.webp', 'image/webp'),
+  hero: b64('public/photo/pack-studio-1024.webp', 'image/webp'),
+  packStudio: b64('public/photo/pack-studio-1024.webp', 'image/webp'),
+  packWood: b64('public/photo/counter-green-1024.webp', 'image/webp'),
+  poster: b64('public/poster/one-more-cup-1024.webp', 'image/webp'),
   prov: b64('public/cil/provenance-hand-pod.webp', 'image/webp'),
   eduWhole: b64('public/cil/edu-whole-cacao.webp', 'image/webp'),
   eduPowder: b64('public/cil/edu-cocoa-powder.webp', 'image/webp'),
@@ -60,10 +62,10 @@ const A = {
   podHalf: b64('public/cil/micro-split-pod-half.webp', 'image/webp'),
   prepBreak: b64('public/cil/prep-break.webp', 'image/webp'),
   curiousFinger: b64('public/cil/micro-curious-finger.webp', 'image/webp'),
-  nicolas: b64('public/photo/nicolas-pod.webp', 'image/webp'),
-  originPodBranch: b64('public/photo/origin-pod-branch.webp', 'image/webp'),
-  originAtTheTrees: b64('public/photo/origin-at-the-trees.webp', 'image/webp'),
-  originTwoPods: b64('public/photo/origin-two-pods.webp', 'image/webp'),
+  nicolas: b64('public/photo/nicolas-pod-1024.webp', 'image/webp'),
+  originPodBranch: b64('public/photo/origin-pod-branch-640.webp', 'image/webp'),
+  originAtTheTrees: b64('public/photo/origin-at-the-trees-640.webp', 'image/webp'),
+  originTwoPods: b64('public/photo/origin-two-pods-640.webp', 'image/webp'),
 }
 
 /* ---------- CIL micro-marks (same geometry as CilMarks.tsx) ---------- */
@@ -258,7 +260,7 @@ const BODY = `
     <div class="packWrap">
       <img class="podCrop" src="${A.podHalf}" alt="" style="width:200px;height:auto">
       <div class="packMedia">
-        <img src="${A.packWood}" alt="A bag of Cacao Is Love and a mug of cacao on a sunlit wooden table." style="width:100%;height:auto">
+        <img src="${A.packWood}" alt="The Cacao Is Love pouch on a green background beside a full cup of cacao, with broken pieces of cacao in front of it." style="width:100%;height:auto">
       </div>
       <div class="packCap">
         <span class="t-meta">PL. 02</span>
