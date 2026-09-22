@@ -206,12 +206,10 @@
   padding: var(--s-6) var(--gutter) var(--s-6);
   display: grid; gap: var(--s-4); align-content: start;
 }
-.megaRecord { color: var(--fg-meta); }
-
 .megaList { display: grid; }
 .megaLink {
   display: grid;
-  grid-template-columns: 66px minmax(0, 1fr);
+  grid-template-columns: 22px minmax(0, 1fr);
   gap: var(--s-4);
   align-items: baseline;
   padding-block: var(--s-3);
@@ -220,11 +218,13 @@
 }
 .megaList li:last-child .megaLink { border-bottom: var(--hair) solid var(--rule); }
 
-/* INFORMATION voice. Fixed column, tabular, so the codes stack like a ledger. */
+/* The Seed Chamber holds the column the chapter codes used to hold — it keeps
+   the ledger rule and the hover target without narrating a reading order.
+   Glyph tier: currentColor, well under 48px, inherits the field's meta grey and
+   turns red on hover exactly as the code did. */
 .megaCh {
-  font-family: var(--font-mono); font-size: var(--fs-meta);
-  font-variant-numeric: tabular-nums; letter-spacing: var(--tr-meta);
-  color: var(--fg-meta); white-space: nowrap;
+  display: inline-flex; align-items: center; justify-content: flex-start;
+  color: var(--fg-meta);
   transition: color var(--dur-nav) var(--ease-nav);
 }
 .megaLinkMain { display: grid; gap: 3px; min-width: 0; }
@@ -241,13 +241,13 @@
 .megaNote { font-size: var(--fs-small); color: var(--fg-2); line-height: 1.4; text-wrap: pretty; }
 
 @media (min-width: 1180px) {
-  /* Three columns: code, label, note — one ledger line per entry.
+  /* Three columns: mark, label, note — one ledger line per entry.
      Baseline alignment here stacks each item's ascent on the next item's
      descent and inflates every row by ~24px; centring holds the same read
      and keeps all four panels within a single height, so sliding across the
      nav does not make the panel jump. */
   .megaLink {
-    grid-template-columns: 66px minmax(0, 15rem) minmax(0, 1fr);
+    grid-template-columns: 22px minmax(0, 15rem) minmax(0, 1fr);
     align-items: center;
     padding-block: var(--s-3);
   }
@@ -329,9 +329,8 @@
 }
 .sheetSubLink:hover, .sheetSubLink:focus-visible { color: var(--cil-ink); }
 .sheetSubCh {
-  font-family: var(--font-mono); font-size: var(--fs-meta);
-  font-variant-numeric: tabular-nums; letter-spacing: var(--tr-meta);
-  color: var(--fg-meta); flex: 0 0 62px;
+  display: inline-flex; align-items: center;
+  color: var(--fg-meta); flex: 0 0 22px;
 }
 
 .sheetSecondary {

@@ -17,7 +17,7 @@ import s from './sections.module.css'
  * THE PHOTOGRAPH IS GONE, and deliberately. It showed the superseded bag — the
  * hands-and-cup label reading "100% WHOLE CACAO" — so the first image on the
  * site was the wrong product. The current product now arrives immediately
- * below, full bleed, as PL. 01. Removing it also takes a screen off the phone
+ * below, full bleed, as THE BAG. Removing it also takes a screen off the phone
  * and a request off every device.
  *
  * MOTION — the arrival reads NUDGE then REVEAL: the glyph settles onto the
@@ -34,7 +34,7 @@ export function Hero() {
         <div className={s.heroGrid}>
           {/* Desktop composition only, and a CSS background on purpose: it is
               decorative here — the same product arrives immediately below as
-              PL. 01 with real alt text — and a background declared inside a
+              THE BAG with real alt text — and a background declared inside a
               min-width query is never fetched by a phone, which a
               display:none <img> would still be. */}
           <div className={s.heroMedia} aria-hidden />

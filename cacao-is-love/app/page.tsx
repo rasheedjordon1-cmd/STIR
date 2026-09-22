@@ -29,7 +29,7 @@ export default function HomePage() {
       <Hero />
       <Marquee items={site.marquee} field="ink" />
       {/* The photograph comes before the chapter. A visitor should meet the
-          real object before they are told anything about it — CH. 01's job is
+          real object before they are told anything about it — the red poster's job is
           to make the simplicity interesting, which only lands once they have
           seen what they are being asked to buy. */}
       <ProductImage />

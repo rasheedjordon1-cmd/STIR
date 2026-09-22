@@ -38,22 +38,23 @@ export const origin = {
     'We are filling in this record as we go, and we will publish it here as it is confirmed. Nothing on this page is a guess.',
   ],
 
-  /* Real photographs from the trees. Captions describe what is shown, never
-     where — the region and producer above are still unconfirmed. */
+  /* Real photographs from the trees. Captions name the subject and the COUNTRY
+     only. Colombia is on the bag and is stated site-wide; the region and the
+     producer above are still unconfirmed and must not appear here. */
   plates: [
     {
-      plate: 'PL. 04',
-      caption: 'Pod on the branch',
+      plate: 'POD ON THE BRANCH',
+      caption: 'Colombia',
       photo: 'originPodBranch' as PhotoKey,
     },
     {
-      plate: 'PL. 05',
-      caption: 'At the trees',
+      plate: 'AT THE TREES',
+      caption: 'Colombia',
       photo: 'originAtTheTrees' as PhotoKey,
     },
     {
-      plate: 'PL. 06',
-      caption: 'Two pods, backlit',
+      plate: 'TWO PODS, BACKLIT',
+      caption: 'Colombia',
       photo: 'originTwoPods' as PhotoKey,
     },
   ],

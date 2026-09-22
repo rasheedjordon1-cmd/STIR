@@ -21,5 +21,5 @@ export const people = {
   eyebrow: 'THE NEIGHBORHOOD',
   headline: 'TWO CUPS ARE BETTER THAN ONE.',
   body: 'Good things are meant to be shared.',
-  caption: 'PL. 06 — SUNDAY MORNING / BROOKLYN',
+  caption: 'SUNDAY MORNING / BROOKLYN',
 } as const

@@ -34,7 +34,7 @@ export function WhatIsCacao() {
     <Section id="cacao" field="cream" labelledBy="cacao-title">
       <div className={s.eduGrid}>
         <div>
-          <Tag>CH. 02 — THE CATEGORY</Tag>
+          <Tag>WHAT IT ISN’T</Tag>
           <h2 id="cacao-title" className="t-h1" style={{ marginTop: 'var(--s-5)' }}>
             {whatIsCacao.headline}
           </h2>
@@ -79,7 +79,7 @@ export function Composition() {
     <Section id="composition" field="ink" labelledBy="composition-title">
       <div className={s.compGrid}>
         <div>
-          <Tag>CH. 03 — COMPOSITION</Tag>
+          <Tag>WHAT’S INSIDE</Tag>
           <h2 id="composition-title" className="t-h1" style={{ marginTop: 'var(--s-4)' }}>
             {composition.headline}
           </h2>
@@ -92,7 +92,7 @@ export function Composition() {
         <dl className={s.compList}>
           {composition.rows.map((r, i) => (
             /* The rule draws first, then the compound. A reference chart being
-               constructed — a different behavioural tone to CH. 01's poster. */
+               constructed — a different behavioural tone to the red poster. */
             <Reveal key={r.compound} delay={i * 130} className={`${s.compRow} ${s.compDraw}`}>
               <dt className={s.compMark} aria-hidden>
                 <SeedChamber size={14} />
@@ -122,7 +122,7 @@ export function Provenance() {
         </div>
         <div className={s.provCopySide}>
           <div className={s.provCopyInner}>
-            <Tag>CH. 04 — ORIGIN</Tag>
+            <Tag>WHERE IT’S FROM</Tag>
             <h2 id="source-title" className="t-display">
               GROWN IN COLOMBIA.
             </h2>
@@ -197,7 +197,7 @@ export function Preparation() {
           <Photo name="theBreak" sizes="(min-width: 900px) 92vw, 100vw" />
         </Reveal>
         <Reveal as="figcaption" className={`t-meta ${s.makeCaption}`} delay={620}>
-          PL. 05 — THE BREAK
+          THE BREAK
         </Reveal>
       </figure>
 

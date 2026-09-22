@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { site } from '@/content/site'
-import { megaMenus, menuRecord, type MegaMenu } from '@/content/navigation'
+import { megaMenus, type MegaMenu } from '@/content/navigation'
 import { Mastermark } from '@/components/cil/Mastermark'
 import { SeedChamber, DoubleSteam, SplitPodHalf, CupRim } from '@/components/cil/CilMarks'
 import { useCart } from '@/lib/cart'
@@ -254,9 +254,8 @@ export function SiteHeader() {
               aria-label={`${menu.label} menu`}
             >
               <div className={`${s.megaBrand} field-${menu.field}`}>
-                {/* INFORMATION voice, anchoring the top edge — a plate number,
-                    the same device the chapters use. Derived, so it cannot
-                    drift out of true. */}
+                {/* INFORMATION voice, anchoring the top edge. Derived from the
+                    panel's own position, so it cannot drift out of true. */}
                 <p className={`t-meta ${s.megaPlate}`}>
                   {String(i + 1).padStart(2, '0')} / {String(megaMenus.length).padStart(2, '0')}
                   <span aria-hidden> · </span>
@@ -272,12 +271,13 @@ export function SiteHeader() {
               </div>
 
               <div className={s.megaBody}>
-                <p className={`t-meta ${s.megaRecord}`}>{menuRecord(menu)}</p>
                 <ul className={s.megaList}>
                   {menu.links.map((link) => (
                     <li key={link.href + link.label}>
                       <Link href={link.href} className={s.megaLink} onClick={() => closeNow()}>
-                        <span className={s.megaCh}>{link.ch ?? '—'}</span>
+                        <span className={s.megaCh} aria-hidden>
+                          <SeedChamber size={13} />
+                        </span>
                         <span className={s.megaLinkMain}>
                           <span className={s.megaLabel}>{link.label}</span>
                           <span className={s.megaNote}>{link.note}</span>
@@ -339,7 +339,9 @@ export function SiteHeader() {
                             className={s.sheetSubLink}
                             onClick={() => setMenuOpen(false)}
                           >
-                            <span className={s.sheetSubCh}>—</span>
+                            <span className={s.sheetSubCh} aria-hidden>
+                              <SeedChamber size={13} />
+                            </span>
                             <span>OVERVIEW</span>
                           </Link>
                         </li>
@@ -350,7 +352,9 @@ export function SiteHeader() {
                               className={s.sheetSubLink}
                               onClick={() => setMenuOpen(false)}
                             >
-                              <span className={s.sheetSubCh}>{link.ch ?? '—'}</span>
+                              <span className={s.sheetSubCh} aria-hidden>
+                                <SeedChamber size={13} />
+                              </span>
                               <span>{link.label}</span>
                             </Link>
                           </li>

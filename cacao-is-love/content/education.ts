@@ -114,7 +114,7 @@ export const composition = {
 }
 
 /**
- * CH. 01 — the red poster.
+ * WHAT IT IS — the red poster.
  *
  * ⚠ THE SPEC TABLE IS GONE. This chapter used to restate CONTENTS / GROWN /
  *   WEIGHT / PRICE directly under the headline — four facts the visitor had

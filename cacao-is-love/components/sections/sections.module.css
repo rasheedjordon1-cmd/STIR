@@ -75,7 +75,7 @@
    ordering is not guaranteed and this must not depend on winning that race. */
 .truthMega {
   display: grid;
-  /* CH. 01's headline is identity scale, so it takes the identity voice. */
+  /* The red poster's headline is identity scale, so it takes the identity voice. */
   font-family: var(--font-display);
   font-weight: 800;
   text-transform: uppercase;
@@ -489,7 +489,7 @@
 .heroCopy { display: grid; gap: var(--s-5); align-content: start; }
 .heroHead { max-width: 16ch; }
 
-/* ---- CH. 01 — the red poster ------------------------------------------- */
+/* ---- WHAT IT IS — the red poster --------------------------------------- */
 .truthPoster { display: grid; gap: var(--s-6); }
 @media (min-width: 900px) { .truthPoster { gap: var(--s-7); max-width: 26ch; } }
 .truthNegatives { display: grid; gap: 2px; }

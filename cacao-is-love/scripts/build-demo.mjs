@@ -126,37 +126,29 @@ const MENUS = [
   { key: 'cacao', label: 'CACAO', href: '#cacao', field: 'red',
     line: 'ONE INGREDIENT.', note: 'Whole cacao. Nothing added, nothing taken out.',
     mark: (s) => seed(s), big: () => seed(44),
-    links: [['CH. 01', 'THE CACAO', '#truth', 'What is actually in the bag.'],
-            ['CH. 02', 'THE CATEGORY', '#cacao', 'Cacao is not cocoa powder, and not a chocolate bar.'],
-            ['CH. 03', 'COMPOSITION', '#composition', 'The compounds the whole bean carries.'],
-            ['', 'CACAO &amp; COFFEE', '#coffee', 'How the cup compares to the one you already drink.']] },
+    links: [['THE CACAO', '#truth', 'What is actually in the bag.'],
+            ['THE CATEGORY', '#cacao', 'Cacao is not cocoa powder, and not a chocolate bar.'],
+            ['COMPOSITION', '#composition', 'The compounds the whole bean carries.'],
+            ['CACAO &amp; COFFEE', '#coffee', 'How the cup compares to the one you already drink.']] },
   { key: 'source', label: 'SOURCE', href: '#source', field: 'green',
     line: 'GROWN IN COLOMBIA.', note: 'One country, named. The rest of the record stays blank until it is confirmed.',
     mark: (s) => podMark(s), big: () => podMark(44),
-    links: [['CH. 04', 'ORIGIN', '#source', 'Where the cacao comes from, and what we can prove.'],
-            ['CH. 05', 'WORLDVIEW', '#nicolas', 'Nicolas, in his own words.'],
-            ['', 'WHY THIS EXISTS', '#why', 'The reason for a single bag.']] },
+    links: [['ORIGIN', '#source', 'Where the cacao comes from, and what we can prove.'],
+            ['WORLDVIEW', '#nicolas', 'Nicolas, in his own words.'],
+            ['WHY THIS EXISTS', '#why', 'The reason for a single bag.']] },
   { key: 'make', label: 'MAKE', href: '#make', field: 'ink',
     line: 'MADE TO BE SHARED.', note: 'Break it, steam it, stir it. Four steps and a pot.',
     mark: (s) => steam(s), big: () => steam(44),
-    links: [['', 'MAKE A CUP', '#make', 'The method, start to finish.'],
-            ['', 'QUESTIONS', '#buy', 'Storage, strength, sweetening, shipping.'],
-            ['CH. 06', 'THE COUNTER', '#buy', '250 g of whole cacao.']] },
+    links: [['MAKE A CUP', '#make', 'The method, start to finish.'],
+            ['QUESTIONS', '#buy', 'Storage, strength, sweetening, shipping.'],
+            ['THE COUNTER', '#buy', '250 g of whole cacao.']] },
   { key: 'people', label: 'PEOPLE', href: '#people', field: 'green',
     line: 'CACAO IS LOVE.', note: 'A bag is usually bought for someone else. That is the whole idea.',
     mark: (s) => cupRim(s), big: () => cupRim(44),
-    links: [['', 'THE NEIGHBORHOOD', '#people', 'Who is drinking it.'],
-            ['CH. 05', 'NICOLAS', '#nicolas', 'The person who started it.'],
-            ['', 'STAY CLOSE', '#newsletter', 'Next drops, and nothing else.']] },
+    links: [['THE NEIGHBORHOOD', '#people', 'Who is drinking it.'],
+            ['NICOLAS', '#nicolas', 'The person who started it.'],
+            ['STAY CLOSE', '#newsletter', 'Next drops, and nothing else.']] },
 ]
-
-const menuRecord = (m) => {
-  const ch = m.links.map((l) => l[0]).filter(Boolean).map((c) => c.replace('CH. ', ''))
-  const count = String(m.links.length).padStart(2, '0') + ' ENTRIES'
-  if (!ch.length) return count
-  const span = ch.length === 1 ? 'CH. ' + ch[0] : 'CH. ' + ch[0] + '\u2013' + ch[ch.length - 1]
-  return span + ' \u00b7 ' + count
-}
 
 const megaPanels = MENUS.map((m, i) => `
   <div id="mega-${m.key}" class="mega" aria-label="${m.label} menu" hidden>
@@ -169,9 +161,8 @@ const megaPanels = MENUS.map((m, i) => `
       <div class="megaBrandMark" aria-hidden="true">${m.big()}</div>
     </div>
     <div class="megaBody">
-      <p class="t-meta megaRecord">${menuRecord(m)}</p>
       <ul class="megaList">
-        ${m.links.map(([ch, label, href, note]) => `<li><a href="${href}" class="megaLink"><span class="megaCh">${ch || '&#8212;'}</span><span class="megaLinkMain"><span class="megaLabel">${label}</span><span class="megaNote">${note}</span></span></a></li>`).join('')}
+        ${m.links.map(([label, href, note]) => `<li><a href="${href}" class="megaLink"><span class="megaCh" aria-hidden>${seed(13)}</span><span class="megaLinkMain"><span class="megaLabel">${label}</span><span class="megaNote">${note}</span></span></a></li>`).join('')}
       </ul>
     </div>
   </div>`).join('')
@@ -224,9 +215,9 @@ const BODY = `
       </div>
       <div class="heroMedia">
         <div class="heroMediaInner">
-          <img src="${A.hero}" alt="One person passing a mug of cacao to another across a sunlit table, beside a bag of Cacao Is Love." style="object-position:66% 45%">
+          <img src="${A.hero}" alt="A bag of Cacao Is Love standing on a pale studio surface." style="object-position:66% 45%">
         </div>
-        <p class="t-meta heroCaption">PL. 01 — THE PASS</p>
+        <p class="t-meta heroCaption">THE BAG</p>
       </div>
     </div>
   </div>
@@ -241,7 +232,7 @@ const BODY = `
   <div class="shell">
     <div class="truthGrid">
       <div>
-        <p class="t-label truthKicker">CH. 01 — THE CACAO</p>
+        <p class="t-label truthKicker">WHAT IT IS</p>
         <h2 id="truth-title" class="truthMega"><span>ONE INGREDIENT.</span><span>WHOLE CACAO.</span></h2>
         <div class="truthTail">
           <p class="t-h3">Nothing added.</p>
@@ -263,8 +254,8 @@ const BODY = `
         <img src="${A.packWood}" alt="The Cacao Is Love pouch on a green background beside a full cup of cacao, with broken pieces of cacao in front of it." style="width:100%;height:auto">
       </div>
       <div class="packCap">
-        <span class="t-meta">PL. 02</span>
-        <span class="t-meta">CACAO IS LOVE / ${P.weight} G / ${P.origin}</span>
+        <span class="t-meta">THE COUNTER</span>
+        <span class="t-meta">${P.weight} G / ${P.origin}</span>
       </div>
     </div>
   </div>
@@ -274,7 +265,7 @@ const BODY = `
   <div class="shell">
     <div class="eduGrid">
       <div>
-        ${tag('CH. 02 — THE CATEGORY')}
+        ${tag('WHAT IT ISN’T')}
         <h2 id="cacao-title" class="t-h1" style="margin-top:var(--s-5)">WHAT ARE YOU ACTUALLY DRINKING?</h2>
         <p class="t-lede measure" style="margin-top:var(--s-5)">Chocolate starts as a fruit. Cacao is that fruit, before anybody adds sugar to it. That is the whole idea.</p>
         <p class="t-body measure" style="margin-top:var(--s-4)">Not cocoa powder. Not a chocolate bar. The whole bean, still whole.</p>
@@ -292,7 +283,7 @@ const BODY = `
   <div class="shell">
     <div class="compGrid">
       <div>
-        ${tag('CH. 03 \u2014 COMPOSITION')}
+        ${tag('WHAT’S INSIDE')}
         <h2 id="composition-title" class="t-h1" style="margin-top:var(--s-4)">WHAT\u2019S IN IT.</h2>
         <p class="t-lede measure" style="margin-top:var(--s-4)">Simply ground cacao beans, with nothing added.</p>
         <p class="t-meta compFootnote">This is a food, not a supplement. We list what is in the bean and leave the claims to somebody qualified to make them.</p>
@@ -309,7 +300,7 @@ const BODY = `
     <div class="provArtSide"><img src="${A.prov}" alt="" style="width:100%;height:auto"></div>
     <div class="provCopySide">
       <div class="provCopyInner">
-        ${tag('CH. 04 \u2014 ORIGIN')}
+        ${tag('WHERE IT’S FROM')}
         <h2 id="source-title" class="t-display">GROWN IN COLOMBIA.</h2>
         <p class="t-lede">Where the cacao begins.</p>
         <div class="provMeta">
@@ -324,9 +315,9 @@ const BODY = `
 <section class="field-ink">
   <ul class="plateStrip">
     ${[
-      [A.originPodBranch, 'PL. 04', 'POD ON THE BRANCH', 'Two hands holding a ripening cacao pod hanging from a branch.'],
-      [A.originAtTheTrees, 'PL. 05', 'AT THE TREES', 'Nicolas standing beneath a cacao tree, looking up at the pods.'],
-      [A.originTwoPods, 'PL. 06', 'TWO PODS, BACKLIT', 'A hand reaching for two cacao pods on the trunk, lit from behind.'],
+      [A.originPodBranch, 'POD ON THE BRANCH', 'COLOMBIA', 'Two hands holding a ripening cacao pod hanging from a branch.'],
+      [A.originAtTheTrees, 'AT THE TREES', 'COLOMBIA', 'Nicolas standing beneath a cacao tree, looking up at the pods.'],
+      [A.originTwoPods, 'TWO PODS, BACKLIT', 'COLOMBIA', 'A hand reaching for two cacao pods on the trunk, lit from behind.'],
     ].map(([src, pl, cap, alt], i) => `<li class="plateItem reveal" style="--reveal-delay:${i * 80}ms"><div class="plateMedia"><img src="${src}" alt="${alt}" loading="lazy"></div><div class="plateCap"><span class="t-meta">${pl}</span><span class="t-meta">${cap}</span></div></li>`).join('')}
   </ul>
 </section>
@@ -349,7 +340,7 @@ const BODY = `
   <div class="shell">
     <div class="nicGrid">
       <div class="nicCopy">
-        ${tag('CH. 05 \u2014 WORLDVIEW')}
+        ${tag('WHO MADE IT')}
         <h2 id="nicolas-title" class="t-display">CURIOSITY IS WHERE IT STARTS.</h2>
         <blockquote class="t-quote nicQuote">“I’m sharing this with you because good things are meant to be shared, especially among neighbors.”</blockquote>
         <p class="t-body measure">I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.</p>
@@ -361,7 +352,7 @@ const BODY = `
           <div class="figureMedia cut-br" style="aspect-ratio:4/3">
             <img src="${A.nicolas}" alt="Nicolas smiling as he holds a ripening cacao pod still attached to the tree.">
           </div>
-          <figcaption class="figureCap"><span class="t-meta">PL. 07</span><span class="t-meta figureCapRight">Nicolas, at the trees</span></figcaption>
+          <figcaption class="figureCap"><span class="t-meta">NICOLAS</span><span class="t-meta figureCapRight">At the trees</span></figcaption>
         </figure>
         <img class="nicMark" src="${A.curiosity}" alt="" style="width:100%;height:auto">
       </div>
@@ -375,13 +366,13 @@ const BODY = `
 
 <section id="buy" class="field-cream field" aria-labelledby="buy-title">
   <div class="shell">
-    ${tag('CH. 06 \u2014 THE COUNTER')}
+    ${tag('THE COUNTER')}
     <div class="buyGrid" style="margin-top:var(--s-6)">
       <figure class="figure">
         <div class="figureMedia cut-br" style="aspect-ratio:4/5">
           <img src="${A.packStudio}" alt="The Cacao Is Love bag beside a mug of cacao, broken cacao and a wooden spoon.">
         </div>
-        <figcaption class="figureCap"><span class="t-meta">PL. 03</span><span class="t-meta figureCapRight">${P.weight} G / ${P.origin}</span></figcaption>
+        <figcaption class="figureCap"><span class="t-meta">THE BAG</span><span class="t-meta figureCapRight">${P.weight} G / ${P.origin}</span></figcaption>
       </figure>
 
       <div class="module" data-buy>
@@ -536,8 +527,8 @@ const BODY = `
             <span class="sheetSign" aria-hidden="true">+</span>
           </button>
           <ul id="sheet-${m.key}" class="sheetSub" hidden>
-            <li><a href="${m.href}" class="sheetSubLink" data-close-menu><span class="sheetSubCh">&#8212;</span><span>OVERVIEW</span></a></li>
-            ${m.links.map(([ch, label, href]) => `<li><a href="${href}" class="sheetSubLink" data-close-menu><span class="sheetSubCh">${ch || '&#8212;'}</span><span>${label}</span></a></li>`).join('')}
+            <li><a href="${m.href}" class="sheetSubLink" data-close-menu><span class="sheetSubCh" aria-hidden>${seed(13)}</span><span>OVERVIEW</span></a></li>
+            ${m.links.map(([label, href]) => `<li><a href="${href}" class="sheetSubLink" data-close-menu><span class="sheetSubCh" aria-hidden>${seed(13)}</span><span>${label}</span></a></li>`).join('')}
           </ul>
         </li>`).join('')}
       </ul>

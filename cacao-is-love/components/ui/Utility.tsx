@@ -28,7 +28,8 @@ export function UtilityTable({ rows, className }: { rows: UtilityRow[]; classNam
   )
 }
 
-/** CH. 01 / PL. 02 notation — seasoning, never the structure. */
+/** Section eyebrow. Names the question the section answers, so a skimmer can
+    jump to whatever is blocking them. Seasoning, never the structure. */
 export function Tag({ children }: { children: React.ReactNode }) {
   return (
     <span className={`t-meta ${s.chapterTag}`}>

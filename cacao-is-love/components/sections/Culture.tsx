@@ -24,7 +24,7 @@ export function Nicolas() {
     <Section id="nicolas" field="cream" labelledBy="nicolas-title">
       <div className={s.nicGrid}>
         <div className={s.nicCopy}>
-          <Tag>CH. 05 — WORLDVIEW</Tag>
+          <Tag>WHO MADE IT</Tag>
           <h2 id="nicolas-title" className="t-display">
             CURIOSITY IS WHERE IT STARTS.
           </h2>

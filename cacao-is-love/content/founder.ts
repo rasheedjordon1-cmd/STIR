@@ -18,8 +18,8 @@ export const founder = {
   name: 'Nicolas Nuvan',
   role: 'Founder',
   portrait: {
-    plate: 'PL. 07',
-    caption: 'Nicolas, at the trees',
+    plate: 'NICOLAS',
+    caption: 'At the trees',
     photo: 'founderNicolas',
   },
   /**

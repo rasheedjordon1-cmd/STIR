@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 export default function ProductPage() {
   return (
     <>
-      <Purchase id="pdp-buy" tag="PL. 03 — THE BAG" as="h1" />
+      <Purchase id="pdp-buy" as="h1" />
       <Marquee items={site.marquee} field="ink" />
       <ProductField />
       <TheWait />

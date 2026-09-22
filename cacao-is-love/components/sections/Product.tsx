@@ -9,7 +9,7 @@ import { product, formatPrice } from '@/content/product'
 import { productTruth } from '@/content/education'
 import s from './sections.module.css'
 
-/* -------- CH. 01 · THE PRODUCT — red field ------------------------------
+/* -------- WHAT IT IS · THE PRODUCT — red field --------------------------
    A typographic poster, not a product database. The spec table that used to
    sit under the headline is gone; see productTruth for why.
 
@@ -22,7 +22,7 @@ export function ProductField() {
     <Section id="truth" field="red" labelledBy="truth-title">
       <div className={s.truthPoster}>
         <Reveal as="p" className={`t-label ${s.truthKicker}`}>
-          CH. 01 — THE CACAO
+          WHAT IT IS
         </Reveal>
 
         <h2 id="truth-title" className={s.truthMega}>
@@ -82,9 +82,9 @@ export function ProductImage() {
           {/* Labelled after the photograph was put down — 620ms behind the
               BREAK, so the annotation reads as a second action. */}
           <Reveal className={s.packCap} delay={620}>
-            <span className="t-meta">PL. 01</span>
+            <span className="t-meta">THE BAG</span>
             <span className="t-meta">
-              CACAO IS LOVE / {product.weightGrams} G / {product.originCountry.toUpperCase()}
+              {product.weightGrams} G / {product.originCountry.toUpperCase()}
             </span>
           </Reveal>
           <div className={s.packBuy}>
@@ -101,7 +101,7 @@ export function ProductImage() {
 export function Purchase({
   id = 'buy',
   field = 'cream',
-  tag = 'CH. 06 — THE COUNTER',
+  tag = 'THE COUNTER',
   as = 'h2',
 }: {
   id?: string
@@ -116,7 +116,7 @@ export function Purchase({
         <figure className={s.buyFigure}>
           <Photo name="packStudio" sizes="(min-width: 900px) 46vw, 100vw" />
           <figcaption className={`t-meta ${s.buyCap}`}>
-            <span>PL. 03</span>
+            <span>THE BAG</span>
             <span>
               {product.weightGrams} G / {product.originCountry.toUpperCase()}
             </span>
