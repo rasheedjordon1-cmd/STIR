@@ -165,13 +165,23 @@
 
 /* ---------------- 06 · NICOLAS ---------------- */
 .nicGrid { display: grid; gap: var(--s-8); align-items: center; }
+/* The copy is three short elements now — eyebrow, headline, quote, name — so
+   the WIDE column goes to the photograph, not to the words. At 7fr / 5fr the
+   copy sat 390px tall in the larger slot while the art ran 708px in the
+   smaller one, which read as a column that had lost its text. */
 @media (min-width: 900px) {
-  .nicGrid { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(40px, 5vw, 88px); }
+  .nicGrid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(40px, 5vw, 88px); }
 }
 .nicCopy { display: grid; gap: var(--s-5); }
 .nicQuote { border-left: var(--rule-w) solid var(--accent); padding-left: var(--s-5); }
 .nicArt { color: var(--fg); justify-self: center; }
 .nicArt img, .nicArt svg { width: 100%; max-width: 420px; height: auto; }
+/* The photograph is the section's subject, so it is the one thing allowed to
+   fill its column. The curiosity mark keeps its own cap below. */
+@media (min-width: 900px) {
+  .nicArt { justify-self: stretch; }
+  .nicFigure img { max-width: none; }
+}
 .nicSign { display: flex; align-items: center; gap: var(--s-3); color: var(--fg-meta); }
 
 /* ---------------- 07 · POSTER ---------------- */
@@ -287,7 +297,11 @@
 @media (min-width: 760px) { .plateCap { padding-inline: var(--s-5); } }
 
 /* the Curiosity mark sits under the portrait rather than replacing it */
-.nicMark { margin-top: var(--s-6); max-width: 260px; }
+/* ⚠ SPECIFICITY. `.nicArt img` (0,1,1) outranks a bare `.nicMark` (0,1,0), so
+   this cap never applied and the curiosity mark rendered at 420px — 60% over
+   its intended size, which is why it competed with the photograph instead of
+   annotating it. Scoped to .nicArt so it wins on its own terms. */
+.nicArt .nicMark { margin-top: var(--s-6); max-width: 260px; }
 
 /* ============================================================================
    CIL 2026 — NARRATIVE SECTIONS

@@ -16,10 +16,18 @@
  * or "whole bean", because the photographs would contradict it.
  */
 
+/**
+ * ⚠ FACT CORRECTION. The lede used to read "Chocolate starts as a fruit. Cacao
+ *   is that fruit, before anybody adds sugar to it." Cacao is not the fruit —
+ *   it is the SEED inside the pod, and the product in the bag is those seeds
+ *   ground and set. The sentence was pretty and wrong, and the four steps
+ *   directly beneath it already said pod → bean → pieces, so the page
+ *   contradicted itself in the space of one screen. The cadence is kept.
+ */
 export const whatIsCacao = {
   headline: 'WHAT ARE YOU ACTUALLY DRINKING?',
   lede:
-    'Chocolate starts as a fruit. Cacao is that fruit, before anybody adds sugar to it. That is the whole idea.',
+    'Chocolate starts with a fruit. Inside are the cacao beans. Before the sugar, milk and everything else, this is where chocolate begins.',
   steps: [
     { n: '01', term: 'CACAO POD',  def: 'A fruit the size of a football, growing straight off the trunk of the tree.' },
     { n: '02', term: 'CACAO BEAN', def: 'The seeds inside. Fermented and dried on the farm, which is where the flavour is made.' },
@@ -75,10 +83,13 @@ export const whyPeopleDrinkIt = {
  *   regulated for food in the US and is the wellness register the brand rules
  *   out.
  *
- *   `note` describes each compound or its name instead. Every compound from
- *   his list is kept, nothing is invented, and no effect is promised.
- *   `originalNote` is his wording, verbatim, so it can be restored in one edit
- *   if it clears review. Do not ship `originalNote` without that review.
+ *   `note` describes each compound instead. Nothing is invented and no effect
+ *   is promised. `originalNote` is his wording, verbatim, so it can be
+ *   restored in one edit if it clears review. Do not ship `originalNote`
+ *   without that review.
+ *
+ *   ONE COMPOUND FROM HIS LIST IS NOT HERE — anandamide. See the note on the
+ *   row that replaced it.
  *
  *   THEOBROMINE's note used to end "Slower on than caffeine, and slower off."
  *   That is the same claim in quieter clothes, so it now says what the
@@ -90,7 +101,7 @@ export const composition = {
   rows: [
     {
       compound: 'THEOBROMINE',
-      note: 'Cacao’s own stimulant, and the one it has most of.',
+      note: 'The predominant methylxanthine in cacao. Caffeine is present in smaller amounts.',
       originalNote: 'A gentle, heart-opening stimulant.',
     },
     {
@@ -98,14 +109,21 @@ export const composition = {
       note: 'A mineral cacao is naturally rich in.',
       originalNote: 'For relaxation.',
     },
+    /* ⚠ ANANDAMIDE WAS REMOVED, and this is the one compound from Nicolas's
+       list that is not on the page. His wording was 'The “bliss molecule”';
+       ours was 'Named from ānanda, the Sanskrit for joy', which dodges the
+       regulated claim and then smuggles the same promise in through the
+       etymology. The compound is also present only in trace amounts, so the
+       row was carrying an implication it could not carry a fact for.
+       Flavanols do the job it was pretending to do — they are genuinely
+       abundant, well established in cocoa, and describable without a promise. */
     {
-      compound: 'ANANDAMIDE',
-      note: 'Named from ānanda, the Sanskrit for joy.',
-      originalNote: 'The “bliss molecule”.',
+      compound: 'FLAVANOLS / POLYPHENOLS',
+      note: 'A family of plant compounds. They are much of what makes unsweetened cacao taste bitter.',
     },
     {
-      compound: 'IRON + ANTIOXIDANTS',
-      note: 'Also naturally present in the bean.',
+      compound: 'IRON',
+      note: 'A mineral also naturally present in the bean.',
       originalNote: 'Iron and antioxidants.',
     },
   ],

@@ -23,8 +23,18 @@ export const founder = {
     photo: 'founderNicolas',
   },
   /**
-   * His own words, first person, close to verbatim from his original site.
-   * The opening clause is restored — it was truncated for no reason.
+   * ⚠ HELD OUT OF THE RENDER, NOT DELETED. The section now runs headline →
+   *   quote → name, and the photograph carries the rest. Two things followed
+   *   from cutting these paragraphs, and both are improvements:
+   *
+   *   · "opens creativity, deepens empathy" was the site's last remaining
+   *     effect language. It survived on the grounds that first-person
+   *     testimony is not a brand claim — a defensible position, but a thinner
+   *     one than simply not saying it.
+   *   · The Indigenous-cultures clause question is moot while nothing here
+   *     renders. It still needs Nicolas's decision before any of this returns.
+   *
+   *   The words are kept verbatim so restoring them is one line in Culture.tsx.
    */
   note: [
     'I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.',

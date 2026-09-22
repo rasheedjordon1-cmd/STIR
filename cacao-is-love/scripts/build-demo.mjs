@@ -107,11 +107,15 @@ const STEPS = [
   ['03', 'MAKE IT YOURS', prepMake, 'Honey, cinnamon, salt, oat milk, chilli, nothing at all. This is the part where it stops being our drink and becomes yours.'],
 ]
 
+/* Mirrors content/education.ts. This file had drifted two claims behind the
+   site: THEOBROMINE still carried "Slower on than caffeine, and slower off"
+   and ANANDAMIDE was still listed. Both were removed from the site on claims
+   grounds. Re-check this block against education.ts before every handoff. */
 const COMPOUNDS = [
-  ['THEOBROMINE', 'Cacao\u2019s own stimulant. Slower on than caffeine, and slower off.'],
+  ['THEOBROMINE', 'The predominant methylxanthine in cacao. Caffeine is present in smaller amounts.'],
   ['MAGNESIUM', 'A mineral cacao is naturally rich in.'],
-  ['ANANDAMIDE', 'Named from \u0101nanda, the Sanskrit for joy.'],
-  ['IRON + ANTIOXIDANTS', 'Also naturally present in the whole bean.'],
+  ['FLAVANOLS / POLYPHENOLS', 'A family of plant compounds. They are much of what makes unsweetened cacao taste bitter.'],
+  ['IRON', 'A mineral also naturally present in the bean.'],
 ]
 
 const NOTES = [
@@ -143,7 +147,7 @@ const MENUS = [
             ['QUESTIONS', '#buy', 'Storage, strength, sweetening, shipping.'],
             ['THE COUNTER', '#buy', '250 g of whole cacao.']] },
   { key: 'people', label: 'PEOPLE', href: '#people', field: 'green',
-    line: 'CACAO IS LOVE.', note: 'A bag is usually bought for someone else. That is the whole idea.',
+    line: 'CACAO IS LOVE.', note: 'One cup has a habit of becoming two. That is the whole idea.',
     mark: (s) => cupRim(s), big: () => cupRim(44),
     links: [['THE NEIGHBORHOOD', '#people', 'Who is drinking it.'],
             ['NICOLAS', '#nicolas', 'The person who started it.'],
@@ -267,7 +271,7 @@ const BODY = `
       <div>
         ${tag('WHAT IT ISN’T')}
         <h2 id="cacao-title" class="t-h1" style="margin-top:var(--s-5)">WHAT ARE YOU ACTUALLY DRINKING?</h2>
-        <p class="t-lede measure" style="margin-top:var(--s-5)">Chocolate starts as a fruit. Cacao is that fruit, before anybody adds sugar to it. That is the whole idea.</p>
+        <p class="t-lede measure" style="margin-top:var(--s-5)">Chocolate starts with a fruit. Inside are the cacao beans. Before the sugar, milk and everything else, this is where chocolate begins.</p>
         <p class="t-body measure" style="margin-top:var(--s-4)">Not cocoa powder. Not a chocolate bar. The whole bean, still whole.</p>
         <img class="eduCue" src="${A.curiousFinger}" alt="" style="height:64px;width:auto">
       </div>
@@ -343,8 +347,6 @@ const BODY = `
         ${tag('WHO MADE IT')}
         <h2 id="nicolas-title" class="t-display">CURIOSITY IS WHERE IT STARTS.</h2>
         <blockquote class="t-quote nicQuote">“I’m sharing this with you because good things are meant to be shared, especially among neighbors.”</blockquote>
-        <p class="t-body measure">I’ve learned that cacao opens creativity, deepens empathy, and connects us to something ancient and beautiful.</p>
-        <p class="t-body measure">This is a gift — it’s an invitation to slow down, connect with yourself, and experience the gentle magic that indigenous cultures have honored for thousands of years.</p>
         <p class="t-meta nicSign">${shard(13)}NICOLAS NUVAN · FOUNDER</p>
       </div>
       <div class="nicArt">

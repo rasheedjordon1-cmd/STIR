@@ -29,12 +29,11 @@ export function Nicolas() {
             CURIOSITY IS WHERE IT STARTS.
           </h2>
           {/* The one place the serif is allowed to speak. */}
+          {/* HEADLINE, ONE QUOTE, A NAME. `founder.note` is deliberately not
+              rendered — see content/founder.ts. The photograph carries the
+              rest, and the quote lands harder without two paragraphs of
+              testimony standing in front of it. */}
           <blockquote className={`t-quote ${s.nicQuote}`}>“{founder.quote}”</blockquote>
-          {founder.note.map((p, i) => (
-            <p key={i} className="t-body measure">
-              {p}
-            </p>
-          ))}
           <p className={`t-meta ${s.nicSign}`}>
             <CacaoShard size={13} />
             {founder.name.toUpperCase()} · {founder.role.toUpperCase()}

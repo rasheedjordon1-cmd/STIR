@@ -81,7 +81,7 @@ const allMenus: MegaMenu[] = [
     href: '/#people',
     field: 'green',
     brandline: 'CACAO IS LOVE.',
-    brandNote: 'A bag is usually bought for someone else. That is the whole idea.',
+    brandNote: 'One cup has a habit of becoming two. That is the whole idea.',
     links: [
       { label: 'THE NEIGHBORHOOD', href: '/#people',     note: 'Who is drinking it.' },
       { label: 'NICOLAS',          href: '/#nicolas',    note: 'The person who started it.' },
