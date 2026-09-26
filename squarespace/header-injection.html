@@ -1,0 +1,24 @@
+<!-- ══ STIR · head ══
+     Paste into Settings → Advanced → Code Injection → HEADER. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Social share card. Squarespace sets its own og tags per page; these
+     override them. Swap the image URL for your uploaded og-stir.jpg. -->
+<meta property="og:image" content="ASSET_BASE/og-stir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="ASSET_BASE/og-stir.jpg">
+
+<script>
+/* Tag the page so the Custom CSS host layer only acts on STIR pages,
+   and paint the ground behind the cobalt hero before first paint. */
+(function () {
+  var p = window.location.pathname.replace(/\/$/, '');
+  document.documentElement.classList.add('stir-page');
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add('stir-page');
+    if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');
+  });
+})();
+</script>

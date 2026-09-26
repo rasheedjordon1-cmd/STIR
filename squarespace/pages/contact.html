@@ -1,0 +1,151 @@
+<!-- ══ STIR · CONTACT ══ Paste into ONE Code Block on a blank page.
+     Find/replace ASSET_BASE with your uploaded asset URL prefix. -->
+<div class="stir stir-contact">
+<header class="nav nav--ink">
+  <div class="shell nav-inner">
+    <a href="/" class="nav-logo"><img class="mark-ink" src="ASSET_BASE/stir-mark.png" alt="STIR — Home"><img class="mark-ivory" src="ASSET_BASE/stir-mark-ivory.png" alt="" aria-hidden="true"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/#proof">Work</a>
+      <a href="/#method">Capabilities</a>
+      <a href="/about">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="/contact" class="nav-start" aria-current="page">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="ASSET_BASE/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="/#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
+<main>
+  <section class="page shell" data-ground="ivory" data-index="Contact" aria-labelledby="contact-title">
+    <div class="grid">
+      <p class="utility page-label" data-reveal="structural">Contact</p>
+      <h1 class="display page-title" data-reveal="editorial" id="contact-title">What are we<br>looking at?</h1>
+
+      <div class="contact-info reveal">
+        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see.</p>
+        <div class="contact-links utility">
+          <a href="mailto:rasheedjordon1@gmail.com">Email us directly</a>
+          <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">@builtbystir</a>
+          <span>Brooklyn, New&nbsp;York</span>
+        </div>
+      </div>
+
+      <!-- Netlify Forms. Keeps the original form name so existing
+           notifications and past submissions stay intact. -->
+      <!-- Formspree: replace FORMSPREE_ID with your form ID (formspree.io → New Form) -->
+      <form class="contact-form reveal" name="start-a-project" method="POST"
+            action="https://formspree.io/f/FORMSPREE_ID" id="contact-form">
+        <input type="hidden" name="_subject" value="New STIR inquiry">
+        <p class="sr-only" aria-hidden="true">
+          <label>Don’t fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off"></label>
+        </p>
+
+        <div class="q-block">
+          <span class="utility q-no">01</span>
+          <div class="q-body">
+            <label class="q-label" for="f-business">Your business</label>
+            <span class="utility q-hint">Name it, and what it actually does.</span>
+            <input id="f-business" name="business" type="text" required autocomplete="organization">
+          </div>
+        </div>
+
+        <fieldset class="q-block" style="border:0;padding:0;margin:0;">
+          <span class="utility q-no">02</span>
+          <div class="q-body">
+            <legend class="q-label" style="padding:0;">What’s happening right now?</legend>
+            <span class="utility q-hint">Pick the closest.</span>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="situation" value="We need more customers" required><span>We need more customers</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re launching something"><span>We’re launching something</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our brand isn’t connecting"><span>Our brand isn’t connecting</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our content isn’t working"><span>Our content isn’t working</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re growing and need a system"><span>We’re growing and need a system</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Something else"><span>Something else</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="q-block">
+          <span class="utility q-no">03</span>
+          <div class="q-body">
+            <label class="q-label" for="f-show">Show us.</label>
+            <span class="utility q-hint">Website, Instagram, TikTok — wherever the business lives.</span>
+            <input id="f-show" name="show_us" type="text" inputmode="url" autocomplete="url" placeholder="instagram.com/…">
+          </div>
+        </div>
+
+        <div class="q-block">
+          <span class="utility q-no">04</span>
+          <div class="q-body">
+            <label class="q-label" for="f-blind">What do you think we’re not seeing yet?</label>
+            <span class="utility q-hint">Optional. Usually the most interesting answer.</span>
+            <textarea id="f-blind" name="not_seeing" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <span class="utility q-no">05</span>
+          <div class="q-body">
+            <label class="q-label" for="f-name">Where do we reply?</label>
+            <span class="utility q-hint">We read everything. We reply to the interesting ones fast.</span>
+            <div class="q-pair">
+              <div>
+                <span class="utility q-sub">Name</span>
+                <input id="f-name" name="name" type="text" required autocomplete="name">
+              </div>
+              <div>
+                <span class="utility q-sub">Email</span>
+                <input id="f-email" name="email" type="email" required autocomplete="email">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="send-row">
+          <button class="cta" type="submit">Send it to STIR <span class="arrow" aria-hidden="true">→</span></button>
+          <span class="send-rail" aria-hidden="true"></span>
+        </div>
+      </form>
+
+      <div class="contact-form form-success" id="form-success" role="status">
+        <h2 class="display">We’ve got it.</h2>
+        <p class="body">We’re reading it now. If there’s something there, you’ll hear from us — usually within a couple of days.</p>
+        <p class="utility contact-note">Brooklyn, New&nbsp;York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+      </div>
+
+      <div class="contact-form form-success" id="form-error" role="alert">
+        <h2 class="display">That didn’t send.</h2>
+        <p class="body">Something went wrong on our end. Email us directly at
+          <a href="mailto:rasheedjordon1@gmail.com" style="border-bottom:1px solid currentColor">rasheedjordon1@gmail.com</a>
+          and we’ll pick it up from there.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="ASSET_BASE/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
+  </div>
+</footer>
+</div>

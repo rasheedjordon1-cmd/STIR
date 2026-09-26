@@ -1,0 +1,295 @@
+<!-- ══ STIR · behaviour ══
+     Paste into Settings → Advanced → Code Injection → FOOTER.
+     Site-wide: it no-ops on pages that have no .stir root. -->
+<script>
+/* ════════════════════════════════════════════════════════════════
+   STIR — behavior. Motion has a job: explain, direct, reward or
+   confirm. Anything that does none of those is not here.
+   Everything below no-ops under prefers-reduced-motion.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine   = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ── Reveal ─────────────────────────────────────────────────────
+     One observer drives every entrance variant. Elements opt in with
+     .reveal (default) or data-reveal="editorial|registration|structural".
+     Structural signals pass through and retire, so red never lingers
+     as decoration.                                                  */
+  var revealables = document.querySelectorAll('.reveal, [data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce) {
+    revealables.forEach(function (el) { el.classList.add('is-in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        el.classList.add('is-in');
+        io.unobserve(el);
+        if (el.getAttribute('data-reveal') === 'structural') {
+          setTimeout(function () { el.classList.add('sig-spent'); }, 900);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ── Metric count-up ────────────────────────────────────────────
+     EXPLAIN: the number is about scale, so it should accrue.        */
+  (function () {
+    var el = document.querySelector('[data-count]');
+    if (!el || !('IntersectionObserver' in window)) return;
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-count-suffix') || '';
+    if (reduce) { el.textContent = target + suffix; return; }
+    el.textContent = '0' + suffix;
+    var run = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        run.unobserve(e.target);
+        var t0 = null, dur = 1100;
+        requestAnimationFrame(function step(ts) {
+          if (t0 === null) t0 = ts;
+          var p = Math.min((ts - t0) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          var v = target * eased;
+          el.textContent = (p < 1 ? v.toFixed(target < 10 ? 1 : 0) : target) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        });
+      });
+    }, { threshold: 0.5 });
+    run.observe(el);
+  })();
+
+  /* ── Method: FIND ─ BUILD ─ RUN as one system ───────────────────
+     DIRECT: the red signal progresses down the spine to the active
+     stage, so the three rows read as sequence, not as a list.       */
+  (function () {
+    var index = document.getElementById('method-index');
+    if (!index) return;
+    var rows = Array.prototype.slice.call(index.querySelectorAll('.method-row'));
+
+    function progress() {
+      var active = index.querySelector('.method-row.is-active');
+      if (!active) return;
+      var head = active.querySelector('.method-row-head');
+      var h = active.offsetTop + (head ? head.offsetHeight : 0) * 0.55;
+      index.style.setProperty('--sig-progress', h + 'px');
+    }
+
+    rows.forEach(function (row) {
+      var btn = row.querySelector('.method-row-head');
+      btn.addEventListener('click', function () {
+        if (row.classList.contains('is-active')) return;
+        rows.forEach(function (r) {
+          r.classList.remove('is-active');
+          r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
+        });
+        row.classList.add('is-active');
+        btn.setAttribute('aria-expanded', 'true');
+        progress();
+      });
+    });
+
+    progress();
+    window.addEventListener('resize', progress, { passive: true });
+    /* the detail panel changes height as it opens */
+    rows.forEach(function (r) {
+      var d = r.querySelector('.method-detail');
+      if (d) d.addEventListener('transitionend', progress);
+    });
+  })();
+
+  /* ── Hero: a few pixels of depth, and nothing more ──────────────
+     REWARD: the cobalt world responds to presence. Desktop pointers
+     only; never on touch, never under reduced motion.               */
+  (function () {
+    var hero = document.querySelector('.hero');
+    var art  = document.querySelector('.hero-art');
+    if (!hero || !art || reduce || !fine) return;
+    var tx = 0, ty = 0, queued = false;
+    hero.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var r = hero.getBoundingClientRect();
+      tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
+      ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
+      if (queued) return;
+      queued = true;
+      requestAnimationFrame(function () {
+        art.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
+        queued = false;
+      });
+    }, { passive: true });
+    hero.addEventListener('pointerleave', function () {
+      art.style.transform = '';
+    });
+  })();
+
+  /* ── Evidence video — only loads and plays while it is on screen ─ */
+  (function () {
+    var vids = document.querySelectorAll('video[data-autoplay]');
+    if (!vids.length || reduce || !('IntersectionObserver' in window)) return;
+    var vo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.play().catch(function () {}); }
+        else { e.target.pause(); }
+      });
+    }, { threshold: 0.25 });
+    vids.forEach(function (v) { vo.observe(v); });
+  })();
+
+  /* ── Evidence reel — draggable, like handling contact sheets ─────
+     CONFIRM: arrows step, drag has weight, the counter tracks.      */
+  (function () {
+    var reel = document.getElementById('proof-reel');
+    if (!reel) return;
+    var items = Array.prototype.slice.call(reel.querySelectorAll('.reel-item'));
+    var pos = document.getElementById('reel-pos');
+    var total = document.getElementById('reel-total');
+    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+    if (total) total.textContent = pad(items.length);
+
+    function currentIndex() {
+      var x = reel.scrollLeft, best = 0, bestDist = Infinity;
+      items.forEach(function (it, i) {
+        var d = Math.abs(it.offsetLeft - reel.offsetLeft - x);
+        if (d < bestDist) { bestDist = d; best = i; }
+      });
+      return best;
+    }
+    function sync() { if (pos) pos.textContent = pad(currentIndex() + 1); }
+
+    document.querySelectorAll('.reel-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var next = Math.min(items.length - 1, Math.max(0, currentIndex() + parseInt(btn.dataset.dir, 10)));
+        reel.scrollTo({ left: items[next].offsetLeft - reel.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+      });
+    });
+
+    var ticking = false;
+    reel.addEventListener('scroll', function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { sync(); ticking = false; });
+    }, { passive: true });
+
+    /* pointer drag with a little momentum */
+    var down = false, startX = 0, startScroll = 0, lastX = 0, vel = 0, lastT = 0, moved = false;
+    reel.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') return;   /* native touch scrolling is better */
+      down = true; moved = false;
+      startX = lastX = e.clientX;
+      startScroll = reel.scrollLeft;
+      vel = 0; lastT = performance.now();
+    });
+    reel.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (!moved && Math.abs(dx) > 4) { moved = true; reel.classList.add('is-dragging'); reel.setPointerCapture(e.pointerId); }
+      if (!moved) return;
+      var now = performance.now();
+      vel = (e.clientX - lastX) / Math.max(now - lastT, 1);
+      lastX = e.clientX; lastT = now;
+      reel.scrollLeft = startScroll - dx;
+    });
+    function release() {
+      if (!down) return;
+      down = false;
+      reel.classList.remove('is-dragging');
+      if (!moved || reduce) return;
+      var v = vel * 180;
+      if (Math.abs(v) > 40) reel.scrollBy({ left: -v, behavior: 'smooth' });
+    }
+    reel.addEventListener('pointerup', release);
+    reel.addEventListener('pointercancel', release);
+    reel.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
+  })();
+
+  /* ── Mobile menu ────────────────────────────────────────────────*/
+  (function () {
+    var btn = document.querySelector('.nav-menu');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !overlay) return;
+    var close = overlay.querySelector('.nav-overlay-close');
+    function setOpen(open) {
+      overlay.hidden = !open;
+      overlay.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    }
+    btn.addEventListener('click', function () { setOpen(true); });
+    close.addEventListener('click', function () { setOpen(false); });
+    overlay.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
+    });
+  })();
+
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   SQUARESPACE ENHANCEMENTS
+   01 · Adaptive nav — inverts against the ground passing beneath it
+   02 · Running index — which part of the argument you're in
+   Both are state, not movement. Both are inert under reduced motion
+   in the sense that nothing animates continuously.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var root = document.querySelector('.stir');
+  if (!root) return;
+  var nav = root.querySelector('.nav');
+  var sections = Array.prototype.slice.call(root.querySelectorAll('[data-ground]'));
+  if (!sections.length) return;
+
+  /* running index element (desktop only via CSS) */
+  var idx = document.createElement('div');
+  idx.className = 'stir-index';
+  idx.setAttribute('aria-hidden', 'true');
+  idx.innerHTML = '<span class="idx-rule"></span><span class="idx-label"></span>';
+  document.body.appendChild(idx);
+  var label = idx.querySelector('.idx-label');
+
+  var navH = 64, current = null, ticking = false;
+
+  function measure() {
+    navH = nav ? nav.offsetHeight : 64;
+  }
+
+  function update() {
+    var line = window.scrollY + navH * 0.6;
+    var active = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].offsetTop <= line) active = sections[i];
+    }
+    if (active !== current) {
+      current = active;
+      var ground = active.getAttribute('data-ground') || 'ivory';
+      if (nav) nav.setAttribute('data-on', ground);
+      idx.setAttribute('data-on', ground);
+      label.textContent = active.getAttribute('data-index') || '';
+    }
+    /* progress through the whole argument */
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+    idx.style.setProperty('--idx-progress', p.toFixed(3));
+    idx.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.35);
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }
+
+  measure();
+  update();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { measure(); update(); }, { passive: true });
+})();
+
+</script>
