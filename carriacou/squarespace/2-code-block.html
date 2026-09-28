@@ -1,0 +1,949 @@
+<!-- Carriacou Logistics, Squarespace kit, part 2 of 2.
+     Paste into: one Code Block, alone in one blank section, on the same page. Leave "Display source" off.
+     Set your form endpoint in the form action below (search for YOUR_FORM_ID). -->
+<script>(function(h){h.classList.add('cl-js');setTimeout(function(){if(!h.classList.contains('cl-ready'))h.classList.remove('cl-js')},4000)})(document.documentElement)</script>
+<div id="cl-root">
+<header class="hdr">
+  <div class="wrap">
+    <a class="wordmark" href="#cl-top" aria-label="Carriacou Logistics, home">
+      <svg class="logo" viewBox="-4 -4 934 108" aria-hidden="true" focusable="false"><g fill="currentColor" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><path d="M6.5 51.3V48.7Q6.5 35.4 7.5 26.4Q8.5 17.4 11.0 11.7Q13.5 6.1 17.8 3.1Q22.1 0.1 28.6 -1.0Q35.1 -2.1 44.2 -2.1H64.7Q75.2 -2.1 82.3 -0.8Q89.5 0.5 93.9 4.2Q98.3 7.9 100.3 15.2Q102.3 22.5 102.3 34.4H92.5Q92.5 25.0 91.2 19.8Q89.9 14.5 86.8 12.2Q83.6 9.8 78.3 9.3Q72.9 8.7 64.7 8.7H44.2Q37.0 8.7 32.0 9.3Q27.0 9.8 23.9 11.8Q20.8 13.8 19.1 18.1Q17.5 22.4 16.9 29.8Q16.3 37.2 16.3 48.7V51.3Q16.3 62.4 16.9 69.7Q17.5 77.0 19.1 81.3Q20.8 85.7 23.9 87.8Q27.0 90.0 32.0 90.6Q37.0 91.3 44.2 91.3H64.7Q72.9 91.3 78.3 90.8Q83.6 90.4 86.8 88.2Q89.9 85.9 91.2 80.8Q92.5 75.6 92.5 66.2H102.3Q102.3 78.2 100.3 85.4Q98.3 92.5 93.9 96.1Q89.5 99.7 82.3 100.9Q75.2 102.1 64.7 102.1H44.2Q32.8 102.1 25.4 100.1Q18.1 98.1 13.9 92.8Q9.8 87.4 8.2 77.4Q6.5 67.4 6.5 51.3Z M115.8 100.0 161.3 0.0H174.3L219.8 100.0H208.5L198.7 77.1H137.0L127.2 100.0ZM141.8 66.7H193.8L167.8 8.3Z M236.7 0.0H288.9Q300.3 0.0 307.3 1.3Q314.3 2.6 317.9 5.8Q321.5 9.0 322.8 14.5Q324.1 20.1 324.1 28.5V31.1Q324.1 38.9 322.6 44.6Q321.2 50.2 317.1 53.7Q312.9 57.2 304.9 58.6L321.8 100.0H312.1L295.5 59.5Q294.5 59.6 293.4 59.6Q292.3 59.6 291.1 59.6H246.5V100.0H236.7ZM246.5 48.8H289.6Q298.3 48.8 303.3 48.0Q308.3 47.3 310.6 45.4Q313.0 43.5 313.7 40.0Q314.3 36.6 314.3 31.1V28.5Q314.3 22.3 313.4 18.7Q312.5 15.2 309.7 13.5Q307.0 11.8 301.6 11.3Q296.1 10.8 287.0 10.8H246.5Z M346.4 0.0H398.6Q410.0 0.0 417.0 1.3Q424.0 2.6 427.6 5.8Q431.2 9.0 432.4 14.5Q433.7 20.1 433.7 28.5V31.1Q433.7 38.9 432.3 44.6Q430.8 50.2 426.7 53.7Q422.6 57.2 414.5 58.6L431.5 100.0H421.7L405.1 59.5Q404.1 59.6 403.0 59.6Q401.9 59.6 400.8 59.6H356.1V100.0H346.4ZM356.1 48.8H399.2Q407.9 48.8 412.9 48.0Q417.9 47.3 420.3 45.4Q422.6 43.5 423.3 40.0Q424.0 36.6 424.0 31.1V28.5Q424.0 22.3 423.0 18.7Q422.1 15.2 419.4 13.5Q416.6 11.8 411.2 11.3Q405.8 10.8 396.7 10.8H356.1Z M455.8 100.0V0.0H465.6V100.0Z M482.2 100.0 527.7 0.0H540.7L586.2 100.0H574.9L565.1 77.1H503.4L493.6 100.0ZM508.2 66.7H560.2L534.2 8.3Z M599.7 51.3V48.7Q599.7 35.4 600.7 26.4Q601.7 17.4 604.2 11.7Q606.7 6.1 611.0 3.1Q615.2 0.1 621.7 -1.0Q628.2 -2.1 637.4 -2.1H657.8Q668.3 -2.1 675.5 -0.8Q682.7 0.5 687.1 4.2Q691.5 7.9 693.4 15.2Q695.4 22.5 695.4 34.4H685.7Q685.7 25.0 684.4 19.8Q683.0 14.5 679.9 12.2Q676.8 9.8 671.4 9.3Q666.0 8.7 657.8 8.7H637.4Q630.1 8.7 625.1 9.3Q620.2 9.8 617.0 11.8Q613.9 13.8 612.3 18.1Q610.6 22.4 610.0 29.8Q609.4 37.2 609.4 48.7V51.3Q609.4 62.4 610.0 69.7Q610.6 77.0 612.3 81.3Q613.9 85.7 617.0 87.8Q620.2 90.0 625.1 90.6Q630.1 91.3 637.4 91.3H657.8Q666.0 91.3 671.4 90.8Q676.8 90.4 679.9 88.2Q683.0 85.9 684.4 80.8Q685.7 75.6 685.7 66.2H695.4Q695.4 78.2 693.4 85.4Q691.5 92.5 687.1 96.1Q682.7 99.7 675.5 100.9Q668.3 102.1 657.8 102.1H637.4Q626.0 102.1 618.6 100.1Q611.2 98.1 607.1 92.8Q603.0 87.4 601.3 77.4Q599.7 67.4 599.7 51.3Z M750.0 102.1Q738.6 102.1 731.2 100.1Q723.8 98.1 719.7 92.8Q715.5 87.4 713.9 77.4Q712.2 67.4 712.2 51.3V48.7Q712.2 35.4 713.3 26.4Q714.3 17.4 716.8 11.7Q719.3 6.1 723.5 3.1Q727.8 0.1 734.3 -1.0Q740.8 -2.1 750.0 -2.1H770.4Q779.6 -2.1 786.1 -1.0Q792.6 0.1 796.9 3.1Q801.2 6.1 803.7 11.7Q806.1 17.4 807.2 26.4Q808.2 35.4 808.2 48.7V51.3Q808.2 67.4 806.5 77.4Q804.9 87.4 800.7 92.8Q796.6 98.1 789.2 100.1Q781.9 102.1 770.4 102.1ZM750.0 91.3H770.4Q777.7 91.3 782.7 90.6Q787.7 90.0 790.8 87.8Q793.9 85.7 795.6 81.3Q797.2 77.0 797.8 69.7Q798.4 62.4 798.4 51.3V48.7Q798.4 37.2 797.8 29.8Q797.2 22.4 795.6 18.1Q793.9 13.8 790.8 11.8Q787.7 9.8 782.7 9.3Q777.7 8.7 770.4 8.7H750.0Q742.7 8.7 737.7 9.3Q732.8 9.8 729.6 11.8Q726.5 13.8 724.9 18.1Q723.2 22.4 722.6 29.8Q722.0 37.2 722.0 48.7V51.3Q722.0 62.4 722.6 69.7Q723.2 77.0 724.9 81.3Q726.5 85.7 729.6 87.8Q732.8 90.0 737.7 90.6Q742.7 91.3 750.0 91.3Z M863.0 102.1Q851.6 102.1 844.2 100.1Q836.8 98.1 832.7 92.8Q828.6 87.4 826.9 77.4Q825.2 67.4 825.2 51.3V0.0H835.0V51.3Q835.0 62.4 835.6 69.7Q836.2 77.0 837.9 81.3Q839.6 85.7 842.7 87.8Q845.8 90.0 850.8 90.6Q855.8 91.3 863.0 91.3H881.4Q888.6 91.3 893.6 90.6Q898.5 90.0 901.7 87.8Q904.8 85.7 906.4 81.3Q908.1 77.0 908.7 69.7Q909.3 62.4 909.3 51.3V0.0H919.1V51.3Q919.1 67.4 917.4 77.4Q915.8 87.4 911.7 92.8Q907.5 98.1 900.2 100.1Q892.8 102.1 881.4 102.1Z"/></g></svg>
+      <span class="sr">Carriacou Logistics</span>
+    </a>
+    <div class="readout" id="readout" aria-live="off">
+      <span class="ro-label">In view</span>
+      <span class="ro-zone" id="ro-zone">Facility</span>
+      <span class="ro-temp num" id="ro-temp" aria-hidden="true"></span>
+    </div>
+    <a class="hdr-tel num" href="tel:" title="Phone number pending confirmation">Call <span class="tk" data-fact="phone">TK</span></a>
+    <a class="btn btn-primary" href="#quote">Get a pallet rate</a>
+  </div>
+</header>
+
+<div id="cl-main">
+<span id="cl-top"></span>
+
+<!-- B. Hero -->
+<section class="hero" data-view="Facility" data-view-temp="">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 class="h1">Freezer, cooler, and dry pallet storage in Waterbury, Connecticut. <span data-authorize="terms">Month to month.</span></h1>
+      <p class="lead"><span class="mask"><span>85 South Leonard Street, on the I-84 corridor. Four loading docks. Refrigerated Sprinter vans and trucks that deliver your product into the grocery DC's receiving window.</span></span></p>
+      <div class="hero-cta"><span class="mask"><span>
+        <span class="mag"><a class="btn btn-primary" href="#quote">Get a pallet rate</a></span>
+        <a class="btn" href="#quote" data-intent="tour">Book a dock tour</a>
+      </span></span></div>
+    </div>
+
+    <figure class="pv-wrap" id="pv-wrap">
+      <svg class="pv" id="pv" viewBox="0 0 960 620" role="img" aria-labelledby="pv-title pv-desc">
+        <title id="pv-title">Plan view of the Carriacou Logistics warehouse at 85 South Leonard Street, Waterbury, Connecticut</title>
+        <desc id="pv-desc">A drafted floor plan. Three temperature zones run left to right across the building: freezer, cooler, and dry, each drawn with a grid of pallet positions. A staging apron runs along the south wall, where four numbered loading docks open onto the truck court. Temperatures and pallet counts are pending confirmation.</desc>
+        <defs>
+          <pattern id="cl-units" x="0" y="8" width="24" height="20" patternUnits="userSpaceOnUse"><rect x=".5" y=".5" width="23" height="19" fill="none" stroke="#0B1F2A" stroke-opacity=".3" stroke-width=".75"/></pattern>
+          <pattern id="cl-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#0B1F2A" stroke-opacity=".16" stroke-width=".75"/></pattern>
+        </defs>
+
+        <g class="pv-late">
+          <text class="lbl" x="48" y="36">Facility plan. 85 South Leonard Street, Waterbury, Connecticut. Not to scale.</text>
+          <rect class="unit-legend" x="800" y="27" width="10" height="9"/>
+          <text class="lbl" x="816" y="36">1 pallet position</text>
+          <path class="hair" d="M936 84v40M936 84l-4 8M936 84l4 8"/>
+          <text class="lbl" x="936" y="140" text-anchor="middle">N</text>
+        </g>
+
+        <a href="#zone-freezer" class="pz" data-zone="freezer" data-label="Freezer">
+          <rect class="pz-fill" x="48" y="56" width="288" height="392"/>
+          <rect class="pz-grid" x="48" y="128" width="288" height="320"/>
+          <rect class="pz-ring" x="54" y="62" width="276" height="380"/>
+          <text class="pz-name" x="64" y="90">Freezer</text>
+          <text class="pz-temp" x="64" y="114"><tspan class="pz-num tk" data-setpoint="" data-fact="freezer-setpoint">TK</tspan> °F</text>
+          <text class="pz-count" x="320" y="114" text-anchor="end"><tspan class="tk" data-fact="freezer-positions">TK</tspan> positions</text>
+        </a>
+        <a href="#zone-cooler" class="pz" data-zone="cooler" data-label="Cooler">
+          <rect class="pz-fill" x="336" y="56" width="288" height="392"/>
+          <rect class="pz-grid" x="336" y="128" width="288" height="320"/>
+          <rect class="pz-ring" x="342" y="62" width="276" height="380"/>
+          <text class="pz-name" x="352" y="90">Cooler</text>
+          <text class="pz-temp" x="352" y="114"><tspan class="pz-num tk" data-setpoint="" data-fact="cooler-setpoint">TK</tspan> °F</text>
+          <text class="pz-count" x="608" y="114" text-anchor="end"><tspan class="tk" data-fact="cooler-positions">TK</tspan> positions</text>
+        </a>
+        <a href="#zone-dry" class="pz" data-zone="dry" data-label="Dry">
+          <rect class="pz-fill" x="624" y="56" width="288" height="392"/>
+          <rect class="pz-grid" x="624" y="128" width="288" height="320"/>
+          <rect class="pz-ring" x="630" y="62" width="276" height="380"/>
+          <text class="pz-name" x="640" y="90">Dry</text>
+          <text class="pz-temp" x="640" y="114"><tspan class="pz-num tk" data-setpoint="" data-fact="dry-setpoint">TK</tspan> °F</text>
+          <text class="pz-count" x="896" y="114" text-anchor="end"><tspan class="tk" data-fact="dry-positions">TK</tspan> positions</text>
+        </a>
+
+        <g class="pv-late" data-label="Staging apron">
+          <rect class="apron" x="48" y="448" width="864" height="64"/>
+          <text class="lbl" x="64" y="486">Staging apron</text>
+        </g>
+
+        <path class="pv-outline" pathLength="1" d="M48 56H912V512H48ZM336 56V448M624 56V448M48 448H912M196 512h40M372 512h40M548 512h40M724 512h40"/>
+
+        <g class="pv-late">
+          <g data-label="Dock 1"><rect class="dock-door" x="196" y="506" width="40" height="6"/><rect class="trailer" x="200" y="524" width="32" height="80"/><text class="dock-num" x="216" y="572" text-anchor="middle">1</text></g>
+          <g data-label="Dock 2"><rect class="dock-door" x="372" y="506" width="40" height="6"/><rect class="trailer" x="376" y="524" width="32" height="80"/><text class="dock-num" x="392" y="572" text-anchor="middle">2</text></g>
+          <g data-label="Dock 3"><rect class="dock-door" x="548" y="506" width="40" height="6"/><rect class="trailer" x="552" y="524" width="32" height="80"/><text class="dock-num" x="568" y="572" text-anchor="middle">3</text></g>
+          <g data-label="Dock 4"><rect class="dock-door" x="724" y="506" width="40" height="6"/><rect class="trailer" x="728" y="524" width="32" height="80"/><text class="dock-num" x="744" y="572" text-anchor="middle">4</text></g>
+          <text class="lbl" x="912" y="608" text-anchor="end">Truck court. 4 loading docks.</text>
+        </g>
+      </svg>
+      <div class="pv-reticle" id="pv-reticle" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M16 0v11M16 21v11M0 16h11M21 16h11" stroke="#0B1F2A" stroke-width="1"/><circle cx="16" cy="16" r="3" fill="none" stroke="#0B1F2A" stroke-width="1"/></svg>
+        <b id="pv-reticle-lbl">Plan</b>
+      </div>
+      <figcaption class="pv-panel" id="pv-panel">
+        <p class="pv-hint">Select a zone on the plan for its temperature, capacity, and typical product. Pressing a zone also sets the temperature on the quote form.</p>
+        <dl class="pv-spec" aria-live="polite">
+          <div><dt>Zone</dt><dd id="ps-zone"></dd></div>
+          <div><dt>Temperature</dt><dd id="ps-temp"></dd></div>
+          <div><dt>Pallet positions</dt><dd id="ps-count"></dd></div>
+        </dl>
+        <p class="pv-cta"><a class="btn" id="ps-cta" href="#quote">Get a rate for this zone</a></p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- C. Three zones -->
+<section class="sec zones rv" id="zones" aria-labelledby="zones-h">
+  <div class="scrub scrub-cold" aria-hidden="true"></div>
+  <div class="scrub scrub-warm" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="zones-h"><span class="mask"><span>Three temperature zones under one roof.</span></span></h2>
+      <p class="lead"><span class="mask"><span>Rent positions in one zone or all three. Product moves between them without leaving the building.</span></span></p>
+    </div>
+    <div class="zone-grid">
+      <article class="zone" id="zone-freezer" data-view="Freezer" data-view-temp="">
+        <div class="frost" aria-hidden="true">
+          <svg preserveAspectRatio="none">
+            <defs>
+              <pattern id="cl-fr-t" width="20" height="28" patternUnits="userSpaceOnUse"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <pattern id="cl-fr-b" width="20" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(180)"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <pattern id="cl-fr-l" width="28" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(-90)"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <pattern id="cl-fr-r" width="28" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(90)"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <linearGradient id="cl-fr-fade-t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <linearGradient id="cl-fr-fade-b" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <linearGradient id="cl-fr-fade-l" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <linearGradient id="cl-fr-fade-r" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <mask id="cl-fr-m-t" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-t)"/></mask>
+              <mask id="cl-fr-m-b" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-b)"/></mask>
+              <mask id="cl-fr-m-l" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-l)"/></mask>
+              <mask id="cl-fr-m-r" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-r)"/></mask>
+            </defs>
+            <rect class="fe fe-t" x="0" y="0" width="100%" height="28" fill="url(#cl-fr-t)" mask="url(#cl-fr-m-t)"/>
+            <rect class="fe fe-b" x="0" y="0" width="100%" height="28" fill="url(#cl-fr-b)" mask="url(#cl-fr-m-b)"/>
+            <rect class="fe fe-l" x="0" y="0" width="28" height="100%" fill="url(#cl-fr-l)" mask="url(#cl-fr-m-l)"/>
+            <rect class="fe fe-r" x="0" y="0" width="28" height="100%" fill="url(#cl-fr-r)" mask="url(#cl-fr-m-r)"/>
+          </svg>
+        </div>
+        <h3 class="zone-name">Freezer</h3>
+        <dl>
+          <dt>Temperature</dt><dd><span class="tk" data-fact="freezer-temp-range">TK</span> °F</dd>
+          <dt>Pallet positions</dt><dd><span class="tk" data-fact="freezer-positions">TK</span></dd>
+          <dt>Monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd>
+        </dl>
+        <p class="cats"><b>Typical product.</b> Frozen entrées and sides, ice cream and novelties, frozen protein, frozen fruit and vegetables, frozen bakery.</p>
+        <p class="zone-cta"><a class="text-link" href="#quote" data-prefill="freezer">Get a freezer rate</a></p>
+      </article>
+      <article class="zone" id="zone-cooler" data-view="Cooler" data-view-temp="">
+        <h3 class="zone-name">Cooler</h3>
+        <dl>
+          <dt>Temperature</dt><dd><span class="tk" data-fact="cooler-temp-range">TK</span> °F</dd>
+          <dt>Pallet positions</dt><dd><span class="tk" data-fact="cooler-positions">TK</span></dd>
+          <dt>Monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd>
+        </dl>
+        <p class="cats"><b>Typical product.</b> Dairy and plant-based dairy, fresh produce, fresh protein, cold-pressed juice and kombucha, prepared meals, eggs.</p>
+        <p class="zone-cta"><a class="text-link" href="#quote" data-prefill="cooler">Get a cooler rate</a></p>
+      </article>
+      <article class="zone" id="zone-dry" data-view="Dry" data-view-temp="">
+        <h3 class="zone-name">Dry</h3>
+        <dl>
+          <dt>Temperature</dt><dd><span class="tk" data-fact="dry-temp-range">TK</span> °F</dd>
+          <dt>Pallet positions</dt><dd><span class="tk" data-fact="dry-positions">TK</span></dd>
+          <dt>Monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd>
+        </dl>
+        <p class="cats"><b>Typical product.</b> Shelf-stable beverage, supplements and powders, snacks, canned and jarred goods, packaging and point-of-sale material.</p>
+        <p class="zone-cta"><a class="text-link" href="#quote" data-prefill="dry">Get a dry rate</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- D. The facility -->
+<section class="sec dark facility rv" id="facility" aria-labelledby="fac-h" data-view="Docks" data-view-temp="">
+  <div class="shutter" id="shutter" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="fac-h"><span class="mask"><span>The building.</span></span></h2>
+      <p class="lead muted"><span class="mask"><span>One address, one roof, three temperatures, four doors.</span></span></p>
+    </div>
+    <div class="fac-grid">
+      <div>
+        <div class="stats">
+          <div class="stat"><span class="big num"><span class="count" data-count="4">4</span></span><span class="lbl">Loading docks</span></div>
+          <div class="stat"><span class="big num"><span class="count tk" data-count="" data-fact="square-feet">TK</span><small>sq ft</small></span><span class="lbl">Under roof</span></div>
+          <div class="stat"><span class="big num"><span class="count tk" data-count="" data-fact="clear-height">TK</span><small>ft</small></span><span class="lbl">Clear height</span></div>
+          <div class="stat"><span class="big num"><span class="count" data-count="3">3</span></span><span class="lbl">Temperature zones</span></div>
+        </div>
+        <div class="cap" id="cap">
+          <span class="big num"><span class="count tk" id="cap-count" data-count="" data-fact="total-positions">TK</span></span> <span class="muted">pallet positions in total</span>
+          <div class="cap-grid pending" id="cap-grid" aria-hidden="true"></div>
+        </div>
+      </div>
+      <dl class="spec">
+        <div><dt>Racking</dt><dd><span class="tk" data-fact="racking">TK</span></dd></div>
+        <div><dt>Receiving hours</dt><dd><span class="tk" data-fact="hours">TK</span></dd></div>
+        <div><dt>Appointments</dt><dd><span class="tk" data-fact="appointment-policy">TK</span></dd></div>
+        <div><dt>Dock equipment</dt><dd><span class="tk" data-fact="dock-levelers">TK</span></dd></div>
+        <div><dt>Backup power</dt><dd><span class="tk" data-fact="backup-power">TK</span></dd></div>
+        <div><dt>Temperature monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd></div>
+        <div><dt>Certifications</dt><dd><span class="tk" data-fact="certifications">TK</span></dd></div>
+        <div><dt>Warehouse management system</dt><dd><span class="tk" data-fact="wms">TK</span></dd></div>
+        <div><dt>Cross-docking</dt><dd><span class="tk" data-fact="cross-dock">TK</span></dd></div>
+        <div><dt>Fleet</dt><dd>Refrigerated Sprinter vans and trucks. Count <span class="tk" data-fact="fleet-size">TK</span>.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- E. Retail compliance -->
+<section class="sec light rv" id="compliance" aria-labelledby="comp-h" data-view="Dispatch" data-view-temp="">
+  <div class="wrap">
+    <div class="comp-grid">
+      <div class="sec-head" style="margin-bottom:0">
+        <h2 class="h2" id="comp-h"><span class="mask"><span>Product arrives inside the DC's window. Documented. No chargeback.</span></span></h2>
+        <p class="lead"><span class="mask"><span>Any warehouse can keep a box cold. The money is lost at the receiving door: a missed appointment, a short ASN, a lot code that doesn't match the paperwork. This operation is built around that door.</span></span></p>
+      </div>
+      <dl class="rows">
+        <div class="row"><dt>Delivery appointments</dt><dd data-authorize="process">Every outbound load is scheduled against the DC's receiving window before it leaves the dock. The appointment number rides on the bill of lading.<span class="row-doc">On the load: the appointment number and window travel on the bill of lading.</span></dd></div>
+        <div class="row"><dt>OTIF</dt><dd data-authorize="process">Loads are built and dispatched to land on time and in full. A late load and a short load cost you the same chargeback, so both are treated as failures here, not at your retailer's deduction desk.<span class="row-doc">Scored by: your retailer's vendor scorecard, delivery by delivery.</span></dd></div>
+        <div class="row"><dt>ASN and EDI</dt><dd>Advance ship notices and EDI transmission: <span class="tk" data-fact="edi-asn">TK</span>. Whether notices originate from this warehouse or from your team is being confirmed and will be stated here plainly.<span class="row-doc">On the wire: an 856 advance ship notice tells the DC what is on the truck before it arrives.</span></dd></div>
+        <div class="row"><dt>Lot codes and rotation</dt><dd data-authorize="process">Every pallet is received against a lot code and rotated FIFO or FEFO, whichever your retailer's routing guide calls for.<span class="row-doc">On the record: lot code and receipt date against every pallet position.</span></dd></div>
+        <div class="row"><dt>Temperature record</dt><dd>Zone temperatures are logged by <span class="tk" data-fact="monitoring">TK</span>. The record is available for any load on request.<span class="row-doc">On request: the zone log for the days your product was in the building.</span></dd></div>
+        <div class="row"><dt>Recall traceability</dt><dd data-authorize="process">Lot-level trace from receipt to the DC door. If a lot is pulled, you know which pallets, which loads, and which docks.<span class="row-doc">On request: pallets, loads, and docks for any lot, from receipt to the DC door.</span></dd></div>
+        <div class="row"><dt>Lumper coordination</dt><dd data-authorize="process">Unloading and lumper fees at the DC are coordinated ahead of the appointment, so the driver isn't negotiating at the door.<span class="row-doc">On the receipt: the lumper fee is agreed before the appointment, not at the door.</span></dd></div>
+        <div class="row"><dt>Routing guide compliance</dt><dd>Retail routing guide handling: <span class="tk" data-fact="routing-guide">TK</span>.<span class="row-doc">Checked against: pallet height, label placement, and the appointment rules in the guide.</span></dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- F. Storage + delivery -->
+<section class="sec dark delivery rv" id="delivery" aria-labelledby="del-h" data-view="Route" data-view-temp="">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="del-h"><span class="mask"><span>Stored and delivered by one operation.</span></span></h2>
+      <p class="lead muted"><span class="mask"><span>One accountable party from your receipt to the retailer's dock. No handoff between a warehouse and a carrier who point at each other.</span></span></p>
+    </div>
+    <div class="del-grid">
+      <ol class="steps">
+        <li class="step"><span class="n num" aria-hidden="true">1</span><div><h3 class="h3">Receive</h3><p>Your product comes in on appointment, is checked against the lot code and the temperature on arrival, and is put away in its zone.</p></div></li>
+        <li class="step"><span class="n num" aria-hidden="true">2</span><div><h3 class="h3">Store</h3><p>Pallet positions are billed by the month. <b>Rotation and the temperature record run the whole time it sits.</b></p></div></li>
+        <li class="step"><span class="n num" aria-hidden="true">3</span><div><h3 class="h3">Deliver</h3><p>On request, a refrigerated Sprinter van or truck moves it to your customer's dock inside their receiving window.</p></div></li>
+      </ol>
+      <div>
+        <svg class="route" viewBox="0 0 760 560" role="img" aria-labelledby="route-t route-d">
+          <title id="route-t">Delivery route map</title>
+          <desc id="route-d">A drafted map of Connecticut with the I-84, I-91, and I-95 corridors. The facility in Waterbury is marked. A route draws outward from Waterbury along I-84 to Hartford and north on I-91 as the page scrolls. Service radius and states served are pending confirmation.</desc>
+          <path class="land" d="M96 112 L588 112 L588 118 L560 118 L560 124 L590 124 L596 300 L578 300 L556 306 L520 300 L490 296 L462 300 L440 306 L420 312 L400 316 L380 318 L360 322 L336 326 L322 332 L300 334 L282 338 L262 344 L246 352 L226 356 L206 362 L188 370 L166 372 L152 378 L138 386 L124 396 L112 402 L102 400 L110 388 L120 372 L124 356 L118 348 L110 330 L108 300 L102 200 Z"/>
+          <path class="hwy" d="M126 366 L156 336 L188 314 L226 304 L260 300 L300 296 L332 286 L352 272 L370 254 L392 246 L418 236 L436 212 L458 190 L486 170 L520 152 L560 138 L588 126"/>
+          <text class="hwy-lbl" x="300" y="284" text-anchor="middle">I-84</text>
+          <path class="hwy" d="M406 112 L410 150 L416 190 L424 224 L428 246 L424 274 L420 300 L418 312"/>
+          <text class="hwy-lbl" x="446" y="166">I-91</text>
+          <path class="hwy" d="M108 402 L140 384 L176 372 L210 362 L250 350 L290 336 L336 326 L380 318 L420 312 L470 300 L520 302 L560 308 L596 300"/>
+          <text class="hwy-lbl" x="250" y="366">I-95</text>
+          <text class="hwy-lbl" x="340" y="98">Massachusetts</text>
+          <text class="hwy-lbl" x="612" y="200">Rhode Island</text>
+          <text class="hwy-lbl" x="40" y="240">New York</text>
+          <text class="hwy-lbl" x="380" y="420">Long Island Sound</text>
+          <circle class="city" cx="428" cy="212" r="3"/><text class="city-lbl" x="438" y="208">Hartford</text>
+          <circle class="city" cx="188" cy="314" r="3"/><text class="city-lbl" x="160" y="330">Danbury</text>
+          <circle class="city" cx="336" cy="326" r="3"/><text class="city-lbl" x="322" y="346">New Haven</text>
+          <circle class="city" cx="262" cy="344" r="3"/><text class="city-lbl" x="236" y="364">Bridgeport</text>
+          <circle class="city" cx="556" cy="306" r="3"/><text class="city-lbl" x="536" y="326">New London</text>
+          <path class="path path-2" pathLength="1" d="M300 296 L260 300 L226 304 L188 314 L156 336 L126 366"/>
+          <path class="path" pathLength="1" d="M300 296 L332 286 L352 272 L370 254 L392 246 L418 236 L428 212 L436 178 L440 140"/>
+          <rect class="reefer" x="-7" y="-4" width="14" height="8"/>
+          <circle class="fac" cx="300" cy="296" r="5"/>
+          <text class="fac-lbl" x="300" y="260" text-anchor="middle">Waterbury</text>
+          <text class="fac-lbl" x="300" y="245" text-anchor="middle" font-size="11">85 South Leonard Street</text>
+        </svg>
+        <p class="route-note">Delivery radius <span class="tk" data-fact="delivery-radius">TK</span>. States served <span class="tk" data-fact="states-served">TK</span>. Scheduled retail routes <span class="tk" data-fact="scheduled-routes">TK</span>. Corridors drawn are I-84, I-91, and I-95.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- G. Who this serves -->
+<section class="sec rv" id="serves" aria-labelledby="serves-h" data-view="Facility" data-view-temp="">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="serves-h"><span class="mask"><span>Who this is built for.</span></span></h2>
+      <p class="lead"><span class="mask"><span>Brands that sell into grocery, and the distributors who move their product. Regional and national.</span></span></p>
+    </div>
+    <div class="serve-grid">
+      <div class="serve">
+        <h3 class="h3">CPG brands</h3>
+        <ul>
+          <li><span>Frozen entrées and sides</span><span class="tag">Freezer</span></li><li><span>Ice cream and frozen desserts</span><span class="tag">Freezer</span></li><li><span>Frozen and fresh protein</span><span class="tag">Freezer or cooler</span></li><li><span>Dairy and plant-based dairy</span><span class="tag">Cooler</span></li><li><span>Fresh produce</span><span class="tag">Cooler</span></li><li><span>Beverage, cold and shelf-stable</span><span class="tag">Cooler or dry</span></li><li><span>Supplements and powders</span><span class="tag">Dry</span></li><li><span>Snacks and shelf-stable grocery</span><span class="tag">Dry</span></li>
+        </ul>
+      </div>
+      <div class="serve">
+        <h3 class="h3">Grocery retail supply</h3>
+        <ul>
+          <li><span>Grocery DC replenishment</span><span class="tag">Store and deliver</span></li><li><span>Regional distributor drops</span><span class="tag">Deliver</span></li><li><span>Direct-store delivery staging</span><span class="tag">Store</span></li><li><span>Overflow and seasonal build-up</span><span class="tag">Store</span></li><li><span>Promotional and display product</span><span class="tag">Store</span></li><li><span>Cross-dock <span class="tk" data-fact="cross-dock">TK</span></span><span class="tag">Receive and deliver</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fit lead" data-authorize="fit">Built for brands running 5 pallets and brands running 500.</p>
+  </div>
+</section>
+
+<!-- J. Terms and trust -->
+<section class="sec light rv" id="terms" aria-labelledby="terms-h" style="padding-top:0" data-view="Terms" data-view-temp="">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="terms-h"><span class="mask"><span>Terms, flat and factual.</span></span></h2>
+    </div>
+    <dl class="spec">
+      <div><dt>Contract</dt><dd data-authorize="terms">Month to month. No annual contract.</dd></div>
+      <div><dt>Minimum</dt><dd><span class="tk" data-fact="minimum-pallets">TK</span> pallet positions, <span class="tk" data-fact="minimum-term">TK</span> minimum term.</dd></div>
+      <div><dt>Quote turnaround</dt><dd data-authorize="quote-turnaround">One business day.</dd></div>
+      <div><dt>Rate lock</dt><dd><span class="tk" data-fact="rate-lock">TK</span></dd></div>
+      <div><dt>Onboarding to first receipt</dt><dd><span class="tk" data-fact="onboarding">TK</span></dd></div>
+      <div><dt>Handling</dt><dd>Inbound and outbound handling, palletizing, and case pick are itemized in the quote. Pick-and-pack <span class="tk" data-fact="pick-pack">TK</span>.</dd></div>
+      <div><dt>Insurance</dt><dd><span class="tk" data-fact="insurance">TK</span></dd></div>
+      <div><dt>Certifications</dt><dd><span class="tk" data-fact="certifications">TK</span></dd></div>
+      <div><dt>Price</dt><dd>Disclosed in the quote.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- K. Ownership -->
+<section class="sec rv" id="ownership" aria-labelledby="own-h" style="padding-top:0" data-view="Ownership" data-view-temp="">
+  <div class="wrap">
+    <div class="own">
+      <span class="rule" aria-hidden="true"></span>
+      <h2 class="h2" id="own-h"><span class="mask"><span>Who runs this.</span></span></h2>
+      <p class="copy" style="margin-top:24px">Carriacou is an island in Grenada, and the founder's origin. It is the name on the door, and nothing else about the operation refers to it. The warehouse is run day to day by <span class="tk" data-fact="founder">TK</span>, who answers the phone listed on this page.</p>
+    </div>
+  </div>
+</section>
+
+<!-- L. Quote form: rate request or dock appointment, drawn as a load ticket -->
+<section class="sec light rv quote" id="quote" data-mode="rate" data-view="Quote" data-view-temp="" aria-labelledby="quote-h" style="border-top:1px solid var(--line-strong)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sr" id="quote-h">Get a pallet rate or book a dock tour</h2>
+      <div class="mask"><div class="tabs" role="tablist" aria-label="What do you need">
+        <button class="tab" role="tab" type="button" id="tab-rate" aria-selected="true" aria-controls="quote-panel" data-mode-set="rate">Get a pallet rate.</button>
+        <button class="tab" role="tab" type="button" id="tab-tour" aria-selected="false" aria-controls="quote-panel" data-mode-set="tour" tabindex="-1">Book a dock tour.</button>
+      </div></div>
+      <p class="lead"><span class="mask"><span><span data-mode="rate">Seven questions. <span data-authorize="quote-turnaround">Quoted in one business day.</span> No account, no uploads.</span><span data-mode="tour">Pick a day and a window. The dock is yours to walk, and the time is confirmed by phone.</span></span></span></p>
+    </div>
+    <div class="quote-grid" id="quote-panel" role="tabpanel" aria-labelledby="tab-rate">
+      <div class="form-col">
+        <form class="form" id="quote-form" name="quote" method="post" action="https://formspree.io/f/YOUR_FORM_ID" novalidate>
+          <input type="hidden" name="intent" id="f-intent" value="rate">
+          <p class="sr" aria-hidden="true"><label>Leave this field empty <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <fieldset>
+            <legend>Temperature needed</legend>
+            <div class="seg" id="seg-temp">
+              <label class="opt"><input type="radio" name="temp" value="freezer"><span>Freezer</span></label>
+              <label class="opt"><input type="radio" name="temp" value="cooler"><span>Cooler</span></label>
+              <label class="opt"><input type="radio" name="temp" value="dry"><span>Dry</span></label>
+              <label class="opt"><input type="radio" name="temp" value="mixed"><span>Mixed</span></label>
+            </div>
+            <p class="msg group-msg" id="msg-temp"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Approximate pallet positions</legend>
+            <div class="seg" id="seg-pallets">
+              <label class="opt"><input type="radio" name="pallets" value="1-5"><span class="num">1 to 5</span></label>
+              <label class="opt"><input type="radio" name="pallets" value="6-20"><span class="num">6 to 20</span></label>
+              <label class="opt"><input type="radio" name="pallets" value="21-50"><span class="num">21 to 50</span></label>
+              <label class="opt"><input type="radio" name="pallets" value="50+"><span class="num">More than 50</span></label>
+            </div>
+            <p class="msg group-msg" id="msg-pallets"></p>
+          </fieldset>
+          <div class="field">
+            <input type="text" id="f-product" name="product" placeholder=" " autocomplete="off" aria-describedby="msg-product">
+            <label for="f-product">Product type</label>
+            <p class="msg" id="msg-product"></p>
+          </div>
+          <fieldset data-mode="rate">
+            <legend>Do you deliver into retail DCs?</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="retail" value="yes"><span>Yes</span></label>
+              <label class="opt"><input type="radio" name="retail" value="no"><span>No</span></label>
+              <label class="opt"><input type="radio" name="retail" value="not-yet"><span>Not yet</span></label>
+            </div>
+          </fieldset>
+          <fieldset data-mode="rate">
+            <legend>Need pickup and delivery?</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="delivery" value="yes"><span>Yes</span></label>
+              <label class="opt"><input type="radio" name="delivery" value="no"><span>No</span></label>
+              <label class="opt"><input type="radio" name="delivery" value="unsure"><span>Unsure</span></label>
+            </div>
+          </fieldset>
+          <fieldset data-mode="rate">
+            <legend>Start date</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="start" value="this-month"><span>This month</span></label>
+              <label class="opt"><input type="radio" name="start" value="next-month"><span>Next month</span></label>
+              <label class="opt"><input type="radio" name="start" value="exploring"><span>Exploring</span></label>
+            </div>
+          </fieldset>
+          <fieldset data-mode="tour">
+            <legend>Day of the visit</legend>
+            <div class="days" id="days"></div>
+            <input type="hidden" name="tour-day" id="f-tour-day">
+            <p class="msg group-msg" id="msg-tour-day"></p>
+          </fieldset>
+          <fieldset data-mode="tour">
+            <legend>Window</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="tour-window" value="morning"><span>Morning</span></label>
+              <label class="opt"><input type="radio" name="tour-window" value="afternoon"><span>Afternoon</span></label>
+            </div>
+            <p class="small muted" style="margin-top:8px">Receiving hours <span class="tk" data-fact="hours">TK</span>. We confirm the exact time by phone.</p>
+          </fieldset>
+          <div class="two">
+            <div class="field"><input type="text" id="f-company" name="company" placeholder=" " autocomplete="organization" aria-describedby="msg-company"><label for="f-company">Company</label><p class="msg" id="msg-company"></p></div>
+            <div class="field"><input type="text" id="f-name" name="name" placeholder=" " autocomplete="name" aria-describedby="msg-name"><label for="f-name">Your name</label><p class="msg" id="msg-name"></p></div>
+            <div class="field"><input type="email" id="f-email" name="email" placeholder=" " autocomplete="email" inputmode="email" aria-describedby="msg-email"><label for="f-email">Work email</label><p class="msg" id="msg-email"></p></div>
+            <div class="field"><input type="tel" id="f-phone" name="phone" placeholder=" " autocomplete="tel" inputmode="tel" aria-describedby="msg-phone"><label for="f-phone">Phone</label><p class="msg" id="msg-phone"></p></div>
+          </div>
+          <div class="form-foot">
+            <span class="mag"><button class="btn btn-primary" type="submit" id="f-submit">Send for a rate</button></span>
+            <p class="small muted">Sent to the warehouse directly. <span data-authorize="who-calls"><span class="tk" data-fact="who-calls">TK</span> calls you back.</span></p>
+          </div>
+        </form>
+        <div class="form-state" id="form-ok" role="status" aria-live="polite">
+          <h3 class="h3">Received.</h3>
+          <p class="copy" id="form-ok-copy"></p>
+          <p class="copy" style="margin-top:12px" id="form-ok-next"></p>
+          <a class="btn" href="#cl-top">Back to the plan</a>
+        </div>
+        <div class="form-state" id="form-fail" role="alert">
+          <h3 class="h3">This didn't send.</h3>
+          <p class="copy">Your answers are still on this page. Try again, or call <a class="num text-link" href="tel:"><span class="tk" data-fact="phone">TK</span></a> and read them out. It takes about a minute.</p>
+          <button class="btn" type="button" id="form-retry">Try again</button>
+        </div>
+      </div>
+      <aside class="ticket" id="ticket" aria-label="Your request, drawn as you answer">
+        <p class="tk-kind" id="tk-kind">Rate request</p>
+        <p class="tk-co empty" id="tk-co">Your company</p>
+        <p class="tk-sum" id="tk-sum" aria-live="polite">Nothing chosen yet</p>
+        <svg class="tk-mini" viewBox="0 0 960 640" aria-hidden="true">
+          <defs><pattern id="cl-tk-units" x="0" y="8" width="24" height="20" patternUnits="userSpaceOnUse"><rect x=".5" y=".5" width="23" height="19" fill="none" stroke="#0B1F2A" stroke-opacity=".22" stroke-width=".75"/></pattern></defs>
+          <rect class="z" id="tkz-freezer" x="48" y="56" width="288" height="392"/>
+          <rect class="z" id="tkz-cooler" x="336" y="56" width="288" height="392"/>
+          <rect class="z" id="tkz-dry" x="624" y="56" width="288" height="392"/>
+          <rect x="48" y="128" width="864" height="320" fill="url(#cl-tk-units)"/>
+          <g id="tk-pallets"></g>
+          <text x="64" y="98">Freezer</text><text x="352" y="98">Cooler</text><text x="640" y="98">Dry</text>
+          <path d="M48 56H912V512H48ZM336 56V448M624 56V448M48 448H912" fill="none" stroke="#0B1F2A" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
+          <rect class="door" id="tk-door1" x="196" y="506" width="40" height="6"/>
+          <rect class="door" x="372" y="506" width="40" height="6"/>
+          <rect class="door" x="548" y="506" width="40" height="6"/>
+          <rect class="door" x="724" y="506" width="40" height="6"/>
+          <rect class="trl" id="tk-trl1" x="200" y="524" width="32" height="80"/>
+          <rect class="trl" id="tk-trl2" x="376" y="524" width="32" height="80"/>
+          <text class="trl-lbl" id="tk-trl1-lbl" x="244" y="572">Your visit, Dock 1</text>
+          <text class="trl-lbl" id="tk-trl2-lbl" x="420" y="572">Reefer, Dock 2</text>
+          <path class="rt" id="tk-rt" pathLength="1" d="M568 512V608H904"/>
+          <text class="rt-lbl" id="tk-rt-lbl" x="904" y="632" text-anchor="end">To the retail DC</text>
+        </svg>
+        <dl class="tk-rows">
+          <div><dt>Zone</dt><dd id="tr-zone" class="empty">Not set</dd></div>
+          <div><dt>Positions</dt><dd id="tr-pallets" class="empty">Not set</dd></div>
+          <div><dt>Product</dt><dd id="tr-product" class="empty">Not set</dd></div>
+          <div data-mode="rate"><dt>Retail DCs</dt><dd id="tr-retail" class="empty">Not set</dd></div>
+          <div data-mode="rate"><dt>Pickup and delivery</dt><dd id="tr-delivery" class="empty">Not set</dd></div>
+          <div data-mode="rate"><dt>Start</dt><dd id="tr-start" class="empty">Not set</dd></div>
+          <div data-mode="tour"><dt>Day</dt><dd id="tr-day" class="empty">Not set</dd></div>
+          <div data-mode="tour"><dt>Window</dt><dd id="tr-window" class="empty">Not set</dd></div>
+          <div data-mode="tour"><dt>Dock</dt><dd>Dock 1. Time confirmed by phone.</dd></div>
+          <div><dt>Contact</dt><dd id="tr-contact" class="empty">Not set</dd></div>
+        </dl>
+        <div class="stamp" aria-hidden="true">Received<small id="stamp-time"></small></div>
+      </aside>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- M. Footer -->
+<footer class="dark ftr" id="contact">
+  <div class="wrap">
+    <div class="ftr-grid">
+      <div>
+        <h2 class="sr">Carriacou Logistics</h2>
+        <svg class="logo-lockup" viewBox="-4 -4 934 168" aria-hidden="true" focusable="false"><g fill="currentColor" stroke="currentColor" stroke-width="5" stroke-linejoin="round"><path d="M6.5 51.3V48.7Q6.5 35.4 7.5 26.4Q8.5 17.4 11.0 11.7Q13.5 6.1 17.8 3.1Q22.1 0.1 28.6 -1.0Q35.1 -2.1 44.2 -2.1H64.7Q75.2 -2.1 82.3 -0.8Q89.5 0.5 93.9 4.2Q98.3 7.9 100.3 15.2Q102.3 22.5 102.3 34.4H92.5Q92.5 25.0 91.2 19.8Q89.9 14.5 86.8 12.2Q83.6 9.8 78.3 9.3Q72.9 8.7 64.7 8.7H44.2Q37.0 8.7 32.0 9.3Q27.0 9.8 23.9 11.8Q20.8 13.8 19.1 18.1Q17.5 22.4 16.9 29.8Q16.3 37.2 16.3 48.7V51.3Q16.3 62.4 16.9 69.7Q17.5 77.0 19.1 81.3Q20.8 85.7 23.9 87.8Q27.0 90.0 32.0 90.6Q37.0 91.3 44.2 91.3H64.7Q72.9 91.3 78.3 90.8Q83.6 90.4 86.8 88.2Q89.9 85.9 91.2 80.8Q92.5 75.6 92.5 66.2H102.3Q102.3 78.2 100.3 85.4Q98.3 92.5 93.9 96.1Q89.5 99.7 82.3 100.9Q75.2 102.1 64.7 102.1H44.2Q32.8 102.1 25.4 100.1Q18.1 98.1 13.9 92.8Q9.8 87.4 8.2 77.4Q6.5 67.4 6.5 51.3Z M115.8 100.0 161.3 0.0H174.3L219.8 100.0H208.5L198.7 77.1H137.0L127.2 100.0ZM141.8 66.7H193.8L167.8 8.3Z M236.7 0.0H288.9Q300.3 0.0 307.3 1.3Q314.3 2.6 317.9 5.8Q321.5 9.0 322.8 14.5Q324.1 20.1 324.1 28.5V31.1Q324.1 38.9 322.6 44.6Q321.2 50.2 317.1 53.7Q312.9 57.2 304.9 58.6L321.8 100.0H312.1L295.5 59.5Q294.5 59.6 293.4 59.6Q292.3 59.6 291.1 59.6H246.5V100.0H236.7ZM246.5 48.8H289.6Q298.3 48.8 303.3 48.0Q308.3 47.3 310.6 45.4Q313.0 43.5 313.7 40.0Q314.3 36.6 314.3 31.1V28.5Q314.3 22.3 313.4 18.7Q312.5 15.2 309.7 13.5Q307.0 11.8 301.6 11.3Q296.1 10.8 287.0 10.8H246.5Z M346.4 0.0H398.6Q410.0 0.0 417.0 1.3Q424.0 2.6 427.6 5.8Q431.2 9.0 432.4 14.5Q433.7 20.1 433.7 28.5V31.1Q433.7 38.9 432.3 44.6Q430.8 50.2 426.7 53.7Q422.6 57.2 414.5 58.6L431.5 100.0H421.7L405.1 59.5Q404.1 59.6 403.0 59.6Q401.9 59.6 400.8 59.6H356.1V100.0H346.4ZM356.1 48.8H399.2Q407.9 48.8 412.9 48.0Q417.9 47.3 420.3 45.4Q422.6 43.5 423.3 40.0Q424.0 36.6 424.0 31.1V28.5Q424.0 22.3 423.0 18.7Q422.1 15.2 419.4 13.5Q416.6 11.8 411.2 11.3Q405.8 10.8 396.7 10.8H356.1Z M455.8 100.0V0.0H465.6V100.0Z M482.2 100.0 527.7 0.0H540.7L586.2 100.0H574.9L565.1 77.1H503.4L493.6 100.0ZM508.2 66.7H560.2L534.2 8.3Z M599.7 51.3V48.7Q599.7 35.4 600.7 26.4Q601.7 17.4 604.2 11.7Q606.7 6.1 611.0 3.1Q615.2 0.1 621.7 -1.0Q628.2 -2.1 637.4 -2.1H657.8Q668.3 -2.1 675.5 -0.8Q682.7 0.5 687.1 4.2Q691.5 7.9 693.4 15.2Q695.4 22.5 695.4 34.4H685.7Q685.7 25.0 684.4 19.8Q683.0 14.5 679.9 12.2Q676.8 9.8 671.4 9.3Q666.0 8.7 657.8 8.7H637.4Q630.1 8.7 625.1 9.3Q620.2 9.8 617.0 11.8Q613.9 13.8 612.3 18.1Q610.6 22.4 610.0 29.8Q609.4 37.2 609.4 48.7V51.3Q609.4 62.4 610.0 69.7Q610.6 77.0 612.3 81.3Q613.9 85.7 617.0 87.8Q620.2 90.0 625.1 90.6Q630.1 91.3 637.4 91.3H657.8Q666.0 91.3 671.4 90.8Q676.8 90.4 679.9 88.2Q683.0 85.9 684.4 80.8Q685.7 75.6 685.7 66.2H695.4Q695.4 78.2 693.4 85.4Q691.5 92.5 687.1 96.1Q682.7 99.7 675.5 100.9Q668.3 102.1 657.8 102.1H637.4Q626.0 102.1 618.6 100.1Q611.2 98.1 607.1 92.8Q603.0 87.4 601.3 77.4Q599.7 67.4 599.7 51.3Z M750.0 102.1Q738.6 102.1 731.2 100.1Q723.8 98.1 719.7 92.8Q715.5 87.4 713.9 77.4Q712.2 67.4 712.2 51.3V48.7Q712.2 35.4 713.3 26.4Q714.3 17.4 716.8 11.7Q719.3 6.1 723.5 3.1Q727.8 0.1 734.3 -1.0Q740.8 -2.1 750.0 -2.1H770.4Q779.6 -2.1 786.1 -1.0Q792.6 0.1 796.9 3.1Q801.2 6.1 803.7 11.7Q806.1 17.4 807.2 26.4Q808.2 35.4 808.2 48.7V51.3Q808.2 67.4 806.5 77.4Q804.9 87.4 800.7 92.8Q796.6 98.1 789.2 100.1Q781.9 102.1 770.4 102.1ZM750.0 91.3H770.4Q777.7 91.3 782.7 90.6Q787.7 90.0 790.8 87.8Q793.9 85.7 795.6 81.3Q797.2 77.0 797.8 69.7Q798.4 62.4 798.4 51.3V48.7Q798.4 37.2 797.8 29.8Q797.2 22.4 795.6 18.1Q793.9 13.8 790.8 11.8Q787.7 9.8 782.7 9.3Q777.7 8.7 770.4 8.7H750.0Q742.7 8.7 737.7 9.3Q732.8 9.8 729.6 11.8Q726.5 13.8 724.9 18.1Q723.2 22.4 722.6 29.8Q722.0 37.2 722.0 48.7V51.3Q722.0 62.4 722.6 69.7Q723.2 77.0 724.9 81.3Q726.5 85.7 729.6 87.8Q732.8 90.0 737.7 90.6Q742.7 91.3 750.0 91.3Z M863.0 102.1Q851.6 102.1 844.2 100.1Q836.8 98.1 832.7 92.8Q828.6 87.4 826.9 77.4Q825.2 67.4 825.2 51.3V0.0H835.0V51.3Q835.0 62.4 835.6 69.7Q836.2 77.0 837.9 81.3Q839.6 85.7 842.7 87.8Q845.8 90.0 850.8 90.6Q855.8 91.3 863.0 91.3H881.4Q888.6 91.3 893.6 90.6Q898.5 90.0 901.7 87.8Q904.8 85.7 906.4 81.3Q908.1 77.0 908.7 69.7Q909.3 62.4 909.3 51.3V0.0H919.1V51.3Q919.1 67.4 917.4 77.4Q915.8 87.4 911.7 92.8Q907.5 98.1 900.2 100.1Q892.8 102.1 881.4 102.1Z"/><path d="M263.8 154.0V130.0H266.2V151.5H281.0V154.0Z M319.2 154.5Q316.4 154.5 314.7 154.0Q312.9 153.5 311.9 152.3Q310.9 151.0 310.5 148.6Q310.1 146.2 310.1 142.3V141.7Q310.1 138.5 310.4 136.3Q310.6 134.2 311.2 132.8Q311.8 131.5 312.8 130.7Q313.9 130.0 315.4 129.8Q317.0 129.5 319.2 129.5H324.1Q326.3 129.5 327.8 129.8Q329.4 130.0 330.4 130.7Q331.5 131.5 332.1 132.8Q332.7 134.2 332.9 136.3Q333.1 138.5 333.1 141.7V142.3Q333.1 146.2 332.8 148.6Q332.4 151.0 331.4 152.3Q330.4 153.5 328.6 154.0Q326.8 154.5 324.1 154.5ZM319.2 151.9H324.1Q325.8 151.9 327.0 151.8Q328.2 151.6 329.0 151.1Q329.7 150.6 330.1 149.5Q330.5 148.5 330.7 146.7Q330.8 145.0 330.8 142.3V141.7Q330.8 138.9 330.7 137.2Q330.5 135.4 330.1 134.3Q329.7 133.3 329.0 132.8Q328.2 132.4 327.0 132.2Q325.8 132.1 324.1 132.1H319.2Q317.4 132.1 316.2 132.2Q315.1 132.4 314.3 132.8Q313.6 133.3 313.2 134.3Q312.8 135.4 312.6 137.2Q312.5 138.9 312.5 141.7V142.3Q312.5 145.0 312.6 146.7Q312.8 148.5 313.2 149.5Q313.6 150.6 314.3 151.1Q315.1 151.6 316.2 151.8Q317.4 151.9 319.2 151.9Z M363.1 142.3V141.7Q363.1 138.5 363.3 136.3Q363.5 134.2 364.1 132.8Q364.7 131.5 365.8 130.7Q366.8 130.0 368.4 129.8Q369.9 129.5 372.1 129.5H376.7Q379.6 129.5 381.4 129.8Q383.2 130.1 384.1 130.9Q385.1 131.7 385.5 133.2Q385.8 134.7 385.8 137.2H383.5Q383.5 135.3 383.2 134.3Q383.0 133.2 382.3 132.8Q381.6 132.3 380.2 132.2Q378.9 132.1 376.7 132.1H372.1Q370.4 132.1 369.2 132.2Q368.0 132.4 367.2 132.8Q366.5 133.3 366.1 134.3Q365.7 135.4 365.5 137.2Q365.4 138.9 365.4 141.7V142.3Q365.4 145.0 365.5 146.7Q365.7 148.5 366.1 149.5Q366.5 150.6 367.2 151.1Q368.0 151.6 369.2 151.8Q370.4 151.9 372.1 151.9H377.5Q379.5 151.9 380.8 151.7Q382.0 151.5 382.6 150.8Q383.3 150.1 383.5 148.7Q383.7 147.2 383.7 144.8V143.9H374.7V141.4H386.0V144.8Q386.0 147.8 385.6 149.8Q385.2 151.7 384.3 152.7Q383.3 153.7 381.7 154.1Q380.0 154.5 377.5 154.5H372.1Q369.4 154.5 367.6 154.0Q365.8 153.5 364.8 152.3Q363.8 151.0 363.5 148.6Q363.1 146.2 363.1 142.3Z M417.2 154.0V130.0H419.5V154.0Z M470.9 147.1Q470.9 145.7 470.7 144.9Q470.6 144.1 470.0 143.7Q469.4 143.3 468.1 143.2Q466.8 143.1 464.7 143.0L457.9 142.9Q455.4 142.9 453.9 142.5Q452.3 142.2 451.5 141.4Q450.8 140.7 450.5 139.4Q450.2 138.2 450.2 136.3Q450.2 134.3 450.6 132.9Q451.0 131.6 451.9 130.9Q452.9 130.1 454.6 129.8Q456.3 129.5 459.1 129.5H464.3Q466.8 129.5 468.4 129.7Q470.1 129.9 471.0 130.6Q472.0 131.4 472.4 132.9Q472.9 134.5 472.9 137.2H470.5Q470.5 135.1 470.2 134.0Q469.9 132.9 469.2 132.5Q468.5 132.2 467.3 132.1Q466.1 132.1 464.3 132.1H459.2Q457.0 132.1 455.7 132.2Q454.4 132.3 453.7 132.7Q453.0 133.1 452.8 134.0Q452.6 134.8 452.6 136.3Q452.6 137.6 452.7 138.3Q452.9 139.1 453.5 139.5Q454.0 139.9 455.2 140.1Q456.3 140.2 458.3 140.2L465.6 140.4Q468.1 140.4 469.7 140.7Q471.2 141.1 472.0 141.8Q472.7 142.6 473.0 143.9Q473.2 145.1 473.2 147.1Q473.2 149.2 472.9 150.6Q472.6 152.0 471.7 152.9Q470.8 153.8 469.1 154.1Q467.5 154.5 464.7 154.5H459.0Q456.5 154.5 454.8 154.2Q453.1 153.9 452.1 153.1Q451.1 152.2 450.7 150.5Q450.2 148.9 450.2 146.0H452.6Q452.6 148.2 452.9 149.5Q453.1 150.7 453.8 151.2Q454.5 151.7 455.8 151.8Q457.1 151.9 459.0 151.9H464.6Q466.8 151.9 468.1 151.7Q469.3 151.5 469.9 151.0Q470.5 150.5 470.7 149.6Q470.9 148.6 470.9 147.1Z M512.0 154.0V132.5H502.7V130.0H523.7V132.5H514.4V154.0Z M554.0 154.0V130.0H556.3V154.0Z M587.0 142.3V141.7Q587.0 138.5 587.3 136.3Q587.5 134.2 588.1 132.8Q588.7 131.5 589.7 130.7Q590.8 130.0 592.3 129.8Q593.9 129.5 596.1 129.5H601.0Q603.5 129.5 605.2 129.8Q607.0 130.1 608.0 131.0Q609.1 131.9 609.5 133.6Q610.0 135.4 610.0 138.3H607.7Q607.7 136.0 607.4 134.7Q607.0 133.5 606.3 132.9Q605.5 132.4 604.2 132.2Q603.0 132.1 601.0 132.1H596.1Q594.3 132.1 593.1 132.2Q591.9 132.4 591.2 132.8Q590.4 133.3 590.1 134.3Q589.7 135.4 589.5 137.2Q589.4 138.9 589.4 141.7V142.3Q589.4 145.0 589.5 146.7Q589.7 148.5 590.1 149.5Q590.4 150.6 591.2 151.1Q591.9 151.6 593.1 151.8Q594.3 151.9 596.1 151.9H601.0Q603.0 151.9 604.2 151.8Q605.5 151.7 606.3 151.2Q607.0 150.6 607.4 149.4Q607.7 148.1 607.7 145.9H610.0Q610.0 148.8 609.5 150.5Q609.1 152.2 608.0 153.1Q607.0 153.9 605.2 154.2Q603.5 154.5 601.0 154.5H596.1Q593.3 154.5 591.6 154.0Q589.8 153.5 588.8 152.3Q587.8 151.0 587.4 148.6Q587.0 146.2 587.0 142.3Z M660.7 147.1Q660.7 145.7 660.5 144.9Q660.3 144.1 659.7 143.7Q659.1 143.3 657.9 143.2Q656.6 143.1 654.4 143.0L647.7 142.9Q645.1 142.9 643.6 142.5Q642.1 142.2 641.3 141.4Q640.5 140.7 640.3 139.4Q640.0 138.2 640.0 136.3Q640.0 134.3 640.4 132.9Q640.7 131.6 641.7 130.9Q642.6 130.1 644.4 129.8Q646.1 129.5 648.8 129.5H654.0Q656.5 129.5 658.2 129.7Q659.8 129.9 660.8 130.6Q661.8 131.4 662.2 132.9Q662.6 134.5 662.6 137.2H660.3Q660.3 135.1 660.0 134.0Q659.7 132.9 659.0 132.5Q658.2 132.2 657.0 132.1Q655.8 132.1 654.0 132.1H648.9Q646.8 132.1 645.5 132.2Q644.1 132.3 643.5 132.7Q642.8 133.1 642.6 134.0Q642.4 134.8 642.4 136.3Q642.4 137.6 642.5 138.3Q642.7 139.1 643.2 139.5Q643.8 139.9 644.9 140.1Q646.1 140.2 648.1 140.2L655.4 140.4Q657.9 140.4 659.4 140.7Q661.0 141.1 661.7 141.8Q662.5 142.6 662.8 143.9Q663.0 145.1 663.0 147.1Q663.0 149.2 662.7 150.6Q662.4 152.0 661.5 152.9Q660.6 153.8 658.9 154.1Q657.2 154.5 654.5 154.5H648.8Q646.3 154.5 644.6 154.2Q642.9 153.9 641.9 153.1Q640.9 152.2 640.5 150.5Q640.0 148.9 640.0 146.0H642.4Q642.4 148.2 642.6 149.5Q642.9 150.7 643.6 151.2Q644.3 151.7 645.6 151.8Q646.8 151.9 648.8 151.9H654.4Q656.6 151.9 657.8 151.7Q659.1 151.5 659.7 151.0Q660.3 150.5 660.5 149.6Q660.7 148.6 660.7 147.1Z"/></g></svg>
+        <address>85 South Leonard Street<br>Waterbury, Connecticut <span class="tk" data-fact="zip">TK</span><br>Legal entity <span class="tk" data-fact="entity">TK</span></address>
+        <svg class="loc" viewBox="0 0 220 160" role="img" aria-label="Locator map. Waterbury sits in west central Connecticut on I-84.">
+          <path d="M28 32 L172 32 L174 86 L162 88 L128 92 L96 100 L72 108 L52 116 L40 122 L34 116 L36 100 L30 60 Z" fill="none" stroke="#98A4AB" stroke-width="1"/>
+          <path d="M38 110 L60 92 L86 86 L104 82 L120 70 L136 58 L160 44 L172 38" fill="none" stroke="#98A4AB" stroke-width=".75" stroke-opacity=".6"/>
+          <circle cx="86" cy="86" r="4" fill="#E8A00D"/>
+          <text x="94" y="80" fill="#F5F8F9" font-size="11">Waterbury</text>
+          <text x="140" y="112" fill="#98A4AB" font-size="10">Connecticut</text>
+        </svg>
+      </div>
+      <div>
+        <h2>Contact</h2>
+        <p><a class="num" href="tel:">Phone <span class="tk" data-fact="phone">TK</span></a><br><a href="mailto:">Email <span class="tk" data-fact="email">TK</span></a></p>
+        <p style="margin-top:16px"><a href="https://www.google.com/maps/search/?api=1&query=85+South+Leonard+Street+Waterbury+CT" rel="noopener">Directions to the dock</a></p>
+      </div>
+      <div>
+        <h2>Hours</h2>
+        <p>Receiving <span class="tk" data-fact="hours">TK</span><br>Office <span class="tk" data-fact="office-hours">TK</span><br>Appointments <span class="tk" data-fact="appointment-policy">TK</span></p>
+      </div>
+      <div>
+        <h2>Service area</h2>
+        <p>Waterbury and the I-84 corridor. Delivery radius <span class="tk" data-fact="delivery-radius">TK</span>. States served <span class="tk" data-fact="states-served">TK</span>.</p>
+      </div>
+    </div>
+    <div class="ftr-base">
+      <span>Copyright 2026 Carriacou Logistics</span>
+      <span>Freezer, cooler, and dry public warehouse, Waterbury, Connecticut</span>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar" role="navigation" aria-label="Call or request a rate">
+  <a class="btn num" href="tel:">Call</a>
+  <a class="btn btn-primary" href="#quote">Get a rate</a>
+</div>
+</div>
+<script>
+/* Carriacou Logistics. One deferred file. Every effect here discloses a fact; nothing decorates. */
+(() => {
+  'use strict';
+  const d = document;
+  const ROOT = d.getElementById('cl-root');
+  if (!ROOT) return;
+  const rm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const hasTL = typeof CSS !== 'undefined' && CSS.supports && CSS.supports('animation-timeline: view()');
+  const $ = (s, r = ROOT) => r.querySelector(s);
+  const $$ = (s, r = ROOT) => Array.from(r.querySelectorAll(s));
+  const expo = t => (t >= 1 ? 1 : 1 - Math.pow(2, -10 * t));
+  const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+  const fmt = n => Math.round(n).toLocaleString('en-US');
+  const tk = v => v === '' || v == null;
+
+  /* Animate a number in place. Final value is already in the DOM for AT; the animation is aria-hidden. */
+  function countTo(el, from, to, dur, done) {
+    if (rm || dur <= 0) { el.textContent = fmt(to); done && done(); return; }
+    const t0 = performance.now();
+    const step = now => {
+      const p = expo(clamp((now - t0) / dur, 0, 1));
+      el.textContent = fmt(from + (to - from) * p);
+      if (p < 1) requestAnimationFrame(step); else { el.textContent = fmt(to); done && done(); }
+    };
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- Zone facts, read from the markup so there is one source of truth ---------- */
+  const zones = {};
+  $$('.pv .pz').forEach(a => {
+    const z = a.dataset.zone;
+    const art = $('#zone-' + z);
+    const dds = art ? $$('dd', art) : [];
+    zones[z] = {
+      name: a.dataset.label,
+      setpoint: $('.pz-num', a).dataset.setpoint,
+      tempHTML: dds[0] ? dds[0].innerHTML : 'TK °F',
+      countHTML: dds[1] ? dds[1].innerHTML : 'TK'
+    };
+  });
+
+  /* ---------- M-01 Cold Start: readouts count from 72 °F down to each set point ---------- */
+  (function coldStart() {
+    const delays = { dry: 420, cooler: 510, freezer: 600 };
+    $$('.pv .pz-num').forEach(el => {
+      const sp = el.dataset.setpoint;
+      if (tk(sp)) return; // pending: leave the designed TK state
+      const target = parseFloat(sp);
+      el.classList.remove('tk');
+      const z = el.closest('.pz').dataset.zone;
+      const run = () => {
+        if (rm) { el.textContent = target; return; }
+        const t0 = performance.now(), dur = 280;
+        const step = now => {
+          const p = expo(clamp((now - t0) / dur, 0, 1));
+          el.textContent = Math.round(72 + (target - 72) * p);
+          if (p < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      };
+      rm ? run() : setTimeout(run, delays[z] || 420);
+    });
+    const hero = $('.hero');
+    setTimeout(() => hero && hero.classList.add('hero-done'), rm ? 0 : 900);
+  })();
+
+  /* ---------- M-07 Zone Select + spec panel + form pre-fill ---------- */
+  const pv = $('#pv'), panel = $('#pv-panel');
+  const setTemp = z => { const r = $('input[name="temp"][value="' + z + '"]'); if (r) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); } };
+  function select(z) {
+    const links = $$('.pz', pv);
+    links.forEach(a => a.classList.toggle('sel', a.dataset.zone === z));
+    pv.classList.toggle('has-sel', !!z);
+    if (!z) { panel.classList.remove('open'); return; }
+    const f = zones[z];
+    $('#ps-zone').textContent = f.name;
+    $('#ps-temp').innerHTML = f.tempHTML;
+    $('#ps-count').innerHTML = f.countHTML;
+    $('#ps-cta').textContent = 'Get a ' + f.name.toLowerCase() + ' rate';
+    panel.classList.add('open');
+    setTemp(z);
+  }
+  if (pv) {
+    $$('.pz', pv).forEach(a => a.addEventListener('click', e => {
+      e.preventDefault();
+      select(a.classList.contains('sel') ? null : a.dataset.zone);
+    }));
+    d.addEventListener('keydown', e => { if (e.key === 'Escape' && pv.classList.contains('has-sel')) select(null); });
+  }
+  $$('[data-prefill]').forEach(a => a.addEventListener('click', () => setTemp(a.dataset.prefill)));
+
+  /* ---------- M-12 Reticle cursor over the plan, desktop only ---------- */
+  const wrap = $('#pv-wrap'), ret = $('#pv-reticle'), retLbl = $('#pv-reticle-lbl');
+  if (wrap && fine) {
+    wrap.addEventListener('pointerenter', () => wrap.classList.add('ret'));
+    wrap.addEventListener('pointerleave', () => wrap.classList.remove('ret'));
+    wrap.addEventListener('pointermove', e => {
+      const r = wrap.getBoundingClientRect();
+      ret.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px)';
+      const t = e.target.closest ? e.target.closest('[data-label]') : null;
+      retLbl.textContent = t ? t.dataset.label : (e.target.closest && e.target.closest('.pv-panel') ? 'Specification' : 'Plan');
+    });
+  }
+
+  /* ---------- M-09 Live zone readout in the header ---------- */
+  const roZone = $('#ro-zone'), roTemp = $('#ro-temp');
+  function roll(el, str) {
+    const chars = str.split('');
+    const slots = $$('.roll-d', el);
+    const rebuild = slots.length !== chars.length || chars.some((c, i) => (/\d/.test(c)) !== slots[i].classList.contains('dg'));
+    if (rebuild) {
+      el.innerHTML = '';
+      const r = d.createElement('span'); r.className = 'roll';
+      chars.forEach(c => {
+        const s = d.createElement('span'); s.className = 'roll-d' + (/\d/.test(c) ? ' dg' : '');
+        const inner = d.createElement('span');
+        if (/\d/.test(c)) { for (let i = 0; i < 10; i++) { const it = d.createElement('i'); it.textContent = i; inner.appendChild(it); } }
+        else { const it = d.createElement('i'); it.textContent = c; inner.appendChild(it); }
+        s.appendChild(inner); r.appendChild(s);
+      });
+      el.appendChild(r);
+    }
+    $$('.roll-d', el).forEach((s, i) => {
+      const c = chars[i];
+      if (/\d/.test(c)) s.firstChild.style.transform = 'translateY(' + (-1.2 * parseInt(c, 10)) + 'em)';
+      else s.firstChild.firstChild.textContent = c;
+    });
+  }
+  const views = $$('[data-view]');
+  const visible = new Set();
+  let current = null;
+  function updateView(entries) {
+    (entries || []).forEach(e => { if (e.isIntersecting) visible.add(e.target); else visible.delete(e.target); });
+    const el = views.find(v => visible.has(v));
+    if (!el || el === current) return;
+    current = el;
+    roZone.textContent = el.dataset.view;
+    const isZone = /^zone-/.test(el.id);
+    if (isZone) { const t = el.dataset.viewTemp; roll(roTemp, tk(t) ? 'TK °F' : t + ' °F'); }
+    else roTemp.innerHTML = '';
+  }
+  if (views.length && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(updateView, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+    views.forEach(v => io.observe(v));
+  }
+
+  /* ---------- M-14 Section reveals, once, one direction ---------- */
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); o.unobserve(e.target); } }), { threshold: 0.08 });
+    $$('.rv').forEach(s => io.observe(s));
+  } else $$('.rv').forEach(s => s.classList.add('in'));
+
+  /* ---------- M-10 Number roll + M-05 Capacity fill ---------- */
+  $$('.count').forEach(el => {
+    const v = el.dataset.count;
+    if (tk(v)) return;
+    el.classList.remove('tk');
+    const n = parseFloat(v);
+    const sr = d.createElement('span'); sr.className = 'sr'; sr.textContent = fmt(n);
+    el.after(sr); el.setAttribute('aria-hidden', 'true'); el.textContent = fmt(n);
+  });
+  const capGrid = $('#cap-grid'), capCount = $('#cap-count');
+  function buildCapacity(n) {
+    capGrid.innerHTML = '';
+    const per = n > 600 ? 10 : 1;
+    const units = Math.ceil(n / per);
+    const frag = d.createDocumentFragment();
+    for (let i = 0; i < units; i++) frag.appendChild(d.createElement('i'));
+    capGrid.appendChild(frag);
+    capGrid.classList.remove('pending');
+    if (per > 1) { const note = $('#cap-note') || d.createElement('p'); note.id = 'cap-note'; note.className = 'small muted'; note.textContent = 'One square is ten pallet positions.'; capGrid.after(note); }
+    return units;
+  }
+  if (capGrid) {
+    const v = capCount.dataset.count;
+    if (tk(v)) { for (let i = 0; i < 120; i++) capGrid.appendChild(d.createElement('i')); }
+    else capGrid.classList.add('armed');
+  }
+  const statIO = 'IntersectionObserver' in window ? new IntersectionObserver((es, o) => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    o.unobserve(e.target);
+    const el = e.target;
+    if (el.classList.contains('count')) {
+      const n = parseFloat(el.dataset.count);
+      countTo(el, 0, n, 700);
+      if (el.id === 'cap-count') {
+        const units = buildCapacity(n);
+        const gap = Math.min(12, 1800 / units);
+        const cells = $$('i', capGrid);
+        requestAnimationFrame(() => cells.forEach((c, i) => { c.style.transitionDelay = rm ? '0ms' : (i * gap) + 'ms'; c.classList.add('on'); }));
+      }
+    }
+  }), { threshold: 0.4 }) : null;
+  if (statIO) $$('.count').forEach(el => { if (!tk(el.dataset.count)) statIO.observe(el); });
+  else $$('.count').forEach(el => { if (!tk(el.dataset.count)) el.textContent = fmt(parseFloat(el.dataset.count)); });
+
+  /* ---------- M-04 Dock shutter, once ---------- */
+  const shutter = $('#shutter');
+  if (shutter && !rm && 'IntersectionObserver' in window) {
+    const N = 12;
+    for (let i = 0; i < N; i++) {
+      const s = d.createElement('i');
+      s.style.top = (i * 100 / N) + '%';
+      s.style.height = (100 / N + 0.2) + '%';
+      s.style.transitionDelay = ((N - 1 - i) * 40) + 'ms';
+      shutter.appendChild(s);
+    }
+    const io = new IntersectionObserver((es, o) => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      shutter.classList.add('open');
+      setTimeout(() => shutter.classList.add('done'), 700);
+    }), { threshold: 0.18 });
+    io.observe($('#facility'));
+  } else if (shutter) shutter.classList.add('done');
+
+  /* ---------- M-02 Thermal scrub + M-06 Route draw: fallback when CSS scroll timelines are missing ---------- */
+  if (!hasTL && !rm && 'IntersectionObserver' in window) {
+    const steps = []; for (let i = 0; i <= 50; i++) steps.push(i / 50);
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      const r = e.boundingClientRect, vh = innerHeight;
+      let p = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      if (e.target.id === 'delivery') p = clamp((p - 0.15) / 0.55, 0, 1);
+      e.target.style.setProperty('--p', p.toFixed(3));
+    }), { threshold: steps });
+    ['#zones', '#delivery'].forEach(s => { const el = $(s); if (el) io.observe(el); });
+  } else if (rm) {
+    ['#zones', '#delivery'].forEach(s => { const el = $(s); if (el) el.style.setProperty('--p', '1'); });
+  }
+
+  /* ---------- M-08 Magnetic CTA, desktop only ---------- */
+  if (fine && !rm) $$('.mag').forEach(w => {
+    const b = $('.btn', w);
+    if (!b) return;
+    w.addEventListener('pointermove', e => {
+      const r = b.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      const inside = Math.abs(dx) < r.width / 2 + 40 && Math.abs(dy) < r.height / 2 + 40;
+      if (!inside) { w.classList.remove('live'); b.style.transform = ''; return; }
+      w.classList.add('live');
+      b.style.transform = 'translate(' + clamp(dx * 0.12, -6, 6).toFixed(1) + 'px,' + clamp(dy * 0.12, -6, 6).toFixed(1) + 'px)';
+    });
+    w.addEventListener('pointerleave', () => { w.classList.remove('live'); b.style.transform = ''; });
+  });
+
+  /* ---------- Reading line: on touch screens the categories answer with their zone, one at a time ---------- */
+  (function readingLine() {
+    const sec = $('#serves'); if (!sec || fine || rm || !('IntersectionObserver' in window)) return;
+    const items = $$('#serves li'); if (!items.length) return;
+    let i = -1, timer = 0;
+    const step = () => { if (i >= 0) items[i].classList.remove('live'); i = (i + 1) % items.length; items[i].classList.add('live'); };
+    const start = () => { if (timer) return; step(); timer = setInterval(step, 1600); };
+    const stop = () => { if (!timer) return; clearInterval(timer); timer = 0; };
+    new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? start() : stop()), { threshold: 0.2 }).observe(sec);
+    d.addEventListener('visibilitychange', () => { if (d.hidden) stop(); });
+  })();
+
+  /* ---------- Load ticket: every answer changes the drawing ---------- */
+  const quote = $('#quote'), form = $('#quote-form'), ticket = $('#ticket');
+  const SVG = 'http://www.w3.org/2000/svg';
+  const val = n => { const el = form.elements[n]; return el && typeof el.value === 'string' ? el.value.trim() : ''; };
+  const optLabel = n => { const el = form.querySelector('input[name="' + n + '"]:checked'); return el ? el.nextElementSibling.textContent.trim() : ''; };
+  const setRow = (id, text, empty) => {
+    const dd = $('#' + id); if (!dd || dd.textContent === text) return;
+    dd.textContent = text; dd.classList.toggle('empty', !!empty);
+    if (!rm) { dd.classList.remove('up'); void dd.offsetWidth; dd.classList.add('up'); }
+  };
+  const zoneX = { freezer: 48, cooler: 336, dry: 624 };
+  const palletMap = { '1-5': 5, '6-20': 20, '21-50': 50, '50+': 50 };
+  const pal = $('#tk-pallets');
+  function drawPallets(temp, range) {
+    const n = palletMap[range] || 0, more = range === '50+' ? 10 : 0, total = n + more;
+    const on = temp === 'mixed' ? ['freezer', 'cooler', 'dry'] : (zoneX[temp] ? [temp] : []);
+    while (pal.children.length < total) { const r = d.createElementNS(SVG, 'rect'); r.setAttribute('class', 'u'); r.setAttribute('width', '20'); r.setAttribute('height', '16'); pal.appendChild(r); }
+    while (pal.children.length > total) pal.lastChild.remove();
+    const cells = Array.from(pal.children);
+    if (!on.length) { cells.forEach(u => u.classList.remove('on')); return; }
+    cells.forEach((u, i) => {
+      const zi = i % on.length, k = Math.floor(i / on.length);
+      u.style.setProperty('--x', (zoneX[on[zi]] + (k % 12) * 24 + 2) + 'px');
+      u.style.setProperty('--y', (128 + Math.floor(k / 12) * 20 + 2) + 'px');
+      u.classList.toggle('more', i >= n);
+      u.style.transitionDelay = rm ? '0ms' : (i * 10) + 'ms';
+    });
+    requestAnimationFrame(() => cells.forEach(u => u.classList.add('on')));
+  }
+  const setZone = temp => ['freezer', 'cooler', 'dry'].forEach(z => { const el = $('#tkz-' + z); el.classList.toggle('on', temp === z); el.classList.toggle('half', temp === 'mixed'); });
+  let dayText = '';
+  function update() {
+    if (!form || !ticket) return;
+    const mode = quote.dataset.mode, temp = val('temp'), pallets = val('pallets'), product = val('product');
+    const retail = val('retail'), delivery = val('delivery'), start = val('start'), win = val('tour-window');
+    const company = val('company'), name = val('name'), email = val('email');
+    $('#tk-kind').textContent = mode === 'tour' ? 'Dock appointment' : 'Rate request';
+    const co = $('#tk-co'); co.textContent = company || 'Your company'; co.classList.toggle('empty', !company);
+    setZone(temp); drawPallets(temp, pallets);
+    const zName = temp === 'mixed' ? 'Mixed' : (zones[temp] ? zones[temp].name : '');
+    const zTemp = zones[temp] ? (tk(zones[temp].setpoint) ? 'TK °F' : zones[temp].setpoint + ' °F') : '';
+    setRow('tr-zone', zName ? zName + (zTemp ? ', ' + zTemp : '') : 'Not set', !zName);
+    setRow('tr-pallets', pallets ? optLabel('pallets') : 'Not set', !pallets);
+    setRow('tr-product', product || 'Not set', !product);
+    setRow('tr-retail', retail ? optLabel('retail') : 'Not set', !retail);
+    setRow('tr-delivery', delivery ? optLabel('delivery') : 'Not set', !delivery);
+    setRow('tr-start', start ? optLabel('start') : 'Not set', !start);
+    setRow('tr-day', dayText || 'Not set', !dayText);
+    setRow('tr-window', win ? optLabel('tour-window') : 'Not set', !win);
+    setRow('tr-contact', name || email ? [name, email].filter(Boolean).join(', ') : 'Not set', !(name || email));
+    const sum = [zName, pallets ? optLabel('pallets') + ' positions' : ''].filter(Boolean).join(', ');
+    $('#tk-sum').textContent = sum || (mode === 'tour' ? 'Pick a zone, a count, and a day' : 'Nothing chosen yet');
+    const rt = mode === 'rate' && retail === 'yes'; $('#tk-rt').classList.toggle('on', rt); $('#tk-rt-lbl').classList.toggle('on', rt);
+    const rf = mode === 'rate' && delivery === 'yes'; $('#tk-trl2').classList.toggle('on', rf); $('#tk-trl2-lbl').classList.toggle('on', rf);
+    const vs = mode === 'tour' && !!dayText; $('#tk-door1').classList.toggle('open', vs); $('#tk-trl1').classList.toggle('on', vs); $('#tk-trl1-lbl').classList.toggle('on', vs);
+  }
+
+  /* Day strip: the next ten business days, real dates, never a decorative calendar */
+  const days = $('#days'), hiddenDay = $('#f-tour-day');
+  if (days) {
+    const wd = new Intl.DateTimeFormat('en-US', { weekday: 'short' }), md = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' });
+    const long = new Intl.DateTimeFormat('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+    const t = new Date(); t.setHours(12, 0, 0, 0); let n = 0;
+    const iso = x => x.getFullYear() + '-' + String(x.getMonth() + 1).padStart(2, '0') + '-' + String(x.getDate()).padStart(2, '0');
+    while (n < 10) {
+      t.setDate(t.getDate() + 1); if (t.getDay() === 0 || t.getDay() === 6) continue; n++;
+      const lab = d.createElement('label'); lab.className = 'opt day';
+      const inp = d.createElement('input'); inp.type = 'radio'; inp.name = 'tour-day-pick'; inp.value = iso(t); inp.dataset.long = long.format(t);
+      const sp = d.createElement('span'); const sm = d.createElement('small'); sm.textContent = wd.format(t); sp.appendChild(sm); sp.appendChild(d.createTextNode(md.format(t)));
+      lab.appendChild(inp); lab.appendChild(sp); days.appendChild(lab);
+      inp.addEventListener('change', () => { hiddenDay.value = inp.value; dayText = inp.dataset.long; check('tour-day'); update(); });
+    }
+  }
+
+  /* Mode: rate or tour. Two honest tabs. */
+  function setMode(m) {
+    quote.dataset.mode = m;
+    $('#f-intent').value = m;
+    $$('.tab').forEach(t => { const on = t.dataset.modeSet === m; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
+    $('#f-submit').textContent = m === 'tour' ? 'Request the visit' : 'Send for a rate';
+    $('#quote-panel').setAttribute('aria-labelledby', m === 'tour' ? 'tab-tour' : 'tab-rate');
+    update();
+  }
+  $$('.tab').forEach(t => {
+    t.addEventListener('click', () => setMode(t.dataset.modeSet));
+    t.addEventListener('keydown', e => { if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { const other = $$('.tab').find(x => x !== t); other.focus(); setMode(other.dataset.modeSet); } });
+  });
+  $$('[data-intent="tour"]').forEach(a => a.addEventListener('click', () => setMode('tour')));
+  if (form) { form.addEventListener('input', update); form.addEventListener('change', update); update(); }
+
+  /* ---------- M-13 Field choreography + submit ---------- */
+  const rules = {
+    temp: { group: true, msg: 'Pick the temperature your product needs.' },
+    pallets: { group: true, msg: 'Pick a pallet range. A rough number is fine.' },
+    product: { modes: ['rate'], msg: 'Say what the product is, in a few words.' },
+    'tour-day': { hidden: true, modes: ['tour'], msg: 'Pick a day for the visit.' },
+    company: { msg: 'The company the rate is for.' },
+    name: { msg: 'Your name, so we know who to ask for.' },
+    email: { msg: 'A work email, so the rate has somewhere to go.', bad: 'That email is missing an @ or a domain.' }
+  };
+  const msgFor = n => $('#msg-' + n);
+  const setMsg = (n, text, bad) => {
+    const m = msgFor(n); if (!m) return;
+    m.textContent = text || ''; m.classList.toggle('show', !!text);
+    const r = rules[n];
+    const field = (r.group || r.hidden) ? m.closest('fieldset') : m.closest('.field');
+    if (field) field.classList.toggle('err', !!bad);
+    if (!r.group && !r.hidden) { const i = form.elements[n]; if (i) i.setAttribute('aria-invalid', bad ? 'true' : 'false'); }
+  };
+  function check(n) {
+    const r = rules[n];
+    if (r.modes && !r.modes.includes(quote.dataset.mode)) { setMsg(n, '', false); return true; }
+    if (r.group) { const ok = !!form.querySelector('input[name="' + n + '"]:checked'); setMsg(n, ok ? '' : r.msg, !ok); return ok; }
+    if (r.hidden) { const ok = !!hiddenDay.value; setMsg(n, ok ? '' : r.msg, !ok); return ok; }
+    const i = form.elements[n]; const v = i.value.trim();
+    if (!v) { setMsg(n, r.msg, true); return false; }
+    if (n === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) { setMsg(n, r.bad, true); return false; }
+    setMsg(n, '', false); return true;
+  }
+  if (form) {
+    Object.keys(rules).forEach(n => {
+      const r = rules[n];
+      if (r.group) form.querySelectorAll('input[name="' + n + '"]').forEach(i => i.addEventListener('change', () => check(n)));
+      else if (!r.hidden) { const i = form.elements[n]; i.addEventListener('blur', () => { if (i.value.trim() || i.dataset.touched) check(n); i.dataset.touched = '1'; }); i.addEventListener('input', () => { if (i.dataset.touched) check(n); }); }
+    });
+    form.addEventListener('submit', async e => {
+      e.preventDefault();
+      const bad = Object.keys(rules).filter(n => !check(n));
+      if (bad.length) {
+        const first = bad[0], r = rules[first];
+        const target = r.group ? form.querySelector('input[name="' + first + '"]') : r.hidden ? form.querySelector('input[name="tour-day-pick"]') : form.elements[first];
+        target && target.focus();
+        return;
+      }
+      const btn = $('#f-submit'); btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
+      const fd = new FormData(form); fd.delete('tour-day-pick');
+      const mode = quote.dataset.mode, email = fd.get('email').trim();
+      try {
+        /* Formspree-compatible endpoint, set once in the form's action attribute. */
+        const endpoint = form.getAttribute('action') || '';
+        if (!/^https:\/\//.test(endpoint) || /YOUR_FORM_ID/.test(endpoint)) { console.warn('Carriacou: set the form action to your form endpoint. See the kit README.'); throw new Error('no endpoint'); }
+        fd.set('_subject', (mode === 'tour' ? 'Dock tour request: ' : 'Rate request: ') + [optLabel('temp'), optLabel('pallets') && optLabel('pallets') + ' positions', fd.get('company')].filter(Boolean).join(', '));
+        const res = await fetch(endpoint, { method: 'POST', body: fd, headers: { Accept: 'application/json' } });
+        if (!res.ok) throw new Error(res.status);
+        const now = new Date();
+        $('#stamp-time').textContent = now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }) + ', ' + now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        if (mode === 'tour') {
+          $('#form-ok-copy').textContent = 'Your visit on ' + dayText + ', ' + optLabel('tour-window').toLowerCase() + ', is with the warehouse. Dock 1.';
+          $('#form-ok-next').innerHTML = 'We confirm the time by phone and by email to ' + email.replace(/</g, '&lt;') + '. If it\'s sooner than that, call <a class="num text-link" href="tel:"><span class="tk" data-fact="phone">TK</span></a>.';
+        } else {
+          $('#form-ok-copy').textContent = 'A rate request for ' + optLabel('pallets').toLowerCase() + ' positions of ' + optLabel('temp').toLowerCase() + ' storage' + (fd.get('product').trim() ? ' for ' + fd.get('product').trim() : '') + ' is with the warehouse. The reply goes to ' + email + '.';
+          $('#form-ok-next').innerHTML = '<span data-authorize="quote-turnaround">You\'ll have a rate within one business day.</span> If it\'s urgent, call <a class="num text-link" href="tel:"><span class="tk" data-fact="phone">TK</span></a>.';
+        }
+        form.classList.add('sent'); $('#form-ok').classList.add('show'); ticket.classList.add('stamped');
+        quote.scrollIntoView({ behavior: rm ? 'auto' : 'smooth', block: 'start' });
+        $('#form-ok').setAttribute('tabindex', '-1'); $('#form-ok').focus({ preventScroll: true });
+      } catch (err) {
+        $('#form-fail').classList.add('show');
+        $('#form-fail').setAttribute('tabindex', '-1'); $('#form-fail').focus();
+      } finally { btn.disabled = false; btn.textContent = label; }
+    });
+    $('#form-retry').addEventListener('click', () => { $('#form-fail').classList.remove('show'); $('#f-submit').focus(); });
+  }
+  d.documentElement.classList.add('cl-ready');
+})();
+</script>

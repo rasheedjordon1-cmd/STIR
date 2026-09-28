@@ -48,3 +48,28 @@
   from = "/index.html"
   to = "/"
   status = 301
+
+# Working files live in the repo but are not part of the site.
+[[redirects]]
+  from = "/squarespace/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/screenshots/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/assets/og-source.html"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/*.md"
+  to = "/404.html"
+  status = 404
+  force = true
