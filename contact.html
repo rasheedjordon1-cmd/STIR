@@ -49,7 +49,7 @@
       <h1 class="display page-title" data-reveal="editorial" id="contact-title">What are we<br>looking at?</h1>
 
       <div class="contact-info reveal">
-        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see.</p>
+        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see. Free, whether or not we end up working&nbsp;together.</p>
         <div class="contact-links utility">
           <a href="mailto:rasheedjordon1@gmail.com">Email us directly</a>
           <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">@builtbystir</a>
@@ -114,7 +114,7 @@
           <span class="utility q-no">05</span>
           <div class="q-body">
             <label class="q-label" for="f-name">Where do we reply?</label>
-            <span class="utility q-hint">We read everything. We reply to the interesting ones fast.</span>
+            <span class="utility q-hint">We read everything, and we answer with what we actually see.</span>
             <div class="q-pair">
               <div>
                 <span class="utility q-sub">Name</span>
@@ -173,6 +173,27 @@
     entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); if (e.target.getAttribute('data-reveal') === 'structural') setTimeout(function(){ e.target.classList.add('sig-spent'); }, 900); } });
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(function (el) { io.observe(el); });
+})();
+
+/* Handoff from the homepage starter: prefill the business and move the
+   visitor to the next unanswered question rather than the top of the form. */
+(function () {
+  var q = new URLSearchParams(window.location.search).get('business');
+  if (!q) return;
+  var field = document.getElementById('f-business');
+  if (!field) return;
+  field.value = q;
+  var next = document.querySelector('input[name="situation"]');
+  if (next) {
+    var block = next.closest('.q-block');
+    if (block) {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setTimeout(function () {
+        block.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        next.focus({ preventScroll: true });
+      }, 260);
+    }
+  }
 })();
 
 /* Form submission — posts to Netlify Forms without a page reload so the

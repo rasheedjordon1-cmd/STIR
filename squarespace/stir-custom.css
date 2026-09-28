@@ -1498,6 +1498,169 @@
 }
 .stir form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 .stir .contact-note { color: var(--ink-60); margin-top: clamp(40px, 6vh, 72px); }
+.stir /* ════════════════════════════════════════════════════════════════
+   PROOF — the role. The claim almost nobody else can make:
+   not "we ran a campaign" but "we operate this."
+   ════════════════════════════════════════════════════════════════ */
+.proof-role {
+  max-width: 34ch;
+  margin-bottom: clamp(48px, 7vh, 96px);
+}
+.stir .proof-role .role-label { display: flex; margin-bottom: 18px; }
+.stir .proof-role .role-said {
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  font-weight: 300;
+  line-height: 1.32;
+  color: var(--ink);
+}
+.stir .proof-role .role-said strong { font-weight: 700; }
+.stir /* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — answers the question a prospect is actually
+   asking by this point in the page.
+   ════════════════════════════════════════════════════════════════ */
+.who {
+  padding-top: clamp(110px, 16vh, 220px);
+  padding-bottom: clamp(120px, 18vh, 240px);
+}
+.stir .who-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.stir .who-title { grid-column: 1 / 10; font-size: var(--t-big); }
+.stir .who-copy { grid-column: 1 / 6; margin-top: clamp(32px, 5vh, 56px); }
+.stir /* The trades,
+.stir as an index — not a grid of cards */
+.who-trades {
+  grid-column: 7 / 13;
+  margin-top: clamp(32px, 5vh, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 0;
+}
+.stir .who-trades li {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.stir .who-trades li:not(:last-child)::after {
+  content: "·";
+  color: var(--ink-35);
+  padding-inline: 0.9em;
+}
+.stir .who-trades-note { grid-column: 7 / 12; margin-top: 20px; color: var(--ink-60); }
+.stir /* The disqualifier — saying who it isn't for is what makes the
+   yes credible. Kept plain,
+.stir never apologetic. */
+.who-not {
+  grid-column: 7 / 13;
+  margin-top: clamp(48px, 7vh, 88px);
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+}
+.stir .who-not .not-label { display: flex; color: var(--ink-60); margin-bottom: 14px; }
+.stir /* the ordinary storefront: the argument for who this is for */
+.who-art {
+  grid-column: 1 / -1;
+  margin-top: clamp(72px, 11vh, 150px);
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 55%;
+  height: auto;
+  margin-inline: calc(var(--bleed) * -1);
+  width: calc(100% + var(--bleed) * 2);
+}
+@media (max-width: 1023px) {
+.stir .who-title,
+.stir .who-copy,
+.stir .who-trades,
+.stir .who-trades-note,
+.stir .who-not { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+.stir .who-label { grid-column: 1 / -1; margin-bottom: 48px; }
+.stir .who-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+.stir .who-art { aspect-ratio: 4 / 3; }
+}
+.stir /* ════════════════════════════════════════════════════════════════
+   CONVERSION — show the journey,
+.stir then start it
+   ════════════════════════════════════════════════════════════════ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--col-gap);
+  margin-top: clamp(56px, 8vh, 110px);
+}
+.stir .step { border-top: 1px solid var(--ink); padding-top: 16px; }
+.stir .step-no { color: var(--ink-60); display: flex; margin-bottom: 14px; }
+.stir .step-said {
+  font-size: calc(var(--t-body) * 1.05);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.stir .step-note { color: var(--ink-60); margin-top: 8px; max-width: 26ch; }
+@media (max-width: 639px) {
+.stir .steps { grid-template-columns: 1fr; row-gap: 28px; }
+}
+.stir /* Start the conversation before the commitment */
+.starter {
+  margin-top: clamp(56px, 8vh, 110px);
+  max-width: 680px;
+}
+.stir .starter-label { display: block; color: var(--ink-60); margin-bottom: 12px; }
+.stir .starter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 12px;
+}
+.stir .starter-row input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  color: var(--ink);
+}
+.stir .starter-row input:focus { outline: none; }
+.stir .starter-row input::placeholder { color: var(--ink-35); }
+.stir .starter-go {
+  flex: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 6px 2px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  transition: color 0.25s var(--ease);
+}
+.stir .starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.stir .starter-go:hover,
+.stir .starter-go:focus-visible { color: var(--red); }
+.stir .starter-go:hover .arrow,
+.stir .starter-go:focus-visible .arrow { transform: translateX(0.35em); }
+.stir .starter-row:focus-within { border-bottom-color: var(--red); }
+.stir .starter-note { color: var(--ink-60); margin-top: 16px; }
 /* ════════════════════════════════════════════════════════════════
    SQUARESPACE HOST LAYER
    Everything above is the STIR design system, scoped to .stir so

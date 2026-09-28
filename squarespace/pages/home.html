@@ -1,5 +1,5 @@
-<!-- ══ STIR · HOME ══ Paste into ONE Code Block on a blank page.
-     Find/replace ASSET_BASE with your uploaded asset URL prefix. -->
+<!-- ══ STIR · HOME ══ One Code Block on a blank page.
+     Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
 <div class="stir stir-home">
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
@@ -87,6 +87,11 @@
 
       <h2 class="display proof-title" data-reveal="editorial" id="proof-title">Labay<br>Market.</h2>
 
+      <p class="proof-role reveal">
+        <span class="ann role-label"><i class="ann-mark" aria-hidden="true"></i>The role</span>
+        <span class="role-said">STIR is Labay Market’s <strong>digital and systems operator</strong>. Since&nbsp;2025.</span>
+      </p>
+
       <div class="grid proof-body">
         <div class="proof-lead">
           <p class="proof-metric reveal" data-count="10" data-count-suffix="M+">10M+</p>
@@ -116,11 +121,15 @@
         </div>
         <div class="reel" id="proof-reel" aria-label="Labay evidence — scroll horizontally">
           <figure class="reel-item">
-            <video class="ev-media" muted loop playsinline data-autoplay
+            <!-- VIDEO_URL: Squarespace will not host .mp4. Keep the existing
+     Netlify deploy alive purely as an asset host and point here:
+     https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4
+     DO NOT DELETE that Netlify site. -->
+          <video class="ev-media" muted loop playsinline data-autoplay
                    preload="none" width="720" height="1280"
                    poster="assets/labay/labay-social-01-poster.webp"
                    aria-label="Short-form vertical video shot at Labay Market">
-              <source src="ASSET_BASE/labay/labay-social-01.mp4" type="video/mp4">
+              <source src="VIDEO_URL" type="video/mp4">
             </video>
             <figcaption class="ev-cap utility">
               <span class="cap">Serialized short-form built from daily operations.</span>
@@ -286,41 +295,72 @@
     </div>
   </section>
 
-  <!-- ════════ 06 · ONE THOUGHT ════════
-       (Observation 001 — the eye/mango "too close to see it" idea —
-       now lives in the hero's observer artwork. The fuller
-       Observations index moves to About / future Insights.) -->
-  <section class="obs shell" data-ground="ivory" data-index="06 — Observation" aria-labelledby="obs-label">
+  <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
+  <section class="who shell" data-ground="ivory" data-index="06 — Who this is for" aria-labelledby="who-title">
     <div class="grid">
-      <p class="utility obs-label" data-reveal="structural" id="obs-label">06 / Observation</p>
-    </div>
+      <p class="utility who-label" data-reveal="structural" id="who-label">06 / Who this is for</p>
 
-    <article class="grid obs-spread">
-      <div class="obs-text reveal">
-        <h3 class="display obs-headline" data-reveal="editorial">The kids don’t want the store. They want the brand.</h3>
-        <a class="cta-line obs-cta" href="#" aria-disabled="true">Read the thought <span class="arrow" aria-hidden="true">→</span></a>
+      <h2 class="display who-title" data-reveal="editorial" id="who-title">We work with businesses that already do something&nbsp;well.</h2>
+
+      <p class="body who-copy reveal">The product is good. The service is good. The operation works. What’s missing is that not enough of the right people know yet — and nothing is turning the ones who do into revenue.</p>
+
+      <ul class="who-trades reveal">
+        <li>Markets</li><li>Bakeries</li><li>Cafés</li><li>Restaurants</li>
+        <li>Logistics</li><li>Industrial</li><li>Law</li><li>Real estate</li><li>Services</li>
+      </ul>
+      <p class="utility who-trades-note reveal">The category matters less than whether there’s something real to work with.</p>
+
+      <div class="who-not reveal">
+        <p class="ann not-label"><i class="ann-mark" aria-hidden="true"></i>Not for you if</p>
+        <p class="body">The business isn’t doing the volume yet to invest in an operator, or isn’t ready to grow the operation. We’d rather tell you that early than take the work.</p>
       </div>
-      <!--
-        ILLUSTRATION: assets/illustration-corner.webp
-        The ordinary corner store — one lit doorway in a whole blue
-        block. Slides under the text column, bleeds off the right edge.
-      -->
-      <img class="obs-art" data-reveal="registration" src="ASSET_BASE/illustration-corner.webp"
+
+      <!-- The ordinary storefront: the argument for who this is for. -->
+      <img class="who-art" data-reveal="registration" src="ASSET_BASE/illustration-corner.webp"
            width="1800" height="1347" loading="lazy" decoding="async"
            alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
-    </article>
+    </div>
   </section>
 
-  <!-- ════════ 06 · CTA — quiet ivory, red only at the action ════════ -->
+  <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
   <section class="convert shell" data-ground="ivory" data-index="Your turn" id="contact" aria-labelledby="convert-q">
     <div class="convert-head" data-reveal="structural">
       <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
     </div>
-    <h2 class="display convert-q" data-reveal="editorial">What are<br>we not<br>seeing yet?</h2>
+    <h2 class="display convert-q" data-reveal="editorial" id="convert-q">What are<br>we not<br>seeing yet?</h2>
+
     <div class="convert-foot reveal">
-      <p class="body convert-copy">There’s probably something inside your business people would care about. Let’s find it.</p>
-      <a class="cta" href="/contact">Tell us about the business <span class="arrow" aria-hidden="true">↗</span></a>
+      <p class="body convert-copy">There’s probably something inside your business people would care about. Tell us about it and we’ll tell you what we see — whether or not we end up working together.</p>
     </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
+        <p class="step-said">You send it.</p>
+        <p class="utility step-note">A few lines about the business.</p>
+      </div>
+      <div class="step">
+        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
+        <p class="step-said">We look at the business.</p>
+        <p class="utility step-note">Properly. The product, the operation, the market.</p>
+      </div>
+      <div class="step">
+        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
+        <p class="step-said">We tell you what we see.</p>
+        <p class="utility step-note">Free, either way.</p>
+      </div>
+    </div>
+
+    <!-- Starts the contact conversation here and carries the answer over. -->
+    <form class="starter reveal" id="starter" action="/contact" method="GET">
+      <label class="utility starter-label" for="starter-input">Start here</label>
+      <div class="starter-row">
+        <input id="starter-input" name="business" type="text" autocomplete="organization"
+               placeholder="What’s the business?">
+        <button class="starter-go" type="submit">Take a look <span class="arrow" aria-hidden="true">→</span></button>
+      </div>
+      <p class="utility starter-note">Four more questions on the next page. Two minutes, honestly.</p>
+    </form>
   </section>
 
 </main>

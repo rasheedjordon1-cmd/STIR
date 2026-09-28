@@ -23,10 +23,15 @@ plan or above. Custom CSS with file uploads is on the same tier.
 Squarespace gives each file a URL. Keep the tab open — you need them
 in steps 2 and 4.
 
-> Squarespace won't host the `.mp4`. Two options: upload the Labay
-> video to Vimeo/YouTube unlisted and swap that one `<video>` for an
-> embed, or keep serving it from the existing Netlify URL. The rest
-> of the reel is images and works as-is.
+> **The Labay video.** Squarespace won't host `.mp4`. The build keeps
+> it on the existing Netlify deploy, which now serves only as an asset
+> host. In `pages/home.html`, replace `VIDEO_URL` with:
+> `https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4`
+>
+> **Do not delete that Netlify site** — it costs nothing and the video
+> is the only thing still pointing at it. (Fallback if you ever want to
+> consolidate: put the clip on Vimeo unlisted and swap the `<video>`
+> for an embed, accepting the player chrome.)
 
 ## 2 · Custom CSS
 
