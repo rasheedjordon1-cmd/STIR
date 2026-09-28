@@ -205,6 +205,64 @@
     reel.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
   })();
 
+  /* ── Who this is for: the trades as a working index ─────────────
+     EXPLAIN: the real question behind a list of verticals is "what
+     would you do for a business like mine". So the list answers it.
+     Pointer hovers preview; click and keyboard focus commit. The
+     panel is the single source of truth, so there is one answer on
+     screen at a time and no cards to scan.                          */
+  (function () {
+    var list  = document.getElementById('trade-list');
+    var panel = document.getElementById('trade-panel');
+    var said  = document.getElementById('panel-said');
+    var note  = document.getElementById('panel-note');
+    if (!list || !panel || !said || !note) return;
+
+    var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
+    var current = trades[0];
+    var swapTimer = null;
+
+    function select(btn) {
+      if (!btn || btn === current) return;
+      trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
+      current = btn;
+
+      var nextSaid = btn.getAttribute('data-said');
+      var nextNote = btn.getAttribute('data-note');
+      if (reduce) { said.textContent = nextSaid; note.textContent = nextNote; return; }
+
+      /* fade out, swap, fade back — the copy replaces itself rather
+         than sliding, so nothing moves that shouldn't. */
+      panel.classList.add('is-swapping');
+      clearTimeout(swapTimer);
+      swapTimer = setTimeout(function () {
+        said.textContent = nextSaid;
+        note.textContent = nextNote;
+        panel.classList.remove('is-swapping');
+      }, 200);
+    }
+
+    trades.forEach(function (btn) {
+      btn.addEventListener('click', function () { select(btn); });
+      btn.addEventListener('focus', function () { select(btn); });
+      if (fine) btn.addEventListener('pointerenter', function (e) {
+        if (e.pointerType === 'mouse') select(btn);
+      });
+    });
+
+    /* Arrow keys walk the index, the way a keyboard user expects a
+       single-select list to behave. */
+    list.addEventListener('keydown', function (e) {
+      var step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
+               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      var i = trades.indexOf(document.activeElement);
+      if (i === -1) i = trades.indexOf(current);
+      trades[(i + step + trades.length) % trades.length].focus();
+    });
+  })();
+
   /* ── Mobile menu ────────────────────────────────────────────────*/
   (function () {
     var btn = document.querySelector('.nav-menu');
@@ -228,6 +286,78 @@
   })();
 
 })();
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — the parts unique to /contact. Reveal, the mobile menu
+   and everything else already ran above; these two no-op on any
+   page that doesn't have the form.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Handoff from the homepage starter ──────────────────────────
+     Carry the answer over, then move the visitor to the next
+     unanswered question rather than the top of the form.           */
+  (function () {
+    var q = new URLSearchParams(window.location.search).get('business');
+    if (!q) return;
+    var field = document.getElementById('f-business');
+    if (!field) return;
+    field.value = q;
+    var next = document.querySelector('input[name="situation"]');
+    if (!next) return;
+    var block = next.closest('.q-block');
+    if (!block) return;
+    setTimeout(function () {
+      block.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      next.focus({ preventScroll: true });
+    }, 260);
+  })();
+
+  /* ── Submit ─────────────────────────────────────────────────────
+     Posts to Formspree over fetch so the success state is immediate.
+     CONFIRM: the red signal travels the rail while the request is in
+     flight, then the form is replaced by the acknowledgement. Without
+     JS the form still submits normally and Formspree answers.       */
+  (function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+    if (form.action.indexOf('FORMSPREE_ID') !== -1) {
+      console.warn('STIR: replace FORMSPREE_ID in the contact page Code Block.');
+    }
+    var ok  = document.getElementById('form-success');
+    var bad = document.getElementById('form-error');
+    var btn = form.querySelector('button[type="submit"]');
+
+    function show(el) {
+      form.style.display = 'none';
+      el.classList.add('is-shown');
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (btn) { btn.disabled = true; btn.firstChild.nodeValue = 'Sending '; }
+      form.classList.add('is-sending');
+      var travelled = new Promise(function (go) { setTimeout(go, reduce ? 0 : 620); });
+      var sent = fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      Promise.all([travelled, sent]).then(function (res) {
+        if (!res[1].ok) throw new Error(res[1].status);
+        show(ok);
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.firstChild.nodeValue = 'Send it to STIR '; }
+        form.classList.remove('is-sending');
+        show(bad);
+      });
+    });
+  })();
+})();
+
 /* ════════════════════════════════════════════════════════════════
    SQUARESPACE ENHANCEMENTS
    01 · Adaptive nav — inverts against the ground passing beneath it
@@ -258,10 +388,13 @@
   }
 
   function update() {
-    var line = window.scrollY + navH * 0.6;
+    /* Viewport-relative, not offsetTop: Squarespace nests our root in
+       several positioned wrappers, and offsetTop is measured against
+       whichever of them happens to be the offsetParent. */
+    var line = navH * 0.6;
     var active = sections[0];
     for (var i = 0; i < sections.length; i++) {
-      if (sections[i].offsetTop <= line) active = sections[i];
+      if (sections[i].getBoundingClientRect().top <= line) active = sections[i];
     }
     if (active !== current) {
       current = active;
@@ -274,7 +407,12 @@
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
     idx.style.setProperty('--idx-progress', p.toFixed(3));
-    idx.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.35);
+    /* Shown once the argument is underway, and retired once it lands:
+       the closing section owns the bottom-left corner, and a marker
+       counting a journey that has finished is just clutter. */
+    var last = sections[sections.length - 1];
+    var landed = last.getBoundingClientRect().top < window.innerHeight * 0.6;
+    idx.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.35 && !landed);
   }
 
   function onScroll() {
@@ -283,10 +421,27 @@
     requestAnimationFrame(function () { update(); ticking = false; });
   }
 
-  measure();
-  update();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measure(); update(); }, { passive: true });
-})();
+  function refresh() { measure(); update(); }
 
+  refresh();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', refresh, { passive: true });
+
+  /* The first pass runs before the artwork has laid out, when every
+     section still reports roughly the same offset — which is how the
+     nav ended up reading the wrong ground at first paint. Recompute
+     whenever the page actually changes height. */
+  /* The first pass runs before the artwork has laid out, when every
+     section still reports roughly the same position — which is how the
+     nav ended up showing the wrong ground at first paint. Nothing here
+     is a poll: each is a one-shot settle as the page finishes
+     resolving. */
+  window.addEventListener('load', refresh);
+  [120, 500, 1200].forEach(function (ms) { setTimeout(refresh, ms); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  if ('ResizeObserver' in window) { new ResizeObserver(refresh).observe(root); }
+  root.querySelectorAll('img').forEach(function (img) {
+    if (!img.complete) img.addEventListener('load', refresh, { once: true });
+  });
+})();
 </script>

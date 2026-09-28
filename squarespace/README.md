@@ -4,6 +4,19 @@ The full site as custom code. Squarespace handles hosting, domain,
 SSL and billing; Formspree handles inquiries. Nothing about the
 result reads as a Squarespace template.
 
+> **Everything in this folder is generated.** The standalone site
+> (`index.html`, `about.html`, `contact.html`, `assets/stir.css`) is
+> the only source of truth. After changing any of those, run:
+>
+> ```
+> python3 scripts/build-squarespace.py
+> ```
+>
+> Hand-edit `squarespace/src/` — never the generated files, which are
+> overwritten on the next build. Hand-patching the output is how the
+> package previously lost its defensive reset and its contact-form
+> behaviour without anyone noticing.
+
 **Plan requirement:** Code Blocks and Code Injection need a Business
 plan or above. Custom CSS with file uploads is on the same tier.
 (Verify current tiering — Squarespace moves it.)
@@ -54,8 +67,16 @@ FONT_BOLD_ITALIC_URL    founders-grotesk-bold-italic.woff2
 - **Header** ← `header-injection.html`
 - **Footer** ← `footer-injection.html`
 
-In the header file, swap `ASSET_BASE/og-stir.jpg` for the uploaded
-share image URL.
+In the header file, replace **both** `ASSET_BASE/` occurrences — the
+share image (`og-stir.jpg`) and the entrance mark
+(`stir-mark-ivory.png`).
+
+The header also carries the entrance: a cobalt hold that covers
+Squarespace's unstyled flash and lifts the moment the page is ready.
+It is capped at 900ms, shows once per session and is skipped entirely
+under reduced motion. It has to live in the head — a Code Block paints
+too late to cover anything — so it is drawn with pseudo-elements on
+`<html>` rather than markup.
 
 ## 4 · The pages
 
@@ -76,8 +97,14 @@ the Custom CSS already neutralises the usual wrappers.
 3. Submit once yourself to confirm the address.
 
 Fields captured: business, situation, show_us, not_seeing, name,
-email. `_gotcha` is the spam honeypot. The JS posts over fetch and
-shows **WE'VE GOT IT.** without a page reload.
+email. `_gotcha` is the spam honeypot. The footer injection posts over
+fetch and shows **WE'VE GOT IT.** without a page reload; the red
+signal travels the rail while the request is in flight. Without JS the
+form still submits normally and Formspree answers.
+
+The homepage **Start here** field hands its answer to `/contact`, which
+prefills question 01 and moves the visitor to question 02 rather than
+the top of the form.
 
 ---
 
@@ -94,6 +121,16 @@ Same design system, same motion. Three adaptations:
    Squarespace nests several padded wrappers.
 3. **The nav is fixed**, not absolute, since the document scrolls.
 
+## What lives in `src/`
+
+| file | what it is |
+|---|---|
+| `host-layer.css` | the defensive reset, the wrapper neutralisers, full-bleed for a nested DOM, and the two enhancements' styling |
+| `host-behaviour.js` | adaptive nav + running index |
+| `contact-behaviour.js` | the Formspree submit and the homepage handoff |
+| `header-injection.html` | page tagging, share tags, the entrance |
+| `preview-shell.html` | the mock host `_preview.html` is built into |
+
 ## Two things the Netlify build doesn't have
 
 - **Adaptive nav.** The nav reads the section passing beneath it and
@@ -101,7 +138,14 @@ Same design system, same motion. Three adaptations:
   `data-ground="cobalt|ivory"` to any new section to include it.
 - **Running index.** A quiet publication marker, bottom-left, showing
   which part of the argument you're in, with a hairline progress
-  rule. Desktop only. Add `data-index="..."` to any new section.
+  rule. Desktop only, and it retires over the closing section — the
+  CTA owns that corner, and an index of a journey that has finished is
+  clutter. Add `data-index="..."` to any new section.
+
+Both read `data-ground` / `data-index`, which the build script stamps
+onto sections from a table at the top of
+`scripts/build-squarespace.py`. Add a new section there, not by hand in
+the generated page.
 
 ## Editing later
 
@@ -109,5 +153,9 @@ Copy lives in the page Code Blocks — edit it right in Squarespace.
 Design tokens (colour, type scale, spacing) live at the top of the
 Custom CSS. Behaviour lives in the footer injection.
 
-`_preview.html` in this folder renders the whole thing inside a mock
-Squarespace DOM so changes can be checked before pasting.
+`_preview.html` renders the whole package inside a deliberately hostile
+mock of Squarespace's DOM — their serif headings, their green links,
+their disc bullets, their nested padded wrappers. Append `?p=about` or
+`?p=contact` for the other pages. Open it before pasting: it is where
+the host-versus-us problems show up, and it is the reason the defensive
+reset exists at all.

@@ -1,4 +1,145 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>STIR — Squarespace preview</title><link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"><style>body{font-family:"Helvetica Neue",sans-serif;color:#222;margin:0;line-height:1.7}h1,h2,h3{font-family:Georgia,serif;font-weight:400;margin:0 0 .6em}p{margin:0 0 1.5em;font-size:17px}a{color:#0d7;text-decoration:underline}ul{padding-left:40px;list-style:disc}#header{height:80px;background:#eee}#sections{max-width:1200px;margin:0 auto}.page-section{padding:90px 4vw}.content-wrapper{max-width:960px;margin:0 auto;padding:0 17px}.sqs-block{padding:17px 0}</style><style>.stir /* ════════════════════════════════════════════════════════════════
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STIR — Squarespace preview</title>
+<!--
+  GENERATED — do not edit. Run: python3 scripts/build-squarespace.py
+
+  This renders the paste-in package inside a deliberately hostile mock
+  of Squarespace's DOM: their serif headings, their green links, their
+  disc bullets, their nested padded wrappers, their 1200px cap. If a
+  rule of ours can be beaten by the host, it gets beaten here first.
+  Append ?p=about or ?p=contact to preview the other pages.
+-->
+<style>
+  /* ── The mock host. Approximates a stock Squarespace template. ── */
+  body { font-family: "Helvetica Neue", sans-serif; color: #222; margin: 0; line-height: 1.7; }
+  h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: 400; margin: 0 0 .6em; }
+  h1 { font-size: 40px; }
+  p { margin: 0 0 1.5em; font-size: 17px; }
+  a { color: #0d7; text-decoration: underline; }
+  ul { padding-left: 40px; list-style: disc; }
+  button, input, textarea { font: inherit; }
+  #header { height: 80px; background: #eee; }
+  #sections { max-width: 1200px; margin: 0 auto; }
+  .page-section { padding: 90px 4vw; }
+  .content-wrapper { max-width: 960px; margin: 0 auto; padding: 0 17px; min-height: 400px; }
+  .sqs-block { padding: 17px 0; }
+  #footer-sections { height: 220px; background: #ddd; }
+  /* preview-only chrome */
+  .pv-switch { position: fixed; right: 12px; bottom: 12px; z-index: 999999;
+               display: flex; gap: 6px; font: 500 11px/1 monospace; }
+  .pv-switch a { background: #161310; color: #FAF2E6; text-decoration: none;
+                 padding: 7px 10px; letter-spacing: .08em; text-transform: uppercase; }
+  .pv-switch a[data-on] { background: #F21B16; }
+</style>
+<!-- ══ STIR · head ══
+     Paste into Settings → Advanced → Code Injection → HEADER. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Social share card. Squarespace sets its own og tags per page; these
+     override them. Swap the image URL for your uploaded og-stir.jpg. -->
+<meta property="og:image" content="../assets/og-stir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="../assets/og-stir.jpg">
+
+<script>
+/* Tag the page so the Custom CSS host layer only acts on STIR pages,
+   and paint the ground behind the cobalt hero before first paint. */
+(function () {
+  var p = window.location.pathname.replace(/\/$/, '');
+  document.documentElement.classList.add('stir-page');
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add('stir-page');
+    if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');
+  });
+})();
+</script>
+
+<!-- ══ ENTRANCE ══
+     Not a progress bar — there is nothing on a page this size worth
+     measuring. A cobalt hold that covers Squarespace's unstyled flash
+     and resolves the moment the page is ready, capped at 900ms so it
+     can never become a wait. Once per session; never under reduced
+     motion.
+
+     It lives here rather than in a Code Block because a Code Block
+     paints too late to cover anything: this has to exist in <head>.
+     It is built from pseudo-elements on <html>, since Code Injection
+     can only put markup in the body, which is the thing we're hiding.
+     Swap ASSET_BASE for your uploaded file prefix. -->
+<style>
+  html.stir-enter::before,
+  html.stir-enter::after {
+    content: "";
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* the cobalt ground, with the ivory mark centred on it */
+  html.stir-enter::before {
+    inset: 0;
+    background: #0451AB url("../assets/stir-mark-ivory.png") no-repeat center;
+    background-size: auto clamp(26px, 3vw, 38px);
+  }
+  /* the signal rail, just under the mark */
+  html.stir-enter::after {
+    left: 50%;
+    top: calc(50% + clamp(26px, 3vw, 38px));
+    width: clamp(90px, 12vw, 150px);
+    height: 1px;
+    margin-left: calc(clamp(90px, 12vw, 150px) / -2);
+    background:
+      linear-gradient(to right, #F21B16, #F21B16) left / var(--stir-fill, 0%) 100% no-repeat,
+      rgba(250, 242, 230, 0.40);
+    transition: background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.stir-enter { overflow: hidden; }
+  html.stir-enter-done::before,
+  html.stir-enter-done::after { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    html.stir-enter::before, html.stir-enter::after { display: none; }
+  }
+</style>
+<script>
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false;
+  try { seen = sessionStorage.getItem('stir-entered') === '1'; } catch (e) {}
+  if (reduce || seen) return;
+  try { sessionStorage.setItem('stir-entered', '1'); } catch (e) {}
+
+  root.classList.add('stir-enter');
+  var t0 = Date.now(), lifted = false, cap;
+
+  function lift() {
+    if (lifted) return;
+    lifted = true;
+    clearTimeout(cap);
+    root.classList.add('stir-enter-done');
+    setTimeout(function () {
+      root.classList.remove('stir-enter', 'stir-enter-done');
+      root.style.removeProperty('--stir-fill');
+    }, 520);
+  }
+
+  requestAnimationFrame(function () { root.style.setProperty('--stir-fill', '100%'); });
+  cap = setTimeout(lift, 900);   /* hard ceiling — never a wait */
+
+  window.addEventListener('load', function () {
+    setTimeout(lift, Math.max(0, 420 - (Date.now() - t0)));
+  });
+})();
+</script>
+
+<style>/* ════════════════════════════════════════════════════════════════
    STIR — shared system
    Semantic color roles:
    COBALT — world / visual environment.  IVORY — information /
@@ -7,8 +148,7 @@
    atmosphere.
    ════════════════════════════════════════════════════════════════ */
 
-/* ── Founders Grotesk — licensed,
-.stir self-hosted ─────────────────── */
+/* ── Founders Grotesk — licensed, self-hosted ─────────────────── */
 @font-face {
   font-family: "Founders Grotesk";
   src: url("../assets/fonts/founders-grotesk-light.woff2") format("woff2");
@@ -87,9 +227,9 @@
 .stir a { color: inherit; text-decoration: none; }
 .stir img,
 .stir video { max-width: 100%; display: block; }
-.stir /* Art images size from their CSS aspect-ratio,
-.stir not the HTML height attr */
-.obs-art,
+
+/* Art images size from their CSS aspect-ratio, not the HTML height attr */
+.stir .obs-art,
 .stir .about-art { height: auto; }
 .stir :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 .stir ::selection { background: var(--ink); color: var(--ivory); }
@@ -97,8 +237,10 @@
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap;
 }
-.stir /* ── Shell + grid ─────────────────────────────────────────────── */
-.shell {
+
+
+/* ── Shell + grid ─────────────────────────────────────────────── */
+.stir .shell {
   max-width: var(--max-w);
   margin-inline: auto;
   padding-inline: var(--gutter);
@@ -114,21 +256,21 @@
 @media (max-width: 639px) {
 .stir .grid { grid-template-columns: repeat(4, 1fr); }
 }
-.stir /* ── Type voices ──────────────────────────────────────────────── */
-/* Display: monumental,
-.stir declarative — Founders Grotesk Bold */
-.display {
+
+
+/* ── Type voices ──────────────────────────────────────────────── */
+/* Display: monumental, declarative — Founders Grotesk Bold */
+.stir .display {
   font-weight: 700;
   text-transform: uppercase;
   line-height: 0.94;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.stir /* Body: clear,
-.stir direct,
-.stir commercial — someone explaining something
+
+/* Body: clear, direct, commercial — someone explaining something
    across a table */
-.body {
+.stir .body {
   font-family: var(--font-display);
   font-weight: 300;
   font-size: var(--t-body);
@@ -137,9 +279,9 @@
   max-width: 46ch;
 }
 .stir .body strong { color: var(--ink); font-weight: 500; }
-.stir /* Editorial serif: selective accent only (hero proposition,
-.stir thesis) */
-.editorial {
+
+/* Editorial serif: selective accent only (hero proposition, thesis) */
+.stir .editorial {
   font-family: var(--font-serif);
   font-size: calc(var(--t-body) * 1.08);
   font-weight: 400;
@@ -147,9 +289,9 @@
   color: var(--ink-70);
   max-width: 44ch;
 }
-.stir /* Utility: publishing metadata,
-.stir used only where it means something */
-.utility {
+
+/* Utility: publishing metadata, used only where it means something */
+.stir .utility {
   font-family: var(--font-mono);
   font-size: var(--t-utility);
   font-weight: 500;
@@ -157,8 +299,10 @@
   letter-spacing: 0.09em;
   line-height: 1.5;
 }
-.stir /* ── CTA vocabulary — red appears at the moment of action ─────── */
-.cta {
+
+
+/* ── CTA vocabulary — red appears at the moment of action ─────── */
+.stir .cta {
   display: inline-flex;
   align-items: center;
   gap: 0.9em;
@@ -198,8 +342,9 @@
   height: 1px;
   background: currentColor;
 }
-.stir /* Activation mark: a tiny red square arrives on hover */
-.cta-line::before {
+
+/* Activation mark: a tiny red square arrives on hover */
+.stir .cta-line::before {
   content: "";
   width: 0.5em; height: 0.5em;
   background: var(--red);
@@ -215,9 +360,10 @@
 .stir .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .stir .cta-line:hover .arrow,
 .stir .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
-.stir /* ── Annotation (used sparingly — structural,
-.stir not decorative) ─── */
-.ann {
+
+
+/* ── Annotation (used sparingly — structural, not decorative) ─── */
+.stir .ann {
   display: inline-flex;
   align-items: baseline;
   gap: 0.7em;
@@ -235,8 +381,10 @@
   background: var(--red);
   align-self: center;
 }
-.stir /* ── Development placeholder frames (final art drops in later) ── */
-.ph {
+
+
+/* ── Development placeholder frames (final art drops in later) ── */
+.stir .ph {
   position: relative;
   border: 1px solid var(--ink-35);
   background: var(--ink-05);
@@ -251,19 +399,21 @@
 .stir .ph--on-cobalt { border-color: var(--wht-35); background: var(--wht-07); }
 .stir .ph--on-cobalt .ph-id { color: #fff; }
 .stir .ph--on-cobalt .ph-note { color: var(--wht-70); }
-.stir /* ── Reveal (respects reduced motion) ─────────────────────────── */
+/* ── Reveal (respects reduced motion) ─────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
+.stir .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
   }
-  .reveal.is-in { opacity: 1; transform: none; }
+.stir .reveal.is-in { opacity: 1; transform: none; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    NAVIGATION — ivory system over the cobalt world
    ════════════════════════════════════════════════════════════════ */
-.nav {
+.stir .nav {
   position: absolute;
   top: 0; left: 0; right: 0;
   z-index: 10;
@@ -315,14 +465,14 @@
 .stir .nav-start:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
 .stir .nav-start:hover .arrow,
 .stir .nav-start:focus-visible .arrow { transform: translate(0.18em, -0.18em); }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    01 — HERO · ATTENTION SHOULD PAY.
    Full cobalt environment. The illustration sits full-bleed behind
-   the interface — one composition,
-.stir no frame,
-.stir no feather.
+   the interface — one composition, no frame, no feather.
    ════════════════════════════════════════════════════════════════ */
-.hero {
+.stir .hero {
   position: relative;
   background: var(--cobalt);
   color: var(--ivory);
@@ -330,16 +480,17 @@
   display: flex;
   flex-direction: column;
 }
-.stir /*
+
+
+/*
   HERO ARTWORK — assets/hero-stir-attention.webp
   Cobalt world · enormous cropped observer entering upper-right ·
-  eye looking toward a tiny ordinary storefront,
-.stir center-right ·
+  eye looking toward a tiny ordinary storefront, center-right ·
   Signal Red threshold. Left territory stays clean for interface.
   Swap this file to update the hero; keep observer + storefront
   in frame (object-position tuned below).
 */
-.hero-art {
+.stir .hero-art {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -348,10 +499,10 @@
   object-position: center 28%;
   z-index: 1;
 }
-.stir /* Legibility scrim for the nav zone only — not a treatment of the
-   artwork,
-.stir just enough contrast where type crosses the observer */
-.hero::after {
+
+/* Legibility scrim for the nav zone only — not a treatment of the
+   artwork, just enough contrast where type crosses the observer */
+.stir .hero::after {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0;
@@ -370,8 +521,10 @@
   padding-top: clamp(120px, 17vh, 190px);
   padding-bottom: clamp(24px, 3.5vh, 44px);
 }
-.stir /* Copy territory — the clean cobalt left */
-.hero-copy { max-width: 46%; }
+
+
+/* Copy territory — the clean cobalt left */
+.stir .hero-copy { max-width: 46%; }
 .stir .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--t-utility);
@@ -401,9 +554,10 @@
   margin-top: clamp(28px, 4.5vh, 52px);
   color: var(--ivory);
 }
-.stir /* Below-the-fold index — quiet,
-.stir structural */
-.hero-index {
+
+
+/* Below-the-fold index — quiet, structural */
+.stir .hero-index {
   margin-top: auto;
   color: var(--ivory-75);
 }
@@ -415,45 +569,46 @@
   display: block;
   margin-top: 14px;
 }
-.stir /* Load choreography — arrive confidently,
-.stir then stop performing */
+/* Load choreography — arrive confidently, then stop performing */
 @media (prefers-reduced-motion: no-preference) {
-  .nav-inner {
+.stir .nav-inner {
     opacity: 0;
     animation: fade-up 0.6s var(--ease) 0.1s forwards;
   }
-  .hero-art {
+.stir .hero-art {
     opacity: 0;
     transform: scale(1.015);
     animation: art-settle 1s var(--ease) 0.2s forwards;
   }
-  @keyframes art-settle { to { opacity: 1; transform: none; } }
-
-  .hl-line > span {
+@keyframes art-settle { to { opacity: 1; transform: none; } }
+.stir .hl-line > span {
     transform: translateY(112%);
     animation: hl-rise 0.8s var(--ease) 0.4s forwards;
   }
-  .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
-  @keyframes hl-rise { to { transform: none; } }
-
-  .eyebrow, .hero-prop, .hero-cta, .hero-index {
+.stir .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
+@keyframes hl-rise { to { transform: none; } }
+.stir .eyebrow,
+.stir .hero-prop,
+.stir .hero-cta,
+.stir .hero-index {
     opacity: 0;
     animation: fade-up 0.7s var(--ease) forwards;
   }
-  .eyebrow     { animation-delay: 0.3s; }
-  .hero-prop   { animation-delay: 0.7s; }
-  .hero-cta    { animation-delay: 0.85s; }
-  .hero-index  { animation-delay: 0.95s; }
-  @keyframes fade-up {
+.stir .eyebrow { animation-delay: 0.3s; }
+.stir .hero-prop { animation-delay: 0.7s; }
+.stir .hero-cta { animation-delay: 0.85s; }
+.stir .hero-index { animation-delay: 0.95s; }
+@keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: none; }
   }
 }
-.stir /* ════════════════════════════════════════════════════════════════
-   02 — THESIS · a pause,
-.stir then a realization
+
+
+/* ════════════════════════════════════════════════════════════════
+   02 — THESIS · a pause, then a realization
    ════════════════════════════════════════════════════════════════ */
-.belief {
+.stir .belief {
   padding-top: clamp(140px, 26vh, 300px);
   padding-bottom: clamp(140px, 26vh, 300px);
 }
@@ -476,13 +631,14 @@
   grid-column: 7 / 12;
   margin-top: clamp(56px, 9vh, 120px);
 }
-.stir /* ════════════════════════════════════════════════════════════════
-   03 — PROOF · ivory section,
-.stir one large cobalt evidence field
+
+
+/* ════════════════════════════════════════════════════════════════
+   03 — PROOF · ivory section, one large cobalt evidence field
    (Option B: the page stays ivory; cobalt returns as a block of
    evidence rather than a second full environment.)
    ════════════════════════════════════════════════════════════════ */
-.proof {
+.stir .proof {
   padding-top: clamp(72px, 10vh, 140px);
   padding-bottom: clamp(96px, 14vh, 200px);
 }
@@ -521,12 +677,14 @@
   letter-spacing: 0.005em;
   max-width: 22ch;
 }
-.stir /* ── The evidence reel ────────────────────────────────────────────
+
+
+/* ── The evidence reel ────────────────────────────────────────────
    Asset-first: every artifact renders at its NATIVE aspect ratio at
    one shared height — nothing is cropped to fit a slot. The row
    scrolls horizontally with gentle snap; widths vary because the
    material varies. New artifacts drop in with no layout work. */
-.proof-reel-band {
+.stir .proof-reel-band {
   background: var(--cobalt);
   color: #fff;
   margin-inline: calc(var(--bleed) * -1);
@@ -572,9 +730,9 @@
   display: flex;
   flex-direction: column;
 }
-.stir /* Native ratio,
-.stir shared height — the media decides its own width */
-.ev-media {
+
+/* Native ratio, shared height — the media decides its own width */
+.stir .ev-media {
   display: block;
   height: clamp(360px, 56vh, 620px);
   width: auto;
@@ -593,12 +751,14 @@
 }
 .stir .ev-cap .cap { color: #fff; }
 .stir .ev-cap .ev-meta { color: var(--wht-70); text-align: right; flex: none; }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    04 — WHAT WE DO · FIND / BUILD / RUN
    Editorial index. Default: 1px ink rule. Hover: the word leans in,
-.stir contrast rises. Active: a tiny Signal Red marker + services unfold.
+   contrast rises. Active: a tiny Signal Red marker + services unfold.
    ════════════════════════════════════════════════════════════════ */
-.method {
+.stir .method {
   padding-top: clamp(120px, 18vh, 240px);
   padding-bottom: clamp(120px, 18vh, 240px);
 }
@@ -694,15 +854,15 @@
   transform: translateY(8px);
   transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
 }
-.stir /* Hover: contrast,
-.stir not color */
+/* Hover: contrast, not color */
 @media (hover: hover) {
-  .method-row:hover .method-no { color: var(--ink); }
-  .method-row:hover .method-word { transform: translateX(0.35ch); }
-  .method-row:hover .method-line { color: var(--ink); }
+.stir .method-row:hover .method-no { color: var(--ink); }
+.stir .method-row:hover .method-word { transform: translateX(0.35ch); }
+.stir .method-row:hover .method-line { color: var(--ink); }
 }
-.stir /* Active: the red marker appears; services unfold in sequence */
-.method-row.is-active .method-no { color: var(--ink); }
+
+/* Active: the red marker appears; services unfold in sequence */
+.stir .method-row.is-active .method-no { color: var(--ink); }
 .stir .method-row.is-active .method-word { transform: translateX(0.35ch); }
 .stir .method-row.is-active .method-dot { opacity: 1; transform: none; }
 .stir .method-row.is-active .method-line { color: var(--ink); }
@@ -718,11 +878,13 @@
 .stir .method-caps li { transition: none; }
 .stir .method-caps li { opacity: 1; transform: none; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    05 — ONE THOUGHT · a single interstitial observation
    (The fuller Observations index moves to About / future Insights.)
    ════════════════════════════════════════════════════════════════ */
-.obs {
+.stir .obs {
   padding-top: clamp(100px, 15vh, 200px);
   padding-bottom: clamp(140px, 22vh, 280px);
 }
@@ -750,10 +912,12 @@
   margin-right: calc(var(--bleed) * -1);
   z-index: 1;
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    06 — CTA · quiet ivory; red appears only at the action
    ════════════════════════════════════════════════════════════════ */
-.convert {
+.stir .convert {
   padding-top: clamp(100px, 16vh, 220px);
   padding-bottom: clamp(120px, 20vh, 260px);
 }
@@ -774,10 +938,12 @@
   margin-top: clamp(56px, 9vh, 120px);
 }
 .stir .convert-copy { max-width: 38ch; }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    FOOTER — deliberately quiet
    ════════════════════════════════════════════════════════════════ */
-.footer { padding-block: clamp(40px, 6vh, 72px); }
+.stir .footer { padding-block: clamp(40px, 6vh, 72px); }
 .stir .footer-grid { row-gap: 24px; align-items: center; }
 .stir .footer-logo { grid-column: 1 / 3; }
 .stir .footer-logo img { height: 18px; width: auto; }
@@ -792,128 +958,121 @@
 .stir .footer-links a:focus-visible { border-bottom-color: var(--ink); }
 .stir .footer-line { grid-column: 9 / 11; color: var(--ink-60); }
 .stir .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
-.stir /* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════
    TABLET — recomposed: the illustration becomes its own scene
    below the copy; observer + storefront stay uncropped
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
-  .hero { min-height: 0; }
-  .hero::after { display: none; }
+.stir .hero { min-height: 0; }
+.stir .hero::after { display: none; }
+
   /* Copy and index become direct flex items of .hero so the flow is
      copy → artwork (its own uncropped scene) → index */
-  .hero-inner { display: contents; }
-  .hero-copy, .hero-index { padding-inline: var(--gutter); }
-  .hero-copy {
+  .stir .hero-inner { display: contents; }
+.stir .hero-copy,
+.stir .hero-index { padding-inline: var(--gutter); }
+.stir .hero-copy {
     order: 1;
     max-width: 80%;
     padding-top: clamp(110px, 15vh, 160px);
   }
-  .hero-art {
+.stir .hero-art {
     position: static;
     order: 2;
     width: 100%;
     height: auto;
     margin-top: clamp(44px, 7vh, 80px);
   }
-  .hero-index {
+.stir .hero-index {
     order: 3;
     margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
   }
-
-  .belief-label  { grid-column: 1 / 4; }
-  .belief-a      { grid-column: 1 / 9; }
-  .belief-b      { grid-column: 2 / 9; }
-  .belief-support{ grid-column: 3 / 8; }
-
-  .proof-lead { grid-column: 1 / -1; }
-  .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
-  .ev-media { height: clamp(320px, 48vh, 520px); }
-
-  .method-label  { grid-column: 1 / 4; }
-  .method-intro  { grid-column: 1 / 8; }
-  .method-word   { grid-column: 2 / 6; }
-  .method-line   { grid-column: 6 / 9; }
-  .method-caps   { grid-column: 6 / 9; }
-
-  .obs-label { grid-column: 1 / 4; }
-  .obs-text  { grid-column: 1 / 5; }
-  .obs-art   { grid-column: 4 / 9; }
-
-  .footer-logo  { grid-column: 1 / 2; }
-  .footer-place { grid-column: 2 / 5; }
-  .footer-links { grid-column: 5 / 8; }
-  .footer-line  { display: none; }
-  .footer-copy  { grid-column: 8 / 9; }
+.stir .belief-label { grid-column: 1 / 4; }
+.stir .belief-a { grid-column: 1 / 9; }
+.stir .belief-b { grid-column: 2 / 9; }
+.stir .belief-support { grid-column: 3 / 8; }
+.stir .proof-lead { grid-column: 1 / -1; }
+.stir .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
+.stir .ev-media { height: clamp(320px, 48vh, 520px); }
+.stir .method-label { grid-column: 1 / 4; }
+.stir .method-intro { grid-column: 1 / 8; }
+.stir .method-word { grid-column: 2 / 6; }
+.stir .method-line { grid-column: 6 / 9; }
+.stir .method-caps { grid-column: 6 / 9; }
+.stir .obs-label { grid-column: 1 / 4; }
+.stir .obs-text { grid-column: 1 / 5; }
+.stir .obs-art { grid-column: 4 / 9; }
+.stir .footer-logo { grid-column: 1 / 2; }
+.stir .footer-place { grid-column: 2 / 5; }
+.stir .footer-links { grid-column: 5 / 8; }
+.stir .footer-line { display: none; }
+.stir .footer-copy { grid-column: 8 / 9; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════════════════════
    MOBILE — headline first; illustration is its own controlled
    scene; CTA stays close
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 639px) {
-  :root { --gutter: 18px; }
-
-  .nav-logo img { height: 22px; }
-  .nav-links { gap: 16px; }
-  .nav-links a:not(.nav-start) { display: none; } /* menu returns with the ABOUT/CONTACT build */
-  .nav-start { padding: 0.6em 0.9em !important; }
-
-  .hero-inner { padding-top: 96px; }
-  .hero-copy { max-width: 100%; }
-  .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
-  .hero-art { margin-top: 44px; }
-
-  .belief { padding-block: clamp(110px, 20vh, 160px); }
-  .belief-label   { grid-column: 1 / -1; margin-bottom: 56px; }
-  .belief-a       { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
-  .belief-gap     { height: clamp(80px, 14vh, 120px); }
-  .belief-b       { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); text-indent: 1.2em; }
-  .belief-support { grid-column: 1 / -1; margin-top: 64px; }
-
-  .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
-  .proof-meta { text-align: left; }
-  .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
-  .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
-  .ev-media { height: clamp(280px, 46vh, 420px); }
-  .reel-btn { width: 40px; height: 40px; }
-  .ev-cap { flex-direction: column; gap: 4px; }
-  .ev-cap .ev-meta { text-align: left; }
-
-  .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
-  .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
-  .method-row-head {
+.stir { --gutter: 18px; }
+.stir .nav-logo img { height: 22px; }
+.stir .nav-links { gap: 16px; }
+.stir .nav-links a:not(.nav-start) { display: none; }
+ /* menu returns with the ABOUT/CONTACT build */
+  .stir .nav-start { padding: 0.6em 0.9em !important; }
+.stir .hero-inner { padding-top: 96px; }
+.stir .hero-copy { max-width: 100%; }
+.stir .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+.stir .hero-art { margin-top: 44px; }
+.stir .belief { padding-block: clamp(110px, 20vh, 160px); }
+.stir .belief-label { grid-column: 1 / -1; margin-bottom: 56px; }
+.stir .belief-a { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
+.stir .belief-gap { height: clamp(80px, 14vh, 120px); }
+.stir .belief-b { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); text-indent: 1.2em; }
+.stir .belief-support { grid-column: 1 / -1; margin-top: 64px; }
+.stir .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+.stir .proof-meta { text-align: left; }
+.stir .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
+.stir .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
+.stir .ev-media { height: clamp(280px, 46vh, 420px); }
+.stir .reel-btn { width: 40px; height: 40px; }
+.stir .ev-cap { flex-direction: column; gap: 4px; }
+.stir .ev-cap .ev-meta { text-align: left; }
+.stir .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
+.stir .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
+.stir .method-row-head {
     grid-template-columns: repeat(4, 1fr);
     row-gap: 14px;
     padding-block: 30px;
   }
-  .method-no   { grid-column: 1 / -1; }
-  .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
-  .method-line { grid-column: 1 / -1; }
-  .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
-  .method-caps { grid-column: 1 / -1; }
-
-  .obs { padding-bottom: 140px; }
-  .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
-  .obs-text { grid-column: 1 / -1; }
-  .obs-art  {
+.stir .method-no { grid-column: 1 / -1; }
+.stir .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
+.stir .method-line { grid-column: 1 / -1; }
+.stir .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+.stir .method-caps { grid-column: 1 / -1; }
+.stir .obs { padding-bottom: 140px; }
+.stir .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
+.stir .obs-text { grid-column: 1 / -1; }
+.stir .obs-art {
     grid-column: 1 / -1;
     margin-top: 40px;
     margin-inline: calc(var(--gutter) * -1);
     aspect-ratio: 4 / 5;
   }
-  .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
-
-  .convert-q { font-size: clamp(2.7rem, 13.5vw, 4rem); }
-  .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
-
-  .footer-grid { row-gap: 18px; }
-  .footer-logo, .footer-place, .footer-links, .footer-copy { grid-column: 1 / -1; text-align: left; }
-  .footer-line { display: block; grid-column: 1 / -1; }
+.stir .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+.stir .convert-q { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+.stir .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
+.stir .footer-grid { row-gap: 18px; }
+.stir .footer-logo,
+.stir .footer-place,
+.stir .footer-links,
+.stir .footer-copy { grid-column: 1 / -1; text-align: left; }
+.stir .footer-line { display: block; grid-column: 1 / -1; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
-   PROOF PAYOFF — the headline's promise,
-.stir cashed
+
+/* ════════════════════════════════════════════════════════════════
+   PROOF PAYOFF — the headline's promise, cashed
    ════════════════════════════════════════════════════════════════ */
-.proof-payoff {
+.stir .proof-payoff {
   margin-top: clamp(72px, 11vh, 150px);
   align-items: end;
   row-gap: 40px;
@@ -929,16 +1088,18 @@
   gap: 24px;
 }
 .stir .payoff-creators { color: var(--ink-60); }
-.stir /* ════════════════════════════════════════════════════════════════
-   NAV — ink variant for ivory pages (about,
-.stir contact,
-.stir 404)
+
+
+/* ════════════════════════════════════════════════════════════════
+   NAV — ink variant for ivory pages (about, contact, 404)
    ════════════════════════════════════════════════════════════════ */
-.nav--ink .nav-links a { color: var(--ink); }
+.stir .nav--ink .nav-links a { color: var(--ink); }
 .stir .nav--ink .nav-links a:not(.nav-start)::after { background: var(--ink); }
 .stir .nav--ink .nav-start { border-color: var(--ink); }
-.stir /* ── Mobile menu ──────────────────────────────────────────────── */
-.nav-menu {
+
+
+/* ── Mobile menu ──────────────────────────────────────────────── */
+.stir .nav-menu {
   display: none;
   background: none;
   border: 0;
@@ -994,10 +1155,12 @@
   margin-top: auto;
   color: var(--ivory-75);
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    SUBPAGES — quiet ivory pages (about / contact / 404)
    ════════════════════════════════════════════════════════════════ */
-.page {
+.stir .page {
   padding-top: clamp(140px, 20vh, 220px);
   padding-bottom: clamp(100px, 16vh, 200px);
 }
@@ -1012,9 +1175,10 @@
   font-size: var(--t-giant);
   margin-bottom: clamp(56px, 9vh, 120px);
 }
-.stir /* ── Contact form — hairline editorial,
-.stir no boxes ──────────────── */
-.contact-info {
+
+
+/* ── Contact form — hairline editorial, no boxes ──────────────── */
+.stir .contact-info {
   grid-column: 1 / 5;
   display: flex;
   flex-direction: column;
@@ -1070,8 +1234,10 @@
 .stir .form-success { display: none; }
 .stir .form-success.is-shown { display: block; }
 .stir .form-success .display { font-size: var(--t-big); margin-bottom: 24px; }
-.stir /* ── 404 ──────────────────────────────────────────────────────── */
-.notfound {
+
+
+/* ── 404 ──────────────────────────────────────────────────────── */
+.stir .notfound {
   min-height: 100svh;
   background: var(--cobalt);
   color: var(--ivory);
@@ -1088,13 +1254,13 @@
 }
 .stir .notfound .display { font-size: var(--t-giant); }
 .stir .notfound .cta-line { color: var(--ivory); width: fit-content; }
-.stir /* ── Responsive for new components ────────────────────────────── */
+/* ── Responsive for new components ────────────────────────────── */
 @media (max-width: 1023px) {
-  .payoff-title { grid-column: 1 / -1; }
-  .payoff-body  { grid-column: 1 / -1; }
-  .page-title   { grid-column: 1 / -1; }
-  .contact-info { grid-column: 1 / -1; margin-bottom: 56px; }
-  .contact-form { grid-column: 1 / -1; }
+.stir .payoff-title { grid-column: 1 / -1; }
+.stir .payoff-body { grid-column: 1 / -1; }
+.stir .page-title { grid-column: 1 / -1; }
+.stir .contact-info { grid-column: 1 / -1; margin-bottom: 56px; }
+.stir .contact-form { grid-column: 1 / -1; }
 }
 @media (max-width: 639px) {
 .stir .nav-menu { display: inline-block; }
@@ -1102,9 +1268,8 @@
 .stir .page-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
 .stir .payoff-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
 }
-.stir /* ════════════════════════════════════════════════════════════════
-   MOTION SYSTEM — one small library,
-.stir reused everywhere.
+/* ════════════════════════════════════════════════════════════════
+   MOTION SYSTEM — one small library, reused everywhere.
    BLUE HOLDS · RED MOVES · IVORY REVEALS · BLACK EXPLAINS
 
    Four primitives:
@@ -1114,16 +1279,16 @@
      D  [data-reveal=structural]    red progression (systems)
 
    Every primitive is inert under prefers-reduced-motion: content
-   arrives complete,
-.stir only the movement is dropped.
+   arrives complete, only the movement is dropped.
    ════════════════════════════════════════════════════════════════ */
 
 @media (prefers-reduced-motion: no-preference) {
 
+
   /* ── C · Editorial reveal — typography rises out of a mask ───── */
   /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
      intersection rect, so IntersectionObserver would never fire. */
-  [data-reveal="editorial"] {
+  .stir [data-reveal="editorial"] {
     opacity: 0;
     transform: translateY(14px);
     -webkit-mask-image: linear-gradient(#000, #000);
@@ -1137,35 +1302,45 @@
       -webkit-mask-size 0.7s var(--ease),
       mask-size 0.7s var(--ease);
   }
-  [data-reveal="editorial"].is-in {
+.stir [data-reveal="editorial"].is-in {
     opacity: 1;
     transform: none;
     -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
   }
 
+
   /* ── B · Registration reveal — plates settling into register ─── */
-  [data-reveal="registration"] {
+  .stir [data-reveal="registration"] {
     opacity: 0;
     transform: translate(4px, 2px);
     transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
   }
-  [data-reveal="registration"].is-in {
+.stir [data-reveal="registration"].is-in {
     opacity: 1;
     transform: none;
   }
+
   /* Images carry a mis-registered cobalt plate that resolves */
-  img[data-reveal="registration"] {
+  .stir img[data-reveal="registration"] {
     box-shadow: 5px 3px 0 0 var(--cobalt);
     transition:
       opacity 0.5s var(--ease),
       transform 0.8s var(--ease),
       box-shadow 0.8s var(--ease);
   }
-  img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+.stir img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+
+  /* A band that already reaches both viewport edges cannot also shift
+     sideways: the 4px would hang off the right for the length of the
+     entrance and flash a horizontal scrollbar. It registers on the
+     vertical only; the cobalt plate still carries the effect. */
+  .stir .who-art[data-reveal="registration"],
+.stir .about-art[data-reveal="registration"] { transform: translateY(2px); }
+
 
   /* ── D · Structural reveal — a red signal draws the rule ─────── */
-  [data-reveal="structural"] { position: relative; }
-  [data-reveal="structural"]::before {
+  .stir [data-reveal="structural"] { position: relative; }
+.stir [data-reveal="structural"]::before {
     content: "";
     position: absolute;
     left: 0; top: -1px;
@@ -1176,15 +1351,18 @@
     transform-origin: left;
     transition: transform 0.55s var(--ease);
   }
-  [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+.stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+
   /* the signal passes through, it does not stay */
-  [data-reveal="structural"].is-in.sig-spent::before {
+  .stir [data-reveal="structural"].is-in.sig-spent::before {
     transform-origin: right;
     transform: scaleX(0);
   }
 }
-.stir /* ── A · Signal line — the shared "this is actionable" primitive ─ */
-.sig-line {
+
+
+/* ── A · Signal line — the shared "this is actionable" primitive ─ */
+.stir .sig-line {
   position: relative;
 }
 .stir .sig-line::after {
@@ -1202,9 +1380,11 @@
 .stir .sig-line:focus-visible::after,
 .stir .sig-line[aria-current]::after,
 .stir .sig-line.is-active::after { transform: scaleX(1); }
-.stir /* Nav: active page gets a small permanent red marker (never colour alone —
+
+
+/* Nav: active page gets a small permanent red marker (never colour alone —
    it pairs with the underline and aria-current) */
-.nav-links a[aria-current]::before {
+.stir .nav-links a[aria-current]::before {
   content: "";
   position: absolute;
   left: -12px; top: 50%;
@@ -1212,12 +1392,13 @@
   margin-top: -2px;
   background: var(--red);
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    THESIS — quantity → reduction → significance
-   "more content" briefly accumulates behind itself,
-.stir then collapses.
+   "more content" briefly accumulates behind itself, then collapses.
    ════════════════════════════════════════════════════════════════ */
-.accum {
+.stir .accum {
   position: relative;
   display: inline-block;
   white-space: nowrap;
@@ -1243,12 +1424,14 @@
     100% { opacity: 0; transform: none; }
   }
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    METHOD — FIND / BUILD / RUN reads as one system.
    A structural spine runs the index; Signal Red progresses to the
    active stage. Progress height is set from JS (--sig-progress).
    ════════════════════════════════════════════════════════════════ */
-.method-index { position: relative; padding-left: 0; }
+.stir .method-index { position: relative; padding-left: 0; }
 .stir .method-index::before,
 .stir .method-index::after {
   content: "";
@@ -1268,8 +1451,9 @@
   background: var(--red);
   transition: height 0.5s var(--ease);
 }
-.stir /* Stage markers on the spine */
-.method-row { --dot: var(--ink-35); }
+
+/* Stage markers on the spine */
+.stir .method-row { --dot: var(--ink-35); }
 .stir .method-row::before {
   content: "";
   position: absolute;
@@ -1288,23 +1472,28 @@
 .stir .method-index::after { left: -10.5px; }
 .stir .method-row::before { left: -13px; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    METRIC — 10M+ counts up when it arrives (tabular so it can't jitter)
    ════════════════════════════════════════════════════════════════ */
-.proof-metric { font-variant-numeric: tabular-nums; }
-.stir /* ════════════════════════════════════════════════════════════════
+.stir .proof-metric { font-variant-numeric: tabular-nums; }
+
+
+/* ════════════════════════════════════════════════════════════════
    REEL — drag to examine the evidence
    ════════════════════════════════════════════════════════════════ */
-.reel { cursor: grab; }
+.stir .reel { cursor: grab; }
 .stir .reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
 .stir .reel.is-dragging .ev-media { pointer-events: none; }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    OUTCOMES — what you leave with.
    Deliberately a different rhythm from the FIND/BUILD/RUN index
-   that precedes it: three vertical columns,
-.stir not full-width rows.
+   that precedes it: three vertical columns, not full-width rows.
    ════════════════════════════════════════════════════════════════ */
-.outcomes {
+.stir .outcomes {
   padding-top: clamp(110px, 16vh, 220px);
   padding-bottom: clamp(120px, 18vh, 240px);
 }
@@ -1364,11 +1553,12 @@
 .stir .outcomes-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
 .stir .outcomes-set { grid-template-columns: 1fr; row-gap: 44px; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
-   CONTACT — a conversation,
-.stir not a form.
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — a conversation, not a form.
    ════════════════════════════════════════════════════════════════ */
-.q-block {
+.stir .q-block {
   border-top: 1px solid var(--ink-35);
   padding-top: 18px;
   display: grid;
@@ -1388,9 +1578,10 @@
   margin-bottom: 4px;
 }
 .stir .q-hint { color: var(--ink-60); margin-bottom: 18px; display: block; }
-.stir /* Editorial inputs — rules,
-.stir not boxes */
-.q-body input[type="text"],
+
+
+/* Editorial inputs — rules, not boxes */
+.stir .q-body input[type="text"],
 .stir .q-body input[type="email"],
 .stir .q-body input[type="url"],
 .stir .q-body textarea {
@@ -1411,17 +1602,19 @@
 .stir .q-body textarea:focus { outline: none; border-bottom-color: var(--red); }
 .stir .q-body input:focus-visible,
 .stir .q-body textarea:focus-visible { outline: none; }
-.stir /* Two fields on one rule (name + email) */
-.q-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); row-gap: 20px; }
+
+
+/* Two fields on one rule (name + email) */
+.stir .q-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); row-gap: 20px; }
 @media (max-width: 639px) {
 .stir .q-pair { grid-template-columns: 1fr; }
 }
 .stir .q-sub { color: var(--ink-60); display: block; margin-bottom: 2px; }
-.stir /* Selectable situations — editorial rows,
-.stir red indicator,
-.stir never
+
+
+/* Selectable situations — editorial rows, red indicator, never
    colour alone (the label also goes to full Ink and shifts 2px) */
-.opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
+.stir .opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
 @media (max-width: 639px) {
 .stir .opts { grid-template-columns: 1fr; }
 }
@@ -1465,9 +1658,10 @@
   outline: 2px solid var(--red);
   outline-offset: 4px;
 }
-.stir /* Submit: the signal travels,
-.stir then confirmation */
-.send-row {
+
+
+/* Submit: the signal travels, then confirmation */
+.stir .send-row {
   display: flex;
   align-items: center;
   gap: 28px;
@@ -1498,11 +1692,13 @@
 }
 .stir form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 .stir .contact-note { color: var(--ink-60); margin-top: clamp(40px, 6vh, 72px); }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    PROOF — the role. The claim almost nobody else can make:
    not "we ran a campaign" but "we operate this."
    ════════════════════════════════════════════════════════════════ */
-.proof-role {
+.stir .proof-role {
   max-width: 34ch;
   margin-bottom: clamp(48px, 7vh, 96px);
 }
@@ -1514,11 +1710,13 @@
   color: var(--ink);
 }
 .stir .proof-role .role-said strong { font-weight: 700; }
-.stir /* ════════════════════════════════════════════════════════════════
+
+
+/* ════════════════════════════════════════════════════════════════
    WHO THIS IS FOR — answers the question a prospect is actually
    asking by this point in the page.
    ════════════════════════════════════════════════════════════════ */
-.who {
+.stir .who {
   padding-top: clamp(110px, 16vh, 220px);
   padding-bottom: clamp(120px, 18vh, 240px);
 }
@@ -1530,9 +1728,10 @@
 }
 .stir .who-title { grid-column: 1 / 10; font-size: var(--t-big); }
 .stir .who-copy { grid-column: 1 / 6; margin-top: clamp(32px, 5vh, 56px); }
-.stir /* The trades,
-.stir as an index — not a grid of cards */
-.who-trades {
+
+
+/* The trades, as an index — not a grid of cards */
+.stir .who-trades {
   grid-column: 7 / 13;
   margin-top: clamp(32px, 5vh, 56px);
   display: flex;
@@ -1556,32 +1755,38 @@
   padding-inline: 0.9em;
 }
 .stir .who-trades-note { grid-column: 7 / 12; margin-top: 20px; color: var(--ink-60); }
-.stir /* The disqualifier — saying who it isn't for is what makes the
-   yes credible. Kept plain,
-.stir never apologetic. */
-.who-not {
+
+
+/* The disqualifier — saying who it isn't for is what makes the
+   yes credible. Kept plain, never apologetic. */
+.stir .who-not {
   grid-column: 7 / 13;
   margin-top: clamp(48px, 7vh, 88px);
   border-top: 1px solid var(--ink-35);
   padding-top: 18px;
 }
 .stir .who-not .not-label { display: flex; color: var(--ink-60); margin-bottom: 14px; }
-.stir /* the ordinary storefront: the argument for who this is for */
-.who-art {
-  grid-column: 1 / -1;
+
+
+/* the ordinary storefront: the argument for who this is for */
+.stir .who-art {
+  /* the global img reset would otherwise clamp the bleed */
+  max-width: none;
   margin-top: clamp(72px, 11vh, 150px);
   aspect-ratio: 21 / 9;
   object-fit: cover;
   object-position: center 55%;
   height: auto;
-  margin-inline: calc(var(--bleed) * -1);
-  width: calc(100% + var(--bleed) * 2);
+  /* Viewport bleed measured against this element's own containing
+     block, so it lands on the edge whatever the grid, the gutter or
+     --bleed happen to be at this width. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
 }
 @media (max-width: 1023px) {
 .stir .who-title,
 .stir .who-copy,
-.stir .who-trades,
-.stir .who-trades-note,
 .stir .who-not { grid-column: 1 / -1; }
 }
 @media (max-width: 639px) {
@@ -1589,11 +1794,12 @@
 .stir .who-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
 .stir .who-art { aspect-ratio: 4 / 3; }
 }
-.stir /* ════════════════════════════════════════════════════════════════
-   CONVERSION — show the journey,
-.stir then start it
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — show the journey, then start it
    ════════════════════════════════════════════════════════════════ */
-.steps {
+.stir .steps {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: var(--col-gap);
@@ -1611,8 +1817,10 @@
 @media (max-width: 639px) {
 .stir .steps { grid-template-columns: 1fr; row-gap: 28px; }
 }
-.stir /* Start the conversation before the commitment */
-.starter {
+
+
+/* Start the conversation before the commitment */
+.stir .starter {
   margin-top: clamp(56px, 8vh, 110px);
   max-width: 680px;
 }
@@ -1661,44 +1869,215 @@
 .stir .starter-go:focus-visible .arrow { transform: translateX(0.35em); }
 .stir .starter-row:focus-within { border-bottom-color: var(--red); }
 .stir .starter-note { color: var(--ink-60); margin-top: 16px; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   ENTRANCE — masks the unstyled flash while the page boots, and
+   gives the arrival authorship. Cover and hero are both cobalt, so
+   nothing "wipes": the mark simply resolves into the site.
+   Capped at 700ms, once per session, skipped for reduced motion.
+   ════════════════════════════════════════════════════════════════ */
+.stir-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--cobalt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  transition: opacity 0.45s var(--ease);
+}
+.stir-enter img { height: clamp(26px, 3vw, 38px); width: auto; }
+.stir-enter .enter-rail {
+  width: clamp(90px, 12vw, 150px);
+  height: 1px;
+  background: var(--ivory-40);
+  position: relative;
+  overflow: hidden;
+}
+.stir-enter .enter-rail::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.stir-enter.is-filling .enter-rail::after { transform: scaleX(1); }
+.stir-enter.is-done { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+.stir-enter { display: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — the trades at display scale, and what each one
+   actually gets. Demonstrates range across verticals, which is the
+   real question behind "do you work with someone like me".
+   ════════════════════════════════════════════════════════════════ */
+.stir .who-body { grid-column: 1 / -1; margin-top: clamp(56px, 9vh, 120px); }
+.stir .trades-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  column-gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+.stir .trade-list { list-style: none; }
+.stir .trade-list li { border-top: 1px solid var(--ink-35); }
+.stir .trade-list li:last-child { border-bottom: 1px solid var(--ink-35); }
+.stir .trade {
+  width: 100%;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  padding: clamp(10px, 1.4vh, 18px) 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.1vw, 2.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  transition: color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.stir .trade::before {
+  content: "";
+  flex: none;
+  width: 0.2em; height: 0.2em;
+  align-self: center;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.stir .trade:hover { color: var(--ink-60); }
+.stir .trade[aria-pressed="true"] {
+  color: var(--ink);
+  transform: translateX(0.3ch);
+}
+.stir .trade[aria-pressed="true"]::before { opacity: 1; transform: none; }
+
+
+/* The answer panel — what that kind of business actually gets */
+.stir .trade-panel {
+  position: sticky;
+  top: clamp(120px, 18vh, 200px);
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+  min-height: 12rem;
+}
+.stir .trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.stir .trade-panel .panel-said {
+  font-size: clamp(1.3rem, 2.3vw, 2.1rem);
+  font-weight: 300;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  min-height: 2.7em;
+}
+.stir .trade-panel .panel-note {
+  margin-top: clamp(18px, 2.6vh, 28px);
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-35);
+  color: var(--ink-60);
+}
+@media (prefers-reduced-motion: no-preference) {
+.stir .trade-panel .panel-said,
+.stir .trade-panel .panel-note { transition: opacity 0.22s var(--ease); }
+.stir .trade-panel.is-swapping .panel-said,
+.stir .trade-panel.is-swapping .panel-note { opacity: 0; }
+}
+.stir .who-body .who-trades-note {
+  grid-column: auto;
+  margin-top: clamp(28px, 4vh, 44px);
+  max-width: 44ch;
+}
+/* Narrow: the answer leads and stays pinned, so choosing a trade
+   never pushes the reply off screen. */
+@media (max-width: 1023px) {
+.stir .trades-grid { grid-template-columns: 1fr; row-gap: clamp(28px, 4vh, 40px); }
+.stir .trade-panel {
+    grid-row: 1;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    min-height: 0;
+    background: var(--ivory);
+    border-top: 0;
+    border-bottom: 1px solid var(--ink);
+    padding-top: clamp(14px, 2.4vh, 22px);
+    padding-bottom: clamp(14px, 2.4vh, 22px);
+  }
+.stir .trade-panel .panel-label { margin-bottom: 14px; }
+.stir .trade-panel .panel-said { min-height: 2.6em; }
+.stir .trade-panel .panel-note { margin-top: 14px; padding-top: 10px; }
+.stir .trade-list { grid-row: 2; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — the site opens in STIR's world and closes in it.
+   The observer returns, cropped to the eye: the site asked what an
+   ordinary business is hiding; now it asks you.
+   ════════════════════════════════════════════════════════════════ */
+.stir .convert {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  overflow: hidden;
+  padding-top: clamp(96px, 15vh, 190px);
+  padding-bottom: clamp(96px, 15vh, 190px);
+}
+.stir .convert-art {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(58%, 900px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% 36%;
+  z-index: 0;
+  opacity: 0.95;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+}
+.stir .convert .convert-inner { position: relative; z-index: 1; max-width: 62%; }
+.stir .convert .convert-head { border-top-color: var(--ivory-40); }
+.stir .convert .convert-head .ann { color: var(--ivory); }
+.stir .convert-q { font-size: var(--t-giant); color: var(--ivory); }
+.stir .convert-copy { color: var(--ivory-75); max-width: 40ch; margin-top: clamp(32px, 5vh, 56px); }
+.stir .convert .steps { margin-top: clamp(48px, 7vh, 96px); }
+.stir .convert .step { border-top-color: var(--ivory-40); }
+.stir .convert .step-no { color: var(--ivory-75); }
+.stir .convert .step-said { color: var(--ivory); }
+.stir .convert .step-note { color: var(--ivory-75); }
+.stir .convert .starter-label { color: var(--ivory-75); }
+.stir .convert .starter-row { border-bottom-color: var(--ivory); }
+.stir .convert .starter-row input { color: var(--ivory); }
+.stir .convert .starter-row input::placeholder { color: var(--ivory-40); }
+.stir .convert .starter-go { color: var(--ivory); }
+.stir .convert .starter-go:hover,
+.stir .convert .starter-go:focus-visible { color: #fff; }
+.stir .convert .starter-go:hover .arrow { transform: translateX(0.35em); }
+.stir .convert .starter-row:focus-within { border-bottom-color: var(--red); }
+.stir .convert .starter-note { color: var(--ivory-75); }
+@media (max-width: 1023px) {
+.stir .convert .convert-inner { max-width: 100%; }
+.stir .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}
+
+
 /* ════════════════════════════════════════════════════════════════
    SQUARESPACE HOST LAYER
    Everything above is the STIR design system, scoped to .stir so
    Squarespace's stylesheet can't leak in and ours can't leak out.
    Everything below adapts it to Squarespace's DOM.
    ════════════════════════════════════════════════════════════════ */
-
-/* ── Defensive reset ──────────────────────────────────────────────
-   Squarespace styles bare elements (h1 {font-family: Georgia},
-   p {margin-bottom}, a {underline}…). Those beat plain inheritance,
-   so neutralise them inside .stir. Our own class rules carry higher
-   specificity and still win over everything here. */
-.stir h1, .stir h2, .stir h3, .stir h4, .stir h5, .stir h6,
-.stir p, .stir ul, .stir ol, .stir li, .stir figure, .stir figcaption,
-.stir blockquote, .stir dl, .stir dt, .stir dd, .stir fieldset, .stir legend {
-  margin: 0;
-  padding: 0;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  font-style: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  text-transform: none;
-  color: inherit;
-  border: 0;
-}
-.stir a { color: inherit; text-decoration: none; background: none; }
-.stir a:hover { text-decoration: none; }
-.stir img, .stir video { border: 0; border-radius: 0; box-shadow: none; }
-.stir button, .stir input, .stir textarea, .stir select {
-  font-family: inherit;
-  letter-spacing: inherit;
-  border-radius: 0;
-  -webkit-appearance: none;
-          appearance: none;
-}
-.stir ul, .stir ol { list-style: none; }
 
 /* The page ground. Squarespace paints its own white behind content. */
 body { background: #FAF2E6; }
@@ -1726,23 +2105,55 @@ body.stir-dark-top { background: #0451AB; }
 .stir-page #footer-sections,
 .stir-page .sqs-announcement-bar-dropzone { display: none !important; }
 
+/* ── Defensive reset ─────────────────────────────────────────────
+   Squarespace styles bare elements directly — `h1 { font-family:
+   Georgia }`, `a { color: #0d7 }`, `ul { list-style: disc }` — and a
+   type selector in their sheet beats inheritance from our container,
+   however specific that container is. Inheritance is not a fight we
+   can win, so every element we use is reset to inherit explicitly and
+   our own rules then style it. Remove this and the headlines render
+   in the host's serif.                                             */
+.stir h1, .stir h2, .stir h3, .stir h4, .stir h5, .stir h6,
+.stir p, .stir ul, .stir ol, .stir li, .stir figure, .stir figcaption,
+.stir blockquote, .stir dl, .stir dd, .stir fieldset, .stir legend,
+.stir button, .stir input, .stir textarea, .stir select, .stir label,
+.stir a, .stir span, .stir strong, .stir em, .stir i, .stir form {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-transform: none;
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.stir ul, .stir ol { list-style: none; }
+.stir img, .stir video { display: block; max-width: 100%; height: auto; }
+.stir button { cursor: pointer; -webkit-appearance: none; appearance: none; }
+.stir *, .stir *::before, .stir *::after { box-sizing: border-box; }
+
 /* Full-bleed that works inside ANY container width. The viewport-math
    version used on the standalone build assumes our own shell is the
-   only wrapper; Squarespace nests several. */
+   only wrapper; Squarespace nests several.
+
+   Margin, never transform: .reveal and [data-reveal] both animate
+   transform, and their resting `transform: none` would cancel a
+   translateX(-50%) and leave the band hanging half a screen right. */
 .stir { --bleed: 0px; }
 .stir .bleed,
 .stir .proof-reel-band,
 .stir .about-art,
-.stir .obs-art {
+.stir .who-art {
   width: 100vw;
   max-width: 100vw;
-  margin-left: 50%;
-  transform: translateX(-50%);
+  margin-left: calc(50% - 50vw);
   margin-right: 0;
-}
-.stir .obs-art { width: min(100vw, 62%); margin-left: 0; transform: none; }
-@media (max-width: 639px) {
-  .stir .obs-art { width: 100vw; margin-left: 50%; transform: translateX(-50%); }
 }
 
 /* Our nav is fixed rather than absolute, since Squarespace scrolls
@@ -1817,16 +2228,20 @@ body.stir-dark-top { background: #0451AB; }
 @media (prefers-reduced-motion: reduce) {
   .stir-index, .stir-index .idx-rule::after { transition: none; }
 }
-</style><script>/* Tag the page so the Custom CSS host layer only acts on STIR pages,
-   and paint the ground behind the cobalt hero before first paint. */
-(function () {
-  var p = window.location.pathname.replace(/\/$/, '');
-  document.documentElement.classList.add('stir-page');
-  document.addEventListener('DOMContentLoaded', function () {
-    document.body.classList.add('stir-page');
-    if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');
-  });
-})();</script></head><body><div id="header"><p>Squarespace header (hidden)</p></div><div id="sections"><section class="page-section"><div class="content-wrapper"><div class="sqs-layout"><div class="sqs-block sqs-block-code"><div class="sqs-block-content"><!-- ══ STIR · HOME ══ One Code Block on a blank page.
+</style>
+</head>
+<body>
+
+<!-- Squarespace's own wrappers, in the order they actually nest -->
+<div id="header"></div>
+<div id="sections">
+  <section class="page-section">
+    <div class="content-wrapper">
+      <div class="sqs-layout">
+        <div class="sqs-block sqs-block-code">
+          <div class="sqs-block-content">
+
+<div data-pv="home"><!-- ══ STIR · HOME ══ One Code Block on a blank page.
      Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
 <div class="stir stir-home">
 <!-- ════════ NAVIGATION ════════ -->
@@ -1863,7 +2278,7 @@ body.stir-dark-top { background: #0451AB; }
   <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
   <section class="hero" data-ground="cobalt" data-index="01 — Attention" aria-label="STIR — attention should pay">
     <!--
-      HERO ASSET SLOT: assets/hero-stir-attention.webp
+      HERO ASSET SLOT: ../assets/hero-stir-attention.webp
       Enormous observer entering upper-right · tiny ordinary
       storefront with Signal Red threshold · clean cobalt left.
       Drop updated artwork here; no structural change needed.
@@ -1906,7 +2321,7 @@ body.stir-dark-top { background: #0451AB; }
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
-  <section class="proof" id="proof" data-ground="ivory" data-index="03 — Proof" aria-labelledby="proof-title">
+  <section class="proof" data-ground="ivory" data-index="03 — Proof" id="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility" data-reveal="structural">
         <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
@@ -1949,13 +2364,9 @@ body.stir-dark-top { background: #0451AB; }
         </div>
         <div class="reel" id="proof-reel" aria-label="Labay evidence — scroll horizontally">
           <figure class="reel-item">
-            <!-- ../assets/labay/labay-social-01.mp4: Squarespace will not host .mp4. Keep the existing
-     Netlify deploy alive purely as an asset host and point here:
-     https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4
-     DO NOT DELETE that Netlify site. -->
-          <video class="ev-media" muted loop playsinline data-autoplay
+            <video class="ev-media" muted loop playsinline data-autoplay
                    preload="none" width="720" height="1280"
-                   poster="assets/labay/labay-social-01-poster.webp"
+                   poster="../assets/labay/labay-social-01-poster.webp"
                    aria-label="Short-form vertical video shot at Labay Market">
               <source src="../assets/labay/labay-social-01.mp4" type="video/mp4">
             </video>
@@ -2015,7 +2426,7 @@ body.stir-dark-top { background: #0451AB; }
   </section>
 
   <!-- ════════ 04 · WHAT WE DO — FIND / BUILD / RUN ════════ -->
-  <section class="method shell" id="method" data-ground="ivory" data-index="04 — What we do" aria-labelledby="method-label">
+  <section class="method shell" data-ground="ivory" data-index="04 — What we do" id="method" aria-labelledby="method-label">
     <div class="grid">
       <p class="utility method-label" data-reveal="structural" id="method-label">04 / What we do</p>
       <p class="body method-intro reveal">We make the work, put it in front of the right people and build the system that turns their attention into business. More calls. More orders. More bookings. More customers.</p>
@@ -2132,63 +2543,121 @@ body.stir-dark-top { background: #0451AB; }
 
       <p class="body who-copy reveal">The product is good. The service is good. The operation works. What’s missing is that not enough of the right people know yet — and nothing is turning the ones who do into revenue.</p>
 
-      <ul class="who-trades reveal">
-        <li>Markets</li><li>Bakeries</li><li>Cafés</li><li>Restaurants</li>
-        <li>Logistics</li><li>Industrial</li><li>Law</li><li>Real estate</li><li>Services</li>
-      </ul>
-      <p class="utility who-trades-note reveal">The category matters less than whether there’s something real to work with.</p>
+      <!--
+        The trades are the answer to "do you work with someone like me".
+        Answering it as a wrapped list of nouns wastes the question, so
+        each one is a working control: choose a trade, and the panel
+        states what STIR actually does for it.
+      -->
+      <div class="who-body reveal">
+        <div class="trades-grid">
+          <ul class="trade-list" id="trade-list">
+          <li><button class="trade" type="button" aria-pressed="true"
+                      data-said="Turn daily operations into content people travel for."
+                      data-note="Short-form · Merchandising story · Foot traffic">Markets</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Make the morning line the marketing."
+                      data-note="Product film · Launch moments · Pre-orders">Bakeries</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Give regulars a reason to post."
+                      data-note="Identity · In-store cues · Community content">Cafés</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Fill the room on the nights that matter."
+                      data-note="Campaigns · Creator seeding · Reservations">Restaurants</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Make a business nobody photographs impossible to ignore."
+                      data-note="Brand system · Website · Inbound pipeline">Logistics</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Explain a complex operation to the people who buy it."
+                      data-note="Positioning · Capability film · Sales collateral">Industrial</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Turn expertise into the reason people call you first."
+                      data-note="Authority content · Website · Intake system">Law</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Sell the block, not just the listing."
+                      data-note="Neighborhood story · Listing media · Lead capture">Real estate</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Make the work visible, then make it bookable."
+                      data-note="Proof content · Offer design · Booking flow">Services</button></li>
+          </ul>
+
+          <div class="trade-panel" id="trade-panel">
+            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>What that looks like</p>
+            <p class="panel-said" id="panel-said" aria-live="polite">Turn daily operations into content people travel for.</p>
+            <p class="utility panel-note" id="panel-note">Short-form · Merchandising story · Foot traffic</p>
+          </div>
+        </div>
+
+        <p class="utility who-trades-note">The category matters less than whether there’s something real to work with.</p>
+      </div>
 
       <div class="who-not reveal">
         <p class="ann not-label"><i class="ann-mark" aria-hidden="true"></i>Not for you if</p>
         <p class="body">The business isn’t doing the volume yet to invest in an operator, or isn’t ready to grow the operation. We’d rather tell you that early than take the work.</p>
       </div>
 
-      <!-- The ordinary storefront: the argument for who this is for. -->
-      <img class="who-art" data-reveal="registration" src="../assets/illustration-corner.webp"
-           width="1800" height="1347" loading="lazy" decoding="async"
-           alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
     </div>
+
+    <!-- The ordinary storefront: the argument for who this is for.
+         A sibling of the grid, not a member of it: a band that bleeds
+         past the gutter is not grid content, and as a grid item it was
+         picking up a few pixels of alignment nudge. -->
+    <img class="who-art" data-reveal="registration" src="../assets/illustration-corner.webp"
+         width="1800" height="1347" loading="lazy" decoding="async"
+         alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
   </section>
 
   <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
-  <section class="convert shell" data-ground="ivory" data-index="Your turn" id="contact" aria-labelledby="convert-q">
-    <div class="convert-head" data-reveal="structural">
-      <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
-    </div>
-    <h2 class="display convert-q" data-reveal="editorial" id="convert-q">What are<br>we not<br>seeing yet?</h2>
+  <section class="convert" data-ground="cobalt" data-index="Your turn" id="contact" aria-labelledby="convert-q">
+    <!--
+      The site opened on the observer looking at an ordinary business.
+      It closes on the same artwork, cropped to the eye and masked into
+      the cobalt, so the question reads as the eye asking it.
+    -->
+    <img class="convert-art" src="../assets/hero-stir-attention.webp"
+         width="1800" height="1346" loading="lazy" decoding="async"
+         alt="" aria-hidden="true">
+    <div class="shell">
+     <div class="convert-inner">
+      <div class="convert-head" data-reveal="structural">
+        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
+      </div>
+      <h2 class="display convert-q" data-reveal="editorial" id="convert-q">What are<br>we not<br>seeing yet?</h2>
 
-    <div class="convert-foot reveal">
-      <p class="body convert-copy">There’s probably something inside your business people would care about. Tell us about it and we’ll tell you what we see — whether or not we end up working together.</p>
-    </div>
+      <div class="convert-foot reveal">
+        <p class="body convert-copy">There’s probably something inside your business people would care about. Tell us about it and we’ll tell you what we see — whether or not we end up working together.</p>
+      </div>
 
-    <div class="steps reveal">
-      <div class="step">
-        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-        <p class="step-said">You send it.</p>
-        <p class="utility step-note">A few lines about the business.</p>
+      <div class="steps reveal">
+        <div class="step">
+          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
+          <p class="step-said">You send it.</p>
+          <p class="utility step-note">A few lines about the business.</p>
+        </div>
+        <div class="step">
+          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
+          <p class="step-said">We look at the business.</p>
+          <p class="utility step-note">Properly. The product, the operation, the market.</p>
+        </div>
+        <div class="step">
+          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
+          <p class="step-said">We tell you what we see.</p>
+          <p class="utility step-note">Free, either way.</p>
+        </div>
       </div>
-      <div class="step">
-        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-        <p class="step-said">We look at the business.</p>
-        <p class="utility step-note">Properly. The product, the operation, the market.</p>
-      </div>
-      <div class="step">
-        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-        <p class="step-said">We tell you what we see.</p>
-        <p class="utility step-note">Free, either way.</p>
-      </div>
-    </div>
 
-    <!-- Starts the contact conversation here and carries the answer over. -->
-    <form class="starter reveal" id="starter" action="/contact" method="GET">
-      <label class="utility starter-label" for="starter-input">Start here</label>
-      <div class="starter-row">
-        <input id="starter-input" name="business" type="text" autocomplete="organization"
-               placeholder="What’s the business?">
-        <button class="starter-go" type="submit">Take a look <span class="arrow" aria-hidden="true">→</span></button>
-      </div>
-      <p class="utility starter-note">Four more questions on the next page. Two minutes, honestly.</p>
-    </form>
+      <!-- Starts the contact conversation here and carries the answer over. -->
+      <form class="starter reveal" id="starter" action="/contact" method="GET">
+        <label class="utility starter-label" for="starter-input">Start here</label>
+        <div class="starter-row">
+          <input id="starter-input" name="business" type="text" autocomplete="organization"
+                 placeholder="What’s the business?">
+          <button class="starter-go" type="submit">Take a look <span class="arrow" aria-hidden="true">→</span></button>
+        </div>
+        <p class="utility starter-note">Four more questions on the next page. Two minutes, honestly.</p>
+      </form>
+     </div>
+    </div>
   </section>
 
 </main>
@@ -2207,7 +2676,284 @@ body.stir-dark-top { background: #0451AB; }
   </div>
 </footer>
 </div>
-</div></div></div></div></section></div><div id="footer-sections"></div><script>/* ════════════════════════════════════════════════════════════════
+</div>
+<div data-pv="about"><!-- ══ STIR · ABOUT ══ One Code Block on a blank page.
+     Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
+<div class="stir stir-about">
+<header class="nav nav--ink">
+  <div class="shell nav-inner">
+    <a href="/" class="nav-logo"><img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home"><img class="mark-ink" src="../assets/stir-mark.png" alt="" aria-hidden="true"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/#proof">Work</a>
+      <a href="/#method">Capabilities</a>
+      <a href="/about" aria-current="page">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="/contact" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="../assets/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="/#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
+<main>
+  <section class="page shell" data-ground="ivory" data-index="About" aria-labelledby="about-title">
+    <div class="grid">
+      <p class="utility page-label" data-reveal="structural">About</p>
+      <h1 class="display page-title" data-reveal="editorial" id="about-title">Ordinary businesses.<br>Extraordinary demand.</h1>
+
+      <!-- DRAFT COPY — founder review before launch -->
+      <div class="about-intro reveal">
+        <p class="editorial">STIR is an independent growth and creative practice in Brooklyn, New York. We work with businesses most agencies overlook — markets, restaurants, operators, creators — because the interesting part is usually already there. Our job is to find it, make it impossible to ignore, and build the system that turns the attention into revenue.</p>
+      </div>
+      <div class="about-facts utility reveal">
+        <span>Independent</span>
+        <span>Brooklyn, New&nbsp;York</span>
+        <span>Est.&nbsp;2025</span>
+        <span>@builtbystir</span>
+      </div>
+
+      <div class="grid about-block" style="grid-column: 1 / -1;">
+        <p class="utility b-label" data-reveal="structural">What we believe</p>
+        <h2 class="display b-title" data-reveal="editorial">People can’t buy what they don’t&nbsp;see.</h2>
+        <p class="body b-copy reveal">And being seen is only useful if something happens next. So we don’t sell content. We make the work, put it in front of the right people and build the system that turns their attention into business — more calls, more orders, more bookings, more customers.</p>
+      </div>
+
+      <div class="grid about-block" style="grid-column: 1 / -1;">
+        <p class="utility b-label" data-reveal="structural">The work so far</p>
+        <h2 class="display b-title" data-reveal="editorial">It’s already working.</h2>
+        <p class="body b-copy reveal">Our work with <strong>Labay Market</strong> earned 10M+ organic views — and the attention turned into brand partnerships with <strong>Nike, Red&nbsp;Bull and TurboTax</strong>. We’ve worked with creators including Kemoy Martin, MarcoEatsWorld and Nicolas Nuvan, and more join the system every season.</p>
+        <p class="utility about-roster reveal">Labay Market&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
+      </div>
+    </div>
+
+    <!-- ILLUSTRATION: ../assets/illustration-city.webp — every window a business -->
+    <img class="about-art" data-reveal="registration" src="../assets/illustration-city.webp"
+         width="2000" height="1497" loading="lazy" decoding="async"
+         alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
+
+    <div class="about-cta reveal">
+      <a class="cta" href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="cta-line" href="/#proof">See the proof <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="../assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
+  </div>
+</footer>
+</div>
+</div>
+<div data-pv="contact"><!-- ══ STIR · CONTACT ══ One Code Block on a blank page.
+     Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
+<div class="stir stir-contact">
+<header class="nav nav--ink">
+  <div class="shell nav-inner">
+    <a href="/" class="nav-logo"><img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home"><img class="mark-ink" src="../assets/stir-mark.png" alt="" aria-hidden="true"></a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="/#proof">Work</a>
+      <a href="/#method">Capabilities</a>
+      <a href="/about">About</a>
+      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
+      <a href="/contact" class="nav-start" aria-current="page">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="nav-overlay" id="nav-overlay" hidden>
+  <div class="nav-overlay-head">
+    <img src="../assets/stir-mark-ivory.png" alt="STIR">
+    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+  </div>
+  <nav class="nav-overlay-links" aria-label="Menu">
+    <a href="/#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+  </nav>
+  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+</div>
+
+<main>
+  <section class="page shell" data-ground="ivory" data-index="Contact" aria-labelledby="contact-title">
+    <div class="grid">
+      <p class="utility page-label" data-reveal="structural">Contact</p>
+      <h1 class="display page-title" data-reveal="editorial" id="contact-title">What are we<br>looking at?</h1>
+
+      <div class="contact-info reveal">
+        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see. Free, whether or not we end up working&nbsp;together.</p>
+        <div class="contact-links utility">
+          <a href="mailto:rasheedjordon1@gmail.com">Email us directly</a>
+          <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">@builtbystir</a>
+          <span>Brooklyn, New&nbsp;York</span>
+        </div>
+      </div>
+
+      <!-- Formspree takes the POST. Replace FORMSPREE_ID with your form id. -->
+      <form class="contact-form reveal" name="start-a-project" method="POST"
+            action="https://formspree.io/f/FORMSPREE_ID" id="contact-form">
+        <input type="hidden" name="_subject" value="New STIR inquiry">
+        <p class="sr-only" aria-hidden="true">
+          <label>Don’t fill this out: <input name="_gotcha" tabindex="-1" autocomplete="off"></label>
+        </p>
+
+        <div class="q-block">
+          <span class="utility q-no">01</span>
+          <div class="q-body">
+            <label class="q-label" for="f-business">Your business</label>
+            <span class="utility q-hint">Name it, and what it actually does.</span>
+            <input id="f-business" name="business" type="text" required autocomplete="organization">
+          </div>
+        </div>
+
+        <fieldset class="q-block" style="border:0;padding:0;margin:0;">
+          <span class="utility q-no">02</span>
+          <div class="q-body">
+            <legend class="q-label" style="padding:0;">What’s happening right now?</legend>
+            <span class="utility q-hint">Pick the closest.</span>
+            <div class="opts">
+              <label class="opt"><input type="radio" name="situation" value="We need more customers" required><span>We need more customers</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re launching something"><span>We’re launching something</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our brand isn’t connecting"><span>Our brand isn’t connecting</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Our content isn’t working"><span>Our content isn’t working</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We’re growing and need a system"><span>We’re growing and need a system</span></label>
+              <label class="opt"><input type="radio" name="situation" value="Something else"><span>Something else</span></label>
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="q-block">
+          <span class="utility q-no">03</span>
+          <div class="q-body">
+            <label class="q-label" for="f-show">Show us.</label>
+            <span class="utility q-hint">Website, Instagram, TikTok — wherever the business lives.</span>
+            <input id="f-show" name="show_us" type="text" inputmode="url" autocomplete="url" placeholder="instagram.com/…">
+          </div>
+        </div>
+
+        <div class="q-block">
+          <span class="utility q-no">04</span>
+          <div class="q-body">
+            <label class="q-label" for="f-blind">What do you think we’re not seeing yet?</label>
+            <span class="utility q-hint">Optional. Usually the most interesting answer.</span>
+            <textarea id="f-blind" name="not_seeing" rows="3"></textarea>
+          </div>
+        </div>
+
+        <div class="q-block">
+          <span class="utility q-no">05</span>
+          <div class="q-body">
+            <label class="q-label" for="f-name">Where do we reply?</label>
+            <span class="utility q-hint">We read everything, and we answer with what we actually see.</span>
+            <div class="q-pair">
+              <div>
+                <span class="utility q-sub">Name</span>
+                <input id="f-name" name="name" type="text" required autocomplete="name">
+              </div>
+              <div>
+                <span class="utility q-sub">Email</span>
+                <input id="f-email" name="email" type="email" required autocomplete="email">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="send-row">
+          <button class="cta" type="submit">Send it to STIR <span class="arrow" aria-hidden="true">→</span></button>
+          <span class="send-rail" aria-hidden="true"></span>
+        </div>
+      </form>
+
+      <div class="contact-form form-success" id="form-success" role="status">
+        <h2 class="display">We’ve got it.</h2>
+        <p class="body">We’re reading it now. If there’s something there, you’ll hear from us — usually within a couple of days.</p>
+        <p class="utility contact-note">Brooklyn, New&nbsp;York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
+      </div>
+
+      <div class="contact-form form-success" id="form-error" role="alert">
+        <h2 class="display">That didn’t send.</h2>
+        <p class="body">Something went wrong on our end. Email us directly at
+          <a href="mailto:rasheedjordon1@gmail.com" style="border-bottom:1px solid currentColor">rasheedjordon1@gmail.com</a>
+          and we’ll pick it up from there.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer shell">
+  <div class="grid footer-grid utility">
+    <span class="footer-logo"><img src="../assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-place">Brooklyn, New&nbsp;York</span>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
+      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
+    </nav>
+    <span class="footer-line">Attention should pay.</span>
+    <span class="footer-copy">© 2026 STIR</span>
+  </div>
+</footer>
+</div>
+</div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="footer-sections"></div>
+
+<script>
+/* Preview only: keep one page in the DOM so the behaviour script sees
+   exactly what it would see on a real Squarespace page. */
+(function () {
+  var want = new URLSearchParams(location.search).get('p') || 'home';
+  var nav = document.createElement('nav');
+  nav.className = 'pv-switch';
+  ['home', 'about', 'contact'].forEach(function (name) {
+    var host = document.querySelector('[data-pv="' + name + '"]');
+    if (name !== want && host) host.parentNode.removeChild(host);
+    var a = document.createElement('a');
+    a.href = '?p=' + name;
+    a.textContent = name;
+    if (name === want) a.setAttribute('data-on', '');
+    nav.appendChild(a);
+  });
+  document.body.appendChild(nav);
+  document.documentElement.classList.add('stir-page');
+  document.body.classList.add('stir-page');
+  if (want === 'home') document.body.classList.add('stir-dark-top');
+  /* the real site routes these; here they just switch the preview */
+  document.querySelectorAll('.stir a[href^="/"]').forEach(function (a) {
+    var to = a.getAttribute('href').replace(/^\/#.*/, 'home').replace(/^\//, '') || 'home';
+    if (['home', 'about', 'contact'].indexOf(to) !== -1) a.setAttribute('href', '?p=' + to);
+  });
+})();
+</script>
+
+<!-- ══ STIR · behaviour ══ Settings → Advanced → Code Injection → FOOTER -->
+<script>
+/* ════════════════════════════════════════════════════════════════
    STIR — behavior. Motion has a job: explain, direct, reward or
    confirm. Anything that does none of those is not here.
    Everything below no-ops under prefers-reduced-motion.
@@ -2412,6 +3158,64 @@ body.stir-dark-top { background: #0451AB; }
     reel.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
   })();
 
+  /* ── Who this is for: the trades as a working index ─────────────
+     EXPLAIN: the real question behind a list of verticals is "what
+     would you do for a business like mine". So the list answers it.
+     Pointer hovers preview; click and keyboard focus commit. The
+     panel is the single source of truth, so there is one answer on
+     screen at a time and no cards to scan.                          */
+  (function () {
+    var list  = document.getElementById('trade-list');
+    var panel = document.getElementById('trade-panel');
+    var said  = document.getElementById('panel-said');
+    var note  = document.getElementById('panel-note');
+    if (!list || !panel || !said || !note) return;
+
+    var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
+    var current = trades[0];
+    var swapTimer = null;
+
+    function select(btn) {
+      if (!btn || btn === current) return;
+      trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
+      current = btn;
+
+      var nextSaid = btn.getAttribute('data-said');
+      var nextNote = btn.getAttribute('data-note');
+      if (reduce) { said.textContent = nextSaid; note.textContent = nextNote; return; }
+
+      /* fade out, swap, fade back — the copy replaces itself rather
+         than sliding, so nothing moves that shouldn't. */
+      panel.classList.add('is-swapping');
+      clearTimeout(swapTimer);
+      swapTimer = setTimeout(function () {
+        said.textContent = nextSaid;
+        note.textContent = nextNote;
+        panel.classList.remove('is-swapping');
+      }, 200);
+    }
+
+    trades.forEach(function (btn) {
+      btn.addEventListener('click', function () { select(btn); });
+      btn.addEventListener('focus', function () { select(btn); });
+      if (fine) btn.addEventListener('pointerenter', function (e) {
+        if (e.pointerType === 'mouse') select(btn);
+      });
+    });
+
+    /* Arrow keys walk the index, the way a keyboard user expects a
+       single-select list to behave. */
+    list.addEventListener('keydown', function (e) {
+      var step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
+               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      var i = trades.indexOf(document.activeElement);
+      if (i === -1) i = trades.indexOf(current);
+      trades[(i + step + trades.length) % trades.length].focus();
+    });
+  })();
+
   /* ── Mobile menu ────────────────────────────────────────────────*/
   (function () {
     var btn = document.querySelector('.nav-menu');
@@ -2435,6 +3239,78 @@ body.stir-dark-top { background: #0451AB; }
   })();
 
 })();
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — the parts unique to /contact. Reveal, the mobile menu
+   and everything else already ran above; these two no-op on any
+   page that doesn't have the form.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Handoff from the homepage starter ──────────────────────────
+     Carry the answer over, then move the visitor to the next
+     unanswered question rather than the top of the form.           */
+  (function () {
+    var q = new URLSearchParams(window.location.search).get('business');
+    if (!q) return;
+    var field = document.getElementById('f-business');
+    if (!field) return;
+    field.value = q;
+    var next = document.querySelector('input[name="situation"]');
+    if (!next) return;
+    var block = next.closest('.q-block');
+    if (!block) return;
+    setTimeout(function () {
+      block.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      next.focus({ preventScroll: true });
+    }, 260);
+  })();
+
+  /* ── Submit ─────────────────────────────────────────────────────
+     Posts to Formspree over fetch so the success state is immediate.
+     CONFIRM: the red signal travels the rail while the request is in
+     flight, then the form is replaced by the acknowledgement. Without
+     JS the form still submits normally and Formspree answers.       */
+  (function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+    if (form.action.indexOf('FORMSPREE_ID') !== -1) {
+      console.warn('STIR: replace FORMSPREE_ID in the contact page Code Block.');
+    }
+    var ok  = document.getElementById('form-success');
+    var bad = document.getElementById('form-error');
+    var btn = form.querySelector('button[type="submit"]');
+
+    function show(el) {
+      form.style.display = 'none';
+      el.classList.add('is-shown');
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (btn) { btn.disabled = true; btn.firstChild.nodeValue = 'Sending '; }
+      form.classList.add('is-sending');
+      var travelled = new Promise(function (go) { setTimeout(go, reduce ? 0 : 620); });
+      var sent = fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      Promise.all([travelled, sent]).then(function (res) {
+        if (!res[1].ok) throw new Error(res[1].status);
+        show(ok);
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.firstChild.nodeValue = 'Send it to STIR '; }
+        form.classList.remove('is-sending');
+        show(bad);
+      });
+    });
+  })();
+})();
+
 /* ════════════════════════════════════════════════════════════════
    SQUARESPACE ENHANCEMENTS
    01 · Adaptive nav — inverts against the ground passing beneath it
@@ -2465,10 +3341,13 @@ body.stir-dark-top { background: #0451AB; }
   }
 
   function update() {
-    var line = window.scrollY + navH * 0.6;
+    /* Viewport-relative, not offsetTop: Squarespace nests our root in
+       several positioned wrappers, and offsetTop is measured against
+       whichever of them happens to be the offsetParent. */
+    var line = navH * 0.6;
     var active = sections[0];
     for (var i = 0; i < sections.length; i++) {
-      if (sections[i].offsetTop <= line) active = sections[i];
+      if (sections[i].getBoundingClientRect().top <= line) active = sections[i];
     }
     if (active !== current) {
       current = active;
@@ -2481,7 +3360,12 @@ body.stir-dark-top { background: #0451AB; }
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
     idx.style.setProperty('--idx-progress', p.toFixed(3));
-    idx.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.35);
+    /* Shown once the argument is underway, and retired once it lands:
+       the closing section owns the bottom-left corner, and a marker
+       counting a journey that has finished is just clutter. */
+    var last = sections[sections.length - 1];
+    var landed = last.getBoundingClientRect().top < window.innerHeight * 0.6;
+    idx.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.35 && !landed);
   }
 
   function onScroll() {
@@ -2490,9 +3374,30 @@ body.stir-dark-top { background: #0451AB; }
     requestAnimationFrame(function () { update(); ticking = false; });
   }
 
-  measure();
-  update();
+  function refresh() { measure(); update(); }
+
+  refresh();
   window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', function () { measure(); update(); }, { passive: true });
+  window.addEventListener('resize', refresh, { passive: true });
+
+  /* The first pass runs before the artwork has laid out, when every
+     section still reports roughly the same offset — which is how the
+     nav ended up reading the wrong ground at first paint. Recompute
+     whenever the page actually changes height. */
+  /* The first pass runs before the artwork has laid out, when every
+     section still reports roughly the same position — which is how the
+     nav ended up showing the wrong ground at first paint. Nothing here
+     is a poll: each is a one-shot settle as the page finishes
+     resolving. */
+  window.addEventListener('load', refresh);
+  [120, 500, 1200].forEach(function (ms) { setTimeout(refresh, ms); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  if ('ResizeObserver' in window) { new ResizeObserver(refresh).observe(root); }
+  root.querySelectorAll('img').forEach(function (img) {
+    if (!img.complete) img.addEventListener('load', refresh, { once: true });
+  });
 })();
-</script></body></html>
+</script>
+
+</body>
+</html>

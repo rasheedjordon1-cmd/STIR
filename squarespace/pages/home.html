@@ -35,7 +35,7 @@
   <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
   <section class="hero" data-ground="cobalt" data-index="01 — Attention" aria-label="STIR — attention should pay">
     <!--
-      HERO ASSET SLOT: assets/hero-stir-attention.webp
+      HERO ASSET SLOT: ASSET_BASE/hero-stir-attention.webp
       Enormous observer entering upper-right · tiny ordinary
       storefront with Signal Red threshold · clean cobalt left.
       Drop updated artwork here; no structural change needed.
@@ -78,7 +78,7 @@
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
-  <section class="proof" id="proof" data-ground="ivory" data-index="03 — Proof" aria-labelledby="proof-title">
+  <section class="proof" data-ground="ivory" data-index="03 — Proof" id="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility" data-reveal="structural">
         <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
@@ -121,13 +121,9 @@
         </div>
         <div class="reel" id="proof-reel" aria-label="Labay evidence — scroll horizontally">
           <figure class="reel-item">
-            <!-- VIDEO_URL: Squarespace will not host .mp4. Keep the existing
-     Netlify deploy alive purely as an asset host and point here:
-     https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4
-     DO NOT DELETE that Netlify site. -->
-          <video class="ev-media" muted loop playsinline data-autoplay
+            <video class="ev-media" muted loop playsinline data-autoplay
                    preload="none" width="720" height="1280"
-                   poster="assets/labay/labay-social-01-poster.webp"
+                   poster="ASSET_BASE/labay/labay-social-01-poster.webp"
                    aria-label="Short-form vertical video shot at Labay Market">
               <source src="VIDEO_URL" type="video/mp4">
             </video>
@@ -187,7 +183,7 @@
   </section>
 
   <!-- ════════ 04 · WHAT WE DO — FIND / BUILD / RUN ════════ -->
-  <section class="method shell" id="method" data-ground="ivory" data-index="04 — What we do" aria-labelledby="method-label">
+  <section class="method shell" data-ground="ivory" data-index="04 — What we do" id="method" aria-labelledby="method-label">
     <div class="grid">
       <p class="utility method-label" data-reveal="structural" id="method-label">04 / What we do</p>
       <p class="body method-intro reveal">We make the work, put it in front of the right people and build the system that turns their attention into business. More calls. More orders. More bookings. More customers.</p>
@@ -304,63 +300,121 @@
 
       <p class="body who-copy reveal">The product is good. The service is good. The operation works. What’s missing is that not enough of the right people know yet — and nothing is turning the ones who do into revenue.</p>
 
-      <ul class="who-trades reveal">
-        <li>Markets</li><li>Bakeries</li><li>Cafés</li><li>Restaurants</li>
-        <li>Logistics</li><li>Industrial</li><li>Law</li><li>Real estate</li><li>Services</li>
-      </ul>
-      <p class="utility who-trades-note reveal">The category matters less than whether there’s something real to work with.</p>
+      <!--
+        The trades are the answer to "do you work with someone like me".
+        Answering it as a wrapped list of nouns wastes the question, so
+        each one is a working control: choose a trade, and the panel
+        states what STIR actually does for it.
+      -->
+      <div class="who-body reveal">
+        <div class="trades-grid">
+          <ul class="trade-list" id="trade-list">
+          <li><button class="trade" type="button" aria-pressed="true"
+                      data-said="Turn daily operations into content people travel for."
+                      data-note="Short-form · Merchandising story · Foot traffic">Markets</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Make the morning line the marketing."
+                      data-note="Product film · Launch moments · Pre-orders">Bakeries</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Give regulars a reason to post."
+                      data-note="Identity · In-store cues · Community content">Cafés</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Fill the room on the nights that matter."
+                      data-note="Campaigns · Creator seeding · Reservations">Restaurants</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Make a business nobody photographs impossible to ignore."
+                      data-note="Brand system · Website · Inbound pipeline">Logistics</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Explain a complex operation to the people who buy it."
+                      data-note="Positioning · Capability film · Sales collateral">Industrial</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Turn expertise into the reason people call you first."
+                      data-note="Authority content · Website · Intake system">Law</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Sell the block, not just the listing."
+                      data-note="Neighborhood story · Listing media · Lead capture">Real estate</button></li>
+          <li><button class="trade" type="button" aria-pressed="false"
+                      data-said="Make the work visible, then make it bookable."
+                      data-note="Proof content · Offer design · Booking flow">Services</button></li>
+          </ul>
+
+          <div class="trade-panel" id="trade-panel">
+            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>What that looks like</p>
+            <p class="panel-said" id="panel-said" aria-live="polite">Turn daily operations into content people travel for.</p>
+            <p class="utility panel-note" id="panel-note">Short-form · Merchandising story · Foot traffic</p>
+          </div>
+        </div>
+
+        <p class="utility who-trades-note">The category matters less than whether there’s something real to work with.</p>
+      </div>
 
       <div class="who-not reveal">
         <p class="ann not-label"><i class="ann-mark" aria-hidden="true"></i>Not for you if</p>
         <p class="body">The business isn’t doing the volume yet to invest in an operator, or isn’t ready to grow the operation. We’d rather tell you that early than take the work.</p>
       </div>
 
-      <!-- The ordinary storefront: the argument for who this is for. -->
-      <img class="who-art" data-reveal="registration" src="ASSET_BASE/illustration-corner.webp"
-           width="1800" height="1347" loading="lazy" decoding="async"
-           alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
     </div>
+
+    <!-- The ordinary storefront: the argument for who this is for.
+         A sibling of the grid, not a member of it: a band that bleeds
+         past the gutter is not grid content, and as a grid item it was
+         picking up a few pixels of alignment nudge. -->
+    <img class="who-art" data-reveal="registration" src="ASSET_BASE/illustration-corner.webp"
+         width="1800" height="1347" loading="lazy" decoding="async"
+         alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
   </section>
 
   <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
-  <section class="convert shell" data-ground="ivory" data-index="Your turn" id="contact" aria-labelledby="convert-q">
-    <div class="convert-head" data-reveal="structural">
-      <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
-    </div>
-    <h2 class="display convert-q" data-reveal="editorial" id="convert-q">What are<br>we not<br>seeing yet?</h2>
+  <section class="convert" data-ground="cobalt" data-index="Your turn" id="contact" aria-labelledby="convert-q">
+    <!--
+      The site opened on the observer looking at an ordinary business.
+      It closes on the same artwork, cropped to the eye and masked into
+      the cobalt, so the question reads as the eye asking it.
+    -->
+    <img class="convert-art" src="ASSET_BASE/hero-stir-attention.webp"
+         width="1800" height="1346" loading="lazy" decoding="async"
+         alt="" aria-hidden="true">
+    <div class="shell">
+     <div class="convert-inner">
+      <div class="convert-head" data-reveal="structural">
+        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
+      </div>
+      <h2 class="display convert-q" data-reveal="editorial" id="convert-q">What are<br>we not<br>seeing yet?</h2>
 
-    <div class="convert-foot reveal">
-      <p class="body convert-copy">There’s probably something inside your business people would care about. Tell us about it and we’ll tell you what we see — whether or not we end up working together.</p>
-    </div>
+      <div class="convert-foot reveal">
+        <p class="body convert-copy">There’s probably something inside your business people would care about. Tell us about it and we’ll tell you what we see — whether or not we end up working together.</p>
+      </div>
 
-    <div class="steps reveal">
-      <div class="step">
-        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-        <p class="step-said">You send it.</p>
-        <p class="utility step-note">A few lines about the business.</p>
+      <div class="steps reveal">
+        <div class="step">
+          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
+          <p class="step-said">You send it.</p>
+          <p class="utility step-note">A few lines about the business.</p>
+        </div>
+        <div class="step">
+          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
+          <p class="step-said">We look at the business.</p>
+          <p class="utility step-note">Properly. The product, the operation, the market.</p>
+        </div>
+        <div class="step">
+          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
+          <p class="step-said">We tell you what we see.</p>
+          <p class="utility step-note">Free, either way.</p>
+        </div>
       </div>
-      <div class="step">
-        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-        <p class="step-said">We look at the business.</p>
-        <p class="utility step-note">Properly. The product, the operation, the market.</p>
-      </div>
-      <div class="step">
-        <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-        <p class="step-said">We tell you what we see.</p>
-        <p class="utility step-note">Free, either way.</p>
-      </div>
-    </div>
 
-    <!-- Starts the contact conversation here and carries the answer over. -->
-    <form class="starter reveal" id="starter" action="/contact" method="GET">
-      <label class="utility starter-label" for="starter-input">Start here</label>
-      <div class="starter-row">
-        <input id="starter-input" name="business" type="text" autocomplete="organization"
-               placeholder="What’s the business?">
-        <button class="starter-go" type="submit">Take a look <span class="arrow" aria-hidden="true">→</span></button>
-      </div>
-      <p class="utility starter-note">Four more questions on the next page. Two minutes, honestly.</p>
-    </form>
+      <!-- Starts the contact conversation here and carries the answer over. -->
+      <form class="starter reveal" id="starter" action="/contact" method="GET">
+        <label class="utility starter-label" for="starter-input">Start here</label>
+        <div class="starter-row">
+          <input id="starter-input" name="business" type="text" autocomplete="organization"
+                 placeholder="What’s the business?">
+          <button class="starter-go" type="submit">Take a look <span class="arrow" aria-hidden="true">→</span></button>
+        </div>
+        <p class="utility starter-note">Four more questions on the next page. Two minutes, honestly.</p>
+      </form>
+     </div>
+    </div>
   </section>
 
 </main>

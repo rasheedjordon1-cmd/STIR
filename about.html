@@ -34,9 +34,11 @@
   structural change.
 */
 .about-art {
+  max-width: none;   /* the global img reset would clamp the bleed */
   margin-top: clamp(96px, 15vh, 200px);
-  margin-inline: calc(var(--bleed) * -1);
-  width: calc(100% + var(--bleed) * 2);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
   aspect-ratio: 21 / 9;
   object-fit: cover;
   object-position: center 58%;

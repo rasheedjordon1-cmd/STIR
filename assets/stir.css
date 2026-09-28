@@ -1173,6 +1173,12 @@ img, video { max-width: 100%; display: block; }
       box-shadow 0.8s var(--ease);
   }
   img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+  /* A band that already reaches both viewport edges cannot also shift
+     sideways: the 4px would hang off the right for the length of the
+     entrance and flash a horizontal scrollbar. It registers on the
+     vertical only; the cobalt plate still carries the effect. */
+  .who-art[data-reveal="registration"],
+  .about-art[data-reveal="registration"] { transform: translateY(2px); }
 
   /* ── D · Structural reveal — a red signal draws the rule ─────── */
   [data-reveal="structural"] { position: relative; }
@@ -1583,18 +1589,23 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 
 /* the ordinary storefront: the argument for who this is for */
 .who-art {
-  grid-column: 1 / -1;
+  /* the global img reset would otherwise clamp the bleed */
+  max-width: none;
   margin-top: clamp(72px, 11vh, 150px);
   aspect-ratio: 21 / 9;
   object-fit: cover;
   object-position: center 55%;
   height: auto;
-  margin-inline: calc(var(--bleed) * -1);
-  width: calc(100% + var(--bleed) * 2);
+  /* Viewport bleed measured against this element's own containing
+     block, so it lands on the edge whatever the grid, the gutter or
+     --bleed happen to be at this width. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
 }
 
 @media (max-width: 1023px) {
-  .who-title, .who-copy, .who-trades, .who-trades-note, .who-not { grid-column: 1 / -1; }
+  .who-title, .who-copy, .who-not { grid-column: 1 / -1; }
 }
 @media (max-width: 639px) {
   .who-label { grid-column: 1 / -1; margin-bottom: 48px; }
@@ -1672,3 +1683,201 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 .starter-go:hover .arrow, .starter-go:focus-visible .arrow { transform: translateX(0.35em); }
 .starter-row:focus-within { border-bottom-color: var(--red); }
 .starter-note { color: var(--ink-60); margin-top: 16px; }
+
+/* ════════════════════════════════════════════════════════════════
+   ENTRANCE — masks the unstyled flash while the page boots, and
+   gives the arrival authorship. Cover and hero are both cobalt, so
+   nothing "wipes": the mark simply resolves into the site.
+   Capped at 700ms, once per session, skipped for reduced motion.
+   ════════════════════════════════════════════════════════════════ */
+.stir-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--cobalt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  transition: opacity 0.45s var(--ease);
+}
+.stir-enter img { height: clamp(26px, 3vw, 38px); width: auto; }
+.stir-enter .enter-rail {
+  width: clamp(90px, 12vw, 150px);
+  height: 1px;
+  background: var(--ivory-40);
+  position: relative;
+  overflow: hidden;
+}
+.stir-enter .enter-rail::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.stir-enter.is-filling .enter-rail::after { transform: scaleX(1); }
+.stir-enter.is-done { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .stir-enter { display: none; } }
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — the trades at display scale, and what each one
+   actually gets. Demonstrates range across verticals, which is the
+   real question behind "do you work with someone like me".
+   ════════════════════════════════════════════════════════════════ */
+.who-body { grid-column: 1 / -1; margin-top: clamp(56px, 9vh, 120px); }
+.trades-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  column-gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+.trade-list { list-style: none; }
+.trade-list li { border-top: 1px solid var(--ink-35); }
+.trade-list li:last-child { border-bottom: 1px solid var(--ink-35); }
+
+.trade {
+  width: 100%;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  padding: clamp(10px, 1.4vh, 18px) 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.1vw, 2.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  transition: color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.trade::before {
+  content: "";
+  flex: none;
+  width: 0.2em; height: 0.2em;
+  align-self: center;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.trade:hover { color: var(--ink-60); }
+.trade[aria-pressed="true"] {
+  color: var(--ink);
+  transform: translateX(0.3ch);
+}
+.trade[aria-pressed="true"]::before { opacity: 1; transform: none; }
+
+/* The answer panel — what that kind of business actually gets */
+.trade-panel {
+  position: sticky;
+  top: clamp(120px, 18vh, 200px);
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+  min-height: 12rem;
+}
+.trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.trade-panel .panel-said {
+  font-size: clamp(1.3rem, 2.3vw, 2.1rem);
+  font-weight: 300;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  min-height: 2.7em;
+}
+.trade-panel .panel-note {
+  margin-top: clamp(18px, 2.6vh, 28px);
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-35);
+  color: var(--ink-60);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .trade-panel .panel-said,
+  .trade-panel .panel-note { transition: opacity 0.22s var(--ease); }
+  .trade-panel.is-swapping .panel-said,
+  .trade-panel.is-swapping .panel-note { opacity: 0; }
+}
+.who-body .who-trades-note {
+  grid-column: auto;
+  margin-top: clamp(28px, 4vh, 44px);
+  max-width: 44ch;
+}
+/* Narrow: the answer leads and stays pinned, so choosing a trade
+   never pushes the reply off screen. */
+@media (max-width: 1023px) {
+  .trades-grid { grid-template-columns: 1fr; row-gap: clamp(28px, 4vh, 40px); }
+  .trade-panel {
+    grid-row: 1;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    min-height: 0;
+    background: var(--ivory);
+    border-top: 0;
+    border-bottom: 1px solid var(--ink);
+    padding-top: clamp(14px, 2.4vh, 22px);
+    padding-bottom: clamp(14px, 2.4vh, 22px);
+  }
+  .trade-panel .panel-label { margin-bottom: 14px; }
+  .trade-panel .panel-said { min-height: 2.6em; }
+  .trade-panel .panel-note { margin-top: 14px; padding-top: 10px; }
+  .trade-list { grid-row: 2; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — the site opens in STIR's world and closes in it.
+   The observer returns, cropped to the eye: the site asked what an
+   ordinary business is hiding; now it asks you.
+   ════════════════════════════════════════════════════════════════ */
+.convert {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  overflow: hidden;
+  padding-top: clamp(96px, 15vh, 190px);
+  padding-bottom: clamp(96px, 15vh, 190px);
+}
+.convert-art {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(58%, 900px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% 36%;
+  z-index: 0;
+  opacity: 0.95;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+}
+.convert .convert-inner { position: relative; z-index: 1; max-width: 62%; }
+.convert .convert-head { border-top-color: var(--ivory-40); }
+.convert .convert-head .ann { color: var(--ivory); }
+.convert-q { font-size: var(--t-giant); color: var(--ivory); }
+.convert-copy { color: var(--ivory-75); max-width: 40ch; margin-top: clamp(32px, 5vh, 56px); }
+
+.convert .steps { margin-top: clamp(48px, 7vh, 96px); }
+.convert .step { border-top-color: var(--ivory-40); }
+.convert .step-no { color: var(--ivory-75); }
+.convert .step-said { color: var(--ivory); }
+.convert .step-note { color: var(--ivory-75); }
+
+.convert .starter-label { color: var(--ivory-75); }
+.convert .starter-row { border-bottom-color: var(--ivory); }
+.convert .starter-row input { color: var(--ivory); }
+.convert .starter-row input::placeholder { color: var(--ivory-40); }
+.convert .starter-go { color: var(--ivory); }
+.convert .starter-go:hover, .convert .starter-go:focus-visible { color: #fff; }
+.convert .starter-go:hover .arrow { transform: translateX(0.35em); }
+.convert .starter-row:focus-within { border-bottom-color: var(--red); }
+.convert .starter-note { color: var(--ivory-75); }
+
+@media (max-width: 1023px) {
+  .convert .convert-inner { max-width: 100%; }
+  .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}
