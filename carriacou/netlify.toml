@@ -69,7 +69,19 @@
   force = true
 
 [[redirects]]
-  from = "/*.md"
+  from = "/PLAN.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/CRITIQUE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/DEPLOY.md"
   to = "/404.html"
   status = 404
   force = true
