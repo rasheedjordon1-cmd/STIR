@@ -1,0 +1,6 @@
+snapshots/
+reports/
+research_*.xlsx
+diffs/
+__pycache__/
+*.log
