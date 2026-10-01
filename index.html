@@ -91,8 +91,8 @@
   <div class="shell nav-inner">
     <a href="index.html" class="nav-logo"><img src="assets/stir-mark-ivory.png" alt="STIR — Home"></a>
     <nav class="nav-links" aria-label="Primary">
-      <a href="#proof">Work</a>
-      <a href="#method">Capabilities</a>
+      <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
+      <a href="#method" data-spy="method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="about.html">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
       <a href="contact.html" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
@@ -107,8 +107,8 @@
     <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
-    <a href="#proof">Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="#method">Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="#method" data-spy="method"><i class="nav-no" aria-hidden="true">04</i>Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
@@ -147,19 +147,28 @@
     </div>
   </section>
 
-  <!-- ════════ 02 · THESIS ════════ -->
+  <!-- ════════ 02 · THESIS ════════
+       Set as a front page, because "a headline statement" is a format,
+       not a metaphor: masthead rule, kicker, folio, headline, deck.
+
+       The claim is then corrected in place rather than answered three
+       hundred pixels later. A red rule strikes the phrase that is
+       wrong, the struck words stay but go quiet — content is not
+       wrong, it is insufficient — and the replacement sets
+       underneath. One red mark in the entire section, and it is the
+       mark that changes the meaning. -->
   <section class="belief shell" aria-labelledby="belief-label">
-    <div class="grid">
-      <p class="utility belief-label" data-reveal="structural" id="belief-label">02 / Thesis</p>
-
-      <h2 class="display belief-a" data-reveal="editorial">Most businesses don’t&nbsp;need <span class="accum">more&nbsp;content.<i aria-hidden="true">more&nbsp;content.</i><i aria-hidden="true">more&nbsp;content.</i></span></h2>
-
-      <div class="belief-gap" aria-hidden="true"></div>
-
-      <p class="display belief-b" data-reveal="editorial">They need something worth talking&nbsp;about.</p>
-
-      <p class="editorial belief-support reveal">The interesting part is usually already there. We find it, build the story around it, put it in front of the right people and give them a reason to act.</p>
+    <div class="masthead" data-reveal="structural">
+      <p class="utility" id="belief-label">02 / Thesis</p>
+      <p class="utility masthead-folio">The argument&nbsp;&nbsp;·&nbsp;&nbsp;02 / 07</p>
     </div>
+
+    <div class="belief-statement" data-reveal="stage">
+      <h2 class="display belief-claim">Most businesses don’t&nbsp;need <span class="struck"><span class="struck-say">more&nbsp;content</span><i class="struck-rule" aria-hidden="true"></i></span></h2>
+      <p class="display belief-fix">They need something worth talking&nbsp;about.</p>
+    </div>
+
+    <p class="editorial belief-deck reveal">The interesting part is usually already there. We find it, build the story around it, put it in front of the right people and give them a reason to act.</p>
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
@@ -779,6 +788,35 @@
       var i = trades.indexOf(document.activeElement);
       if (i === -1) i = trades.indexOf(current);
       trades[(i + step + trades.length) % trades.length].focus();
+    });
+  })();
+
+  /* ── Nav as index — the red square marks where you are ──────────
+     DIRECT: the nav names two numbered sections, so it should say
+     which one you are standing in. A band across the middle of the
+     viewport decides; at most one section is ever in it.            */
+  (function () {
+    var links = document.querySelectorAll('a[data-spy]');
+    if (!links.length || !('IntersectionObserver' in window)) return;
+
+    var byId = {};
+    Array.prototype.forEach.call(links, function (a) {
+      var id = a.getAttribute('data-spy');
+      (byId[id] = byId[id] || []).push(a);
+    });
+
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        (byId[e.target.id] || []).forEach(function (a) {
+          if (e.isIntersecting) a.setAttribute('aria-current', 'true');
+          else a.removeAttribute('aria-current');
+        });
+      });
+    }, { rootMargin: '-45% 0px -45% 0px' });
+
+    Object.keys(byId).forEach(function (id) {
+      var section = document.getElementById(id);
+      if (section) spy.observe(section);
     });
   })();
 

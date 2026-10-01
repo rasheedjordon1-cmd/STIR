@@ -39,6 +39,7 @@
   --ink:     #161310;
   --cobalt:  #0451AB;                    /* matches the artwork field  */
   --red:     #F21B16;                    /* activation only            */
+  --red-deep: #C4120D;                   /* the same ink, under press  */
 
   --ink-70: rgba(22, 19, 16, 0.72);
   --ink-60: rgba(22, 19, 16, 0.58);
@@ -167,10 +168,26 @@ img, video { max-width: 100%; display: block; }
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
+}
+/* Ink, not fill. The red lays down from the left edge the way it
+   would off a plate, instead of the whole box cross-fading. */
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.44s var(--ease);
 }
 .cta .arrow { transition: transform 0.3s var(--ease); }
-.cta:hover, .cta:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
+.cta:hover, .cta:focus-visible { border-color: var(--red); color: #fff; }
+.cta:hover::before, .cta:focus-visible::before { transform: scaleX(1); }
 .cta:hover .arrow, .cta:focus-visible .arrow { transform: translate(0.22em, -0.22em); }
 
 .cta-line {
@@ -205,8 +222,40 @@ img, video { max-width: 100%; display: block; }
   margin-right: -0.3em;
 }
 .cta-line:hover::before, .cta-line:focus-visible::before { opacity: 1; transform: none; }
+.cta-line { transition: transform 0.12s var(--ease); }
+.cta-line::after { transition: background 0.2s var(--ease); }
 .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
+
+/* ── Press ───────────────────────────────────────────────────────
+   There was no :active state anywhere in this system, which is the
+   whole difference between a page and an object. On press the paper
+   shifts and the cobalt plate stays where it was: mis-registration,
+   held for exactly as long as the finger is down. Same language as
+   [data-reveal="registration"], at the scale where people touch it.
+   ──────────────────────────────────────────────────────────────── */
+.cta:active,
+.nav-start:active,
+.reel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: -2px -2px 0 0 var(--cobalt);
+  transition-duration: 0.06s;
+}
+.cta:active::before,
+.nav-start:active::before { background: var(--red-deep); }
+.reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
+
+/* Text actions have no box to shift, so they take the travel alone
+   and the rule beneath them goes live. */
+.cta-line:active,
+.starter-go:active { transform: translate(1px, 1px); }
+.cta-line:active::after { background: var(--red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta::before, .nav-start::before { transition: none; }
+  .cta:active, .nav-start:active, .reel-btn:active,
+  .cta-line:active, .starter-go:active { transform: none; }
+}
 
 /* ── Annotation (used sparingly — structural, not decorative) ─── */
 .ann {
@@ -285,6 +334,57 @@ img, video { max-width: 100%; display: block; }
   position: relative;
   padding-bottom: 3px;
 }
+/* ── The nav as an index, not a menu ─────────────────────────────
+   Every section on this site is numbered. The nav points at two of
+   them, so it carries their numerals in the same mono the running
+   index uses. The numerals sit back until you reach for them.
+
+   And the small red square — already the mark on .ann-mark,
+   .cta-line and .trade — now means exactly one thing everywhere:
+   this is live. On the nav that makes it "you are here", which is
+   worth more than another underline.                                */
+.nav-links a { position: relative; }
+.nav-links .nav-no {
+  font-style: normal;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  margin-right: 0.6em;
+  color: var(--ivory-40);
+  transition: color 0.3s var(--ease);
+}
+.nav-links a:hover .nav-no,
+.nav-links a:focus-visible .nav-no,
+.nav-links a[aria-current] .nav-no { color: inherit; }
+
+.nav-links a:not(.nav-start)[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
+}
+/* The mark is the current state, so the hover rule stands down. */
+.nav-links a:not(.nav-start)[aria-current]::after { display: none; }
+
+.nav--ink .nav-links .nav-no { color: var(--ink-35); }
+
+/* Same index in the overlay, where the type is large enough that the
+   numeral needs to sit further out of the way. */
+.nav-overlay-links a { position: relative; }
+.nav-overlay-links .nav-no {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  vertical-align: 0.9em;
+  margin-right: 0.5em;
+  color: var(--ivory-40);
+}
+.nav-overlay-links a[aria-current] .nav-no { color: var(--red); }
+
 .nav-links a:not(.nav-start)::after {
   content: "";
   position: absolute;
@@ -298,15 +398,29 @@ img, video { max-width: 100%; display: block; }
 .nav-links a:not(.nav-start):hover::after,
 .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
 .nav-start {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border: 1px solid var(--ivory);
   padding: 0.7em 1.1em !important;
   display: inline-flex;
   align-items: center;
   gap: 0.7em;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
+}
+.nav-start::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.44s var(--ease);
 }
 .nav-start .arrow { transition: transform 0.3s var(--ease); }
-.nav-start:hover, .nav-start:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
+.nav-start:hover, .nav-start:focus-visible { border-color: var(--red); color: #fff; }
+.nav-start:hover::before, .nav-start:focus-visible::before { transform: scaleX(1); }
 .nav-start:hover .arrow, .nav-start:focus-visible .arrow { transform: translate(0.18em, -0.18em); }
 
 /* ════════════════════════════════════════════════════════════════
@@ -448,30 +562,96 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   02 — THESIS · a pause, then a realization
+   02 — THESIS · set as a front page, then corrected in place
+   The reversal is staged rather than stated. Both halves used to be
+   the same size, three hundred pixels apart, which reads as a list;
+   now the second overrides the first where the first stands.
    ════════════════════════════════════════════════════════════════ */
 .belief {
-  padding-top: clamp(140px, 26vh, 300px);
-  padding-bottom: clamp(140px, 26vh, 300px);
+  padding-top: clamp(104px, 19vh, 230px);
+  padding-bottom: clamp(130px, 24vh, 280px);
 }
-.belief-label {
-  grid-column: 1 / 4;
-  border-top: 1px solid var(--ink);
+
+/* The furniture that says "this is the news" rather than "here is a
+   thought": a masthead rule at newspaper weight, the kicker, and a
+   folio telling you where you are in the argument. */
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 2px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(56px, 9vh, 120px);
+  margin-bottom: clamp(44px, 7vh, 96px);
 }
-.belief-a {
-  grid-column: 1 / 10;
+.masthead::before { height: 2px; top: -2px; }   /* the red signal covers the rule */
+.masthead-folio { color: var(--ink-60); text-align: right; }
+
+.belief-claim,
+.belief-fix {
   font-size: var(--t-giant);
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  max-width: 18ch;
 }
-.belief-gap { grid-column: 1 / -1; height: clamp(110px, 22vh, 280px); }
-.belief-b {
-  grid-column: 5 / 13;
-  font-size: var(--t-giant);
+.belief-fix { margin-top: 0.17em; }
+
+/* The phrase under correction. The rule is drawn, not a
+   text-decoration: it has to arrive, and it has to be red. */
+.struck { position: relative; display: inline-block; white-space: nowrap; }
+.struck-say { color: var(--ink); }
+.struck-rule {
+  position: absolute;
+  left: -0.03em;
+  right: -0.03em;
+  top: 0.29em;              /* measured: centred on the cap height, not the baseline */
+  height: 0.05em;
+  min-height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
 }
-.belief-support {
-  grid-column: 7 / 12;
-  margin-top: clamp(56px, 9vh, 120px);
+
+/* The deck — a standfirst, set away from the headline it supports */
+.belief-deck {
+  margin-top: clamp(52px, 8vh, 110px);
+  margin-left: auto;
+  max-width: 46ch;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* One sequence: the claim sets, the rule strikes, the struck words
+     go quiet, the correction arrives. Pure CSS delays off the single
+     .is-in the observer adds — no timers to drift. */
+  .belief-claim {
+    opacity: 0; transform: translateY(0.09em);
+    transition: opacity 0.6s var(--ease), transform 0.8s var(--ease);
+  }
+  .belief-fix {
+    opacity: 0; transform: translateY(0.16em);
+    transition: opacity 0.6s var(--ease) 1.18s, transform 0.85s var(--ease) 1.18s;
+  }
+  .struck-rule  { transition: transform 0.5s var(--ease) 0.72s; }
+  .struck-say   { transition: color 0.45s var(--ease) 1.0s; }
+
+  .belief-statement.is-in .belief-claim,
+  .belief-statement.is-in .belief-fix { opacity: 1; transform: none; }
+  .belief-statement.is-in .struck-rule { transform: scaleX(1); }
+  .belief-statement.is-in .struck-say  { color: var(--ink-35); }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No sequence to watch, so the correction is simply already made. */
+  .struck-rule { transform: scaleX(1); }
+  .struck-say  { color: var(--ink-35); }
+}
+
+@media (max-width: 1023px) {
+  .belief-claim, .belief-fix { max-width: none; }
+  .belief-deck { margin-left: 0; }
+}
+@media (max-width: 639px) {
+  .masthead { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .masthead-folio { text-align: left; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -829,10 +1009,6 @@ img, video { max-width: 100%; display: block; }
     margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
   }
 
-  .belief-label  { grid-column: 1 / 4; }
-  .belief-a      { grid-column: 1 / 9; }
-  .belief-b      { grid-column: 2 / 9; }
-  .belief-support{ grid-column: 3 / 8; }
 
   .proof-lead { grid-column: 1 / -1; }
   .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
@@ -872,12 +1048,8 @@ img, video { max-width: 100%; display: block; }
   .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
   .hero-art { margin-top: 44px; }
 
-  .belief { padding-block: clamp(110px, 20vh, 160px); }
-  .belief-label   { grid-column: 1 / -1; margin-bottom: 56px; }
-  .belief-a       { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
-  .belief-gap     { height: clamp(80px, 14vh, 120px); }
-  .belief-b       { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); text-indent: 1.2em; }
-  .belief-support { grid-column: 1 / -1; margin-top: 64px; }
+  .belief { padding-block: clamp(96px, 17vh, 150px); }
+  .belief-claim, .belief-fix { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
 
   .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
   .proof-meta { text-align: left; }
@@ -1230,37 +1402,6 @@ img, video { max-width: 100%; display: block; }
   width: 5px; height: 5px;
   margin-top: -2px;
   background: var(--red);
-}
-
-/* ════════════════════════════════════════════════════════════════
-   THESIS — quantity → reduction → significance
-   "more content" briefly accumulates behind itself, then collapses.
-   ════════════════════════════════════════════════════════════════ */
-.accum {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-}
-.accum i {
-  position: absolute;
-  inset: 0;
-  font-style: normal;
-  pointer-events: none;
-  opacity: 0;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .belief-a.is-in .accum i:nth-of-type(1) { animation: accum-a 1.15s var(--ease) 0.25s both; }
-  .belief-a.is-in .accum i:nth-of-type(2) { animation: accum-b 1.15s var(--ease) 0.3s both; }
-  @keyframes accum-a {
-    0%   { opacity: 0; transform: none; }
-    28%  { opacity: 0.22; transform: translate(0.18em, 0.1em); color: var(--cobalt); }
-    100% { opacity: 0; transform: none; }
-  }
-  @keyframes accum-b {
-    0%   { opacity: 0; transform: none; }
-    28%  { opacity: 0.14; transform: translate(0.36em, 0.2em); color: var(--ink); }
-    100% { opacity: 0; transform: none; }
-  }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1678,6 +1819,7 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
   gap: 0.7em;
   transition: color 0.25s var(--ease);
 }
+.starter-go { transition: color 0.25s var(--ease), transform 0.12s var(--ease); }
 .starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .starter-go:hover, .starter-go:focus-visible { color: var(--red); }
 .starter-go:hover .arrow, .starter-go:focus-visible .arrow { transform: translateX(0.35em); }

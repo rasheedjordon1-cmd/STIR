@@ -38,6 +38,7 @@
   --ink:     #161310;
   --cobalt:  #0451AB;                    /* matches the artwork field  */
   --red:     #F21B16;                    /* activation only            */
+  --red-deep: #C4120D;                   /* the same ink, under press  */
 
   --ink-70: rgba(22, 19, 16, 0.72);
   --ink-60: rgba(22, 19, 16, 0.58);
@@ -175,11 +176,29 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
+}
+
+/* Ink, not fill. The red lays down from the left edge the way it
+   would off a plate, instead of the whole box cross-fading. */
+.stir .cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.44s var(--ease);
 }
 .stir .cta .arrow { transition: transform 0.3s var(--ease); }
 .stir .cta:hover,
-.stir .cta:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
+.stir .cta:focus-visible { border-color: var(--red); color: #fff; }
+.stir .cta:hover::before,
+.stir .cta:focus-visible::before { transform: scaleX(1); }
 .stir .cta:hover .arrow,
 .stir .cta:focus-visible .arrow { transform: translate(0.22em, -0.22em); }
 .stir .cta-line {
@@ -216,9 +235,46 @@
 }
 .stir .cta-line:hover::before,
 .stir .cta-line:focus-visible::before { opacity: 1; transform: none; }
+.stir .cta-line { transition: transform 0.12s var(--ease); }
+.stir .cta-line::after { transition: background 0.2s var(--ease); }
 .stir .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .stir .cta-line:hover .arrow,
 .stir .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
+
+
+/* ── Press ───────────────────────────────────────────────────────
+   There was no :active state anywhere in this system, which is the
+   whole difference between a page and an object. On press the paper
+   shifts and the cobalt plate stays where it was: mis-registration,
+   held for exactly as long as the finger is down. Same language as
+   [data-reveal="registration"], at the scale where people touch it.
+   ──────────────────────────────────────────────────────────────── */
+.stir .cta:active,
+.stir .nav-start:active,
+.stir .reel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: -2px -2px 0 0 var(--cobalt);
+  transition-duration: 0.06s;
+}
+.stir .cta:active::before,
+.stir .nav-start:active::before { background: var(--red-deep); }
+.stir .reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
+
+
+/* Text actions have no box to shift, so they take the travel alone
+   and the rule beneath them goes live. */
+.stir .cta-line:active,
+.stir .starter-go:active { transform: translate(1px, 1px); }
+.stir .cta-line:active::after { background: var(--red); }
+@media (prefers-reduced-motion: reduce) {
+.stir .cta::before,
+.stir .nav-start::before { transition: none; }
+.stir .cta:active,
+.stir .nav-start:active,
+.stir .reel-btn:active,
+.stir .cta-line:active,
+.stir .starter-go:active { transform: none; }
+}
 
 
 /* ── Annotation (used sparingly — structural, not decorative) ─── */
@@ -299,6 +355,57 @@
   position: relative;
   padding-bottom: 3px;
 }
+
+/* ── The nav as an index, not a menu ─────────────────────────────
+   Every section on this site is numbered. The nav points at two of
+   them, so it carries their numerals in the same mono the running
+   index uses. The numerals sit back until you reach for them.
+
+   And the small red square — already the mark on .ann-mark,
+   .cta-line and .trade — now means exactly one thing everywhere:
+   this is live. On the nav that makes it "you are here", which is
+   worth more than another underline.                                */
+.stir .nav-links a { position: relative; }
+.stir .nav-links .nav-no {
+  font-style: normal;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  margin-right: 0.6em;
+  color: var(--ivory-40);
+  transition: color 0.3s var(--ease);
+}
+.stir .nav-links a:hover .nav-no,
+.stir .nav-links a:focus-visible .nav-no,
+.stir .nav-links a[aria-current] .nav-no { color: inherit; }
+.stir .nav-links a:not(.nav-start)[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
+}
+
+/* The mark is the current state, so the hover rule stands down. */
+.stir .nav-links a:not(.nav-start)[aria-current]::after { display: none; }
+.stir .nav--ink .nav-links .nav-no { color: var(--ink-35); }
+
+
+/* Same index in the overlay, where the type is large enough that the
+   numeral needs to sit further out of the way. */
+.stir .nav-overlay-links a { position: relative; }
+.stir .nav-overlay-links .nav-no {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  vertical-align: 0.9em;
+  margin-right: 0.5em;
+  color: var(--ivory-40);
+}
+.stir .nav-overlay-links a[aria-current] .nav-no { color: var(--red); }
 .stir .nav-links a:not(.nav-start)::after {
   content: "";
   position: absolute;
@@ -312,16 +419,31 @@
 .stir .nav-links a:not(.nav-start):hover::after,
 .stir .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
 .stir .nav-start {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   border: 1px solid var(--ivory);
   padding: 0.7em 1.1em !important;
   display: inline-flex;
   align-items: center;
   gap: 0.7em;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
+}
+.stir .nav-start::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.44s var(--ease);
 }
 .stir .nav-start .arrow { transition: transform 0.3s var(--ease); }
 .stir .nav-start:hover,
-.stir .nav-start:focus-visible { background: var(--red); border-color: var(--red); color: #fff; }
+.stir .nav-start:focus-visible { border-color: var(--red); color: #fff; }
+.stir .nav-start:hover::before,
+.stir .nav-start:focus-visible::before { transform: scaleX(1); }
 .stir .nav-start:hover .arrow,
 .stir .nav-start:focus-visible .arrow { transform: translate(0.18em, -0.18em); }
 
@@ -465,30 +587,99 @@
 
 
 /* ════════════════════════════════════════════════════════════════
-   02 — THESIS · a pause, then a realization
+   02 — THESIS · set as a front page, then corrected in place
+   The reversal is staged rather than stated. Both halves used to be
+   the same size, three hundred pixels apart, which reads as a list;
+   now the second overrides the first where the first stands.
    ════════════════════════════════════════════════════════════════ */
 .stir .belief {
-  padding-top: clamp(140px, 26vh, 300px);
-  padding-bottom: clamp(140px, 26vh, 300px);
+  padding-top: clamp(104px, 19vh, 230px);
+  padding-bottom: clamp(130px, 24vh, 280px);
 }
-.stir .belief-label {
-  grid-column: 1 / 4;
-  border-top: 1px solid var(--ink);
+
+
+/* The furniture that says "this is the news" rather than "here is a
+   thought": a masthead rule at newspaper weight, the kicker, and a
+   folio telling you where you are in the argument. */
+.stir .masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+  border-top: 2px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(56px, 9vh, 120px);
+  margin-bottom: clamp(44px, 7vh, 96px);
 }
-.stir .belief-a {
-  grid-column: 1 / 10;
+.stir .masthead::before { height: 2px; top: -2px; }
+   /* the red signal covers the rule */
+.stir .masthead-folio { color: var(--ink-60); text-align: right; }
+.stir .belief-claim,
+.stir .belief-fix {
   font-size: var(--t-giant);
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  max-width: 18ch;
 }
-.stir .belief-gap { grid-column: 1 / -1; height: clamp(110px, 22vh, 280px); }
-.stir .belief-b {
-  grid-column: 5 / 13;
-  font-size: var(--t-giant);
+.stir .belief-fix { margin-top: 0.17em; }
+
+
+/* The phrase under correction. The rule is drawn, not a
+   text-decoration: it has to arrive, and it has to be red. */
+.stir .struck { position: relative; display: inline-block; white-space: nowrap; }
+.stir .struck-say { color: var(--ink); }
+.stir .struck-rule {
+  position: absolute;
+  left: -0.03em;
+  right: -0.03em;
+  top: 0.29em;              /* measured: centred on the cap height, not the baseline */
+  height: 0.05em;
+  min-height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
 }
-.stir .belief-support {
-  grid-column: 7 / 12;
-  margin-top: clamp(56px, 9vh, 120px);
+
+
+/* The deck — a standfirst, set away from the headline it supports */
+.stir .belief-deck {
+  margin-top: clamp(52px, 8vh, 110px);
+  margin-left: auto;
+  max-width: 46ch;
+}
+@media (prefers-reduced-motion: no-preference) {
+
+  /* One sequence: the claim sets, the rule strikes, the struck words
+     go quiet, the correction arrives. Pure CSS delays off the single
+     .is-in the observer adds — no timers to drift. */
+  .stir .belief-claim {
+    opacity: 0; transform: translateY(0.09em);
+    transition: opacity 0.6s var(--ease), transform 0.8s var(--ease);
+  }
+.stir .belief-fix {
+    opacity: 0; transform: translateY(0.16em);
+    transition: opacity 0.6s var(--ease) 1.18s, transform 0.85s var(--ease) 1.18s;
+  }
+.stir .struck-rule { transition: transform 0.5s var(--ease) 0.72s; }
+.stir .struck-say { transition: color 0.45s var(--ease) 1.0s; }
+.stir .belief-statement.is-in .belief-claim,
+.stir .belief-statement.is-in .belief-fix { opacity: 1; transform: none; }
+.stir .belief-statement.is-in .struck-rule { transform: scaleX(1); }
+.stir .belief-statement.is-in .struck-say { color: var(--ink-35); }
+}
+@media (prefers-reduced-motion: reduce) {
+
+  /* No sequence to watch, so the correction is simply already made. */
+  .stir .struck-rule { transform: scaleX(1); }
+.stir .struck-say { color: var(--ink-35); }
+}
+@media (max-width: 1023px) {
+.stir .belief-claim,
+.stir .belief-fix { max-width: none; }
+.stir .belief-deck { margin-left: 0; }
+}
+@media (max-width: 639px) {
+.stir .masthead { flex-direction: column; align-items: flex-start; gap: 6px; }
+.stir .masthead-folio { text-align: left; }
 }
 
 
@@ -846,10 +1037,6 @@
     order: 3;
     margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
   }
-.stir .belief-label { grid-column: 1 / 4; }
-.stir .belief-a { grid-column: 1 / 9; }
-.stir .belief-b { grid-column: 2 / 9; }
-.stir .belief-support { grid-column: 3 / 8; }
 .stir .proof-lead { grid-column: 1 / -1; }
 .stir .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
 .stir .ev-media { height: clamp(320px, 48vh, 520px); }
@@ -882,12 +1069,9 @@
 .stir .hero-copy { max-width: 100%; }
 .stir .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
 .stir .hero-art { margin-top: 44px; }
-.stir .belief { padding-block: clamp(110px, 20vh, 160px); }
-.stir .belief-label { grid-column: 1 / -1; margin-bottom: 56px; }
-.stir .belief-a { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
-.stir .belief-gap { height: clamp(80px, 14vh, 120px); }
-.stir .belief-b { grid-column: 1 / -1; font-size: clamp(2.5rem, 12.5vw, 3.6rem); text-indent: 1.2em; }
-.stir .belief-support { grid-column: 1 / -1; margin-top: 64px; }
+.stir .belief { padding-block: clamp(96px, 17vh, 150px); }
+.stir .belief-claim,
+.stir .belief-fix { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
 .stir .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
 .stir .proof-meta { text-align: left; }
 .stir .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
@@ -1250,38 +1434,6 @@
   width: 5px; height: 5px;
   margin-top: -2px;
   background: var(--red);
-}
-
-
-/* ════════════════════════════════════════════════════════════════
-   THESIS — quantity → reduction → significance
-   "more content" briefly accumulates behind itself, then collapses.
-   ════════════════════════════════════════════════════════════════ */
-.stir .accum {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-}
-.stir .accum i {
-  position: absolute;
-  inset: 0;
-  font-style: normal;
-  pointer-events: none;
-  opacity: 0;
-}
-@media (prefers-reduced-motion: no-preference) {
-.stir .belief-a.is-in .accum i:nth-of-type(1) { animation: accum-a 1.15s var(--ease) 0.25s both; }
-.stir .belief-a.is-in .accum i:nth-of-type(2) { animation: accum-b 1.15s var(--ease) 0.3s both; }
-@keyframes accum-a {
-    0%   { opacity: 0; transform: none; }
-    28%  { opacity: 0.22; transform: translate(0.18em, 0.1em); color: var(--cobalt); }
-    100% { opacity: 0; transform: none; }
-  }
-@keyframes accum-b {
-    0%   { opacity: 0; transform: none; }
-    28%  { opacity: 0.14; transform: translate(0.36em, 0.2em); color: var(--ink); }
-    100% { opacity: 0; transform: none; }
-  }
 }
 
 
@@ -1721,6 +1873,7 @@
   gap: 0.7em;
   transition: color 0.25s var(--ease);
 }
+.stir .starter-go { transition: color 0.25s var(--ease), transform 0.12s var(--ease); }
 .stir .starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .stir .starter-go:hover,
 .stir .starter-go:focus-visible { color: var(--red); }
@@ -1985,7 +2138,10 @@ body.stir-dark-top { background: #0451AB; }
   font-style: inherit;
   line-height: inherit;
   letter-spacing: inherit;
-  text-transform: none;
+  /* inherit, not none: a <span> inside uppercase display type must
+     keep the transform it is sitting in. `none` silently lowercased
+     the struck phrase in the thesis. */
+  text-transform: inherit;
   text-decoration: none;
   color: inherit;
   background: none;
@@ -2037,12 +2193,19 @@ body.stir-dark-top { background: #0451AB; }
 .stir .nav[data-on="ivory"] .nav-start { border-color: var(--ink); }
 .stir .nav[data-on="ivory"] .nav-logo .mark-ivory { opacity: 0; }
 .stir .nav[data-on="ivory"] .nav-logo .mark-ink { opacity: 1; }
+/* The index numerals sit back on whichever ground the nav is on. */
+.stir .nav[data-on="ivory"] .nav-links .nav-no { color: var(--ink-35); }
 
 .stir .nav[data-on="cobalt"] .nav-links a { color: var(--ivory); }
 .stir .nav[data-on="cobalt"] .nav-links a:not(.nav-start)::after { background: var(--ivory); }
 .stir .nav[data-on="cobalt"] .nav-start { border-color: var(--ivory); }
 .stir .nav[data-on="cobalt"] .nav-logo .mark-ivory { opacity: 1; }
 .stir .nav[data-on="cobalt"] .nav-logo .mark-ink { opacity: 0; }
+.stir .nav[data-on="cobalt"] .nav-links .nav-no { color: var(--ivory-40); }
+
+/* Current state beats the ground on either. */
+.stir .nav .nav-links a:hover .nav-no,
+.stir .nav .nav-links a[aria-current] .nav-no { color: inherit; }
 
 /* ════════════════════════════════════════════════════════════════
    ENHANCEMENT 02 — RUNNING INDEX

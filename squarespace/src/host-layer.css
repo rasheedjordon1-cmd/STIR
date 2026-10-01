@@ -53,7 +53,10 @@ body.stir-dark-top { background: #0451AB; }
   font-style: inherit;
   line-height: inherit;
   letter-spacing: inherit;
-  text-transform: none;
+  /* inherit, not none: a <span> inside uppercase display type must
+     keep the transform it is sitting in. `none` silently lowercased
+     the struck phrase in the thesis. */
+  text-transform: inherit;
   text-decoration: none;
   color: inherit;
   background: none;
@@ -105,12 +108,19 @@ body.stir-dark-top { background: #0451AB; }
 .stir .nav[data-on="ivory"] .nav-start { border-color: var(--ink); }
 .stir .nav[data-on="ivory"] .nav-logo .mark-ivory { opacity: 0; }
 .stir .nav[data-on="ivory"] .nav-logo .mark-ink { opacity: 1; }
+/* The index numerals sit back on whichever ground the nav is on. */
+.stir .nav[data-on="ivory"] .nav-links .nav-no { color: var(--ink-35); }
 
 .stir .nav[data-on="cobalt"] .nav-links a { color: var(--ivory); }
 .stir .nav[data-on="cobalt"] .nav-links a:not(.nav-start)::after { background: var(--ivory); }
 .stir .nav[data-on="cobalt"] .nav-start { border-color: var(--ivory); }
 .stir .nav[data-on="cobalt"] .nav-logo .mark-ivory { opacity: 1; }
 .stir .nav[data-on="cobalt"] .nav-logo .mark-ink { opacity: 0; }
+.stir .nav[data-on="cobalt"] .nav-links .nav-no { color: var(--ivory-40); }
+
+/* Current state beats the ground on either. */
+.stir .nav .nav-links a:hover .nav-no,
+.stir .nav .nav-links a[aria-current] .nav-no { color: inherit; }
 
 /* ════════════════════════════════════════════════════════════════
    ENHANCEMENT 02 — RUNNING INDEX
