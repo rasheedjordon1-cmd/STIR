@@ -101,7 +101,15 @@ def scope_selector(sel):
         elif s == '*':
             parts.append(SCOPE + ' *')
         else:
-            parts.append(SCOPE + ' ' + s)
+            # A selector that qualifies <html> — `html.js .x`, used for
+            # state the page sets before first paint — has to keep that
+            # condition on the real root and scope only the rest, or it
+            # becomes `.stir html.js .x` and never matches anything.
+            m = re.match(r'^(html(?:[.#:\[][^\s>+~]*)*)\s+(.+)$', s)
+            if m:
+                parts.append('%s %s %s' % (m.group(1), SCOPE, m.group(2)))
+            else:
+                parts.append(SCOPE + ' ' + s)
     return lead + ',\n'.join(parts)
 
 
@@ -200,15 +208,8 @@ def adapt(body, page_label=None):
         body = body.replace(a, b)
     body = body.replace('src="assets/labay/labay-social-01.mp4"', 'src="VIDEO_URL"')
     body = body.replace('assets/', 'ASSET_BASE/')
-    # The nav carries both marks; the adaptive nav cross-fades them.
-    body = body.replace(
-        '<a href="/" class="nav-logo"><img src="ASSET_BASE/stir-mark-ivory.png" alt="STIR — Home"></a>',
-        '<a href="/" class="nav-logo"><img class="mark-ivory" src="ASSET_BASE/stir-mark-ivory.png" alt="STIR — Home">'
-        '<img class="mark-ink" src="ASSET_BASE/stir-mark.png" alt="" aria-hidden="true"></a>')
-    body = body.replace(
-        '<a href="/" class="nav-logo"><img src="ASSET_BASE/stir-mark.png" alt="STIR — Home"></a>',
-        '<a href="/" class="nav-logo"><img class="mark-ivory" src="ASSET_BASE/stir-mark-ivory.png" alt="STIR — Home">'
-        '<img class="mark-ink" src="ASSET_BASE/stir-mark.png" alt="" aria-hidden="true"></a>')
+    # The nav ships both marks in the source markup now; which one
+    # shows is decided by the header's scrolled state, not the build.
     return annotate_sections(body, page_label)
 
 

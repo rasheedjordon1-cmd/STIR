@@ -15,7 +15,7 @@
    and paint the ground behind the cobalt hero before first paint. */
 (function () {
   var p = window.location.pathname.replace(/\/$/, '');
-  document.documentElement.classList.add('stir-page');
+  document.documentElement.classList.add('stir-page', 'js');
   document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('stir-page');
     if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');

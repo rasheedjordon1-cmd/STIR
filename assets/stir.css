@@ -68,6 +68,7 @@
   --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
   --t-utility: 0.72rem;
 
+  --nav-h: 76px;                         /* compact once stuck      */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
@@ -154,41 +155,82 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ── CTA vocabulary — red appears at the moment of action ─────── */
+/* ── Primary action ──────────────────────────────────────────────
+   One construction everywhere: a warm-paper label carrying the words
+   and a separate red compartment carrying the arrow. Paper holds its
+   own on cobalt and on ivory alike, and red stays on the part that
+   moves you forward rather than flooding the whole control.
+   ──────────────────────────────────────────────────────────────── */
 .cta {
   display: inline-flex;
-  align-items: center;
-  gap: 0.9em;
-  background: transparent; /* buttons inherit UA fills otherwise */
-  color: inherit;
+  align-items: stretch;
+  background: none;
+  border: 0;
+  padding: 0;
   cursor: pointer;
-  border: 1px solid var(--ink);
-  padding: 1.1em 1.7em;
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 0.76rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
+  line-height: 1;
+  text-align: left;
+  transition: transform 0.12s var(--ease);
 }
-/* Ink, not fill. The red lays down from the left edge the way it
-   would off a plate, instead of the whole box cross-fading. */
-.cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+.cta-label {
+  display: flex;
+  align-items: center;
+  min-height: 46px;                 /* comfortable on touch */
+  padding: 0 1.5em;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-right: 0;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.cta-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 46px;
+  min-height: 46px;
   background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.44s var(--ease);
+  border: 1px solid var(--red);
+  color: var(--ivory);
+  overflow: hidden;
+  transition: background 0.25s var(--ease);
 }
-.cta .arrow { transition: transform 0.3s var(--ease); }
-.cta:hover, .cta:focus-visible { border-color: var(--red); color: #fff; }
-.cta:hover::before, .cta:focus-visible::before { transform: scaleX(1); }
-.cta:hover .arrow, .cta:focus-visible .arrow { transform: translate(0.22em, -0.22em); }
+.cta-glyph {
+  font-style: normal;
+  font-size: 1.1em;
+  line-height: 1;
+  display: block;
+  transition: transform 0.25s var(--ease);
+}
+/* Subtle: three pixels, in the direction the arrow points. */
+.cta:hover .cta-glyph,
+.cta:focus-visible .cta-glyph { transform: translate(3px, -3px); }
+.cta--flat:hover .cta-glyph,
+.cta--flat:focus-visible .cta-glyph { transform: translateX(3px); }
+.cta:hover .cta-label,
+.cta:focus-visible .cta-label { background: var(--ink); color: var(--ivory); }
+.cta:active { transform: translate(1px, 1px); }
+.cta:active .cta-arrow { background: var(--red-deep); border-color: var(--red-deep); }
+.cta:disabled { opacity: 0.55; cursor: default; }
+.cta:disabled .cta-glyph { transform: none; }
+
+/* The compact one, used in the nav bar. */
+.cta--sm { font-size: 0.7rem; }
+.cta--sm .cta-label { min-height: 44px; padding: 0 1.1em; }
+.cta--sm .cta-arrow { min-width: 44px; min-height: 44px; }
+
+/* Over the cobalt hero the paper label needs no ink hairline to
+   separate it from the ground. */
+.hero .cta-label, .nav .cta-label { border-color: var(--ivory); }
+.nav.is-stuck .cta-label { border-color: var(--ink); }
+.nav--ink .cta-label { border-color: var(--ink); }
 
 .cta-line {
   display: inline-flex;
@@ -225,7 +267,7 @@ img, video { max-width: 100%; display: block; }
 .cta-line { transition: transform 0.12s var(--ease); }
 .cta-line::after { transition: background 0.2s var(--ease); }
 .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
-.cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
+.cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(3px); }
 
 /* ── Press ───────────────────────────────────────────────────────
    There was no :active state anywhere in this system, which is the
@@ -235,14 +277,12 @@ img, video { max-width: 100%; display: block; }
    [data-reveal="registration"], at the scale where people touch it.
    ──────────────────────────────────────────────────────────────── */
 .cta:active,
-.nav-start:active,
 .reel-btn:active {
   transform: translate(2px, 2px);
   box-shadow: -2px -2px 0 0 var(--cobalt);
   transition-duration: 0.06s;
 }
 .cta:active::before,
-.nav-start:active::before { background: var(--red-deep); }
 .reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
 
 /* Text actions have no box to shift, so they take the travel alone
@@ -252,8 +292,8 @@ img, video { max-width: 100%; display: block; }
 .cta-line:active::after { background: var(--red); }
 
 @media (prefers-reduced-motion: reduce) {
-  .cta::before, .nav-start::before { transition: none; }
-  .cta:active, .nav-start:active, .reel-btn:active,
+  .cta-label, .cta-arrow, .cta-glyph { transition: none; }
+  .cta:active, .reel-btn:active,
   .cta-line:active, .starter-go:active { transform: none; }
 }
 
@@ -296,29 +336,63 @@ img, video { max-width: 100%; display: block; }
 
 /* ── Reveal (respects reduced motion) ─────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
-  .reveal {
+  html.js .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
   }
-  .reveal.is-in { opacity: 1; transform: none; }
+  html.js .reveal.is-in { opacity: 1; transform: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════
    NAVIGATION — ivory system over the cobalt world
    ════════════════════════════════════════════════════════════════ */
+/* Fixed, with two states. Transparent over the cobalt hero so the
+   artwork is uninterrupted; once you have scrolled it becomes an
+   opaque paper bar with the red mark, ink links and a hairline — so
+   it never has to hold contrast against moving imagery. */
 .nav {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 10;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+              padding 0.3s var(--ease);
 }
 .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: clamp(22px, 2.6vw, 36px);
+  gap: 16px;
+  padding-block: clamp(18px, 2.2vw, 30px);
+  transition: padding-block 0.3s var(--ease);
 }
-.nav-logo img { height: clamp(24px, 2.2vw, 32px); width: auto; }
+.nav.is-stuck {
+  background: var(--ivory);
+  border-bottom-color: var(--ink-35);
+}
+.nav.is-stuck .nav-inner { padding-block: 11px; }
+.nav.is-stuck .nav-links a:not(.nav-start) { color: var(--ink); }
+.nav.is-stuck .nav-links a:not(.nav-start)::after { background: var(--ink); }
+.nav.is-stuck .nav-links .nav-no { color: var(--ink-35); }
+
+/* Both marks ship; which one shows is a state, not a page. */
+.nav-logo { position: relative; display: block; line-height: 0; }
+.nav-logo img {
+  height: clamp(22px, 2.1vw, 30px);
+  width: auto;
+  transition: opacity 0.3s var(--ease);
+}
+.nav-logo .mark-red { position: absolute; inset: 0; opacity: 0; }
+.nav.is-stuck .nav-logo .mark-ivory,
+.nav--ink      .nav-logo .mark-ivory { opacity: 0; }
+.nav.is-stuck .nav-logo .mark-red,
+.nav--ink      .nav-logo .mark-red { opacity: 1; }
+
+/* Anything the nav can jump to has to clear the bar. */
+[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+/* scroll-behavior is set from JS on the real document: under
+   Squarespace this stylesheet is scoped to .stir and cannot reach it. */
 .nav-links {
   display: flex;
   align-items: center;
@@ -397,31 +471,7 @@ img, video { max-width: 100%; display: block; }
 }
 .nav-links a:not(.nav-start):hover::after,
 .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
-.nav-start {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border: 1px solid var(--ivory);
-  padding: 0.7em 1.1em !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
-}
-.nav-start::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.44s var(--ease);
-}
-.nav-start .arrow { transition: transform 0.3s var(--ease); }
-.nav-start:hover, .nav-start:focus-visible { border-color: var(--red); color: #fff; }
-.nav-start:hover::before, .nav-start:focus-visible::before { transform: scaleX(1); }
-.nav-start:hover .arrow, .nav-start:focus-visible .arrow { transform: translate(0.18em, -0.18em); }
+/* .nav-start now carries the shared .cta construction; see Primary action. */
 
 /* ════════════════════════════════════════════════════════════════
    01 — HERO · ATTENTION SHOULD PAY.
@@ -562,96 +612,77 @@ img, video { max-width: 100%; display: block; }
 }
 
 /* ════════════════════════════════════════════════════════════════
-   02 — THESIS · set as a front page, then corrected in place
-   The reversal is staged rather than stated. Both halves used to be
-   the same size, three hundred pixels apart, which reads as a list;
-   now the second overrides the first where the first stands.
+   02 — THE ARGUMENT · one headline, concentrated
+   A small concession, the statement people should leave with, and
+   the method underneath. Cobalt on paper, with one red field.
    ════════════════════════════════════════════════════════════════ */
 .belief {
-  padding-top: clamp(104px, 19vh, 230px);
-  padding-bottom: clamp(130px, 24vh, 280px);
+  padding-top: clamp(76px, 11vh, 132px);
+  padding-bottom: clamp(60px, 9vh, 112px);
 }
-
-/* The furniture that says "this is the news" rather than "here is a
-   thought": a masthead rule at newspaper weight, the kicker, and a
-   folio telling you where you are in the argument. */
-.masthead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 24px;
-  border-top: 2px solid var(--ink);
+.belief-label {
+  border-top: 1px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(44px, 7vh, 96px);
+  max-width: 320px;
+  margin-bottom: clamp(40px, 6vh, 76px);
 }
-.masthead::before { height: 2px; top: -2px; }   /* the red signal covers the rule */
-.masthead-folio { color: var(--ink-60); text-align: right; }
-
-.belief-claim,
-.belief-fix {
-  font-size: var(--t-giant);
-  line-height: 0.95;
-  letter-spacing: -0.028em;
-  max-width: 18ch;
+.belief-intro {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink-60);
+  margin-bottom: clamp(18px, 2.6vh, 32px);
 }
-.belief-fix { margin-top: 0.17em; }
-
-/* The phrase under correction. The rule is drawn, not a
-   text-decoration: it has to arrive, and it has to be red. */
-.struck { position: relative; display: inline-block; white-space: nowrap; }
-.struck-say { color: var(--ink); }
-.struck-rule {
-  position: absolute;
-  left: -0.03em;
-  right: -0.03em;
-  top: 0.29em;              /* measured: centred on the cap height, not the baseline */
-  height: 0.05em;
-  min-height: 2px;
+.belief-claim {
+  color: var(--cobalt);
+  font-size: clamp(2.6rem, 8.2vw, 7.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+/* Editorial emphasis, not a control: a block of red with the words
+   knocked out of it. Deliberately carries no hover, no cursor and
+   no focus behaviour, so nothing reads as clickable. */
+.belief-claim .field {
+  display: inline-block;
+  white-space: nowrap;
   background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
+  color: var(--ivory);
+  /* Sized off the measured cap height so the ink sits evenly above
+     and below the letters. An inline-block's box is driven by the
+     line box, not the glyphs, so the default leaves roughly four
+     times as much red under the word as over it. */
+  line-height: 0.46;
+  padding: 0.37em 0.15em 0;
+  margin: 0 0.02em;
+  cursor: inherit;
 }
-
-/* The deck — a standfirst, set away from the headline it supports */
 .belief-deck {
-  margin-top: clamp(52px, 8vh, 110px);
-  margin-left: auto;
-  max-width: 46ch;
+  margin-top: clamp(32px, 5vh, 56px);
+  max-width: 48ch;
+  color: var(--ink-70);
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  /* One sequence: the claim sets, the rule strikes, the struck words
-     go quiet, the correction arrives. Pure CSS delays off the single
-     .is-in the observer adds — no timers to drift. */
-  .belief-claim {
-    opacity: 0; transform: translateY(0.09em);
-    transition: opacity 0.6s var(--ease), transform 0.8s var(--ease);
+  html.js .belief-intro, html.js .belief-claim, html.js .belief-deck {
+    opacity: 0;
+    transform: translateY(0.4rem);
+    transition: opacity 0.6s var(--ease), transform 0.75s var(--ease);
   }
-  .belief-fix {
-    opacity: 0; transform: translateY(0.16em);
-    transition: opacity 0.6s var(--ease) 1.18s, transform 0.85s var(--ease) 1.18s;
-  }
-  .struck-rule  { transition: transform 0.5s var(--ease) 0.72s; }
-  .struck-say   { transition: color 0.45s var(--ease) 1.0s; }
-
-  .belief-statement.is-in .belief-claim,
-  .belief-statement.is-in .belief-fix { opacity: 1; transform: none; }
-  .belief-statement.is-in .struck-rule { transform: scaleX(1); }
-  .belief-statement.is-in .struck-say  { color: var(--ink-35); }
-}
-@media (prefers-reduced-motion: reduce) {
-  /* No sequence to watch, so the correction is simply already made. */
-  .struck-rule { transform: scaleX(1); }
-  .struck-say  { color: var(--ink-35); }
+  html.js .belief-claim { transition-delay: 0.1s; }
+  html.js .belief-deck  { transition-delay: 0.22s; }
+  html.js .belief-statement.is-in .belief-intro,
+  html.js .belief-statement.is-in .belief-claim,
+  html.js .belief-statement.is-in .belief-deck { opacity: 1; transform: none; }
 }
 
-@media (max-width: 1023px) {
-  .belief-claim, .belief-fix { max-width: none; }
-  .belief-deck { margin-left: 0; }
-}
+@media (max-width: 1023px) { .belief-claim { max-width: none; } }
 @media (max-width: 639px) {
-  .masthead { flex-direction: column; align-items: flex-start; gap: 6px; }
-  .masthead-folio { text-align: left; }
+  .belief-claim { line-height: 0.95; letter-spacing: -0.025em; }
+  .belief-deck  { max-width: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -660,8 +691,8 @@ img, video { max-width: 100%; display: block; }
    evidence rather than a second full environment.)
    ════════════════════════════════════════════════════════════════ */
 .proof {
-  padding-top: clamp(72px, 10vh, 140px);
-  padding-bottom: clamp(96px, 14vh, 200px);
+  padding-top: clamp(60px, 8vh, 112px);
+  padding-bottom: clamp(64px, 9vh, 128px);
 }
 .proof-head {
   display: flex;
@@ -780,8 +811,8 @@ img, video { max-width: 100%; display: block; }
    contrast rises. Active: a tiny Signal Red marker + services unfold.
    ════════════════════════════════════════════════════════════════ */
 .method {
-  padding-top: clamp(120px, 18vh, 240px);
-  padding-bottom: clamp(120px, 18vh, 240px);
+  padding-top: clamp(88px, 13vh, 170px);
+  padding-bottom: clamp(88px, 13vh, 170px);
 }
 .method-label {
   grid-column: 1 / 4;
@@ -1041,15 +1072,15 @@ img, video { max-width: 100%; display: block; }
   .nav-logo img { height: 22px; }
   .nav-links { gap: 16px; }
   .nav-links a:not(.nav-start) { display: none; } /* menu returns with the ABOUT/CONTACT build */
-  .nav-start { padding: 0.6em 0.9em !important; }
 
   .hero-inner { padding-top: 96px; }
   .hero-copy { max-width: 100%; }
   .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
   .hero-art { margin-top: 44px; }
 
-  .belief { padding-block: clamp(96px, 17vh, 150px); }
-  .belief-claim, .belief-fix { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
+  /* The thesis → proof hand-off was ~180px of nothing on a phone. */
+  .belief { padding-top: clamp(64px, 9vh, 96px); padding-bottom: clamp(44px, 6vh, 68px); }
+  .proof  { padding-top: clamp(52px, 7vh, 80px); }
 
   .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
   .proof-meta { text-align: left; }
@@ -1116,7 +1147,6 @@ img, video { max-width: 100%; display: block; }
    ════════════════════════════════════════════════════════════════ */
 .nav--ink .nav-links a { color: var(--ink); }
 .nav--ink .nav-links a:not(.nav-start)::after { background: var(--ink); }
-.nav--ink .nav-start { border-color: var(--ink); }
 
 /* ── Mobile menu ──────────────────────────────────────────────── */
 .nav-menu {
@@ -1306,7 +1336,7 @@ img, video { max-width: 100%; display: block; }
   /* ── C · Editorial reveal — typography rises out of a mask ───── */
   /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
      intersection rect, so IntersectionObserver would never fire. */
-  [data-reveal="editorial"] {
+  html.js [data-reveal="editorial"] {
     opacity: 0;
     transform: translateY(14px);
     -webkit-mask-image: linear-gradient(#000, #000);
@@ -1320,19 +1350,19 @@ img, video { max-width: 100%; display: block; }
       -webkit-mask-size 0.7s var(--ease),
       mask-size 0.7s var(--ease);
   }
-  [data-reveal="editorial"].is-in {
+  html.js [data-reveal="editorial"].is-in {
     opacity: 1;
     transform: none;
     -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
   }
 
   /* ── B · Registration reveal — plates settling into register ─── */
-  [data-reveal="registration"] {
+  html.js [data-reveal="registration"] {
     opacity: 0;
     transform: translate(4px, 2px);
     transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
   }
-  [data-reveal="registration"].is-in {
+  html.js [data-reveal="registration"].is-in {
     opacity: 1;
     transform: none;
   }
@@ -1354,7 +1384,7 @@ img, video { max-width: 100%; display: block; }
 
   /* ── D · Structural reveal — a red signal draws the rule ─────── */
   [data-reveal="structural"] { position: relative; }
-  [data-reveal="structural"]::before {
+  html.js [data-reveal="structural"]::before {
     content: "";
     position: absolute;
     left: 0; top: -1px;
@@ -1365,9 +1395,9 @@ img, video { max-width: 100%; display: block; }
     transform-origin: left;
     transition: transform 0.55s var(--ease);
   }
-  [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+  html.js [data-reveal="structural"].is-in::before { transform: scaleX(1); }
   /* the signal passes through, it does not stay */
-  [data-reveal="structural"].is-in.sig-spent::before {
+  html.js [data-reveal="structural"].is-in.sig-spent::before {
     transform-origin: right;
     transform: scaleX(0);
   }
@@ -1680,8 +1710,8 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
    asking by this point in the page.
    ════════════════════════════════════════════════════════════════ */
 .who {
-  padding-top: clamp(110px, 16vh, 220px);
-  padding-bottom: clamp(120px, 18vh, 240px);
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: 0;      /* the full-bleed art meets the invitation */
 }
 .who-label {
   grid-column: 1 / 4;
@@ -1822,7 +1852,7 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 .starter-go { transition: color 0.25s var(--ease), transform 0.12s var(--ease); }
 .starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .starter-go:hover, .starter-go:focus-visible { color: var(--red); }
-.starter-go:hover .arrow, .starter-go:focus-visible .arrow { transform: translateX(0.35em); }
+.starter-go:hover .arrow, .starter-go:focus-visible .arrow { transform: translateX(3px); }
 .starter-row:focus-within { border-bottom-color: var(--red); }
 .starter-note { color: var(--ink-60); margin-top: 16px; }
 
@@ -1925,6 +1955,7 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
   min-height: 12rem;
 }
 .trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.trade-panel .panel-for { color: var(--ink); }
 .trade-panel .panel-said {
   font-size: clamp(1.3rem, 2.3vw, 2.1rem);
   font-weight: 300;
@@ -1950,26 +1981,49 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
   margin-top: clamp(28px, 4vh, 44px);
   max-width: 44ch;
 }
-/* Narrow: the answer leads and stays pinned, so choosing a trade
-   never pushes the reply off screen. */
+/* The inline answer lives in the markup, not in a script. With no JS
+   the whole list simply reads as nine trades and their answers; the
+   panel stands down, because without script it can only ever show
+   the first one. */
+.trade-inline > div { min-height: 0; }
+.trade-inline-said {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-block: 4px 10px;
+}
+.trade-inline-note { color: var(--ink-60); padding-bottom: 18px; }
+html:not(.js) .trade-panel { display: none; }
+html.js .trade-inline { display: none; }    /* wide + JS: the panel does it */
+
+/* Narrow: no panel. The answer opens directly under the trade you
+   chose, because an update somewhere else on the page is a change
+   you cannot see — and a panel pinned to the top of the viewport
+   would sit behind the fixed header anyway. */
 @media (max-width: 1023px) {
-  .trades-grid { grid-template-columns: 1fr; row-gap: clamp(28px, 4vh, 40px); }
-  .trade-panel {
-    grid-row: 1;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    min-height: 0;
-    background: var(--ivory);
-    border-top: 0;
-    border-bottom: 1px solid var(--ink);
-    padding-top: clamp(14px, 2.4vh, 22px);
-    padding-bottom: clamp(14px, 2.4vh, 22px);
+  .trades-grid { grid-template-columns: 1fr; }
+  .trade-panel { display: none; }
+
+  html.js .trade-inline {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.38s var(--ease);
   }
-  .trade-panel .panel-label { margin-bottom: 14px; }
-  .trade-panel .panel-said { min-height: 2.6em; }
-  .trade-panel .panel-note { margin-top: 14px; padding-top: 10px; }
-  .trade-list { grid-row: 2; }
+  html.js .trade[aria-pressed="true"] + .trade-inline { grid-template-rows: 1fr; }
+
+  .trade-inline-said { font-size: clamp(1.1rem, 4.4vw, 1.45rem); }
+
+  /* The chosen trade and its answer read as one block. */
+  .trade-list li:has(.trade[aria-pressed="true"]) {
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+  }
+  .trade[aria-pressed="true"] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .trade-inline { transition: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -2015,7 +2069,7 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 .convert .starter-row input::placeholder { color: var(--ivory-40); }
 .convert .starter-go { color: var(--ivory); }
 .convert .starter-go:hover, .convert .starter-go:focus-visible { color: #fff; }
-.convert .starter-go:hover .arrow { transform: translateX(0.35em); }
+.convert .starter-go:hover .arrow { transform: translateX(3px); }
 .convert .starter-row:focus-within { border-bottom-color: var(--red); }
 .convert .starter-note { color: var(--ivory-75); }
 

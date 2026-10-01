@@ -86,9 +86,6 @@ body.stir-dark-top { background: #0451AB; }
   margin-right: 0;
 }
 
-/* Our nav is fixed rather than absolute, since Squarespace scrolls
-   the document body. */
-.stir .nav { position: fixed; }
 
 /* ════════════════════════════════════════════════════════════════
    ENHANCEMENT 01 — ADAPTIVE NAV
@@ -96,31 +93,12 @@ body.stir-dark-top { background: #0451AB; }
    environments get the ivory mark; ivory gets ink. One detail that
    no template does.
    ════════════════════════════════════════════════════════════════ */
-.stir .nav {
-  transition: color 0.4s var(--ease);
-}
-.stir .nav-logo img { transition: opacity 0.3s var(--ease); }
-.stir .nav-logo { position: relative; display: inline-block; }
-.stir .nav-logo .mark-ink { position: absolute; inset: 0; opacity: 0; }
+.stir .nav { transition: color 0.4s var(--ease); }
 
-.stir .nav[data-on="ivory"] .nav-links a { color: var(--ink); }
-.stir .nav[data-on="ivory"] .nav-links a:not(.nav-start)::after { background: var(--ink); }
-.stir .nav[data-on="ivory"] .nav-start { border-color: var(--ink); }
-.stir .nav[data-on="ivory"] .nav-logo .mark-ivory { opacity: 0; }
-.stir .nav[data-on="ivory"] .nav-logo .mark-ink { opacity: 1; }
-/* The index numerals sit back on whichever ground the nav is on. */
-.stir .nav[data-on="ivory"] .nav-links .nav-no { color: var(--ink-35); }
-
-.stir .nav[data-on="cobalt"] .nav-links a { color: var(--ivory); }
-.stir .nav[data-on="cobalt"] .nav-links a:not(.nav-start)::after { background: var(--ivory); }
-.stir .nav[data-on="cobalt"] .nav-start { border-color: var(--ivory); }
-.stir .nav[data-on="cobalt"] .nav-logo .mark-ivory { opacity: 1; }
-.stir .nav[data-on="cobalt"] .nav-logo .mark-ink { opacity: 0; }
-.stir .nav[data-on="cobalt"] .nav-links .nav-no { color: var(--ivory-40); }
-
-/* Current state beats the ground on either. */
-.stir .nav .nav-links a:hover .nav-no,
-.stir .nav .nav-links a[aria-current] .nav-no { color: inherit; }
+/* The mark cross-fade and the ground inversion now live in the shared
+   stylesheet, driven by the header's scrolled state rather than by
+   whichever section is passing beneath it. data-ground stays because
+   the running index still reads it. */
 
 /* ════════════════════════════════════════════════════════════════
    ENHANCEMENT 02 — RUNNING INDEX

@@ -52,7 +52,7 @@
    and paint the ground behind the cobalt hero before first paint. */
 (function () {
   var p = window.location.pathname.replace(/\/$/, '');
-  document.documentElement.classList.add('stir-page');
+  document.documentElement.classList.add('stir-page', 'js');
   document.addEventListener('DOMContentLoaded', function () {
     document.body.classList.add('stir-page');
     if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');
@@ -208,6 +208,7 @@
   --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
   --t-utility: 0.72rem;
 
+  --nav-h: 76px;                         /* compact once stuck      */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 .stir * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -303,45 +304,86 @@
 
 
 /* ── CTA vocabulary — red appears at the moment of action ─────── */
+/* ── Primary action ──────────────────────────────────────────────
+   One construction everywhere: a warm-paper label carrying the words
+   and a separate red compartment carrying the arrow. Paper holds its
+   own on cobalt and on ivory alike, and red stays on the part that
+   moves you forward rather than flooding the whole control.
+   ──────────────────────────────────────────────────────────────── */
 .stir .cta {
   display: inline-flex;
-  align-items: center;
-  gap: 0.9em;
-  background: transparent; /* buttons inherit UA fills otherwise */
-  color: inherit;
+  align-items: stretch;
+  background: none;
+  border: 0;
+  padding: 0;
   cursor: pointer;
-  border: 1px solid var(--ink);
-  padding: 1.1em 1.7em;
+  color: var(--ink);
   font-family: var(--font-mono);
   font-size: 0.76rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  position: relative;
-  isolation: isolate;
+  line-height: 1;
+  text-align: left;
+  transition: transform 0.12s var(--ease);
+}
+.stir .cta-label {
+  display: flex;
+  align-items: center;
+  min-height: 46px;                 /* comfortable on touch */
+  padding: 0 1.5em;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-right: 0;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.stir .cta-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 46px;
+  min-height: 46px;
+  background: var(--red);
+  border: 1px solid var(--red);
+  color: var(--ivory);
   overflow: hidden;
-  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
+  transition: background 0.25s var(--ease);
+}
+.stir .cta-glyph {
+  font-style: normal;
+  font-size: 1.1em;
+  line-height: 1;
+  display: block;
+  transition: transform 0.25s var(--ease);
 }
 
-/* Ink, not fill. The red lays down from the left edge the way it
-   would off a plate, instead of the whole box cross-fading. */
-.stir .cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.44s var(--ease);
-}
-.stir .cta .arrow { transition: transform 0.3s var(--ease); }
-.stir .cta:hover,
-.stir .cta:focus-visible { border-color: var(--red); color: #fff; }
-.stir .cta:hover::before,
-.stir .cta:focus-visible::before { transform: scaleX(1); }
-.stir .cta:hover .arrow,
-.stir .cta:focus-visible .arrow { transform: translate(0.22em, -0.22em); }
+/* Subtle: three pixels, in the direction the arrow points. */
+.stir .cta:hover .cta-glyph,
+.stir .cta:focus-visible .cta-glyph { transform: translate(3px, -3px); }
+.stir .cta--flat:hover .cta-glyph,
+.stir .cta--flat:focus-visible .cta-glyph { transform: translateX(3px); }
+.stir .cta:hover .cta-label,
+.stir .cta:focus-visible .cta-label { background: var(--ink); color: var(--ivory); }
+.stir .cta:active { transform: translate(1px, 1px); }
+.stir .cta:active .cta-arrow { background: var(--red-deep); border-color: var(--red-deep); }
+.stir .cta:disabled { opacity: 0.55; cursor: default; }
+.stir .cta:disabled .cta-glyph { transform: none; }
+
+
+/* The compact one, used in the nav bar. */
+.stir .cta--sm { font-size: 0.7rem; }
+.stir .cta--sm .cta-label { min-height: 44px; padding: 0 1.1em; }
+.stir .cta--sm .cta-arrow { min-width: 44px; min-height: 44px; }
+
+
+/* Over the cobalt hero the paper label needs no ink hairline to
+   separate it from the ground. */
+.stir .hero .cta-label,
+.stir .nav .cta-label { border-color: var(--ivory); }
+.stir .nav.is-stuck .cta-label { border-color: var(--ink); }
+.stir .nav--ink .cta-label { border-color: var(--ink); }
 .stir .cta-line {
   display: inline-flex;
   align-items: baseline;
@@ -380,7 +422,7 @@
 .stir .cta-line::after { transition: background 0.2s var(--ease); }
 .stir .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
 .stir .cta-line:hover .arrow,
-.stir .cta-line:focus-visible .arrow { transform: translateX(0.35em); }
+.stir .cta-line:focus-visible .arrow { transform: translateX(3px); }
 
 
 /* ── Press ───────────────────────────────────────────────────────
@@ -391,14 +433,12 @@
    [data-reveal="registration"], at the scale where people touch it.
    ──────────────────────────────────────────────────────────────── */
 .stir .cta:active,
-.stir .nav-start:active,
 .stir .reel-btn:active {
   transform: translate(2px, 2px);
   box-shadow: -2px -2px 0 0 var(--cobalt);
   transition-duration: 0.06s;
 }
 .stir .cta:active::before,
-.stir .nav-start:active::before { background: var(--red-deep); }
 .stir .reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
 
 
@@ -408,10 +448,10 @@
 .stir .starter-go:active { transform: translate(1px, 1px); }
 .stir .cta-line:active::after { background: var(--red); }
 @media (prefers-reduced-motion: reduce) {
-.stir .cta::before,
-.stir .nav-start::before { transition: none; }
+.stir .cta-label,
+.stir .cta-arrow,
+.stir .cta-glyph { transition: none; }
 .stir .cta:active,
-.stir .nav-start:active,
 .stir .reel-btn:active,
 .stir .cta-line:active,
 .stir .starter-go:active { transform: none; }
@@ -457,30 +497,67 @@
 .stir .ph--on-cobalt .ph-note { color: var(--wht-70); }
 /* ── Reveal (respects reduced motion) ─────────────────────────── */
 @media (prefers-reduced-motion: no-preference) {
-.stir .reveal {
+html.js .stir .reveal {
     opacity: 0;
     transform: translateY(18px);
     transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
   }
-.stir .reveal.is-in { opacity: 1; transform: none; }
+html.js .stir .reveal.is-in { opacity: 1; transform: none; }
 }
 
 
 /* ════════════════════════════════════════════════════════════════
    NAVIGATION — ivory system over the cobalt world
    ════════════════════════════════════════════════════════════════ */
+/* Fixed, with two states. Transparent over the cobalt hero so the
+   artwork is uninterrupted; once you have scrolled it becomes an
+   opaque paper bar with the red mark, ink links and a hairline — so
+   it never has to hold contrast against moving imagery. */
 .stir .nav {
-  position: absolute;
+  position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 10;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+              padding 0.3s var(--ease);
 }
 .stir .nav-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-block: clamp(22px, 2.6vw, 36px);
+  gap: 16px;
+  padding-block: clamp(18px, 2.2vw, 30px);
+  transition: padding-block 0.3s var(--ease);
 }
-.stir .nav-logo img { height: clamp(24px, 2.2vw, 32px); width: auto; }
+.stir .nav.is-stuck {
+  background: var(--ivory);
+  border-bottom-color: var(--ink-35);
+}
+.stir .nav.is-stuck .nav-inner { padding-block: 11px; }
+.stir .nav.is-stuck .nav-links a:not(.nav-start) { color: var(--ink); }
+.stir .nav.is-stuck .nav-links a:not(.nav-start)::after { background: var(--ink); }
+.stir .nav.is-stuck .nav-links .nav-no { color: var(--ink-35); }
+
+
+/* Both marks ship; which one shows is a state, not a page. */
+.stir .nav-logo { position: relative; display: block; line-height: 0; }
+.stir .nav-logo img {
+  height: clamp(22px, 2.1vw, 30px);
+  width: auto;
+  transition: opacity 0.3s var(--ease);
+}
+.stir .nav-logo .mark-red { position: absolute; inset: 0; opacity: 0; }
+.stir .nav.is-stuck .nav-logo .mark-ivory,
+.stir .nav--ink      .nav-logo .mark-ivory { opacity: 0; }
+.stir .nav.is-stuck .nav-logo .mark-red,
+.stir .nav--ink      .nav-logo .mark-red { opacity: 1; }
+
+
+/* Anything the nav can jump to has to clear the bar. */
+.stir [id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+/* scroll-behavior is set from JS on the real document: under
+   Squarespace this stylesheet is scoped to .stir and cannot reach it. */
 .stir .nav-links {
   display: flex;
   align-items: center;
@@ -559,35 +636,8 @@
 }
 .stir .nav-links a:not(.nav-start):hover::after,
 .stir .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
-.stir .nav-start {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  border: 1px solid var(--ivory);
-  padding: 0.7em 1.1em !important;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-  transition: color 0.22s var(--ease) 0.14s, border-color 0.4s var(--ease);
-}
-.stir .nav-start::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.44s var(--ease);
-}
-.stir .nav-start .arrow { transition: transform 0.3s var(--ease); }
-.stir .nav-start:hover,
-.stir .nav-start:focus-visible { border-color: var(--red); color: #fff; }
-.stir .nav-start:hover::before,
-.stir .nav-start:focus-visible::before { transform: scaleX(1); }
-.stir .nav-start:hover .arrow,
-.stir .nav-start:focus-visible .arrow { transform: translate(0.18em, -0.18em); }
 
+/* .nav-start now carries the shared .cta construction; see Primary action. */
 
 /* ════════════════════════════════════════════════════════════════
    01 — HERO · ATTENTION SHOULD PAY.
@@ -728,99 +778,80 @@
 
 
 /* ════════════════════════════════════════════════════════════════
-   02 — THESIS · set as a front page, then corrected in place
-   The reversal is staged rather than stated. Both halves used to be
-   the same size, three hundred pixels apart, which reads as a list;
-   now the second overrides the first where the first stands.
+   02 — THE ARGUMENT · one headline, concentrated
+   A small concession, the statement people should leave with, and
+   the method underneath. Cobalt on paper, with one red field.
    ════════════════════════════════════════════════════════════════ */
 .stir .belief {
-  padding-top: clamp(104px, 19vh, 230px);
-  padding-bottom: clamp(130px, 24vh, 280px);
+  padding-top: clamp(76px, 11vh, 132px);
+  padding-bottom: clamp(60px, 9vh, 112px);
 }
-
-
-/* The furniture that says "this is the news" rather than "here is a
-   thought": a masthead rule at newspaper weight, the kicker, and a
-   folio telling you where you are in the argument. */
-.stir .masthead {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 24px;
-  border-top: 2px solid var(--ink);
+.stir .belief-label {
+  border-top: 1px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(44px, 7vh, 96px);
+  max-width: 320px;
+  margin-bottom: clamp(40px, 6vh, 76px);
 }
-.stir .masthead::before { height: 2px; top: -2px; }
-   /* the red signal covers the rule */
-.stir .masthead-folio { color: var(--ink-60); text-align: right; }
-.stir .belief-claim,
-.stir .belief-fix {
-  font-size: var(--t-giant);
-  line-height: 0.95;
-  letter-spacing: -0.028em;
-  max-width: 18ch;
+.stir .belief-intro {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink-60);
+  margin-bottom: clamp(18px, 2.6vh, 32px);
 }
-.stir .belief-fix { margin-top: 0.17em; }
+.stir .belief-claim {
+  color: var(--cobalt);
+  font-size: clamp(2.6rem, 8.2vw, 7.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  max-width: 15ch;
+  text-wrap: balance;
+}
 
-
-/* The phrase under correction. The rule is drawn, not a
-   text-decoration: it has to arrive, and it has to be red. */
-.stir .struck { position: relative; display: inline-block; white-space: nowrap; }
-.stir .struck-say { color: var(--ink); }
-.stir .struck-rule {
-  position: absolute;
-  left: -0.03em;
-  right: -0.03em;
-  top: 0.29em;              /* measured: centred on the cap height, not the baseline */
-  height: 0.05em;
-  min-height: 2px;
+/* Editorial emphasis, not a control: a block of red with the words
+   knocked out of it. Deliberately carries no hover, no cursor and
+   no focus behaviour, so nothing reads as clickable. */
+.stir .belief-claim .field {
+  display: inline-block;
+  white-space: nowrap;
   background: var(--red);
-  transform: scaleX(0);
-  transform-origin: left;
+  color: var(--ivory);
+  /* Sized off the measured cap height so the ink sits evenly above
+     and below the letters. An inline-block's box is driven by the
+     line box, not the glyphs, so the default leaves roughly four
+     times as much red under the word as over it. */
+  line-height: 0.46;
+  padding: 0.37em 0.15em 0;
+  margin: 0 0.02em;
+  cursor: inherit;
 }
-
-
-/* The deck — a standfirst, set away from the headline it supports */
 .stir .belief-deck {
-  margin-top: clamp(52px, 8vh, 110px);
-  margin-left: auto;
-  max-width: 46ch;
+  margin-top: clamp(32px, 5vh, 56px);
+  max-width: 48ch;
+  color: var(--ink-70);
 }
 @media (prefers-reduced-motion: no-preference) {
-
-  /* One sequence: the claim sets, the rule strikes, the struck words
-     go quiet, the correction arrives. Pure CSS delays off the single
-     .is-in the observer adds — no timers to drift. */
-  .stir .belief-claim {
-    opacity: 0; transform: translateY(0.09em);
-    transition: opacity 0.6s var(--ease), transform 0.8s var(--ease);
+html.js .stir .belief-intro,
+html.js .stir .belief-claim,
+html.js .stir .belief-deck {
+    opacity: 0;
+    transform: translateY(0.4rem);
+    transition: opacity 0.6s var(--ease), transform 0.75s var(--ease);
   }
-.stir .belief-fix {
-    opacity: 0; transform: translateY(0.16em);
-    transition: opacity 0.6s var(--ease) 1.18s, transform 0.85s var(--ease) 1.18s;
-  }
-.stir .struck-rule { transition: transform 0.5s var(--ease) 0.72s; }
-.stir .struck-say { transition: color 0.45s var(--ease) 1.0s; }
-.stir .belief-statement.is-in .belief-claim,
-.stir .belief-statement.is-in .belief-fix { opacity: 1; transform: none; }
-.stir .belief-statement.is-in .struck-rule { transform: scaleX(1); }
-.stir .belief-statement.is-in .struck-say { color: var(--ink-35); }
-}
-@media (prefers-reduced-motion: reduce) {
-
-  /* No sequence to watch, so the correction is simply already made. */
-  .stir .struck-rule { transform: scaleX(1); }
-.stir .struck-say { color: var(--ink-35); }
+html.js .stir .belief-claim { transition-delay: 0.1s; }
+html.js .stir .belief-deck { transition-delay: 0.22s; }
+html.js .stir .belief-statement.is-in .belief-intro,
+html.js .stir .belief-statement.is-in .belief-claim,
+html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none; }
 }
 @media (max-width: 1023px) {
-.stir .belief-claim,
-.stir .belief-fix { max-width: none; }
-.stir .belief-deck { margin-left: 0; }
+.stir .belief-claim { max-width: none; }
 }
 @media (max-width: 639px) {
-.stir .masthead { flex-direction: column; align-items: flex-start; gap: 6px; }
-.stir .masthead-folio { text-align: left; }
+.stir .belief-claim { line-height: 0.95; letter-spacing: -0.025em; }
+.stir .belief-deck { max-width: none; }
 }
 
 
@@ -830,8 +861,8 @@
    evidence rather than a second full environment.)
    ════════════════════════════════════════════════════════════════ */
 .stir .proof {
-  padding-top: clamp(72px, 10vh, 140px);
-  padding-bottom: clamp(96px, 14vh, 200px);
+  padding-top: clamp(60px, 8vh, 112px);
+  padding-bottom: clamp(64px, 9vh, 128px);
 }
 .stir .proof-head {
   display: flex;
@@ -950,8 +981,8 @@
    contrast rises. Active: a tiny Signal Red marker + services unfold.
    ════════════════════════════════════════════════════════════════ */
 .stir .method {
-  padding-top: clamp(120px, 18vh, 240px);
-  padding-bottom: clamp(120px, 18vh, 240px);
+  padding-top: clamp(88px, 13vh, 170px);
+  padding-bottom: clamp(88px, 13vh, 170px);
 }
 .stir .method-label {
   grid-column: 1 / 4;
@@ -1205,14 +1236,16 @@
 .stir .nav-links { gap: 16px; }
 .stir .nav-links a:not(.nav-start) { display: none; }
  /* menu returns with the ABOUT/CONTACT build */
-  .stir .nav-start { padding: 0.6em 0.9em !important; }
-.stir .hero-inner { padding-top: 96px; }
+
+  .stir .hero-inner { padding-top: 96px; }
 .stir .hero-copy { max-width: 100%; }
 .stir .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
 .stir .hero-art { margin-top: 44px; }
-.stir .belief { padding-block: clamp(96px, 17vh, 150px); }
-.stir .belief-claim,
-.stir .belief-fix { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
+
+
+  /* The thesis → proof hand-off was ~180px of nothing on a phone. */
+  .stir .belief { padding-top: clamp(64px, 9vh, 96px); padding-bottom: clamp(44px, 6vh, 68px); }
+.stir .proof { padding-top: clamp(52px, 7vh, 80px); }
 .stir .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
 .stir .proof-meta { text-align: left; }
 .stir .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
@@ -1279,7 +1312,6 @@
    ════════════════════════════════════════════════════════════════ */
 .stir .nav--ink .nav-links a { color: var(--ink); }
 .stir .nav--ink .nav-links a:not(.nav-start)::after { background: var(--ink); }
-.stir .nav--ink .nav-start { border-color: var(--ink); }
 
 
 /* ── Mobile menu ──────────────────────────────────────────────── */
@@ -1472,7 +1504,7 @@
   /* ── C · Editorial reveal — typography rises out of a mask ───── */
   /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
      intersection rect, so IntersectionObserver would never fire. */
-  .stir [data-reveal="editorial"] {
+  html.js .stir [data-reveal="editorial"] {
     opacity: 0;
     transform: translateY(14px);
     -webkit-mask-image: linear-gradient(#000, #000);
@@ -1486,7 +1518,7 @@
       -webkit-mask-size 0.7s var(--ease),
       mask-size 0.7s var(--ease);
   }
-.stir [data-reveal="editorial"].is-in {
+html.js .stir [data-reveal="editorial"].is-in {
     opacity: 1;
     transform: none;
     -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
@@ -1494,12 +1526,12 @@
 
 
   /* ── B · Registration reveal — plates settling into register ─── */
-  .stir [data-reveal="registration"] {
+  html.js .stir [data-reveal="registration"] {
     opacity: 0;
     transform: translate(4px, 2px);
     transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
   }
-.stir [data-reveal="registration"].is-in {
+html.js .stir [data-reveal="registration"].is-in {
     opacity: 1;
     transform: none;
   }
@@ -1524,7 +1556,7 @@
 
   /* ── D · Structural reveal — a red signal draws the rule ─────── */
   .stir [data-reveal="structural"] { position: relative; }
-.stir [data-reveal="structural"]::before {
+html.js .stir [data-reveal="structural"]::before {
     content: "";
     position: absolute;
     left: 0; top: -1px;
@@ -1535,10 +1567,10 @@
     transform-origin: left;
     transition: transform 0.55s var(--ease);
   }
-.stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 
   /* the signal passes through, it does not stay */
-  .stir [data-reveal="structural"].is-in.sig-spent::before {
+  html.js .stir [data-reveal="structural"].is-in.sig-spent::before {
     transform-origin: right;
     transform: scaleX(0);
   }
@@ -1869,8 +1901,8 @@
    asking by this point in the page.
    ════════════════════════════════════════════════════════════════ */
 .stir .who {
-  padding-top: clamp(110px, 16vh, 220px);
-  padding-bottom: clamp(120px, 18vh, 240px);
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: 0;      /* the full-bleed art meets the invitation */
 }
 .stir .who-label {
   grid-column: 1 / 4;
@@ -2019,7 +2051,7 @@
 .stir .starter-go:hover,
 .stir .starter-go:focus-visible { color: var(--red); }
 .stir .starter-go:hover .arrow,
-.stir .starter-go:focus-visible .arrow { transform: translateX(0.35em); }
+.stir .starter-go:focus-visible .arrow { transform: translateX(3px); }
 .stir .starter-row:focus-within { border-bottom-color: var(--red); }
 .stir .starter-note { color: var(--ink-60); margin-top: 16px; }
 
@@ -2126,6 +2158,7 @@
   min-height: 12rem;
 }
 .stir .trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.stir .trade-panel .panel-for { color: var(--ink); }
 .stir .trade-panel .panel-said {
   font-size: clamp(1.3rem, 2.3vw, 2.1rem);
   font-weight: 300;
@@ -2151,26 +2184,50 @@
   margin-top: clamp(28px, 4vh, 44px);
   max-width: 44ch;
 }
-/* Narrow: the answer leads and stays pinned, so choosing a trade
-   never pushes the reply off screen. */
+
+/* The inline answer lives in the markup, not in a script. With no JS
+   the whole list simply reads as nine trades and their answers; the
+   panel stands down, because without script it can only ever show
+   the first one. */
+.stir .trade-inline > div { min-height: 0; }
+.stir .trade-inline-said {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-block: 4px 10px;
+}
+.stir .trade-inline-note { color: var(--ink-60); padding-bottom: 18px; }
+html:not(.js) .stir .trade-panel { display: none; }
+html.js .stir .trade-inline { display: none; }
+/* wide + JS: the panel does it */
+
+/* Narrow: no panel. The answer opens directly under the trade you
+   chose, because an update somewhere else on the page is a change
+   you cannot see — and a panel pinned to the top of the viewport
+   would sit behind the fixed header anyway. */
 @media (max-width: 1023px) {
-.stir .trades-grid { grid-template-columns: 1fr; row-gap: clamp(28px, 4vh, 40px); }
-.stir .trade-panel {
-    grid-row: 1;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-    min-height: 0;
-    background: var(--ivory);
-    border-top: 0;
-    border-bottom: 1px solid var(--ink);
-    padding-top: clamp(14px, 2.4vh, 22px);
-    padding-bottom: clamp(14px, 2.4vh, 22px);
+.stir .trades-grid { grid-template-columns: 1fr; }
+.stir .trade-panel { display: none; }
+html.js .stir .trade-inline {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.38s var(--ease);
   }
-.stir .trade-panel .panel-label { margin-bottom: 14px; }
-.stir .trade-panel .panel-said { min-height: 2.6em; }
-.stir .trade-panel .panel-note { margin-top: 14px; padding-top: 10px; }
-.stir .trade-list { grid-row: 2; }
+html.js .stir .trade[aria-pressed="true"] + .trade-inline { grid-template-rows: 1fr; }
+.stir .trade-inline-said { font-size: clamp(1.1rem, 4.4vw, 1.45rem); }
+
+
+  /* The chosen trade and its answer read as one block. */
+  .stir .trade-list li:has(.trade[aria-pressed="true"]) {
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+  }
+.stir .trade[aria-pressed="true"] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+html.js .stir .trade-inline { transition: none; }
 }
 
 
@@ -2216,7 +2273,7 @@
 .stir .convert .starter-go { color: var(--ivory); }
 .stir .convert .starter-go:hover,
 .stir .convert .starter-go:focus-visible { color: #fff; }
-.stir .convert .starter-go:hover .arrow { transform: translateX(0.35em); }
+.stir .convert .starter-go:hover .arrow { transform: translateX(3px); }
 .stir .convert .starter-row:focus-within { border-bottom-color: var(--red); }
 .stir .convert .starter-note { color: var(--ivory-75); }
 @media (max-width: 1023px) {
@@ -2312,9 +2369,6 @@ body.stir-dark-top { background: #0451AB; }
   margin-right: 0;
 }
 
-/* Our nav is fixed rather than absolute, since Squarespace scrolls
-   the document body. */
-.stir .nav { position: fixed; }
 
 /* ════════════════════════════════════════════════════════════════
    ENHANCEMENT 01 — ADAPTIVE NAV
@@ -2322,31 +2376,12 @@ body.stir-dark-top { background: #0451AB; }
    environments get the ivory mark; ivory gets ink. One detail that
    no template does.
    ════════════════════════════════════════════════════════════════ */
-.stir .nav {
-  transition: color 0.4s var(--ease);
-}
-.stir .nav-logo img { transition: opacity 0.3s var(--ease); }
-.stir .nav-logo { position: relative; display: inline-block; }
-.stir .nav-logo .mark-ink { position: absolute; inset: 0; opacity: 0; }
+.stir .nav { transition: color 0.4s var(--ease); }
 
-.stir .nav[data-on="ivory"] .nav-links a { color: var(--ink); }
-.stir .nav[data-on="ivory"] .nav-links a:not(.nav-start)::after { background: var(--ink); }
-.stir .nav[data-on="ivory"] .nav-start { border-color: var(--ink); }
-.stir .nav[data-on="ivory"] .nav-logo .mark-ivory { opacity: 0; }
-.stir .nav[data-on="ivory"] .nav-logo .mark-ink { opacity: 1; }
-/* The index numerals sit back on whichever ground the nav is on. */
-.stir .nav[data-on="ivory"] .nav-links .nav-no { color: var(--ink-35); }
-
-.stir .nav[data-on="cobalt"] .nav-links a { color: var(--ivory); }
-.stir .nav[data-on="cobalt"] .nav-links a:not(.nav-start)::after { background: var(--ivory); }
-.stir .nav[data-on="cobalt"] .nav-start { border-color: var(--ivory); }
-.stir .nav[data-on="cobalt"] .nav-logo .mark-ivory { opacity: 1; }
-.stir .nav[data-on="cobalt"] .nav-logo .mark-ink { opacity: 0; }
-.stir .nav[data-on="cobalt"] .nav-links .nav-no { color: var(--ivory-40); }
-
-/* Current state beats the ground on either. */
-.stir .nav .nav-links a:hover .nav-no,
-.stir .nav .nav-links a[aria-current] .nav-no { color: inherit; }
+/* The mark cross-fade and the ground inversion now live in the shared
+   stylesheet, driven by the header's scrolled state rather than by
+   whichever section is passing beneath it. data-ground stays because
+   the running index still reads it. */
 
 /* ════════════════════════════════════════════════════════════════
    ENHANCEMENT 02 — RUNNING INDEX
@@ -2410,13 +2445,16 @@ body.stir-dark-top { background: #0451AB; }
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
-    <a href="/" class="nav-logo"><img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home"><img class="mark-ink" src="../assets/stir-mark.png" alt="" aria-hidden="true"></a>
+    <a href="/" class="nav-logo">
+      <img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="../assets/stir-mark.png" alt="" aria-hidden="true">
+    </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="#method" data-spy="method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="/contact" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -2461,35 +2499,29 @@ body.stir-dark-top { background: #0451AB; }
 
         <p class="editorial hero-prop">STIR builds the content, strategy and systems that turn attention into demand&nbsp;— and demand into revenue.</p>
 
-        <p class="hero-cta"><a class="cta-line" href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a></p>
+        <p class="hero-cta"><a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
       </div>
 
       <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
     </div>
   </section>
 
-  <!-- ════════ 02 · THESIS ════════
-       Set as a front page, because "a headline statement" is a format,
-       not a metaphor: masthead rule, kicker, folio, headline, deck.
-
-       The claim is then corrected in place rather than answered three
-       hundred pixels later. A red rule strikes the phrase that is
-       wrong, the struck words stay but go quiet — content is not
-       wrong, it is insufficient — and the replacement sets
-       underneath. One red mark in the entire section, and it is the
-       mark that changes the meaning. -->
-  <section class="belief shell" data-ground="ivory" data-index="02 — Thesis" aria-labelledby="belief-label">
-    <div class="masthead" data-reveal="structural">
-      <p class="utility" id="belief-label">02 / Thesis</p>
-      <p class="utility masthead-folio">The argument&nbsp;&nbsp;·&nbsp;&nbsp;02 / 07</p>
-    </div>
+  <!-- ════════ 02 · THE ARGUMENT ════════
+       One headline, not a staged reversal. The small line concedes
+       the obvious, the headline says the thing worth remembering,
+       and the deck explains how it is done. The red field behind
+       WORTH is editorial emphasis — a printed block, not a control,
+       so it carries no hover, no cursor and no affordance. -->
+  <section class="belief shell" data-ground="ivory" data-index="02 — Thesis" aria-labelledby="belief-title">
+    <p class="utility belief-label" data-reveal="structural">02 / The argument</p>
 
     <div class="belief-statement" data-reveal="stage">
-      <h2 class="display belief-claim">Most businesses don’t&nbsp;need <span class="struck"><span class="struck-say">more&nbsp;content</span><i class="struck-rule" aria-hidden="true"></i></span></h2>
-      <p class="display belief-fix">They need something worth talking&nbsp;about.</p>
-    </div>
+      <p class="belief-intro">More content isn’t the whole&nbsp;answer.</p>
 
-    <p class="editorial belief-deck reveal">The interesting part is usually already there. We find it, build the story around it, put it in front of the right people and give them a reason to act.</p>
+      <h2 class="display belief-claim" id="belief-title">Something <span class="field">worth</span> talking&nbsp;about.</h2>
+
+      <p class="editorial belief-deck">The interesting part is usually already there. We find it, build the story around it, and give people a reason to&nbsp;act.</p>
+    </div>
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
@@ -2726,36 +2758,90 @@ body.stir-dark-top { background: #0451AB; }
           <ul class="trade-list" id="trade-list">
           <li><button class="trade" type="button" aria-pressed="true"
                       data-said="Turn daily operations into content people travel for."
-                      data-note="Short-form · Merchandising story · Foot traffic">Markets</button></li>
+                      data-note="Short-form · Merchandising story · Foot traffic" aria-controls="answer-markets">Markets</button>
+            <div class="trade-inline" id="answer-markets">
+              <div>
+                <p class="trade-inline-said">Turn daily operations into content people travel for.</p>
+                <p class="utility trade-inline-note">Short-form · Merchandising story · Foot traffic</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Make the morning line the marketing."
-                      data-note="Product film · Launch moments · Pre-orders">Bakeries</button></li>
+                      data-note="Product film · Launch moments · Pre-orders" aria-controls="answer-bakeries">Bakeries</button>
+            <div class="trade-inline" id="answer-bakeries">
+              <div>
+                <p class="trade-inline-said">Make the morning line the marketing.</p>
+                <p class="utility trade-inline-note">Product film · Launch moments · Pre-orders</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Give regulars a reason to post."
-                      data-note="Identity · In-store cues · Community content">Cafés</button></li>
+                      data-note="Identity · In-store cues · Community content" aria-controls="answer-caf-s">Cafés</button>
+            <div class="trade-inline" id="answer-caf-s">
+              <div>
+                <p class="trade-inline-said">Give regulars a reason to post.</p>
+                <p class="utility trade-inline-note">Identity · In-store cues · Community content</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Fill the room on the nights that matter."
-                      data-note="Campaigns · Creator seeding · Reservations">Restaurants</button></li>
+                      data-note="Campaigns · Creator seeding · Reservations" aria-controls="answer-restaurants">Restaurants</button>
+            <div class="trade-inline" id="answer-restaurants">
+              <div>
+                <p class="trade-inline-said">Fill the room on the nights that matter.</p>
+                <p class="utility trade-inline-note">Campaigns · Creator seeding · Reservations</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Make a business nobody photographs impossible to ignore."
-                      data-note="Brand system · Website · Inbound pipeline">Logistics</button></li>
+                      data-note="Brand system · Website · Inbound pipeline" aria-controls="answer-logistics">Logistics</button>
+            <div class="trade-inline" id="answer-logistics">
+              <div>
+                <p class="trade-inline-said">Make a business nobody photographs impossible to ignore.</p>
+                <p class="utility trade-inline-note">Brand system · Website · Inbound pipeline</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Explain a complex operation to the people who buy it."
-                      data-note="Positioning · Capability film · Sales collateral">Industrial</button></li>
+                      data-note="Positioning · Capability film · Sales collateral" aria-controls="answer-industrial">Industrial</button>
+            <div class="trade-inline" id="answer-industrial">
+              <div>
+                <p class="trade-inline-said">Explain a complex operation to the people who buy it.</p>
+                <p class="utility trade-inline-note">Positioning · Capability film · Sales collateral</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Turn expertise into the reason people call you first."
-                      data-note="Authority content · Website · Intake system">Law</button></li>
+                      data-note="Authority content · Website · Intake system" aria-controls="answer-law">Law</button>
+            <div class="trade-inline" id="answer-law">
+              <div>
+                <p class="trade-inline-said">Turn expertise into the reason people call you first.</p>
+                <p class="utility trade-inline-note">Authority content · Website · Intake system</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Sell the block, not just the listing."
-                      data-note="Neighborhood story · Listing media · Lead capture">Real estate</button></li>
+                      data-note="Neighborhood story · Listing media · Lead capture" aria-controls="answer-real-estate">Real estate</button>
+            <div class="trade-inline" id="answer-real-estate">
+              <div>
+                <p class="trade-inline-said">Sell the block, not just the listing.</p>
+                <p class="utility trade-inline-note">Neighborhood story · Listing media · Lead capture</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Make the work visible, then make it bookable."
-                      data-note="Proof content · Offer design · Booking flow">Services</button></li>
+                      data-note="Proof content · Offer design · Booking flow" aria-controls="answer-services">Services</button>
+            <div class="trade-inline" id="answer-services">
+              <div>
+                <p class="trade-inline-said">Make the work visible, then make it bookable.</p>
+                <p class="utility trade-inline-note">Proof content · Offer design · Booking flow</p>
+              </div>
+            </div></li>
           </ul>
 
           <div class="trade-panel" id="trade-panel">
-            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>What that looks like</p>
-            <p class="panel-said" id="panel-said" aria-live="polite">Turn daily operations into content people travel for.</p>
+            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>For <span class="panel-for" id="panel-for">markets</span></p>
+            <p class="panel-said" id="panel-said">Turn daily operations into content people travel for.</p>
             <p class="utility panel-note" id="panel-note">Short-form · Merchandising story · Foot traffic</p>
           </div>
         </div>
@@ -2854,13 +2940,16 @@ body.stir-dark-top { background: #0451AB; }
 <div class="stir stir-about">
 <header class="nav nav--ink">
   <div class="shell nav-inner">
-    <a href="/" class="nav-logo"><img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home"><img class="mark-ink" src="../assets/stir-mark.png" alt="" aria-hidden="true"></a>
+    <a href="/" class="nav-logo">
+      <img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="../assets/stir-mark.png" alt="" aria-hidden="true">
+    </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="/#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="/about" aria-current="page">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="/contact" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -2916,7 +3005,7 @@ body.stir-dark-top { background: #0451AB; }
          alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
 
     <div class="about-cta reveal">
-      <a class="cta" href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
       <a class="cta-line" href="/#proof">See the proof <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
@@ -2941,13 +3030,16 @@ body.stir-dark-top { background: #0451AB; }
 <div class="stir stir-contact">
 <header class="nav nav--ink">
   <div class="shell nav-inner">
-    <a href="/" class="nav-logo"><img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home"><img class="mark-ink" src="../assets/stir-mark.png" alt="" aria-hidden="true"></a>
+    <a href="/" class="nav-logo">
+      <img class="mark-ivory" src="../assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="../assets/stir-mark.png" alt="" aria-hidden="true">
+    </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="/#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="/contact" class="nav-start" aria-current="page">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a href="/contact" class="cta cta--sm nav-start" aria-current="page"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -3051,7 +3143,7 @@ body.stir-dark-top { background: #0451AB; }
         </div>
 
         <div class="send-row">
-          <button class="cta" type="submit">Send it to STIR <span class="arrow" aria-hidden="true">→</span></button>
+          <button class="cta cta--flat" type="submit"><span class="cta-label">Send it to STIR</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">→</i></span></button>
           <span class="send-rail" aria-hidden="true"></span>
         </div>
       </form>
@@ -3333,14 +3425,20 @@ body.stir-dark-top { background: #0451AB; }
   /* ── Who this is for: the trades as a working index ─────────────
      EXPLAIN: the real question behind a list of verticals is "what
      would you do for a business like mine". So the list answers it.
-     Pointer hovers preview; click and keyboard focus commit. The
-     panel is the single source of truth, so there is one answer on
-     screen at a time and no cards to scan.                          */
+
+     Wide: one sticky panel, because there is room to show the list
+     and the answer at once. Narrow: the answer opens underneath the
+     trade you chose, because a panel that updates somewhere else is
+     a change you cannot see. The panel names the trade either way.
+
+     Every answer is in the markup already, so with no JS the list
+     simply reads as nine trades with their answers under them.     */
   (function () {
     var list  = document.getElementById('trade-list');
     var panel = document.getElementById('trade-panel');
     var said  = document.getElementById('panel-said');
     var note  = document.getElementById('panel-note');
+    var forEl = document.getElementById('panel-for');
     if (!list || !panel || !said || !note) return;
 
     var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
@@ -3348,21 +3446,27 @@ body.stir-dark-top { background: #0451AB; }
     var swapTimer = null;
 
     function select(btn) {
-      if (!btn || btn === current) return;
+      if (!btn) return;
       trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
+      if (btn === current) return;
       current = btn;
 
       var nextSaid = btn.getAttribute('data-said');
       var nextNote = btn.getAttribute('data-note');
-      if (reduce) { said.textContent = nextSaid; note.textContent = nextNote; return; }
+      var nextFor  = btn.textContent.trim().toLowerCase();
+      function write() {
+        said.textContent = nextSaid;
+        note.textContent = nextNote;
+        if (forEl) forEl.textContent = nextFor;
+      }
+      if (reduce) { write(); return; }
 
       /* fade out, swap, fade back — the copy replaces itself rather
          than sliding, so nothing moves that shouldn't. */
       panel.classList.add('is-swapping');
       clearTimeout(swapTimer);
       swapTimer = setTimeout(function () {
-        said.textContent = nextSaid;
-        note.textContent = nextNote;
+        write();
         panel.classList.remove('is-swapping');
       }, 200);
     }
@@ -3370,6 +3474,8 @@ body.stir-dark-top { background: #0451AB; }
     trades.forEach(function (btn) {
       btn.addEventListener('click', function () { select(btn); });
       btn.addEventListener('focus', function () { select(btn); });
+      /* Hover previews on a real pointer only — never on touch, where
+         it would fire on the way to a tap. */
       if (fine) btn.addEventListener('pointerenter', function (e) {
         if (e.pointerType === 'mouse') select(btn);
       });
@@ -3388,33 +3494,36 @@ body.stir-dark-top { background: #0451AB; }
     });
   })();
 
-  /* ── Nav as index — the red square marks where you are ──────────
-     DIRECT: the nav names two numbered sections, so it should say
-     which one you are standing in. A band across the middle of the
-     viewport decides; at most one section is ever in it.            */
+  /* ── Sticky header ──────────────────────────────────────────────
+     Transparent over the cobalt hero, opaque paper once scrolled, so
+     it never has to hold contrast against moving artwork. One class,
+     flipped from a throttled rAF; no scroll work per frame.          */
   (function () {
-    var links = document.querySelectorAll('a[data-spy]');
-    if (!links.length || !('IntersectionObserver' in window)) return;
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var ticking = false;
+    /* Under Squarespace the stylesheet is scoped to .stir, which owns
+       its own --nav-h, so the measurement has to land on both. */
+    var scope = document.querySelector('.stir');
+    function sync() {
+      nav.classList.toggle('is-stuck', window.scrollY > 24);
+      var h = nav.offsetHeight + 'px';
+      document.documentElement.style.setProperty('--nav-h', h);
+      if (scope) scope.style.setProperty('--nav-h', h);
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { sync(); ticking = false; });
+    }
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
-    var byId = {};
-    Array.prototype.forEach.call(links, function (a) {
-      var id = a.getAttribute('data-spy');
-      (byId[id] = byId[id] || []).push(a);
-    });
-
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        (byId[e.target.id] || []).forEach(function (a) {
-          if (e.isIntersecting) a.setAttribute('aria-current', 'true');
-          else a.removeAttribute('aria-current');
-        });
-      });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-
-    Object.keys(byId).forEach(function (id) {
-      var section = document.getElementById(id);
-      if (section) spy.observe(section);
-    });
+    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
+    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
   })();
 
   /* ── Mobile menu ────────────────────────────────────────────────*/

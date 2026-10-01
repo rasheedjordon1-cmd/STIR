@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STIR — Attention should pay</title>
 <meta name="description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue. Independent growth + creative practice, Brooklyn, New York.">
@@ -89,13 +90,16 @@
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo"><img src="assets/stir-mark-ivory.png" alt="STIR — Home"></a>
+    <a href="index.html" class="nav-logo">
+      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
+    </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="#method" data-spy="method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="about.html">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a href="contact.html" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -140,35 +144,29 @@
 
         <p class="editorial hero-prop">STIR builds the content, strategy and systems that turn attention into demand&nbsp;— and demand into revenue.</p>
 
-        <p class="hero-cta"><a class="cta-line" href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a></p>
+        <p class="hero-cta"><a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
       </div>
 
       <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
     </div>
   </section>
 
-  <!-- ════════ 02 · THESIS ════════
-       Set as a front page, because "a headline statement" is a format,
-       not a metaphor: masthead rule, kicker, folio, headline, deck.
-
-       The claim is then corrected in place rather than answered three
-       hundred pixels later. A red rule strikes the phrase that is
-       wrong, the struck words stay but go quiet — content is not
-       wrong, it is insufficient — and the replacement sets
-       underneath. One red mark in the entire section, and it is the
-       mark that changes the meaning. -->
-  <section class="belief shell" aria-labelledby="belief-label">
-    <div class="masthead" data-reveal="structural">
-      <p class="utility" id="belief-label">02 / Thesis</p>
-      <p class="utility masthead-folio">The argument&nbsp;&nbsp;·&nbsp;&nbsp;02 / 07</p>
-    </div>
+  <!-- ════════ 02 · THE ARGUMENT ════════
+       One headline, not a staged reversal. The small line concedes
+       the obvious, the headline says the thing worth remembering,
+       and the deck explains how it is done. The red field behind
+       WORTH is editorial emphasis — a printed block, not a control,
+       so it carries no hover, no cursor and no affordance. -->
+  <section class="belief shell" aria-labelledby="belief-title">
+    <p class="utility belief-label" data-reveal="structural">02 / The argument</p>
 
     <div class="belief-statement" data-reveal="stage">
-      <h2 class="display belief-claim">Most businesses don’t&nbsp;need <span class="struck"><span class="struck-say">more&nbsp;content</span><i class="struck-rule" aria-hidden="true"></i></span></h2>
-      <p class="display belief-fix">They need something worth talking&nbsp;about.</p>
-    </div>
+      <p class="belief-intro">More content isn’t the whole&nbsp;answer.</p>
 
-    <p class="editorial belief-deck reveal">The interesting part is usually already there. We find it, build the story around it, put it in front of the right people and give them a reason to act.</p>
+      <h2 class="display belief-claim" id="belief-title">Something <span class="field">worth</span> talking&nbsp;about.</h2>
+
+      <p class="editorial belief-deck">The interesting part is usually already there. We find it, build the story around it, and give people a reason to&nbsp;act.</p>
+    </div>
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
@@ -405,36 +403,90 @@
           <ul class="trade-list" id="trade-list">
           <li><button class="trade" type="button" aria-pressed="true"
                       data-said="Turn daily operations into content people travel for."
-                      data-note="Short-form · Merchandising story · Foot traffic">Markets</button></li>
+                      data-note="Short-form · Merchandising story · Foot traffic" aria-controls="answer-markets">Markets</button>
+            <div class="trade-inline" id="answer-markets">
+              <div>
+                <p class="trade-inline-said">Turn daily operations into content people travel for.</p>
+                <p class="utility trade-inline-note">Short-form · Merchandising story · Foot traffic</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Make the morning line the marketing."
-                      data-note="Product film · Launch moments · Pre-orders">Bakeries</button></li>
+                      data-note="Product film · Launch moments · Pre-orders" aria-controls="answer-bakeries">Bakeries</button>
+            <div class="trade-inline" id="answer-bakeries">
+              <div>
+                <p class="trade-inline-said">Make the morning line the marketing.</p>
+                <p class="utility trade-inline-note">Product film · Launch moments · Pre-orders</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Give regulars a reason to post."
-                      data-note="Identity · In-store cues · Community content">Cafés</button></li>
+                      data-note="Identity · In-store cues · Community content" aria-controls="answer-caf-s">Cafés</button>
+            <div class="trade-inline" id="answer-caf-s">
+              <div>
+                <p class="trade-inline-said">Give regulars a reason to post.</p>
+                <p class="utility trade-inline-note">Identity · In-store cues · Community content</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Fill the room on the nights that matter."
-                      data-note="Campaigns · Creator seeding · Reservations">Restaurants</button></li>
+                      data-note="Campaigns · Creator seeding · Reservations" aria-controls="answer-restaurants">Restaurants</button>
+            <div class="trade-inline" id="answer-restaurants">
+              <div>
+                <p class="trade-inline-said">Fill the room on the nights that matter.</p>
+                <p class="utility trade-inline-note">Campaigns · Creator seeding · Reservations</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Make a business nobody photographs impossible to ignore."
-                      data-note="Brand system · Website · Inbound pipeline">Logistics</button></li>
+                      data-note="Brand system · Website · Inbound pipeline" aria-controls="answer-logistics">Logistics</button>
+            <div class="trade-inline" id="answer-logistics">
+              <div>
+                <p class="trade-inline-said">Make a business nobody photographs impossible to ignore.</p>
+                <p class="utility trade-inline-note">Brand system · Website · Inbound pipeline</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Explain a complex operation to the people who buy it."
-                      data-note="Positioning · Capability film · Sales collateral">Industrial</button></li>
+                      data-note="Positioning · Capability film · Sales collateral" aria-controls="answer-industrial">Industrial</button>
+            <div class="trade-inline" id="answer-industrial">
+              <div>
+                <p class="trade-inline-said">Explain a complex operation to the people who buy it.</p>
+                <p class="utility trade-inline-note">Positioning · Capability film · Sales collateral</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Turn expertise into the reason people call you first."
-                      data-note="Authority content · Website · Intake system">Law</button></li>
+                      data-note="Authority content · Website · Intake system" aria-controls="answer-law">Law</button>
+            <div class="trade-inline" id="answer-law">
+              <div>
+                <p class="trade-inline-said">Turn expertise into the reason people call you first.</p>
+                <p class="utility trade-inline-note">Authority content · Website · Intake system</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Sell the block, not just the listing."
-                      data-note="Neighborhood story · Listing media · Lead capture">Real estate</button></li>
+                      data-note="Neighborhood story · Listing media · Lead capture" aria-controls="answer-real-estate">Real estate</button>
+            <div class="trade-inline" id="answer-real-estate">
+              <div>
+                <p class="trade-inline-said">Sell the block, not just the listing.</p>
+                <p class="utility trade-inline-note">Neighborhood story · Listing media · Lead capture</p>
+              </div>
+            </div></li>
           <li><button class="trade" type="button" aria-pressed="false"
                       data-said="Make the work visible, then make it bookable."
-                      data-note="Proof content · Offer design · Booking flow">Services</button></li>
+                      data-note="Proof content · Offer design · Booking flow" aria-controls="answer-services">Services</button>
+            <div class="trade-inline" id="answer-services">
+              <div>
+                <p class="trade-inline-said">Make the work visible, then make it bookable.</p>
+                <p class="utility trade-inline-note">Proof content · Offer design · Booking flow</p>
+              </div>
+            </div></li>
           </ul>
 
           <div class="trade-panel" id="trade-panel">
-            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>What that looks like</p>
-            <p class="panel-said" id="panel-said" aria-live="polite">Turn daily operations into content people travel for.</p>
+            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>For <span class="panel-for" id="panel-for">markets</span></p>
+            <p class="panel-said" id="panel-said">Turn daily operations into content people travel for.</p>
             <p class="utility panel-note" id="panel-note">Short-form · Merchandising story · Foot traffic</p>
           </div>
         </div>
@@ -736,14 +788,20 @@
   /* ── Who this is for: the trades as a working index ─────────────
      EXPLAIN: the real question behind a list of verticals is "what
      would you do for a business like mine". So the list answers it.
-     Pointer hovers preview; click and keyboard focus commit. The
-     panel is the single source of truth, so there is one answer on
-     screen at a time and no cards to scan.                          */
+
+     Wide: one sticky panel, because there is room to show the list
+     and the answer at once. Narrow: the answer opens underneath the
+     trade you chose, because a panel that updates somewhere else is
+     a change you cannot see. The panel names the trade either way.
+
+     Every answer is in the markup already, so with no JS the list
+     simply reads as nine trades with their answers under them.     */
   (function () {
     var list  = document.getElementById('trade-list');
     var panel = document.getElementById('trade-panel');
     var said  = document.getElementById('panel-said');
     var note  = document.getElementById('panel-note');
+    var forEl = document.getElementById('panel-for');
     if (!list || !panel || !said || !note) return;
 
     var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
@@ -751,21 +809,27 @@
     var swapTimer = null;
 
     function select(btn) {
-      if (!btn || btn === current) return;
+      if (!btn) return;
       trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
+      if (btn === current) return;
       current = btn;
 
       var nextSaid = btn.getAttribute('data-said');
       var nextNote = btn.getAttribute('data-note');
-      if (reduce) { said.textContent = nextSaid; note.textContent = nextNote; return; }
+      var nextFor  = btn.textContent.trim().toLowerCase();
+      function write() {
+        said.textContent = nextSaid;
+        note.textContent = nextNote;
+        if (forEl) forEl.textContent = nextFor;
+      }
+      if (reduce) { write(); return; }
 
       /* fade out, swap, fade back — the copy replaces itself rather
          than sliding, so nothing moves that shouldn't. */
       panel.classList.add('is-swapping');
       clearTimeout(swapTimer);
       swapTimer = setTimeout(function () {
-        said.textContent = nextSaid;
-        note.textContent = nextNote;
+        write();
         panel.classList.remove('is-swapping');
       }, 200);
     }
@@ -773,6 +837,8 @@
     trades.forEach(function (btn) {
       btn.addEventListener('click', function () { select(btn); });
       btn.addEventListener('focus', function () { select(btn); });
+      /* Hover previews on a real pointer only — never on touch, where
+         it would fire on the way to a tap. */
       if (fine) btn.addEventListener('pointerenter', function (e) {
         if (e.pointerType === 'mouse') select(btn);
       });
@@ -791,33 +857,36 @@
     });
   })();
 
-  /* ── Nav as index — the red square marks where you are ──────────
-     DIRECT: the nav names two numbered sections, so it should say
-     which one you are standing in. A band across the middle of the
-     viewport decides; at most one section is ever in it.            */
+  /* ── Sticky header ──────────────────────────────────────────────
+     Transparent over the cobalt hero, opaque paper once scrolled, so
+     it never has to hold contrast against moving artwork. One class,
+     flipped from a throttled rAF; no scroll work per frame.          */
   (function () {
-    var links = document.querySelectorAll('a[data-spy]');
-    if (!links.length || !('IntersectionObserver' in window)) return;
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var ticking = false;
+    /* Under Squarespace the stylesheet is scoped to .stir, which owns
+       its own --nav-h, so the measurement has to land on both. */
+    var scope = document.querySelector('.stir');
+    function sync() {
+      nav.classList.toggle('is-stuck', window.scrollY > 24);
+      var h = nav.offsetHeight + 'px';
+      document.documentElement.style.setProperty('--nav-h', h);
+      if (scope) scope.style.setProperty('--nav-h', h);
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { sync(); ticking = false; });
+    }
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
-    var byId = {};
-    Array.prototype.forEach.call(links, function (a) {
-      var id = a.getAttribute('data-spy');
-      (byId[id] = byId[id] || []).push(a);
-    });
-
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        (byId[e.target.id] || []).forEach(function (a) {
-          if (e.isIntersecting) a.setAttribute('aria-current', 'true');
-          else a.removeAttribute('aria-current');
-        });
-      });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-
-    Object.keys(byId).forEach(function (id) {
-      var section = document.getElementById(id);
-      if (section) spy.observe(section);
-    });
+    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
+    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
   })();
 
   /* ── Mobile menu ────────────────────────────────────────────────*/

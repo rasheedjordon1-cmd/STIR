@@ -208,14 +208,20 @@
   /* ── Who this is for: the trades as a working index ─────────────
      EXPLAIN: the real question behind a list of verticals is "what
      would you do for a business like mine". So the list answers it.
-     Pointer hovers preview; click and keyboard focus commit. The
-     panel is the single source of truth, so there is one answer on
-     screen at a time and no cards to scan.                          */
+
+     Wide: one sticky panel, because there is room to show the list
+     and the answer at once. Narrow: the answer opens underneath the
+     trade you chose, because a panel that updates somewhere else is
+     a change you cannot see. The panel names the trade either way.
+
+     Every answer is in the markup already, so with no JS the list
+     simply reads as nine trades with their answers under them.     */
   (function () {
     var list  = document.getElementById('trade-list');
     var panel = document.getElementById('trade-panel');
     var said  = document.getElementById('panel-said');
     var note  = document.getElementById('panel-note');
+    var forEl = document.getElementById('panel-for');
     if (!list || !panel || !said || !note) return;
 
     var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
@@ -223,21 +229,27 @@
     var swapTimer = null;
 
     function select(btn) {
-      if (!btn || btn === current) return;
+      if (!btn) return;
       trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
+      if (btn === current) return;
       current = btn;
 
       var nextSaid = btn.getAttribute('data-said');
       var nextNote = btn.getAttribute('data-note');
-      if (reduce) { said.textContent = nextSaid; note.textContent = nextNote; return; }
+      var nextFor  = btn.textContent.trim().toLowerCase();
+      function write() {
+        said.textContent = nextSaid;
+        note.textContent = nextNote;
+        if (forEl) forEl.textContent = nextFor;
+      }
+      if (reduce) { write(); return; }
 
       /* fade out, swap, fade back — the copy replaces itself rather
          than sliding, so nothing moves that shouldn't. */
       panel.classList.add('is-swapping');
       clearTimeout(swapTimer);
       swapTimer = setTimeout(function () {
-        said.textContent = nextSaid;
-        note.textContent = nextNote;
+        write();
         panel.classList.remove('is-swapping');
       }, 200);
     }
@@ -245,6 +257,8 @@
     trades.forEach(function (btn) {
       btn.addEventListener('click', function () { select(btn); });
       btn.addEventListener('focus', function () { select(btn); });
+      /* Hover previews on a real pointer only — never on touch, where
+         it would fire on the way to a tap. */
       if (fine) btn.addEventListener('pointerenter', function (e) {
         if (e.pointerType === 'mouse') select(btn);
       });
@@ -263,33 +277,36 @@
     });
   })();
 
-  /* ── Nav as index — the red square marks where you are ──────────
-     DIRECT: the nav names two numbered sections, so it should say
-     which one you are standing in. A band across the middle of the
-     viewport decides; at most one section is ever in it.            */
+  /* ── Sticky header ──────────────────────────────────────────────
+     Transparent over the cobalt hero, opaque paper once scrolled, so
+     it never has to hold contrast against moving artwork. One class,
+     flipped from a throttled rAF; no scroll work per frame.          */
   (function () {
-    var links = document.querySelectorAll('a[data-spy]');
-    if (!links.length || !('IntersectionObserver' in window)) return;
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var ticking = false;
+    /* Under Squarespace the stylesheet is scoped to .stir, which owns
+       its own --nav-h, so the measurement has to land on both. */
+    var scope = document.querySelector('.stir');
+    function sync() {
+      nav.classList.toggle('is-stuck', window.scrollY > 24);
+      var h = nav.offsetHeight + 'px';
+      document.documentElement.style.setProperty('--nav-h', h);
+      if (scope) scope.style.setProperty('--nav-h', h);
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { sync(); ticking = false; });
+    }
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
 
-    var byId = {};
-    Array.prototype.forEach.call(links, function (a) {
-      var id = a.getAttribute('data-spy');
-      (byId[id] = byId[id] || []).push(a);
-    });
-
-    var spy = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        (byId[e.target.id] || []).forEach(function (a) {
-          if (e.isIntersecting) a.setAttribute('aria-current', 'true');
-          else a.removeAttribute('aria-current');
-        });
-      });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-
-    Object.keys(byId).forEach(function (id) {
-      var section = document.getElementById(id);
-      if (section) spy.observe(section);
-    });
+    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
+    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
   })();
 
   /* ── Mobile menu ────────────────────────────────────────────────*/

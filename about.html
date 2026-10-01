@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STIR — About</title>
 <meta name="description" content="STIR is an independent growth and creative practice in Brooklyn, New York. We find what makes a business worth attention and build the system that turns that attention into revenue.">
@@ -57,13 +58,16 @@
 
 <header class="nav nav--ink">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
+    <a href="index.html" class="nav-logo">
+      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
+    </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="index.html#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="index.html#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="about.html" aria-current="page">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="nav-start">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a href="contact.html" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -119,7 +123,7 @@
          alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
 
     <div class="about-cta reveal">
-      <a class="cta" href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
       <a class="cta-line" href="index.html#proof">See the proof <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
@@ -148,6 +152,38 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
   els.forEach(function (el) { io.observe(el); });
 })();
+/* ── Sticky header ──────────────────────────────────────────────
+   Transparent over the cobalt hero, opaque paper once scrolled, so
+   it never has to hold contrast against moving artwork. One class,
+   flipped from a throttled rAF; no scroll work per frame.          */
+(function () {
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  var ticking = false;
+  /* Under Squarespace the stylesheet is scoped to .stir, which owns
+     its own --nav-h, so the measurement has to land on both. */
+  var scope = document.querySelector('.stir');
+  function sync() {
+    nav.classList.toggle('is-stuck', window.scrollY > 24);
+    var h = nav.offsetHeight + 'px';
+    document.documentElement.style.setProperty('--nav-h', h);
+    if (scope) scope.style.setProperty('--nav-h', h);
+  }
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { sync(); ticking = false; });
+  }
+  sync();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  /* Anchor jumps glide rather than cut, except where that is unwelcome. */
+  if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    document.documentElement.style.scrollBehavior = 'smooth';
+  }
+})();
+
 (function () {
   var btn = document.querySelector('.nav-menu');
   var overlay = document.getElementById('nav-overlay');

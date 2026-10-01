@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STIR — Start a project</title>
 <meta name="description" content="Tell us about the business. STIR turns attention into demand — and demand into revenue. Brooklyn, New York.">
@@ -17,13 +18,16 @@
 
 <header class="nav nav--ink">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo"><img src="assets/stir-mark.png" alt="STIR — Home"></a>
+    <a href="index.html" class="nav-logo">
+      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
+    </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="index.html#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="index.html#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
       <a href="about.html">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="nav-start" aria-current="page">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+      <a href="contact.html" class="cta cta--sm nav-start" aria-current="page"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -129,7 +133,7 @@
         </div>
 
         <div class="send-row">
-          <button class="cta" type="submit">Send it to STIR <span class="arrow" aria-hidden="true">→</span></button>
+          <button class="cta cta--flat" type="submit"><span class="cta-label">Send it to STIR</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">→</i></span></button>
           <span class="send-rail" aria-hidden="true"></span>
         </div>
       </form>
@@ -214,7 +218,8 @@
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
-    if (btn) { btn.disabled = true; btn.firstChild.nodeValue = 'Sending '; }
+    var btnLabel = btn && btn.querySelector('.cta-label');
+    if (btn) { btn.disabled = true; if (btnLabel) btnLabel.textContent = 'Sending'; }
     form.classList.add('is-sending');
     var travelled = new Promise(function (go) { setTimeout(go, reduceMotion ? 0 : 620); });
     Promise.all([travelled, fetch('/', {
@@ -231,6 +236,38 @@
 
   /* Also honor the redirect path, in case a submission lands that way */
   if (window.location.search.indexOf('sent=1') !== -1) show(ok);
+})();
+
+/* ── Sticky header ──────────────────────────────────────────────
+   Transparent over the cobalt hero, opaque paper once scrolled, so
+   it never has to hold contrast against moving artwork. One class,
+   flipped from a throttled rAF; no scroll work per frame.          */
+(function () {
+  var nav = document.querySelector('.nav');
+  if (!nav) return;
+  var ticking = false;
+  /* Under Squarespace the stylesheet is scoped to .stir, which owns
+     its own --nav-h, so the measurement has to land on both. */
+  var scope = document.querySelector('.stir');
+  function sync() {
+    nav.classList.toggle('is-stuck', window.scrollY > 24);
+    var h = nav.offsetHeight + 'px';
+    document.documentElement.style.setProperty('--nav-h', h);
+    if (scope) scope.style.setProperty('--nav-h', h);
+  }
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { sync(); ticking = false; });
+  }
+  sync();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+
+  /* Anchor jumps glide rather than cut, except where that is unwelcome. */
+  if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+    document.documentElement.style.scrollBehavior = 'smooth';
+  }
 })();
 
 /* Mobile menu overlay */
