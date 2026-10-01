@@ -5,17 +5,38 @@ already resolved — paste each file as-is, no find and replace.
 
 Assets are served from `https://stirnyc.netlify.app/assets/`.
 
+> **Leave Design → Custom CSS empty.** Squarespace compiles that field
+> with LESS, which reads `calc(var(--bleed) * -1)` as arithmetic, errors,
+> and silently drops the whole stylesheet — the symptom is a bare
+> template with all the images loading correctly. The CSS is loaded from
+> Code Injection instead, which Squarespace passes through untouched.
+
 ## Order
 
-1. **`01-custom-css.txt`** → Design → Custom CSS
-2. **`02-code-injection-header.html`** → Settings → Advanced → Code Injection → HEADER
-3. **`03-code-injection-footer.html`** → Settings → Advanced → Code Injection → FOOTER
-4. **`04-page-home.html`** → The / page → one Code Block, full width
-5. **`05-page-about.html`** → The /about page → one Code Block, full width
-6. **`06-page-contact.html`** → The /contact page → one Code Block, full width
+1. **`01-code-injection-header.html`** → Settings → Advanced → Code Injection → HEADER
+2. **`02-code-injection-footer.html`** → Settings → Advanced → Code Injection → FOOTER
+3. **`03-page-home.html`** → The / page → one Code Block, full width
+4. **`04-page-about.html`** → The /about page → one Code Block, full width
+5. **`05-page-contact.html`** → The /contact page → one Code Block, full width
 
 Each page needs ONE Code Block set to full width on an otherwise blank
-page. The Custom CSS already neutralises Squarespace's own wrappers.
+page. The stylesheet already neutralises Squarespace's own wrappers.
+
+### If the site still renders as a bare template
+
+The header file links the stylesheet from the CDN. If that file is not
+being served yet — Netlify builds one branch, so a stylesheet added on
+another will 404 — use **`ALT-header-with-inline-css.html`** in the
+HEADER slot instead. It carries the same CSS inline and depends on
+nothing external. Switch back to the linked version once the CDN copy
+is live; it is cached and keeps the injection small.
+
+Confirm which is the case in the browser console on the published site:
+
+```js
+getComputedStyle(document.querySelector('.stir')).getPropertyValue('--cobalt')
+// '#0451AB' = the stylesheet is loading.  '' = it is not.
+```
 
 ## Still to fill in
 
@@ -28,7 +49,7 @@ Paste this in a browser console on any page. It should report 0 missing;
 anything listed is a file the Netlify deploy is not serving yet.
 
 ```js
-Promise.all([ "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-bold-italic.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-bold.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-light-italic.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-light.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-medium.woff2", "https://stirnyc.netlify.app/assets/hero-stir-attention.webp", "https://stirnyc.netlify.app/assets/illustration-city.webp", "https://stirnyc.netlify.app/assets/illustration-corner.webp", "https://stirnyc.netlify.app/assets/labay/labay-coconut.webp", "https://stirnyc.netlify.app/assets/labay/labay-market-interior.webp", "https://stirnyc.netlify.app/assets/labay/labay-production-bts.webp", "https://stirnyc.netlify.app/assets/labay/labay-social-01-poster.webp", "https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4", "https://stirnyc.netlify.app/assets/labay/labay-timeout-cover.webp", "https://stirnyc.netlify.app/assets/og-stir.jpg", "https://stirnyc.netlify.app/assets/stir-mark-ivory.png", "https://stirnyc.netlify.app/assets/stir-mark.png" ]
+Promise.all([ "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-bold-italic.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-bold.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-light-italic.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-light.woff2", "https://stirnyc.netlify.app/assets/fonts/founders-grotesk-medium.woff2", "https://stirnyc.netlify.app/assets/hero-stir-attention.webp", "https://stirnyc.netlify.app/assets/illustration-city.webp", "https://stirnyc.netlify.app/assets/illustration-corner.webp", "https://stirnyc.netlify.app/assets/labay/labay-coconut.webp", "https://stirnyc.netlify.app/assets/labay/labay-market-interior.webp", "https://stirnyc.netlify.app/assets/labay/labay-production-bts.webp", "https://stirnyc.netlify.app/assets/labay/labay-social-01-poster.webp", "https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4", "https://stirnyc.netlify.app/assets/labay/labay-timeout-cover.webp", "https://stirnyc.netlify.app/assets/og-stir.jpg", "https://stirnyc.netlify.app/assets/stir-mark-ivory.png", "https://stirnyc.netlify.app/assets/stir-mark.png", "https://stirnyc.netlify.app/assets/stir-squarespace.css" ]
 .map(u => fetch(u, { method: 'HEAD' }).then(r => r.ok ? null : u).catch(() => u)))
   .then(r => r.filter(Boolean))
   .then(bad => console.log(bad.length + ' missing', bad));

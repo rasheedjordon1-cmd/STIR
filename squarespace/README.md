@@ -29,37 +29,57 @@ Everything you paste lives in **`ready/`**, already resolved — no
 find and replace, nothing to upload. `ready/CHECKLIST.md` is the
 short version; this is the long one.
 
-### 1 · Custom CSS
+Nothing goes in **Design → Custom CSS**. See step 1.
 
-**Design → Custom CSS.** Paste all of `ready/01-custom-css.txt`.
-
-### 2 · Code Injection
+### 1 · Code Injection
 
 **Settings → Advanced → Code Injection.**
 
-- **Header** ← `ready/02-code-injection-header.html`
-- **Footer** ← `ready/03-code-injection-footer.html`
+- **Header** ← `ready/01-code-injection-header.html`
+- **Footer** ← `ready/02-code-injection-footer.html`
 
-The header carries the page tagging, the share tags and the entrance
-cover. It has to be in the head: a Code Block paints too late to
-cover Squarespace's unstyled flash.
+The header carries the stylesheet link, the page tagging, the share
+tags and the entrance cover. It has to be in the head: a Code Block
+paints too late to cover Squarespace's unstyled flash.
 
-### 3 · The pages
+> **Design → Custom CSS stays empty.**
+>
+> Squarespace compiles that field with LESS, which tries to evaluate
+> `calc(var(--bleed) * -1)` as arithmetic, throws, and drops the whole
+> stylesheet. The symptom is a site that renders as a bare template
+> with every image loading perfectly — nothing looks broken enough to
+> point at the CSS. Code Injection is passed through untouched, so the
+> stylesheet goes there.
+
+If the stylesheet is not yet being served from the CDN, put
+`ready/ALT-header-with-inline-css.html` in the HEADER slot instead:
+same CSS, carried inline, no external dependency. Move to the linked
+version when the CDN copy is live — it is cached and keeps the
+injection small.
+
+Check which you have, in the console on the published site:
+
+```js
+getComputedStyle(document.querySelector('.stir')).getPropertyValue('--cobalt')
+// '#0451AB' = loading.  '' = not.
+```
+
+### 2 · The pages
 
 Create three blank pages — **/**, **/about**, **/contact** — and give
 each one a single **Code Block**, set to full width:
 
 | page | file |
 |---|---|
-| `/` | `ready/04-page-home.html` |
-| `/about` | `ready/05-page-about.html` |
-| `/contact` | `ready/06-page-contact.html` |
+| `/` | `ready/03-page-home.html` |
+| `/about` | `ready/04-page-about.html` |
+| `/contact` | `ready/05-page-contact.html` |
 
-Remove every other block from those pages. The Custom CSS already
+Remove every other block from those pages. The stylesheet already
 neutralises Squarespace's own padded wrappers, headers and footers on
 STIR pages, so the layout does not need their page settings.
 
-### 4 · The form
+### 3 · The form
 
 1. formspree.io → **New Form** → copy the form id.
 2. Put it in `deploy.config.json` as `formspree_id`.
@@ -77,9 +97,9 @@ the form still submits normally and Formspree answers.
 
 ## Where the assets come from
 
-The Netlify deploy at `stirnyc.netlify.app` serves the images, fonts
-and video, and sends the `Access-Control-Allow-Origin` header the
-self-hosted fonts need cross-origin (see `netlify.toml`). That is why
+The Netlify deploy at `stirnyc.netlify.app` serves the images, fonts,
+video and the stylesheet, and sends the `Access-Control-Allow-Origin`
+header the self-hosted fonts need cross-origin (see `netlify.toml`). That is why
 there is nothing to upload: Squarespace gets the markup, Netlify gets
 the files.
 
@@ -87,7 +107,7 @@ the files.
 origin for the whole Squarespace build, not just the video.
 
 Before pasting, run the console snippet in `ready/CHECKLIST.md` to
-confirm all 17 files are actually being served — Netlify builds a
+confirm every file is actually being served — Netlify builds a
 specific branch, so anything added on a branch it is not watching will
 404.
 

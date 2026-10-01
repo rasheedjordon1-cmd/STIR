@@ -1,0 +1,2396 @@
+<!-- The design system, inlined. Use this variant when the CDN copy
+     at https://stirnyc.netlify.app/assets/stir-squarespace.css
+     is not being served yet. Same CSS, no external dependency. -->
+<style>
+/* ════════════════════════════════════════════════════════════════
+   STIR — shared system
+   Semantic color roles:
+   COBALT — world / visual environment.  IVORY — information /
+   breathing room.  INK — structure / typography.  SIGNAL RED —
+   activation and commercial significance only. Red is never
+   atmosphere.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Founders Grotesk — licensed, self-hosted ─────────────────── */
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("https://stirnyc.netlify.app/assets/fonts/founders-grotesk-light.woff2") format("woff2");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("https://stirnyc.netlify.app/assets/fonts/founders-grotesk-light-italic.woff2") format("woff2");
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("https://stirnyc.netlify.app/assets/fonts/founders-grotesk-medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("https://stirnyc.netlify.app/assets/fonts/founders-grotesk-bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("https://stirnyc.netlify.app/assets/fonts/founders-grotesk-bold-italic.woff2") format("woff2");
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+.stir {
+  --ivory:   #FAF2E6;
+  --ink:     #161310;
+  --cobalt:  #0451AB;                    /* matches the artwork field  */
+  --red:     #F21B16;                    /* activation only            */
+  --red-deep: #C4120D;                   /* the same ink, under press  */
+
+  --ink-70: rgba(22, 19, 16, 0.72);
+  --ink-60: rgba(22, 19, 16, 0.58);
+  --ink-35: rgba(22, 19, 16, 0.32);
+  --ink-05: rgba(22, 19, 16, 0.05);
+  --ivory-75: rgba(250, 242, 230, 0.78);
+  --ivory-40: rgba(250, 242, 230, 0.40);
+  --wht-70: rgba(255, 255, 255, 0.70);
+  --wht-35: rgba(255, 255, 255, 0.35);
+  --wht-07: rgba(255, 255, 255, 0.07);
+
+  --font-display: "Founders Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  --max-w: 1520px;
+  --gutter: clamp(20px, 3.2vw, 48px);
+  --col-gap: clamp(16px, 1.6vw, 32px);
+  --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
+
+  /* Scale re-fit for Founders Grotesk (normal width, not condensed) */
+  --t-hero:    clamp(2.6rem, 7.1vw, 6.8rem);
+  --t-giant:   clamp(2.3rem, 6.4vw, 6.2rem);
+  --t-big:     clamp(1.8rem, 4.5vw, 4.3rem);
+  --t-metric:  clamp(5.5rem, 17vw, 16rem);
+  --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
+  --t-utility: 0.72rem;
+
+  --nav-h: 76px;                         /* compact once stuck      */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+.stir * { margin: 0; padding: 0; box-sizing: border-box; }
+.stir { scroll-behavior: smooth; overflow-x: clip; }
+@media (prefers-reduced-motion: reduce) {
+.stir { scroll-behavior: auto; }
+}
+.stir {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+.stir a { color: inherit; text-decoration: none; }
+.stir img,
+.stir video { max-width: 100%; display: block; }
+
+/* Art images size from their CSS aspect-ratio, not the HTML height attr */
+.stir .obs-art,
+.stir .about-art { height: auto; }
+.stir :focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.stir ::selection { background: var(--ink); color: var(--ivory); }
+.stir .sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+
+/* ── Shell + grid ─────────────────────────────────────────────── */
+.stir .shell {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.stir .grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+}
+@media (max-width: 1023px) {
+.stir .grid { grid-template-columns: repeat(8, 1fr); }
+}
+@media (max-width: 639px) {
+.stir .grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+
+/* ── Type voices ──────────────────────────────────────────────── */
+/* Display: monumental, declarative — Founders Grotesk Bold */
+.stir .display {
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* Body: clear, direct, commercial — someone explaining something
+   across a table */
+.stir .body {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-70);
+  max-width: 46ch;
+}
+.stir .body strong { color: var(--ink); font-weight: 500; }
+
+/* Editorial serif: selective accent only (hero proposition, thesis) */
+.stir .editorial {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.08);
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink-70);
+  max-width: 44ch;
+}
+
+/* Utility: publishing metadata, used only where it means something */
+.stir .utility {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+}
+
+
+/* ── CTA vocabulary — red appears at the moment of action ─────── */
+/* ── Primary action ──────────────────────────────────────────────
+   One construction everywhere: a warm-paper label carrying the words
+   and a separate red compartment carrying the arrow. Paper holds its
+   own on cobalt and on ivory alike, and red stays on the part that
+   moves you forward rather than flooding the whole control.
+   ──────────────────────────────────────────────────────────────── */
+.stir .cta {
+  display: inline-flex;
+  align-items: stretch;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-align: left;
+  transition: transform 0.12s var(--ease);
+}
+.stir .cta-label {
+  display: flex;
+  align-items: center;
+  min-height: 46px;                 /* comfortable on touch */
+  padding: 0 1.5em;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-right: 0;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.stir .cta-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 46px;
+  min-height: 46px;
+  background: var(--red);
+  border: 1px solid var(--red);
+  color: var(--ivory);
+  overflow: hidden;
+  transition: background 0.25s var(--ease);
+}
+.stir .cta-glyph {
+  font-style: normal;
+  font-size: 1.1em;
+  line-height: 1;
+  display: block;
+  transition: transform 0.25s var(--ease);
+}
+
+/* Subtle: three pixels, in the direction the arrow points. */
+.stir .cta:hover .cta-glyph,
+.stir .cta:focus-visible .cta-glyph { transform: translate(3px, -3px); }
+.stir .cta--flat:hover .cta-glyph,
+.stir .cta--flat:focus-visible .cta-glyph { transform: translateX(3px); }
+.stir .cta:hover .cta-label,
+.stir .cta:focus-visible .cta-label { background: var(--ink); color: var(--ivory); }
+.stir .cta:active { transform: translate(1px, 1px); }
+.stir .cta:active .cta-arrow { background: var(--red-deep); border-color: var(--red-deep); }
+.stir .cta:disabled { opacity: 0.55; cursor: default; }
+.stir .cta:disabled .cta-glyph { transform: none; }
+
+
+/* The compact one, used in the nav bar. */
+.stir .cta--sm { font-size: 0.7rem; }
+.stir .cta--sm .cta-label { min-height: 44px; padding: 0 1.1em; }
+.stir .cta--sm .cta-arrow { min-width: 44px; min-height: 44px; }
+
+
+/* Over the cobalt hero the paper label needs no ink hairline to
+   separate it from the ground. */
+.stir .hero .cta-label,
+.stir .nav .cta-label { border-color: var(--ivory); }
+.stir .nav.is-stuck .cta-label { border-color: var(--ink); }
+.stir .nav--ink .cta-label { border-color: var(--ink); }
+.stir .cta-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.8em;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding-bottom: 0.5em;
+  position: relative;
+}
+.stir .cta-line::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+}
+
+/* Activation mark: a tiny red square arrives on hover */
+.stir .cta-line::before {
+  content: "";
+  width: 0.5em; height: 0.5em;
+  background: var(--red);
+  align-self: center;
+  flex: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  margin-right: -0.3em;
+}
+.stir .cta-line:hover::before,
+.stir .cta-line:focus-visible::before { opacity: 1; transform: none; }
+.stir .cta-line { transition: transform 0.12s var(--ease); }
+.stir .cta-line::after { transition: background 0.2s var(--ease); }
+.stir .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.stir .cta-line:hover .arrow,
+.stir .cta-line:focus-visible .arrow { transform: translateX(3px); }
+
+
+/* ── Press ───────────────────────────────────────────────────────
+   There was no :active state anywhere in this system, which is the
+   whole difference between a page and an object. On press the paper
+   shifts and the cobalt plate stays where it was: mis-registration,
+   held for exactly as long as the finger is down. Same language as
+   [data-reveal="registration"], at the scale where people touch it.
+   ──────────────────────────────────────────────────────────────── */
+.stir .cta:active,
+.stir .reel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: -2px -2px 0 0 var(--cobalt);
+  transition-duration: 0.06s;
+}
+.stir .cta:active::before,
+.stir .reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
+
+
+/* Text actions have no box to shift, so they take the travel alone
+   and the rule beneath them goes live. */
+.stir .cta-line:active,
+.stir .starter-go:active { transform: translate(1px, 1px); }
+.stir .cta-line:active::after { background: var(--red); }
+@media (prefers-reduced-motion: reduce) {
+.stir .cta-label,
+.stir .cta-arrow,
+.stir .cta-glyph { transition: none; }
+.stir .cta:active,
+.stir .reel-btn:active,
+.stir .cta-line:active,
+.stir .starter-go:active { transform: none; }
+}
+
+
+/* ── Annotation (used sparingly — structural, not decorative) ─── */
+.stir .ann {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.7em;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+}
+.stir .ann-mark {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  background: var(--red);
+  align-self: center;
+}
+
+
+/* ── Development placeholder frames (final art drops in later) ── */
+.stir .ph {
+  position: relative;
+  border: 1px solid var(--ink-35);
+  background: var(--ink-05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px;
+  overflow: hidden;
+}
+.stir .ph .ph-id { color: var(--ink); }
+.stir .ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.64rem; }
+.stir .ph--on-cobalt { border-color: var(--wht-35); background: var(--wht-07); }
+.stir .ph--on-cobalt .ph-id { color: #fff; }
+.stir .ph--on-cobalt .ph-note { color: var(--wht-70); }
+/* ── Reveal (respects reduced motion) ─────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+html.js .stir .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+html.js .stir .reveal.is-in { opacity: 1; transform: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   NAVIGATION — ivory system over the cobalt world
+   ════════════════════════════════════════════════════════════════ */
+/* Fixed, with two states. Transparent over the cobalt hero so the
+   artwork is uninterrupted; once you have scrolled it becomes an
+   opaque paper bar with the red mark, ink links and a hairline — so
+   it never has to hold contrast against moving imagery. */
+.stir .nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+              padding 0.3s var(--ease);
+}
+.stir .nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: clamp(18px, 2.2vw, 30px);
+  transition: padding-block 0.3s var(--ease);
+}
+.stir .nav.is-stuck {
+  background: var(--ivory);
+  border-bottom-color: var(--ink-35);
+}
+.stir .nav.is-stuck .nav-inner { padding-block: 11px; }
+.stir .nav.is-stuck .nav-links a:not(.nav-start) { color: var(--ink); }
+.stir .nav.is-stuck .nav-links a:not(.nav-start)::after { background: var(--ink); }
+.stir .nav.is-stuck .nav-links .nav-no { color: var(--ink-35); }
+
+
+/* Both marks ship; which one shows is a state, not a page. */
+.stir .nav-logo { position: relative; display: block; line-height: 0; }
+.stir .nav-logo img {
+  height: clamp(22px, 2.1vw, 30px);
+  width: auto;
+  transition: opacity 0.3s var(--ease);
+}
+.stir .nav-logo .mark-red { position: absolute; inset: 0; opacity: 0; }
+.stir .nav.is-stuck .nav-logo .mark-ivory,
+.stir .nav--ink      .nav-logo .mark-ivory { opacity: 0; }
+.stir .nav.is-stuck .nav-logo .mark-red,
+.stir .nav--ink      .nav-logo .mark-red { opacity: 1; }
+
+
+/* Anything the nav can jump to has to clear the bar. */
+.stir [id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+
+/* scroll-behavior is set from JS on the real document: under
+   Squarespace this stylesheet is scoped to .stir and cannot reach it. */
+.stir .nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 2.6vw, 44px);
+}
+.stir .nav-links a {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ivory);
+  position: relative;
+  padding-bottom: 3px;
+}
+
+/* ── The nav as an index, not a menu ─────────────────────────────
+   Every section on this site is numbered. The nav points at two of
+   them, so it carries their numerals in the same mono the running
+   index uses. The numerals sit back until you reach for them.
+
+   And the small red square — already the mark on .ann-mark,
+   .cta-line and .trade — now means exactly one thing everywhere:
+   this is live. On the nav that makes it "you are here", which is
+   worth more than another underline.                                */
+.stir .nav-links a { position: relative; }
+.stir .nav-links .nav-no {
+  font-style: normal;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  margin-right: 0.6em;
+  color: var(--ivory-40);
+  transition: color 0.3s var(--ease);
+}
+.stir .nav-links a:hover .nav-no,
+.stir .nav-links a:focus-visible .nav-no,
+.stir .nav-links a[aria-current] .nav-no { color: inherit; }
+.stir .nav-links a:not(.nav-start)[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
+}
+
+/* The mark is the current state, so the hover rule stands down. */
+.stir .nav-links a:not(.nav-start)[aria-current]::after { display: none; }
+.stir .nav--ink .nav-links .nav-no { color: var(--ink-35); }
+
+
+/* Same index in the overlay, where the type is large enough that the
+   numeral needs to sit further out of the way. */
+.stir .nav-overlay-links a { position: relative; }
+.stir .nav-overlay-links .nav-no {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  vertical-align: 0.9em;
+  margin-right: 0.5em;
+  color: var(--ivory-40);
+}
+.stir .nav-overlay-links a[aria-current] .nav-no { color: var(--red); }
+.stir .nav-links a:not(.nav-start)::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--ivory);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.stir .nav-links a:not(.nav-start):hover::after,
+.stir .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
+
+/* .nav-start now carries the shared .cta construction; see Primary action. */
+
+/* ════════════════════════════════════════════════════════════════
+   01 — HERO · ATTENTION SHOULD PAY.
+   Full cobalt environment. The illustration sits full-bleed behind
+   the interface — one composition, no frame, no feather.
+   ════════════════════════════════════════════════════════════════ */
+.stir .hero {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  min-height: max(100svh, 700px);
+  display: flex;
+  flex-direction: column;
+}
+
+
+/*
+  HERO ARTWORK — assets/hero-stir-attention.webp
+  Cobalt world · enormous cropped observer entering upper-right ·
+  eye looking toward a tiny ordinary storefront, center-right ·
+  Signal Red threshold. Left territory stays clean for interface.
+  Swap this file to update the hero; keep observer + storefront
+  in frame (object-position tuned below).
+*/
+.stir .hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  z-index: 1;
+}
+
+/* Legibility scrim for the nav zone only — not a treatment of the
+   artwork, just enough contrast where type crosses the observer */
+.stir .hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: clamp(90px, 14vh, 150px);
+  background: linear-gradient(to bottom, rgba(3, 40, 105, 0.55), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+.stir .hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%; /* flex column + auto margins would otherwise shrink-wrap */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(120px, 17vh, 190px);
+  padding-bottom: clamp(24px, 3.5vh, 44px);
+}
+
+
+/* Copy territory — the clean cobalt left */
+.stir .hero-copy { max-width: 46%; }
+.stir .eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ivory);
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.stir .eyebrow .arr { padding-inline: 0.35em; }
+.stir .hero-headline {
+  font-size: var(--t-hero);
+  line-height: 0.95;
+  color: var(--ivory);
+  width: max-content;
+  max-width: none;
+}
+.stir .hl-line { display: block; overflow: hidden; }
+.stir .hl-line > span { display: block; }
+.stir .hero-prop {
+  margin-top: clamp(28px, 4vh, 48px);
+  color: var(--ivory-75);
+  max-width: 36ch;
+}
+.stir .hero-prop strong { color: var(--ivory); font-weight: 500; }
+.stir .hero-cta {
+  margin-top: clamp(28px, 4.5vh, 52px);
+  color: var(--ivory);
+}
+
+
+/* Below-the-fold index — quiet, structural */
+.stir .hero-index {
+  margin-top: auto;
+  color: var(--ivory-75);
+}
+.stir .hero-index .hi-label {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ivory-40);
+}
+.stir .hero-index .down {
+  display: block;
+  margin-top: 14px;
+}
+/* Load choreography — arrive confidently, then stop performing */
+@media (prefers-reduced-motion: no-preference) {
+.stir .nav-inner {
+    opacity: 0;
+    animation: fade-up 0.6s var(--ease) 0.1s forwards;
+  }
+.stir .hero-art {
+    opacity: 0;
+    transform: scale(1.015);
+    animation: art-settle 1s var(--ease) 0.2s forwards;
+  }
+@keyframes art-settle { to { opacity: 1; transform: none; } }
+.stir .hl-line > span {
+    transform: translateY(112%);
+    animation: hl-rise 0.8s var(--ease) 0.4s forwards;
+  }
+.stir .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
+@keyframes hl-rise { to { transform: none; } }
+.stir .eyebrow,
+.stir .hero-prop,
+.stir .hero-cta,
+.stir .hero-index {
+    opacity: 0;
+    animation: fade-up 0.7s var(--ease) forwards;
+  }
+.stir .eyebrow { animation-delay: 0.3s; }
+.stir .hero-prop { animation-delay: 0.7s; }
+.stir .hero-cta { animation-delay: 0.85s; }
+.stir .hero-index { animation-delay: 0.95s; }
+@keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   02 — THE ARGUMENT · one headline, concentrated
+   A small concession, the statement people should leave with, and
+   the method underneath. Cobalt on paper, with one red field.
+   ════════════════════════════════════════════════════════════════ */
+.stir .belief {
+  padding-top: clamp(76px, 11vh, 132px);
+  padding-bottom: clamp(60px, 9vh, 112px);
+}
+.stir .belief-label {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  max-width: 320px;
+  margin-bottom: clamp(40px, 6vh, 76px);
+}
+.stir .belief-intro {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink-60);
+  margin-bottom: clamp(18px, 2.6vh, 32px);
+}
+.stir .belief-claim {
+  color: var(--cobalt);
+  font-size: clamp(2.6rem, 8.2vw, 7.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+
+/* Editorial emphasis, not a control: a block of red with the words
+   knocked out of it. Deliberately carries no hover, no cursor and
+   no focus behaviour, so nothing reads as clickable. */
+.stir .belief-claim .field {
+  display: inline-block;
+  white-space: nowrap;
+  background: var(--red);
+  color: var(--ivory);
+  /* Sized off the measured cap height so the ink sits evenly above
+     and below the letters. An inline-block's box is driven by the
+     line box, not the glyphs, so the default leaves roughly four
+     times as much red under the word as over it. */
+  line-height: 0.46;
+  padding: 0.37em 0.15em 0;
+  margin: 0 0.02em;
+  cursor: inherit;
+}
+.stir .belief-deck {
+  margin-top: clamp(32px, 5vh, 56px);
+  max-width: 48ch;
+  color: var(--ink-70);
+}
+@media (prefers-reduced-motion: no-preference) {
+html.js .stir .belief-intro,
+html.js .stir .belief-claim,
+html.js .stir .belief-deck {
+    opacity: 0;
+    transform: translateY(0.4rem);
+    transition: opacity 0.6s var(--ease), transform 0.75s var(--ease);
+  }
+html.js .stir .belief-claim { transition-delay: 0.1s; }
+html.js .stir .belief-deck { transition-delay: 0.22s; }
+html.js .stir .belief-statement.is-in .belief-intro,
+html.js .stir .belief-statement.is-in .belief-claim,
+html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none; }
+}
+@media (max-width: 1023px) {
+.stir .belief-claim { max-width: none; }
+}
+@media (max-width: 639px) {
+.stir .belief-claim { line-height: 0.95; letter-spacing: -0.025em; }
+.stir .belief-deck { max-width: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   03 — PROOF · ivory section, one large cobalt evidence field
+   (Option B: the page stays ivory; cobalt returns as a block of
+   evidence rather than a second full environment.)
+   ════════════════════════════════════════════════════════════════ */
+.stir .proof {
+  padding-top: clamp(60px, 8vh, 112px);
+  padding-bottom: clamp(64px, 9vh, 128px);
+}
+.stir .proof-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.stir .proof-meta { text-align: right; color: var(--ink-60); }
+.stir .proof-title {
+  font-size: var(--t-giant);
+  margin-bottom: clamp(64px, 11vh, 160px);
+}
+.stir .proof-body {
+  align-items: end;
+  margin-bottom: clamp(56px, 8vh, 110px);
+}
+.stir .proof-lead { grid-column: 1 / 8; }
+.stir .proof-statement-wrap { grid-column: 8 / 13; }
+.stir .proof-metric {
+  font-size: var(--t-metric);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  margin-left: -0.03em;
+}
+.stir .proof-metric-label { margin-top: 20px; color: var(--ink-60); }
+.stir .proof-statement {
+  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
+  max-width: 22ch;
+}
+
+
+/* ── The evidence reel ────────────────────────────────────────────
+   Asset-first: every artifact renders at its NATIVE aspect ratio at
+   one shared height — nothing is cropped to fit a slot. The row
+   scrolls horizontally with gentle snap; widths vary because the
+   material varies. New artifacts drop in with no layout work. */
+.stir .proof-reel-band {
+  background: var(--cobalt);
+  color: #fff;
+  margin-inline: calc(var(--bleed) * -1);
+  padding: clamp(28px, 3.5vw, 56px) var(--bleed) clamp(32px, 4vw, 56px);
+}
+.stir .reel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(20px, 2.8vh, 36px);
+}
+.stir .reel-counter { color: var(--wht-70); }
+.stir .reel-nav { display: flex; gap: 10px; }
+.stir .reel-btn {
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 1px solid var(--wht-35);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.stir .reel-btn:hover,
+.stir .reel-btn:focus-visible { background: var(--red); border-color: var(--red); }
+.stir .reel {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 2.5vw, 44px);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--wht-35) transparent;
+}
+.stir .reel::-webkit-scrollbar { height: 4px; }
+.stir .reel::-webkit-scrollbar-thumb { background: var(--wht-35); }
+.stir .reel::-webkit-scrollbar-track { background: transparent; }
+.stir .reel-item {
+  flex: none;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Native ratio, shared height — the media decides its own width */
+.stir .ev-media {
+  display: block;
+  height: clamp(360px, 56vh, 620px);
+  width: auto;
+  max-width: none;
+  background: var(--wht-07);
+}
+.stir .ev-cap {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  /* match the media's width without stretching the item */
+  inline-size: 0;
+  min-inline-size: 100%;
+}
+.stir .ev-cap .cap { color: #fff; }
+.stir .ev-cap .ev-meta { color: var(--wht-70); text-align: right; flex: none; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   04 — WHAT WE DO · FIND / BUILD / RUN
+   Editorial index. Default: 1px ink rule. Hover: the word leans in,
+   contrast rises. Active: a tiny Signal Red marker + services unfold.
+   ════════════════════════════════════════════════════════════════ */
+.stir .method {
+  padding-top: clamp(88px, 13vh, 170px);
+  padding-bottom: clamp(88px, 13vh, 170px);
+}
+.stir .method-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+.stir .method-intro {
+  grid-column: 5 / 12;
+  margin-bottom: clamp(72px, 11vh, 160px);
+}
+.stir .method-index { grid-column: 1 / -1; }
+.stir .method-row { border-top: 1px solid var(--ink); position: relative; }
+.stir .method-row:last-child { border-bottom: 1px solid var(--ink); }
+.stir .method-row-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  align-items: baseline;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding-block: clamp(28px, 4.5vh, 56px);
+}
+.stir .method-no {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+.stir .method-word {
+  grid-column: 2 / 8;
+  font-size: var(--t-big);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  transition: transform 0.45s var(--ease);
+}
+.stir .method-dot {
+  width: 0.16em; height: 0.16em;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.stir .method-line {
+  grid-column: 8 / 12;
+  font-size: var(--t-body);
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+.stir .method-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s var(--ease);
+}
+.stir .method-detail > div { overflow: hidden; }
+.stir .method-detail-inner {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  padding-bottom: clamp(36px, 5vh, 64px);
+}
+.stir .method-caps {
+  grid-column: 8 / 12;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.stir .method-caps li {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  border-bottom: 1px solid var(--ink-35);
+  padding-bottom: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+/* Hover: contrast, not color */
+@media (hover: hover) {
+.stir .method-row:hover .method-no { color: var(--ink); }
+.stir .method-row:hover .method-word { transform: translateX(0.35ch); }
+.stir .method-row:hover .method-line { color: var(--ink); }
+}
+
+/* Active: the red marker appears; services unfold in sequence */
+.stir .method-row.is-active .method-no { color: var(--ink); }
+.stir .method-row.is-active .method-word { transform: translateX(0.35ch); }
+.stir .method-row.is-active .method-dot { opacity: 1; transform: none; }
+.stir .method-row.is-active .method-line { color: var(--ink); }
+.stir .method-row.is-active .method-detail { grid-template-rows: 1fr; }
+.stir .method-row.is-active .method-caps li { opacity: 1; transform: none; }
+.stir .method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
+.stir .method-row.is-active .method-caps li:nth-child(2) { transition-delay: 0.16s; }
+.stir .method-row.is-active .method-caps li:nth-child(3) { transition-delay: 0.22s; }
+.stir .method-row.is-active .method-caps li:nth-child(4) { transition-delay: 0.28s; }
+.stir .method-row.is-active .method-caps li:nth-child(5) { transition-delay: 0.34s; }
+@media (prefers-reduced-motion: reduce) {
+.stir .method-word,
+.stir .method-caps li { transition: none; }
+.stir .method-caps li { opacity: 1; transform: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   05 — ONE THOUGHT · a single interstitial observation
+   (The fuller Observations index moves to About / future Insights.)
+   ════════════════════════════════════════════════════════════════ */
+.stir .obs {
+  padding-top: clamp(100px, 15vh, 200px);
+  padding-bottom: clamp(140px, 22vh, 280px);
+}
+.stir .obs-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(72px, 12vh, 160px);
+}
+.stir .obs-spread { align-items: start; }
+.stir .obs-text {
+  grid-column: 1 / 6;
+  position: relative;
+  z-index: 2;
+}
+.stir .obs-headline {
+  font-size: var(--t-big);
+  margin-bottom: clamp(32px, 4vh, 56px);
+}
+.stir .obs-cta { color: var(--ink); }
+.stir .obs-art {
+  grid-column: 5 / 13;
+  aspect-ratio: 16 / 10;
+  margin-top: clamp(80px, 14vh, 200px);
+  margin-right: calc(var(--bleed) * -1);
+  z-index: 1;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   06 — CTA · quiet ivory; red appears only at the action
+   ════════════════════════════════════════════════════════════════ */
+.stir .convert {
+  padding-top: clamp(100px, 16vh, 220px);
+  padding-bottom: clamp(120px, 20vh, 260px);
+}
+.stir .convert-head {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.stir .convert-q {
+  font-size: var(--t-giant);
+}
+.stir .convert-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: clamp(56px, 9vh, 120px);
+}
+.stir .convert-copy { max-width: 38ch; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER — deliberately quiet
+   ════════════════════════════════════════════════════════════════ */
+.stir .footer { padding-block: clamp(40px, 6vh, 72px); }
+.stir .footer-grid { row-gap: 24px; align-items: center; }
+.stir .footer-logo { grid-column: 1 / 3; }
+.stir .footer-logo img { height: 18px; width: auto; }
+.stir .footer-place { grid-column: 3 / 6; color: var(--ink-60); }
+.stir .footer-links {
+  grid-column: 6 / 9;
+  display: flex;
+  gap: 28px;
+}
+.stir .footer-links a { color: var(--ink); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.stir .footer-links a:hover,
+.stir .footer-links a:focus-visible { border-bottom-color: var(--ink); }
+.stir .footer-line { grid-column: 9 / 11; color: var(--ink-60); }
+.stir .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
+/* ════════════════════════════════════════════════════════════════
+   TABLET — recomposed: the illustration becomes its own scene
+   below the copy; observer + storefront stay uncropped
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+.stir .hero { min-height: 0; }
+.stir .hero::after { display: none; }
+
+  /* Copy and index become direct flex items of .hero so the flow is
+     copy → artwork (its own uncropped scene) → index */
+  .stir .hero-inner { display: contents; }
+.stir .hero-copy,
+.stir .hero-index { padding-inline: var(--gutter); }
+.stir .hero-copy {
+    order: 1;
+    max-width: 80%;
+    padding-top: clamp(110px, 15vh, 160px);
+  }
+.stir .hero-art {
+    position: static;
+    order: 2;
+    width: 100%;
+    height: auto;
+    margin-top: clamp(44px, 7vh, 80px);
+  }
+.stir .hero-index {
+    order: 3;
+    margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
+  }
+.stir .proof-lead { grid-column: 1 / -1; }
+.stir .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
+.stir .ev-media { height: clamp(320px, 48vh, 520px); }
+.stir .method-label { grid-column: 1 / 4; }
+.stir .method-intro { grid-column: 1 / 8; }
+.stir .method-word { grid-column: 2 / 6; }
+.stir .method-line { grid-column: 6 / 9; }
+.stir .method-caps { grid-column: 6 / 9; }
+.stir .obs-label { grid-column: 1 / 4; }
+.stir .obs-text { grid-column: 1 / 5; }
+.stir .obs-art { grid-column: 4 / 9; }
+.stir .footer-logo { grid-column: 1 / 2; }
+.stir .footer-place { grid-column: 2 / 5; }
+.stir .footer-links { grid-column: 5 / 8; }
+.stir .footer-line { display: none; }
+.stir .footer-copy { grid-column: 8 / 9; }
+}
+/* ════════════════════════════════════════════════════════════════
+   MOBILE — headline first; illustration is its own controlled
+   scene; CTA stays close
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 639px) {
+.stir { --gutter: 18px; }
+.stir .nav-logo img { height: 22px; }
+.stir .nav-links { gap: 16px; }
+.stir .nav-links a:not(.nav-start) { display: none; }
+ /* menu returns with the ABOUT/CONTACT build */
+
+  .stir .hero-inner { padding-top: 96px; }
+.stir .hero-copy { max-width: 100%; }
+.stir .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+.stir .hero-art { margin-top: 44px; }
+
+
+  /* The thesis → proof hand-off was ~180px of nothing on a phone. */
+  .stir .belief { padding-top: clamp(64px, 9vh, 96px); padding-bottom: clamp(44px, 6vh, 68px); }
+.stir .proof { padding-top: clamp(52px, 7vh, 80px); }
+.stir .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+.stir .proof-meta { text-align: left; }
+.stir .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
+.stir .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
+.stir .ev-media { height: clamp(280px, 46vh, 420px); }
+.stir .reel-btn { width: 40px; height: 40px; }
+.stir .ev-cap { flex-direction: column; gap: 4px; }
+.stir .ev-cap .ev-meta { text-align: left; }
+.stir .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
+.stir .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
+.stir .method-row-head {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 14px;
+    padding-block: 30px;
+  }
+.stir .method-no { grid-column: 1 / -1; }
+.stir .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
+.stir .method-line { grid-column: 1 / -1; }
+.stir .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+.stir .method-caps { grid-column: 1 / -1; }
+.stir .obs { padding-bottom: 140px; }
+.stir .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
+.stir .obs-text { grid-column: 1 / -1; }
+.stir .obs-art {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    margin-inline: calc(var(--gutter) * -1);
+    aspect-ratio: 4 / 5;
+  }
+.stir .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+.stir .convert-q { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+.stir .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
+.stir .footer-grid { row-gap: 18px; }
+.stir .footer-logo,
+.stir .footer-place,
+.stir .footer-links,
+.stir .footer-copy { grid-column: 1 / -1; text-align: left; }
+.stir .footer-line { display: block; grid-column: 1 / -1; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PROOF PAYOFF — the headline's promise, cashed
+   ════════════════════════════════════════════════════════════════ */
+.stir .proof-payoff {
+  margin-top: clamp(72px, 11vh, 150px);
+  align-items: end;
+  row-gap: 40px;
+}
+.stir .payoff-title {
+  grid-column: 1 / 6;
+  font-size: var(--t-giant);
+}
+.stir .payoff-body {
+  grid-column: 7 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.stir .payoff-creators { color: var(--ink-60); }
+
+
+/* ════════════════════════════════════════════════════════════════
+   NAV — ink variant for ivory pages (about, contact, 404)
+   ════════════════════════════════════════════════════════════════ */
+.stir .nav--ink .nav-links a { color: var(--ink); }
+.stir .nav--ink .nav-links a:not(.nav-start)::after { background: var(--ink); }
+
+
+/* ── Mobile menu ──────────────────────────────────────────────── */
+.stir .nav-menu {
+  display: none;
+  background: none;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.6em 0;
+}
+.stir .nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--cobalt);
+  color: var(--ivory);
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  padding: var(--gutter);
+}
+.stir .nav-overlay.is-open { display: flex; }
+.stir .nav-overlay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 4px;
+}
+.stir .nav-overlay-head img { height: 22px; width: auto; }
+.stir .nav-overlay-close {
+  background: none; border: 0; color: var(--ivory);
+  font-family: var(--font-mono); font-size: 0.9rem;
+  text-transform: uppercase; letter-spacing: 0.09em; cursor: pointer;
+  padding: 0.5em;
+}
+.stir .nav-overlay-links {
+  margin-top: 14vh;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.stir .nav-overlay-links a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+}
+.stir .nav-overlay-links a .arrow { font-size: 0.6em; vertical-align: 0.3em; padding-left: 0.3em; }
+.stir .nav-overlay-foot {
+  margin-top: auto;
+  color: var(--ivory-75);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   SUBPAGES — quiet ivory pages (about / contact / 404)
+   ════════════════════════════════════════════════════════════════ */
+.stir .page {
+  padding-top: clamp(140px, 20vh, 220px);
+  padding-bottom: clamp(100px, 16vh, 200px);
+}
+.stir .page-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.stir .page-title {
+  grid-column: 1 / 12;
+  font-size: var(--t-giant);
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+
+
+/* ── Contact form — hairline editorial, no boxes ──────────────── */
+.stir .contact-info {
+  grid-column: 1 / 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vh, 56px);
+}
+.stir .contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.stir .contact-links a {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: border-color 0.2s var(--ease);
+}
+.stir .contact-links a:hover,
+.stir .contact-links a:focus-visible { border-bottom-color: var(--ink); }
+.stir .contact-form {
+  grid-column: 6 / 12;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4.5vh, 48px);
+}
+.stir .field { display: flex; flex-direction: column; gap: 10px; }
+.stir .field label { color: var(--ink-60); }
+.stir .field input,
+.stir .field textarea {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 6px 0 12px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.stir .field textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.stir .field input:focus-visible,
+.stir .field textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--red); /* activation */
+}
+.stir .form-foot {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.stir .form-note { color: var(--ink-60); }
+.stir .form-success { display: none; }
+.stir .form-success.is-shown { display: block; }
+.stir .form-success .display { font-size: var(--t-big); margin-bottom: 24px; }
+
+
+/* ── 404 ──────────────────────────────────────────────────────── */
+.stir .notfound {
+  min-height: 100svh;
+  background: var(--cobalt);
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+}
+.stir .notfound-inner {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 5vh, 56px);
+}
+.stir .notfound .display { font-size: var(--t-giant); }
+.stir .notfound .cta-line { color: var(--ivory); width: fit-content; }
+/* ── Responsive for new components ────────────────────────────── */
+@media (max-width: 1023px) {
+.stir .payoff-title { grid-column: 1 / -1; }
+.stir .payoff-body { grid-column: 1 / -1; }
+.stir .page-title { grid-column: 1 / -1; }
+.stir .contact-info { grid-column: 1 / -1; margin-bottom: 56px; }
+.stir .contact-form { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+.stir .nav-menu { display: inline-block; }
+.stir .page-label { grid-column: 1 / -1; margin-bottom: 48px; }
+.stir .page-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
+.stir .payoff-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
+}
+/* ════════════════════════════════════════════════════════════════
+   MOTION SYSTEM — one small library, reused everywhere.
+   BLUE HOLDS · RED MOVES · IVORY REVEALS · BLACK EXPLAINS
+
+   Four primitives:
+     A  .sig-line / .sig-*      Signal Red enters when something acts
+     B  [data-reveal=registration]  print-registration resolve (art)
+     C  [data-reveal=editorial]     masked rise (typography)
+     D  [data-reveal=structural]    red progression (systems)
+
+   Every primitive is inert under prefers-reduced-motion: content
+   arrives complete, only the movement is dropped.
+   ════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+
+  /* ── C · Editorial reveal — typography rises out of a mask ───── */
+  /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
+     intersection rect, so IntersectionObserver would never fire. */
+  html.js .stir [data-reveal="editorial"] {
+    opacity: 0;
+    transform: translateY(14px);
+    -webkit-mask-image: linear-gradient(#000, #000);
+            mask-image: linear-gradient(#000, #000);
+    -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
+    -webkit-mask-position: 0 100%;    mask-position: 0 100%;
+    -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.7s var(--ease),
+      -webkit-mask-size 0.7s var(--ease),
+      mask-size 0.7s var(--ease);
+  }
+html.js .stir [data-reveal="editorial"].is-in {
+    opacity: 1;
+    transform: none;
+    -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
+  }
+
+
+  /* ── B · Registration reveal — plates settling into register ─── */
+  html.js .stir [data-reveal="registration"] {
+    opacity: 0;
+    transform: translate(4px, 2px);
+    transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
+  }
+html.js .stir [data-reveal="registration"].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Images carry a mis-registered cobalt plate that resolves */
+  .stir img[data-reveal="registration"] {
+    box-shadow: 5px 3px 0 0 var(--cobalt);
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.8s var(--ease),
+      box-shadow 0.8s var(--ease);
+  }
+.stir img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+
+  /* A band that already reaches both viewport edges cannot also shift
+     sideways: the 4px would hang off the right for the length of the
+     entrance and flash a horizontal scrollbar. It registers on the
+     vertical only; the cobalt plate still carries the effect. */
+  .stir .who-art[data-reveal="registration"],
+.stir .about-art[data-reveal="registration"] { transform: translateY(2px); }
+
+
+  /* ── D · Structural reveal — a red signal draws the rule ─────── */
+  .stir [data-reveal="structural"] { position: relative; }
+html.js .stir [data-reveal="structural"]::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -1px;
+    height: 2px;
+    width: 100%;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s var(--ease);
+  }
+html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+
+  /* the signal passes through, it does not stay */
+  html.js .stir [data-reveal="structural"].is-in.sig-spent::before {
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+}
+
+
+/* ── A · Signal line — the shared "this is actionable" primitive ─ */
+.stir .sig-line {
+  position: relative;
+}
+.stir .sig-line::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.stir .sig-line:hover::after,
+.stir .sig-line:focus-visible::after,
+.stir .sig-line[aria-current]::after,
+.stir .sig-line.is-active::after { transform: scaleX(1); }
+
+
+/* Nav: active page gets a small permanent red marker (never colour alone —
+   it pairs with the underline and aria-current) */
+.stir .nav-links a[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -12px; top: 50%;
+  width: 5px; height: 5px;
+  margin-top: -2px;
+  background: var(--red);
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   METHOD — FIND / BUILD / RUN reads as one system.
+   A structural spine runs the index; Signal Red progresses to the
+   active stage. Progress height is set from JS (--sig-progress).
+   ════════════════════════════════════════════════════════════════ */
+.stir .method-index { position: relative; padding-left: 0; }
+.stir .method-index::before,
+.stir .method-index::after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 0;
+  width: 1px;
+}
+.stir .method-index::before {
+  bottom: 0;
+  background: var(--ink-35);
+}
+.stir .method-index::after {
+  width: 2px;
+  left: -18.5px;
+  height: var(--sig-progress, 0px);
+  background: var(--red);
+  transition: height 0.5s var(--ease);
+}
+
+/* Stage markers on the spine */
+.stir .method-row { --dot: var(--ink-35); }
+.stir .method-row::before {
+  content: "";
+  position: absolute;
+  left: -21px;
+  top: calc(clamp(28px, 4.5vh, 56px) + 0.35em);
+  width: 7px; height: 7px;
+  background: var(--ivory);
+  box-shadow: 0 0 0 1px var(--dot);
+  transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.stir .method-row.is-active { --dot: var(--red); }
+.stir .method-row.is-active::before { background: var(--red); box-shadow: 0 0 0 1px var(--red); }
+@media (max-width: 639px) {
+.stir .method-index::before,
+.stir .method-index::after { left: -10px; }
+.stir .method-index::after { left: -10.5px; }
+.stir .method-row::before { left: -13px; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   METRIC — 10M+ counts up when it arrives (tabular so it can't jitter)
+   ════════════════════════════════════════════════════════════════ */
+.stir .proof-metric { font-variant-numeric: tabular-nums; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   REEL — drag to examine the evidence
+   ════════════════════════════════════════════════════════════════ */
+.stir .reel { cursor: grab; }
+.stir .reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.stir .reel.is-dragging .ev-media { pointer-events: none; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   OUTCOMES — what you leave with.
+   Deliberately a different rhythm from the FIND/BUILD/RUN index
+   that precedes it: three vertical columns, not full-width rows.
+   ════════════════════════════════════════════════════════════════ */
+.stir .outcomes {
+  padding-top: clamp(110px, 16vh, 220px);
+  padding-bottom: clamp(120px, 18vh, 240px);
+}
+.stir .outcomes-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.stir .outcomes-title {
+  grid-column: 1 / 9;
+  font-size: var(--t-big);
+}
+.stir .outcomes-lede {
+  grid-column: 1 / 7;
+  margin-top: clamp(28px, 4vh, 48px);
+}
+.stir .outcomes-set {
+  grid-column: 1 / -1;
+  margin-top: clamp(72px, 11vh, 150px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--col-gap);
+  row-gap: clamp(56px, 8vh, 80px);
+}
+.stir .outcome { border-top: 1px solid var(--ink); padding-top: 16px; }
+.stir .outcome-no { color: var(--ink-60); display: flex; margin-bottom: clamp(28px, 4vh, 48px); }
+.stir .outcome-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  line-height: 1;
+}
+.stir .outcome-q {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.5;
+  color: var(--ink);
+  margin-top: 14px;
+  max-width: 22ch;
+}
+.stir .outcome-list { margin-top: clamp(20px, 3vh, 32px); color: var(--ink-60); max-width: 26ch; }
+.stir .outcomes-foot {
+  grid-column: 1 / -1;
+  margin-top: clamp(56px, 8vh, 110px);
+  color: var(--ink-60);
+}
+@media (max-width: 1023px) {
+.stir .outcomes-title,
+.stir .outcomes-lede { grid-column: 1 / -1; }
+.stir .outcomes-set { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 639px) {
+.stir .outcomes-label { grid-column: 1 / -1; margin-bottom: 48px; }
+.stir .outcomes-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+.stir .outcomes-set { grid-template-columns: 1fr; row-gap: 44px; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — a conversation, not a form.
+   ════════════════════════════════════════════════════════════════ */
+.stir .q-block {
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+.stir .q-no { color: var(--ink-60); padding-top: 4px; }
+.stir .q-body { min-width: 0; }
+.stir .q-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.8vw, 1.6rem);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  display: block;
+  margin-bottom: 4px;
+}
+.stir .q-hint { color: var(--ink-60); margin-bottom: 18px; display: block; }
+
+
+/* Editorial inputs — rules, not boxes */
+.stir .q-body input[type="text"],
+.stir .q-body input[type="email"],
+.stir .q-body input[type="url"],
+.stir .q-body textarea {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 8px 0 14px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.stir .q-body textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+.stir .q-body input:focus,
+.stir .q-body textarea:focus { outline: none; border-bottom-color: var(--red); }
+.stir .q-body input:focus-visible,
+.stir .q-body textarea:focus-visible { outline: none; }
+
+
+/* Two fields on one rule (name + email) */
+.stir .q-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); row-gap: 20px; }
+@media (max-width: 639px) {
+.stir .q-pair { grid-template-columns: 1fr; }
+}
+.stir .q-sub { color: var(--ink-60); display: block; margin-bottom: 2px; }
+
+
+/* Selectable situations — editorial rows, red indicator, never
+   colour alone (the label also goes to full Ink and shifts 2px) */
+.stir .opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
+@media (max-width: 639px) {
+.stir .opts { grid-template-columns: 1fr; }
+}
+.stir .opt { position: relative; display: block; }
+.stir .opt input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  margin: 0;
+}
+.stir .opt span {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85em;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink-35);
+  color: var(--ink-60);
+  cursor: pointer;
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.stir .opt span::before {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  align-self: center;
+  box-shadow: inset 0 0 0 1px var(--ink-35);
+  background: transparent;
+  transition: background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.stir .opt:hover span { color: var(--ink); }
+.stir .opt input:checked + span {
+  color: var(--ink);
+  font-weight: 500;
+  transform: translateX(2px);
+}
+.stir .opt input:checked + span::before {
+  background: var(--red);
+  box-shadow: inset 0 0 0 1px var(--red);
+}
+.stir .opt input:focus-visible + span {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+
+/* Submit: the signal travels, then confirmation */
+.stir .send-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: clamp(16px, 2.5vh, 28px);
+}
+.stir .send-rail {
+  position: relative;
+  height: 1px;
+  background: var(--ink-35);
+  flex: 1 1 160px;
+  min-width: 120px;
+  overflow: hidden;
+}
+.stir .send-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+.stir form.is-sending .send-rail::after {
+    transform: scaleX(1);
+    transition: transform 0.6s var(--ease);
+  }
+}
+.stir form.is-sending .cta { opacity: 0.55; pointer-events: none; }
+.stir .contact-note { color: var(--ink-60); margin-top: clamp(40px, 6vh, 72px); }
+
+
+/* ════════════════════════════════════════════════════════════════
+   PROOF — the role. The claim almost nobody else can make:
+   not "we ran a campaign" but "we operate this."
+   ════════════════════════════════════════════════════════════════ */
+.stir .proof-role {
+  max-width: 34ch;
+  margin-bottom: clamp(48px, 7vh, 96px);
+}
+.stir .proof-role .role-label { display: flex; margin-bottom: 18px; }
+.stir .proof-role .role-said {
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  font-weight: 300;
+  line-height: 1.32;
+  color: var(--ink);
+}
+.stir .proof-role .role-said strong { font-weight: 700; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — answers the question a prospect is actually
+   asking by this point in the page.
+   ════════════════════════════════════════════════════════════════ */
+.stir .who {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: 0;      /* the full-bleed art meets the invitation */
+}
+.stir .who-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.stir .who-title { grid-column: 1 / 10; font-size: var(--t-big); }
+.stir .who-copy { grid-column: 1 / 6; margin-top: clamp(32px, 5vh, 56px); }
+
+
+/* The trades, as an index — not a grid of cards */
+.stir .who-trades {
+  grid-column: 7 / 13;
+  margin-top: clamp(32px, 5vh, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 0;
+}
+.stir .who-trades li {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.stir .who-trades li:not(:last-child)::after {
+  content: "·";
+  color: var(--ink-35);
+  padding-inline: 0.9em;
+}
+.stir .who-trades-note { grid-column: 7 / 12; margin-top: 20px; color: var(--ink-60); }
+
+
+/* The disqualifier — saying who it isn't for is what makes the
+   yes credible. Kept plain, never apologetic. */
+.stir .who-not {
+  grid-column: 7 / 13;
+  margin-top: clamp(48px, 7vh, 88px);
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+}
+.stir .who-not .not-label { display: flex; color: var(--ink-60); margin-bottom: 14px; }
+
+
+/* the ordinary storefront: the argument for who this is for */
+.stir .who-art {
+  /* the global img reset would otherwise clamp the bleed */
+  max-width: none;
+  margin-top: clamp(72px, 11vh, 150px);
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 55%;
+  height: auto;
+  /* Viewport bleed measured against this element's own containing
+     block, so it lands on the edge whatever the grid, the gutter or
+     --bleed happen to be at this width. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+}
+@media (max-width: 1023px) {
+.stir .who-title,
+.stir .who-copy,
+.stir .who-not { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+.stir .who-label { grid-column: 1 / -1; margin-bottom: 48px; }
+.stir .who-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+.stir .who-art { aspect-ratio: 4 / 3; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — show the journey, then start it
+   ════════════════════════════════════════════════════════════════ */
+.stir .steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--col-gap);
+  margin-top: clamp(56px, 8vh, 110px);
+}
+.stir .step { border-top: 1px solid var(--ink); padding-top: 16px; }
+.stir .step-no { color: var(--ink-60); display: flex; margin-bottom: 14px; }
+.stir .step-said {
+  font-size: calc(var(--t-body) * 1.05);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.stir .step-note { color: var(--ink-60); margin-top: 8px; max-width: 26ch; }
+@media (max-width: 639px) {
+.stir .steps { grid-template-columns: 1fr; row-gap: 28px; }
+}
+
+
+/* Start the conversation before the commitment */
+.stir .starter {
+  margin-top: clamp(56px, 8vh, 110px);
+  max-width: 680px;
+}
+.stir .starter-label { display: block; color: var(--ink-60); margin-bottom: 12px; }
+.stir .starter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 12px;
+}
+.stir .starter-row input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  color: var(--ink);
+}
+.stir .starter-row input:focus { outline: none; }
+.stir .starter-row input::placeholder { color: var(--ink-35); }
+.stir .starter-go {
+  flex: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 6px 2px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  transition: color 0.25s var(--ease);
+}
+.stir .starter-go { transition: color 0.25s var(--ease), transform 0.12s var(--ease); }
+.stir .starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.stir .starter-go:hover,
+.stir .starter-go:focus-visible { color: var(--red); }
+.stir .starter-go:hover .arrow,
+.stir .starter-go:focus-visible .arrow { transform: translateX(3px); }
+.stir .starter-row:focus-within { border-bottom-color: var(--red); }
+.stir .starter-note { color: var(--ink-60); margin-top: 16px; }
+
+
+/* ════════════════════════════════════════════════════════════════
+   ENTRANCE — masks the unstyled flash while the page boots, and
+   gives the arrival authorship. Cover and hero are both cobalt, so
+   nothing "wipes": the mark simply resolves into the site.
+   Capped at 700ms, once per session, skipped for reduced motion.
+   ════════════════════════════════════════════════════════════════ */
+.stir-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--cobalt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  transition: opacity 0.45s var(--ease);
+}
+.stir-enter img { height: clamp(26px, 3vw, 38px); width: auto; }
+.stir-enter .enter-rail {
+  width: clamp(90px, 12vw, 150px);
+  height: 1px;
+  background: var(--ivory-40);
+  position: relative;
+  overflow: hidden;
+}
+.stir-enter .enter-rail::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.stir-enter.is-filling .enter-rail::after { transform: scaleX(1); }
+.stir-enter.is-done { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+.stir-enter { display: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — the trades at display scale, and what each one
+   actually gets. Demonstrates range across verticals, which is the
+   real question behind "do you work with someone like me".
+   ════════════════════════════════════════════════════════════════ */
+.stir .who-body { grid-column: 1 / -1; margin-top: clamp(56px, 9vh, 120px); }
+.stir .trades-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  column-gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+.stir .trade-list { list-style: none; }
+.stir .trade-list li { border-top: 1px solid var(--ink-35); }
+.stir .trade-list li:last-child { border-bottom: 1px solid var(--ink-35); }
+.stir .trade {
+  width: 100%;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  padding: clamp(10px, 1.4vh, 18px) 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.1vw, 2.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  transition: color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.stir .trade::before {
+  content: "";
+  flex: none;
+  width: 0.2em; height: 0.2em;
+  align-self: center;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.stir .trade:hover { color: var(--ink-60); }
+.stir .trade[aria-pressed="true"] {
+  color: var(--ink);
+  transform: translateX(0.3ch);
+}
+.stir .trade[aria-pressed="true"]::before { opacity: 1; transform: none; }
+
+
+/* The answer panel — what that kind of business actually gets */
+.stir .trade-panel {
+  position: sticky;
+  top: clamp(120px, 18vh, 200px);
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+  min-height: 12rem;
+}
+.stir .trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.stir .trade-panel .panel-for { color: var(--ink); }
+.stir .trade-panel .panel-said {
+  font-size: clamp(1.3rem, 2.3vw, 2.1rem);
+  font-weight: 300;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  min-height: 2.7em;
+}
+.stir .trade-panel .panel-note {
+  margin-top: clamp(18px, 2.6vh, 28px);
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-35);
+  color: var(--ink-60);
+}
+@media (prefers-reduced-motion: no-preference) {
+.stir .trade-panel .panel-said,
+.stir .trade-panel .panel-note { transition: opacity 0.22s var(--ease); }
+.stir .trade-panel.is-swapping .panel-said,
+.stir .trade-panel.is-swapping .panel-note { opacity: 0; }
+}
+.stir .who-body .who-trades-note {
+  grid-column: auto;
+  margin-top: clamp(28px, 4vh, 44px);
+  max-width: 44ch;
+}
+
+/* The inline answer lives in the markup, not in a script. With no JS
+   the whole list simply reads as nine trades and their answers; the
+   panel stands down, because without script it can only ever show
+   the first one. */
+.stir .trade-inline > div { min-height: 0; }
+.stir .trade-inline-said {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-block: 4px 10px;
+}
+.stir .trade-inline-note { color: var(--ink-60); padding-bottom: 18px; }
+html:not(.js) .stir .trade-panel { display: none; }
+html.js .stir .trade-inline { display: none; }
+/* wide + JS: the panel does it */
+
+/* Narrow: no panel. The answer opens directly under the trade you
+   chose, because an update somewhere else on the page is a change
+   you cannot see — and a panel pinned to the top of the viewport
+   would sit behind the fixed header anyway. */
+@media (max-width: 1023px) {
+.stir .trades-grid { grid-template-columns: 1fr; }
+.stir .trade-panel { display: none; }
+html.js .stir .trade-inline {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.38s var(--ease);
+  }
+html.js .stir .trade[aria-pressed="true"] + .trade-inline { grid-template-rows: 1fr; }
+.stir .trade-inline-said { font-size: clamp(1.1rem, 4.4vw, 1.45rem); }
+
+
+  /* The chosen trade and its answer read as one block. */
+  .stir .trade-list li:has(.trade[aria-pressed="true"]) {
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+  }
+.stir .trade[aria-pressed="true"] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+html.js .stir .trade-inline { transition: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — the site opens in STIR's world and closes in it.
+   The observer returns, cropped to the eye: the site asked what an
+   ordinary business is hiding; now it asks you.
+   ════════════════════════════════════════════════════════════════ */
+.stir .convert {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  overflow: hidden;
+  padding-top: clamp(96px, 15vh, 190px);
+  padding-bottom: clamp(96px, 15vh, 190px);
+}
+.stir .convert-art {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(58%, 900px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% 36%;
+  z-index: 0;
+  opacity: 0.95;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+}
+.stir .convert .convert-inner { position: relative; z-index: 1; max-width: 62%; }
+.stir .convert .convert-head { border-top-color: var(--ivory-40); }
+.stir .convert .convert-head .ann { color: var(--ivory); }
+.stir .convert-q { font-size: var(--t-giant); color: var(--ivory); }
+.stir .convert-copy { color: var(--ivory-75); max-width: 40ch; margin-top: clamp(32px, 5vh, 56px); }
+.stir .convert .steps { margin-top: clamp(48px, 7vh, 96px); }
+.stir .convert .step { border-top-color: var(--ivory-40); }
+.stir .convert .step-no { color: var(--ivory-75); }
+.stir .convert .step-said { color: var(--ivory); }
+.stir .convert .step-note { color: var(--ivory-75); }
+.stir .convert .starter-label { color: var(--ivory-75); }
+.stir .convert .starter-row { border-bottom-color: var(--ivory); }
+.stir .convert .starter-row input { color: var(--ivory); }
+.stir .convert .starter-row input::placeholder { color: var(--ivory-40); }
+.stir .convert .starter-go { color: var(--ivory); }
+.stir .convert .starter-go:hover,
+.stir .convert .starter-go:focus-visible { color: #fff; }
+.stir .convert .starter-go:hover .arrow { transform: translateX(3px); }
+.stir .convert .starter-row:focus-within { border-bottom-color: var(--red); }
+.stir .convert .starter-note { color: var(--ivory-75); }
+@media (max-width: 1023px) {
+.stir .convert .convert-inner { max-width: 100%; }
+.stir .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   SQUARESPACE HOST LAYER
+   Everything above is the STIR design system, scoped to .stir so
+   Squarespace's stylesheet can't leak in and ours can't leak out.
+   Everything below adapts it to Squarespace's DOM.
+   ════════════════════════════════════════════════════════════════ */
+
+/* The page ground. Squarespace paints its own white behind content. */
+body { background: #FAF2E6; }
+body.stir-dark-top { background: #0451AB; }
+
+/* Squarespace wraps blocks in padded containers that would inset our
+   full-bleed sections. Neutralise on STIR pages only. */
+.stir-page #sections,
+.stir-page .page-section,
+.stir-page .content-wrapper,
+.stir-page .sqs-layout,
+.stir-page .sqs-block,
+.stir-page .sqs-block-content,
+.stir-page .sqs-block-code {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+.stir-page .page-section > .content-wrapper { min-height: 0 !important; }
+
+/* We supply our own nav and footer. */
+.stir-page #header,
+.stir-page .header,
+.stir-page #footer-sections,
+.stir-page .sqs-announcement-bar-dropzone { display: none !important; }
+
+/* ── Defensive reset ─────────────────────────────────────────────
+   Squarespace styles bare elements directly — `h1 { font-family:
+   Georgia }`, `a { color: #0d7 }`, `ul { list-style: disc }` — and a
+   type selector in their sheet beats inheritance from our container,
+   however specific that container is. Inheritance is not a fight we
+   can win, so every element we use is reset to inherit explicitly and
+   our own rules then style it. Remove this and the headlines render
+   in the host's serif.                                             */
+.stir h1, .stir h2, .stir h3, .stir h4, .stir h5, .stir h6,
+.stir p, .stir ul, .stir ol, .stir li, .stir figure, .stir figcaption,
+.stir blockquote, .stir dl, .stir dd, .stir fieldset, .stir legend,
+.stir button, .stir input, .stir textarea, .stir select, .stir label,
+.stir a, .stir span, .stir strong, .stir em, .stir i, .stir form {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  /* inherit, not none: a <span> inside uppercase display type must
+     keep the transform it is sitting in. `none` silently lowercased
+     the struck phrase in the thesis. */
+  text-transform: inherit;
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.stir ul, .stir ol { list-style: none; }
+.stir img, .stir video { display: block; max-width: 100%; height: auto; }
+.stir button { cursor: pointer; -webkit-appearance: none; appearance: none; }
+.stir *, .stir *::before, .stir *::after { box-sizing: border-box; }
+
+/* Full-bleed that works inside ANY container width. The viewport-math
+   version used on the standalone build assumes our own shell is the
+   only wrapper; Squarespace nests several.
+
+   Margin, never transform: .reveal and [data-reveal] both animate
+   transform, and their resting `transform: none` would cancel a
+   translateX(-50%) and leave the band hanging half a screen right. */
+.stir { --bleed: 0px; }
+.stir .bleed,
+.stir .proof-reel-band,
+.stir .about-art,
+.stir .who-art {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ENHANCEMENT 01 — ADAPTIVE NAV
+   The nav reads the section passing beneath it and inverts. Cobalt
+   environments get the ivory mark; ivory gets ink. One detail that
+   no template does.
+   ════════════════════════════════════════════════════════════════ */
+.stir .nav { transition: color 0.4s var(--ease); }
+
+/* The mark cross-fade and the ground inversion now live in the shared
+   stylesheet, driven by the header's scrolled state rather than by
+   whichever section is passing beneath it. data-ground stays because
+   the running index still reads it. */
+
+/* ════════════════════════════════════════════════════════════════
+   ENHANCEMENT 02 — RUNNING INDEX
+   A quiet publication marker: which part of the argument you're in.
+   State, not movement. Desktop only.
+   ════════════════════════════════════════════════════════════════ */
+.stir-index {
+  position: fixed;
+  left: clamp(20px, 3.2vw, 48px);
+  bottom: clamp(20px, 3vw, 40px);
+  z-index: 9;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease), color 0.4s var(--ease);
+}
+.stir-index.is-shown { opacity: 1; }
+.stir-index .idx-rule {
+  width: 34px; height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  position: relative;
+}
+.stir-index .idx-rule::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(var(--idx-progress, 0));
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.stir-index[data-on="cobalt"] { color: var(--ivory); }
+.stir-index[data-on="ivory"]  { color: var(--ink); }
+@media (min-width: 1024px) { .stir-index { display: flex; } }
+@media (prefers-reduced-motion: reduce) {
+  .stir-index, .stir-index .idx-rule::after { transition: none; }
+}
+
+</style>
+
+<!-- ══ STIR · head ══
+     Paste into Settings → Advanced → Code Injection → HEADER. Ready as-is. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Social share card. Squarespace sets its own og tags per page; these
+     override them. Swap the image URL for your uploaded og-stir.jpg. -->
+<meta property="og:image" content="https://stirnyc.netlify.app/assets/og-stir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://stirnyc.netlify.app/assets/og-stir.jpg">
+
+<script>
+/* Tag the page so the Custom CSS host layer only acts on STIR pages,
+   and paint the ground behind the cobalt hero before first paint. */
+(function () {
+  var p = window.location.pathname.replace(/\/$/, '');
+  document.documentElement.classList.add('stir-page', 'js');
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add('stir-page');
+    if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');
+  });
+})();
+</script>
+
+<!-- ══ ENTRANCE ══
+     Not a progress bar — there is nothing on a page this size worth
+     measuring. A cobalt hold that covers Squarespace's unstyled flash
+     and resolves the moment the page is ready, capped at 900ms so it
+     can never become a wait. Once per session; never under reduced
+     motion.
+
+     It lives here rather than in a Code Block because a Code Block
+     paints too late to cover anything: this has to exist in <head>.
+     It is built from pseudo-elements on <html>, since Code Injection
+     can only put markup in the body, which is the thing we're hiding. -->
+<style>
+  html.stir-enter::before,
+  html.stir-enter::after {
+    content: "";
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* the cobalt ground, with the ivory mark centred on it */
+  html.stir-enter::before {
+    inset: 0;
+    background: #0451AB url("https://stirnyc.netlify.app/assets/stir-mark-ivory.png") no-repeat center;
+    background-size: auto clamp(26px, 3vw, 38px);
+  }
+  /* the signal rail, just under the mark */
+  html.stir-enter::after {
+    left: 50%;
+    top: calc(50% + clamp(26px, 3vw, 38px));
+    width: clamp(90px, 12vw, 150px);
+    height: 1px;
+    margin-left: calc(clamp(90px, 12vw, 150px) / -2);
+    background:
+      linear-gradient(to right, #F21B16, #F21B16) left / var(--stir-fill, 0%) 100% no-repeat,
+      rgba(250, 242, 230, 0.40);
+    transition: background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.stir-enter { overflow: hidden; }
+  html.stir-enter-done::before,
+  html.stir-enter-done::after { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    html.stir-enter::before, html.stir-enter::after { display: none; }
+  }
+</style>
+<script>
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false;
+  try { seen = sessionStorage.getItem('stir-entered') === '1'; } catch (e) {}
+  if (reduce || seen) return;
+  try { sessionStorage.setItem('stir-entered', '1'); } catch (e) {}
+
+  root.classList.add('stir-enter');
+  var t0 = Date.now(), lifted = false, cap;
+
+  function lift() {
+    if (lifted) return;
+    lifted = true;
+    clearTimeout(cap);
+    root.classList.add('stir-enter-done');
+    setTimeout(function () {
+      root.classList.remove('stir-enter', 'stir-enter-done');
+      root.style.removeProperty('--stir-fill');
+    }, 520);
+  }
+
+  requestAnimationFrame(function () { root.style.setProperty('--stir-fill', '100%'); });
+  cap = setTimeout(lift, 900);   /* hard ceiling — never a wait */
+
+  window.addEventListener('load', function () {
+    setTimeout(lift, Math.max(0, 420 - (Date.now() - t0)));
+  });
+})();
+</script>
