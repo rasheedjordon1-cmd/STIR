@@ -23,88 +23,79 @@ plan or above. Custom CSS with file uploads is on the same tier.
 
 ---
 
-## 1 · Upload the assets
+## Paste it in
 
-**Design → Custom CSS → Manage Custom Files.** Upload:
+Everything you paste lives in **`ready/`**, already resolved — no
+find and replace, nothing to upload. `ready/CHECKLIST.md` is the
+short version; this is the long one.
 
-- the 5 font files from `assets/fonts/`
-- `hero-stir-attention.webp`, `illustration-corner.webp`,
-  `illustration-city.webp`, `stir-mark.png`, `stir-mark-ivory.png`,
-  `og-stir.jpg`
-- everything in `assets/labay/`
+### 1 · Custom CSS
 
-Squarespace gives each file a URL. Keep the tab open — you need them
-in steps 2 and 4.
+**Design → Custom CSS.** Paste all of `ready/01-custom-css.txt`.
 
-> **The Labay video.** Squarespace won't host `.mp4`. The build keeps
-> it on the existing Netlify deploy, which now serves only as an asset
-> host. In `pages/home.html`, replace `VIDEO_URL` with:
-> `https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4`
->
-> **Do not delete that Netlify site** — it costs nothing and the video
-> is the only thing still pointing at it. (Fallback if you ever want to
-> consolidate: put the clip on Vimeo unlisted and swap the `<video>`
-> for an embed, accepting the player chrome.)
+### 2 · Code Injection
 
-## 2 · Custom CSS
+**Settings → Advanced → Code Injection.**
 
-Paste all of `stir-custom.css` into **Design → Custom CSS**.
+- **Header** ← `ready/02-code-injection-header.html`
+- **Footer** ← `ready/03-code-injection-footer.html`
 
-Then replace the five font placeholders with your uploaded URLs:
+The header carries the page tagging, the share tags and the entrance
+cover. It has to be in the head: a Code Block paints too late to
+cover Squarespace's unstyled flash.
 
-```
-FONT_LIGHT_URL          founders-grotesk-light.woff2
-FONT_LIGHT_ITALIC_URL   founders-grotesk-light-italic.woff2
-FONT_MEDIUM_URL         founders-grotesk-medium.woff2
-FONT_BOLD_URL           founders-grotesk-bold.woff2
-FONT_BOLD_ITALIC_URL    founders-grotesk-bold-italic.woff2
-```
+### 3 · The pages
 
-## 3 · Code Injection
+Create three blank pages — **/**, **/about**, **/contact** — and give
+each one a single **Code Block**, set to full width:
 
-**Settings → Advanced → Code Injection**
+| page | file |
+|---|---|
+| `/` | `ready/04-page-home.html` |
+| `/about` | `ready/05-page-about.html` |
+| `/contact` | `ready/06-page-contact.html` |
 
-- **Header** ← `header-injection.html`
-- **Footer** ← `footer-injection.html`
+Remove every other block from those pages. The Custom CSS already
+neutralises Squarespace's own padded wrappers, headers and footers on
+STIR pages, so the layout does not need their page settings.
 
-In the header file, replace **both** `ASSET_BASE/` occurrences — the
-share image (`og-stir.jpg`) and the entrance mark
-(`stir-mark-ivory.png`).
+### 4 · The form
 
-The header also carries the entrance: a cobalt hold that covers
-Squarespace's unstyled flash and lifts the moment the page is ready.
-It is capped at 900ms, shows once per session and is skipped entirely
-under reduced motion. It has to live in the head — a Code Block paints
-too late to cover anything — so it is drawn with pseudo-elements on
-`<html>` rather than markup.
-
-## 4 · The pages
-
-Create three blank pages: **/** (home), **/about**, **/contact**.
-On each, add ONE **Code Block**, full width, and paste the matching
-file from `pages/`.
-
-In each pasted block, find/replace `ASSET_BASE/` with your Squarespace
-file URL prefix — one operation per page.
-
-Set the page layout to have no padding if your template offers it;
-the Custom CSS already neutralises the usual wrappers.
-
-## 5 · The form
-
-1. formspree.io → **New Form** → copy the form ID.
-2. In `pages/contact.html`, replace `FORMSPREE_ID`.
-3. Submit once yourself to confirm the address.
+1. formspree.io → **New Form** → copy the form id.
+2. Put it in `deploy.config.json` as `formspree_id`.
+3. Re-run `python3 scripts/build-squarespace.py`.
+4. Re-paste `ready/06-page-contact.html`.
+5. Submit once yourself to confirm the address.
 
 Fields captured: business, situation, show_us, not_seeing, name,
 email. `_gotcha` is the spam honeypot. The footer injection posts over
-fetch and shows **WE'VE GOT IT.** without a page reload; the red
-signal travels the rail while the request is in flight. Without JS the
-form still submits normally and Formspree answers.
+fetch and shows **WE'VE GOT IT.** without a page reload, with the red
+signal travelling the rail while the request is in flight. Without JS
+the form still submits normally and Formspree answers.
 
-The homepage **Start here** field hands its answer to `/contact`, which
-prefills question 01 and moves the visitor to question 02 rather than
-the top of the form.
+---
+
+## Where the assets come from
+
+The Netlify deploy at `stirnyc.netlify.app` serves the images, fonts
+and video, and sends the `Access-Control-Allow-Origin` header the
+self-hosted fonts need cross-origin (see `netlify.toml`). That is why
+there is nothing to upload: Squarespace gets the markup, Netlify gets
+the files.
+
+**Do not delete that site.** It costs nothing and it is now the asset
+origin for the whole Squarespace build, not just the video.
+
+Before pasting, run the console snippet in `ready/CHECKLIST.md` to
+confirm all 17 files are actually being served — Netlify builds a
+specific branch, so anything added on a branch it is not watching will
+404.
+
+To host on Squarespace instead, upload the files under **Design →
+Custom CSS → Manage Custom Files**, put that URL prefix in
+`deploy.config.json` as `asset_base`, and re-run the build. Note that
+Squarespace will not host `.mp4`, so the Labay clip stays on Netlify
+either way.
 
 ---
 

@@ -1,0 +1,9 @@
+{
+  "_": "Values the paste kit is built with. Edit, then re-run: python3 scripts/build-squarespace.py",
+
+  "asset_base": "https://stirnyc.netlify.app/assets/",
+  "_asset_base": "Where images, fonts and the video are served from. The Netlify deploy already hosts them and sends the CORS header fonts need, so nothing has to be uploaded to Squarespace. To host on Squarespace instead, upload the files under Design -> Custom CSS -> Manage Custom Files and put that URL prefix here.",
+
+  "formspree_id": "",
+  "_formspree_id": "The id from formspree.io -> New Form. Just the id, not the whole URL. Left empty, the contact form still builds but will not send."
+}

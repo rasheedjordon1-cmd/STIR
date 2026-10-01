@@ -1,0 +1,102 @@
+<!-- ══ STIR · head ══
+     Paste into Settings → Advanced → Code Injection → HEADER. Ready as-is. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Social share card. Squarespace sets its own og tags per page; these
+     override them. Swap the image URL for your uploaded og-stir.jpg. -->
+<meta property="og:image" content="https://stirnyc.netlify.app/assets/og-stir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://stirnyc.netlify.app/assets/og-stir.jpg">
+
+<script>
+/* Tag the page so the Custom CSS host layer only acts on STIR pages,
+   and paint the ground behind the cobalt hero before first paint. */
+(function () {
+  var p = window.location.pathname.replace(/\/$/, '');
+  document.documentElement.classList.add('stir-page', 'js');
+  document.addEventListener('DOMContentLoaded', function () {
+    document.body.classList.add('stir-page');
+    if (p === '' || p === '/home') document.body.classList.add('stir-dark-top');
+  });
+})();
+</script>
+
+<!-- ══ ENTRANCE ══
+     Not a progress bar — there is nothing on a page this size worth
+     measuring. A cobalt hold that covers Squarespace's unstyled flash
+     and resolves the moment the page is ready, capped at 900ms so it
+     can never become a wait. Once per session; never under reduced
+     motion.
+
+     It lives here rather than in a Code Block because a Code Block
+     paints too late to cover anything: this has to exist in <head>.
+     It is built from pseudo-elements on <html>, since Code Injection
+     can only put markup in the body, which is the thing we're hiding. -->
+<style>
+  html.stir-enter::before,
+  html.stir-enter::after {
+    content: "";
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  /* the cobalt ground, with the ivory mark centred on it */
+  html.stir-enter::before {
+    inset: 0;
+    background: #0451AB url("https://stirnyc.netlify.app/assets/stir-mark-ivory.png") no-repeat center;
+    background-size: auto clamp(26px, 3vw, 38px);
+  }
+  /* the signal rail, just under the mark */
+  html.stir-enter::after {
+    left: 50%;
+    top: calc(50% + clamp(26px, 3vw, 38px));
+    width: clamp(90px, 12vw, 150px);
+    height: 1px;
+    margin-left: calc(clamp(90px, 12vw, 150px) / -2);
+    background:
+      linear-gradient(to right, #F21B16, #F21B16) left / var(--stir-fill, 0%) 100% no-repeat,
+      rgba(250, 242, 230, 0.40);
+    transition: background-size 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  html.stir-enter { overflow: hidden; }
+  html.stir-enter-done::before,
+  html.stir-enter-done::after { opacity: 0; }
+  @media (prefers-reduced-motion: reduce) {
+    html.stir-enter::before, html.stir-enter::after { display: none; }
+  }
+</style>
+<script>
+(function () {
+  var root = document.documentElement;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = false;
+  try { seen = sessionStorage.getItem('stir-entered') === '1'; } catch (e) {}
+  if (reduce || seen) return;
+  try { sessionStorage.setItem('stir-entered', '1'); } catch (e) {}
+
+  root.classList.add('stir-enter');
+  var t0 = Date.now(), lifted = false, cap;
+
+  function lift() {
+    if (lifted) return;
+    lifted = true;
+    clearTimeout(cap);
+    root.classList.add('stir-enter-done');
+    setTimeout(function () {
+      root.classList.remove('stir-enter', 'stir-enter-done');
+      root.style.removeProperty('--stir-fill');
+    }, 520);
+  }
+
+  requestAnimationFrame(function () { root.style.setProperty('--stir-fill', '100%'); });
+  cap = setTimeout(lift, 900);   /* hard ceiling — never a wait */
+
+  window.addEventListener('load', function () {
+    setTimeout(lift, Math.max(0, 420 - (Date.now() - t0)));
+  });
+})();
+</script>
