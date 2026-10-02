@@ -1730,16 +1730,93 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 }
 
 
-/* The visual slot. A marked placeholder until real art is supplied —
-   never a stand-in image pretending to be the work. */
-.stir .svc-art {
-  margin-top: clamp(22px, 3.2vh, 34px);
-  /* A fixed height, not a ratio: the third column is wider, and a
-     ratio would make its slot taller and knock the scope lists out
-     of line across the three panels. */
+/* ── The plate ───────────────────────────────────────────────────
+   The reference card works because a vivid object floats in a dark
+   field. STIR already owns that composition — it is the hero. So the
+   illustration slot is a cobalt plate: a window onto the same world,
+   with the figure lit against it.
+
+   Fixed height, not a ratio: the third column is wider, and a ratio
+   would make its plate taller and knock the scope lists out of line
+   across the three panels.
+
+   The plate does not clip. A cut-out figure is meant to break the top
+   edge and stand in the paper above it — artwork breaking the frame
+   is the house rule, and it is what stops three cobalt rectangles
+   reading as three boxes.                                           */
+.stir .svc-plate {
+  position: relative;
+  margin-top: clamp(30px, 4.4vh, 52px);
   height: clamp(150px, 15.5vw, 224px);
+  background: var(--cobalt);
+  color: var(--ivory);
 }
-.stir .svc-art .ph-note { max-width: none; }
+.stir .svc-fig {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 1;
+  height: 118%;                     /* the 18% that breaks the edge */
+  width: auto;
+  /* Vertical break, bounded horizontally. A tall cut-out is governed
+     by the height and stands out of the top; wide art is caught here
+     instead of spilling into the next column. */
+  max-width: 106%;        /* worst-case spill stays inside the column gap */
+  object-fit: contain;
+  object-position: bottom center;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+
+
+/* The plate number, set like a folio on a printing form. It carries
+   the slot while the art is pending and sits behind the figure once
+   it lands, so the empty state is a composition rather than a gap. */
+.stir .svc-plate-no {
+  position: absolute;
+  left: 0.32em;
+  bottom: -0.16em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ivory);
+  opacity: 0.16;
+  user-select: none;
+}
+.stir .svc-plate-note {
+  position: absolute;
+  top: 14px; left: 16px; right: 16px;
+  color: var(--ivory-40);
+}
+
+
+/* Signal Red at the threshold — a short tick at rest that runs the
+   width of the plate when the panel is addressed. Red moves. */
+.stir .svc-plate-rule {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;                       /* the threshold reads over the figure */
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0.22);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.stir .svc:hover .svc-plate-rule,
+.stir .svc:focus-within .svc-plate-rule { transform: scaleX(1); }
+/* The plate arrives mis-registered and settles, like a second pass on
+   press. Reuses the registration primitive rather than inventing a
+   new entrance. */
+@media (prefers-reduced-motion: no-preference) {
+html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
+.stir .svc:hover .svc-plate { transform: translate(-2px, -2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+.stir .svc-plate-rule { transform: scaleX(1); }
+}
 .stir .svc-scope {
   list-style: none;
   margin-top: clamp(22px, 3.2vh, 32px);
@@ -1757,7 +1834,7 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 
 /* 03 — the ongoing relationship. Red rule, red numeral, more width.
    No badge and no claim: the emphasis is typographic. */
-.stir .svc--lead { border-top-width: 2px; border-top-color: var(--red); }
+.stir .svc--lead { border-top-width: 2px; border-top-color: var(--red); padding-top: 15px; }
 .stir .svc--lead .svc-no { color: var(--red); }
 @media (max-width: 1023px) {
 .stir .svc-title,
@@ -1773,7 +1850,7 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
   /* A vertical stack, in order, with nothing hidden. */
   .stir .svc-set { grid-template-columns: 1fr; row-gap: 44px; }
 .stir .svc--lead { grid-column: auto; }
-.stir .svc-art { height: clamp(170px, 46vw, 240px); }
+.stir .svc-plate { height: clamp(176px, 46vw, 250px); }
 }
 
 
@@ -2701,13 +2778,16 @@ body.stir-dark-top { background: #0451AB; }
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
           <h3 class="svc-name">Content &amp;<br>campaigns</h3>
-          <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
-          <!-- ASSET SLOT: a frame from the work this service produces.
-               Marked placeholder until real art is supplied. -->
-          <div class="ph svc-art" role="img" aria-label="Placeholder for a content and campaigns still">
-            <span class="utility ph-id">IMAGE &mdash; 01</span>
-            <span class="utility ph-note">Campaign or content still</span>
+          <!-- ILLUSTRATION SLOT 01. Drop a cut-out figure in as
+               <img class="svc-fig" src="../assets/svc-01.webp" alt="">
+               and delete the .svc-plate-note span. The figure is
+               allowed to break the top edge; the plate does not clip. -->
+          <div class="svc-plate" data-reveal="registration">
+            <span class="svc-plate-no" aria-hidden="true">01</span>
+            <span class="utility svc-plate-note">Illustration &mdash; a camera light on a market corner</span>
+            <i class="svc-plate-rule" aria-hidden="true"></i>
           </div>
+          <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
           <ul class="utility svc-scope">
             <li>Content direction</li>
             <li>Photography</li>
@@ -2722,11 +2802,16 @@ body.stir-dark-top { background: #0451AB; }
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
           <h3 class="svc-name">Brand &amp;<br>websites</h3>
-          <p class="svc-prop">Make the business look as good as it&nbsp;is.</p>
-          <div class="ph svc-art" role="img" aria-label="Placeholder for a brand and website still">
-            <span class="utility ph-id">IMAGE &mdash; 02</span>
-            <span class="utility ph-note">Identity or site screen</span>
+          <!-- ILLUSTRATION SLOT 02. Drop a cut-out figure in as
+               <img class="svc-fig" src="../assets/svc-02.webp" alt="">
+               and delete the .svc-plate-note span. The figure is
+               allowed to break the top edge; the plate does not clip. -->
+          <div class="svc-plate" data-reveal="registration">
+            <span class="svc-plate-no" aria-hidden="true">02</span>
+            <span class="utility svc-plate-note">Illustration &mdash; a shop window being lettered</span>
+            <i class="svc-plate-rule" aria-hidden="true"></i>
           </div>
+          <p class="svc-prop">Make the business look as good as it&nbsp;is.</p>
           <ul class="utility svc-scope">
             <li>Positioning</li>
             <li>Identity</li>
@@ -2740,11 +2825,16 @@ body.stir-dark-top { background: #0451AB; }
         <article class="svc svc--lead reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
           <h3 class="svc-name">Ongoing creative<br>&amp; growth</h3>
-          <p class="svc-prop">Put someone in charge of keeping it&nbsp;moving.</p>
-          <div class="ph svc-art" role="img" aria-label="Placeholder for an ongoing engagement still">
-            <span class="utility ph-id">IMAGE &mdash; 03</span>
-            <span class="utility ph-note">Operating shot &mdash; the work in motion</span>
+          <!-- ILLUSTRATION SLOT 03. Drop a cut-out figure in as
+               <img class="svc-fig" src="../assets/svc-03.webp" alt="">
+               and delete the .svc-plate-note span. The figure is
+               allowed to break the top edge; the plate does not clip. -->
+          <div class="svc-plate" data-reveal="registration">
+            <span class="svc-plate-no" aria-hidden="true">03</span>
+            <span class="utility svc-plate-note">Illustration &mdash; the operator, mid-shift</span>
+            <i class="svc-plate-rule" aria-hidden="true"></i>
           </div>
+          <p class="svc-prop">Put someone in charge of keeping it&nbsp;moving.</p>
           <ul class="utility svc-scope">
             <li>Monthly planning</li>
             <li>Production</li>
@@ -3573,6 +3663,35 @@ body.stir-dark-top { background: #0451AB; }
       var i = trades.indexOf(document.activeElement);
       if (i === -1) i = trades.indexOf(current);
       trades[(i + step + trades.length) % trades.length].focus();
+    });
+  })();
+
+  /* ── Service plates — a few pixels of the same depth the hero has ─
+     REWARD: the figure sits in the cobalt world, so it should answer
+     to presence the way that world does. Desktop pointers only, never
+     on touch, never under reduced motion, and a no-op until real
+     artwork is in the plate.                                        */
+  (function () {
+    if (reduce || !fine) return;
+    var plates = document.querySelectorAll('.svc-plate');
+    if (!plates.length) return;
+    Array.prototype.forEach.call(plates, function (plate) {
+      var fig = plate.querySelector('.svc-fig');
+      if (!fig) return;
+      var queued = false, tx = 0, ty = 0;
+      plate.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var r = plate.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width - 0.5) * -7;
+        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () {
+          fig.style.transform = 'translateX(-50%) translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
+          queued = false;
+        });
+      }, { passive: true });
+      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
     });
   })();
 

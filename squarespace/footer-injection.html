@@ -277,6 +277,35 @@
     });
   })();
 
+  /* ── Service plates — a few pixels of the same depth the hero has ─
+     REWARD: the figure sits in the cobalt world, so it should answer
+     to presence the way that world does. Desktop pointers only, never
+     on touch, never under reduced motion, and a no-op until real
+     artwork is in the plate.                                        */
+  (function () {
+    if (reduce || !fine) return;
+    var plates = document.querySelectorAll('.svc-plate');
+    if (!plates.length) return;
+    Array.prototype.forEach.call(plates, function (plate) {
+      var fig = plate.querySelector('.svc-fig');
+      if (!fig) return;
+      var queued = false, tx = 0, ty = 0;
+      plate.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var r = plate.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width - 0.5) * -7;
+        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () {
+          fig.style.transform = 'translateX(-50%) translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
+          queued = false;
+        });
+      }, { passive: true });
+      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
+    });
+  })();
+
   /* ── Sticky header ──────────────────────────────────────────────
      Transparent over the cobalt hero, opaque paper once scrolled, so
      it never has to hold contrast against moving artwork. One class,
