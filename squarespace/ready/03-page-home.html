@@ -1,105 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<script>document.documentElement.classList.add('js')</script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — Attention should pay</title>
-<meta name="description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue. Independent growth + creative practice, Brooklyn, New York.">
-<!-- TODO at deploy: replace SITE_URL below with the production domain -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="STIR — Attention should pay">
-<meta property="og:description" content="STIR builds the content, strategy and systems that turn attention into demand — and demand into revenue.">
-<meta property="og:image" content="SITE_URL/assets/og-stir.jpg">
-<meta property="og:url" content="SITE_URL/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="STIR — Attention should pay">
-<meta name="twitter:description" content="Attention → Demand → Revenue. Independent growth + creative practice, Brooklyn.">
-<meta name="twitter:image" content="SITE_URL/assets/og-stir.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
-
-<!--
-  Typography: Founders Grotesk (licensed, self-hosted in assets/fonts).
-  Newsreader = selective editorial serif accent. IBM Plex Mono = utility.
--->
-<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/hero-stir-attention.webp" as="image" type="image/webp">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="assets/stir.css">
-</head>
-<body>
-
-<!-- ════════ ENTRANCE ════════
-     Not a progress bar — there is nothing worth measuring on a page
-     this size. A cobalt hold that covers the unstyled flash, resolves
-     the instant the hero image is decoded, and is capped at 700ms so
-     it can never become a wait. Once per session; never with reduced
-     motion. Removed from the DOM after it lifts.                     -->
-<div class="stir-enter" id="stir-enter" aria-hidden="true">
-  <img src="assets/stir-mark-ivory.png" alt="">
-  <span class="enter-rail"></span>
-</div>
-<script>
-(function () {
-  var cover = document.getElementById('stir-enter');
-  if (!cover) return;
-  function drop() { if (cover.parentNode) cover.parentNode.removeChild(cover); }
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen = false;
-  try { seen = sessionStorage.getItem('stir-entered') === '1'; } catch (e) {}
-  /* Runs before paint, so a return visit within the session never
-     sees a flash of the cover at all. */
-  if (reduce || seen) { drop(); return; }
-  try { sessionStorage.setItem('stir-entered', '1'); } catch (e) {}
-
-  var t0 = Date.now(), lifted = false, cap;
-  /* Inline rather than a class: the same script runs inside
-     Squarespace, where our CSS is scoped to .stir and cannot
-     reach <html>. */
-  var root = document.documentElement, held = root.style.overflow;
-  root.style.overflow = 'hidden';
-
-  function lift() {
-    if (lifted) return;
-    lifted = true;
-    clearTimeout(cap);
-    cover.classList.add('is-done');
-    root.style.overflow = held;
-    setTimeout(drop, 520);
-  }
-
-  requestAnimationFrame(function () { cover.classList.add('is-filling'); });
-  cap = setTimeout(lift, 700);   /* hard ceiling — never a wait */
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var art = document.querySelector('.hero-art');
-    var ready = (art && art.decode) ? art.decode() : Promise.resolve();
-    ready.catch(function () {}).then(function () {
-      /* a short floor so the mark registers instead of flickering */
-      setTimeout(lift, Math.max(0, 360 - (Date.now() - t0)));
-    });
-  });
-})();
-</script>
-
+<!-- ══ STIR · HOME ══ One Code Block on a blank page. -->
+<div class="stir stir-home">
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
-      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
+    <a href="/" class="nav-logo">
+      <img class="mark-ivory" src="https://stirnyc.netlify.app/assets/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="" aria-hidden="true">
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">04</i>Services</a>
-      <a href="about.html">About</a>
+      <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
+      <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -107,14 +20,14 @@
 <!-- Mobile menu overlay -->
 <div class="nav-overlay" id="nav-overlay" hidden>
   <div class="nav-overlay-head">
-    <img src="assets/stir-mark-ivory.png" alt="STIR">
+    <img src="https://stirnyc.netlify.app/assets/stir-mark-ivory.png" alt="STIR">
     <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">04</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
   <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
 </div>
@@ -122,14 +35,14 @@
 <main>
 
   <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
-  <section class="hero" aria-label="STIR — attention should pay">
+  <section class="hero" data-ground="cobalt" data-index="01 — Attention" aria-label="STIR — attention should pay">
     <!--
-      HERO ASSET SLOT: assets/hero-stir-attention.webp
+      HERO ASSET SLOT: https://stirnyc.netlify.app/assets/hero-stir-attention.webp
       Enormous observer entering upper-right · tiny ordinary
       storefront with Signal Red threshold · clean cobalt left.
       Drop updated artwork here; no structural change needed.
     -->
-    <img class="hero-art" src="assets/hero-stir-attention.webp"
+    <img class="hero-art" src="https://stirnyc.netlify.app/assets/hero-stir-attention.webp"
          width="1800" height="1346" fetchpriority="high"
          alt="An enormous observer leans in from the upper right of a deep cobalt field, eye fixed on a tiny ordinary storefront with a small Signal Red threshold">
 
@@ -144,7 +57,7 @@
 
         <p class="editorial hero-prop">STIR builds the content, strategy and systems that turn attention into demand&nbsp;— and demand into revenue.</p>
 
-        <p class="hero-cta"><a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
+        <p class="hero-cta"><a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
       </div>
 
       <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
@@ -157,7 +70,7 @@
        and the deck explains how it is done. The red field behind
        WORTH is editorial emphasis — a printed block, not a control,
        so it carries no hover, no cursor and no affordance. -->
-  <section class="belief shell" aria-labelledby="belief-title">
+  <section class="belief shell" data-ground="ivory" data-index="02 — Thesis" aria-labelledby="belief-title">
     <p class="utility belief-label" data-reveal="structural">02 / The argument</p>
 
     <div class="belief-statement" data-reveal="stage">
@@ -170,7 +83,7 @@
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
-  <section class="proof" id="proof" aria-labelledby="proof-title">
+  <section class="proof" data-ground="ivory" data-index="03 — Proof" id="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility" data-reveal="structural">
         <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
@@ -215,9 +128,9 @@
           <figure class="reel-item">
             <video class="ev-media" muted loop playsinline data-autoplay
                    preload="none" width="720" height="1280"
-                   poster="assets/labay/labay-social-01-poster.webp"
+                   poster="https://stirnyc.netlify.app/assets/labay/labay-social-01-poster.webp"
                    aria-label="Short-form vertical video shot at Labay Market">
-              <source src="assets/labay/labay-social-01.mp4" type="video/mp4">
+              <source src="https://stirnyc.netlify.app/assets/labay/labay-social-01.mp4" type="video/mp4">
             </video>
             <figcaption class="ev-cap utility">
               <span class="cap">Serialized short-form built from daily operations.</span>
@@ -225,7 +138,7 @@
             </figcaption>
           </figure>
           <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-production-bts.webp"
+            <img class="ev-media" src="https://stirnyc.netlify.app/assets/labay/labay-production-bts.webp"
                  width="1600" height="2133" loading="lazy" decoding="async"
                  alt="A film crew records an interview on the Brooklyn street corner outside Labay Market, coconuts in hand">
             <figcaption class="ev-cap utility">
@@ -234,7 +147,7 @@
             </figcaption>
           </figure>
           <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-coconut.webp"
+            <img class="ev-media" src="https://stirnyc.netlify.app/assets/labay/labay-coconut.webp"
                  width="554" height="554" loading="lazy" decoding="async"
                  alt="Gloved hands split a fresh coconut with a machete, water bursting out, in front of crates of plantains and bananas">
             <figcaption class="ev-cap utility">
@@ -243,7 +156,7 @@
             </figcaption>
           </figure>
           <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-timeout-cover.webp"
+            <img class="ev-media" src="https://stirnyc.netlify.app/assets/labay/labay-timeout-cover.webp"
                  width="399" height="501" loading="lazy" decoding="async"
                  alt="Time Out New York cover, December 2024 — NYC's Best Eats, featuring Righteous Eats' Jaeki Cho">
             <figcaption class="ev-cap utility">
@@ -252,7 +165,7 @@
             </figcaption>
           </figure>
           <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-market-interior.webp"
+            <img class="ev-media" src="https://stirnyc.netlify.app/assets/labay/labay-market-interior.webp"
                  width="1216" height="922" loading="lazy" decoding="async"
                  alt="Inside Labay Market: a customer holds up a breadfruit among stocked shelves of Caribbean groceries">
             <figcaption class="ev-cap utility">
@@ -297,7 +210,7 @@
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
           <h3 class="svc-name">Content &amp;<br>campaigns</h3>
           <!-- ILLUSTRATION SLOT 01. Drop a cut-out figure in as
-               <img class="svc-fig" src="assets/svc-01.webp" alt="">
+               <img class="svc-fig" src="https://stirnyc.netlify.app/assets/svc-01.webp" alt="">
                and delete the .svc-plate-note span. The figure is
                allowed to break the top edge; the plate does not clip. -->
           <div class="svc-plate" data-reveal="registration">
@@ -314,14 +227,14 @@
             <li>Launches</li>
             <li>Creator collaborations</li>
           </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html">Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+          <p class="svc-action"><a class="cta-line" href="/contact">Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
         </article>
 
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
           <h3 class="svc-name">Brand &amp;<br>websites</h3>
           <!-- ILLUSTRATION SLOT 02. Drop a cut-out figure in as
-               <img class="svc-fig" src="assets/svc-02.webp" alt="">
+               <img class="svc-fig" src="https://stirnyc.netlify.app/assets/svc-02.webp" alt="">
                and delete the .svc-plate-note span. The figure is
                allowed to break the top edge; the plate does not clip. -->
           <div class="svc-plate" data-reveal="registration">
@@ -337,14 +250,14 @@
             <li>Clearer offers</li>
             <li>Inquiry paths</li>
           </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html">Talk about a build <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+          <p class="svc-action"><a class="cta-line" href="/contact">Talk about a build <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
         </article>
 
         <article class="svc svc--lead reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
           <h3 class="svc-name">Ongoing creative<br>&amp; growth</h3>
           <!-- ILLUSTRATION SLOT 03. Drop a cut-out figure in as
-               <img class="svc-fig" src="assets/svc-03.webp" alt="">
+               <img class="svc-fig" src="https://stirnyc.netlify.app/assets/svc-03.webp" alt="">
                and delete the .svc-plate-note span. The figure is
                allowed to break the top edge; the plate does not clip. -->
           <div class="svc-plate" data-reveal="registration">
@@ -360,7 +273,7 @@
             <li>Website improvements</li>
             <li>Lead + sales systems</li>
           </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html">Talk about ongoing <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+          <p class="svc-action"><a class="cta-line" href="/contact">Talk about ongoing <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
         </article>
 
       </div>
@@ -371,7 +284,7 @@
        The capability lists that used to live here now sit in the
        services panels, where someone deciding what to buy will
        actually read them. This section is only about sequence. -->
-  <section class="method shell" id="method" aria-labelledby="method-label">
+  <section class="method shell" data-ground="ivory" data-index="04 — What we do" id="method" aria-labelledby="method-label">
     <div class="grid">
       <p class="utility method-label" data-reveal="structural" id="method-label">05 / How we work</p>
       <p class="body method-intro reveal">Three stages, in order. You can hire us for one of them, or for all three and the years after.</p>
@@ -429,7 +342,7 @@
 
 
   <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
-  <section class="who shell" aria-labelledby="who-title">
+  <section class="who shell" data-ground="ivory" data-index="06 — Who this is for" aria-labelledby="who-title">
     <div class="grid">
       <p class="utility who-label" data-reveal="structural" id="who-label">06 / Who this is for</p>
 
@@ -550,19 +463,19 @@
          A sibling of the grid, not a member of it: a band that bleeds
          past the gutter is not grid content, and as a grid item it was
          picking up a few pixels of alignment nudge. -->
-    <img class="who-art" data-reveal="registration" src="assets/illustration-corner.webp"
+    <img class="who-art" data-reveal="registration" src="https://stirnyc.netlify.app/assets/illustration-corner.webp"
          width="1800" height="1347" loading="lazy" decoding="async"
          alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
   </section>
 
   <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
-  <section class="convert" id="contact" aria-labelledby="convert-q">
+  <section class="convert" data-ground="cobalt" data-index="Your turn" id="contact" aria-labelledby="convert-q">
     <!--
       The site opened on the observer looking at an ordinary business.
       It closes on the same artwork, cropped to the eye and masked into
       the cobalt, so the question reads as the eye asking it.
     -->
-    <img class="convert-art" src="assets/hero-stir-attention.webp"
+    <img class="convert-art" src="https://stirnyc.netlify.app/assets/hero-stir-attention.webp"
          width="1800" height="1346" loading="lazy" decoding="async"
          alt="" aria-hidden="true">
     <div class="shell">
@@ -595,7 +508,7 @@
       </div>
 
       <!-- Starts the contact conversation here and carries the answer over. -->
-      <form class="starter reveal" id="starter" action="contact.html" method="GET">
+      <form class="starter reveal" id="starter" action="/contact" method="GET">
         <label class="utility starter-label" for="starter-input">Start here</label>
         <div class="starter-row">
           <input id="starter-input" name="business" type="text" autocomplete="organization"
@@ -613,7 +526,7 @@
 <!-- ════════ FOOTER — quiet ════════ -->
 <footer class="footer shell">
   <div class="grid footer-grid utility">
-    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-logo"><img src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="STIR"></span>
     <span class="footer-place">Brooklyn, New&nbsp;York</span>
     <nav class="footer-links" aria-label="Footer">
       <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
@@ -623,370 +536,4 @@
     <span class="footer-copy">© 2026 STIR</span>
   </div>
 </footer>
-
-<script>
-/* ════════════════════════════════════════════════════════════════
-   STIR — behavior. Motion has a job: explain, direct, reward or
-   confirm. Anything that does none of those is not here.
-   Everything below no-ops under prefers-reduced-motion.
-   ════════════════════════════════════════════════════════════════ */
-(function () {
-  'use strict';
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine   = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  /* ── Reveal ─────────────────────────────────────────────────────
-     One observer drives every entrance variant. Elements opt in with
-     .reveal (default) or data-reveal="editorial|registration|structural".
-     Structural signals pass through and retire, so red never lingers
-     as decoration.                                                  */
-  var revealables = document.querySelectorAll('.reveal, [data-reveal]');
-  if (!('IntersectionObserver' in window) || reduce) {
-    revealables.forEach(function (el) { el.classList.add('is-in'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target;
-        el.classList.add('is-in');
-        io.unobserve(el);
-        if (el.getAttribute('data-reveal') === 'structural') {
-          setTimeout(function () { el.classList.add('sig-spent'); }, 900);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealables.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ── Metric count-up ────────────────────────────────────────────
-     EXPLAIN: the number is about scale, so it should accrue.        */
-  (function () {
-    var el = document.querySelector('[data-count]');
-    if (!el || !('IntersectionObserver' in window)) return;
-    var target = parseFloat(el.getAttribute('data-count'));
-    var suffix = el.getAttribute('data-count-suffix') || '';
-    if (reduce) { el.textContent = target + suffix; return; }
-    el.textContent = '0' + suffix;
-    var run = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        run.unobserve(e.target);
-        var t0 = null, dur = 1100;
-        requestAnimationFrame(function step(ts) {
-          if (t0 === null) t0 = ts;
-          var p = Math.min((ts - t0) / dur, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          var v = target * eased;
-          el.textContent = (p < 1 ? v.toFixed(target < 10 ? 1 : 0) : target) + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        });
-      });
-    }, { threshold: 0.5 });
-    run.observe(el);
-  })();
-
-  /* ── Method: FIND ─ BUILD ─ RUN as one system ───────────────────
-     DIRECT: the red signal progresses down the spine to the active
-     stage, so the three rows read as sequence, not as a list.       */
-  (function () {
-    var index = document.getElementById('method-index');
-    if (!index) return;
-    var rows = Array.prototype.slice.call(index.querySelectorAll('.method-row'));
-
-    function progress() {
-      var active = index.querySelector('.method-row.is-active');
-      if (!active) return;
-      var head = active.querySelector('.method-row-head');
-      var h = active.offsetTop + (head ? head.offsetHeight : 0) * 0.55;
-      index.style.setProperty('--sig-progress', h + 'px');
-    }
-
-    rows.forEach(function (row) {
-      var btn = row.querySelector('.method-row-head');
-      btn.addEventListener('click', function () {
-        if (row.classList.contains('is-active')) return;
-        rows.forEach(function (r) {
-          r.classList.remove('is-active');
-          r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
-        });
-        row.classList.add('is-active');
-        btn.setAttribute('aria-expanded', 'true');
-        progress();
-      });
-    });
-
-    progress();
-    window.addEventListener('resize', progress, { passive: true });
-    /* the detail panel changes height as it opens */
-    rows.forEach(function (r) {
-      var d = r.querySelector('.method-detail');
-      if (d) d.addEventListener('transitionend', progress);
-    });
-  })();
-
-  /* ── Hero: a few pixels of depth, and nothing more ──────────────
-     REWARD: the cobalt world responds to presence. Desktop pointers
-     only; never on touch, never under reduced motion.               */
-  (function () {
-    var hero = document.querySelector('.hero');
-    var art  = document.querySelector('.hero-art');
-    if (!hero || !art || reduce || !fine) return;
-    var tx = 0, ty = 0, queued = false;
-    hero.addEventListener('pointermove', function (e) {
-      if (e.pointerType !== 'mouse') return;
-      var r = hero.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
-      ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(function () {
-        art.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
-        queued = false;
-      });
-    }, { passive: true });
-    hero.addEventListener('pointerleave', function () {
-      art.style.transform = '';
-    });
-  })();
-
-  /* ── Evidence video — only loads and plays while it is on screen ─ */
-  (function () {
-    var vids = document.querySelectorAll('video[data-autoplay]');
-    if (!vids.length || reduce || !('IntersectionObserver' in window)) return;
-    var vo = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.play().catch(function () {}); }
-        else { e.target.pause(); }
-      });
-    }, { threshold: 0.25 });
-    vids.forEach(function (v) { vo.observe(v); });
-  })();
-
-  /* ── Evidence reel — draggable, like handling contact sheets ─────
-     CONFIRM: arrows step, drag has weight, the counter tracks.      */
-  (function () {
-    var reel = document.getElementById('proof-reel');
-    if (!reel) return;
-    var items = Array.prototype.slice.call(reel.querySelectorAll('.reel-item'));
-    var pos = document.getElementById('reel-pos');
-    var total = document.getElementById('reel-total');
-    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    if (total) total.textContent = pad(items.length);
-
-    function currentIndex() {
-      var x = reel.scrollLeft, best = 0, bestDist = Infinity;
-      items.forEach(function (it, i) {
-        var d = Math.abs(it.offsetLeft - reel.offsetLeft - x);
-        if (d < bestDist) { bestDist = d; best = i; }
-      });
-      return best;
-    }
-    function sync() { if (pos) pos.textContent = pad(currentIndex() + 1); }
-
-    document.querySelectorAll('.reel-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var next = Math.min(items.length - 1, Math.max(0, currentIndex() + parseInt(btn.dataset.dir, 10)));
-        reel.scrollTo({ left: items[next].offsetLeft - reel.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
-      });
-    });
-
-    var ticking = false;
-    reel.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
-    }, { passive: true });
-
-    /* pointer drag with a little momentum */
-    var down = false, startX = 0, startScroll = 0, lastX = 0, vel = 0, lastT = 0, moved = false;
-    reel.addEventListener('pointerdown', function (e) {
-      if (e.pointerType === 'touch') return;   /* native touch scrolling is better */
-      down = true; moved = false;
-      startX = lastX = e.clientX;
-      startScroll = reel.scrollLeft;
-      vel = 0; lastT = performance.now();
-    });
-    reel.addEventListener('pointermove', function (e) {
-      if (!down) return;
-      var dx = e.clientX - startX;
-      if (!moved && Math.abs(dx) > 4) { moved = true; reel.classList.add('is-dragging'); reel.setPointerCapture(e.pointerId); }
-      if (!moved) return;
-      var now = performance.now();
-      vel = (e.clientX - lastX) / Math.max(now - lastT, 1);
-      lastX = e.clientX; lastT = now;
-      reel.scrollLeft = startScroll - dx;
-    });
-    function release() {
-      if (!down) return;
-      down = false;
-      reel.classList.remove('is-dragging');
-      if (!moved || reduce) return;
-      var v = vel * 180;
-      if (Math.abs(v) > 40) reel.scrollBy({ left: -v, behavior: 'smooth' });
-    }
-    reel.addEventListener('pointerup', release);
-    reel.addEventListener('pointercancel', release);
-    reel.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
-  })();
-
-  /* ── Who this is for: the trades as a working index ─────────────
-     EXPLAIN: the real question behind a list of verticals is "what
-     would you do for a business like mine". So the list answers it.
-
-     Wide: one sticky panel, because there is room to show the list
-     and the answer at once. Narrow: the answer opens underneath the
-     trade you chose, because a panel that updates somewhere else is
-     a change you cannot see. The panel names the trade either way.
-
-     Every answer is in the markup already, so with no JS the list
-     simply reads as nine trades with their answers under them.     */
-  (function () {
-    var list  = document.getElementById('trade-list');
-    var panel = document.getElementById('trade-panel');
-    var said  = document.getElementById('panel-said');
-    var note  = document.getElementById('panel-note');
-    var forEl = document.getElementById('panel-for');
-    if (!list || !panel || !said || !note) return;
-
-    var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
-    var current = trades[0];
-    var swapTimer = null;
-
-    function select(btn) {
-      if (!btn) return;
-      trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
-      if (btn === current) return;
-      current = btn;
-
-      var nextSaid = btn.getAttribute('data-said');
-      var nextNote = btn.getAttribute('data-note');
-      var nextFor  = btn.textContent.trim().toLowerCase();
-      function write() {
-        said.textContent = nextSaid;
-        note.textContent = nextNote;
-        if (forEl) forEl.textContent = nextFor;
-      }
-      if (reduce) { write(); return; }
-
-      /* fade out, swap, fade back — the copy replaces itself rather
-         than sliding, so nothing moves that shouldn't. */
-      panel.classList.add('is-swapping');
-      clearTimeout(swapTimer);
-      swapTimer = setTimeout(function () {
-        write();
-        panel.classList.remove('is-swapping');
-      }, 200);
-    }
-
-    trades.forEach(function (btn) {
-      btn.addEventListener('click', function () { select(btn); });
-      btn.addEventListener('focus', function () { select(btn); });
-      /* Hover previews on a real pointer only — never on touch, where
-         it would fire on the way to a tap. */
-      if (fine) btn.addEventListener('pointerenter', function (e) {
-        if (e.pointerType === 'mouse') select(btn);
-      });
-    });
-
-    /* Arrow keys walk the index, the way a keyboard user expects a
-       single-select list to behave. */
-    list.addEventListener('keydown', function (e) {
-      var step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
-               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
-      if (!step) return;
-      e.preventDefault();
-      var i = trades.indexOf(document.activeElement);
-      if (i === -1) i = trades.indexOf(current);
-      trades[(i + step + trades.length) % trades.length].focus();
-    });
-  })();
-
-  /* ── Service plates — a few pixels of the same depth the hero has ─
-     REWARD: the figure sits in the cobalt world, so it should answer
-     to presence the way that world does. Desktop pointers only, never
-     on touch, never under reduced motion, and a no-op until real
-     artwork is in the plate.                                        */
-  (function () {
-    if (reduce || !fine) return;
-    var plates = document.querySelectorAll('.svc-plate');
-    if (!plates.length) return;
-    Array.prototype.forEach.call(plates, function (plate) {
-      var fig = plate.querySelector('.svc-fig');
-      if (!fig) return;
-      var queued = false, tx = 0, ty = 0;
-      plate.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        var r = plate.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * -7;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () {
-          fig.style.transform = 'translateX(-50%) translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
-          queued = false;
-        });
-      }, { passive: true });
-      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
-    });
-  })();
-
-  /* ── Sticky header ──────────────────────────────────────────────
-     Transparent over the cobalt hero, opaque paper once scrolled, so
-     it never has to hold contrast against moving artwork. One class,
-     flipped from a throttled rAF; no scroll work per frame.          */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var ticking = false;
-    /* Under Squarespace the stylesheet is scoped to .stir, which owns
-       its own --nav-h, so the measurement has to land on both. */
-    var scope = document.querySelector('.stir');
-    function sync() {
-      nav.classList.toggle('is-stuck', window.scrollY > 24);
-      var h = nav.offsetHeight + 'px';
-      document.documentElement.style.setProperty('--nav-h', h);
-      if (scope) scope.style.setProperty('--nav-h', h);
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
-    }
-    sync();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
-    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      document.documentElement.style.scrollBehavior = 'smooth';
-    }
-  })();
-
-  /* ── Mobile menu ────────────────────────────────────────────────*/
-  (function () {
-    var btn = document.querySelector('.nav-menu');
-    var overlay = document.getElementById('nav-overlay');
-    if (!btn || !overlay) return;
-    var close = overlay.querySelector('.nav-overlay-close');
-    function setOpen(open) {
-      overlay.hidden = !open;
-      overlay.classList.toggle('is-open', open);
-      btn.setAttribute('aria-expanded', String(open));
-      document.documentElement.style.overflow = open ? 'hidden' : '';
-    }
-    btn.addEventListener('click', function () { setOpen(true); });
-    close.addEventListener('click', function () { setOpen(false); });
-    overlay.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
-    });
-  })();
-
-})();
-</script>
-
-</body>
-</html>
+</div>

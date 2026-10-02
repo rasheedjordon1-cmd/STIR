@@ -1,0 +1,2204 @@
+/* ════════════════════════════════════════════════════════════════
+   STIR — shared system
+   Semantic color roles:
+   COBALT — world / visual environment.  IVORY — information /
+   breathing room.  INK — structure / typography.  SIGNAL RED —
+   activation and commercial significance only. Red is never
+   atmosphere.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Founders Grotesk — licensed, self-hosted ─────────────────── */
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-light.woff2") format("woff2");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-light-italic.woff2") format("woff2");
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-bold-italic.woff2") format("woff2");
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+:root {
+  --ivory:   #FAF2E6;
+  --ink:     #161310;
+  --cobalt:  #0451AB;                    /* matches the artwork field  */
+  --red:     #F21B16;                    /* activation only            */
+  --red-deep: #C4120D;                   /* the same ink, under press  */
+
+  --ink-70: rgba(22, 19, 16, 0.72);
+  --ink-60: rgba(22, 19, 16, 0.58);
+  --ink-35: rgba(22, 19, 16, 0.32);
+  --ink-05: rgba(22, 19, 16, 0.05);
+  --ivory-75: rgba(250, 242, 230, 0.78);
+  --ivory-40: rgba(250, 242, 230, 0.40);
+  --wht-70: rgba(255, 255, 255, 0.70);
+  --wht-35: rgba(255, 255, 255, 0.35);
+  --wht-07: rgba(255, 255, 255, 0.07);
+
+  --font-display: "Founders Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  --max-w: 1520px;
+  --gutter: clamp(20px, 3.2vw, 48px);
+  --col-gap: clamp(16px, 1.6vw, 32px);
+  --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
+
+  /* Scale re-fit for Founders Grotesk (normal width, not condensed) */
+  --t-hero:    clamp(2.6rem, 7.1vw, 6.8rem);
+  --t-giant:   clamp(2.3rem, 6.4vw, 6.2rem);
+  --t-big:     clamp(1.8rem, 4.5vw, 4.3rem);
+  --t-metric:  clamp(5.5rem, 17vw, 16rem);
+  --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
+  --t-utility: 0.72rem;
+
+  --nav-h: 76px;                         /* compact once stuck      */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: clip; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
+/* Art images size from their CSS aspect-ratio, not the HTML height attr */
+.obs-art, .about-art { height: auto; }
+
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+::selection { background: var(--ink); color: var(--ivory); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ── Shell + grid ─────────────────────────────────────────────── */
+.shell {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+}
+@media (max-width: 1023px) { .grid { grid-template-columns: repeat(8, 1fr); } }
+@media (max-width: 639px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── Type voices ──────────────────────────────────────────────── */
+/* Display: monumental, declarative — Founders Grotesk Bold */
+.display {
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+/* Body: clear, direct, commercial — someone explaining something
+   across a table */
+.body {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-70);
+  max-width: 46ch;
+}
+.body strong { color: var(--ink); font-weight: 500; }
+/* Editorial serif: selective accent only (hero proposition, thesis) */
+.editorial {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.08);
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink-70);
+  max-width: 44ch;
+}
+/* Utility: publishing metadata, used only where it means something */
+.utility {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+}
+
+/* ── CTA vocabulary — red appears at the moment of action ─────── */
+/* ── Primary action ──────────────────────────────────────────────
+   One construction everywhere: a warm-paper label carrying the words
+   and a separate red compartment carrying the arrow. Paper holds its
+   own on cobalt and on ivory alike, and red stays on the part that
+   moves you forward rather than flooding the whole control.
+   ──────────────────────────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: stretch;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-align: left;
+  transition: transform 0.12s var(--ease);
+}
+.cta-label {
+  display: flex;
+  align-items: center;
+  min-height: 46px;                 /* comfortable on touch */
+  padding: 0 1.5em;
+  background: var(--ivory);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  border-right: 0;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.cta-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 46px;
+  min-height: 46px;
+  background: var(--red);
+  border: 1px solid var(--red);
+  color: var(--ivory);
+  overflow: hidden;
+  transition: background 0.25s var(--ease);
+}
+.cta-glyph {
+  font-style: normal;
+  font-size: 1.1em;
+  line-height: 1;
+  display: block;
+  transition: transform 0.25s var(--ease);
+}
+/* Subtle: three pixels, in the direction the arrow points. */
+.cta:hover .cta-glyph,
+.cta:focus-visible .cta-glyph { transform: translate(3px, -3px); }
+.cta--flat:hover .cta-glyph,
+.cta--flat:focus-visible .cta-glyph { transform: translateX(3px); }
+.cta:hover .cta-label,
+.cta:focus-visible .cta-label { background: var(--ink); color: var(--ivory); }
+.cta:active { transform: translate(1px, 1px); }
+.cta:active .cta-arrow { background: var(--red-deep); border-color: var(--red-deep); }
+.cta:disabled { opacity: 0.55; cursor: default; }
+.cta:disabled .cta-glyph { transform: none; }
+
+/* The compact one, used in the nav bar. */
+.cta--sm { font-size: 0.7rem; }
+.cta--sm .cta-label { min-height: 44px; padding: 0 1.1em; }
+.cta--sm .cta-arrow { min-width: 44px; min-height: 44px; }
+
+/* Over the cobalt hero the paper label needs no ink hairline to
+   separate it from the ground. */
+.hero .cta-label, .nav .cta-label { border-color: var(--ivory); }
+.nav.is-stuck .cta-label { border-color: var(--ink); }
+.nav--ink .cta-label { border-color: var(--ink); }
+
+.cta-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.8em;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding-bottom: 0.5em;
+  position: relative;
+}
+.cta-line::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+}
+/* Activation mark: a tiny red square arrives on hover */
+.cta-line::before {
+  content: "";
+  width: 0.5em; height: 0.5em;
+  background: var(--red);
+  align-self: center;
+  flex: none;
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+  margin-right: -0.3em;
+}
+.cta-line:hover::before, .cta-line:focus-visible::before { opacity: 1; transform: none; }
+.cta-line { transition: transform 0.12s var(--ease); }
+.cta-line::after { transition: background 0.2s var(--ease); }
+.cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(3px); }
+
+/* ── Press ───────────────────────────────────────────────────────
+   There was no :active state anywhere in this system, which is the
+   whole difference between a page and an object. On press the paper
+   shifts and the cobalt plate stays where it was: mis-registration,
+   held for exactly as long as the finger is down. Same language as
+   [data-reveal="registration"], at the scale where people touch it.
+   ──────────────────────────────────────────────────────────────── */
+.cta:active,
+.reel-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: -2px -2px 0 0 var(--cobalt);
+  transition-duration: 0.06s;
+}
+.cta:active::before,
+.reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
+
+/* Text actions have no box to shift, so they take the travel alone
+   and the rule beneath them goes live. */
+.cta-line:active,
+.starter-go:active { transform: translate(1px, 1px); }
+.cta-line:active::after { background: var(--red); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-label, .cta-arrow, .cta-glyph { transition: none; }
+  .cta:active, .reel-btn:active,
+  .cta-line:active, .starter-go:active { transform: none; }
+}
+
+/* ── Annotation (used sparingly — structural, not decorative) ─── */
+.ann {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.7em;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+}
+.ann-mark {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  background: var(--red);
+  align-self: center;
+}
+
+/* ── Development placeholder frames (final art drops in later) ── */
+.ph {
+  position: relative;
+  border: 1px solid var(--ink-35);
+  background: var(--ink-05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px;
+  overflow: hidden;
+}
+.ph .ph-id   { color: var(--ink); }
+.ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.64rem; }
+.ph--on-cobalt { border-color: var(--wht-35); background: var(--wht-07); }
+.ph--on-cobalt .ph-id   { color: #fff; }
+.ph--on-cobalt .ph-note { color: var(--wht-70); }
+
+/* ── Reveal (respects reduced motion) ─────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  html.js .reveal.is-in { opacity: 1; transform: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   NAVIGATION — ivory system over the cobalt world
+   ════════════════════════════════════════════════════════════════ */
+/* Fixed, with two states. Transparent over the cobalt hero so the
+   artwork is uninterrupted; once you have scrolled it becomes an
+   opaque paper bar with the red mark, ink links and a hairline — so
+   it never has to hold contrast against moving imagery. */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+              padding 0.3s var(--ease);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: clamp(18px, 2.2vw, 30px);
+  transition: padding-block 0.3s var(--ease);
+}
+.nav.is-stuck {
+  background: var(--ivory);
+  border-bottom-color: var(--ink-35);
+}
+.nav.is-stuck .nav-inner { padding-block: 11px; }
+.nav.is-stuck .nav-links a:not(.nav-start) { color: var(--ink); }
+.nav.is-stuck .nav-links a:not(.nav-start)::after { background: var(--ink); }
+.nav.is-stuck .nav-links .nav-no { color: var(--ink-35); }
+
+/* Both marks ship; which one shows is a state, not a page. */
+.nav-logo { position: relative; display: block; line-height: 0; }
+.nav-logo img {
+  height: clamp(22px, 2.1vw, 30px);
+  width: auto;
+  transition: opacity 0.3s var(--ease);
+}
+.nav-logo .mark-red { position: absolute; inset: 0; opacity: 0; }
+.nav.is-stuck .nav-logo .mark-ivory,
+.nav--ink      .nav-logo .mark-ivory { opacity: 0; }
+.nav.is-stuck .nav-logo .mark-red,
+.nav--ink      .nav-logo .mark-red { opacity: 1; }
+
+/* Anything the nav can jump to has to clear the bar. */
+[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+/* scroll-behavior is set from JS on the real document: under
+   Squarespace this stylesheet is scoped to .stir and cannot reach it. */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 2.6vw, 44px);
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ivory);
+  position: relative;
+  padding-bottom: 3px;
+}
+/* ── The nav as an index, not a menu ─────────────────────────────
+   Every section on this site is numbered. The nav points at two of
+   them, so it carries their numerals in the same mono the running
+   index uses. The numerals sit back until you reach for them.
+
+   And the small red square — already the mark on .ann-mark,
+   .cta-line and .trade — now means exactly one thing everywhere:
+   this is live. On the nav that makes it "you are here", which is
+   worth more than another underline.                                */
+.nav-links a { position: relative; }
+.nav-links .nav-no {
+  font-style: normal;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  margin-right: 0.6em;
+  color: var(--ivory-40);
+  transition: color 0.3s var(--ease);
+}
+.nav-links a:hover .nav-no,
+.nav-links a:focus-visible .nav-no,
+.nav-links a[aria-current] .nav-no { color: inherit; }
+
+.nav-links a:not(.nav-start)[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
+}
+/* The mark is the current state, so the hover rule stands down. */
+.nav-links a:not(.nav-start)[aria-current]::after { display: none; }
+
+.nav--ink .nav-links .nav-no { color: var(--ink-35); }
+
+/* Same index in the overlay, where the type is large enough that the
+   numeral needs to sit further out of the way. */
+.nav-overlay-links a { position: relative; }
+.nav-overlay-links .nav-no {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  vertical-align: 0.9em;
+  margin-right: 0.5em;
+  color: var(--ivory-40);
+}
+.nav-overlay-links a[aria-current] .nav-no { color: var(--red); }
+
+.nav-links a:not(.nav-start)::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: var(--ivory);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.nav-links a:not(.nav-start):hover::after,
+.nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
+/* .nav-start now carries the shared .cta construction; see Primary action. */
+
+/* ════════════════════════════════════════════════════════════════
+   01 — HERO · ATTENTION SHOULD PAY.
+   Full cobalt environment. The illustration sits full-bleed behind
+   the interface — one composition, no frame, no feather.
+   ════════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  min-height: max(100svh, 700px);
+  display: flex;
+  flex-direction: column;
+}
+
+/*
+  HERO ARTWORK — assets/hero-stir-attention.webp
+  Cobalt world · enormous cropped observer entering upper-right ·
+  eye looking toward a tiny ordinary storefront, center-right ·
+  Signal Red threshold. Left territory stays clean for interface.
+  Swap this file to update the hero; keep observer + storefront
+  in frame (object-position tuned below).
+*/
+.hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  z-index: 1;
+}
+/* Legibility scrim for the nav zone only — not a treatment of the
+   artwork, just enough contrast where type crosses the observer */
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: clamp(90px, 14vh, 150px);
+  background: linear-gradient(to bottom, rgba(3, 40, 105, 0.55), transparent);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%; /* flex column + auto margins would otherwise shrink-wrap */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: clamp(120px, 17vh, 190px);
+  padding-bottom: clamp(24px, 3.5vh, 44px);
+}
+
+/* Copy territory — the clean cobalt left */
+.hero-copy { max-width: 46%; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ivory);
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.eyebrow .arr { padding-inline: 0.35em; }
+
+.hero-headline {
+  font-size: var(--t-hero);
+  line-height: 0.95;
+  color: var(--ivory);
+  width: max-content;
+  max-width: none;
+}
+.hl-line { display: block; overflow: hidden; }
+.hl-line > span { display: block; }
+
+.hero-prop {
+  margin-top: clamp(28px, 4vh, 48px);
+  color: var(--ivory-75);
+  max-width: 36ch;
+}
+.hero-prop strong { color: var(--ivory); font-weight: 500; }
+
+.hero-cta {
+  margin-top: clamp(28px, 4.5vh, 52px);
+  color: var(--ivory);
+}
+
+/* Below-the-fold index — quiet, structural */
+.hero-index {
+  margin-top: auto;
+  color: var(--ivory-75);
+}
+.hero-index .hi-label {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ivory-40);
+}
+.hero-index .down {
+  display: block;
+  margin-top: 14px;
+}
+
+/* Load choreography — arrive confidently, then stop performing */
+@media (prefers-reduced-motion: no-preference) {
+  .nav-inner {
+    opacity: 0;
+    animation: fade-up 0.6s var(--ease) 0.1s forwards;
+  }
+  .hero-art {
+    opacity: 0;
+    transform: scale(1.015);
+    animation: art-settle 1s var(--ease) 0.2s forwards;
+  }
+  @keyframes art-settle { to { opacity: 1; transform: none; } }
+
+  .hl-line > span {
+    transform: translateY(112%);
+    animation: hl-rise 0.8s var(--ease) 0.4s forwards;
+  }
+  .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
+  @keyframes hl-rise { to { transform: none; } }
+
+  .eyebrow, .hero-prop, .hero-cta, .hero-index {
+    opacity: 0;
+    animation: fade-up 0.7s var(--ease) forwards;
+  }
+  .eyebrow     { animation-delay: 0.3s; }
+  .hero-prop   { animation-delay: 0.7s; }
+  .hero-cta    { animation-delay: 0.85s; }
+  .hero-index  { animation-delay: 0.95s; }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   02 — THE ARGUMENT · one headline, concentrated
+   A small concession, the statement people should leave with, and
+   the method underneath. Cobalt on paper, with one red field.
+   ════════════════════════════════════════════════════════════════ */
+.belief {
+  padding-top: clamp(76px, 11vh, 132px);
+  padding-bottom: clamp(60px, 9vh, 112px);
+}
+.belief-label {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  max-width: 320px;
+  margin-bottom: clamp(40px, 6vh, 76px);
+}
+.belief-intro {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ink-60);
+  margin-bottom: clamp(18px, 2.6vh, 32px);
+}
+.belief-claim {
+  color: var(--cobalt);
+  font-size: clamp(2.6rem, 8.2vw, 7.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.03em;
+  max-width: 15ch;
+  text-wrap: balance;
+}
+/* Editorial emphasis, not a control: a block of red with the words
+   knocked out of it. Deliberately carries no hover, no cursor and
+   no focus behaviour, so nothing reads as clickable. */
+.belief-claim .field {
+  display: inline-block;
+  white-space: nowrap;
+  background: var(--red);
+  color: var(--ivory);
+  /* Sized off the measured cap height so the ink sits evenly above
+     and below the letters. An inline-block's box is driven by the
+     line box, not the glyphs, so the default leaves roughly four
+     times as much red under the word as over it. */
+  line-height: 0.46;
+  padding: 0.37em 0.15em 0;
+  margin: 0 0.02em;
+  cursor: inherit;
+}
+.belief-deck {
+  margin-top: clamp(32px, 5vh, 56px);
+  max-width: 48ch;
+  color: var(--ink-70);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .belief-intro, html.js .belief-claim, html.js .belief-deck {
+    opacity: 0;
+    transform: translateY(0.4rem);
+    transition: opacity 0.6s var(--ease), transform 0.75s var(--ease);
+  }
+  html.js .belief-claim { transition-delay: 0.1s; }
+  html.js .belief-deck  { transition-delay: 0.22s; }
+  html.js .belief-statement.is-in .belief-intro,
+  html.js .belief-statement.is-in .belief-claim,
+  html.js .belief-statement.is-in .belief-deck { opacity: 1; transform: none; }
+}
+
+@media (max-width: 1023px) { .belief-claim { max-width: none; } }
+@media (max-width: 639px) {
+  .belief-claim { line-height: 0.95; letter-spacing: -0.025em; }
+  .belief-deck  { max-width: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   03 — PROOF · ivory section, one large cobalt evidence field
+   (Option B: the page stays ivory; cobalt returns as a block of
+   evidence rather than a second full environment.)
+   ════════════════════════════════════════════════════════════════ */
+.proof {
+  padding-top: clamp(60px, 8vh, 112px);
+  padding-bottom: clamp(64px, 9vh, 128px);
+}
+.proof-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.proof-meta { text-align: right; color: var(--ink-60); }
+
+.proof-title {
+  font-size: var(--t-giant);
+  margin-bottom: clamp(64px, 11vh, 160px);
+}
+
+.proof-body {
+  align-items: end;
+  margin-bottom: clamp(56px, 8vh, 110px);
+}
+.proof-lead { grid-column: 1 / 8; }
+.proof-statement-wrap { grid-column: 8 / 13; }
+.proof-metric {
+  font-size: var(--t-metric);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  margin-left: -0.03em;
+}
+.proof-metric-label { margin-top: 20px; color: var(--ink-60); }
+.proof-statement {
+  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
+  max-width: 22ch;
+}
+
+/* ── The evidence reel ────────────────────────────────────────────
+   Asset-first: every artifact renders at its NATIVE aspect ratio at
+   one shared height — nothing is cropped to fit a slot. The row
+   scrolls horizontally with gentle snap; widths vary because the
+   material varies. New artifacts drop in with no layout work. */
+.proof-reel-band {
+  background: var(--cobalt);
+  color: #fff;
+  margin-inline: calc(var(--bleed) * -1);
+  padding: clamp(28px, 3.5vw, 56px) var(--bleed) clamp(32px, 4vw, 56px);
+}
+.reel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(20px, 2.8vh, 36px);
+}
+.reel-counter { color: var(--wht-70); }
+.reel-nav { display: flex; gap: 10px; }
+.reel-btn {
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: 1px solid var(--wht-35);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.reel-btn:hover, .reel-btn:focus-visible { background: var(--red); border-color: var(--red); }
+
+.reel {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 2.5vw, 44px);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--wht-35) transparent;
+}
+.reel::-webkit-scrollbar { height: 4px; }
+.reel::-webkit-scrollbar-thumb { background: var(--wht-35); }
+.reel::-webkit-scrollbar-track { background: transparent; }
+
+.reel-item {
+  flex: none;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+}
+/* Native ratio, shared height — the media decides its own width */
+.ev-media {
+  display: block;
+  height: clamp(360px, 56vh, 620px);
+  width: auto;
+  max-width: none;
+  background: var(--wht-07);
+}
+.ev-cap {
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  /* match the media's width without stretching the item */
+  inline-size: 0;
+  min-inline-size: 100%;
+}
+.ev-cap .cap { color: #fff; }
+.ev-cap .ev-meta { color: var(--wht-70); text-align: right; flex: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   04 — WHAT WE DO · FIND / BUILD / RUN
+   Editorial index. Default: 1px ink rule. Hover: the word leans in,
+   contrast rises. Active: a tiny Signal Red marker + services unfold.
+   ════════════════════════════════════════════════════════════════ */
+.method {
+  padding-top: clamp(88px, 13vh, 170px);
+  padding-bottom: clamp(88px, 13vh, 170px);
+}
+.method-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+.method-intro {
+  grid-column: 5 / 12;
+  margin-bottom: clamp(72px, 11vh, 160px);
+}
+
+.method-index { grid-column: 1 / -1; }
+
+.method-row { border-top: 1px solid var(--ink); position: relative; }
+.method-row:last-child { border-bottom: 1px solid var(--ink); }
+
+.method-row-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  align-items: baseline;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding-block: clamp(28px, 4.5vh, 56px);
+}
+.method-no {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+.method-word {
+  grid-column: 2 / 8;
+  font-size: var(--t-big);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  transition: transform 0.45s var(--ease);
+}
+.method-dot {
+  width: 0.16em; height: 0.16em;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.method-line {
+  grid-column: 8 / 12;
+  font-size: var(--t-body);
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+
+.method-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s var(--ease);
+}
+.method-detail > div { overflow: hidden; }
+.method-detail-inner {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  padding-bottom: clamp(36px, 5vh, 64px);
+}
+.method-caps {
+  grid-column: 8 / 12;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.method-caps li {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  border-bottom: 1px solid var(--ink-35);
+  padding-bottom: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+
+/* Hover: contrast, not color */
+@media (hover: hover) {
+  .method-row:hover .method-no { color: var(--ink); }
+  .method-row:hover .method-word { transform: translateX(0.35ch); }
+  .method-row:hover .method-line { color: var(--ink); }
+}
+/* Active: the red marker appears; services unfold in sequence */
+.method-row.is-active .method-no { color: var(--ink); }
+.method-row.is-active .method-word { transform: translateX(0.35ch); }
+.method-row.is-active .method-dot { opacity: 1; transform: none; }
+.method-row.is-active .method-line { color: var(--ink); }
+.method-row.is-active .method-detail { grid-template-rows: 1fr; }
+.method-row.is-active .method-caps li { opacity: 1; transform: none; }
+.method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
+.method-row.is-active .method-caps li:nth-child(2) { transition-delay: 0.16s; }
+.method-row.is-active .method-caps li:nth-child(3) { transition-delay: 0.22s; }
+.method-row.is-active .method-caps li:nth-child(4) { transition-delay: 0.28s; }
+.method-row.is-active .method-caps li:nth-child(5) { transition-delay: 0.34s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .method-word, .method-caps li { transition: none; }
+  .method-caps li { opacity: 1; transform: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   05 — ONE THOUGHT · a single interstitial observation
+   (The fuller Observations index moves to About / future Insights.)
+   ════════════════════════════════════════════════════════════════ */
+.obs {
+  padding-top: clamp(100px, 15vh, 200px);
+  padding-bottom: clamp(140px, 22vh, 280px);
+}
+.obs-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(72px, 12vh, 160px);
+}
+
+.obs-spread { align-items: start; }
+.obs-text {
+  grid-column: 1 / 6;
+  position: relative;
+  z-index: 2;
+}
+.obs-headline {
+  font-size: var(--t-big);
+  margin-bottom: clamp(32px, 4vh, 56px);
+}
+.obs-cta { color: var(--ink); }
+.obs-art {
+  grid-column: 5 / 13;
+  aspect-ratio: 16 / 10;
+  margin-top: clamp(80px, 14vh, 200px);
+  margin-right: calc(var(--bleed) * -1);
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   06 — CTA · quiet ivory; red appears only at the action
+   ════════════════════════════════════════════════════════════════ */
+.convert {
+  padding-top: clamp(100px, 16vh, 220px);
+  padding-bottom: clamp(120px, 20vh, 260px);
+}
+.convert-head {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.convert-q {
+  font-size: var(--t-giant);
+}
+.convert-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: clamp(56px, 9vh, 120px);
+}
+.convert-copy { max-width: 38ch; }
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER — deliberately quiet
+   ════════════════════════════════════════════════════════════════ */
+.footer { padding-block: clamp(40px, 6vh, 72px); }
+.footer-grid { row-gap: 24px; align-items: center; }
+.footer-logo { grid-column: 1 / 3; }
+.footer-logo img { height: 18px; width: auto; }
+.footer-place { grid-column: 3 / 6; color: var(--ink-60); }
+.footer-links {
+  grid-column: 6 / 9;
+  display: flex;
+  gap: 28px;
+}
+.footer-links a { color: var(--ink); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.footer-links a:hover, .footer-links a:focus-visible { border-bottom-color: var(--ink); }
+.footer-line { grid-column: 9 / 11; color: var(--ink-60); }
+.footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
+
+/* ════════════════════════════════════════════════════════════════
+   TABLET — recomposed: the illustration becomes its own scene
+   below the copy; observer + storefront stay uncropped
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  .hero { min-height: 0; }
+  .hero::after { display: none; }
+  /* Copy and index become direct flex items of .hero so the flow is
+     copy → artwork (its own uncropped scene) → index */
+  .hero-inner { display: contents; }
+  .hero-copy, .hero-index { padding-inline: var(--gutter); }
+  .hero-copy {
+    order: 1;
+    max-width: 80%;
+    padding-top: clamp(110px, 15vh, 160px);
+  }
+  .hero-art {
+    position: static;
+    order: 2;
+    width: 100%;
+    height: auto;
+    margin-top: clamp(44px, 7vh, 80px);
+  }
+  .hero-index {
+    order: 3;
+    margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
+  }
+
+
+  .proof-lead { grid-column: 1 / -1; }
+  .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
+  .ev-media { height: clamp(320px, 48vh, 520px); }
+
+  .method-label  { grid-column: 1 / 4; }
+  .method-intro  { grid-column: 1 / 8; }
+  .method-word   { grid-column: 2 / 6; }
+  .method-line   { grid-column: 6 / 9; }
+  .method-caps   { grid-column: 6 / 9; }
+
+  .obs-label { grid-column: 1 / 4; }
+  .obs-text  { grid-column: 1 / 5; }
+  .obs-art   { grid-column: 4 / 9; }
+
+  .footer-logo  { grid-column: 1 / 2; }
+  .footer-place { grid-column: 2 / 5; }
+  .footer-links { grid-column: 5 / 8; }
+  .footer-line  { display: none; }
+  .footer-copy  { grid-column: 8 / 9; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE — headline first; illustration is its own controlled
+   scene; CTA stays close
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 639px) {
+  :root { --gutter: 18px; }
+
+  .nav-logo img { height: 22px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-start) { display: none; } /* menu returns with the ABOUT/CONTACT build */
+
+  .hero-inner { padding-top: 96px; }
+  .hero-copy { max-width: 100%; }
+  .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+  .hero-art { margin-top: 44px; }
+
+  /* The thesis → proof hand-off was ~180px of nothing on a phone. */
+  .belief { padding-top: clamp(64px, 9vh, 96px); padding-bottom: clamp(44px, 6vh, 68px); }
+  .proof  { padding-top: clamp(52px, 7vh, 80px); }
+
+  .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .proof-meta { text-align: left; }
+  .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
+  .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
+  .ev-media { height: clamp(280px, 46vh, 420px); }
+  .reel-btn { width: 40px; height: 40px; }
+  .ev-cap { flex-direction: column; gap: 4px; }
+  .ev-cap .ev-meta { text-align: left; }
+
+  .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
+  .method-row-head {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 14px;
+    padding-block: 30px;
+  }
+  .method-no   { grid-column: 1 / -1; }
+  .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
+  .method-line { grid-column: 1 / -1; }
+  .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+  .method-caps { grid-column: 1 / -1; }
+
+  .obs { padding-bottom: 140px; }
+  .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
+  .obs-text { grid-column: 1 / -1; }
+  .obs-art  {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    margin-inline: calc(var(--gutter) * -1);
+    aspect-ratio: 4 / 5;
+  }
+  .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+
+  .convert-q { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+  .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
+
+  .footer-grid { row-gap: 18px; }
+  .footer-logo, .footer-place, .footer-links, .footer-copy { grid-column: 1 / -1; text-align: left; }
+  .footer-line { display: block; grid-column: 1 / -1; }
+}
+/* ════════════════════════════════════════════════════════════════
+   PROOF PAYOFF — the headline's promise, cashed
+   ════════════════════════════════════════════════════════════════ */
+.proof-payoff {
+  margin-top: clamp(72px, 11vh, 150px);
+  align-items: end;
+  row-gap: 40px;
+}
+.payoff-title {
+  grid-column: 1 / 6;
+  font-size: var(--t-giant);
+}
+.payoff-body {
+  grid-column: 7 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.payoff-creators { color: var(--ink-60); }
+
+/* ════════════════════════════════════════════════════════════════
+   NAV — ink variant for ivory pages (about, contact, 404)
+   ════════════════════════════════════════════════════════════════ */
+.nav--ink .nav-links a { color: var(--ink); }
+.nav--ink .nav-links a:not(.nav-start)::after { background: var(--ink); }
+
+/* ── Mobile menu ──────────────────────────────────────────────── */
+.nav-menu {
+  display: none;
+  background: none;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.6em 0;
+}
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--cobalt);
+  color: var(--ivory);
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  padding: var(--gutter);
+}
+.nav-overlay.is-open { display: flex; }
+.nav-overlay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 4px;
+}
+.nav-overlay-head img { height: 22px; width: auto; }
+.nav-overlay-close {
+  background: none; border: 0; color: var(--ivory);
+  font-family: var(--font-mono); font-size: 0.9rem;
+  text-transform: uppercase; letter-spacing: 0.09em; cursor: pointer;
+  padding: 0.5em;
+}
+.nav-overlay-links {
+  margin-top: 14vh;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.nav-overlay-links a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--ivory);
+}
+.nav-overlay-links a .arrow { font-size: 0.6em; vertical-align: 0.3em; padding-left: 0.3em; }
+.nav-overlay-foot {
+  margin-top: auto;
+  color: var(--ivory-75);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SUBPAGES — quiet ivory pages (about / contact / 404)
+   ════════════════════════════════════════════════════════════════ */
+.page {
+  padding-top: clamp(140px, 20vh, 220px);
+  padding-bottom: clamp(100px, 16vh, 200px);
+}
+.page-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.page-title {
+  grid-column: 1 / 12;
+  font-size: var(--t-giant);
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+
+/* ── Contact form — hairline editorial, no boxes ──────────────── */
+.contact-info {
+  grid-column: 1 / 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vh, 56px);
+}
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.contact-links a {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: border-color 0.2s var(--ease);
+}
+.contact-links a:hover, .contact-links a:focus-visible { border-bottom-color: var(--ink); }
+
+.contact-form {
+  grid-column: 6 / 12;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4.5vh, 48px);
+}
+.field { display: flex; flex-direction: column; gap: 10px; }
+.field label { color: var(--ink-60); }
+.field input,
+.field textarea {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 6px 0 12px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.field textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--red); /* activation */
+}
+.form-foot {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.form-note { color: var(--ink-60); }
+.form-success { display: none; }
+.form-success.is-shown { display: block; }
+.form-success .display { font-size: var(--t-big); margin-bottom: 24px; }
+
+/* ── 404 ──────────────────────────────────────────────────────── */
+.notfound {
+  min-height: 100svh;
+  background: var(--cobalt);
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+}
+.notfound-inner {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 5vh, 56px);
+}
+.notfound .display { font-size: var(--t-giant); }
+.notfound .cta-line { color: var(--ivory); width: fit-content; }
+
+/* ── Responsive for new components ────────────────────────────── */
+@media (max-width: 1023px) {
+  .payoff-title { grid-column: 1 / -1; }
+  .payoff-body  { grid-column: 1 / -1; }
+  .page-title   { grid-column: 1 / -1; }
+  .contact-info { grid-column: 1 / -1; margin-bottom: 56px; }
+  .contact-form { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+  .nav-menu { display: inline-block; }
+  .page-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .page-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
+  .payoff-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOTION SYSTEM — one small library, reused everywhere.
+   BLUE HOLDS · RED MOVES · IVORY REVEALS · BLACK EXPLAINS
+
+   Four primitives:
+     A  .sig-line / .sig-*      Signal Red enters when something acts
+     B  [data-reveal=registration]  print-registration resolve (art)
+     C  [data-reveal=editorial]     masked rise (typography)
+     D  [data-reveal=structural]    red progression (systems)
+
+   Every primitive is inert under prefers-reduced-motion: content
+   arrives complete, only the movement is dropped.
+   ════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ── C · Editorial reveal — typography rises out of a mask ───── */
+  /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
+     intersection rect, so IntersectionObserver would never fire. */
+  html.js [data-reveal="editorial"] {
+    opacity: 0;
+    transform: translateY(14px);
+    -webkit-mask-image: linear-gradient(#000, #000);
+            mask-image: linear-gradient(#000, #000);
+    -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
+    -webkit-mask-position: 0 100%;    mask-position: 0 100%;
+    -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.7s var(--ease),
+      -webkit-mask-size 0.7s var(--ease),
+      mask-size 0.7s var(--ease);
+  }
+  html.js [data-reveal="editorial"].is-in {
+    opacity: 1;
+    transform: none;
+    -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
+  }
+
+  /* ── B · Registration reveal — plates settling into register ─── */
+  html.js [data-reveal="registration"] {
+    opacity: 0;
+    transform: translate(4px, 2px);
+    transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
+  }
+  html.js [data-reveal="registration"].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* Images carry a mis-registered cobalt plate that resolves */
+  img[data-reveal="registration"] {
+    box-shadow: 5px 3px 0 0 var(--cobalt);
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.8s var(--ease),
+      box-shadow 0.8s var(--ease);
+  }
+  img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+  /* A band that already reaches both viewport edges cannot also shift
+     sideways: the 4px would hang off the right for the length of the
+     entrance and flash a horizontal scrollbar. It registers on the
+     vertical only; the cobalt plate still carries the effect. */
+  .who-art[data-reveal="registration"],
+  .about-art[data-reveal="registration"] { transform: translateY(2px); }
+
+  /* ── D · Structural reveal — a red signal draws the rule ─────── */
+  [data-reveal="structural"] { position: relative; }
+  html.js [data-reveal="structural"]::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -1px;
+    height: 2px;
+    width: 100%;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s var(--ease);
+  }
+  html.js [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+  /* the signal passes through, it does not stay */
+  html.js [data-reveal="structural"].is-in.sig-spent::before {
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+}
+
+/* ── A · Signal line — the shared "this is actionable" primitive ─ */
+.sig-line {
+  position: relative;
+}
+.sig-line::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.sig-line:hover::after,
+.sig-line:focus-visible::after,
+.sig-line[aria-current]::after,
+.sig-line.is-active::after { transform: scaleX(1); }
+
+/* Nav: active page gets a small permanent red marker (never colour alone —
+   it pairs with the underline and aria-current) */
+.nav-links a[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -12px; top: 50%;
+  width: 5px; height: 5px;
+  margin-top: -2px;
+  background: var(--red);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METHOD — FIND / BUILD / RUN reads as one system.
+   A structural spine runs the index; Signal Red progresses to the
+   active stage. Progress height is set from JS (--sig-progress).
+   ════════════════════════════════════════════════════════════════ */
+.method-index { position: relative; padding-left: 0; }
+.method-index::before,
+.method-index::after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 0;
+  width: 1px;
+}
+.method-index::before {
+  bottom: 0;
+  background: var(--ink-35);
+}
+.method-index::after {
+  width: 2px;
+  left: -18.5px;
+  height: var(--sig-progress, 0px);
+  background: var(--red);
+  transition: height 0.5s var(--ease);
+}
+/* Stage markers on the spine */
+.method-row { --dot: var(--ink-35); }
+.method-row::before {
+  content: "";
+  position: absolute;
+  left: -21px;
+  top: calc(clamp(28px, 4.5vh, 56px) + 0.35em);
+  width: 7px; height: 7px;
+  background: var(--ivory);
+  box-shadow: 0 0 0 1px var(--dot);
+  transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.method-row.is-active { --dot: var(--red); }
+.method-row.is-active::before { background: var(--red); box-shadow: 0 0 0 1px var(--red); }
+
+@media (max-width: 639px) {
+  .method-index::before, .method-index::after { left: -10px; }
+  .method-index::after { left: -10.5px; }
+  .method-row::before { left: -13px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METRIC — 10M+ counts up when it arrives (tabular so it can't jitter)
+   ════════════════════════════════════════════════════════════════ */
+.proof-metric { font-variant-numeric: tabular-nums; }
+
+/* ════════════════════════════════════════════════════════════════
+   REEL — drag to examine the evidence
+   ════════════════════════════════════════════════════════════════ */
+.reel { cursor: grab; }
+.reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.reel.is-dragging .ev-media { pointer-events: none; }
+
+/* ════════════════════════════════════════════════════════════════
+   SERVICES — what you can hire us for
+   Three panels, all of them visible at every width. The reference
+   this came from puts one card on screen at a time behind a swipe;
+   information someone needs in order to decide cannot sit behind a
+   gesture, so the structure is borrowed and the carousel is not.
+   Warm paper, cobalt names, red numbering, thin rules.
+   ════════════════════════════════════════════════════════════════ */
+.services {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: clamp(104px, 15vh, 210px);
+}
+.svc-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(44px, 7vh, 96px);
+}
+.svc-title { grid-column: 1 / 9; font-size: var(--t-big); }
+.svc-lede  { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
+
+.svc-set {
+  grid-column: 1 / -1;
+  margin-top: clamp(60px, 9vh, 120px);
+  display: grid;
+  /* The ongoing panel is given a little more room — enough to read as
+     the one we would point at, not enough to make the others look
+     like leftovers. */
+  grid-template-columns: 1fr 1fr 1.14fr;
+  column-gap: var(--col-gap);
+  row-gap: clamp(48px, 7vh, 72px);
+  align-items: stretch;
+}
+
+.svc {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+}
+.svc-no { color: var(--ink-60); display: flex; margin-bottom: clamp(24px, 3.5vh, 40px); }
+.svc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+}
+.svc-prop {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.45;
+  color: var(--ink);
+  margin-top: 14px;
+  max-width: 24ch;
+}
+
+/* ── The plate ───────────────────────────────────────────────────
+   The reference card works because a vivid object floats in a dark
+   field. STIR already owns that composition — it is the hero. So the
+   illustration slot is a cobalt plate: a window onto the same world,
+   with the figure lit against it.
+
+   Fixed height, not a ratio: the third column is wider, and a ratio
+   would make its plate taller and knock the scope lists out of line
+   across the three panels.
+
+   The plate does not clip. A cut-out figure is meant to break the top
+   edge and stand in the paper above it — artwork breaking the frame
+   is the house rule, and it is what stops three cobalt rectangles
+   reading as three boxes.                                           */
+.svc-plate {
+  position: relative;
+  margin-top: clamp(30px, 4.4vh, 52px);
+  height: clamp(150px, 15.5vw, 224px);
+  background: var(--cobalt);
+  color: var(--ivory);
+}
+.svc-fig {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: 1;
+  height: 118%;                     /* the 18% that breaks the edge */
+  width: auto;
+  /* Vertical break, bounded horizontally. A tall cut-out is governed
+     by the height and stands out of the top; wide art is caught here
+     instead of spilling into the next column. */
+  max-width: 106%;        /* worst-case spill stays inside the column gap */
+  object-fit: contain;
+  object-position: bottom center;
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  pointer-events: none;
+}
+
+/* The plate number, set like a folio on a printing form. It carries
+   the slot while the art is pending and sits behind the figure once
+   it lands, so the empty state is a composition rather than a gap. */
+.svc-plate-no {
+  position: absolute;
+  left: 0.32em;
+  bottom: -0.16em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ivory);
+  opacity: 0.16;
+  user-select: none;
+}
+.svc-plate-note {
+  position: absolute;
+  top: 14px; left: 16px; right: 16px;
+  color: var(--ivory-40);
+}
+
+/* Signal Red at the threshold — a short tick at rest that runs the
+   width of the plate when the panel is addressed. Red moves. */
+.svc-plate-rule {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 2;                       /* the threshold reads over the figure */
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0.22);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.svc:hover .svc-plate-rule,
+.svc:focus-within .svc-plate-rule { transform: scaleX(1); }
+
+/* The plate arrives mis-registered and settles, like a second pass on
+   press. Reuses the registration primitive rather than inventing a
+   new entrance. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .svc-plate { transition: transform 0.5s var(--ease); }
+  .svc:hover .svc-plate { transform: translate(-2px, -2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-plate-rule { transform: scaleX(1); }
+}
+
+.svc-scope {
+  list-style: none;
+  margin-top: clamp(22px, 3.2vh, 32px);
+  color: var(--ink-60);
+  line-height: 2;
+}
+.svc-scope li { border-bottom: 1px solid var(--ink-05); }
+.svc-scope li:last-child { border-bottom: 0; }
+
+/* Pushed to the bottom so the three actions line up across panels of
+   unequal length. */
+.svc-action { margin-top: auto; padding-top: clamp(22px, 3.2vh, 32px); }
+
+/* 03 — the ongoing relationship. Red rule, red numeral, more width.
+   No badge and no claim: the emphasis is typographic. */
+.svc--lead { border-top-width: 2px; border-top-color: var(--red); padding-top: 15px; }
+.svc--lead .svc-no { color: var(--red); }
+
+@media (max-width: 1023px) {
+  .svc-title, .svc-lede { grid-column: 1 / -1; }
+  .svc-set { grid-template-columns: 1fr 1fr; }
+  .svc--lead { grid-column: 1 / -1; }
+  .svc--lead .svc-prop { max-width: 36ch; }
+}
+@media (max-width: 639px) {
+  .svc-label { grid-column: 1 / -1; margin-bottom: 44px; }
+  .svc-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  /* A vertical stack, in order, with nothing hidden. */
+  .svc-set { grid-template-columns: 1fr; row-gap: 44px; }
+  .svc--lead { grid-column: auto; }
+  .svc-plate { height: clamp(176px, 46vw, 250px); }
+}
+
+/* The method's detail panels carry a sentence now, not a second copy
+   of the service scope. */
+.method-said {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.55;
+  color: var(--ink-70);
+  max-width: 46ch;
+  padding-bottom: 8px;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — a conversation, not a form.
+   ════════════════════════════════════════════════════════════════ */
+.q-block {
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+.q-no { color: var(--ink-60); padding-top: 4px; }
+.q-body { min-width: 0; }
+.q-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.8vw, 1.6rem);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  display: block;
+  margin-bottom: 4px;
+}
+.q-hint { color: var(--ink-60); margin-bottom: 18px; display: block; }
+
+/* Editorial inputs — rules, not boxes */
+.q-body input[type="text"],
+.q-body input[type="email"],
+.q-body input[type="url"],
+.q-body textarea {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 8px 0 14px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.q-body textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+.q-body input:focus,
+.q-body textarea:focus { outline: none; border-bottom-color: var(--red); }
+.q-body input:focus-visible,
+.q-body textarea:focus-visible { outline: none; }
+
+/* Two fields on one rule (name + email) */
+.q-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); row-gap: 20px; }
+@media (max-width: 639px) { .q-pair { grid-template-columns: 1fr; } }
+.q-sub { color: var(--ink-60); display: block; margin-bottom: 2px; }
+
+/* Selectable situations — editorial rows, red indicator, never
+   colour alone (the label also goes to full Ink and shifts 2px) */
+.opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
+@media (max-width: 639px) { .opts { grid-template-columns: 1fr; } }
+.opt { position: relative; display: block; }
+.opt input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  margin: 0;
+}
+.opt span {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85em;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink-35);
+  color: var(--ink-60);
+  cursor: pointer;
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.opt span::before {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  align-self: center;
+  box-shadow: inset 0 0 0 1px var(--ink-35);
+  background: transparent;
+  transition: background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.opt:hover span { color: var(--ink); }
+.opt input:checked + span {
+  color: var(--ink);
+  font-weight: 500;
+  transform: translateX(2px);
+}
+.opt input:checked + span::before {
+  background: var(--red);
+  box-shadow: inset 0 0 0 1px var(--red);
+}
+.opt input:focus-visible + span {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+/* Submit: the signal travels, then confirmation */
+.send-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: clamp(16px, 2.5vh, 28px);
+}
+.send-rail {
+  position: relative;
+  height: 1px;
+  background: var(--ink-35);
+  flex: 1 1 160px;
+  min-width: 120px;
+  overflow: hidden;
+}
+.send-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  form.is-sending .send-rail::after {
+    transform: scaleX(1);
+    transition: transform 0.6s var(--ease);
+  }
+}
+form.is-sending .cta { opacity: 0.55; pointer-events: none; }
+
+.contact-note { color: var(--ink-60); margin-top: clamp(40px, 6vh, 72px); }
+
+/* ════════════════════════════════════════════════════════════════
+   PROOF — the role. The claim almost nobody else can make:
+   not "we ran a campaign" but "we operate this."
+   ════════════════════════════════════════════════════════════════ */
+.proof-role {
+  max-width: 34ch;
+  margin-bottom: clamp(48px, 7vh, 96px);
+}
+.proof-role .role-label { display: flex; margin-bottom: 18px; }
+.proof-role .role-said {
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  font-weight: 300;
+  line-height: 1.32;
+  color: var(--ink);
+}
+.proof-role .role-said strong { font-weight: 700; }
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — answers the question a prospect is actually
+   asking by this point in the page.
+   ════════════════════════════════════════════════════════════════ */
+.who {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: 0;      /* the full-bleed art meets the invitation */
+}
+.who-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.who-title { grid-column: 1 / 10; font-size: var(--t-big); }
+.who-copy  { grid-column: 1 / 6; margin-top: clamp(32px, 5vh, 56px); }
+
+/* The trades, as an index — not a grid of cards */
+.who-trades {
+  grid-column: 7 / 13;
+  margin-top: clamp(32px, 5vh, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 0;
+}
+.who-trades li {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.who-trades li:not(:last-child)::after {
+  content: "·";
+  color: var(--ink-35);
+  padding-inline: 0.9em;
+}
+.who-trades-note { grid-column: 7 / 12; margin-top: 20px; color: var(--ink-60); }
+
+/* The disqualifier — saying who it isn't for is what makes the
+   yes credible. Kept plain, never apologetic. */
+.who-not {
+  grid-column: 7 / 13;
+  margin-top: clamp(48px, 7vh, 88px);
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+}
+.who-not .not-label { display: flex; color: var(--ink-60); margin-bottom: 14px; }
+
+/* the ordinary storefront: the argument for who this is for */
+.who-art {
+  /* the global img reset would otherwise clamp the bleed */
+  max-width: none;
+  margin-top: clamp(72px, 11vh, 150px);
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 55%;
+  height: auto;
+  /* Viewport bleed measured against this element's own containing
+     block, so it lands on the edge whatever the grid, the gutter or
+     --bleed happen to be at this width. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+}
+
+@media (max-width: 1023px) {
+  .who-title, .who-copy, .who-not { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+  .who-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .who-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  .who-art { aspect-ratio: 4 / 3; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — show the journey, then start it
+   ════════════════════════════════════════════════════════════════ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--col-gap);
+  margin-top: clamp(56px, 8vh, 110px);
+}
+.step { border-top: 1px solid var(--ink); padding-top: 16px; }
+.step-no { color: var(--ink-60); display: flex; margin-bottom: 14px; }
+.step-said {
+  font-size: calc(var(--t-body) * 1.05);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.step-note { color: var(--ink-60); margin-top: 8px; max-width: 26ch; }
+@media (max-width: 639px) {
+  .steps { grid-template-columns: 1fr; row-gap: 28px; }
+}
+
+/* Start the conversation before the commitment */
+.starter {
+  margin-top: clamp(56px, 8vh, 110px);
+  max-width: 680px;
+}
+.starter-label { display: block; color: var(--ink-60); margin-bottom: 12px; }
+.starter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 12px;
+}
+.starter-row input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  color: var(--ink);
+}
+.starter-row input:focus { outline: none; }
+.starter-row input::placeholder { color: var(--ink-35); }
+.starter-go {
+  flex: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 6px 2px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  transition: color 0.25s var(--ease);
+}
+.starter-go { transition: color 0.25s var(--ease), transform 0.12s var(--ease); }
+.starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.starter-go:hover, .starter-go:focus-visible { color: var(--red); }
+.starter-go:hover .arrow, .starter-go:focus-visible .arrow { transform: translateX(3px); }
+.starter-row:focus-within { border-bottom-color: var(--red); }
+.starter-note { color: var(--ink-60); margin-top: 16px; }
+
+/* ════════════════════════════════════════════════════════════════
+   ENTRANCE — masks the unstyled flash while the page boots, and
+   gives the arrival authorship. Cover and hero are both cobalt, so
+   nothing "wipes": the mark simply resolves into the site.
+   Capped at 700ms, once per session, skipped for reduced motion.
+   ════════════════════════════════════════════════════════════════ */
+.stir-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--cobalt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  transition: opacity 0.45s var(--ease);
+}
+.stir-enter img { height: clamp(26px, 3vw, 38px); width: auto; }
+.stir-enter .enter-rail {
+  width: clamp(90px, 12vw, 150px);
+  height: 1px;
+  background: var(--ivory-40);
+  position: relative;
+  overflow: hidden;
+}
+.stir-enter .enter-rail::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.stir-enter.is-filling .enter-rail::after { transform: scaleX(1); }
+.stir-enter.is-done { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .stir-enter { display: none; } }
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — the trades at display scale, and what each one
+   actually gets. Demonstrates range across verticals, which is the
+   real question behind "do you work with someone like me".
+   ════════════════════════════════════════════════════════════════ */
+.who-body { grid-column: 1 / -1; margin-top: clamp(56px, 9vh, 120px); }
+.trades-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  column-gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+.trade-list { list-style: none; }
+.trade-list li { border-top: 1px solid var(--ink-35); }
+.trade-list li:last-child { border-bottom: 1px solid var(--ink-35); }
+
+.trade {
+  width: 100%;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  padding: clamp(10px, 1.4vh, 18px) 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.1vw, 2.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  transition: color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.trade::before {
+  content: "";
+  flex: none;
+  width: 0.2em; height: 0.2em;
+  align-self: center;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.trade:hover { color: var(--ink-60); }
+.trade[aria-pressed="true"] {
+  color: var(--ink);
+  transform: translateX(0.3ch);
+}
+.trade[aria-pressed="true"]::before { opacity: 1; transform: none; }
+
+/* The answer panel — what that kind of business actually gets */
+.trade-panel {
+  position: sticky;
+  top: clamp(120px, 18vh, 200px);
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+  min-height: 12rem;
+}
+.trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.trade-panel .panel-for { color: var(--ink); }
+.trade-panel .panel-said {
+  font-size: clamp(1.3rem, 2.3vw, 2.1rem);
+  font-weight: 300;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  min-height: 2.7em;
+}
+.trade-panel .panel-note {
+  margin-top: clamp(18px, 2.6vh, 28px);
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-35);
+  color: var(--ink-60);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .trade-panel .panel-said,
+  .trade-panel .panel-note { transition: opacity 0.22s var(--ease); }
+  .trade-panel.is-swapping .panel-said,
+  .trade-panel.is-swapping .panel-note { opacity: 0; }
+}
+.who-body .who-trades-note {
+  grid-column: auto;
+  margin-top: clamp(28px, 4vh, 44px);
+  max-width: 44ch;
+}
+/* The inline answer lives in the markup, not in a script. With no JS
+   the whole list simply reads as nine trades and their answers; the
+   panel stands down, because without script it can only ever show
+   the first one. */
+.trade-inline > div { min-height: 0; }
+.trade-inline-said {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-block: 4px 10px;
+}
+.trade-inline-note { color: var(--ink-60); padding-bottom: 18px; }
+html:not(.js) .trade-panel { display: none; }
+html.js .trade-inline { display: none; }    /* wide + JS: the panel does it */
+
+/* Narrow: no panel. The answer opens directly under the trade you
+   chose, because an update somewhere else on the page is a change
+   you cannot see — and a panel pinned to the top of the viewport
+   would sit behind the fixed header anyway. */
+@media (max-width: 1023px) {
+  .trades-grid { grid-template-columns: 1fr; }
+  .trade-panel { display: none; }
+
+  html.js .trade-inline {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.38s var(--ease);
+  }
+  html.js .trade[aria-pressed="true"] + .trade-inline { grid-template-rows: 1fr; }
+
+  .trade-inline-said { font-size: clamp(1.1rem, 4.4vw, 1.45rem); }
+
+  /* The chosen trade and its answer read as one block. */
+  .trade-list li:has(.trade[aria-pressed="true"]) {
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+  }
+  .trade[aria-pressed="true"] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .trade-inline { transition: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — the site opens in STIR's world and closes in it.
+   The observer returns, cropped to the eye: the site asked what an
+   ordinary business is hiding; now it asks you.
+   ════════════════════════════════════════════════════════════════ */
+.convert {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  overflow: hidden;
+  padding-top: clamp(96px, 15vh, 190px);
+  padding-bottom: clamp(96px, 15vh, 190px);
+}
+.convert-art {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(58%, 900px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% 36%;
+  z-index: 0;
+  opacity: 0.95;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+}
+.convert .convert-inner { position: relative; z-index: 1; max-width: 62%; }
+.convert .convert-head { border-top-color: var(--ivory-40); }
+.convert .convert-head .ann { color: var(--ivory); }
+.convert-q { font-size: var(--t-giant); color: var(--ivory); }
+.convert-copy { color: var(--ivory-75); max-width: 40ch; margin-top: clamp(32px, 5vh, 56px); }
+
+.convert .steps { margin-top: clamp(48px, 7vh, 96px); }
+.convert .step { border-top-color: var(--ivory-40); }
+.convert .step-no { color: var(--ivory-75); }
+.convert .step-said { color: var(--ivory); }
+.convert .step-note { color: var(--ivory-75); }
+
+.convert .starter-label { color: var(--ivory-75); }
+.convert .starter-row { border-bottom-color: var(--ivory); }
+.convert .starter-row input { color: var(--ivory); }
+.convert .starter-row input::placeholder { color: var(--ivory-40); }
+.convert .starter-go { color: var(--ivory); }
+.convert .starter-go:hover, .convert .starter-go:focus-visible { color: #fff; }
+.convert .starter-go:hover .arrow { transform: translateX(3px); }
+.convert .starter-row:focus-within { border-bottom-color: var(--red); }
+.convert .starter-note { color: var(--ivory-75); }
+
+@media (max-width: 1023px) {
+  .convert .convert-inner { max-width: 100%; }
+  .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}

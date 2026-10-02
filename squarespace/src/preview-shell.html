@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STIR — Squarespace preview</title>
+<!--
+  GENERATED — do not edit. Run: python3 scripts/build-squarespace.py
+
+  This renders the paste-in package inside a deliberately hostile mock
+  of Squarespace's DOM: their serif headings, their green links, their
+  disc bullets, their nested padded wrappers, their 1200px cap. If a
+  rule of ours can be beaten by the host, it gets beaten here first.
+  Append ?p=about or ?p=contact to preview the other pages.
+-->
+<style>
+  /* ── The mock host. Approximates a stock Squarespace template. ── */
+  body { font-family: "Helvetica Neue", sans-serif; color: #222; margin: 0; line-height: 1.7; }
+  h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: 400; margin: 0 0 .6em; }
+  h1 { font-size: 40px; }
+  p { margin: 0 0 1.5em; font-size: 17px; }
+  a { color: #0d7; text-decoration: underline; }
+  ul { padding-left: 40px; list-style: disc; }
+  button, input, textarea { font: inherit; }
+  #header { height: 80px; background: #eee; }
+  #sections { max-width: 1200px; margin: 0 auto; }
+  .page-section { padding: 90px 4vw; }
+  .content-wrapper { max-width: 960px; margin: 0 auto; padding: 0 17px; min-height: 400px; }
+  .sqs-block { padding: 17px 0; }
+  #footer-sections { height: 220px; background: #ddd; }
+  /* preview-only chrome */
+  .pv-switch { position: fixed; right: 12px; bottom: 12px; z-index: 999999;
+               display: flex; gap: 6px; font: 500 11px/1 monospace; }
+  .pv-switch a { background: #161310; color: #FAF2E6; text-decoration: none;
+                 padding: 7px 10px; letter-spacing: .08em; text-transform: uppercase; }
+  .pv-switch a[data-on] { background: #F21B16; }
+</style>
+<!--HEADER-->
+<style><!--CSS--></style>
+</head>
+<body>
+
+<!-- Squarespace's own wrappers, in the order they actually nest -->
+<div id="header"></div>
+<div id="sections">
+  <section class="page-section">
+    <div class="content-wrapper">
+      <div class="sqs-layout">
+        <div class="sqs-block sqs-block-code">
+          <div class="sqs-block-content">
+
+<div data-pv="home"><!--HOME--></div>
+<div data-pv="about"><!--ABOUT--></div>
+<div data-pv="contact"><!--CONTACT--></div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div id="footer-sections"></div>
+
+<script>
+/* Preview only: keep one page in the DOM so the behaviour script sees
+   exactly what it would see on a real Squarespace page. */
+(function () {
+  var want = new URLSearchParams(location.search).get('p') || 'home';
+  var nav = document.createElement('nav');
+  nav.className = 'pv-switch';
+  ['home', 'about', 'contact'].forEach(function (name) {
+    var host = document.querySelector('[data-pv="' + name + '"]');
+    if (name !== want && host) host.parentNode.removeChild(host);
+    var a = document.createElement('a');
+    a.href = '?p=' + name;
+    a.textContent = name;
+    if (name === want) a.setAttribute('data-on', '');
+    nav.appendChild(a);
+  });
+  document.body.appendChild(nav);
+  document.documentElement.classList.add('stir-page');
+  document.body.classList.add('stir-page');
+  if (want === 'home') document.body.classList.add('stir-dark-top');
+  /* the real site routes these; here they just switch the preview */
+  document.querySelectorAll('.stir a[href^="/"]').forEach(function (a) {
+    var to = a.getAttribute('href').replace(/^\/#.*/, 'home').replace(/^\//, '') || 'home';
+    if (['home', 'about', 'contact'].indexOf(to) !== -1) a.setAttribute('href', '?p=' + to);
+  });
+})();
+</script>
+
+<!--FOOTER-->
+</body>
+</html>
