@@ -1673,69 +1673,119 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 
 
 /* ════════════════════════════════════════════════════════════════
-   OUTCOMES — what you leave with.
-   Deliberately a different rhythm from the FIND/BUILD/RUN index
-   that precedes it: three vertical columns, not full-width rows.
+   SERVICES — what you can hire us for
+   Three panels, all of them visible at every width. The reference
+   this came from puts one card on screen at a time behind a swipe;
+   information someone needs in order to decide cannot sit behind a
+   gesture, so the structure is borrowed and the carousel is not.
+   Warm paper, cobalt names, red numbering, thin rules.
    ════════════════════════════════════════════════════════════════ */
-.stir .outcomes {
-  padding-top: clamp(110px, 16vh, 220px);
-  padding-bottom: clamp(120px, 18vh, 240px);
+.stir .services {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: clamp(104px, 15vh, 210px);
 }
-.stir .outcomes-label {
+.stir .svc-label {
   grid-column: 1 / 4;
   border-top: 1px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(48px, 8vh, 110px);
+  margin-bottom: clamp(44px, 7vh, 96px);
 }
-.stir .outcomes-title {
-  grid-column: 1 / 9;
-  font-size: var(--t-big);
-}
-.stir .outcomes-lede {
-  grid-column: 1 / 7;
-  margin-top: clamp(28px, 4vh, 48px);
-}
-.stir .outcomes-set {
+.stir .svc-title { grid-column: 1 / 9; font-size: var(--t-big); }
+.stir .svc-lede { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
+.stir .svc-set {
   grid-column: 1 / -1;
-  margin-top: clamp(72px, 11vh, 150px);
+  margin-top: clamp(60px, 9vh, 120px);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* The ongoing panel is given a little more room — enough to read as
+     the one we would point at, not enough to make the others look
+     like leftovers. */
+  grid-template-columns: 1fr 1fr 1.14fr;
   column-gap: var(--col-gap);
-  row-gap: clamp(56px, 8vh, 80px);
+  row-gap: clamp(48px, 7vh, 72px);
+  align-items: stretch;
 }
-.stir .outcome { border-top: 1px solid var(--ink); padding-top: 16px; }
-.stir .outcome-no { color: var(--ink-60); display: flex; margin-bottom: clamp(28px, 4vh, 48px); }
-.stir .outcome-name {
+.stir .svc {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+}
+.stir .svc-no { color: var(--ink-60); display: flex; margin-bottom: clamp(24px, 3.5vh, 40px); }
+.stir .svc-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  letter-spacing: -0.015em;
-  line-height: 1;
+  color: var(--cobalt);
 }
-.stir .outcome-q {
+.stir .svc-prop {
   font-family: var(--font-serif);
   font-size: calc(var(--t-body) * 1.02);
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--ink);
   margin-top: 14px;
-  max-width: 22ch;
+  max-width: 24ch;
 }
-.stir .outcome-list { margin-top: clamp(20px, 3vh, 32px); color: var(--ink-60); max-width: 26ch; }
-.stir .outcomes-foot {
-  grid-column: 1 / -1;
-  margin-top: clamp(56px, 8vh, 110px);
+
+
+/* The visual slot. A marked placeholder until real art is supplied —
+   never a stand-in image pretending to be the work. */
+.stir .svc-art {
+  margin-top: clamp(22px, 3.2vh, 34px);
+  /* A fixed height, not a ratio: the third column is wider, and a
+     ratio would make its slot taller and knock the scope lists out
+     of line across the three panels. */
+  height: clamp(150px, 15.5vw, 224px);
+}
+.stir .svc-art .ph-note { max-width: none; }
+.stir .svc-scope {
+  list-style: none;
+  margin-top: clamp(22px, 3.2vh, 32px);
   color: var(--ink-60);
+  line-height: 2;
 }
+.stir .svc-scope li { border-bottom: 1px solid var(--ink-05); }
+.stir .svc-scope li:last-child { border-bottom: 0; }
+
+
+/* Pushed to the bottom so the three actions line up across panels of
+   unequal length. */
+.stir .svc-action { margin-top: auto; padding-top: clamp(22px, 3.2vh, 32px); }
+
+
+/* 03 — the ongoing relationship. Red rule, red numeral, more width.
+   No badge and no claim: the emphasis is typographic. */
+.stir .svc--lead { border-top-width: 2px; border-top-color: var(--red); }
+.stir .svc--lead .svc-no { color: var(--red); }
 @media (max-width: 1023px) {
-.stir .outcomes-title,
-.stir .outcomes-lede { grid-column: 1 / -1; }
-.stir .outcomes-set { grid-template-columns: 1fr 1fr; }
+.stir .svc-title,
+.stir .svc-lede { grid-column: 1 / -1; }
+.stir .svc-set { grid-template-columns: 1fr 1fr; }
+.stir .svc--lead { grid-column: 1 / -1; }
+.stir .svc--lead .svc-prop { max-width: 36ch; }
 }
 @media (max-width: 639px) {
-.stir .outcomes-label { grid-column: 1 / -1; margin-bottom: 48px; }
-.stir .outcomes-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
-.stir .outcomes-set { grid-template-columns: 1fr; row-gap: 44px; }
+.stir .svc-label { grid-column: 1 / -1; margin-bottom: 44px; }
+.stir .svc-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+
+  /* A vertical stack, in order, with nothing hidden. */
+  .stir .svc-set { grid-template-columns: 1fr; row-gap: 44px; }
+.stir .svc--lead { grid-column: auto; }
+.stir .svc-art { height: clamp(170px, 46vw, 240px); }
+}
+
+
+/* The method's detail panels carry a sentence now, not a second copy
+   of the service scope. */
+.stir .method-said {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.55;
+  color: var(--ink-70);
+  max-width: 46ch;
+  padding-bottom: 8px;
 }
 
 
@@ -2451,7 +2501,7 @@ body.stir-dark-top { background: #0451AB; }
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="#method" data-spy="method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
+      <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">04</i>Services</a>
       <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
       <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
@@ -2467,7 +2517,7 @@ body.stir-dark-top { background: #0451AB; }
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="#method" data-spy="method"><i class="nav-no" aria-hidden="true">04</i>Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">04</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
@@ -2629,11 +2679,94 @@ body.stir-dark-top { background: #0451AB; }
     </div>
   </section>
 
-  <!-- ════════ 04 · WHAT WE DO — FIND / BUILD / RUN ════════ -->
+  <!-- ════════ 04 · SERVICES ════════
+       Replaces "What you leave with", which restated the method in
+       different words. This answers the question a visitor actually
+       has: what can I hire these people for, and what does it cost me
+       to find out. Three panels, all visible at every width — nothing
+       essential is behind a swipe or a hover.
+
+       Panel 03 carries the red rule and the red numeral because the
+       ongoing relationship is the one we would steer most businesses
+       toward. The other two are full offers, not downgrades. -->
+  <section class="services shell" id="services" aria-labelledby="services-title">
+    <div class="grid">
+      <p class="utility svc-label" data-reveal="structural">04 / Services</p>
+
+      <h2 class="display svc-title" data-reveal="editorial" id="services-title">What you can hire us&nbsp;for.</h2>
+      <p class="body svc-lede reveal">Three ways in. Take one piece, take the whole build, or put someone in charge of keeping it&nbsp;moving.</p>
+
+      <div class="svc-set">
+
+        <article class="svc reveal">
+          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
+          <h3 class="svc-name">Content &amp;<br>campaigns</h3>
+          <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
+          <!-- ASSET SLOT: a frame from the work this service produces.
+               Marked placeholder until real art is supplied. -->
+          <div class="ph svc-art" role="img" aria-label="Placeholder for a content and campaigns still">
+            <span class="utility ph-id">IMAGE &mdash; 01</span>
+            <span class="utility ph-note">Campaign or content still</span>
+          </div>
+          <ul class="utility svc-scope">
+            <li>Content direction</li>
+            <li>Photography</li>
+            <li>Video</li>
+            <li>Short-form</li>
+            <li>Launches</li>
+            <li>Creator collaborations</li>
+          </ul>
+          <p class="svc-action"><a class="cta-line" href="/contact">Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+        </article>
+
+        <article class="svc reveal">
+          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
+          <h3 class="svc-name">Brand &amp;<br>websites</h3>
+          <p class="svc-prop">Make the business look as good as it&nbsp;is.</p>
+          <div class="ph svc-art" role="img" aria-label="Placeholder for a brand and website still">
+            <span class="utility ph-id">IMAGE &mdash; 02</span>
+            <span class="utility ph-note">Identity or site screen</span>
+          </div>
+          <ul class="utility svc-scope">
+            <li>Positioning</li>
+            <li>Identity</li>
+            <li>Websites</li>
+            <li>Clearer offers</li>
+            <li>Inquiry paths</li>
+          </ul>
+          <p class="svc-action"><a class="cta-line" href="/contact">Talk about a build <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+        </article>
+
+        <article class="svc svc--lead reveal">
+          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
+          <h3 class="svc-name">Ongoing creative<br>&amp; growth</h3>
+          <p class="svc-prop">Put someone in charge of keeping it&nbsp;moving.</p>
+          <div class="ph svc-art" role="img" aria-label="Placeholder for an ongoing engagement still">
+            <span class="utility ph-id">IMAGE &mdash; 03</span>
+            <span class="utility ph-note">Operating shot &mdash; the work in motion</span>
+          </div>
+          <ul class="utility svc-scope">
+            <li>Monthly planning</li>
+            <li>Production</li>
+            <li>Distribution</li>
+            <li>Website improvements</li>
+            <li>Lead + sales systems</li>
+          </ul>
+          <p class="svc-action"><a class="cta-line" href="/contact">Talk about ongoing <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ 05 · HOW WE WORK — FIND / BUILD / RUN ════════
+       The capability lists that used to live here now sit in the
+       services panels, where someone deciding what to buy will
+       actually read them. This section is only about sequence. -->
   <section class="method shell" data-ground="ivory" data-index="04 — What we do" id="method" aria-labelledby="method-label">
     <div class="grid">
-      <p class="utility method-label" data-reveal="structural" id="method-label">04 / What we do</p>
-      <p class="body method-intro reveal">We make the work, put it in front of the right people and build the system that turns their attention into business. More calls. More orders. More bookings. More customers.</p>
+      <p class="utility method-label" data-reveal="structural" id="method-label">05 / How we work</p>
+      <p class="body method-intro reveal">Three stages, in order. You can hire us for one of them, or for all three and the years after.</p>
 
       <div class="method-index reveal" id="method-index">
 
@@ -2646,13 +2779,7 @@ body.stir-dark-top { background: #0451AB; }
           <div class="method-detail" id="method-find">
             <div>
               <div class="method-detail-inner">
-                <ul class="method-caps">
-                  <li>Positioning</li>
-                  <li>Audience</li>
-                  <li>Offer</li>
-                  <li>Content opportunities</li>
-                  <li>Growth opportunities</li>
-                </ul>
+                <p class="method-said">We look at the business properly — the product, the operation, the room it sits in — and find the part that is already worth attention.</p>
               </div>
             </div>
           </div>
@@ -2667,13 +2794,7 @@ body.stir-dark-top { background: #0451AB; }
           <div class="method-detail" id="method-build">
             <div>
               <div class="method-detail-inner">
-                <ul class="method-caps">
-                  <li>Brand identity</li>
-                  <li>Websites</li>
-                  <li>Photography + video</li>
-                  <li>Short-form content</li>
-                  <li>Campaigns</li>
-                </ul>
+                <p class="method-said">We make the work that communicates it, at the standard the business deserves rather than the standard its category settles for.</p>
               </div>
             </div>
           </div>
@@ -2688,13 +2809,7 @@ body.stir-dark-top { background: #0451AB; }
           <div class="method-detail" id="method-run">
             <div>
               <div class="method-detail-inner">
-                <ul class="method-caps">
-                  <li>Content calendars</li>
-                  <li>Social distribution</li>
-                  <li>Paid media</li>
-                  <li>Campaign launches</li>
-                  <li>Lead + sales systems</li>
-                </ul>
+                <p class="method-said">We keep it in front of the right people week after week, and we watch which of it turns into customers.</p>
               </div>
             </div>
           </div>
@@ -2704,39 +2819,6 @@ body.stir-dark-top { background: #0451AB; }
     </div>
   </section>
 
-
-  <!-- ════════ 05 · OUTCOMES — what you leave with ════════ -->
-  <section class="outcomes shell" data-ground="ivory" data-index="05 — What you leave with" aria-labelledby="outcomes-title">
-    <div class="grid">
-      <p class="utility outcomes-label" data-reveal="structural">05 / What you leave with</p>
-
-      <h2 class="display outcomes-title" data-reveal="editorial" id="outcomes-title">You don’t hire us for more&nbsp;stuff.</h2>
-      <p class="body outcomes-lede reveal">You leave with a sharper reason for people to care, the work that communicates it, and a system for getting it in front of them.</p>
-
-      <div class="outcomes-set">
-        <div class="outcome reveal">
-          <p class="ann outcome-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <p class="outcome-name">The angle</p>
-          <p class="outcome-q">What should people care about?</p>
-          <p class="body outcome-list">Positioning, offer, insight, creative direction.</p>
-        </div>
-        <div class="outcome reveal">
-          <p class="ann outcome-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <p class="outcome-name">The work</p>
-          <p class="outcome-q">What do they need to see?</p>
-          <p class="body outcome-list">Identity, campaigns, content, photography, video, websites.</p>
-        </div>
-        <div class="outcome reveal">
-          <p class="ann outcome-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <p class="outcome-name">The system</p>
-          <p class="outcome-q">How does attention become business?</p>
-          <p class="body outcome-list">Distribution, launches, paid media, sales infrastructure, conversion.</p>
-        </div>
-      </div>
-
-      <p class="utility outcomes-foot reveal">Brand. Content. Campaigns. Web. Distribution. Sales. Whatever the idea requires.</p>
-    </div>
-  </section>
 
   <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
   <section class="who shell" data-ground="ivory" data-index="06 — Who this is for" aria-labelledby="who-title">
@@ -2946,7 +3028,7 @@ body.stir-dark-top { background: #0451AB; }
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="/#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
+      <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services</a>
       <a href="/about" aria-current="page">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
       <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
@@ -2961,7 +3043,7 @@ body.stir-dark-top { background: #0451AB; }
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="/#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
@@ -3036,7 +3118,7 @@ body.stir-dark-top { background: #0451AB; }
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="/#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities</a>
+      <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services</a>
       <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
       <a href="/contact" class="cta cta--sm nav-start" aria-current="page"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
@@ -3051,7 +3133,7 @@ body.stir-dark-top { background: #0451AB; }
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="/#method"><i class="nav-no" aria-hidden="true">04</i>Capabilities <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>

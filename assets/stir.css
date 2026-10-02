@@ -1493,68 +1493,117 @@ img, video { max-width: 100%; display: block; }
 .reel.is-dragging .ev-media { pointer-events: none; }
 
 /* ════════════════════════════════════════════════════════════════
-   OUTCOMES — what you leave with.
-   Deliberately a different rhythm from the FIND/BUILD/RUN index
-   that precedes it: three vertical columns, not full-width rows.
+   SERVICES — what you can hire us for
+   Three panels, all of them visible at every width. The reference
+   this came from puts one card on screen at a time behind a swipe;
+   information someone needs in order to decide cannot sit behind a
+   gesture, so the structure is borrowed and the carousel is not.
+   Warm paper, cobalt names, red numbering, thin rules.
    ════════════════════════════════════════════════════════════════ */
-.outcomes {
-  padding-top: clamp(110px, 16vh, 220px);
-  padding-bottom: clamp(120px, 18vh, 240px);
+.services {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: clamp(104px, 15vh, 210px);
 }
-.outcomes-label {
+.svc-label {
   grid-column: 1 / 4;
   border-top: 1px solid var(--ink);
   padding-top: 12px;
-  margin-bottom: clamp(48px, 8vh, 110px);
+  margin-bottom: clamp(44px, 7vh, 96px);
 }
-.outcomes-title {
-  grid-column: 1 / 9;
-  font-size: var(--t-big);
-}
-.outcomes-lede {
-  grid-column: 1 / 7;
-  margin-top: clamp(28px, 4vh, 48px);
-}
-.outcomes-set {
+.svc-title { grid-column: 1 / 9; font-size: var(--t-big); }
+.svc-lede  { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
+
+.svc-set {
   grid-column: 1 / -1;
-  margin-top: clamp(72px, 11vh, 150px);
+  margin-top: clamp(60px, 9vh, 120px);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* The ongoing panel is given a little more room — enough to read as
+     the one we would point at, not enough to make the others look
+     like leftovers. */
+  grid-template-columns: 1fr 1fr 1.14fr;
   column-gap: var(--col-gap);
-  row-gap: clamp(56px, 8vh, 80px);
+  row-gap: clamp(48px, 7vh, 72px);
+  align-items: stretch;
 }
-.outcome { border-top: 1px solid var(--ink); padding-top: 16px; }
-.outcome-no { color: var(--ink-60); display: flex; margin-bottom: clamp(28px, 4vh, 48px); }
-.outcome-name {
+
+.svc {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+}
+.svc-no { color: var(--ink-60); display: flex; margin-bottom: clamp(24px, 3.5vh, 40px); }
+.svc-name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: clamp(1.5rem, 2.4vw, 2.3rem);
+  font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  letter-spacing: -0.015em;
-  line-height: 1;
+  color: var(--cobalt);
 }
-.outcome-q {
+.svc-prop {
   font-family: var(--font-serif);
   font-size: calc(var(--t-body) * 1.02);
-  line-height: 1.5;
+  line-height: 1.45;
   color: var(--ink);
   margin-top: 14px;
-  max-width: 22ch;
+  max-width: 24ch;
 }
-.outcome-list { margin-top: clamp(20px, 3vh, 32px); color: var(--ink-60); max-width: 26ch; }
-.outcomes-foot {
-  grid-column: 1 / -1;
-  margin-top: clamp(56px, 8vh, 110px);
+
+/* The visual slot. A marked placeholder until real art is supplied —
+   never a stand-in image pretending to be the work. */
+.svc-art {
+  margin-top: clamp(22px, 3.2vh, 34px);
+  /* A fixed height, not a ratio: the third column is wider, and a
+     ratio would make its slot taller and knock the scope lists out
+     of line across the three panels. */
+  height: clamp(150px, 15.5vw, 224px);
+}
+.svc-art .ph-note { max-width: none; }
+
+.svc-scope {
+  list-style: none;
+  margin-top: clamp(22px, 3.2vh, 32px);
   color: var(--ink-60);
+  line-height: 2;
 }
+.svc-scope li { border-bottom: 1px solid var(--ink-05); }
+.svc-scope li:last-child { border-bottom: 0; }
+
+/* Pushed to the bottom so the three actions line up across panels of
+   unequal length. */
+.svc-action { margin-top: auto; padding-top: clamp(22px, 3.2vh, 32px); }
+
+/* 03 — the ongoing relationship. Red rule, red numeral, more width.
+   No badge and no claim: the emphasis is typographic. */
+.svc--lead { border-top-width: 2px; border-top-color: var(--red); }
+.svc--lead .svc-no { color: var(--red); }
+
 @media (max-width: 1023px) {
-  .outcomes-title, .outcomes-lede { grid-column: 1 / -1; }
-  .outcomes-set { grid-template-columns: 1fr 1fr; }
+  .svc-title, .svc-lede { grid-column: 1 / -1; }
+  .svc-set { grid-template-columns: 1fr 1fr; }
+  .svc--lead { grid-column: 1 / -1; }
+  .svc--lead .svc-prop { max-width: 36ch; }
 }
 @media (max-width: 639px) {
-  .outcomes-label { grid-column: 1 / -1; margin-bottom: 48px; }
-  .outcomes-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
-  .outcomes-set { grid-template-columns: 1fr; row-gap: 44px; }
+  .svc-label { grid-column: 1 / -1; margin-bottom: 44px; }
+  .svc-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  /* A vertical stack, in order, with nothing hidden. */
+  .svc-set { grid-template-columns: 1fr; row-gap: 44px; }
+  .svc--lead { grid-column: auto; }
+  .svc-art { height: clamp(170px, 46vw, 240px); }
+}
+
+/* The method's detail panels carry a sentence now, not a second copy
+   of the service scope. */
+.method-said {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.55;
+  color: var(--ink-70);
+  max-width: 46ch;
+  padding-bottom: 8px;
 }
 
 /* ════════════════════════════════════════════════════════════════
