@@ -293,12 +293,12 @@
       plate.addEventListener('pointermove', function (e) {
         if (e.pointerType !== 'mouse') return;
         var r = plate.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * -7;
+        tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
         ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
         if (queued) return;
         queued = true;
         requestAnimationFrame(function () {
-          fig.style.transform = 'translateX(-50%) translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
+          fig.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
           queued = false;
         });
       }, { passive: true });

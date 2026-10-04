@@ -9,11 +9,11 @@ allowed to stand out of the top of that plate.
 | | |
 |---|---|
 | **File** | `assets/svc-01.webp`, `svc-02.webp`, `svc-03.webp` |
-| **Background** | **Transparent.** The plate supplies the cobalt. |
-| **Aspect** | Taller than wide. Roughly 3:4 to 4:5. |
-| **Size** | ~1200px on the long edge. |
-| **Safe area** | The bottom ~82% sits inside the plate; the top ~18% breaks out above it onto the paper. Put the head, the light, the thing you want noticed in that top fifth. |
-| **Width limit** | The figure is capped at 106% of the plate width, so keep it narrow. A wide composition will be scaled down and stop breaking the edge. |
+| **Background** | Plain white is fine — the prepare script lifts it off. Do not place the art on cobalt yourself; the plate supplies that. |
+| **Aspect** | Landscape or square. The script normalises everything to 4:3. |
+| **Size** | 1500px or more on the long edge. |
+| **Framing** | Draw the object, not a scene. It floats in the cobalt field, so it needs no ground, no backdrop and no vignette — a cast shadow on the paper is fine and keys out with it. |
+| **Near-white inside the art** | Perfectly safe. The key only removes white that reaches the border, so a cream billboard face or the body of a machine survives intact. |
 
 ## Palette
 
@@ -51,7 +51,14 @@ them. Someone is in charge; that is the whole proposition.
 
 ## Dropping them in
 
-In each panel, replace the placeholder span with the image:
+Run the source file through the preparer, which keys out the paper,
+trims to the art and normalises the ratio:
+
+```
+python3 scripts/prepare-illustration.py ~/art/press.jpg svc-03
+```
+
+Then point the panel at it:
 
 ```html
 <div class="svc-plate" data-reveal="registration">
@@ -61,8 +68,14 @@ In each panel, replace the placeholder span with the image:
 </div>
 ```
 
-Delete the `.svc-plate-note` span. Keep `alt=""` — the figure is
-decorative; the service name and scope carry the meaning.
+Keep `alt=""` — the figure is decorative; the service name and scope
+carry the meaning. The plate number stays behind it: it is the empty
+state and part of the composition both.
 
-The plate number stays behind the figure. It is the empty state and
-the composition both.
+## What is in there now
+
+| | Subject |
+|---|---|
+| **01 · Content & campaigns** | One hand passing a red card to another, the card carrying a storefront. A reason to act, handed over. |
+| **02 · Brand & websites** | A hand painting the first red stroke onto a blank sign. The business getting its face. |
+| **03 · Ongoing creative & growth** | A hand on the lever of a press, a storefront plate in the bed. Someone is running it. |

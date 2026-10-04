@@ -1606,25 +1606,31 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 .stir .svc-plate {
   position: relative;
   margin-top: clamp(30px, 4.4vh, 52px);
-  height: clamp(150px, 15.5vw, 224px);
+  /* Fixed height, not a ratio: the third column is wider, and a ratio
+     would make its plate taller and knock the scope lists out of line
+     across the three panels. The height is set so a 4:3 figure fills
+     the two narrow columns edge to edge and floats with a little
+     cobalt either side in the wide one. */
+  height: clamp(200px, 21.5vw, 310px);
   background: var(--cobalt);
   color: var(--ivory);
 }
+
+/* The artwork is cut out of its paper and sits in the cobalt field —
+   the hero's composition at panel scale. Contained rather than
+   cropped, because these are whole objects and cropping one would
+   just look like a mistake. The extra padding at the bottom keeps the
+   figure clear of the red threshold. */
 .stir .svc-fig {
   position: absolute;
-  left: 50%;
-  bottom: 0;
+  inset: 0;
   z-index: 1;
-  height: 118%;                     /* the 18% that breaks the edge */
-  width: auto;
-  /* Vertical break, bounded horizontally. A tall cut-out is governed
-     by the height and stands out of the top; wide art is caught here
-     instead of spilling into the next column. */
-  max-width: 106%;        /* worst-case spill stays inside the column gap */
+  width: 100%;
+  height: 100%;
+  max-width: none;
   object-fit: contain;
-  object-position: bottom center;
-  transform: translateX(-50%);
-  transform-origin: bottom center;
+  object-position: center;
+  padding: 4% 4% 8%;
   pointer-events: none;
 }
 
@@ -1709,7 +1715,7 @@ html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
   /* A vertical stack, in order, with nothing hidden. */
   .stir .svc-set { grid-template-columns: 1fr; row-gap: 44px; }
 .stir .svc--lead { grid-column: auto; }
-.stir .svc-plate { height: clamp(176px, 46vw, 250px); }
+.stir .svc-plate { height: clamp(220px, 68vw, 300px); }
 }
 
 
