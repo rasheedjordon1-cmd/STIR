@@ -17,7 +17,7 @@ for (const [name, url, scoped] of [
     const out = { sectionsInMain: [], orphans: [], outsideScope: [] };
     // the host's own wrappers are not ours to police
     const ours = e => !e.classList.contains('page-section');
-    document.querySelectorAll('main section').forEach(s => out.sectionsInMain.push(s.className.split(' ')[0]));
+    document.querySelectorAll('main > section').forEach(s => out.sectionsInMain.push(s.className.split(' ')[0]));
     document.querySelectorAll('section').forEach(s => {
       if (ours(s) && !s.closest('main')) out.orphans.push(s.className.split(' ')[0]);
     });
