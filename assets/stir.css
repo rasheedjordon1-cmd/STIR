@@ -1248,6 +1248,40 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
   flex-direction: column;
   gap: 10px;
 }
+/* The method's detail panels carry a sentence now, not a second copy
+   of the service scope — and the sentence needs a column of its own.
+   It replaced a list that had one (8 / 12) and inherited nothing, so
+   it was auto-placing into track 1: 91px of a 1348px row, a single
+   sentence broken over sixteen lines.
+
+   It starts under the word, because it belongs to the word, and runs
+   to the measure a serif sentence wants. It is set as a statement
+   rather than a footnote: it is the whole payoff for opening the row,
+   so it should be worth having opened. */
+.method-said {
+  grid-column: 2 / 10;
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.25vw, 2.1rem);
+  line-height: 1.32;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  max-width: 40ch;
+  padding-bottom: 8px;
+}
+html.js .method-said {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease);
+}
+/* With no script there is nothing to open the rows, so they are all
+   open — the same bargain the trade list already makes with its
+   inline answers. */
+html:not(.js) .method-detail { grid-template-rows: 1fr; }
+.method-row.is-active .method-said {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.14s;
+}
 .method-caps li {
   font-family: var(--font-mono);
   font-size: var(--t-utility);
@@ -1267,12 +1301,31 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
   .method-row:hover .method-word { transform: translateX(0.35ch); }
   .method-row:hover .method-line { color: var(--ink); }
 }
-/* Active: the red marker appears; services unfold in sequence */
-.method-row.is-active .method-no { color: var(--ink); }
-.method-row.is-active .method-word { transform: translateX(0.35ch); }
+/* Active: the row is held open, so it is held in Cobalt. Red still
+   marks the point of action — the dot — and blue marks the state, so
+   the two colours are doing different jobs rather than both shouting
+   "this one". The ground never flips: one ivory page, one row in
+   blue on it. */
+.method-row.is-active .method-no { color: var(--cobalt); }
+.method-row.is-active .method-word { transform: translateX(0.35ch); color: var(--cobalt); }
 .method-row.is-active .method-dot { opacity: 1; transform: none; }
 .method-row.is-active .method-line { color: var(--ink); }
 .method-row.is-active .method-detail { grid-template-rows: 1fr; }
+/* The open row is bracketed by its own rule, drawn rather than
+   switched — a 2px border would shift every row below it by a pixel.
+   ::after, because ::before is already the stage marker on the spine. */
+.method-row::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -1px;
+  height: 2px;
+  background: var(--cobalt);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+  pointer-events: none;
+}
+.method-row.is-active::after { transform: scaleX(1); }
 .method-row.is-active .method-caps li { opacity: 1; transform: none; }
 .method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
 .method-row.is-active .method-caps li:nth-child(2) { transition-delay: 0.16s; }
@@ -1447,6 +1500,9 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
   .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
   .method-line { grid-column: 1 / -1; }
   .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+  /* 2 / 10 clamps to 2 / 5 in a four-column grid, which indents the
+     sentence past the word it belongs to. */
+  .method-said { grid-column: 1 / -1; max-width: none; }
   .method-caps { grid-column: 1 / -1; }
 
   .obs { padding-bottom: 140px; }
@@ -2030,16 +2086,6 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
   .svc-plate { height: clamp(220px, 68vw, 300px); }
 }
 
-/* The method's detail panels carry a sentence now, not a second copy
-   of the service scope. */
-.method-said {
-  font-family: var(--font-serif);
-  font-size: calc(var(--t-body) * 1.02);
-  line-height: 1.55;
-  color: var(--ink-70);
-  max-width: 46ch;
-  padding-bottom: 8px;
-}
 
 /* ════════════════════════════════════════════════════════════════
    CONTACT — a conversation, not a form.
@@ -2439,7 +2485,7 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
   min-height: 12rem;
 }
 .trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
-.trade-panel .panel-for { color: var(--ink); }
+.trade-panel .panel-for { color: var(--cobalt); }
 .trade-panel .panel-said {
   font-size: clamp(1.3rem, 2.3vw, 2.1rem);
   font-weight: 300;
@@ -2456,9 +2502,15 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .trade-panel .panel-said,
-  .trade-panel .panel-note { transition: opacity 0.22s var(--ease); }
+  .trade-panel .panel-note {
+    transition: opacity 0.26s var(--ease), transform 0.34s var(--ease);
+  }
+  .trade-panel .panel-note { transition-delay: 0.04s; }
   .trade-panel.is-swapping .panel-said,
-  .trade-panel.is-swapping .panel-note { opacity: 0; }
+  .trade-panel.is-swapping .panel-note {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 .who-body .who-trades-note {
   grid-column: auto;

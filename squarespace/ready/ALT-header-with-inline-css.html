@@ -1279,6 +1279,42 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
   flex-direction: column;
   gap: 10px;
 }
+
+/* The method's detail panels carry a sentence now, not a second copy
+   of the service scope — and the sentence needs a column of its own.
+   It replaced a list that had one (8 / 12) and inherited nothing, so
+   it was auto-placing into track 1: 91px of a 1348px row, a single
+   sentence broken over sixteen lines.
+
+   It starts under the word, because it belongs to the word, and runs
+   to the measure a serif sentence wants. It is set as a statement
+   rather than a footnote: it is the whole payoff for opening the row,
+   so it should be worth having opened. */
+.stir .method-said {
+  grid-column: 2 / 10;
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.25vw, 2.1rem);
+  line-height: 1.32;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  max-width: 40ch;
+  padding-bottom: 8px;
+}
+html.js .stir .method-said {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease);
+}
+
+/* With no script there is nothing to open the rows, so they are all
+   open — the same bargain the trade list already makes with its
+   inline answers. */
+html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
+.stir .method-row.is-active .method-said {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.14s;
+}
 .stir .method-caps li {
   font-family: var(--font-mono);
   font-size: var(--t-utility);
@@ -1298,12 +1334,32 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 .stir .method-row:hover .method-line { color: var(--ink); }
 }
 
-/* Active: the red marker appears; services unfold in sequence */
-.stir .method-row.is-active .method-no { color: var(--ink); }
-.stir .method-row.is-active .method-word { transform: translateX(0.35ch); }
+/* Active: the row is held open, so it is held in Cobalt. Red still
+   marks the point of action — the dot — and blue marks the state, so
+   the two colours are doing different jobs rather than both shouting
+   "this one". The ground never flips: one ivory page, one row in
+   blue on it. */
+.stir .method-row.is-active .method-no { color: var(--cobalt); }
+.stir .method-row.is-active .method-word { transform: translateX(0.35ch); color: var(--cobalt); }
 .stir .method-row.is-active .method-dot { opacity: 1; transform: none; }
 .stir .method-row.is-active .method-line { color: var(--ink); }
 .stir .method-row.is-active .method-detail { grid-template-rows: 1fr; }
+
+/* The open row is bracketed by its own rule, drawn rather than
+   switched — a 2px border would shift every row below it by a pixel.
+   ::after, because ::before is already the stage marker on the spine. */
+.stir .method-row::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -1px;
+  height: 2px;
+  background: var(--cobalt);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+  pointer-events: none;
+}
+.stir .method-row.is-active::after { transform: scaleX(1); }
 .stir .method-row.is-active .method-caps li { opacity: 1; transform: none; }
 .stir .method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
 .stir .method-row.is-active .method-caps li:nth-child(2) { transition-delay: 0.16s; }
@@ -1475,6 +1531,10 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 .stir .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
 .stir .method-line { grid-column: 1 / -1; }
 .stir .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+
+  /* 2 / 10 clamps to 2 / 5 in a four-column grid, which indents the
+     sentence past the word it belongs to. */
+  .stir .method-said { grid-column: 1 / -1; max-width: none; }
 .stir .method-caps { grid-column: 1 / -1; }
 .stir .obs { padding-bottom: 140px; }
 .stir .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
@@ -2078,17 +2138,6 @@ html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
 }
 
 
-/* The method's detail panels carry a sentence now, not a second copy
-   of the service scope. */
-.stir .method-said {
-  font-family: var(--font-serif);
-  font-size: calc(var(--t-body) * 1.02);
-  line-height: 1.55;
-  color: var(--ink-70);
-  max-width: 46ch;
-  padding-bottom: 8px;
-}
-
 
 /* ════════════════════════════════════════════════════════════════
    CONTACT — a conversation, not a form.
@@ -2509,7 +2558,7 @@ html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
   min-height: 12rem;
 }
 .stir .trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
-.stir .trade-panel .panel-for { color: var(--ink); }
+.stir .trade-panel .panel-for { color: var(--cobalt); }
 .stir .trade-panel .panel-said {
   font-size: clamp(1.3rem, 2.3vw, 2.1rem);
   font-weight: 300;
@@ -2526,9 +2575,15 @@ html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
 }
 @media (prefers-reduced-motion: no-preference) {
 .stir .trade-panel .panel-said,
-.stir .trade-panel .panel-note { transition: opacity 0.22s var(--ease); }
+.stir .trade-panel .panel-note {
+    transition: opacity 0.26s var(--ease), transform 0.34s var(--ease);
+  }
+.stir .trade-panel .panel-note { transition-delay: 0.04s; }
 .stir .trade-panel.is-swapping .panel-said,
-.stir .trade-panel.is-swapping .panel-note { opacity: 0; }
+.stir .trade-panel.is-swapping .panel-note {
+    opacity: 0;
+    transform: translateY(8px);
+  }
 }
 .stir .who-body .who-trades-note {
   grid-column: auto;
