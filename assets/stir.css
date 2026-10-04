@@ -755,6 +755,9 @@ img, video { max-width: 100%; display: block; }
   gap: clamp(14px, 1.6vw, 26px);
   margin-top: clamp(32px, 5vh, 56px);
 }
+/* A flex column so the Watch links line up across the row even when
+   a tile has no follower count to show. */
+.creator { display: flex; flex-direction: column; }
 .creator-frame {
   position: relative;
   display: block;
@@ -799,18 +802,12 @@ img, video { max-width: 100%; display: block; }
   text-transform: uppercase;
   margin-top: 14px;
 }
-.creator-handle { color: var(--ink-60); margin-top: 4px; }
-.creator-link { margin-top: 8px; }
-
-/* An inline marked placeholder, so an unfilled field is obvious in
-   review without blocking the layout. */
-.ph-inline {
-  display: inline-block;
-  padding: 0.2em 0.5em;
-  background: var(--ink-05);
-  border: 1px dashed var(--ink-35);
-  color: var(--ink-60);
-}
+/* Reach is the argument on this wall, so it sits directly under the
+   name rather than being tucked away. */
+.creator-reach { color: var(--ink-60); margin-top: 4px; }
+.creator-link { margin-top: auto; padding-top: 10px; }
+.creator-link .cta-line { font-size: 0.68rem; }
+.creators-foot { color: var(--ink-35); margin-top: clamp(20px, 3vh, 30px); }
 
 @media (max-width: 1279px) { .creator-wall { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 767px) {
