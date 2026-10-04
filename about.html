@@ -52,6 +52,50 @@
   .about-block .b-copy  { grid-column: 1 / -1; }
   .about-roster { grid-column: 1 / -1; }
 }
+
+/* ── Founder ──────────────────────────────────────────────────────
+   The portrait keeps its own grey ground; a cobalt mat around a
+   person's face reads like an ID card, and recolouring someone into
+   the brand palette is not ours to do. It sits in its own column so
+   the bio can run at a readable measure beside it. */
+.founder { margin-top: clamp(96px, 15vh, 200px); align-items: start; }
+.founder-plate { grid-column: 1 / 5; margin: 0; }
+.founder-plate img { display: block; width: 100%; height: auto; }
+.founder-body { grid-column: 6 / 12; }
+.founder-label {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+.founder-name { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
+.founder-role { margin-top: 16px; color: var(--ink-60); }
+.founder-lede {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.2);
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 32ch;
+  margin-top: clamp(28px, 4vh, 44px);
+  padding-top: clamp(24px, 3.5vh, 36px);
+  border-top: 1px solid var(--ink-35);
+}
+.founder-story { margin-top: clamp(28px, 4vh, 40px); display: grid; gap: 1.15em; max-width: 58ch; }
+.founder-story p {
+  font-family: var(--font-serif);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-70);
+}
+.founder-story strong { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 1023px) {
+  .founder-plate { grid-column: 1 / 4; }
+  .founder-body  { grid-column: 4 / -1; }
+}
+@media (max-width: 639px) {
+  .founder-plate { grid-column: 1 / -1; max-width: 280px; }
+  .founder-body  { grid-column: 1 / -1; margin-top: 40px; }
+}
 </style>
 </head>
 <body>
@@ -121,6 +165,35 @@
     <img class="about-art" data-reveal="registration" src="assets/illustration-city.webp"
          width="2000" height="1497" loading="lazy" decoding="async"
          alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
+
+    <!-- Who you are actually hiring. It sits after the argument and
+         the evidence rather than before them: the work earns the
+         introduction, not the other way round.
+
+         The name is a marked gap. It is nowhere in the copy supplied
+         and guessing a person's name from their email address is not
+         something to publish. -->
+    <div class="grid founder">
+      <figure class="founder-plate" data-reveal="registration">
+        <img src="assets/founder.webp" width="900" height="1125" loading="lazy" decoding="async"
+             alt="A black and white portrait of STIR&rsquo;s founder, facing the camera against a plain grey wall.">
+      </figure>
+
+      <div class="founder-body">
+        <p class="utility founder-label" data-reveal="structural">Who you&rsquo;re talking to</p>
+        <h2 class="display founder-name" data-reveal="editorial"><span class="band-gap">Name &mdash; to confirm</span></h2>
+        <p class="utility founder-role">Founder, STIR &middot; Brooklyn, New&nbsp;York</p>
+
+        <p class="founder-lede reveal">I&rsquo;ve opened a business, run one, and closed one. That&rsquo;s the lens I bring to every owner I work&nbsp;with.</p>
+
+        <div class="founder-story reveal">
+          <p>I left college to help my father open a restaurant, handling operations, marketing, sales, and design, often in the same day. Later I built a restaurant concept of my own. Creative decisions there had real consequences, and I learned to judge work by what it actually&nbsp;does.</p>
+          <p>Before that, I started in music at Roc Nation, Universal Music Group / Republic Records, and iHeartRadio, across marketing and&nbsp;A&amp;R. That&rsquo;s where I learned that a rollout is a system: identity, timing, relationships, and a reason for people to tell someone&nbsp;else.</p>
+          <p>STIR combines both. I work with operator-owned businesses to find what deserves attention, give it an identity worth remembering, and build the systems that get it discovered, talked about, and bought, from Caribbean food to cold-chain&nbsp;logistics.</p>
+          <p>At Labay Market, I lead creative direction, content, wholesale accounts, e-commerce, and partnerships for a historic Caribbean neighborhood institution. <strong>Two restaurant groups now buy their produce from it&nbsp;&mdash; Momofuku&rsquo;s Kabawa and Catch Hospitality&rsquo;s Caf&eacute;&nbsp;Charmant. Both came inbound.</strong></p>
+        </div>
+      </div>
+    </div>
 
     <div class="about-cta reveal">
       <a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>

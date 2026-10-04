@@ -2675,6 +2675,50 @@ html.js .stir .trade-inline { transition: none; }
 }
 
 
+/* ── Founder ──────────────────────────────────────────────────────
+   The portrait keeps its own grey ground; a cobalt mat around a
+   person's face reads like an ID card, and recolouring someone into
+   the brand palette is not ours to do. It sits in its own column so
+   the bio can run at a readable measure beside it. */
+.stir .founder { margin-top: clamp(96px, 15vh, 200px); align-items: start; }
+.stir .founder-plate { grid-column: 1 / 5; margin: 0; }
+.stir .founder-plate img { display: block; width: 100%; height: auto; }
+.stir .founder-body { grid-column: 6 / 12; }
+.stir .founder-label {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+.stir .founder-name { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
+.stir .founder-role { margin-top: 16px; color: var(--ink-60); }
+.stir .founder-lede {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.2);
+  line-height: 1.4;
+  color: var(--ink);
+  max-width: 32ch;
+  margin-top: clamp(28px, 4vh, 44px);
+  padding-top: clamp(24px, 3.5vh, 36px);
+  border-top: 1px solid var(--ink-35);
+}
+.stir .founder-story { margin-top: clamp(28px, 4vh, 40px); display: grid; gap: 1.15em; max-width: 58ch; }
+.stir .founder-story p {
+  font-family: var(--font-serif);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-70);
+}
+.stir .founder-story strong { color: var(--ink); font-weight: 500; }
+@media (max-width: 1023px) {
+.stir .founder-plate { grid-column: 1 / 4; }
+.stir .founder-body { grid-column: 4 / -1; }
+}
+@media (max-width: 639px) {
+.stir .founder-plate { grid-column: 1 / -1; max-width: 280px; }
+.stir .founder-body { grid-column: 1 / -1; margin-top: 40px; }
+}
+
+
 /* ════════════════════════════════════════════════════════════════
    SQUARESPACE HOST LAYER
    Everything above is the STIR design system, scoped to .stir so
