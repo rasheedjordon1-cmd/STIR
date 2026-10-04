@@ -110,79 +110,100 @@
     </div>
 
     <!--
-      LABAY EVIDENCE REEL — real artifacts at their NATIVE aspect
-      ratios, one shared height, nothing cropped to fit a slot.
-      New artifacts drop in as additional .reel-item figures with no
-      layout work. LABAY keeps its own visual identity; nothing is
-      recolored into the STIR palette.
+      CREATOR COLLABORATIONS — replaces the evidence reel, which mixed
+      real artifacts with photographs of the shop. These are the
+      distribution arriving: creators who came in through Labay's
+      account, which STIR runs, and were set up by us.
+
+      Posters only until someone asks for a clip. preload="none" keeps
+      the section at ~320KB of stills rather than 11MB of video, and
+      with no JS the posters and the links still carry it.
+
+      NAMES, HANDLES AND WATCH LINKS ARE PLACEHOLDERS pending
+      confirmation. Nothing here asserts a creator's identity.
     -->
     <div class="shell">
-      <div class="proof-reel-band reveal">
-        <div class="reel-head">
-          <span class="utility reel-counter"><span id="reel-pos">01</span> / <span id="reel-total">05</span></span>
-          <div class="reel-nav">
-            <button class="reel-btn" type="button" data-dir="-1" aria-label="Previous artifact">←</button>
-            <button class="reel-btn" type="button" data-dir="1" aria-label="Next artifact">→</button>
-          </div>
+      <div class="creators reveal">
+        <div class="creators-head">
+          <p class="ann creators-label"><i class="ann-mark" aria-hidden="true"></i>Creator collaborations</p>
+          <p class="utility creators-role">Every one of these came in through Labay’s account, which STIR runs, and was set up by&nbsp;us. None of them turned up unannounced.</p>
         </div>
-        <div class="reel" id="proof-reel" aria-label="Labay evidence — scroll horizontally">
-          <figure class="reel-item">
-            <video class="ev-media" muted loop playsinline data-autoplay
-                   preload="none" width="720" height="1280"
-                   poster="ASSET_BASE/labay/labay-social-01-poster.webp"
-                   aria-label="Short-form vertical video shot at Labay Market">
-              <source src="VIDEO_URL" type="video/mp4">
-            </video>
-            <figcaption class="ev-cap utility">
-              <span class="cap">Serialized short-form built from daily operations.</span>
-              <span class="ev-meta">Organic social · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="ASSET_BASE/labay/labay-production-bts.webp"
-                 width="1600" height="2133" loading="lazy" decoding="async"
-                 alt="A film crew records an interview on the Brooklyn street corner outside Labay Market, coconuts in hand">
-            <figcaption class="ev-cap utility">
-              <span class="cap">Shot on the corner, not in a studio.</span>
-              <span class="ev-meta">Production · Brooklyn · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="ASSET_BASE/labay/labay-coconut.webp"
-                 width="554" height="554" loading="lazy" decoding="async"
-                 alt="Gloved hands split a fresh coconut with a machete, water bursting out, in front of crates of plantains and bananas">
-            <figcaption class="ev-cap utility">
-              <span class="cap">The counter, the product, the price — unstyled.</span>
-              <span class="ev-meta">In situ · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="ASSET_BASE/labay/labay-timeout-cover.webp"
-                 width="399" height="501" loading="lazy" decoding="async"
-                 alt="Time Out New York cover, December 2024 — NYC's Best Eats, featuring Righteous Eats' Jaeki Cho">
-            <figcaption class="ev-cap utility">
-              <span class="cap">Time Out New York — NYC’s Best Eats.</span>
-              <span class="ev-meta">Press · December 2024</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="ASSET_BASE/labay/labay-market-interior.webp"
-                 width="1216" height="922" loading="lazy" decoding="async"
-                 alt="Inside Labay Market: a customer holds up a breadfruit among stocked shelves of Caribbean groceries">
-            <figcaption class="ev-cap utility">
-              <span class="cap">The market as a gathering place, not a set.</span>
-              <span class="ev-meta">Brooklyn, NY · 2025</span>
-            </figcaption>
-          </figure>
-        </div>
+
+        <ul class="creator-wall">
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 01">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="ASSET_BASE/labay/creators/creator-01-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-01.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;01</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 02">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="ASSET_BASE/labay/creators/creator-02-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-02.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;02</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 03">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="ASSET_BASE/labay/creators/creator-03-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-03.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;03</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 04">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="ASSET_BASE/labay/creators/creator-04-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-04.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;04</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 05">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="ASSET_BASE/labay/creators/creator-05-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-05.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;05</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+        </ul>
       </div>
+    </div>
 
       <!-- The payoff — the headline's promise, cashed -->
       <div class="grid proof-payoff">
         <h3 class="display payoff-title" data-reveal="editorial">It paid.</h3>
         <div class="payoff-body reveal">
           <p class="body">The attention turned into brand partnerships&nbsp;— <strong>Nike, Red&nbsp;Bull and TurboTax</strong> came to the market.</p>
-          <p class="utility payoff-creators">Also in the system&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
         </div>
       </div>
     </div>

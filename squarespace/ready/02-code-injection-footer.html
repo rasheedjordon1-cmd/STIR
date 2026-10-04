@@ -125,85 +125,51 @@
     });
   })();
 
-  /* ── Evidence video — only loads and plays while it is on screen ─ */
+  /* ── Creator wall ───────────────────────────────────────────────
+     Five clips is more video than any page should fetch on arrival,
+     so nothing loads until it is asked for: the poster carries the
+     tile and preload="none" holds the file back. One plays at a time,
+     because five looping videos competing is noise, not evidence.
+     Without JS the posters and the links still carry the section.  */
   (function () {
-    var vids = document.querySelectorAll('video[data-autoplay]');
-    if (!vids.length || reduce || !('IntersectionObserver' in window)) return;
-    var vo = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.play().catch(function () {}); }
-        else { e.target.pause(); }
+    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame'));
+    if (!frames.length) return;
+    var playing = null;
+
+    function stop(frame) {
+      if (!frame) return;
+      var v = frame.querySelector('video');
+      if (v) v.pause();
+      frame.classList.remove('is-playing');
+      frame.setAttribute('aria-label', frame.dataset.labelPlay);
+      if (playing === frame) playing = null;
+    }
+
+    frames.forEach(function (frame) {
+      var v = frame.querySelector('video');
+      if (!v) return;
+      frame.dataset.labelPlay = frame.getAttribute('aria-label');
+
+      frame.addEventListener('click', function () {
+        if (playing === frame) { stop(frame); return; }
+        stop(playing);
+        playing = frame;
+        frame.classList.add('is-playing');
+        frame.setAttribute('aria-label', frame.dataset.labelPlay.replace(/^Play/, 'Pause'));
+        v.play().catch(function () { stop(frame); });
       });
-    }, { threshold: 0.25 });
-    vids.forEach(function (v) { vo.observe(v); });
+      v.addEventListener('ended', function () { stop(frame); });
+    });
+
+    /* A clip scrolled out of view is not being watched. */
+    if ('IntersectionObserver' in window) {
+      var off = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (!e.isIntersecting) stop(e.target); });
+      }, { threshold: 0.2 });
+      frames.forEach(function (f) { off.observe(f); });
+    }
   })();
 
-  /* ── Evidence reel — draggable, like handling contact sheets ─────
-     CONFIRM: arrows step, drag has weight, the counter tracks.      */
-  (function () {
-    var reel = document.getElementById('proof-reel');
-    if (!reel) return;
-    var items = Array.prototype.slice.call(reel.querySelectorAll('.reel-item'));
-    var pos = document.getElementById('reel-pos');
-    var total = document.getElementById('reel-total');
-    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    if (total) total.textContent = pad(items.length);
-
-    function currentIndex() {
-      var x = reel.scrollLeft, best = 0, bestDist = Infinity;
-      items.forEach(function (it, i) {
-        var d = Math.abs(it.offsetLeft - reel.offsetLeft - x);
-        if (d < bestDist) { bestDist = d; best = i; }
-      });
-      return best;
-    }
-    function sync() { if (pos) pos.textContent = pad(currentIndex() + 1); }
-
-    document.querySelectorAll('.reel-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var next = Math.min(items.length - 1, Math.max(0, currentIndex() + parseInt(btn.dataset.dir, 10)));
-        reel.scrollTo({ left: items[next].offsetLeft - reel.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
-      });
-    });
-
-    var ticking = false;
-    reel.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
-    }, { passive: true });
-
-    /* pointer drag with a little momentum */
-    var down = false, startX = 0, startScroll = 0, lastX = 0, vel = 0, lastT = 0, moved = false;
-    reel.addEventListener('pointerdown', function (e) {
-      if (e.pointerType === 'touch') return;   /* native touch scrolling is better */
-      down = true; moved = false;
-      startX = lastX = e.clientX;
-      startScroll = reel.scrollLeft;
-      vel = 0; lastT = performance.now();
-    });
-    reel.addEventListener('pointermove', function (e) {
-      if (!down) return;
-      var dx = e.clientX - startX;
-      if (!moved && Math.abs(dx) > 4) { moved = true; reel.classList.add('is-dragging'); reel.setPointerCapture(e.pointerId); }
-      if (!moved) return;
-      var now = performance.now();
-      vel = (e.clientX - lastX) / Math.max(now - lastT, 1);
-      lastX = e.clientX; lastT = now;
-      reel.scrollLeft = startScroll - dx;
-    });
-    function release() {
-      if (!down) return;
-      down = false;
-      reel.classList.remove('is-dragging');
-      if (!moved || reduce) return;
-      var v = vel * 180;
-      if (Math.abs(v) > 40) reel.scrollBy({ left: -v, behavior: 'smooth' });
-    }
-    reel.addEventListener('pointerup', release);
-    reel.addEventListener('pointercancel', release);
-    reel.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
-  })();
 
   /* ── Who this is for: the trades as a working index ─────────────
      EXPLAIN: the real question behind a list of verticals is "what

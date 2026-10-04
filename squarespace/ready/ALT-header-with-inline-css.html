@@ -296,18 +296,11 @@
    [data-reveal="registration"], at the scale where people touch it.
    ──────────────────────────────────────────────────────────────── */
 .stir .cta:active,
-.stir .reel-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: -2px -2px 0 0 var(--cobalt);
-  transition-duration: 0.06s;
-}
 .stir .cta:active::before,
-.stir .reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
-
-
-/* Text actions have no box to shift, so they take the travel alone
+.stir /* Text actions have no box to shift,
+.stir so they take the travel alone
    and the rule beneath them goes live. */
-.stir .cta-line:active,
+.cta-line:active,
 .stir .starter-go:active { transform: translate(1px, 1px); }
 .stir .cta-line:active::after { background: var(--red); }
 @media (prefers-reduced-motion: reduce) {
@@ -315,7 +308,6 @@
 .stir .cta-arrow,
 .stir .cta-glyph { transition: none; }
 .stir .cta:active,
-.stir .reel-btn:active,
 .stir .cta-line:active,
 .stir .starter-go:active { transform: none; }
 }
@@ -764,78 +756,99 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 }
 
 
-/* ── The evidence reel ────────────────────────────────────────────
-   Asset-first: every artifact renders at its NATIVE aspect ratio at
-   one shared height — nothing is cropped to fit a slot. The row
-   scrolls horizontally with gentle snap; widths vary because the
-   material varies. New artifacts drop in with no layout work. */
-.stir .proof-reel-band {
-  background: var(--cobalt);
-  color: #fff;
-  margin-inline: calc(var(--bleed) * -1);
-  padding: clamp(28px, 3.5vw, 56px) var(--bleed) clamp(32px, 4vw, 56px);
-}
-.stir .reel-head {
+/* ── Creator collaborations ──────────────────────────────────────
+   The evidence reel mixed real artifacts with photographs of the
+   shop, and the photographs were doing nothing. This is the
+   distribution arriving instead: short-form shown in a short-form
+   shaped frame, which is the only honest way to show short-form.
+   A fixed wall, not a carousel — nothing behind a swipe.
+   ──────────────────────────────────────────────────────────────── */
+.stir .creators { margin-top: clamp(56px, 8vh, 110px); }
+.stir .creators-head {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: clamp(20px, 2.8vh, 36px);
-}
-.stir .reel-counter { color: var(--wht-70); }
-.stir .reel-nav { display: flex; gap: 10px; }
-.stir .reel-btn {
-  width: 44px;
-  height: 44px;
-  background: none;
-  border: 1px solid var(--wht-35);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-.stir .reel-btn:hover,
-.stir .reel-btn:focus-visible { background: var(--red); border-color: var(--red); }
-.stir .reel {
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(20px, 2.5vw, 44px);
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  padding-bottom: 14px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--wht-35) transparent;
-}
-.stir .reel::-webkit-scrollbar { height: 4px; }
-.stir .reel::-webkit-scrollbar-thumb { background: var(--wht-35); }
-.stir .reel::-webkit-scrollbar-track { background: transparent; }
-.stir .reel-item {
-  flex: none;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Native ratio, shared height — the media decides its own width */
-.stir .ev-media {
-  display: block;
-  height: clamp(360px, 56vh, 620px);
-  width: auto;
-  max-width: none;
-  background: var(--wht-07);
-}
-.stir .ev-cap {
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: 20px;
-  /* match the media's width without stretching the item */
-  inline-size: 0;
-  min-inline-size: 100%;
+  justify-content: space-between;
+  gap: clamp(20px, 4vw, 64px);
+  border-top: 1px solid var(--ink);
+  padding-top: 14px;
+  flex-wrap: wrap;
 }
-.stir .ev-cap .cap { color: #fff; }
-.stir .ev-cap .ev-meta { color: var(--wht-70); text-align: right; flex: none; }
+.stir .creators-label { display: flex; color: var(--ink); flex: none; }
+
+/* The role is identical for every clip, so it is stated once here
+   rather than repeated five times under the tiles. */
+.stir .creators-role { color: var(--ink-60); max-width: 54ch; }
+.stir .creator-wall {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(14px, 1.6vw, 26px);
+  margin-top: clamp(32px, 5vh, 56px);
+}
+.stir .creator-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.stir .creator-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+
+/* The system's live mark, doing the job it does everywhere else. */
+.stir .creator-cue {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.45em 0.7em;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  transition: background 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.stir .creator-frame:hover .creator-cue,
+.stir .creator-frame:focus-visible .creator-cue { background: var(--red); }
+.stir .creator-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+.stir .creator-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+.stir .creator-handle { color: var(--ink-60); margin-top: 4px; }
+.stir .creator-link { margin-top: 8px; }
+
+
+/* An inline marked placeholder, so an unfilled field is obvious in
+   review without blocking the layout. */
+.stir .ph-inline {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  background: var(--ink-05);
+  border: 1px dashed var(--ink-35);
+  color: var(--ink-60);
+}
+@media (max-width: 1279px) {
+.stir .creator-wall { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 767px) {
+.stir .creator-wall { grid-template-columns: repeat(2, 1fr); }
+.stir .creators-head { flex-direction: column; gap: 10px; }
+}
 
 
 /* ════════════════════════════════════════════════════════════════
@@ -1074,7 +1087,6 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
   }
 .stir .proof-lead { grid-column: 1 / -1; }
 .stir .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
-.stir .ev-media { height: clamp(320px, 48vh, 520px); }
 .stir .method-label { grid-column: 1 / 4; }
 .stir .method-intro { grid-column: 1 / 8; }
 .stir .method-word { grid-column: 2 / 6; }
@@ -1113,10 +1125,6 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 .stir .proof-meta { text-align: left; }
 .stir .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
 .stir .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
-.stir .ev-media { height: clamp(280px, 46vh, 420px); }
-.stir .reel-btn { width: 40px; height: 40px; }
-.stir .ev-cap { flex-direction: column; gap: 4px; }
-.stir .ev-cap .ev-meta { text-align: left; }
 .stir .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
 .stir .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
 .stir .method-row-head {
@@ -1530,10 +1538,6 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 /* ════════════════════════════════════════════════════════════════
    REEL — drag to examine the evidence
    ════════════════════════════════════════════════════════════════ */
-.stir .reel { cursor: grab; }
-.stir .reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
-.stir .reel.is-dragging .ev-media { pointer-events: none; }
-
 
 /* ════════════════════════════════════════════════════════════════
    SERVICES — what you can hire us for

@@ -196,79 +196,100 @@
     </div>
 
     <!--
-      LABAY EVIDENCE REEL — real artifacts at their NATIVE aspect
-      ratios, one shared height, nothing cropped to fit a slot.
-      New artifacts drop in as additional .reel-item figures with no
-      layout work. LABAY keeps its own visual identity; nothing is
-      recolored into the STIR palette.
+      CREATOR COLLABORATIONS — replaces the evidence reel, which mixed
+      real artifacts with photographs of the shop. These are the
+      distribution arriving: creators who came in through Labay's
+      account, which STIR runs, and were set up by us.
+
+      Posters only until someone asks for a clip. preload="none" keeps
+      the section at ~320KB of stills rather than 11MB of video, and
+      with no JS the posters and the links still carry it.
+
+      NAMES, HANDLES AND WATCH LINKS ARE PLACEHOLDERS pending
+      confirmation. Nothing here asserts a creator's identity.
     -->
     <div class="shell">
-      <div class="proof-reel-band reveal">
-        <div class="reel-head">
-          <span class="utility reel-counter"><span id="reel-pos">01</span> / <span id="reel-total">05</span></span>
-          <div class="reel-nav">
-            <button class="reel-btn" type="button" data-dir="-1" aria-label="Previous artifact">←</button>
-            <button class="reel-btn" type="button" data-dir="1" aria-label="Next artifact">→</button>
-          </div>
+      <div class="creators reveal">
+        <div class="creators-head">
+          <p class="ann creators-label"><i class="ann-mark" aria-hidden="true"></i>Creator collaborations</p>
+          <p class="utility creators-role">Every one of these came in through Labay’s account, which STIR runs, and was set up by&nbsp;us. None of them turned up unannounced.</p>
         </div>
-        <div class="reel" id="proof-reel" aria-label="Labay evidence — scroll horizontally">
-          <figure class="reel-item">
-            <video class="ev-media" muted loop playsinline data-autoplay
-                   preload="none" width="720" height="1280"
-                   poster="assets/labay/labay-social-01-poster.webp"
-                   aria-label="Short-form vertical video shot at Labay Market">
-              <source src="assets/labay/labay-social-01.mp4" type="video/mp4">
-            </video>
-            <figcaption class="ev-cap utility">
-              <span class="cap">Serialized short-form built from daily operations.</span>
-              <span class="ev-meta">Organic social · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-production-bts.webp"
-                 width="1600" height="2133" loading="lazy" decoding="async"
-                 alt="A film crew records an interview on the Brooklyn street corner outside Labay Market, coconuts in hand">
-            <figcaption class="ev-cap utility">
-              <span class="cap">Shot on the corner, not in a studio.</span>
-              <span class="ev-meta">Production · Brooklyn · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-coconut.webp"
-                 width="554" height="554" loading="lazy" decoding="async"
-                 alt="Gloved hands split a fresh coconut with a machete, water bursting out, in front of crates of plantains and bananas">
-            <figcaption class="ev-cap utility">
-              <span class="cap">The counter, the product, the price — unstyled.</span>
-              <span class="ev-meta">In situ · 2025</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-timeout-cover.webp"
-                 width="399" height="501" loading="lazy" decoding="async"
-                 alt="Time Out New York cover, December 2024 — NYC's Best Eats, featuring Righteous Eats' Jaeki Cho">
-            <figcaption class="ev-cap utility">
-              <span class="cap">Time Out New York — NYC’s Best Eats.</span>
-              <span class="ev-meta">Press · December 2024</span>
-            </figcaption>
-          </figure>
-          <figure class="reel-item">
-            <img class="ev-media" src="assets/labay/labay-market-interior.webp"
-                 width="1216" height="922" loading="lazy" decoding="async"
-                 alt="Inside Labay Market: a customer holds up a breadfruit among stocked shelves of Caribbean groceries">
-            <figcaption class="ev-cap utility">
-              <span class="cap">The market as a gathering place, not a set.</span>
-              <span class="ev-meta">Brooklyn, NY · 2025</span>
-            </figcaption>
-          </figure>
-        </div>
+
+        <ul class="creator-wall">
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 01">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="assets/labay/creators/creator-01-poster.webp">
+                <source src="assets/labay/creators/creator-01.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;01</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 02">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="assets/labay/creators/creator-02-poster.webp">
+                <source src="assets/labay/creators/creator-02.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;02</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 03">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="assets/labay/creators/creator-03-poster.webp">
+                <source src="assets/labay/creators/creator-03.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;03</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 04">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="assets/labay/creators/creator-04-poster.webp">
+                <source src="assets/labay/creators/creator-04.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;04</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+          <li class="creator">
+            <button class="creator-frame" type="button" aria-label="Play the clip from creator 05">
+              <video class="creator-vid" muted loop playsinline preload="none"
+                     width="720" height="1280"
+                     poster="assets/labay/creators/creator-05-poster.webp">
+                <source src="assets/labay/creators/creator-05.mp4" type="video/mp4">
+              </video>
+              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+            </button>
+            <p class="creator-name">Creator&nbsp;05</p>
+            <p class="utility creator-handle">@handle &mdash; to confirm</p>
+            <p class="utility creator-link"><span class="ph-inline">Watch link pending</span></p>
+          </li>
+        </ul>
       </div>
+    </div>
 
       <!-- The payoff — the headline's promise, cashed -->
       <div class="grid proof-payoff">
         <h3 class="display payoff-title" data-reveal="editorial">It paid.</h3>
         <div class="payoff-body reveal">
           <p class="body">The attention turned into brand partnerships&nbsp;— <strong>Nike, Red&nbsp;Bull and TurboTax</strong> came to the market.</p>
-          <p class="utility payoff-creators">Also in the system&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
         </div>
       </div>
     </div>
@@ -738,85 +759,51 @@
     });
   })();
 
-  /* ── Evidence video — only loads and plays while it is on screen ─ */
+  /* ── Creator wall ───────────────────────────────────────────────
+     Five clips is more video than any page should fetch on arrival,
+     so nothing loads until it is asked for: the poster carries the
+     tile and preload="none" holds the file back. One plays at a time,
+     because five looping videos competing is noise, not evidence.
+     Without JS the posters and the links still carry the section.  */
   (function () {
-    var vids = document.querySelectorAll('video[data-autoplay]');
-    if (!vids.length || reduce || !('IntersectionObserver' in window)) return;
-    var vo = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.play().catch(function () {}); }
-        else { e.target.pause(); }
+    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame'));
+    if (!frames.length) return;
+    var playing = null;
+
+    function stop(frame) {
+      if (!frame) return;
+      var v = frame.querySelector('video');
+      if (v) v.pause();
+      frame.classList.remove('is-playing');
+      frame.setAttribute('aria-label', frame.dataset.labelPlay);
+      if (playing === frame) playing = null;
+    }
+
+    frames.forEach(function (frame) {
+      var v = frame.querySelector('video');
+      if (!v) return;
+      frame.dataset.labelPlay = frame.getAttribute('aria-label');
+
+      frame.addEventListener('click', function () {
+        if (playing === frame) { stop(frame); return; }
+        stop(playing);
+        playing = frame;
+        frame.classList.add('is-playing');
+        frame.setAttribute('aria-label', frame.dataset.labelPlay.replace(/^Play/, 'Pause'));
+        v.play().catch(function () { stop(frame); });
       });
-    }, { threshold: 0.25 });
-    vids.forEach(function (v) { vo.observe(v); });
+      v.addEventListener('ended', function () { stop(frame); });
+    });
+
+    /* A clip scrolled out of view is not being watched. */
+    if ('IntersectionObserver' in window) {
+      var off = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (!e.isIntersecting) stop(e.target); });
+      }, { threshold: 0.2 });
+      frames.forEach(function (f) { off.observe(f); });
+    }
   })();
 
-  /* ── Evidence reel — draggable, like handling contact sheets ─────
-     CONFIRM: arrows step, drag has weight, the counter tracks.      */
-  (function () {
-    var reel = document.getElementById('proof-reel');
-    if (!reel) return;
-    var items = Array.prototype.slice.call(reel.querySelectorAll('.reel-item'));
-    var pos = document.getElementById('reel-pos');
-    var total = document.getElementById('reel-total');
-    var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-    if (total) total.textContent = pad(items.length);
-
-    function currentIndex() {
-      var x = reel.scrollLeft, best = 0, bestDist = Infinity;
-      items.forEach(function (it, i) {
-        var d = Math.abs(it.offsetLeft - reel.offsetLeft - x);
-        if (d < bestDist) { bestDist = d; best = i; }
-      });
-      return best;
-    }
-    function sync() { if (pos) pos.textContent = pad(currentIndex() + 1); }
-
-    document.querySelectorAll('.reel-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var next = Math.min(items.length - 1, Math.max(0, currentIndex() + parseInt(btn.dataset.dir, 10)));
-        reel.scrollTo({ left: items[next].offsetLeft - reel.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
-      });
-    });
-
-    var ticking = false;
-    reel.addEventListener('scroll', function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
-    }, { passive: true });
-
-    /* pointer drag with a little momentum */
-    var down = false, startX = 0, startScroll = 0, lastX = 0, vel = 0, lastT = 0, moved = false;
-    reel.addEventListener('pointerdown', function (e) {
-      if (e.pointerType === 'touch') return;   /* native touch scrolling is better */
-      down = true; moved = false;
-      startX = lastX = e.clientX;
-      startScroll = reel.scrollLeft;
-      vel = 0; lastT = performance.now();
-    });
-    reel.addEventListener('pointermove', function (e) {
-      if (!down) return;
-      var dx = e.clientX - startX;
-      if (!moved && Math.abs(dx) > 4) { moved = true; reel.classList.add('is-dragging'); reel.setPointerCapture(e.pointerId); }
-      if (!moved) return;
-      var now = performance.now();
-      vel = (e.clientX - lastX) / Math.max(now - lastT, 1);
-      lastX = e.clientX; lastT = now;
-      reel.scrollLeft = startScroll - dx;
-    });
-    function release() {
-      if (!down) return;
-      down = false;
-      reel.classList.remove('is-dragging');
-      if (!moved || reduce) return;
-      var v = vel * 180;
-      if (Math.abs(v) > 40) reel.scrollBy({ left: -v, behavior: 'smooth' });
-    }
-    reel.addEventListener('pointerup', release);
-    reel.addEventListener('pointercancel', release);
-    reel.addEventListener('click', function (e) { if (moved) e.preventDefault(); }, true);
-  })();
 
   /* ── Who this is for: the trades as a working index ─────────────
      EXPLAIN: the real question behind a list of verticals is "what

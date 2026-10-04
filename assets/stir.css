@@ -277,13 +277,7 @@ img, video { max-width: 100%; display: block; }
    [data-reveal="registration"], at the scale where people touch it.
    ──────────────────────────────────────────────────────────────── */
 .cta:active,
-.reel-btn:active {
-  transform: translate(2px, 2px);
-  box-shadow: -2px -2px 0 0 var(--cobalt);
-  transition-duration: 0.06s;
-}
 .cta:active::before,
-.reel-btn:active { background: var(--red-deep); border-color: var(--red-deep); }
 
 /* Text actions have no box to shift, so they take the travel alone
    and the rule beneath them goes live. */
@@ -293,7 +287,7 @@ img, video { max-width: 100%; display: block; }
 
 @media (prefers-reduced-motion: reduce) {
   .cta-label, .cta-arrow, .cta-glyph { transition: none; }
-  .cta:active, .reel-btn:active,
+  .cta:active,
   .cta-line:active, .starter-go:active { transform: none; }
 }
 
@@ -732,78 +726,97 @@ img, video { max-width: 100%; display: block; }
   max-width: 22ch;
 }
 
-/* ── The evidence reel ────────────────────────────────────────────
-   Asset-first: every artifact renders at its NATIVE aspect ratio at
-   one shared height — nothing is cropped to fit a slot. The row
-   scrolls horizontally with gentle snap; widths vary because the
-   material varies. New artifacts drop in with no layout work. */
-.proof-reel-band {
-  background: var(--cobalt);
-  color: #fff;
-  margin-inline: calc(var(--bleed) * -1);
-  padding: clamp(28px, 3.5vw, 56px) var(--bleed) clamp(32px, 4vw, 56px);
-}
-.reel-head {
+/* ── Creator collaborations ──────────────────────────────────────
+   The evidence reel mixed real artifacts with photographs of the
+   shop, and the photographs were doing nothing. This is the
+   distribution arriving instead: short-form shown in a short-form
+   shaped frame, which is the only honest way to show short-form.
+   A fixed wall, not a carousel — nothing behind a swipe.
+   ──────────────────────────────────────────────────────────────── */
+.creators { margin-top: clamp(56px, 8vh, 110px); }
+.creators-head {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: clamp(20px, 2.8vh, 36px);
-}
-.reel-counter { color: var(--wht-70); }
-.reel-nav { display: flex; gap: 10px; }
-.reel-btn {
-  width: 44px;
-  height: 44px;
-  background: none;
-  border: 1px solid var(--wht-35);
-  color: #fff;
-  font-family: var(--font-mono);
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-.reel-btn:hover, .reel-btn:focus-visible { background: var(--red); border-color: var(--red); }
-
-.reel {
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(20px, 2.5vw, 44px);
-  overflow-x: auto;
-  scroll-snap-type: x proximity;
-  padding-bottom: 14px;
-  scrollbar-width: thin;
-  scrollbar-color: var(--wht-35) transparent;
-}
-.reel::-webkit-scrollbar { height: 4px; }
-.reel::-webkit-scrollbar-thumb { background: var(--wht-35); }
-.reel::-webkit-scrollbar-track { background: transparent; }
-
-.reel-item {
-  flex: none;
-  scroll-snap-align: start;
-  display: flex;
-  flex-direction: column;
-}
-/* Native ratio, shared height — the media decides its own width */
-.ev-media {
-  display: block;
-  height: clamp(360px, 56vh, 620px);
-  width: auto;
-  max-width: none;
-  background: var(--wht-07);
-}
-.ev-cap {
-  margin-top: 12px;
-  display: flex;
-  justify-content: space-between;
   align-items: baseline;
-  gap: 20px;
-  /* match the media's width without stretching the item */
-  inline-size: 0;
-  min-inline-size: 100%;
+  justify-content: space-between;
+  gap: clamp(20px, 4vw, 64px);
+  border-top: 1px solid var(--ink);
+  padding-top: 14px;
+  flex-wrap: wrap;
 }
-.ev-cap .cap { color: #fff; }
-.ev-cap .ev-meta { color: var(--wht-70); text-align: right; flex: none; }
+.creators-label { display: flex; color: var(--ink); flex: none; }
+/* The role is identical for every clip, so it is stated once here
+   rather than repeated five times under the tiles. */
+.creators-role { color: var(--ink-60); max-width: 54ch; }
+
+.creator-wall {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(14px, 1.6vw, 26px);
+  margin-top: clamp(32px, 5vh, 56px);
+}
+.creator-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.creator-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* The system's live mark, doing the job it does everywhere else. */
+.creator-cue {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.45em 0.7em;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  transition: background 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.creator-frame:hover .creator-cue,
+.creator-frame:focus-visible .creator-cue { background: var(--red); }
+.creator-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+
+.creator-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+.creator-handle { color: var(--ink-60); margin-top: 4px; }
+.creator-link { margin-top: 8px; }
+
+/* An inline marked placeholder, so an unfilled field is obvious in
+   review without blocking the layout. */
+.ph-inline {
+  display: inline-block;
+  padding: 0.2em 0.5em;
+  background: var(--ink-05);
+  border: 1px dashed var(--ink-35);
+  color: var(--ink-60);
+}
+
+@media (max-width: 1279px) { .creator-wall { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 767px) {
+  .creator-wall { grid-template-columns: repeat(2, 1fr); }
+  .creators-head { flex-direction: column; gap: 10px; }
+}
 
 /* ════════════════════════════════════════════════════════════════
    04 — WHAT WE DO · FIND / BUILD / RUN
@@ -1043,7 +1056,6 @@ img, video { max-width: 100%; display: block; }
 
   .proof-lead { grid-column: 1 / -1; }
   .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
-  .ev-media { height: clamp(320px, 48vh, 520px); }
 
   .method-label  { grid-column: 1 / 4; }
   .method-intro  { grid-column: 1 / 8; }
@@ -1086,10 +1098,6 @@ img, video { max-width: 100%; display: block; }
   .proof-meta { text-align: left; }
   .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
   .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
-  .ev-media { height: clamp(280px, 46vh, 420px); }
-  .reel-btn { width: 40px; height: 40px; }
-  .ev-cap { flex-direction: column; gap: 4px; }
-  .ev-cap .ev-meta { text-align: left; }
 
   .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
   .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
@@ -1488,9 +1496,6 @@ img, video { max-width: 100%; display: block; }
 /* ════════════════════════════════════════════════════════════════
    REEL — drag to examine the evidence
    ════════════════════════════════════════════════════════════════ */
-.reel { cursor: grab; }
-.reel.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
-.reel.is-dragging .ev-media { pointer-events: none; }
 
 /* ════════════════════════════════════════════════════════════════
    SERVICES — what you can hire us for
