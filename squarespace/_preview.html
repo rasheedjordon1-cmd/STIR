@@ -1188,9 +1188,6 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 .stir a.press-row:hover .press-go { color: var(--red); transform: translate(3px, -3px); }
 .stir a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 
-/* A row with nowhere to go should not behave like one that does. */
-.stir .press-row--unlinked .press-pub { color: var(--ink-35); }
-
 /* The one row where STIR did more than run the account. Sits under the
    link, not inside it, so the row stays a single destination. */
 .stir .press-role { max-width: 54ch; margin: 0 0 clamp(16px, 2vh, 24px); }
@@ -3090,8 +3087,7 @@ body.stir-dark-top { background: #0451AB; }
         <!-- Press. Third because it is the weakest kind of evidence on
              the page: someone else's judgement, not a booking or an
              invoice. It earns its place by being verifiable — every
-             row goes to the article, and the one row that cannot yet
-             is marked as unlinked rather than quietly dropped.
+             row goes to the article it describes.
 
              No logos. A wall of mastheads is a trust badge, and it
              would also be the only place on this site where someone
@@ -3128,11 +3124,13 @@ body.stir-dark-top { background: #0451AB; }
                 <p class="utility band-role press-role"><span class="band-role-k">STIR</span> Handled the contact and shipped his order directly, rather than sending him to the&nbsp;website.</p>
               </li>
               <li class="press-item">
-                <div class="press-row press-row--unlinked">
+                <a class="press-row" href="https://www.grubstreet.com/article/best-summer-markets-delis-bakeries-nyc.html" rel="noopener" target="_blank">
                   <span class="press-pub">Grub Street</span>
                   <span class="press-said">&ldquo;This Summer We&rsquo;re Eating in Grocery Stores.&rdquo; Labay runs as the lead&nbsp;image.</span>
-                  <span class="utility press-meta"><span class="band-gap">Article link pending</span></span>
-                </div>
+                  <span class="utility press-meta">New York Magazine</span>
+                  <span class="press-go" aria-hidden="true">&#8599;</span>
+                  <span class="sr-only">Opens in a new tab</span>
+                </a>
               </li>
               <li class="press-item">
                 <a class="press-row" href="https://www.timeout.com/newyork/news/heres-how-to-spend-a-day-in-black-owned-flatbush-brooklyn-022825" rel="noopener" target="_blank">
@@ -3156,7 +3154,7 @@ body.stir-dark-top { background: #0451AB; }
                 <a class="press-row" href="https://www.thegrocerylistshow.com" rel="noopener" target="_blank">
                   <span class="press-pub">The Grocery List&nbsp;Show</span>
                   <span class="press-said">A full episode shot in the shop &mdash; &ldquo;Grenadian&nbsp;Grocery.&rdquo;</span>
-                  <span class="utility press-meta">PBS Independent Lens &middot; <span class="band-gap">date pending</span></span>
+                  <span class="utility press-meta">PBS Independent Lens &middot; June&nbsp;2025</span>
                   <span class="press-go" aria-hidden="true">&#8599;</span>
                   <span class="sr-only">Opens in a new tab</span>
                 </a>
