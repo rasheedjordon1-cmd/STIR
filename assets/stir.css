@@ -932,8 +932,99 @@ p.band-gap { margin-top: 12px; }
 .band-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
 .band-body { max-width: 62ch; }
 
+/* The citation inside a note — a footnote link, not a CTA. */
+.band-cite {
+  color: var(--ink-60);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-35);
+  transition: color 0.16s var(--ease), border-color 0.16s var(--ease);
+}
+.band-cite:hover { color: var(--red); border-bottom-color: var(--red); }
+.band-cite .arrow { margin-left: 0.2em; }
 
+/* Press — an index, not a logo wall. The cover is the one physical
+   artifact we have, so it is matted and set beside the list rather
+   than dropped into it. */
+.press-set {
+  display: grid;
+  grid-template-columns: clamp(190px, 18vw, 262px) minmax(0, 1fr);
+  gap: clamp(28px, 3.4vw, 56px);
+  align-items: start;
+}
+.press-plate {
+  margin: 0;
+  background: var(--cobalt);
+  padding: clamp(14px, 1.4vw, 22px);
+}
+.press-plate img { display: block; width: 100%; height: auto; }
+.press-plate-cap {
+  margin-top: clamp(12px, 1.2vw, 18px);
+  color: var(--ivory-75);
+  line-height: 1.5;
+}
+.press-index {
+  list-style: none;
+  border-top: 1px solid var(--ink-35);
+}
+.press-item { border-bottom: 1px solid var(--ink-05); }
+.press-item:last-child { border-bottom: 0; }
+.press-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "pub go" "said said" "meta meta";
+  column-gap: 16px;
+  padding: clamp(16px, 2vh, 24px) 0 clamp(16px, 2vh, 24px) 0;
+  text-decoration: none;
+  color: inherit;
+  transition: padding-left 0.22s var(--ease);
+}
+.press-pub {
+  grid-area: pub;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+  transition: color 0.16s var(--ease);
+}
+.press-said {
+  grid-area: said;
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  color: var(--ink-70);
+  max-width: 54ch;
+}
+.press-meta { grid-area: meta; margin-top: 9px; color: var(--ink-35); }
+.press-go {
+  grid-area: go;
+  font-style: normal;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--ink-35);
+  transition: transform 0.22s var(--ease), color 0.16s var(--ease);
+}
+a.press-row:hover { padding-left: 14px; }
+a.press-row:hover .press-pub { color: var(--red); }
+a.press-row:hover .press-go { color: var(--red); transform: translate(3px, -3px); }
+a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+/* A row with nowhere to go should not behave like one that does. */
+.press-row--unlinked .press-pub { color: var(--ink-35); }
+/* The one row where STIR did more than run the account. Sits under the
+   link, not inside it, so the row stays a single destination. */
+.press-role { max-width: 54ch; margin: 0 0 clamp(16px, 2vh, 24px); }
+
+
+
+@media (max-width: 1023px) {
+  .press-set { grid-template-columns: clamp(150px, 22vw, 200px) minmax(0, 1fr); }
+}
 @media (max-width: 767px) {
+  .press-set { grid-template-columns: 1fr; gap: clamp(26px, 4vh, 40px); }
+  .press-plate { max-width: 230px; }
   .band-list { grid-template-columns: 1fr; }
   .band-item { max-width: none; }
   .band-list--rows .band-item { grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; }
@@ -1512,8 +1603,8 @@ p.band-gap { margin-top: 12px; }
      sideways: the 4px would hang off the right for the length of the
      entrance and flash a horizontal scrollbar. It registers on the
      vertical only; the cobalt plate still carries the effect. */
-  .who-art[data-reveal="registration"],
-  .about-art[data-reveal="registration"] { transform: translateY(2px); }
+  html.js .who-art[data-reveal="registration"],
+  html.js .about-art[data-reveal="registration"] { transform: translateY(2px); }
 
   /* ── D · Structural reveal — a red signal draws the rule ─────── */
   [data-reveal="structural"] { position: relative; }
