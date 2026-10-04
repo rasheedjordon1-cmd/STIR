@@ -169,9 +169,10 @@ GROUND = {
     'hero':     ('cobalt', '01 — Attention'),
     'belief':   ('ivory',  '02 — Thesis'),
     'proof':    ('ivory',  '03 — Proof'),
-    'method':   ('ivory',  '04 — What we do'),
-    'outcomes': ('ivory',  '05 — What you leave with'),
-    'who':      ('ivory',  '06 — Who this is for'),
+    'sites':    ('ivory',  '04 — Selected websites'),
+    'services': ('ivory',  '05 — Services'),
+    'method':   ('ivory',  '06 — How we work'),
+    'who':      ('ivory',  '07 — Who this is for'),
     'convert':  ('cobalt', 'Your turn'),
     'page':     ('ivory',  None),          # about / contact
 }
