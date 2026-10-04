@@ -1689,6 +1689,18 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
     -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
     -webkit-mask-position: 0 100%;    mask-position: 0 100%;
     -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    /* Display type is set at line-height 0.94, so the glyphs draw
+       about 3px above the element box and 2px below it. mask-clip is
+       border-box and cannot be told to let that overshoot through —
+       growing the mask past the box does nothing, because the box is
+       what clips. So the box is padded until it contains its own ink.
+       Without this the mask shaves the apex off every A and flattens
+       every round letter and full stop.
+
+       The padding only exists where the mask does, inside this
+       media query, so reduced motion is unaffected. */
+    padding-top: 10px;
+    padding-bottom: 10px;
     transition:
       opacity 0.5s var(--ease),
       transform 0.7s var(--ease),

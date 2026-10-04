@@ -140,11 +140,39 @@ FONTS = {
 }
 
 
+PAGES = ('index.html', 'about.html', 'contact.html')
+HEAD_STYLE = re.compile(r'<style\b[^>]*>(.*?)</style>', re.S | re.I)
+
+
+def page_css():
+    """Page-specific CSS lives in a <style> in that page's own head.
+
+    The standalone site loads it with the page; the Squarespace build
+    ships one sheet for the whole site, so these rules have to be
+    collected and scoped as well. Miss them and the About page arrives
+    with no grid columns, its headlines at the host's default size and
+    its full-bleed band no longer bleeding — which is exactly what
+    happened, unnoticed, until the type QC went looking."""
+    out, rules = [], 0
+    for name in PAGES:
+        src = read(ROOT, name)
+        head = src[:src.index('</head>')]
+        for block in HEAD_STYLE.findall(head):
+            if not block.strip():
+                continue
+            rules += block.count('{')
+            out.append('/* ── page CSS, from %s ── */\n%s' % (name, scope(block)))
+    print('  page CSS folded in                 : %d rules from %d page(s)'
+          % (rules, len(out)))
+    return '\n\n'.join(out)
+
+
 def build_css():
     scoped = scope(read(ROOT, 'assets', 'stir.css'))
     for path, token in FONTS.items():
         scoped = scoped.replace('url("%s")' % path, 'url("%s")' % token)
-    css = scoped + '\n\n' + read(SRC, 'host-layer.css')
+    parts = [scoped, page_css(), read(SRC, 'host-layer.css')]
+    css = '\n\n'.join(p for p in parts if p.strip())
     write(os.path.join(OUT, 'stir-custom.css'), css)
     return css
 

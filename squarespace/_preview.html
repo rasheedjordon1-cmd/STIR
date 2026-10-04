@@ -1859,6 +1859,18 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
     -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
     -webkit-mask-position: 0 100%;    mask-position: 0 100%;
     -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    /* Display type is set at line-height 0.94, so the glyphs draw
+       about 3px above the element box and 2px below it. mask-clip is
+       border-box and cannot be told to let that overshoot through —
+       growing the mask past the box does nothing, because the box is
+       what clips. So the box is padded until it contains its own ink.
+       Without this the mask shaves the apex off every A and flattens
+       every round letter and full stop.
+
+       The padding only exists where the mask does, inside this
+       media query, so reduced motion is unaffected. */
+    padding-top: 10px;
+    padding-bottom: 10px;
     transition:
       opacity 0.5s var(--ease),
       transform 0.7s var(--ease),
@@ -2755,6 +2767,48 @@ html.js .stir .trade-inline { transition: none; }
 @media (max-width: 1023px) {
 .stir .convert .convert-inner { max-width: 100%; }
 .stir .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}
+
+/* ── page CSS, from about.html ── */
+
+/* Page-specific: About */
+.stir .about-intro { grid-column: 1 / 8; }
+.stir .about-facts {
+  grid-column: 9 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--ink-60);
+}
+.stir .about-block { margin-top: clamp(96px, 15vh, 200px); }
+.stir .about-block .b-label { grid-column: 1 / 4; border-top: 1px solid var(--ink); padding-top: 12px; }
+.stir .about-block .b-title { grid-column: 1 / 10; font-size: var(--t-big); margin-top: clamp(32px, 5vh, 56px); }
+.stir .about-block .b-copy { grid-column: 5 / 11; margin-top: clamp(32px, 5vh, 56px); }
+.stir .about-roster { grid-column: 5 / 12; margin-top: clamp(24px, 4vh, 40px); color: var(--ink-60); line-height: 2.1; }
+
+/*
+  ILLUSTRATION ASSET SLOT: assets/illustration-city.webp
+  Cobalt rooftop city — attention hidden in every window.
+  Full-bleed band between story blocks; drops in with no
+  structural change.
+*/
+.stir .about-art {
+  max-width: none;   /* the global img reset would clamp the bleed */
+  margin-top: clamp(96px, 15vh, 200px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 58%;
+}
+.stir .about-cta { margin-top: clamp(96px, 15vh, 200px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+@media (max-width: 1023px) {
+.stir .about-intro { grid-column: 1 / -1; }
+.stir .about-facts { grid-column: 1 / -1; margin-top: 40px; flex-direction: row; gap: 32px; flex-wrap: wrap; }
+.stir .about-block .b-title { grid-column: 1 / -1; }
+.stir .about-block .b-copy { grid-column: 1 / -1; }
+.stir .about-roster { grid-column: 1 / -1; }
 }
 
 
@@ -3698,7 +3752,7 @@ body.stir-dark-top { background: #0451AB; }
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services</a>
+      <a href="/#services"><i class="nav-no" aria-hidden="true">05</i>Services</a>
       <a href="/about" aria-current="page">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
       <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
@@ -3713,7 +3767,7 @@ body.stir-dark-top { background: #0451AB; }
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#services"><i class="nav-no" aria-hidden="true">05</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
@@ -3746,8 +3800,8 @@ body.stir-dark-top { background: #0451AB; }
       <div class="grid about-block" style="grid-column: 1 / -1;">
         <p class="utility b-label" data-reveal="structural">The work so far</p>
         <h2 class="display b-title" data-reveal="editorial">It’s already working.</h2>
-        <p class="body b-copy reveal">Our work with <strong>Labay Market</strong> earned 10M+ organic views — and the attention turned into brand partnerships with <strong>Nike, Red&nbsp;Bull and TurboTax</strong>. We’ve worked with creators including Kemoy Martin, MarcoEatsWorld and Nicolas Nuvan, and more join the system every season.</p>
-        <p class="utility about-roster reveal">Labay Market&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;MarcoEatsWorld&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
+        <p class="body b-copy reveal">Our work with <strong>Labay Market</strong> earned 10M+ organic views — and the attention turned into <strong>bookings and accounts</strong>: a Nike Tennis block party, a Hoopbus&nbsp;&times;&nbsp;Red&nbsp;Bull event on the block, and standing wholesale produce orders from Kabawa and Café&nbsp;Charmant. We’ve worked with creators including Kemoy Martin, Nicolas Nuvan and MarcosWorldNyc, and more join the system every&nbsp;season.</p>
+        <p class="utility about-roster reveal">Labay Market&nbsp;&nbsp;·&nbsp;&nbsp;Kemoy Martin&nbsp;&nbsp;·&nbsp;&nbsp;Nicolas Nuvan&nbsp;&nbsp;·&nbsp;&nbsp;MarcosWorldNyc&nbsp;&nbsp;·&nbsp;&nbsp;+&nbsp;more</p>
       </div>
     </div>
 
@@ -3788,7 +3842,7 @@ body.stir-dark-top { background: #0451AB; }
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services</a>
+      <a href="/#services"><i class="nav-no" aria-hidden="true">05</i>Services</a>
       <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
       <a href="/contact" class="cta cta--sm nav-start" aria-current="page"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
@@ -3803,7 +3857,7 @@ body.stir-dark-top { background: #0451AB; }
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="/#proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="/#services"><i class="nav-no" aria-hidden="true">04</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/#services"><i class="nav-no" aria-hidden="true">05</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>

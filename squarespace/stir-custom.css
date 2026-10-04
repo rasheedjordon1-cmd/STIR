@@ -1718,6 +1718,18 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
     -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
     -webkit-mask-position: 0 100%;    mask-position: 0 100%;
     -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    /* Display type is set at line-height 0.94, so the glyphs draw
+       about 3px above the element box and 2px below it. mask-clip is
+       border-box and cannot be told to let that overshoot through —
+       growing the mask past the box does nothing, because the box is
+       what clips. So the box is padded until it contains its own ink.
+       Without this the mask shaves the apex off every A and flattens
+       every round letter and full stop.
+
+       The padding only exists where the mask does, inside this
+       media query, so reduced motion is unaffected. */
+    padding-top: 10px;
+    padding-bottom: 10px;
     transition:
       opacity 0.5s var(--ease),
       transform 0.7s var(--ease),
@@ -2614,6 +2626,48 @@ html.js .stir .trade-inline { transition: none; }
 @media (max-width: 1023px) {
 .stir .convert .convert-inner { max-width: 100%; }
 .stir .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}
+
+/* ── page CSS, from about.html ── */
+
+/* Page-specific: About */
+.stir .about-intro { grid-column: 1 / 8; }
+.stir .about-facts {
+  grid-column: 9 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--ink-60);
+}
+.stir .about-block { margin-top: clamp(96px, 15vh, 200px); }
+.stir .about-block .b-label { grid-column: 1 / 4; border-top: 1px solid var(--ink); padding-top: 12px; }
+.stir .about-block .b-title { grid-column: 1 / 10; font-size: var(--t-big); margin-top: clamp(32px, 5vh, 56px); }
+.stir .about-block .b-copy { grid-column: 5 / 11; margin-top: clamp(32px, 5vh, 56px); }
+.stir .about-roster { grid-column: 5 / 12; margin-top: clamp(24px, 4vh, 40px); color: var(--ink-60); line-height: 2.1; }
+
+/*
+  ILLUSTRATION ASSET SLOT: assets/illustration-city.webp
+  Cobalt rooftop city — attention hidden in every window.
+  Full-bleed band between story blocks; drops in with no
+  structural change.
+*/
+.stir .about-art {
+  max-width: none;   /* the global img reset would clamp the bleed */
+  margin-top: clamp(96px, 15vh, 200px);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 58%;
+}
+.stir .about-cta { margin-top: clamp(96px, 15vh, 200px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+@media (max-width: 1023px) {
+.stir .about-intro { grid-column: 1 / -1; }
+.stir .about-facts { grid-column: 1 / -1; margin-top: 40px; flex-direction: row; gap: 32px; flex-wrap: wrap; }
+.stir .about-block .b-title { grid-column: 1 / -1; }
+.stir .about-block .b-copy { grid-column: 1 / -1; }
+.stir .about-roster { grid-column: 1 / -1; }
 }
 
 
