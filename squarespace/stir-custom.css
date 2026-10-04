@@ -928,9 +928,50 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
   color: var(--ink-60);
 }
 .stir p.band-gap { margin-top: 12px; }
+
+
+/* Activations are rows, not tiles: media left, the account of what
+   happened right. Deliberately a different shape from the creator
+   wall above — three more 9:16 tiles in a grid would read as the same
+   section twice. */
+.stir .band-list--rows {
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vh, 60px);
+}
+.stir .band-list--rows .band-item {
+  max-width: none;
+  display: grid;
+  /* The media is a 9:16 still beside a short account — small enough
+     that the row does not tower over its own text, and centred so the
+     two columns balance instead of hanging off the top. */
+  grid-template-columns: clamp(128px, 12vw, 168px) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 38px);
+  align-items: center;
+}
+.stir .band-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.stir .band-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+.stir .band-frame:hover .creator-cue,
+.stir .band-frame:focus-visible .creator-cue { background: var(--red); }
+.stir .band-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+.stir .band-body { max-width: 62ch; }
 @media (max-width: 767px) {
 .stir .band-list { grid-template-columns: 1fr; }
 .stir .band-item { max-width: none; }
+.stir .band-list--rows .band-item { grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; }
+}
+@media (max-width: 479px) {
+.stir .band-list--rows .band-item { grid-template-columns: 1fr; }
+.stir .band-frame { max-width: 190px; }
 }
 
 

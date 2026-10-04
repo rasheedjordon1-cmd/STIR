@@ -1069,9 +1069,50 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
   color: var(--ink-60);
 }
 .stir p.band-gap { margin-top: 12px; }
+
+
+/* Activations are rows, not tiles: media left, the account of what
+   happened right. Deliberately a different shape from the creator
+   wall above — three more 9:16 tiles in a grid would read as the same
+   section twice. */
+.stir .band-list--rows {
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vh, 60px);
+}
+.stir .band-list--rows .band-item {
+  max-width: none;
+  display: grid;
+  /* The media is a 9:16 still beside a short account — small enough
+     that the row does not tower over its own text, and centred so the
+     two columns balance instead of hanging off the top. */
+  grid-template-columns: clamp(128px, 12vw, 168px) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 38px);
+  align-items: center;
+}
+.stir .band-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.stir .band-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+.stir .band-frame:hover .creator-cue,
+.stir .band-frame:focus-visible .creator-cue { background: var(--red); }
+.stir .band-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+.stir .band-body { max-width: 62ch; }
 @media (max-width: 767px) {
 .stir .band-list { grid-template-columns: 1fr; }
 .stir .band-item { max-width: none; }
+.stir .band-list--rows .band-item { grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; }
+}
+@media (max-width: 479px) {
+.stir .band-list--rows .band-item { grid-template-columns: 1fr; }
+.stir .band-frame { max-width: 190px; }
 }
 
 
@@ -2883,23 +2924,57 @@ body.stir-dark-top { background: #0451AB; }
 
         <section class="band reveal" aria-labelledby="band-activations">
           <p class="ann band-label" id="band-activations"><i class="ann-mark" aria-hidden="true"></i>Activations</p>
-          <ul class="band-list">
+          <ul class="band-list band-list--rows">
             <li class="band-item">
-              <h4 class="band-name">Nike Tennis</h4>
-              <p class="band-said">A Nike Tennis block party at Marcy Playground, produced by Kindred. Labay ran the fruit stand&nbsp;— fresh fruit cut to order and served to guests on an F&amp;B voucher, noon to&nbsp;six.</p>
-              <p class="utility band-role"><span class="band-role-k">STIR</span> Took the inbound, produced Labay&rsquo;s side of it, set the menu and the concept, staffed it, and ran it on the&nbsp;day.</p>
-              <p class="utility band-meta">August 2026 &middot; Marcy Playground, Brooklyn &middot; produced by Kindred, Los&nbsp;Angeles</p>
-              <p class="utility band-gap">Event photography pending</p>
+              <button class="band-frame" type="button" aria-label="Play the clip from Nike Tennis">
+                <video class="band-vid" muted loop playsinline preload="none"
+                       width="720" height="1280"
+                       poster="../assets/labay/activations/act-02-poster.webp">
+                  <source src="../assets/labay/activations/act-02.mp4" type="video/mp4">
+                </video>
+                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+              </button>
+              <div class="band-body">
+                <h4 class="band-name">Nike Tennis</h4>
+                <p class="band-said">A block party at Marcy Playground, produced by Kindred. Labay ran the fruit stand&nbsp;— fresh fruit cut to order and served to guests on an F&amp;B voucher, noon to&nbsp;six.</p>
+                <p class="utility band-role"><span class="band-role-k">STIR</span> Took the inbound, produced Labay&rsquo;s side of it, set the menu and the concept, staffed it, and ran it on the&nbsp;day.</p>
+                <p class="utility band-meta">August 2026 &middot; Marcy Playground, Brooklyn &middot; produced by Kindred, Los&nbsp;Angeles</p>
+              </div>
             </li>
             <li class="band-item">
-              <h4 class="band-name">Hoopbus</h4>
-              <p class="band-said">A community basketball event on the block outside the store, bringing people in from across&nbsp;Brooklyn.</p>
-              <p class="utility band-role"><span class="band-role-k">STIR</span> Took the inbound, coordinated the event and arranged the street&nbsp;closure.</p>
-              <p class="utility band-meta">Brooklyn &middot; <span class="band-gap">date pending</span></p>
-              <p class="utility band-gap">Event photography pending</p>
+              <button class="band-frame" type="button" aria-label="Play the clip from Hoopbus &times; Red&nbsp;Bull">
+                <video class="band-vid" muted loop playsinline preload="none"
+                       width="720" height="1280"
+                       poster="../assets/labay/activations/act-01-poster.webp">
+                  <source src="../assets/labay/activations/act-01.mp4" type="video/mp4">
+                </video>
+                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+              </button>
+              <div class="band-body">
+                <h4 class="band-name">Hoopbus &times; Red&nbsp;Bull</h4>
+                <p class="band-said">A community basketball event on the block outside the store, in partnership with <span class="band-gap">AJ Dybansta &mdash; spelling to confirm</span>, whose Caribbean heritage is how the collaboration came&nbsp;together.</p>
+                <p class="utility band-role"><span class="band-role-k">STIR</span> Took the inbound, coordinated the event and arranged the street&nbsp;closure.</p>
+                <p class="utility band-meta">Nostrand Avenue, Brooklyn &middot; <span class="band-gap">date pending</span></p>
+              </div>
+            </li>
+            <li class="band-item">
+              <button class="band-frame" type="button" aria-label="Play the clip from NYC Health + Hospitals">
+                <video class="band-vid" muted loop playsinline preload="none"
+                       width="720" height="1280"
+                       poster="../assets/labay/activations/act-03-poster.webp">
+                  <source src="../assets/labay/activations/act-03.mp4" type="video/mp4">
+                </video>
+                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
+              </button>
+              <div class="band-body">
+                <h4 class="band-name">NYC Health + Hospitals</h4>
+                <p class="band-said">A Caribbean Heritage Month celebration at South Brooklyn Health, with Labay on&nbsp;site.</p>
+                <p class="utility band-role"><span class="band-role-k">STIR</span> Took the inbound, produced and ran Labay&rsquo;s side of the&nbsp;event.</p>
+                <p class="utility band-meta">South Brooklyn Health &middot; <span class="band-gap">date pending</span></p>
+              </div>
             </li>
           </ul>
-          <p class="utility band-note">Red&nbsp;Bull and TurboTax are held back until the activation details and STIR&rsquo;s role on each are confirmed. Naming a brand without being able to say what was actually done is the claim most likely to be&nbsp;tested.</p>
+          <p class="utility band-note">TurboTax is held back until its activation details and STIR&rsquo;s role are confirmed. Naming a brand without being able to say what was actually done is the claim most likely to be&nbsp;tested.</p>
         </section>
 
         <section class="band reveal" aria-labelledby="band-wholesale">
@@ -2916,6 +2991,7 @@ body.stir-dark-top { background: #0451AB; }
             </li>
           </ul>
           <p class="utility band-role band-role--wide"><span class="band-role-k">STIR</span> Runs the relationship end to end: order intake, sourcing what each kitchen asks for, delivery, and&nbsp;invoicing.</p>
+          <p class="utility band-note">Kabawa has credited Labay as a produce source in the New York&nbsp;Times. <span class="band-gap">Article link pending</span></p>
         </section>
 
       </div>
@@ -3669,13 +3745,14 @@ body.stir-dark-top { background: #0451AB; }
   })();
 
   /* ── Creator wall ───────────────────────────────────────────────
-     Five clips is more video than any page should fetch on arrival,
-     so nothing loads until it is asked for: the poster carries the
-     tile and preload="none" holds the file back. One plays at a time,
-     because five looping videos competing is noise, not evidence.
-     Without JS the posters and the links still carry the section.  */
+     Eight clips across the creator wall and the activations is far
+     more video than any page should fetch on arrival, so nothing
+     loads until it is asked for: the poster carries the tile and
+     preload="none" holds the file back. One plays at a time across
+     both sections, because competing loops are noise, not evidence.
+     Without JS the posters and the copy still carry it.            */
   (function () {
-    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame'));
+    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame, .band-frame'));
     if (!frames.length) return;
     var playing = null;
 

@@ -897,9 +897,50 @@ img, video { max-width: 100%; display: block; }
 }
 p.band-gap { margin-top: 12px; }
 
+/* Activations are rows, not tiles: media left, the account of what
+   happened right. Deliberately a different shape from the creator
+   wall above — three more 9:16 tiles in a grid would read as the same
+   section twice. */
+.band-list--rows {
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vh, 60px);
+}
+.band-list--rows .band-item {
+  max-width: none;
+  display: grid;
+  /* The media is a 9:16 still beside a short account — small enough
+     that the row does not tower over its own text, and centred so the
+     two columns balance instead of hanging off the top. */
+  grid-template-columns: clamp(128px, 12vw, 168px) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 38px);
+  align-items: center;
+}
+.band-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.band-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+.band-frame:hover .creator-cue,
+.band-frame:focus-visible .creator-cue { background: var(--red); }
+.band-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+.band-body { max-width: 62ch; }
+
+
 @media (max-width: 767px) {
   .band-list { grid-template-columns: 1fr; }
   .band-item { max-width: none; }
+  .band-list--rows .band-item { grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; }
+}
+@media (max-width: 479px) {
+  .band-list--rows .band-item { grid-template-columns: 1fr; }
+  .band-frame { max-width: 190px; }
 }
 
 /* ════════════════════════════════════════════════════════════════

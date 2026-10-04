@@ -126,13 +126,14 @@
   })();
 
   /* ── Creator wall ───────────────────────────────────────────────
-     Five clips is more video than any page should fetch on arrival,
-     so nothing loads until it is asked for: the poster carries the
-     tile and preload="none" holds the file back. One plays at a time,
-     because five looping videos competing is noise, not evidence.
-     Without JS the posters and the links still carry the section.  */
+     Eight clips across the creator wall and the activations is far
+     more video than any page should fetch on arrival, so nothing
+     loads until it is asked for: the poster carries the tile and
+     preload="none" holds the file back. One plays at a time across
+     both sections, because competing loops are noise, not evidence.
+     Without JS the posters and the copy still carry it.            */
   (function () {
-    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame'));
+    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame, .band-frame'));
     if (!frames.length) return;
     var playing = null;
 
