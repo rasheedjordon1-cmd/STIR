@@ -625,6 +625,17 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
 }
 .stir .nav[data-theme="cream"].is-stuck { --nav-rule: var(--ink-05); }
 .stir .nav[data-theme="cobalt"].is-stuck { --nav-rule: rgba(250, 242, 230, 0.18); }
+
+/* Nothing tracks the environment without script, and the bar crosses
+   both grounds, so it stops being transparent and brings its own. */
+html:not(.js) .stir .nav {
+  background: var(--ivory);
+  --nav-fg: var(--ink);
+  --nav-dim: rgba(22, 19, 16, 0.68);
+  --nav-rule: var(--ink-05);
+}
+html:not(.js) .stir .nav-logo .mark-ivory { opacity: 0; }
+html:not(.js) .stir .nav-logo .mark-red { opacity: 1; }
 .stir .nav { border-bottom-color: var(--nav-rule); }
 .stir .nav,
 .stir .nav .nav-links a:not(.nav-start) { color: var(--nav-dim); }
@@ -1398,44 +1409,66 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 }
 .stir .sites-title { grid-column: 1 / 9; font-size: var(--t-big); }
 .stir .sites-lede { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
-.stir .site-set {
+
+
+/* ── Selected work: one project at a time ───────────────────
+   Three equal thumbnails made the reader choose before they had read
+   anything. An index on the left and a single stage on the right lets
+   the page do the choosing: the live project changes as the index
+   scrolls past, a pointer can take it over, and both halves open the
+   site. The ratio is the same one the grid already uses — roughly a
+   third of the width to the names, two thirds to the work.
+
+   The stage is the cobalt plate the services panels use, with the
+   capture standing in it rather than filling it: these are phone
+   screens, and a 4:5 capture blown across two thirds of a desktop
+   would be a picture of a phone, not a website.
+
+   Everything here is progressive. Without JavaScript the stage never
+   sticks, every capture shows with its name under it, and the index
+   is an ordinary list of links.                                     */
+.stir .site-stage {
   margin-top: clamp(60px, 9vh, 120px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 0.52fr) minmax(0, 1fr);
   column-gap: var(--col-gap);
-  row-gap: clamp(52px, 8vh, 80px);
+  align-items: start;
 }
-.stir .site { display: flex; flex-direction: column; }
-.stir .site-plate {
-  position: relative;
-  display: block;
-  border: 1px solid var(--ink);
-  background: var(--cobalt);
-  overflow: hidden;
+
+
+/* The list box itself is dissolved so its rows become grid items
+   alongside the stage: on a wide screen that puts the names in one
+   column and the stage in the other, and on a narrow one it lets each
+   capture sit directly under the project it belongs to instead of
+   three names followed by three pictures. The roles are restated
+   because display:contents has a long history of dropping them. */
+.stir .site-index {
+  display: contents;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.stir .site-plate img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform 0.6s var(--ease);
+.stir .site-row { grid-column: 1; }
+.stir .site-screen { grid-column: 2; grid-row: 1 / -1; }
+.stir .site-row {
+  border-top: 1px solid var(--ink-35);
+  padding-block: clamp(28px, 4vh, 44px);
 }
-.stir .site-plate-rule {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 3px;
-  background: var(--red);
-  transform: scaleX(0.18);
-  transform-origin: left;
-  transition: transform 0.45s var(--ease);
+.stir .site-row:last-child { border-bottom: 1px solid var(--ink-35); }
+.stir .site-no {
+  color: var(--ink-35);
+  display: flex;
+  margin-bottom: clamp(16px, 2.2vh, 24px);
+  transition: color var(--stir-ui) var(--stir-ease);
 }
-.stir .site:hover .site-plate-rule,
-.stir .site:focus-within .site-plate-rule { transform: scaleX(1); }
-.stir .site:hover .site-plate img { transform: scale(1.02); }
+
+/* The index mark is the site's "this is live" square, so it is only
+   red on the row that is live. */
+.stir .site-no .ann-mark {
+  background: var(--ink-35);
+  transition: background var(--stir-ui) var(--stir-ease), transform var(--stir-ui) var(--stir-ease);
+}
 .stir .site-name {
-  margin-top: clamp(20px, 2.6vh, 28px);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.3rem, 2.1vw, 1.95rem);
@@ -1444,17 +1477,15 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
   text-transform: uppercase;
 }
 .stir .site-name a {
-  color: var(--cobalt);
+  color: var(--ink-70);
   text-decoration: none;
-  transition: color 0.16s var(--ease);
+  transition: color var(--stir-ui) var(--stir-ease);
 }
 .stir .site-name .arrow {
   font-size: 0.72em;
   display: inline-block;
-  transition: transform 0.25s var(--ease);
+  transition: transform var(--stir-ui) var(--stir-ease);
 }
-.stir .site:hover .site-name a { color: var(--red); }
-.stir .site:hover .site-name .arrow { transform: translate(3px, -3px); }
 .stir .site-name a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
 .stir .site-said {
   margin-top: 14px;
@@ -1467,31 +1498,215 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
 /* Scope, stated in the same shape as every other STIR role line on
    the site — the part a buyer is actually reading for. */
 .stir .site-scope {
-  margin-top: auto;
+  margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid var(--ink-35);
+  border-top: 1px solid var(--ink-05);
   color: var(--ink-60);
   line-height: 1.7;
 }
 .stir .site-scope .band-role-k { margin-right: 0.6em; }
+
+
+/* Live, hovered, and focused all read the same: the row is the one on
+   the stage. Dimming the others would cost legibility for emphasis
+   that the cobalt is already carrying. */
+.stir .site-row.is-active .site-no,
+.stir .site-row:hover .site-no { color: var(--ink-60); }
+.stir .site-row.is-active .site-no .ann-mark,
+.stir .site-row:hover .site-no .ann-mark { background: var(--red); }
+.stir .site-row.is-active .site-name a,
+.stir .site-row:hover .site-name a,
+.stir .site-row:focus-within .site-name a { color: var(--cobalt); }
+.stir .site-row:hover .site-name .arrow,
+.stir .site-row:focus-within .site-name .arrow { transform: translate(3px, -3px); }
+
+
+/* ── The stage ────────────────────────────────────── */
+.stir .site-screen-inner {
+  position: relative;
+  background: var(--cobalt);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+.stir .site-shot { margin: 0; }
+.stir .site-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 340px;
+  margin-inline: auto;
+}
+.stir .site-shot-cap {
+  color: var(--ivory-75);
+  padding: 12px 16px 18px;
+  text-align: center;
+}
+.stir .site-screen-rule {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform var(--stir-medium) var(--stir-ease);
+}
+
+
+/* The staged behaviour only exists once the script has confirmed it
+   can run it. */
+html.js .stir .site-screen {
+  position: sticky;
+  top: calc(var(--nav-h) + clamp(16px, 4vh, 48px));
+}
+html.js .stir .site-screen-inner {
+  height: min(68vh, 620px);
+  display: grid;
+  /* An auto row sizes to its content and overflows the fixed height,
+     which left the capture at its natural width and simply clipped.
+     The row is the plate. */
+  grid-template-rows: minmax(0, 1fr);
+}
+html.js .stir .site-shot {
+  grid-area: 1 / 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: clamp(18px, 3vh, 34px) clamp(18px, 3vw, 40px) clamp(26px, 4vh, 48px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 380ms var(--stir-ease), transform 380ms var(--stir-ease),
+              visibility 0s linear 380ms;
+}
+html.js .stir .site-shot.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 380ms var(--stir-ease), transform 380ms var(--stir-ease),
+              visibility 0s;
+}
+
+/* The capture is bounded, not stretched: align-self is what makes the
+   link's height definite, and without it a percentage height on the
+   image silently resolves to auto and the capture renders at its
+   natural 960px, cropped by the plate. */
+html.js .stir .site-shot-link {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+}
+html.js .stir .site-shot img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+html.js .stir .site-shot-cap { display: none; }
+html.js .stir .site-stage.is-live .site-screen-rule { transform: scaleX(1); }
+/* The pin. Each row is given enough height that one project holds the
+   stage for a little over half a screen before the next takes it —
+   long enough to read the scope line, short enough that nobody feels
+   held. Native scrolling throughout: nothing here intercepts a wheel,
+   a key or a swipe. */
+@media (min-width: 1024px) {
+html.js .stir .site-row {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
 .stir .sites-foot {
   grid-column: 1 / -1;
   margin-top: clamp(32px, 4.5vh, 52px);
   color: var(--ink-35);
 }
+@media (prefers-reduced-motion: reduce) {
+html.js .stir .site-shot { transition: opacity 0.01ms linear; transform: none; }
+html.js .stir .site-shot.is-active { transform: none; }
+.stir .site-screen-rule { transform: scaleX(1); }
+.stir .site-no,
+.stir .site-no .ann-mark,
+.stir .site-name a,
+.stir .site-name .arrow { transition: none; }
+}
+/* Below the two-column threshold the stage stops being a stage: each
+   project is its own block, name first and capture under it, in
+   order, with nothing behind a swipe or a hover. */
 @media (max-width: 1023px) {
 .stir .sites-title { grid-column: 1 / -1; }
 .stir .sites-lede { grid-column: 1 / 8; }
+.stir .site-stage { grid-template-columns: minmax(0, 1fr); }
+html.js .stir .site-screen,
+html.js .stir .site-screen-inner,
+.stir .site-screen,
+.stir .site-screen-inner { display: contents; }
+html.js .stir .site-screen-inner { height: auto; }
+.stir .site-screen-rule { display: none; }
+html.js .stir .site-screen { position: static; }
 
-  /* Three captures plus a scope line will not hold their lines in a
-     third of a tablet. Two columns keeps the screenshots readable. */
-  .stir .site-set { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Name, then its capture, then the next name. The placements carry
+     the html.js prefix because the stage's own grid-area: 1 / 1 still
+     matches once the wrappers dissolve, and without it all three
+     captures land in one cell on top of each other. */
+  html.js .stir .site-row[data-site="0"],
+.stir .site-row[data-site="0"] { grid-row: 1; }
+html.js .stir .site-shot[data-site="0"],
+.stir .site-shot[data-site="0"] { grid-row: 2; }
+html.js .stir .site-row[data-site="1"],
+.stir .site-row[data-site="1"] { grid-row: 3; }
+html.js .stir .site-shot[data-site="1"],
+.stir .site-shot[data-site="1"] { grid-row: 4; }
+html.js .stir .site-row[data-site="2"],
+.stir .site-row[data-site="2"] { grid-row: 5; }
+html.js .stir .site-shot[data-site="2"],
+.stir .site-shot[data-site="2"] { grid-row: 6; }
+html.js .stir .site-row,
+html.js .stir .site-shot,
+.stir .site-row,
+.stir .site-shot { grid-column: 1; }
+.stir .site-row:last-child { border-bottom: 0; }
+
+
+  /* Each capture carries its own plate now that there is no stage. */
+  html.js .stir .site-shot,
+.stir .site-shot {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: block;
+    height: auto;
+    min-height: 0;
+    width: auto;
+    padding: clamp(14px, 3vw, 22px) clamp(14px, 3vw, 22px) 0;
+    margin-bottom: clamp(36px, 6vh, 64px);
+    background: var(--cobalt);
+    border: 1px solid var(--ink);
+    border-bottom: 3px solid var(--red);
+  }
+html.js .stir .site-shot-link,
+.stir .site-shot-link { display: block; height: auto; width: auto; }
+html.js .stir .site-shot img,
+.stir .site-shot img {
+    width: 100%;
+    height: auto;
+    max-width: 340px;
+    max-height: none;
+    margin-inline: auto;
+  }
+html.js .stir .site-shot-cap { display: block; }
 }
 @media (max-width: 767px) {
 .stir .sites-label { grid-column: 1 / -1; }
 .stir .sites-lede { grid-column: 1 / -1; }
-.stir .site-set { grid-template-columns: 1fr; }
-.stir .site-plate { max-width: 340px; }
 }
 
 
@@ -2935,7 +3150,11 @@ html.js .stir .svc-plate { transition: transform var(--stir-medium) var(--stir-e
    nothing "wipes": the mark simply resolves into the site.
    Capped at 700ms, once per session, skipped for reduced motion.
    ════════════════════════════════════════════════════════════════ */
-.stir-enter {
+/* The cover is lifted by script, so it must only exist where script
+   can lift it: with JavaScript off it was a cobalt screen over the
+   whole site with nothing to remove it. */
+.stir-enter { display: none; }
+html.js .stir .stir-enter {
   position: fixed;
   inset: 0;
   z-index: 100;
@@ -3813,37 +4032,59 @@ body.stir-dark-top { background: #0451AB; }
       <p class="body sites-lede reveal">A storage business, a drain service, and a church. Each website needed to make the next step clear: request a quote, call for help, or plan a&nbsp;visit.</p>
     </div>
 
-    <div class="site-set">
+    <!--
+      The index names the work and the stage shows it. One project is
+      live at a time: scrolling the index moves it along, hovering a
+      row takes it over, and either half opens the site. Without
+      JavaScript the stage unsticks and the captures stack under the
+      index with their names attached, so nothing here depends on it.
+    -->
+    <div class="site-stage">
 
-      <article class="site reveal">
-        <a class="site-plate" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
-          <img src="../assets/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-          <i class="site-plate-rule" aria-hidden="true"></i>
-        </a>
-        <h3 class="site-name"><a href="https://carriacoulogistics.com" rel="noopener" target="_blank">Carriacou Logistics <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-        <p class="site-said">A website that explains storage options and helps prospective customers request a&nbsp;quote.</p>
-        <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-      </article>
+      <ol class="site-index" role="list">
+        <li class="site-row is-active" role="listitem" data-site="0">
+          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
+          <h3 class="site-name"><a href="https://carriacoulogistics.com" rel="noopener" target="_blank">Carriacou Logistics <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
+          <p class="site-said">A website that explains storage options and helps prospective customers request a&nbsp;quote.</p>
+          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
+        </li>
+        <li class="site-row" role="listitem" data-site="1">
+          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
+          <h3 class="site-name"><a href="https://24hrpipepatrol.com" rel="noopener" target="_blank">24 Hour Pipe Patrol <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
+          <p class="site-said">A website that makes drain and sewer services easy to understand, with a clear route to call for&nbsp;help.</p>
+          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
+        </li>
+        <li class="site-row" role="listitem" data-site="2">
+          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
+          <h3 class="site-name"><a href="https://torbk.org" rel="noopener" target="_blank">Temple of Refuge <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
+          <p class="site-said">A website that helps visitors learn about the church and plan a&nbsp;visit.</p>
+          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build</p>
+        </li>
+      </ol>
 
-      <article class="site reveal">
-        <a class="site-plate" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
-          <img src="../assets/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-          <i class="site-plate-rule" aria-hidden="true"></i>
-        </a>
-        <h3 class="site-name"><a href="https://24hrpipepatrol.com" rel="noopener" target="_blank">24 Hour Pipe Patrol <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-        <p class="site-said">A website that makes drain and sewer services easy to understand, with a clear route to call for&nbsp;help.</p>
-        <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-      </article>
-
-      <article class="site reveal">
-        <a class="site-plate" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
-          <img src="../assets/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-          <i class="site-plate-rule" aria-hidden="true"></i>
-        </a>
-        <h3 class="site-name"><a href="https://torbk.org" rel="noopener" target="_blank">Temple of Refuge <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-        <p class="site-said">A website that helps visitors learn about the church and plan a&nbsp;visit.</p>
-        <p class="utility site-scope"><span class="band-role-k">STIR</span> Build</p>
-      </article>
+      <div class="site-screen" aria-hidden="true">
+        <div class="site-screen-inner">
+          <figure class="site-shot is-active" data-site="0">
+            <a class="site-shot-link" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1">
+              <img src="../assets/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+            </a>
+            <figcaption class="utility site-shot-cap">Carriacou Logistics</figcaption>
+          </figure>
+          <figure class="site-shot" data-site="1">
+            <a class="site-shot-link" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1">
+              <img src="../assets/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+            </a>
+            <figcaption class="utility site-shot-cap">24 Hour Pipe Patrol</figcaption>
+          </figure>
+          <figure class="site-shot" data-site="2">
+            <a class="site-shot-link" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1">
+              <img src="../assets/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+            </a>
+            <figcaption class="utility site-shot-cap">Temple of Refuge</figcaption>
+          </figure>
+          <i class="site-screen-rule" aria-hidden="true"></i>
+        </div>
+      </div>
 
     </div>
 
@@ -4848,6 +5089,80 @@ body.stir-dark-top { background: #0451AB; }
     if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
       document.documentElement.style.scrollBehavior = 'smooth';
     }
+  })();
+
+  /* ── Selected work: which project holds the stage ───────────
+     Read from the index rows themselves, the same way the bar reads
+     its environment: whichever row spans the middle of the screen is
+     live. A pointer can take it over while it rests on a row, and the
+     scroll position takes it back when the pointer leaves. Nothing
+     here intercepts the scroll — the page moves at the speed the
+     reader moves it, and the stage just keeps up.                  */
+  (function () {
+    var stage = document.querySelector('.site-stage');
+    if (!stage) return;
+    var rows = [].slice.call(stage.querySelectorAll('.site-row'));
+    var shots = [].slice.call(stage.querySelectorAll('.site-shot'));
+    if (rows.length < 2 || rows.length !== shots.length) return;
+
+    var staged = window.matchMedia('(min-width: 1024px)');
+    var live = -1, held = null, ticking = false;
+
+    function paint(i) {
+      if (i === live) return;
+      live = i;
+      for (var n = 0; n < rows.length; n++) {
+        rows[n].classList.toggle('is-active', n === i);
+        shots[n].classList.toggle('is-active', n === i);
+      }
+    }
+
+    function fromScroll() {
+      var mid = window.innerHeight / 2, pick = 0;
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i].getBoundingClientRect();
+        if (r.top <= mid && r.bottom > mid) { pick = i; break; }
+        if (r.top > mid) break;          /* past the middle: keep the last one */
+        pick = i;
+      }
+      return pick;
+    }
+
+    function resolve() {
+      if (!staged.matches) { paint(0); return; }
+      paint(held !== null ? held : fromScroll());
+    }
+
+    function tick() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; resolve(); });
+    }
+
+    rows.forEach(function (row, i) {
+      row.addEventListener('pointerenter', function () { held = i; resolve(); });
+      row.addEventListener('pointerleave', function () { held = null; resolve(); });
+      row.addEventListener('focusin', function () { held = i; resolve(); });
+      row.addEventListener('focusout', function () { held = null; resolve(); });
+    });
+
+    /* The red threshold runs once the stage is actually on screen,
+       rather than sitting at full width before anyone has seen it. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { stage.classList.toggle('is-live', e.isIntersecting); });
+      }, { threshold: 0.12 }).observe(stage);
+
+      var io = new IntersectionObserver(tick, { threshold: [0, 0.5, 1] });
+      rows.forEach(function (r) { io.observe(r); });
+    } else {
+      stage.classList.add('is-live');
+    }
+
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick, { passive: true });
+    if (staged.addEventListener) staged.addEventListener('change', resolve);
+    resolve();
   })();
 
   /* ── Service panels on touch ───────────────────────────

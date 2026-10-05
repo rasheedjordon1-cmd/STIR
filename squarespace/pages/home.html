@@ -412,37 +412,59 @@
       <p class="body sites-lede reveal">A storage business, a drain service, and a church. Each website needed to make the next step clear: request a quote, call for help, or plan a&nbsp;visit.</p>
     </div>
 
-    <div class="site-set">
+    <!--
+      The index names the work and the stage shows it. One project is
+      live at a time: scrolling the index moves it along, hovering a
+      row takes it over, and either half opens the site. Without
+      JavaScript the stage unsticks and the captures stack under the
+      index with their names attached, so nothing here depends on it.
+    -->
+    <div class="site-stage">
 
-      <article class="site reveal">
-        <a class="site-plate" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
-          <img src="ASSET_BASE/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-          <i class="site-plate-rule" aria-hidden="true"></i>
-        </a>
-        <h3 class="site-name"><a href="https://carriacoulogistics.com" rel="noopener" target="_blank">Carriacou Logistics <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-        <p class="site-said">A website that explains storage options and helps prospective customers request a&nbsp;quote.</p>
-        <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-      </article>
+      <ol class="site-index" role="list">
+        <li class="site-row is-active" role="listitem" data-site="0">
+          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
+          <h3 class="site-name"><a href="https://carriacoulogistics.com" rel="noopener" target="_blank">Carriacou Logistics <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
+          <p class="site-said">A website that explains storage options and helps prospective customers request a&nbsp;quote.</p>
+          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
+        </li>
+        <li class="site-row" role="listitem" data-site="1">
+          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
+          <h3 class="site-name"><a href="https://24hrpipepatrol.com" rel="noopener" target="_blank">24 Hour Pipe Patrol <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
+          <p class="site-said">A website that makes drain and sewer services easy to understand, with a clear route to call for&nbsp;help.</p>
+          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
+        </li>
+        <li class="site-row" role="listitem" data-site="2">
+          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
+          <h3 class="site-name"><a href="https://torbk.org" rel="noopener" target="_blank">Temple of Refuge <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
+          <p class="site-said">A website that helps visitors learn about the church and plan a&nbsp;visit.</p>
+          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build</p>
+        </li>
+      </ol>
 
-      <article class="site reveal">
-        <a class="site-plate" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
-          <img src="ASSET_BASE/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-          <i class="site-plate-rule" aria-hidden="true"></i>
-        </a>
-        <h3 class="site-name"><a href="https://24hrpipepatrol.com" rel="noopener" target="_blank">24 Hour Pipe Patrol <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-        <p class="site-said">A website that makes drain and sewer services easy to understand, with a clear route to call for&nbsp;help.</p>
-        <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-      </article>
-
-      <article class="site reveal">
-        <a class="site-plate" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1" aria-hidden="true">
-          <img src="ASSET_BASE/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-          <i class="site-plate-rule" aria-hidden="true"></i>
-        </a>
-        <h3 class="site-name"><a href="https://torbk.org" rel="noopener" target="_blank">Temple of Refuge <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-        <p class="site-said">A website that helps visitors learn about the church and plan a&nbsp;visit.</p>
-        <p class="utility site-scope"><span class="band-role-k">STIR</span> Build</p>
-      </article>
+      <div class="site-screen" aria-hidden="true">
+        <div class="site-screen-inner">
+          <figure class="site-shot is-active" data-site="0">
+            <a class="site-shot-link" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1">
+              <img src="ASSET_BASE/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+            </a>
+            <figcaption class="utility site-shot-cap">Carriacou Logistics</figcaption>
+          </figure>
+          <figure class="site-shot" data-site="1">
+            <a class="site-shot-link" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1">
+              <img src="ASSET_BASE/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+            </a>
+            <figcaption class="utility site-shot-cap">24 Hour Pipe Patrol</figcaption>
+          </figure>
+          <figure class="site-shot" data-site="2">
+            <a class="site-shot-link" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1">
+              <img src="ASSET_BASE/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+            </a>
+            <figcaption class="utility site-shot-cap">Temple of Refuge</figcaption>
+          </figure>
+          <i class="site-screen-rule" aria-hidden="true"></i>
+        </div>
+      </div>
 
     </div>
 

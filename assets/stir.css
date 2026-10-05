@@ -452,6 +452,16 @@ img, video { max-width: 100%; display: block; }
 }
 .nav[data-theme="cream"].is-stuck { --nav-rule: var(--ink-05); }
 .nav[data-theme="cobalt"].is-stuck { --nav-rule: rgba(250, 242, 230, 0.18); }
+/* Nothing tracks the environment without script, and the bar crosses
+   both grounds, so it stops being transparent and brings its own. */
+html:not(.js) .nav {
+  background: var(--ivory);
+  --nav-fg: var(--ink);
+  --nav-dim: rgba(22, 19, 16, 0.68);
+  --nav-rule: var(--ink-05);
+}
+html:not(.js) .nav-logo .mark-ivory { opacity: 0; }
+html:not(.js) .nav-logo .mark-red { opacity: 1; }
 .nav { border-bottom-color: var(--nav-rule); }
 .nav,
 .nav .nav-links a:not(.nav-start) { color: var(--nav-dim); }
@@ -1207,46 +1217,62 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
 .sites-title { grid-column: 1 / 9; font-size: var(--t-big); }
 .sites-lede  { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
 
-.site-set {
+/* ── Selected work: one project at a time ───────────────────
+   Three equal thumbnails made the reader choose before they had read
+   anything. An index on the left and a single stage on the right lets
+   the page do the choosing: the live project changes as the index
+   scrolls past, a pointer can take it over, and both halves open the
+   site. The ratio is the same one the grid already uses — roughly a
+   third of the width to the names, two thirds to the work.
+
+   The stage is the cobalt plate the services panels use, with the
+   capture standing in it rather than filling it: these are phone
+   screens, and a 4:5 capture blown across two thirds of a desktop
+   would be a picture of a phone, not a website.
+
+   Everything here is progressive. Without JavaScript the stage never
+   sticks, every capture shows with its name under it, and the index
+   is an ordinary list of links.                                     */
+.site-stage {
   margin-top: clamp(60px, 9vh, 120px);
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 0.52fr) minmax(0, 1fr);
   column-gap: var(--col-gap);
-  row-gap: clamp(52px, 8vh, 80px);
+  align-items: start;
 }
-.site { display: flex; flex-direction: column; }
 
-.site-plate {
-  position: relative;
-  display: block;
-  border: 1px solid var(--ink);
-  background: var(--cobalt);
-  overflow: hidden;
+/* The list box itself is dissolved so its rows become grid items
+   alongside the stage: on a wide screen that puts the names in one
+   column and the stage in the other, and on a narrow one it lets each
+   capture sit directly under the project it belongs to instead of
+   three names followed by three pictures. The roles are restated
+   because display:contents has a long history of dropping them. */
+.site-index {
+  display: contents;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.site-plate img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: top center;
-  transition: transform 0.6s var(--ease);
+.site-row { grid-column: 1; }
+.site-screen { grid-column: 2; grid-row: 1 / -1; }
+.site-row {
+  border-top: 1px solid var(--ink-35);
+  padding-block: clamp(28px, 4vh, 44px);
 }
-.site-plate-rule {
-  position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 3px;
-  background: var(--red);
-  transform: scaleX(0.18);
-  transform-origin: left;
-  transition: transform 0.45s var(--ease);
+.site-row:last-child { border-bottom: 1px solid var(--ink-35); }
+.site-no {
+  color: var(--ink-35);
+  display: flex;
+  margin-bottom: clamp(16px, 2.2vh, 24px);
+  transition: color var(--stir-ui) var(--stir-ease);
 }
-.site:hover .site-plate-rule,
-.site:focus-within .site-plate-rule { transform: scaleX(1); }
-.site:hover .site-plate img { transform: scale(1.02); }
-
+/* The index mark is the site's "this is live" square, so it is only
+   red on the row that is live. */
+.site-no .ann-mark {
+  background: var(--ink-35);
+  transition: background var(--stir-ui) var(--stir-ease), transform var(--stir-ui) var(--stir-ease);
+}
 .site-name {
-  margin-top: clamp(20px, 2.6vh, 28px);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(1.3rem, 2.1vw, 1.95rem);
@@ -1255,19 +1281,16 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
   text-transform: uppercase;
 }
 .site-name a {
-  color: var(--cobalt);
+  color: var(--ink-70);
   text-decoration: none;
-  transition: color 0.16s var(--ease);
+  transition: color var(--stir-ui) var(--stir-ease);
 }
 .site-name .arrow {
   font-size: 0.72em;
   display: inline-block;
-  transition: transform 0.25s var(--ease);
+  transition: transform var(--stir-ui) var(--stir-ease);
 }
-.site:hover .site-name a { color: var(--red); }
-.site:hover .site-name .arrow { transform: translate(3px, -3px); }
 .site-name a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
-
 .site-said {
   margin-top: 14px;
   font-family: var(--font-serif);
@@ -1278,13 +1301,128 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
 /* Scope, stated in the same shape as every other STIR role line on
    the site — the part a buyer is actually reading for. */
 .site-scope {
-  margin-top: auto;
+  margin-top: 16px;
   padding-top: 14px;
-  border-top: 1px solid var(--ink-35);
+  border-top: 1px solid var(--ink-05);
   color: var(--ink-60);
   line-height: 1.7;
 }
 .site-scope .band-role-k { margin-right: 0.6em; }
+
+/* Live, hovered, and focused all read the same: the row is the one on
+   the stage. Dimming the others would cost legibility for emphasis
+   that the cobalt is already carrying. */
+.site-row.is-active .site-no,
+.site-row:hover .site-no { color: var(--ink-60); }
+.site-row.is-active .site-no .ann-mark,
+.site-row:hover .site-no .ann-mark { background: var(--red); }
+.site-row.is-active .site-name a,
+.site-row:hover .site-name a,
+.site-row:focus-within .site-name a { color: var(--cobalt); }
+.site-row:hover .site-name .arrow,
+.site-row:focus-within .site-name .arrow { transform: translate(3px, -3px); }
+
+/* ── The stage ────────────────────────────────────── */
+.site-screen-inner {
+  position: relative;
+  background: var(--cobalt);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+.site-shot { margin: 0; }
+.site-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 340px;
+  margin-inline: auto;
+}
+.site-shot-cap {
+  color: var(--ivory-75);
+  padding: 12px 16px 18px;
+  text-align: center;
+}
+.site-screen-rule {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform var(--stir-medium) var(--stir-ease);
+}
+
+/* The staged behaviour only exists once the script has confirmed it
+   can run it. */
+html.js .site-screen {
+  position: sticky;
+  top: calc(var(--nav-h) + clamp(16px, 4vh, 48px));
+}
+html.js .site-screen-inner {
+  height: min(68vh, 620px);
+  display: grid;
+  /* An auto row sizes to its content and overflows the fixed height,
+     which left the capture at its natural width and simply clipped.
+     The row is the plate. */
+  grid-template-rows: minmax(0, 1fr);
+}
+html.js .site-shot {
+  grid-area: 1 / 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: clamp(18px, 3vh, 34px) clamp(18px, 3vw, 40px) clamp(26px, 4vh, 48px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 380ms var(--stir-ease), transform 380ms var(--stir-ease),
+              visibility 0s linear 380ms;
+}
+html.js .site-shot.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 380ms var(--stir-ease), transform 380ms var(--stir-ease),
+              visibility 0s;
+}
+/* The capture is bounded, not stretched: align-self is what makes the
+   link's height definite, and without it a percentage height on the
+   image silently resolves to auto and the capture renders at its
+   natural 960px, cropped by the plate. */
+html.js .site-shot-link {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+}
+html.js .site-shot img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+html.js .site-shot-cap { display: none; }
+html.js .site-stage.is-live .site-screen-rule { transform: scaleX(1); }
+
+/* The pin. Each row is given enough height that one project holds the
+   stage for a little over half a screen before the next takes it —
+   long enough to read the scope line, short enough that nobody feels
+   held. Native scrolling throughout: nothing here intercepts a wheel,
+   a key or a swipe. */
+@media (min-width: 1024px) {
+  html.js .site-row {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
 
 .sites-foot {
   grid-column: 1 / -1;
@@ -1292,18 +1430,69 @@ a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; 
   color: var(--ink-35);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  html.js .site-shot { transition: opacity 0.01ms linear; transform: none; }
+  html.js .site-shot.is-active { transform: none; }
+  .site-screen-rule { transform: scaleX(1); }
+  .site-no, .site-no .ann-mark, .site-name a, .site-name .arrow { transition: none; }
+}
+
+/* Below the two-column threshold the stage stops being a stage: each
+   project is its own block, name first and capture under it, in
+   order, with nothing behind a swipe or a hover. */
 @media (max-width: 1023px) {
   .sites-title { grid-column: 1 / -1; }
   .sites-lede  { grid-column: 1 / 8; }
-  /* Three captures plus a scope line will not hold their lines in a
-     third of a tablet. Two columns keeps the screenshots readable. */
-  .site-set { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .site-stage { grid-template-columns: minmax(0, 1fr); }
+  html.js .site-screen, html.js .site-screen-inner,
+  .site-screen, .site-screen-inner { display: contents; }
+  html.js .site-screen-inner { height: auto; }
+  .site-screen-rule { display: none; }
+  html.js .site-screen { position: static; }
+
+  /* Name, then its capture, then the next name. The placements carry
+     the html.js prefix because the stage's own grid-area: 1 / 1 still
+     matches once the wrappers dissolve, and without it all three
+     captures land in one cell on top of each other. */
+  html.js .site-row[data-site="0"],  .site-row[data-site="0"]  { grid-row: 1; }
+  html.js .site-shot[data-site="0"], .site-shot[data-site="0"] { grid-row: 2; }
+  html.js .site-row[data-site="1"],  .site-row[data-site="1"]  { grid-row: 3; }
+  html.js .site-shot[data-site="1"], .site-shot[data-site="1"] { grid-row: 4; }
+  html.js .site-row[data-site="2"],  .site-row[data-site="2"]  { grid-row: 5; }
+  html.js .site-shot[data-site="2"], .site-shot[data-site="2"] { grid-row: 6; }
+  html.js .site-row, html.js .site-shot,
+  .site-row, .site-shot { grid-column: 1; }
+  .site-row:last-child { border-bottom: 0; }
+
+  /* Each capture carries its own plate now that there is no stage. */
+  html.js .site-shot,
+  .site-shot {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: block;
+    height: auto;
+    min-height: 0;
+    width: auto;
+    padding: clamp(14px, 3vw, 22px) clamp(14px, 3vw, 22px) 0;
+    margin-bottom: clamp(36px, 6vh, 64px);
+    background: var(--cobalt);
+    border: 1px solid var(--ink);
+    border-bottom: 3px solid var(--red);
+  }
+  html.js .site-shot-link, .site-shot-link { display: block; height: auto; width: auto; }
+  html.js .site-shot img, .site-shot img {
+    width: 100%;
+    height: auto;
+    max-width: 340px;
+    max-height: none;
+    margin-inline: auto;
+  }
+  html.js .site-shot-cap { display: block; }
 }
 @media (max-width: 767px) {
   .sites-label { grid-column: 1 / -1; }
   .sites-lede  { grid-column: 1 / -1; }
-  .site-set { grid-template-columns: 1fr; }
-  .site-plate { max-width: 340px; }
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -2704,7 +2893,11 @@ form.is-sending .cta { opacity: 0.55; pointer-events: none; }
    nothing "wipes": the mark simply resolves into the site.
    Capped at 700ms, once per session, skipped for reduced motion.
    ════════════════════════════════════════════════════════════════ */
-.stir-enter {
+/* The cover is lifted by script, so it must only exist where script
+   can lift it: with JavaScript off it was a cobalt screen over the
+   whole site with nothing to remove it. */
+.stir-enter { display: none; }
+html.js .stir-enter {
   position: fixed;
   inset: 0;
   z-index: 100;

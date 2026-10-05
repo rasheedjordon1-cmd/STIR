@@ -347,6 +347,80 @@
     }
   })();
 
+  /* ── Selected work: which project holds the stage ───────────
+     Read from the index rows themselves, the same way the bar reads
+     its environment: whichever row spans the middle of the screen is
+     live. A pointer can take it over while it rests on a row, and the
+     scroll position takes it back when the pointer leaves. Nothing
+     here intercepts the scroll — the page moves at the speed the
+     reader moves it, and the stage just keeps up.                  */
+  (function () {
+    var stage = document.querySelector('.site-stage');
+    if (!stage) return;
+    var rows = [].slice.call(stage.querySelectorAll('.site-row'));
+    var shots = [].slice.call(stage.querySelectorAll('.site-shot'));
+    if (rows.length < 2 || rows.length !== shots.length) return;
+
+    var staged = window.matchMedia('(min-width: 1024px)');
+    var live = -1, held = null, ticking = false;
+
+    function paint(i) {
+      if (i === live) return;
+      live = i;
+      for (var n = 0; n < rows.length; n++) {
+        rows[n].classList.toggle('is-active', n === i);
+        shots[n].classList.toggle('is-active', n === i);
+      }
+    }
+
+    function fromScroll() {
+      var mid = window.innerHeight / 2, pick = 0;
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i].getBoundingClientRect();
+        if (r.top <= mid && r.bottom > mid) { pick = i; break; }
+        if (r.top > mid) break;          /* past the middle: keep the last one */
+        pick = i;
+      }
+      return pick;
+    }
+
+    function resolve() {
+      if (!staged.matches) { paint(0); return; }
+      paint(held !== null ? held : fromScroll());
+    }
+
+    function tick() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; resolve(); });
+    }
+
+    rows.forEach(function (row, i) {
+      row.addEventListener('pointerenter', function () { held = i; resolve(); });
+      row.addEventListener('pointerleave', function () { held = null; resolve(); });
+      row.addEventListener('focusin', function () { held = i; resolve(); });
+      row.addEventListener('focusout', function () { held = null; resolve(); });
+    });
+
+    /* The red threshold runs once the stage is actually on screen,
+       rather than sitting at full width before anyone has seen it. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { stage.classList.toggle('is-live', e.isIntersecting); });
+      }, { threshold: 0.12 }).observe(stage);
+
+      var io = new IntersectionObserver(tick, { threshold: [0, 0.5, 1] });
+      rows.forEach(function (r) { io.observe(r); });
+    } else {
+      stage.classList.add('is-live');
+    }
+
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick, { passive: true });
+    if (staged.addEventListener) staged.addEventListener('change', resolve);
+    resolve();
+  })();
+
   /* ── Service panels on touch ───────────────────────────
      A pointer gets the panel's move on hover. A finger never will, so
      the panel performs it once as it arrives and then holds still —
