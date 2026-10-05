@@ -42,8 +42,12 @@ function rows(png) {
 function clipping(shipped, bare) {
   const a = rows(shipped), b = rows(bare);
   if (a.length !== b.length) return 'render size changed';
-  const first = c => c.findIndex(n => n > 0);
-  const last  = c => c.length - 1 - [...c].reverse().findIndex(n => n > 0);
+  // A single anti-aliased pixel can cross the ink threshold in one
+  // render and not the other, so the boundary needs more than one
+  // pixel to count. Real clipping takes whole rows.
+  const EDGE = 3;
+  const first = c => c.findIndex(n => n >= EDGE);
+  const last  = c => c.length - 1 - [...c].reverse().findIndex(n => n >= EDGE);
   if (first(a) !== first(b)) return `ink starts ${first(a) - first(b)}px lower`;
   if (last(a) !== last(b))   return `ink ends ${last(b) - last(a)}px higher`;
   for (let y = 0; y < a.length; y++) {
@@ -72,7 +76,9 @@ for (const url of PAGES) {
     for (let i = 0; i < n; i++) {
       const el = page.locator('[data-reveal="editorial"]').nth(i);
       await el.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(500);
+      // the mask-size transition is 0.7s; shoot after it has settled or
+      // the comparison catches a half-grown mask and calls it clipping
+      await page.waitForTimeout(950);
       const box = await el.boundingBox();
       if (!box || box.height === 0) continue;
       const clip = {

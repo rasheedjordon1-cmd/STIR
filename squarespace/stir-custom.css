@@ -742,6 +742,18 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
   margin-left: -0.03em;
 }
 .stir .proof-metric-label { margin-top: 20px; color: var(--ink-60); }
+
+/* Overlapping totals, stated as overlapping. Kept small and kept
+   beneath the figure so the metric stays one figure, not a panel. */
+.stir .proof-metric-note {
+  margin-top: 10px;
+  color: var(--ink-35);
+  line-height: 1.6;
+  /* ch is a narrow unit in a monospace face — 34ch measured 236px and
+     broke a two-sentence note over five lines. */
+  max-width: 56ch;
+}
+.stir .proof-metric-note + .proof-metric-note { margin-top: 8px; }
 .stir .proof-statement {
   font-size: clamp(1.15rem, 1.8vw, 1.7rem);
   font-weight: 500;
@@ -982,20 +994,8 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
    than dropped into it. */
 .stir .press-set {
   display: grid;
-  grid-template-columns: clamp(190px, 18vw, 262px) minmax(0, 1fr);
-  gap: clamp(28px, 3.4vw, 56px);
-  align-items: start;
-}
-.stir .press-plate {
-  margin: 0;
-  background: var(--cobalt);
-  padding: clamp(14px, 1.4vw, 22px);
-}
-.stir .press-plate img { display: block; width: 100%; height: auto; }
-.stir .press-plate-cap {
-  margin-top: clamp(12px, 1.2vw, 18px);
-  color: var(--ivory-75);
-  line-height: 1.5;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: clamp(320px, 66vw, 880px);
 }
 .stir .press-index {
   list-style: none;
@@ -1051,11 +1051,9 @@ html.js .stir .belief-statement.is-in .belief-deck { opacity: 1; transform: none
    link, not inside it, so the row stays a single destination. */
 .stir .press-role { max-width: 54ch; margin: 0 0 clamp(16px, 2vh, 24px); }
 @media (max-width: 1023px) {
-.stir .press-set { grid-template-columns: clamp(150px, 22vw, 200px) minmax(0, 1fr); }
+
 }
 @media (max-width: 767px) {
-.stir .press-set { grid-template-columns: 1fr; gap: clamp(26px, 4vh, 40px); }
-.stir .press-plate { max-width: 230px; }
 .stir .band-list { grid-template-columns: 1fr; }
 .stir .band-item { max-width: none; }
 .stir .band-list--rows .band-item { grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; }
@@ -2308,6 +2306,7 @@ html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
 }
 .stir .who-title { grid-column: 1 / 10; font-size: var(--t-big); }
 .stir .who-copy { grid-column: 1 / 6; margin-top: clamp(32px, 5vh, 56px); }
+.stir .who-copy-2 { margin-top: 1.1em; }
 
 
 /* The trades, as an index — not a grid of cards */
@@ -2698,7 +2697,7 @@ html.js .stir .trade-inline { transition: none; }
 .stir .about-block .b-label { grid-column: 1 / 4; border-top: 1px solid var(--ink); padding-top: 12px; }
 .stir .about-block .b-title { grid-column: 1 / 10; font-size: var(--t-big); margin-top: clamp(32px, 5vh, 56px); }
 .stir .about-block .b-copy { grid-column: 5 / 11; margin-top: clamp(32px, 5vh, 56px); }
-.stir .about-roster { grid-column: 5 / 12; margin-top: clamp(24px, 4vh, 40px); color: var(--ink-60); line-height: 2.1; }
+.stir .about-block .b-copy-2 { margin-top: 1.1em; }
 
 /*
   ILLUSTRATION ASSET SLOT: assets/illustration-city.webp
@@ -2722,7 +2721,6 @@ html.js .stir .trade-inline { transition: none; }
 .stir .about-facts { grid-column: 1 / -1; margin-top: 40px; flex-direction: row; gap: 32px; flex-wrap: wrap; }
 .stir .about-block .b-title { grid-column: 1 / -1; }
 .stir .about-block .b-copy { grid-column: 1 / -1; }
-.stir .about-roster { grid-column: 1 / -1; }
 }
 
 

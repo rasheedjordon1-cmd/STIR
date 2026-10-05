@@ -35,10 +35,10 @@
   <section class="page shell" data-ground="ivory" data-index="Contact" aria-labelledby="contact-title">
     <div class="grid">
       <p class="utility page-label" data-reveal="structural">Contact</p>
-      <h1 class="display page-title" data-reveal="editorial" id="contact-title">What are we<br>looking at?</h1>
+      <h1 class="display page-title" data-reveal="editorial" id="contact-title">Tell us what<br>you need.</h1>
 
       <div class="contact-info reveal">
-        <p class="editorial">There’s probably something inside your business people would care about. Tell us what you do — plainly — and we’ll tell you what we see. Free, whether or not we end up working&nbsp;together.</p>
+        <p class="editorial">Tell us about the business and what you’d like to improve. We’ll review your inquiry and reply about whether STIR can help. If there’s a fit, we’ll discuss the scope and next&nbsp;step.</p>
         <div class="contact-links utility">
           <a href="mailto:rasheedjordon1@gmail.com">Email us directly</a>
           <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">@builtbystir</a>
@@ -57,8 +57,8 @@
         <div class="q-block">
           <span class="utility q-no">01</span>
           <div class="q-body">
-            <label class="q-label" for="f-business">Your business</label>
-            <span class="utility q-hint">Name it, and what it actually does.</span>
+            <label class="q-label" for="f-business">Business name</label>
+            <span class="utility q-hint">Use the name people know you by.</span>
             <input id="f-business" name="business" type="text" required autocomplete="organization">
           </div>
         </div>
@@ -73,7 +73,8 @@
               <label class="opt"><input type="radio" name="situation" value="We’re launching something"><span>We’re launching something</span></label>
               <label class="opt"><input type="radio" name="situation" value="Our brand isn’t connecting"><span>Our brand isn’t connecting</span></label>
               <label class="opt"><input type="radio" name="situation" value="Our content isn’t working"><span>Our content isn’t working</span></label>
-              <label class="opt"><input type="radio" name="situation" value="We’re growing and need a system"><span>We’re growing and need a system</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We need a website or an update"><span>We need a website or an update</span></label>
+              <label class="opt"><input type="radio" name="situation" value="We need ongoing creative support"><span>We need ongoing creative support</span></label>
               <label class="opt"><input type="radio" name="situation" value="Something else"><span>Something else</span></label>
             </div>
           </div>
@@ -82,38 +83,38 @@
         <div class="q-block">
           <span class="utility q-no">03</span>
           <div class="q-body">
-            <label class="q-label" for="f-show">Show us.</label>
-            <span class="utility q-hint">Website, Instagram, TikTok — wherever the business lives.</span>
-            <input id="f-show" name="show_us" type="text" inputmode="url" autocomplete="url" placeholder="instagram.com/…">
+            <label class="q-label" for="f-show">Website or social link</label>
+            <span class="utility q-hint">Optional. Send the link that best shows the business.</span>
+            <input id="f-show" name="show_us" type="text" inputmode="url" autocomplete="url" placeholder="Website or profile URL">
           </div>
         </div>
 
         <div class="q-block">
           <span class="utility q-no">04</span>
           <div class="q-body">
-            <label class="q-label" for="f-blind">What do you think we’re not seeing yet?</label>
-            <span class="utility q-hint">Optional. Usually the most interesting answer.</span>
-            <textarea id="f-blind" name="not_seeing" rows="3"></textarea>
+            <label class="q-label" for="f-improve">What would you like to improve?</label>
+            <span class="utility q-hint">Optional. Tell us what the business does, what you need, and any timing we should know about.</span>
+            <textarea id="f-improve" name="improve" rows="3"></textarea>
           </div>
         </div>
 
-        <div class="q-block">
+        <fieldset class="q-block" style="border:0;padding:0;margin:0;">
           <span class="utility q-no">05</span>
           <div class="q-body">
-            <label class="q-label" for="f-name">Where do we reply?</label>
-            <span class="utility q-hint">We read everything, and we answer with what we actually see.</span>
+            <legend class="q-label" style="padding:0;">Your contact details</legend>
+            <span class="utility q-hint">We’ll use these to reply about your inquiry.</span>
             <div class="q-pair">
               <div>
-                <span class="utility q-sub">Name</span>
+                <label class="utility q-sub" for="f-name">Name</label>
                 <input id="f-name" name="name" type="text" required autocomplete="name">
               </div>
               <div>
-                <span class="utility q-sub">Email</span>
+                <label class="utility q-sub" for="f-email">Email</label>
                 <input id="f-email" name="email" type="email" required autocomplete="email">
               </div>
             </div>
           </div>
-        </div>
+        </fieldset>
 
         <div class="send-row">
           <button class="cta cta--flat" type="submit"><span class="cta-label">Send it to STIR</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">→</i></span></button>
@@ -123,15 +124,14 @@
 
       <div class="contact-form form-success" id="form-success" role="status">
         <h2 class="display">We’ve got it.</h2>
-        <p class="body">We’re reading it now. If there’s something there, you’ll hear from us — usually within a couple of days.</p>
+        <p class="body">Your inquiry has been sent. We’ll review it and reply by email about whether STIR can&nbsp;help.</p>
         <p class="utility contact-note">Brooklyn, New&nbsp;York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
       </div>
 
       <div class="contact-form form-success" id="form-error" role="alert">
-        <h2 class="display">That didn’t send.</h2>
-        <p class="body">Something went wrong on our end. Email us directly at
-          <a href="mailto:rasheedjordon1@gmail.com" style="border-bottom:1px solid currentColor">rasheedjordon1@gmail.com</a>
-          and we’ll pick it up from there.</p>
+        <h2 class="display">We couldn’t confirm your&nbsp;submission.</h2>
+        <p class="body">Please email your inquiry to
+          <a href="mailto:rasheedjordon1@gmail.com" style="border-bottom:1px solid currentColor">rasheedjordon1@gmail.com</a>.</p>
       </div>
     </div>
   </section>
