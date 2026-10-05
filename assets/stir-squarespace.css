@@ -1504,46 +1504,39 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
 .stir .footer-line { grid-column: 9 / 11; color: var(--ink-60); }
 .stir .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
 /* ════════════════════════════════════════════════════════════════
-   TABLET — recomposed. A portrait crop of a 16:9 street scene is a
-   doorway and nothing else, so below 1024 the hero stops being an
-   overlay: the copy takes a cobalt field of its own at the top and
-   the picture runs full width beneath it, uncropped. Same idea, same
-   hierarchy, a composition that actually fits the frame.
+   TABLET / PHONE — the hero keeps its overlay. A portrait window
+   only shows 26% of a 16:9 picture, but on this one the right-hand
+   quarter is the whole composition in miniature: open cobalt on top,
+   storefront and red windows along the bottom. So the crop moves
+   right instead of the layout breaking apart, and the type stays
+   composed into the sky exactly as it is on desktop.
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
-.stir .hero { min-height: 0; }
 
-  /* Copy and index become direct flex items of .hero so the flow is
-     copy → environment → index */
-  .stir .hero-inner { display: contents; }
-.stir .hero-copy,
-.stir .hero-index { padding-inline: var(--gutter); }
-.stir .hero-copy {
-    order: 1;
-    max-width: min(80%, 620px);
-    padding-top: clamp(110px, 15vh, 160px);
-  }
-.stir .hero picture {
-    position: static;
-    order: 2;
-    width: 100%;
-    margin-top: clamp(44px, 7vh, 80px);
-  }
-.stir .hero-art {
-    position: static;
-    width: 100%;
-    height: auto;
-  }
-.stir .hero-index {
-    order: 3;
-    margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
-  }
+  /* The roofline lands at ~56% of the frame whatever the crop, so the
+     sky is a fixed fraction and the copy is a fixed number of pixels.
+     Measured: the block overran the roofline by 13-96px at every
+     phone size. The floor buys sky (every 100px of frame is 56px of
+     it), the stack tightens, and the whole block stays in the cobalt
+     rather than running onto the lit storefront. */
+  .stir .hero { min-height: max(94svh, 760px); }
+.stir .hero-art { object-position: 74% 50%; }
+.stir .hero-inner { padding-top: clamp(84px, 11svh, 140px); }
+.stir .hero-copy { max-width: min(86%, 560px); }
 
+  /* Bound by height as well as width. A short landscape tablet gets a
+     short sky but a full-width headline, which is the one case that
+     still ran past the roofline. */
+  .stir .hero-headline { font-size: min(var(--t-hero), 8.2svh, 8.6vw); }
+.stir .eyebrow { margin-bottom: clamp(14px, 2.2vh, 26px); }
+.stir .hero-prop { margin-top: clamp(18px, 2.8vh, 32px); }
+.stir .hero-cta { margin-top: clamp(20px, 3vh, 36px); }
 
-  /* The argument keeps its overlay longer than the hero does: the
-     shadow field is wide enough to hold type at tablet widths. */
-  .stir .belief { min-height: min(78svh, 760px); }
-.stir .belief-art { object-position: 46% 50%; }
+  /* The index is pinned to the bottom of the frame on desktop, where
+     the bottom of the frame is cobalt. On a portrait crop the bottom
+     is the lit storefront, so it follows the CTA and stays in the
+     sky with the rest of the type. */
+  .stir .hero-index { margin-top: clamp(30px, 5svh, 60px); }
 .stir .proof-lead { grid-column: 1 / -1; }
 .stir .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
 .stir .method-label { grid-column: 1 / 4; }
@@ -1561,39 +1554,34 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
 .stir .footer-copy { grid-column: 8 / 9; }
 }
 /* ════════════════════════════════════════════════════════════════
-   ARGUMENT, STACKED — below 1280 the shadow is no longer wide enough
-   to hold a column of type before the diagonal climbs into it, and
-   the doorway is the first thing a crop would lose. So the copy takes
-   the top on paper and the picture follows it whole. Same idea, same
-   order, a composition that fits the frame it is actually in.
+   ARGUMENT, NARROW — the overlay is not a taste call here, it is
+   geometry. A phone window shows 30% of this picture, and the widest
+   block of shadow any crop leaves is about 390x166px; the copy needs
+   roughly 330x340. Every anchor was measured and none of them fit,
+   and the ones with room at all lose the doorway, which is the only
+   red in the section.
+
+   So the environment extends instead of breaking. The shadow is a
+   flat navy, so it becomes the section's ground: the picture runs
+   whole and uncropped, the copy sits beneath it on the same colour
+   in the same ivory, and the section still reads as one field of
+   shadow with a lit wall and a red door in it. Same dynamic, built
+   out of the page rather than out of the crop.
    ════════════════════════════════════════════════════════════════ */
-@media (max-width: 1279px) {
+@media (max-width: 1179px) {
 .stir .belief {
-    /* Column rather than block so the copy can lead. The picture is
-       the first child in the markup because it is the environment on
-       desktop; stacked, the section still has to open with its own
-       number and its argument. */
     display: flex;
     flex-direction: column;
     min-height: 0;
-    background: var(--ivory);
-    color: var(--ink);
+    /* sampled from the shadow itself, so the join is invisible */
+    background: #001126;
   }
-.stir .belief-inner { order: 1; }
-.stir .belief picture { order: 2; position: static; display: block; }
+.stir .belief-inner { order: 2; padding-top: clamp(40px, 6vh, 64px); padding-bottom: clamp(56px, 9vh, 96px); }
+.stir .belief picture { order: 1; position: static; display: block; }
 .stir .belief-art { position: static; width: 100%; height: auto; }
-.stir .belief-inner {
-    padding-top: clamp(72px, 11vh, 120px);
-    padding-bottom: clamp(44px, 7vh, 72px);
-  }
-.stir .belief-label {
-    border-top-color: var(--ink);
-    color: var(--ink-60);
-    margin-bottom: clamp(36px, 5.5vh, 68px);
-  }
-.stir .belief-intro { color: var(--ink-60); }
-.stir .belief-claim { color: var(--cobalt); font-size: clamp(2.3rem, 6.6vw, 5rem); }
-.stir .belief-deck { color: var(--ink-70); max-width: 46ch; }
+.stir .belief-label { margin-bottom: clamp(30px, 4.5vh, 52px); }
+.stir .belief-claim { font-size: clamp(2.2rem, 7.4vw, 4.4rem); max-width: 13ch; }
+.stir .belief-deck { max-width: 42ch; }
 }
 /* ════════════════════════════════════════════════════════════════
    MOBILE — headline first; illustration is its own controlled
@@ -1606,10 +1594,27 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
 .stir .nav-links a:not(.nav-start) { display: none; }
  /* menu returns with the ABOUT/CONTACT build */
 
-  .stir .hero-inner { padding-top: 96px; }
-.stir .hero-copy { max-width: 100%; }
-.stir .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
-.stir .hero picture { margin-top: 44px; }
+  .stir .hero-copy { max-width: 100%; }
+.stir .hero-headline { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
+
+  /* Further right and a touch higher: on the narrowest window the
+     roofline has to sit below the CTA, not through it. */
+  .stir .hero-art { object-position: 78% 44%; }
+
+  /* The sky in a phone crop is 445px tall and the copy needs 376 of
+     it. The index does not fit in what is left, and pushed any lower
+     it sits on the lit storefront at 1:1. It is a wayfinding mark,
+     not content, and the scroll affordance on a phone is the phone —
+     so it stands down rather than being made unreadable. */
+  .stir .hero-index { display: none; }
+}
+/* On the smallest phones the supporting line wraps to five and the
+   copy runs past the roofline. The frame gets a taller floor, which
+   buys sky without changing the crop, and the stack tightens. */
+@media (max-width: 374px) {
+.stir .hero { min-height: max(94svh, 790px); }
+.stir .hero-inner { padding-top: clamp(80px, 11svh, 110px); }
+.stir .hero-headline { font-size: 11.2vw; }
 
 
   /* The thesis → proof hand-off was ~180px of nothing on a phone. */
