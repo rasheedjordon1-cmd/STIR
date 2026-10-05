@@ -474,20 +474,25 @@ img, video { max-width: 100%; display: block; }
    ════════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  background: var(--cobalt);
+  /* Sampled from the asset's own sky, not the brand token: this is
+     what shows for the instant before the image paints, and a token
+     cobalt there reads as a flash of a different blue. */
+  background: #013DB8;
   color: var(--ivory);
-  min-height: max(100svh, 700px);
+  min-height: max(92svh, 680px);
   display: flex;
   flex-direction: column;
+  overflow: clip;
 }
+.hero picture { position: absolute; inset: 0; z-index: 1; display: block; }
 
 /*
-  HERO ARTWORK — assets/hero-stir-attention.webp
-  Cobalt world · enormous cropped observer entering upper-right ·
-  eye looking toward a tiny ordinary storefront, center-right ·
-  Signal Red threshold. Left territory stays clean for interface.
-  Swap this file to update the hero; keep observer + storefront
-  in frame (object-position tuned below).
+  HERO ENVIRONMENT — assets/env/hero-cobalt-*
+  The architecture and its red windows are massed in the lower right.
+  object-position holds that mass in frame and lets the crop eat the
+  left, which is empty cobalt and the one part of the picture we can
+  afford to lose. No filter, no scrim, no gradient: the asset already
+  carries its own contrast, and the nav sits over open sky.
 */
 .hero-art {
   position: absolute;
@@ -495,19 +500,8 @@ img, video { max-width: 100%; display: block; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 28%;
+  object-position: 68% 54%;
   z-index: 1;
-}
-/* Legibility scrim for the nav zone only — not a treatment of the
-   artwork, just enough contrast where type crosses the observer */
-.hero::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: clamp(90px, 14vh, 150px);
-  background: linear-gradient(to bottom, rgba(3, 40, 105, 0.55), transparent);
-  z-index: 1;
-  pointer-events: none;
 }
 
 .hero-inner {
@@ -517,12 +511,15 @@ img, video { max-width: 100%; display: block; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: clamp(120px, 17vh, 190px);
+  /* Lands the block's optical centre around a third down the frame,
+     clear of the nav above and the architecture below right. */
+  padding-top: clamp(130px, 25vh, 250px);
   padding-bottom: clamp(24px, 3.5vh, 44px);
 }
 
-/* Copy territory — the clean cobalt left */
-.hero-copy { max-width: 46%; }
+/* Copy territory — the open cobalt. Held to the shell so it lines up
+   with the nav above it; a free 6vw inset would float off that edge. */
+.hero-copy { max-width: min(46%, 700px); }
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -534,6 +531,13 @@ img, video { max-width: 100%; display: block; }
   margin-bottom: clamp(20px, 3vh, 36px);
 }
 .eyebrow .arr { padding-inline: 0.35em; }
+.eyebrow-mark {
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 0.85em;
+  vertical-align: 0.04em;
+  background: var(--red);
+}
 
 .hero-headline {
   font-size: var(--t-hero);
@@ -577,28 +581,31 @@ img, video { max-width: 100%; display: block; }
     opacity: 0;
     animation: fade-up 0.6s var(--ease) 0.1s forwards;
   }
+  /* The picture is present from the first frame and only resolves
+     its exposure — no zoom, nothing to wait for. Marker, headline,
+     then copy and CTA; the whole sequence is done inside 1.4s and
+     then the hero stops moving for good. */
   .hero-art {
-    opacity: 0;
-    transform: scale(1.015);
-    animation: art-settle 1s var(--ease) 0.2s forwards;
+    opacity: 0.82;
+    animation: art-settle 0.9s var(--ease) 0.05s forwards;
   }
-  @keyframes art-settle { to { opacity: 1; transform: none; } }
+  @keyframes art-settle { to { opacity: 1; } }
 
   .hl-line > span {
     transform: translateY(112%);
-    animation: hl-rise 0.8s var(--ease) 0.4s forwards;
+    animation: hl-rise 0.7s var(--ease) 0.35s forwards;
   }
-  .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
+  .hl-line:nth-child(2) > span { animation-delay: 0.45s; }
   @keyframes hl-rise { to { transform: none; } }
 
   .eyebrow, .hero-prop, .hero-cta, .hero-index {
     opacity: 0;
-    animation: fade-up 0.7s var(--ease) forwards;
+    animation: fade-up 0.55s var(--ease) forwards;
   }
-  .eyebrow     { animation-delay: 0.3s; }
+  .eyebrow     { animation-delay: 0.2s; }
   .hero-prop   { animation-delay: 0.7s; }
-  .hero-cta    { animation-delay: 0.85s; }
-  .hero-index  { animation-delay: 0.95s; }
+  .hero-cta    { animation-delay: 0.8s; }
+  .hero-index  { animation-delay: 0.9s; }
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: none; }
@@ -610,15 +617,59 @@ img, video { max-width: 100%; display: block; }
    A small concession, the statement people should leave with, and
    the method underneath. Cobalt on paper, with one red field.
    ════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   02 — THE ARGUMENT · CREAM ENVIRONMENT
+   The hero's opposite number: same system, inverted weighting. The
+   picture runs the full bleed and the copy is composed into the one
+   field it leaves open — the blue-black shadow across the left.
+   Sampled sky behind it so the pre-paint frame is the picture's own
+   colour rather than a flash of paper.
+   ════════════════════════════════════════════════════════════════ */
 .belief {
-  padding-top: clamp(76px, 11vh, 132px);
-  padding-bottom: clamp(60px, 9vh, 112px);
+  position: relative;
+  background: #011639;
+  color: var(--ivory);
+  min-height: min(86svh, 920px);
+  display: flex;
+  overflow: clip;
+}
+.belief picture { position: absolute; inset: 0; z-index: 1; display: block; }
+.belief-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Holds the doorway and the building edge at the right; the crop
+     takes from the left, which is shadow. */
+  object-position: 42% 50%;
+  z-index: 1;
+}
+.belief-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* Measured off the asset, not guessed. The parapet band sits at
+     28.7–29.5% of the picture, and the crop puts it between 25% and
+     28% of this section across the desktop range; by 75% of the
+     picture's height the diagonal has taken the left third of the
+     frame. So the label rides the sky at ~9svh and everything under
+     it starts past 32% of the section, where the shadow is still
+     wide enough to hold a column. The section is min(86svh, 920px),
+     which is what lets svh track it instead of drifting. */
+  align-self: flex-start;
+  padding-top: 9svh;
+  padding-bottom: clamp(40px, 6vh, 90px);
 }
 .belief-label {
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--ivory-40);
+  color: var(--ivory-75);
   padding-top: 12px;
   max-width: 320px;
-  margin-bottom: clamp(40px, 6vh, 76px);
+  /* Carries the statement down past the parapet. The subtraction is
+     the label's own height, so the gap is measured to where the
+     statement lands rather than from where the label sits. */
+  margin-bottom: calc(18.5svh - 30px);
 }
 .belief-intro {
   font-family: var(--font-display);
@@ -626,15 +677,20 @@ img, video { max-width: 100%; display: block; }
   font-size: clamp(1.1rem, 1.7vw, 1.6rem);
   line-height: 1.25;
   letter-spacing: -0.01em;
-  color: var(--ink-60);
-  margin-bottom: clamp(18px, 2.6vh, 32px);
+  color: var(--ivory-75);
+  margin-bottom: clamp(16px, 2.2vh, 26px);
 }
 .belief-claim {
-  color: var(--cobalt);
-  font-size: clamp(2.6rem, 8.2vw, 7.4rem);
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  max-width: 15ch;
+  color: var(--ivory);
+  /* Smaller than it was on paper. The picture is the scale here, and
+     a poster-sized headline would bury the field it is sitting in.
+     Bound by height as well as width: on a short viewport the shadow
+     is short too, and a headline sized only off vw walks the last
+     lines of the deck straight onto the lit wall. */
+  font-size: clamp(2.2rem, min(4.9vw, 7.1svh), 4.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  max-width: 13ch;
   text-wrap: balance;
 }
 /* Editorial emphasis, not a control: a block of red with the words
@@ -655,9 +711,11 @@ img, video { max-width: 100%; display: block; }
   cursor: inherit;
 }
 .belief-deck {
-  margin-top: clamp(32px, 5vh, 56px);
-  max-width: 48ch;
-  color: var(--ink-70);
+  margin-top: clamp(18px, 2.8svh, 38px);
+  /* Measured against the shadow, not against comfort: a wider column
+     reaches the diagonal before the sentence ends. */
+  max-width: 28ch;
+  color: var(--ivory-75);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1412,32 +1470,43 @@ html:not(.js) .method-detail { grid-template-rows: 1fr; }
 .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
 
 /* ════════════════════════════════════════════════════════════════
-   TABLET — recomposed: the illustration becomes its own scene
-   below the copy; observer + storefront stay uncropped
+   TABLET — recomposed. A portrait crop of a 16:9 street scene is a
+   doorway and nothing else, so below 1024 the hero stops being an
+   overlay: the copy takes a cobalt field of its own at the top and
+   the picture runs full width beneath it, uncropped. Same idea, same
+   hierarchy, a composition that actually fits the frame.
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
   .hero { min-height: 0; }
-  .hero::after { display: none; }
   /* Copy and index become direct flex items of .hero so the flow is
-     copy → artwork (its own uncropped scene) → index */
+     copy → environment → index */
   .hero-inner { display: contents; }
   .hero-copy, .hero-index { padding-inline: var(--gutter); }
   .hero-copy {
     order: 1;
-    max-width: 80%;
+    max-width: min(80%, 620px);
     padding-top: clamp(110px, 15vh, 160px);
   }
-  .hero-art {
+  .hero picture {
     position: static;
     order: 2;
     width: 100%;
-    height: auto;
     margin-top: clamp(44px, 7vh, 80px);
+  }
+  .hero-art {
+    position: static;
+    width: 100%;
+    height: auto;
   }
   .hero-index {
     order: 3;
     margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
   }
+
+  /* The argument keeps its overlay longer than the hero does: the
+     shadow field is wide enough to hold type at tablet widths. */
+  .belief { min-height: min(78svh, 760px); }
+  .belief-art { object-position: 46% 50%; }
 
 
   .proof-lead { grid-column: 1 / -1; }
@@ -1461,6 +1530,42 @@ html:not(.js) .method-detail { grid-template-rows: 1fr; }
 }
 
 /* ════════════════════════════════════════════════════════════════
+   ARGUMENT, STACKED — below 1280 the shadow is no longer wide enough
+   to hold a column of type before the diagonal climbs into it, and
+   the doorway is the first thing a crop would lose. So the copy takes
+   the top on paper and the picture follows it whole. Same idea, same
+   order, a composition that fits the frame it is actually in.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1279px) {
+  .belief {
+    /* Column rather than block so the copy can lead. The picture is
+       the first child in the markup because it is the environment on
+       desktop; stacked, the section still has to open with its own
+       number and its argument. */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--ivory);
+    color: var(--ink);
+  }
+  .belief-inner { order: 1; }
+  .belief picture { order: 2; position: static; display: block; }
+  .belief-art { position: static; width: 100%; height: auto; }
+  .belief-inner {
+    padding-top: clamp(72px, 11vh, 120px);
+    padding-bottom: clamp(44px, 7vh, 72px);
+  }
+  .belief-label {
+    border-top-color: var(--ink);
+    color: var(--ink-60);
+    margin-bottom: clamp(36px, 5.5vh, 68px);
+  }
+  .belief-intro { color: var(--ink-60); }
+  .belief-claim { color: var(--cobalt); font-size: clamp(2.3rem, 6.6vw, 5rem); }
+  .belief-deck  { color: var(--ink-70); max-width: 46ch; }
+}
+
+/* ════════════════════════════════════════════════════════════════
    MOBILE — headline first; illustration is its own controlled
    scene; CTA stays close
    ════════════════════════════════════════════════════════════════ */
@@ -1474,7 +1579,7 @@ html:not(.js) .method-detail { grid-template-rows: 1fr; }
   .hero-inner { padding-top: 96px; }
   .hero-copy { max-width: 100%; }
   .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
-  .hero-art { margin-top: 44px; }
+  .hero picture { margin-top: 44px; }
 
   /* The thesis → proof hand-off was ~180px of nothing on a phone. */
   .belief { padding-top: clamp(64px, 9vh, 96px); padding-bottom: clamp(44px, 6vh, 68px); }
@@ -1763,6 +1868,19 @@ html:not(.js) .method-detail { grid-template-rows: 1fr; }
     opacity: 1;
     transform: none;
     -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
+  }
+
+  /* The argument's picture resolves its exposure as the section
+     arrives, and that is the whole of its motion. No parallax: two
+     planes sliding against each other would turn a still photograph
+     into a device. Behind @supports because without :has() the image
+     would simply sit at the unresolved value forever. */
+  @supports selector(:has(*)) {
+    html.js .belief-art {
+      opacity: 0.86;
+      transition: opacity 0.9s var(--ease);
+    }
+    html.js .belief:has(.belief-statement.is-in) .belief-art { opacity: 1; }
   }
 
   /* ── B · Registration reveal — plates settling into register ─── */

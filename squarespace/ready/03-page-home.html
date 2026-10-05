@@ -37,18 +37,27 @@
   <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
   <section class="hero" data-ground="cobalt" data-index="01 — Attention" aria-label="STIR — attention should pay">
     <!--
-      HERO ASSET SLOT: https://stirnyc.netlify.app/assets/hero-stir-attention.webp
-      Enormous observer entering upper-right · tiny ordinary
-      storefront with Signal Red threshold · clean cobalt left.
-      Drop updated artwork here; no structural change needed.
+      HERO ENVIRONMENT — https://stirnyc.netlify.app/assets/env/hero-cobalt-*
+      Not a background. The composition carries the interface: a deep
+      cobalt field holding roughly two thirds of the frame on the left
+      for type, with the architecture and its red window signals
+      massed into the lower right. object-position protects that mass;
+      the copy lives in the cobalt.
+
+      AVIF first, encoded high: the sky is one enormous flat field and
+      ordinary quality smooths its grain into bands.
     -->
-    <img class="hero-art" src="https://stirnyc.netlify.app/assets/hero-stir-attention.webp"
-         width="1800" height="1346" fetchpriority="high"
-         alt="An enormous observer leans in from the upper right of a deep cobalt field, eye fixed on a tiny ordinary storefront with a small Signal Red threshold">
+    <picture>
+      <source type="image/avif" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/hero-cobalt-560.avif 560w, https://stirnyc.netlify.app/assets/env/hero-cobalt-768.avif 768w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1024.avif 1024w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1366.avif 1366w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1672.avif 1672w">
+      <source type="image/webp" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/hero-cobalt-560.webp 560w, https://stirnyc.netlify.app/assets/env/hero-cobalt-768.webp 768w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1024.webp 1024w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1366.webp 1366w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1672.webp 1672w">
+      <img class="hero-art" src="https://stirnyc.netlify.app/assets/env/hero-cobalt-1366.webp"
+           width="1672" height="941" fetchpriority="high" decoding="async"
+           alt="A deep cobalt street scene: a cream corner storefront and the buildings behind it massed in the lower right, their windows lit red, under a wide empty cobalt sky">
+    </picture>
 
     <div class="shell hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow">Independent creative &amp; growth practice</p>
+        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Independent creative &amp; growth practice</p>
 
         <h1 class="display hero-headline">
           <span class="hl-line"><span>Attention</span></span>
@@ -70,7 +79,25 @@
        and the deck explains how it is done. The red field behind
        WORTH is editorial emphasis — a printed block, not a control,
        so it carries no hover, no cursor and no affordance. -->
-  <section class="belief shell" data-ground="ivory" data-index="02 — Thesis" aria-labelledby="belief-title">
+  <section class="belief" data-ground="ivory" data-index="02 — Thesis" aria-labelledby="belief-title">
+    <!--
+      ARGUMENT ENVIRONMENT — https://stirnyc.netlify.app/assets/env/argument-cream-*
+      The opposite weighting to the hero: cream and still, one
+      geometric shadow, one red doorway held at the far right. The
+      shadow owns the left of the frame, so the copy sits in it and
+      sets in ivory — contrast decided by the picture, not by habit.
+      The red field behind "worth" and the red door answer each other
+      across the diagonal; nothing else in here is red.
+    -->
+    <picture>
+      <source type="image/avif" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/argument-cream-560.avif 560w, https://stirnyc.netlify.app/assets/env/argument-cream-768.avif 768w, https://stirnyc.netlify.app/assets/env/argument-cream-1024.avif 1024w, https://stirnyc.netlify.app/assets/env/argument-cream-1366.avif 1366w, https://stirnyc.netlify.app/assets/env/argument-cream-1672.avif 1672w">
+      <source type="image/webp" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/argument-cream-560.webp 560w, https://stirnyc.netlify.app/assets/env/argument-cream-768.webp 768w, https://stirnyc.netlify.app/assets/env/argument-cream-1024.webp 1024w, https://stirnyc.netlify.app/assets/env/argument-cream-1366.webp 1366w, https://stirnyc.netlify.app/assets/env/argument-cream-1672.webp 1672w">
+      <img class="belief-art" src="https://stirnyc.netlify.app/assets/env/argument-cream-1366.webp"
+           width="1672" height="941" loading="lazy" decoding="async"
+           alt="A long cream wall under a deep blue sky, cut diagonally by a hard blue-black shadow, with one small red doorway at the far right">
+    </picture>
+
+    <div class="shell belief-inner">
     <p class="utility belief-label" data-reveal="structural">02 / The argument</p>
 
     <div class="belief-statement" data-reveal="stage">
@@ -79,6 +106,7 @@
       <h2 class="display belief-claim" id="belief-title">Something <span class="field">worth</span> talking&nbsp;about.</h2>
 
       <p class="editorial belief-deck">The interesting part is usually already there. We find it, build the story around it, and give people a reason to&nbsp;act.</p>
+    </div>
     </div>
   </section>
 

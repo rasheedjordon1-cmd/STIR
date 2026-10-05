@@ -100,30 +100,10 @@
     });
   })();
 
-  /* ── Hero: a few pixels of depth, and nothing more ──────────────
-     REWARD: the cobalt world responds to presence. Desktop pointers
-     only; never on touch, never under reduced motion.               */
-  (function () {
-    var hero = document.querySelector('.hero');
-    var art  = document.querySelector('.hero-art');
-    if (!hero || !art || reduce || !fine) return;
-    var tx = 0, ty = 0, queued = false;
-    hero.addEventListener('pointermove', function (e) {
-      if (e.pointerType !== 'mouse') return;
-      var r = hero.getBoundingClientRect();
-      tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
-      ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(function () {
-        art.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
-        queued = false;
-      });
-    }, { passive: true });
-    hero.addEventListener('pointerleave', function () {
-      art.style.transform = '';
-    });
-  })();
+  /* The hero used to follow the pointer by a few pixels. The new
+     environment is a composed photograph, not a stage set: once it
+     has resolved, nothing in it moves. Removed rather than disabled,
+     so there is no dormant listener on the section.                 */
 
   /* ── Creator wall ───────────────────────────────────────────────
      Eight clips across the creator wall and the activations is far

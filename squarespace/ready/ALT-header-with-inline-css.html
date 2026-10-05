@@ -501,21 +501,26 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
    ════════════════════════════════════════════════════════════════ */
 .stir .hero {
   position: relative;
-  background: var(--cobalt);
+  /* Sampled from the asset's own sky, not the brand token: this is
+     what shows for the instant before the image paints, and a token
+     cobalt there reads as a flash of a different blue. */
+  background: #013DB8;
   color: var(--ivory);
-  min-height: max(100svh, 700px);
+  min-height: max(92svh, 680px);
   display: flex;
   flex-direction: column;
+  overflow: clip;
 }
+.stir .hero picture { position: absolute; inset: 0; z-index: 1; display: block; }
 
 
 /*
-  HERO ARTWORK — assets/hero-stir-attention.webp
-  Cobalt world · enormous cropped observer entering upper-right ·
-  eye looking toward a tiny ordinary storefront, center-right ·
-  Signal Red threshold. Left territory stays clean for interface.
-  Swap this file to update the hero; keep observer + storefront
-  in frame (object-position tuned below).
+  HERO ENVIRONMENT — assets/env/hero-cobalt-*
+  The architecture and its red windows are massed in the lower right.
+  object-position holds that mass in frame and lets the crop eat the
+  left, which is empty cobalt and the one part of the picture we can
+  afford to lose. No filter, no scrim, no gradient: the asset already
+  carries its own contrast, and the nav sits over open sky.
 */
 .stir .hero-art {
   position: absolute;
@@ -523,20 +528,8 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 28%;
+  object-position: 68% 54%;
   z-index: 1;
-}
-
-/* Legibility scrim for the nav zone only — not a treatment of the
-   artwork, just enough contrast where type crosses the observer */
-.stir .hero::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: clamp(90px, 14vh, 150px);
-  background: linear-gradient(to bottom, rgba(3, 40, 105, 0.55), transparent);
-  z-index: 1;
-  pointer-events: none;
 }
 .stir .hero-inner {
   position: relative;
@@ -545,13 +538,16 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding-top: clamp(120px, 17vh, 190px);
+  /* Lands the block's optical centre around a third down the frame,
+     clear of the nav above and the architecture below right. */
+  padding-top: clamp(130px, 25vh, 250px);
   padding-bottom: clamp(24px, 3.5vh, 44px);
 }
 
 
-/* Copy territory — the clean cobalt left */
-.stir .hero-copy { max-width: 46%; }
+/* Copy territory — the open cobalt. Held to the shell so it lines up
+   with the nav above it; a free 6vw inset would float off that edge. */
+.stir .hero-copy { max-width: min(46%, 700px); }
 .stir .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--t-utility);
@@ -562,6 +558,13 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   margin-bottom: clamp(20px, 3vh, 36px);
 }
 .stir .eyebrow .arr { padding-inline: 0.35em; }
+.stir .eyebrow-mark {
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 0.85em;
+  vertical-align: 0.04em;
+  background: var(--red);
+}
 .stir .hero-headline {
   font-size: var(--t-hero);
   line-height: 0.95;
@@ -602,29 +605,33 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
     opacity: 0;
     animation: fade-up 0.6s var(--ease) 0.1s forwards;
   }
-.stir .hero-art {
-    opacity: 0;
-    transform: scale(1.015);
-    animation: art-settle 1s var(--ease) 0.2s forwards;
+
+  /* The picture is present from the first frame and only resolves
+     its exposure — no zoom, nothing to wait for. Marker, headline,
+     then copy and CTA; the whole sequence is done inside 1.4s and
+     then the hero stops moving for good. */
+  .stir .hero-art {
+    opacity: 0.82;
+    animation: art-settle 0.9s var(--ease) 0.05s forwards;
   }
-@keyframes art-settle { to { opacity: 1; transform: none; } }
+@keyframes art-settle { to { opacity: 1; } }
 .stir .hl-line > span {
     transform: translateY(112%);
-    animation: hl-rise 0.8s var(--ease) 0.4s forwards;
+    animation: hl-rise 0.7s var(--ease) 0.35s forwards;
   }
-.stir .hl-line:nth-child(2) > span { animation-delay: 0.5s; }
+.stir .hl-line:nth-child(2) > span { animation-delay: 0.45s; }
 @keyframes hl-rise { to { transform: none; } }
 .stir .eyebrow,
 .stir .hero-prop,
 .stir .hero-cta,
 .stir .hero-index {
     opacity: 0;
-    animation: fade-up 0.7s var(--ease) forwards;
+    animation: fade-up 0.55s var(--ease) forwards;
   }
-.stir .eyebrow { animation-delay: 0.3s; }
+.stir .eyebrow { animation-delay: 0.2s; }
 .stir .hero-prop { animation-delay: 0.7s; }
-.stir .hero-cta { animation-delay: 0.85s; }
-.stir .hero-index { animation-delay: 0.95s; }
+.stir .hero-cta { animation-delay: 0.8s; }
+.stir .hero-index { animation-delay: 0.9s; }
 @keyframes fade-up {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: none; }
@@ -637,15 +644,59 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
    A small concession, the statement people should leave with, and
    the method underneath. Cobalt on paper, with one red field.
    ════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   02 — THE ARGUMENT · CREAM ENVIRONMENT
+   The hero's opposite number: same system, inverted weighting. The
+   picture runs the full bleed and the copy is composed into the one
+   field it leaves open — the blue-black shadow across the left.
+   Sampled sky behind it so the pre-paint frame is the picture's own
+   colour rather than a flash of paper.
+   ════════════════════════════════════════════════════════════════ */
 .stir .belief {
-  padding-top: clamp(76px, 11vh, 132px);
-  padding-bottom: clamp(60px, 9vh, 112px);
+  position: relative;
+  background: #011639;
+  color: var(--ivory);
+  min-height: min(86svh, 920px);
+  display: flex;
+  overflow: clip;
+}
+.stir .belief picture { position: absolute; inset: 0; z-index: 1; display: block; }
+.stir .belief-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Holds the doorway and the building edge at the right; the crop
+     takes from the left, which is shadow. */
+  object-position: 42% 50%;
+  z-index: 1;
+}
+.stir .belief-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* Measured off the asset, not guessed. The parapet band sits at
+     28.7–29.5% of the picture, and the crop puts it between 25% and
+     28% of this section across the desktop range; by 75% of the
+     picture's height the diagonal has taken the left third of the
+     frame. So the label rides the sky at ~9svh and everything under
+     it starts past 32% of the section, where the shadow is still
+     wide enough to hold a column. The section is min(86svh, 920px),
+     which is what lets svh track it instead of drifting. */
+  align-self: flex-start;
+  padding-top: 9svh;
+  padding-bottom: clamp(40px, 6vh, 90px);
 }
 .stir .belief-label {
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--ivory-40);
+  color: var(--ivory-75);
   padding-top: 12px;
   max-width: 320px;
-  margin-bottom: clamp(40px, 6vh, 76px);
+  /* Carries the statement down past the parapet. The subtraction is
+     the label's own height, so the gap is measured to where the
+     statement lands rather than from where the label sits. */
+  margin-bottom: calc(18.5svh - 30px);
 }
 .stir .belief-intro {
   font-family: var(--font-display);
@@ -653,15 +704,20 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   font-size: clamp(1.1rem, 1.7vw, 1.6rem);
   line-height: 1.25;
   letter-spacing: -0.01em;
-  color: var(--ink-60);
-  margin-bottom: clamp(18px, 2.6vh, 32px);
+  color: var(--ivory-75);
+  margin-bottom: clamp(16px, 2.2vh, 26px);
 }
 .stir .belief-claim {
-  color: var(--cobalt);
-  font-size: clamp(2.6rem, 8.2vw, 7.4rem);
-  line-height: 0.92;
-  letter-spacing: -0.03em;
-  max-width: 15ch;
+  color: var(--ivory);
+  /* Smaller than it was on paper. The picture is the scale here, and
+     a poster-sized headline would bury the field it is sitting in.
+     Bound by height as well as width: on a short viewport the shadow
+     is short too, and a headline sized only off vw walks the last
+     lines of the deck straight onto the lit wall. */
+  font-size: clamp(2.2rem, min(4.9vw, 7.1svh), 4.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  max-width: 13ch;
   text-wrap: balance;
 }
 
@@ -683,9 +739,11 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   cursor: inherit;
 }
 .stir .belief-deck {
-  margin-top: clamp(32px, 5vh, 56px);
-  max-width: 48ch;
-  color: var(--ink-70);
+  margin-top: clamp(18px, 2.8svh, 38px);
+  /* Measured against the shadow, not against comfort: a wider column
+     reaches the diagonal before the sentence ends. */
+  max-width: 28ch;
+  color: var(--ivory-75);
 }
 @media (prefers-reduced-motion: no-preference) {
 html.js .stir .belief-intro,
@@ -1450,34 +1508,46 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
 .stir .footer-line { grid-column: 9 / 11; color: var(--ink-60); }
 .stir .footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
 /* ════════════════════════════════════════════════════════════════
-   TABLET — recomposed: the illustration becomes its own scene
-   below the copy; observer + storefront stay uncropped
+   TABLET — recomposed. A portrait crop of a 16:9 street scene is a
+   doorway and nothing else, so below 1024 the hero stops being an
+   overlay: the copy takes a cobalt field of its own at the top and
+   the picture runs full width beneath it, uncropped. Same idea, same
+   hierarchy, a composition that actually fits the frame.
    ════════════════════════════════════════════════════════════════ */
 @media (max-width: 1023px) {
 .stir .hero { min-height: 0; }
-.stir .hero::after { display: none; }
 
   /* Copy and index become direct flex items of .hero so the flow is
-     copy → artwork (its own uncropped scene) → index */
+     copy → environment → index */
   .stir .hero-inner { display: contents; }
 .stir .hero-copy,
 .stir .hero-index { padding-inline: var(--gutter); }
 .stir .hero-copy {
     order: 1;
-    max-width: 80%;
+    max-width: min(80%, 620px);
     padding-top: clamp(110px, 15vh, 160px);
   }
-.stir .hero-art {
+.stir .hero picture {
     position: static;
     order: 2;
     width: 100%;
-    height: auto;
     margin-top: clamp(44px, 7vh, 80px);
+  }
+.stir .hero-art {
+    position: static;
+    width: 100%;
+    height: auto;
   }
 .stir .hero-index {
     order: 3;
     margin-block: clamp(24px, 4vh, 44px) clamp(28px, 4vh, 48px);
   }
+
+
+  /* The argument keeps its overlay longer than the hero does: the
+     shadow field is wide enough to hold type at tablet widths. */
+  .stir .belief { min-height: min(78svh, 760px); }
+.stir .belief-art { object-position: 46% 50%; }
 .stir .proof-lead { grid-column: 1 / -1; }
 .stir .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
 .stir .method-label { grid-column: 1 / 4; }
@@ -1495,6 +1565,41 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
 .stir .footer-copy { grid-column: 8 / 9; }
 }
 /* ════════════════════════════════════════════════════════════════
+   ARGUMENT, STACKED — below 1280 the shadow is no longer wide enough
+   to hold a column of type before the diagonal climbs into it, and
+   the doorway is the first thing a crop would lose. So the copy takes
+   the top on paper and the picture follows it whole. Same idea, same
+   order, a composition that fits the frame it is actually in.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1279px) {
+.stir .belief {
+    /* Column rather than block so the copy can lead. The picture is
+       the first child in the markup because it is the environment on
+       desktop; stacked, the section still has to open with its own
+       number and its argument. */
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    background: var(--ivory);
+    color: var(--ink);
+  }
+.stir .belief-inner { order: 1; }
+.stir .belief picture { order: 2; position: static; display: block; }
+.stir .belief-art { position: static; width: 100%; height: auto; }
+.stir .belief-inner {
+    padding-top: clamp(72px, 11vh, 120px);
+    padding-bottom: clamp(44px, 7vh, 72px);
+  }
+.stir .belief-label {
+    border-top-color: var(--ink);
+    color: var(--ink-60);
+    margin-bottom: clamp(36px, 5.5vh, 68px);
+  }
+.stir .belief-intro { color: var(--ink-60); }
+.stir .belief-claim { color: var(--cobalt); font-size: clamp(2.3rem, 6.6vw, 5rem); }
+.stir .belief-deck { color: var(--ink-70); max-width: 46ch; }
+}
+/* ════════════════════════════════════════════════════════════════
    MOBILE — headline first; illustration is its own controlled
    scene; CTA stays close
    ════════════════════════════════════════════════════════════════ */
@@ -1508,7 +1613,7 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
   .stir .hero-inner { padding-top: 96px; }
 .stir .hero-copy { max-width: 100%; }
 .stir .hero-headline { font-size: clamp(2.7rem, 13.5vw, 4rem); }
-.stir .hero-art { margin-top: 44px; }
+.stir .hero picture { margin-top: 44px; }
 
 
   /* The thesis → proof hand-off was ~180px of nothing on a phone. */
@@ -1803,6 +1908,18 @@ html.js .stir [data-reveal="editorial"].is-in {
     transform: none;
     -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
   }
+/* The argument's picture resolves its exposure as the section
+     arrives, and that is the whole of its motion. No parallax: two
+     planes sliding against each other would turn a still photograph
+     into a device. Behind @supports because without :has() the image
+     would simply sit at the unresolved value forever. */
+  @supports selector(:has(*)) {
+html.js .stir .belief-art {
+      opacity: 0.86;
+      transition: opacity 0.9s var(--ease);
+    }
+html.js .stir .belief:has(.belief-statement.is-in) .belief-art { opacity: 1; }
+}
 
 
   /* ── B · Registration reveal — plates settling into register ─── */
