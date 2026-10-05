@@ -18,7 +18,8 @@
 
 <div class="nav-overlay" id="nav-overlay" hidden>
   <div class="nav-overlay-head">
-    <img src="https://stirnyc.netlify.app/assets/stir-mark-ivory.png" alt="STIR">
+    <img class="mark-ivory" src="https://stirnyc.netlify.app/assets/stir-mark-ivory.png" alt="STIR">
+    <img class="mark-red" src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="" aria-hidden="true">
     <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
@@ -31,7 +32,7 @@
 </div>
 
 <main>
-  <section class="page shell" data-ground="ivory" data-index="Contact" aria-labelledby="contact-title">
+  <section class="page shell" data-ground="ivory" data-index="Contact" data-nav-theme="cream" aria-labelledby="contact-title">
     <div class="grid">
       <p class="utility page-label" data-reveal="structural">Contact</p>
       <h1 class="display page-title" data-reveal="editorial" id="contact-title">Tell us what<br>you need.</h1>
@@ -136,7 +137,7 @@
   </section>
 </main>
 
-<footer class="footer shell">
+<footer class="footer shell" data-nav-theme="cobalt">
   <div class="grid footer-grid utility">
     <span class="footer-logo"><img src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="STIR"></span>
     <span class="footer-place">Brooklyn, New&nbsp;York</span>

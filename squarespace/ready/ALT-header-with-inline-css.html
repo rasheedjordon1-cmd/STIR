@@ -42,7 +42,8 @@
   --ink:     #161310;
   --cobalt:  #0451AB;                    /* matches the artwork field  */
   --red:     #F21B16;                    /* activation only            */
-  --red-deep: #C4120D;                   /* the same ink, under press  */
+  --red-deep: #C4120D;                   /* the plate: holds ivory type */
+  --red-press: #A80F0B;                  /* the same ink, under press   */
 
   --ink-70: rgba(22, 19, 16, 0.72);
   --ink-60: rgba(22, 19, 16, 0.58);
@@ -50,6 +51,17 @@
   --ink-05: rgba(22, 19, 16, 0.05);
   --ivory-75: rgba(250, 242, 230, 0.78);
   --ivory-40: rgba(250, 242, 230, 0.40);
+
+  /* ── Motion grammar ───────────────────────────────────────────
+     Four durations and one curve for the whole interface. Pointer
+     work sits at the fast end, reveals in the middle, section-level
+     changes at the slow end. Amplitude stays between 2 and 8px: the
+     quality is meant to come from precision, not travel. */
+  --stir-fast:   160ms;
+  --stir-ui:     220ms;
+  --stir-medium: 320ms;
+  --stir-slow:   520ms;
+  --stir-ease:   cubic-bezier(0.22, 0.61, 0.36, 1);
   --wht-70: rgba(255, 255, 255, 0.70);
   --wht-35: rgba(255, 255, 255, 0.35);
   --wht-07: rgba(255, 255, 255, 0.07);
@@ -190,63 +202,107 @@
   text-align: left;
   transition: transform 0.12s var(--ease);
 }
+
+/* ── PRIMARY · the signal button ──────────────────────────────────
+   One red rectangle, cream type. It replaces the two-compartment
+   paper-and-red construction, because the nav now changes colour
+   with its environment and the CTA has to be the thing that does
+   not. A constant can only be constant if it is one object.
+
+   Hover advances rather than jumps: the plate stays planted, a
+   deeper red arrives from the left under the label, the label moves
+   2px and the arrow 5px. Nothing scales. */
+/* Signal Red is a marker colour, not a type ground: ivory on #F21B16
+   measures 3.82:1 and ink on it 4.36:1, so neither label passes AA at
+   button size. The plate is therefore the deep red, which holds ivory
+   at 5.50:1, and pure Signal Red stays where it carries no type — the
+   squares, the rules, the marks. */
+.stir .cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--red-deep);
+  color: var(--ivory);
+  border-radius: 1px;
+  isolation: isolate;
+}
+.stir .cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red-press);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.stir .cta:hover::before,
+.stir .cta:focus-visible::before { transform: scaleX(1); }
 .stir .cta-label {
   display: flex;
   align-items: center;
   min-height: 46px;                 /* comfortable on touch */
   padding: 0 1.5em;
-  background: var(--ivory);
-  color: var(--ink);
-  border: 1px solid var(--ink);
-  border-right: 0;
-  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+  color: inherit;
+  transition: transform var(--stir-ui) var(--stir-ease);
 }
 .stir .cta-arrow {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: none;
-  min-width: 46px;
+  min-width: 2.6em;
   min-height: 46px;
-  background: var(--red);
-  border: 1px solid var(--red);
-  color: var(--ivory);
+  padding-right: 1.2em;
+  color: inherit;
   overflow: hidden;
-  transition: background 0.25s var(--ease);
 }
 .stir .cta-glyph {
   font-style: normal;
   font-size: 1.1em;
   line-height: 1;
   display: block;
-  transition: transform 0.25s var(--ease);
+  transition: transform var(--stir-ui) var(--stir-ease);
 }
-
-/* Subtle: three pixels, in the direction the arrow points. */
-.stir .cta:hover .cta-glyph,
-.stir .cta:focus-visible .cta-glyph { transform: translate(3px, -3px); }
-.stir .cta--flat:hover .cta-glyph,
-.stir .cta--flat:focus-visible .cta-glyph { transform: translateX(3px); }
 .stir .cta:hover .cta-label,
-.stir .cta:focus-visible .cta-label { background: var(--ink); color: var(--ivory); }
-.stir .cta:active { transform: translate(1px, 1px); }
-.stir .cta:active .cta-arrow { background: var(--red-deep); border-color: var(--red-deep); }
+.stir .cta:focus-visible .cta-label { transform: translateX(2px); }
+.stir .cta:hover .cta-glyph,
+.stir .cta:focus-visible .cta-glyph { transform: translate(5px, -5px); }
+.stir .cta--flat:hover .cta-glyph,
+.stir .cta--flat:focus-visible .cta-glyph { transform: translateX(5px); }
+.stir .cta:active { transform: translateY(1px); }
 .stir .cta:disabled { opacity: 0.55; cursor: default; }
-.stir .cta:disabled .cta-glyph { transform: none; }
+.stir .cta:disabled .cta-glyph,
+.stir .cta:disabled .cta-label { transform: none; }
+
+
+/* ── SECONDARY · structure ────────────────────────────────────────
+   Transparent with a rule. Red arrives on the bottom edge only, so
+   it never competes with the primary by filling. */
+.stir .cta--ghost {
+  background: none;
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+.stir .cta--ghost::before {
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--red);
+  z-index: 0;
+}
+.stir .cta--ghost:hover .cta-label,
+.stir .cta--ghost:focus-visible .cta-label { transform: translateX(2px); }
 
 
 /* The compact one, used in the nav bar. */
 .stir .cta--sm { font-size: 0.7rem; }
 .stir .cta--sm .cta-label { min-height: 44px; padding: 0 1.1em; }
-.stir .cta--sm .cta-arrow { min-width: 44px; min-height: 44px; }
+.stir .cta--sm .cta-arrow { min-width: 2.4em; min-height: 44px; }
 
 
 /* Over the cobalt hero the paper label needs no ink hairline to
    separate it from the ground. */
-.stir .hero .cta-label,
-.stir .nav .cta-label { border-color: var(--ivory); }
-.stir .nav.is-stuck .cta-label { border-color: var(--ink); }
-.stir .nav--ink .cta-label { border-color: var(--ink); }
+
 .stir .cta-line {
   display: inline-flex;
   align-items: baseline;
@@ -259,6 +315,10 @@
   padding-bottom: 0.5em;
   position: relative;
 }
+
+/* The full-width rule is the resting state; a Signal Red rule grows
+   under the first third of the label on hover, so the action reads as
+   starting rather than as a whole new underline. */
 .stir .cta-line::after {
   content: "";
   position: absolute;
@@ -266,50 +326,75 @@
   height: 1px;
   background: currentColor;
 }
-
-/* Activation mark: a tiny red square arrives on hover */
-.stir .cta-line::before {
-  content: "";
-  width: 0.5em; height: 0.5em;
+.stir .cta-line > .cta-line-rule {
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 32%;
+  height: 2px;
   background: var(--red);
-  align-self: center;
-  flex: none;
-  opacity: 0;
-  transform: scale(0.4);
-  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
-  margin-right: -0.3em;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--stir-ui) var(--stir-ease);
 }
-.stir .cta-line:hover::before,
-.stir .cta-line:focus-visible::before { opacity: 1; transform: none; }
-.stir .cta-line { transition: transform 0.12s var(--ease); }
-.stir .cta-line::after { transition: background 0.2s var(--ease); }
-.stir .cta-line .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
+.stir .cta-line:hover > .cta-line-rule,
+.stir .cta-line:focus-visible > .cta-line-rule { transform: scaleX(1); }
+.stir .cta-line { transition: transform var(--stir-ui) var(--stir-ease); }
+.stir .cta-line:hover,
+.stir .cta-line:focus-visible { transform: translateX(1px); }
+.stir .cta-line .arrow { display: inline-block; transition: transform var(--stir-ui) var(--stir-ease); }
 .stir .cta-line:hover .arrow,
-.stir .cta-line:focus-visible .arrow { transform: translateX(3px); }
+.stir .cta-line:focus-visible .arrow { transform: translateX(5px); }
 
 
-/* ── Press ───────────────────────────────────────────────────────
-   There was no :active state anywhere in this system, which is the
-   whole difference between a page and an object. On press the paper
-   shifts and the cobalt plate stays where it was: mis-registration,
-   held for exactly as long as the finger is down. Same language as
-   [data-reveal="registration"], at the scale where people touch it.
+/* ── Focus, everywhere, on its own terms ─────────────────
+   Hover is never the only signal. The outline colour follows the
+   ground so it stays visible on paper and on cobalt alike. */
+.stir .cta:focus-visible,
+.stir .cta-line:focus-visible,
+.stir .site-name a:focus-visible,
+.stir .press-row:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+.stir .hero :focus-visible,
+.stir .convert :focus-visible,
+.stir .belief :focus-visible,
+.stir .footer :focus-visible { outline-color: var(--ivory); }
+
+
+/* ── Press ──────────────────────────────────────────────
+   Touch has no hover, so press is where the primary gets to answer:
+   the fill completes under the finger instead of waiting for a
+   pointer that is never coming. The box itself takes one pixel —
+   enough to register, not enough to read as a jump.
    ──────────────────────────────────────────────────────────────── */
-.stir .cta:active,
-.stir .cta:active::before,
-.stir /* Text actions have no box to shift,
-.stir so they take the travel alone
+.stir .cta:active::before { transform: scaleX(1); }
+
+
+/* Text actions have no box to shift, so they take the travel alone
    and the rule beneath them goes live. */
-.cta-line:active,
-.stir .starter-go:active { transform: translate(1px, 1px); }
-.stir .cta-line:active::after { background: var(--red); }
+.stir .cta-line:active { transform: translate(1px, 1px); }
+.stir .cta-line:active > .cta-line-rule { transform: scaleX(1); }
 @media (prefers-reduced-motion: reduce) {
 .stir .cta-label,
 .stir .cta-arrow,
-.stir .cta-glyph { transition: none; }
+.stir .cta-glyph,
+.stir .cta::before,
+.stir .cta-line,
+.stir .cta-line > .cta-line-rule,
+.stir .cta-line .arrow { transition: none; }
 .stir .cta:active,
-.stir .cta-line:active,
-.stir .starter-go:active { transform: none; }
+.stir .cta-line:active { transform: none; }
+.stir .cta-line:hover,
+.stir .cta-line:focus-visible { transform: none; }
+
+  /* The field still arrives, it just arrives all at once. */
+  .stir .nav-overlay.is-open,
+.stir .nav-overlay.is-open .nav-overlay-links a,
+.stir .nav-overlay.is-open .nav-overlay-foot { animation: none; }
+.stir .nav-overlay-links a,
+.stir .nav-overlay-links a::after { transition: none; }
+.stir .nav-overlay-links a:active { transform: none; }
 }
 
 
@@ -384,14 +469,33 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   padding-block: clamp(18px, 2.2vw, 30px);
   transition: padding-block 0.3s var(--ease);
 }
-.stir .nav.is-stuck {
-  background: var(--ivory);
-  border-bottom-color: var(--ink-35);
-}
+
+/* Stuck only compresses the bar. The paper panel is gone: the nav
+   belongs inside whatever environment is under it, so it changes its
+   own colour instead of bringing a background with it. */
 .stir .nav.is-stuck .nav-inner { padding-block: 11px; }
-.stir .nav.is-stuck .nav-links a:not(.nav-start) { color: var(--ink); }
-.stir .nav.is-stuck .nav-links a:not(.nav-start)::after { background: var(--ink); }
-.stir .nav.is-stuck .nav-links .nav-no { color: var(--ink-35); }
+
+
+/* ── Context-aware state ──────────────────────────────────────────
+   The nav reads data-nav-theme off the section beneath it. Ink and
+   ivory swap; Signal Red does not. The red CTA is the one element
+   that holds still while the interface around it changes, which is
+   what makes it read as a constant rather than as decoration. */
+.stir .nav { --nav-fg: var(--ivory); --nav-dim: var(--ivory-75); --nav-rule: transparent; }
+.stir .nav[data-theme="cream"] {
+  --nav-fg: var(--ink);
+  --nav-dim: rgba(22, 19, 16, 0.68);
+}
+.stir .nav[data-theme="cream"].is-stuck { --nav-rule: var(--ink-05); }
+.stir .nav[data-theme="cobalt"].is-stuck { --nav-rule: rgba(250, 242, 230, 0.18); }
+.stir .nav { border-bottom-color: var(--nav-rule); }
+.stir .nav,
+.stir .nav .nav-links a:not(.nav-start) { color: var(--nav-dim); }
+.stir .nav .nav-links a:not(.nav-start):hover,
+.stir .nav .nav-links a:not(.nav-start):focus-visible,
+.stir .nav .nav-links a:not(.nav-start)[aria-current] { color: var(--nav-fg); }
+.stir .nav .nav-links .nav-no { color: var(--nav-dim); opacity: 0.6; }
+.stir .nav .nav-links a:not(.nav-start) { transition: color var(--stir-ui) var(--stir-ease); }
 
 
 /* Both marks ship; which one shows is a state, not a page. */
@@ -402,10 +506,11 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   transition: opacity 0.3s var(--ease);
 }
 .stir .nav-logo .mark-red { position: absolute; inset: 0; opacity: 0; }
-.stir .nav.is-stuck .nav-logo .mark-ivory,
-.stir .nav--ink      .nav-logo .mark-ivory { opacity: 0; }
-.stir .nav.is-stuck .nav-logo .mark-red,
-.stir .nav--ink      .nav-logo .mark-red { opacity: 1; }
+.stir .nav-logo img { transition: opacity var(--stir-ui) var(--stir-ease); }
+.stir .nav[data-theme="cream"] .nav-logo .mark-ivory,
+.stir .nav--ink               .nav-logo .mark-ivory { opacity: 0; }
+.stir .nav[data-theme="cream"] .nav-logo .mark-red,
+.stir .nav--ink               .nav-logo .mark-red { opacity: 1; }
 
 
 /* Anything the nav can jump to has to clear the bar. */
@@ -476,18 +581,25 @@ html.js .stir .reveal.is-in { opacity: 1; transform: none; }
   letter-spacing: 0.09em;
   vertical-align: 0.9em;
   margin-right: 0.5em;
-  color: var(--ivory-40);
+  color: var(--field-idx);
 }
 .stir .nav-overlay-links a[aria-current] .nav-no { color: var(--red); }
+
+
+/* Hover is the same red square the site already uses for "this is
+   live" — on .ann-mark, on .cta-line, on the trade list. A rule
+   sweeping half the width would be a different language. */
 .stir .nav-links a:not(.nav-start)::after {
   content: "";
   position: absolute;
-  left: 0; right: 0; bottom: 0;
-  height: 1px;
-  background: var(--ivory);
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.35s var(--ease);
+  transition: transform var(--stir-ui) var(--stir-ease);
 }
 .stir .nav-links a:not(.nav-start):hover::after,
 .stir .nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
@@ -1706,17 +1818,61 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
   cursor: pointer;
   padding: 0.6em 0;
 }
+
+/* The menu is a continuation of the bar, not a different place, so it
+   opens on the ground the reader is already standing on. Tapping Menu
+   over the cream half of the site and landing on cobalt inverts the
+   type mid-gesture; following the theme keeps the gesture whole. The
+   observer writes data-theme to the field at the same time it writes
+   it to the bar. */
 .stir .nav-overlay {
+  --field: var(--cobalt);
+  --field-fg: var(--ivory);
+  --field-dim: var(--ivory-75);
+  --field-idx: var(--ivory-40);
   position: fixed;
   inset: 0;
-  background: var(--cobalt);
-  color: var(--ivory);
+  background: var(--field);
+  color: var(--field-fg);
   z-index: 40;
   display: none;
   flex-direction: column;
   padding: var(--gutter);
 }
+.stir .nav-overlay[data-theme="cream"] {
+  --field: var(--ivory);
+  --field-fg: var(--ink);
+  --field-dim: rgba(22, 19, 16, 0.68);
+  --field-idx: var(--ink-35);
+}
 .stir .nav-overlay.is-open { display: flex; }
+
+
+/* The field arrives as a ground, not a fade: it wipes down from the
+   bar's own edge, which is where the tap happened. The rows follow it
+   in one short stagger so the list reads as settling rather than
+   animating. */
+.stir .nav-overlay.is-open {
+  animation: field-in var(--stir-medium) var(--stir-ease) both;
+  transform-origin: top;
+}
+@keyframes field-in {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+.stir .nav-overlay.is-open .nav-overlay-links a,
+.stir .nav-overlay.is-open .nav-overlay-foot {
+  animation: field-row var(--stir-ui) var(--stir-ease) both;
+}
+.stir .nav-overlay.is-open .nav-overlay-links a:nth-child(1) { animation-delay: 0.16s; }
+.stir .nav-overlay.is-open .nav-overlay-links a:nth-child(2) { animation-delay: 0.20s; }
+.stir .nav-overlay.is-open .nav-overlay-links a:nth-child(3) { animation-delay: 0.24s; }
+.stir .nav-overlay.is-open .nav-overlay-links a:nth-child(4) { animation-delay: 0.28s; }
+.stir .nav-overlay.is-open .nav-overlay-foot { animation-delay: 0.32s; }
+@keyframes field-row {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
 .stir .nav-overlay-head {
   display: flex;
   justify-content: space-between;
@@ -1724,8 +1880,13 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
   padding-block: 4px;
 }
 .stir .nav-overlay-head img { height: 22px; width: auto; }
+
+/* One mark per ground, the same pair the bar swaps. */
+.stir .nav-overlay .mark-red { display: none; }
+.stir .nav-overlay[data-theme="cream"] .mark-ivory { display: none; }
+.stir .nav-overlay[data-theme="cream"] .mark-red { display: block; }
 .stir .nav-overlay-close {
-  background: none; border: 0; color: var(--ivory);
+  background: none; border: 0; color: var(--field-fg);
   font-family: var(--font-mono); font-size: 0.9rem;
   text-transform: uppercase; letter-spacing: 0.09em; cursor: pointer;
   padding: 0.5em;
@@ -1742,12 +1903,28 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
   font-size: clamp(2rem, 9vw, 2.8rem);
   text-transform: uppercase;
   letter-spacing: -0.02em;
-  color: var(--ivory);
+  color: var(--field-fg);
 }
+
+/* Touch has no hover, so the row answers the press instead: the red
+   square lands and the row steps one notch toward its destination. */
+.stir .nav-overlay-links a::after {
+  content: "";
+  position: absolute;
+  left: -0.42em; top: 0.46em;
+  width: 0.2em; height: 0.2em;
+  background: var(--red);
+  transform: scale(0);
+  transition: transform var(--stir-fast) var(--stir-ease);
+}
+.stir .nav-overlay-links a:active::after,
+.stir .nav-overlay-links a:focus-visible::after { transform: scale(1); }
+.stir .nav-overlay-links a { transition: transform var(--stir-fast) var(--stir-ease); }
+.stir .nav-overlay-links a:active { transform: translateX(2px); }
 .stir .nav-overlay-links a .arrow { font-size: 0.6em; vertical-align: 0.3em; padding-left: 0.3em; }
 .stir .nav-overlay-foot {
   margin-top: auto;
-  color: var(--ivory-75);
+  color: var(--field-dim);
 }
 
 
@@ -2202,24 +2379,71 @@ html.js .stir [data-reveal="structural"].is-in::before { transform: scaleX(1); }
 .stir .svc-plate-rule {
   position: absolute;
   left: 0; right: 0; bottom: 0;
-  z-index: 2;                       /* the threshold reads over the figure */
+  z-index: 3;                       /* the threshold reads over the figure */
   height: 3px;
   background: var(--red);
-  transform: scaleX(0.22);
+  transform: scaleX(0.18);
   transform-origin: left;
-  transition: transform 0.45s var(--ease);
+  transition: transform var(--stir-medium) var(--stir-ease);
 }
 .stir .svc:hover .svc-plate-rule,
-.stir .svc:focus-within .svc-plate-rule { transform: scaleX(1); }
-/* The plate arrives mis-registered and settles, like a second pass on
-   press. Reuses the registration primitive rather than inventing a
-   new entrance. */
+.stir .svc:focus-within .svc-plate-rule,
+.stir .svc.is-shown .svc-plate-rule { transform: scaleX(1); }
+
+
+/* The panel answers with mis-registration rather than a lift: the
+   plate steps two pixels out of alignment with the card around it and
+   the heading steps one, which is the same second-pass-on-press
+   language as [data-reveal="registration"]. A card that floats on a
+   shadow would be a different site's idea. */
+.stir .svc-name { transition: transform var(--stir-ui) var(--stir-ease); }
+.stir .svc:hover .svc-name,
+.stir .svc:focus-within .svc-name { transform: translateX(2px); }
 @media (prefers-reduced-motion: no-preference) {
-html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
-.stir .svc:hover .svc-plate { transform: translate(-2px, -2px); }
+html.js .stir .svc-plate { transition: transform var(--stir-medium) var(--stir-ease); }
+.stir .svc:hover .svc-plate,
+.stir .svc.is-shown .svc-plate { transform: translate(-2px, -2px); }
 }
+
+
+/* ── The hand-off, finished ───────────────────────────────
+   Panel 01 draws a card mid-pass between two hands, so addressing the
+   panel completes the pass: the card travels the last few pixels
+   toward the receiving hand and stops. The other two panels take the
+   plate's two-pixel step and nothing else — their drawings are single
+   opaque shapes with hand-cut edges, and every partial state we could
+   synthesise for them read as a crop or an airbrush rather than as an
+   action. One honest move beats three invented ones.              */
+.stir .svc-fig--under,
+.stir .svc-fig--hand { z-index: 1; }
+.stir .svc-fig--hand {
+  z-index: 2;
+  transition: transform var(--stir-medium) var(--stir-ease);
+}
+.stir .svc:hover .svc-fig--hand,
+.stir .svc:focus-within .svc-fig--hand,
+.stir .svc.is-shown .svc-fig--hand { transform: translate(7px, 5px); }
 @media (prefers-reduced-motion: reduce) {
 .stir .svc-plate-rule { transform: scaleX(1); }
+.stir .svc-name,
+.stir .svc-fig--hand { transition: none; }
+.stir .svc:hover .svc-name,
+.stir .svc:focus-within .svc-name,
+.stir .svc:hover .svc-fig--hand,
+.stir .svc:focus-within .svc-fig--hand,
+.stir .svc.is-shown .svc-fig--hand { transform: none; }
+}
+/* Touch never hovers, so the panel performs its move once as it
+   arrives and then holds still. is-shown is added on entry and
+   removed when the animation has run; it is not a permanent state. */
+@media (hover: none) {
+.stir .svc.is-shown .svc-plate,
+.stir .svc.is-shown .svc-fig--hand { transition-duration: var(--stir-slow); }
+}
+@media (hover: hover) {
+.stir .svc.is-shown .svc-plate,
+.stir .svc.is-shown .svc-fig--hand { transform: none; }
+.stir .svc.is-shown .svc-plate-rule { transform: scaleX(0.18); }
 }
 .stir .svc-scope {
   list-style: none;
@@ -2550,29 +2774,20 @@ html.js .stir .svc-plate { transition: transform 0.5s var(--ease); }
 }
 .stir .starter-row input:focus { outline: none; }
 .stir .starter-row input::placeholder { color: var(--ink-35); }
+
+/* The row's action is the system's secondary, not a bespoke text
+   button: transparent, ruled, red arriving on the bottom edge. It
+   keeps the mono label and the flat arrow; everything else it now
+   inherits from .cta--ghost. */
 .stir .starter-go {
   flex: none;
-  background: none;
-  border: 0;
-  cursor: pointer;
-  padding: 6px 2px;
   font-family: var(--font-mono);
   font-size: 0.76rem;
   font-weight: 500;
-  text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: var(--ink);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7em;
-  transition: color 0.25s var(--ease);
 }
-.stir .starter-go { transition: color 0.25s var(--ease), transform 0.12s var(--ease); }
-.stir .starter-go .arrow { transition: transform 0.3s var(--ease); display: inline-block; }
-.stir .starter-go:hover,
-.stir .starter-go:focus-visible { color: var(--red); }
-.stir .starter-go:hover .arrow,
-.stir .starter-go:focus-visible .arrow { transform: translateX(3px); }
+.stir .starter-go .cta-label { min-height: 40px; padding: 0 1em; }
+.stir .starter-go .cta-arrow { min-width: 2.2em; min-height: 40px; padding-right: 0.9em; }
 .stir .starter-row:focus-within { border-bottom-color: var(--red); }
 .stir .starter-note { color: var(--ink-60); margin-top: 16px; }
 
@@ -2797,10 +3012,6 @@ html.js .stir .trade-inline { transition: none; }
 .stir .convert .starter-row { border-bottom-color: var(--ivory); }
 .stir .convert .starter-row input { color: var(--ivory); }
 .stir .convert .starter-row input::placeholder { color: var(--ivory-40); }
-.stir .convert .starter-go { color: var(--ivory); }
-.stir .convert .starter-go:hover,
-.stir .convert .starter-go:focus-visible { color: #fff; }
-.stir .convert .starter-go:hover .arrow { transform: translateX(3px); }
 .stir .convert .starter-row:focus-within { border-bottom-color: var(--red); }
 .stir .convert .starter-note { color: var(--ivory-75); }
 @media (max-width: 1023px) {

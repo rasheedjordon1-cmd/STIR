@@ -19,7 +19,8 @@
 
 <div class="nav-overlay" id="nav-overlay" hidden>
   <div class="nav-overlay-head">
-    <img src="ASSET_BASE/stir-mark-ivory.png" alt="STIR">
+    <img class="mark-ivory" src="ASSET_BASE/stir-mark-ivory.png" alt="STIR">
+    <img class="mark-red" src="ASSET_BASE/stir-mark.png" alt="" aria-hidden="true">
     <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
@@ -32,7 +33,7 @@
 </div>
 
 <main>
-  <section class="page shell" data-ground="ivory" data-index="About" aria-labelledby="about-title">
+  <section class="page shell" data-ground="ivory" data-index="About" data-nav-theme="cream" aria-labelledby="about-title">
     <div class="grid">
       <p class="utility page-label" data-reveal="structural">About</p>
       <h1 class="display page-title" data-reveal="editorial" id="about-title">Good businesses deserve<br>to be understood.</h1>
@@ -92,12 +93,12 @@
 
     <div class="about-cta reveal">
       <a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
-      <a class="cta-line" href="/#proof">See the work <span class="arrow" aria-hidden="true">→</span></a>
+      <a class="cta-line" href="/#proof"><i class="cta-line-rule" aria-hidden="true"></i>See the work <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
 </main>
 
-<footer class="footer shell">
+<footer class="footer shell" data-nav-theme="cobalt">
   <div class="grid footer-grid utility">
     <span class="footer-logo"><img src="ASSET_BASE/stir-mark.png" alt="STIR"></span>
     <span class="footer-place">Brooklyn, New&nbsp;York</span>
