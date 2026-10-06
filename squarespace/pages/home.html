@@ -1,106 +1,19 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<script>document.documentElement.classList.add('js')</script>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — Attention should pay</title>
-<meta name="description" content="STIR is an independent creative and growth practice in Brooklyn, New York. We make content, campaigns, brands and websites that help businesses get noticed and make it easier for people to inquire, order or book.">
-<!-- TODO at deploy: replace SITE_URL below with the production domain -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="STIR — Attention should pay">
-<meta property="og:description" content="Content, campaigns, brands and websites that help businesses get noticed — and make it easier for people to inquire, order or book.">
-<meta property="og:image" content="SITE_URL/assets/og-stir.jpg">
-<meta property="og:url" content="SITE_URL/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="STIR — Attention should pay">
-<meta name="twitter:description" content="Independent creative and growth practice. Brooklyn, New York.">
-<meta name="twitter:image" content="SITE_URL/assets/og-stir.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
-
-<!--
-  Typography: Founders Grotesk (licensed, self-hosted in assets/fonts).
-  Newsreader = selective editorial serif accent. IBM Plex Mono = utility.
--->
-<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/env/hero-cobalt-1366.avif" as="image" type="image/avif"
-      imagesrcset="assets/env/hero-cobalt-560.avif 560w, assets/env/hero-cobalt-768.avif 768w, assets/env/hero-cobalt-1024.avif 1024w, assets/env/hero-cobalt-1366.avif 1366w, assets/env/hero-cobalt-1672.avif 1672w" imagesizes="100vw" fetchpriority="high">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="assets/stir.css">
-</head>
-<body>
-
-<!-- ════════ ENTRANCE ════════
-     Not a progress bar — there is nothing worth measuring on a page
-     this size. A cobalt hold that covers the unstyled flash, resolves
-     the instant the hero image is decoded, and is capped at 700ms so
-     it can never become a wait. Once per session; never with reduced
-     motion. Removed from the DOM after it lifts.                     -->
-<div class="stir-enter" id="stir-enter" aria-hidden="true">
-  <img src="assets/stir-mark-ivory.png" alt="">
-  <span class="enter-rail"></span>
-</div>
-<script>
-(function () {
-  var cover = document.getElementById('stir-enter');
-  if (!cover) return;
-  function drop() { if (cover.parentNode) cover.parentNode.removeChild(cover); }
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen = false;
-  try { seen = sessionStorage.getItem('stir-entered') === '1'; } catch (e) {}
-  /* Runs before paint, so a return visit within the session never
-     sees a flash of the cover at all. */
-  if (reduce || seen) { drop(); return; }
-  try { sessionStorage.setItem('stir-entered', '1'); } catch (e) {}
-
-  var t0 = Date.now(), lifted = false, cap;
-  /* Inline rather than a class: the same script runs inside
-     Squarespace, where our CSS is scoped to .stir and cannot
-     reach <html>. */
-  var root = document.documentElement, held = root.style.overflow;
-  root.style.overflow = 'hidden';
-
-  function lift() {
-    if (lifted) return;
-    lifted = true;
-    clearTimeout(cap);
-    cover.classList.add('is-done');
-    root.style.overflow = held;
-    setTimeout(drop, 520);
-  }
-
-  requestAnimationFrame(function () { cover.classList.add('is-filling'); });
-  cap = setTimeout(lift, 700);   /* hard ceiling — never a wait */
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var art = document.querySelector('.hero-art');
-    var ready = (art && art.decode) ? art.decode() : Promise.resolve();
-    ready.catch(function () {}).then(function () {
-      /* a short floor so the mark registers instead of flickering */
-      setTimeout(lift, Math.max(0, 360 - (Date.now() - t0)));
-    });
-  });
-})();
-</script>
-
+<!-- ══ STIR · HOME ══ One Code Block on a blank page.
+     Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
+<div class="stir stir-home">
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
-      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
+    <a href="/" class="nav-logo">
+      <img class="mark-ivory" src="ASSET_BASE/stir-mark-ivory.png" alt="STIR — Home">
+      <img class="mark-red" src="ASSET_BASE/stir-mark.png" alt="" aria-hidden="true">
     </a>
     <nav class="nav-links" aria-label="Primary">
       <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
       <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">05</i>Services</a>
-      <a href="about.html">About</a>
+      <a href="/about">About</a>
       <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
+      <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
     </nav>
   </div>
 </header>
@@ -108,15 +21,15 @@
 <!-- Mobile menu overlay -->
 <div class="nav-overlay" id="nav-overlay" hidden>
   <div class="nav-overlay-head">
-    <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR">
-    <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
+    <img class="mark-ivory" src="ASSET_BASE/stir-mark-ivory.png" alt="STIR">
+    <img class="mark-red" src="ASSET_BASE/stir-mark.png" alt="" aria-hidden="true">
     <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
   </div>
   <nav class="nav-overlay-links" aria-label="Menu">
     <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
     <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">05</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
+    <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
   </nav>
   <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
 </div>
@@ -124,9 +37,9 @@
 <main>
 
   <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
-  <section class="hero" data-nav-theme="cobalt" aria-label="STIR — attention should pay">
+  <section class="hero" data-ground="cobalt" data-index="01 — Attention" data-nav-theme="cobalt" aria-label="STIR — attention should pay">
     <!--
-      HERO ENVIRONMENT — assets/env/hero-cobalt-*
+      HERO ENVIRONMENT — ASSET_BASE/env/hero-cobalt-*
       Not a background. The composition carries the interface: a deep
       cobalt field holding roughly two thirds of the frame on the left
       for type, with the architecture and its red window signals
@@ -137,9 +50,9 @@
       ordinary quality smooths its grain into bands.
     -->
     <picture>
-      <source type="image/avif" sizes="100vw" srcset="assets/env/hero-cobalt-560.avif 560w, assets/env/hero-cobalt-768.avif 768w, assets/env/hero-cobalt-1024.avif 1024w, assets/env/hero-cobalt-1366.avif 1366w, assets/env/hero-cobalt-1672.avif 1672w">
-      <source type="image/webp" sizes="100vw" srcset="assets/env/hero-cobalt-560.webp 560w, assets/env/hero-cobalt-768.webp 768w, assets/env/hero-cobalt-1024.webp 1024w, assets/env/hero-cobalt-1366.webp 1366w, assets/env/hero-cobalt-1672.webp 1672w">
-      <img class="hero-art" src="assets/env/hero-cobalt-1366.webp"
+      <source type="image/avif" sizes="100vw" srcset="ASSET_BASE/env/hero-cobalt-560.avif 560w, ASSET_BASE/env/hero-cobalt-768.avif 768w, ASSET_BASE/env/hero-cobalt-1024.avif 1024w, ASSET_BASE/env/hero-cobalt-1366.avif 1366w, ASSET_BASE/env/hero-cobalt-1672.avif 1672w">
+      <source type="image/webp" sizes="100vw" srcset="ASSET_BASE/env/hero-cobalt-560.webp 560w, ASSET_BASE/env/hero-cobalt-768.webp 768w, ASSET_BASE/env/hero-cobalt-1024.webp 1024w, ASSET_BASE/env/hero-cobalt-1366.webp 1366w, ASSET_BASE/env/hero-cobalt-1672.webp 1672w">
+      <img class="hero-art" src="ASSET_BASE/env/hero-cobalt-1366.webp"
            width="1672" height="941" fetchpriority="high" decoding="async"
            alt="A deep cobalt street scene: a cream corner storefront and the buildings behind it massed in the lower right, their windows lit red, under a wide empty cobalt sky">
     </picture>
@@ -155,7 +68,7 @@
 
         <p class="editorial hero-prop">We make content, campaigns, brands, and websites that help businesses get noticed&nbsp;— and make it easier for people to inquire, order, or&nbsp;book.</p>
 
-        <p class="hero-cta"><a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
+        <p class="hero-cta"><a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
       </div>
 
       <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
@@ -168,9 +81,9 @@
        and the deck explains how it is done. The red field behind
        WORTH is editorial emphasis — a printed block, not a control,
        so it carries no hover, no cursor and no affordance. -->
-  <section class="belief" data-nav-theme="cobalt" aria-labelledby="belief-title">
+  <section class="belief" data-ground="ivory" data-index="02 — Thesis" data-nav-theme="cobalt" aria-labelledby="belief-title">
     <!--
-      ARGUMENT ENVIRONMENT — assets/env/argument-cream-*
+      ARGUMENT ENVIRONMENT — ASSET_BASE/env/argument-cream-*
       The opposite weighting to the hero: cream and still, one
       geometric shadow, one red doorway held at the far right. The
       shadow owns the left of the frame, so the copy sits in it and
@@ -179,9 +92,9 @@
       across the diagonal; nothing else in here is red.
     -->
     <picture>
-      <source type="image/avif" sizes="100vw" srcset="assets/env/argument-cream-560.avif 560w, assets/env/argument-cream-768.avif 768w, assets/env/argument-cream-1024.avif 1024w, assets/env/argument-cream-1366.avif 1366w, assets/env/argument-cream-1672.avif 1672w">
-      <source type="image/webp" sizes="100vw" srcset="assets/env/argument-cream-560.webp 560w, assets/env/argument-cream-768.webp 768w, assets/env/argument-cream-1024.webp 1024w, assets/env/argument-cream-1366.webp 1366w, assets/env/argument-cream-1672.webp 1672w">
-      <img class="belief-art" src="assets/env/argument-cream-1366.webp"
+      <source type="image/avif" sizes="100vw" srcset="ASSET_BASE/env/argument-cream-560.avif 560w, ASSET_BASE/env/argument-cream-768.avif 768w, ASSET_BASE/env/argument-cream-1024.avif 1024w, ASSET_BASE/env/argument-cream-1366.avif 1366w, ASSET_BASE/env/argument-cream-1672.avif 1672w">
+      <source type="image/webp" sizes="100vw" srcset="ASSET_BASE/env/argument-cream-560.webp 560w, ASSET_BASE/env/argument-cream-768.webp 768w, ASSET_BASE/env/argument-cream-1024.webp 1024w, ASSET_BASE/env/argument-cream-1366.webp 1366w, ASSET_BASE/env/argument-cream-1672.webp 1672w">
+      <img class="belief-art" src="ASSET_BASE/env/argument-cream-1366.webp"
            width="1672" height="941" loading="lazy" decoding="async"
            alt="A long cream wall under a deep blue sky, cut diagonally by a hard blue-black shadow, with one small red doorway at the far right">
     </picture>
@@ -200,7 +113,7 @@
   </section>
 
   <!-- ════════ 03 · PROOF — LABAY ════════ -->
-  <section class="proof" data-nav-theme="cream" id="proof" aria-labelledby="proof-title">
+  <section class="proof" data-ground="ivory" data-index="03 — Proof" data-nav-theme="cream" id="proof" aria-labelledby="proof-title">
     <div class="shell">
       <div class="proof-head utility" data-reveal="structural">
         <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
@@ -253,8 +166,8 @@
             <button class="creator-frame" type="button" aria-label="Play the clip from Kemoy Martin">
               <video class="creator-vid" muted loop playsinline preload="none"
                      width="720" height="1280"
-                     poster="assets/labay/creators/creator-01-poster.webp">
-                <source src="assets/labay/creators/creator-01.mp4" type="video/mp4">
+                     poster="ASSET_BASE/labay/creators/creator-01-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-01.mp4" type="video/mp4">
               </video>
               <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
             </button>
@@ -265,8 +178,8 @@
             <button class="creator-frame" type="button" aria-label="Play the clip from Nicolas Nuvan">
               <video class="creator-vid" muted loop playsinline preload="none"
                      width="720" height="1280"
-                     poster="assets/labay/creators/creator-04-poster.webp">
-                <source src="assets/labay/creators/creator-04.mp4" type="video/mp4">
+                     poster="ASSET_BASE/labay/creators/creator-04-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-04.mp4" type="video/mp4">
               </video>
               <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
             </button>
@@ -277,8 +190,8 @@
             <button class="creator-frame" type="button" aria-label="Play the clip from MarcosWorldNyc">
               <video class="creator-vid" muted loop playsinline preload="none"
                      width="720" height="1280"
-                     poster="assets/labay/creators/creator-02-poster.webp">
-                <source src="assets/labay/creators/creator-02.mp4" type="video/mp4">
+                     poster="ASSET_BASE/labay/creators/creator-02-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-02.mp4" type="video/mp4">
               </video>
               <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
             </button>
@@ -289,8 +202,8 @@
             <button class="creator-frame" type="button" aria-label="Play the clip from Eating With Experts">
               <video class="creator-vid" muted loop playsinline preload="none"
                      width="720" height="1280"
-                     poster="assets/labay/creators/creator-05-poster.webp">
-                <source src="assets/labay/creators/creator-05.mp4" type="video/mp4">
+                     poster="ASSET_BASE/labay/creators/creator-05-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-05.mp4" type="video/mp4">
               </video>
               <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
             </button>
@@ -301,8 +214,8 @@
             <button class="creator-frame" type="button" aria-label="Play the clip from Melissa Rose Cooper">
               <video class="creator-vid" muted loop playsinline preload="none"
                      width="720" height="1280"
-                     poster="assets/labay/creators/creator-03-poster.webp">
-                <source src="assets/labay/creators/creator-03.mp4" type="video/mp4">
+                     poster="ASSET_BASE/labay/creators/creator-03-poster.webp">
+                <source src="ASSET_BASE/labay/creators/creator-03.mp4" type="video/mp4">
               </video>
               <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
             </button>
@@ -337,8 +250,8 @@
               <button class="band-frame" type="button" aria-label="Play the clip from Nike Tennis">
                 <video class="band-vid" muted loop playsinline preload="none"
                        width="720" height="1280"
-                       poster="assets/labay/activations/act-02-poster.webp">
-                  <source src="assets/labay/activations/act-02.mp4" type="video/mp4">
+                       poster="ASSET_BASE/labay/activations/act-02-poster.webp">
+                  <source src="ASSET_BASE/labay/activations/act-02.mp4" type="video/mp4">
                 </video>
                 <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
               </button>
@@ -353,8 +266,8 @@
               <button class="band-frame" type="button" aria-label="Play the clip from Hoopbus &times; Red&nbsp;Bull">
                 <video class="band-vid" muted loop playsinline preload="none"
                        width="720" height="1280"
-                       poster="assets/labay/activations/act-01-poster.webp">
-                  <source src="assets/labay/activations/act-01.mp4" type="video/mp4">
+                       poster="ASSET_BASE/labay/activations/act-01-poster.webp">
+                  <source src="ASSET_BASE/labay/activations/act-01.mp4" type="video/mp4">
                 </video>
                 <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
               </button>
@@ -369,8 +282,8 @@
               <button class="band-frame" type="button" aria-label="Play the clip from NYC Health + Hospitals">
                 <video class="band-vid" muted loop playsinline preload="none"
                        width="720" height="1280"
-                       poster="assets/labay/activations/act-03-poster.webp">
-                  <source src="assets/labay/activations/act-03.mp4" type="video/mp4">
+                       poster="ASSET_BASE/labay/activations/act-03-poster.webp">
+                  <source src="ASSET_BASE/labay/activations/act-03.mp4" type="video/mp4">
                 </video>
                 <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
               </button>
@@ -491,7 +404,7 @@
 
        Shown at phone width because that is the capture we have and,
        for all three of these businesses, the screen that matters. -->
-  <section class="sites shell" data-nav-theme="cream" id="sites" aria-labelledby="sites-title">
+  <section class="sites shell" data-ground="ivory" data-index="04 — Selected websites" data-nav-theme="cream" id="sites" aria-labelledby="sites-title">
     <div class="grid">
       <p class="utility sites-label" data-reveal="structural">04 / Selected websites</p>
 
@@ -533,19 +446,19 @@
         <div class="site-screen-inner">
           <figure class="site-shot is-active" data-site="0">
             <a class="site-shot-link" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1">
-              <img src="assets/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+              <img src="ASSET_BASE/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
             </a>
             <figcaption class="utility site-shot-cap">Carriacou Logistics</figcaption>
           </figure>
           <figure class="site-shot" data-site="1">
             <a class="site-shot-link" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1">
-              <img src="assets/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+              <img src="ASSET_BASE/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
             </a>
             <figcaption class="utility site-shot-cap">24 Hour Pipe Patrol</figcaption>
           </figure>
           <figure class="site-shot" data-site="2">
             <a class="site-shot-link" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1">
-              <img src="assets/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
+              <img src="ASSET_BASE/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
             </a>
             <figcaption class="utility site-shot-cap">Temple of Refuge</figcaption>
           </figure>
@@ -570,7 +483,7 @@
        Panel 03 carries the red rule and the red numeral because the
        ongoing relationship is the one we would steer most businesses
        toward. The other two are full offers, not downgrades. -->
-  <section class="services shell" data-nav-theme="cream" id="services" aria-labelledby="services-title">
+  <section class="services shell" data-ground="ivory" data-index="05 — Services" data-nav-theme="cream" id="services" aria-labelledby="services-title">
     <div class="grid">
       <p class="utility svc-label" data-reveal="structural">05 / Services</p>
 
@@ -587,8 +500,8 @@
             <!-- Two layers of one drawing: the card is cut out of the plate so
                  it can travel the last of the hand-off. Nothing is added to the
                  artwork; the separation reconstructs it exactly at rest. -->
-            <img class="svc-fig svc-fig--under" src="assets/svc-01-base.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <img class="svc-fig svc-fig--hand" src="assets/svc-01-red.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
+            <img class="svc-fig svc-fig--under" src="ASSET_BASE/svc-01-base.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
+            <img class="svc-fig svc-fig--hand" src="ASSET_BASE/svc-01-red.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
             <i class="svc-plate-rule" aria-hidden="true"></i>
           </div>
           <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
@@ -600,7 +513,7 @@
             <li>Launch content</li>
             <li>Creator coordination</li>
           </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html"><i class="cta-line-rule" aria-hidden="true"></i>Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+          <p class="svc-action"><a class="cta-line" href="/contact"><i class="cta-line-rule" aria-hidden="true"></i>Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
         </article>
 
         <article class="svc reveal">
@@ -608,7 +521,7 @@
           <h3 class="svc-name">Brand &amp;<br>websites</h3>
           <div class="svc-plate" data-reveal="registration">
             <span class="svc-plate-no" aria-hidden="true">02</span>
-            <img class="svc-fig" src="assets/svc-02.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
+            <img class="svc-fig" src="ASSET_BASE/svc-02.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
             <i class="svc-plate-rule" aria-hidden="true"></i>
           </div>
           <p class="svc-prop">Make the business clear, recognizable, and easy to buy&nbsp;from.</p>
@@ -619,7 +532,7 @@
             <li>Service &amp; product copy</li>
             <li>Inquiry &amp; ordering flows</li>
           </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html"><i class="cta-line-rule" aria-hidden="true"></i>Talk about brand &amp; websites <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+          <p class="svc-action"><a class="cta-line" href="/contact"><i class="cta-line-rule" aria-hidden="true"></i>Talk about brand &amp; websites <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
         </article>
 
         <article class="svc svc--lead reveal">
@@ -627,7 +540,7 @@
           <h3 class="svc-name">Ongoing creative<br>support</h3>
           <div class="svc-plate" data-reveal="registration">
             <span class="svc-plate-no" aria-hidden="true">03</span>
-            <img class="svc-fig" src="assets/svc-03.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
+            <img class="svc-fig" src="ASSET_BASE/svc-03.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
             <i class="svc-plate-rule" aria-hidden="true"></i>
           </div>
           <p class="svc-prop">Keep the content and website working together, month after&nbsp;month.</p>
@@ -638,7 +551,7 @@
             <li>Website updates</li>
             <li>Performance reviews</li>
           </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html"><i class="cta-line-rule" aria-hidden="true"></i>Talk about ongoing support <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
+          <p class="svc-action"><a class="cta-line" href="/contact"><i class="cta-line-rule" aria-hidden="true"></i>Talk about ongoing support <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
         </article>
 
       </div>
@@ -649,7 +562,7 @@
        The capability lists that used to live here now sit in the
        services panels, where someone deciding what to buy will
        actually read them. This section is only about sequence. -->
-  <section class="method shell" data-nav-theme="cream" id="method" aria-labelledby="method-label">
+  <section class="method shell" data-ground="ivory" data-index="06 — How we work" data-nav-theme="cream" id="method" aria-labelledby="method-label">
     <div class="grid">
       <p class="utility method-label" data-reveal="structural" id="method-label">06 / How we work</p>
       <p class="body method-intro reveal">We agree on the priorities, make the work, and keep improving what needs ongoing&nbsp;attention.</p>
@@ -707,7 +620,7 @@
 
 
   <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
-  <section class="who shell" data-nav-theme="cream" aria-labelledby="who-title">
+  <section class="who shell" data-ground="ivory" data-index="07 — Who this is for" data-nav-theme="cream" aria-labelledby="who-title">
     <div class="grid">
       <p class="utility who-label" data-reveal="structural" id="who-label">07 / Who this is for</p>
 
@@ -829,19 +742,19 @@
          A sibling of the grid, not a member of it: a band that bleeds
          past the gutter is not grid content, and as a grid item it was
          picking up a few pixels of alignment nudge. -->
-    <img class="who-art" data-reveal="registration" src="assets/illustration-corner.webp"
+    <img class="who-art" data-reveal="registration" src="ASSET_BASE/illustration-corner.webp"
          width="1800" height="1347" loading="lazy" decoding="async"
          alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
   </section>
 
   <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
-  <section class="convert" data-nav-theme="cobalt" id="contact" aria-labelledby="convert-q">
+  <section class="convert" data-ground="cobalt" data-index="Your turn" data-nav-theme="cobalt" id="contact" aria-labelledby="convert-q">
     <!--
       The site opened on the observer looking at an ordinary business.
       It closes on the same artwork, cropped to the eye and masked into
       the cobalt, so the question reads as the eye asking it.
     -->
-    <img class="convert-art" src="assets/hero-stir-attention.webp"
+    <img class="convert-art" src="ASSET_BASE/hero-stir-attention.webp"
          width="1800" height="1346" loading="lazy" decoding="async"
          alt="" aria-hidden="true">
     <div class="shell">
@@ -874,7 +787,7 @@
       </div>
 
       <!-- Starts the contact conversation here and carries the answer over. -->
-      <form class="starter reveal" id="starter" action="contact.html" method="GET">
+      <form class="starter reveal" id="starter" action="/contact" method="GET">
         <label class="utility starter-label" for="starter-input">Business name</label>
         <div class="starter-row">
           <input id="starter-input" name="business" type="text" autocomplete="organization"
@@ -892,7 +805,7 @@
 <!-- ════════ FOOTER — quiet ════════ -->
 <footer class="footer shell" data-nav-theme="cobalt">
   <div class="grid footer-grid utility">
-    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
+    <span class="footer-logo"><img src="ASSET_BASE/stir-mark.png" alt="STIR"></span>
     <span class="footer-place">Brooklyn, New&nbsp;York</span>
     <nav class="footer-links" aria-label="Footer">
       <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
@@ -902,473 +815,4 @@
     <span class="footer-copy">© 2026 STIR</span>
   </div>
 </footer>
-
-<script>
-/* ════════════════════════════════════════════════════════════════
-   STIR — behavior. Motion has a job: explain, direct, reward or
-   confirm. Anything that does none of those is not here.
-   Everything below no-ops under prefers-reduced-motion.
-   ════════════════════════════════════════════════════════════════ */
-(function () {
-  'use strict';
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine   = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  /* ── Reveal ─────────────────────────────────────────────────────
-     One observer drives every entrance variant. Elements opt in with
-     .reveal (default) or data-reveal="editorial|registration|structural".
-     Structural signals pass through and retire, so red never lingers
-     as decoration.                                                  */
-  var revealables = document.querySelectorAll('.reveal, [data-reveal]');
-  if (!('IntersectionObserver' in window) || reduce) {
-    revealables.forEach(function (el) { el.classList.add('is-in'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target;
-        el.classList.add('is-in');
-        io.unobserve(el);
-        if (el.getAttribute('data-reveal') === 'structural') {
-          setTimeout(function () { el.classList.add('sig-spent'); }, 900);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealables.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ── Metric count-up ────────────────────────────────────────────
-     EXPLAIN: the number is about scale, so it should accrue.        */
-  (function () {
-    var el = document.querySelector('[data-count]');
-    if (!el || !('IntersectionObserver' in window)) return;
-    var target = parseFloat(el.getAttribute('data-count'));
-    var suffix = el.getAttribute('data-count-suffix') || '';
-    if (reduce) { el.textContent = target + suffix; return; }
-    el.textContent = '0' + suffix;
-    var run = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        run.unobserve(e.target);
-        var t0 = null, dur = 1100;
-        requestAnimationFrame(function step(ts) {
-          if (t0 === null) t0 = ts;
-          var p = Math.min((ts - t0) / dur, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          var v = target * eased;
-          el.textContent = (p < 1 ? v.toFixed(target < 10 ? 1 : 0) : target) + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        });
-      });
-    }, { threshold: 0.5 });
-    run.observe(el);
-  })();
-
-  /* ── Method: FIND ─ BUILD ─ RUN as one system ───────────────────
-     DIRECT: the red signal progresses down the spine to the active
-     stage, so the three rows read as sequence, not as a list.       */
-  (function () {
-    var index = document.getElementById('method-index');
-    if (!index) return;
-    var rows = Array.prototype.slice.call(index.querySelectorAll('.method-row'));
-
-    function progress() {
-      var active = index.querySelector('.method-row.is-active');
-      if (!active) return;
-      var head = active.querySelector('.method-row-head');
-      var h = active.offsetTop + (head ? head.offsetHeight : 0) * 0.55;
-      index.style.setProperty('--sig-progress', h + 'px');
-    }
-
-    rows.forEach(function (row) {
-      var btn = row.querySelector('.method-row-head');
-      btn.addEventListener('click', function () {
-        if (row.classList.contains('is-active')) return;
-        rows.forEach(function (r) {
-          r.classList.remove('is-active');
-          r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
-        });
-        row.classList.add('is-active');
-        btn.setAttribute('aria-expanded', 'true');
-        progress();
-      });
-    });
-
-    progress();
-    window.addEventListener('resize', progress, { passive: true });
-    /* the detail panel changes height as it opens */
-    rows.forEach(function (r) {
-      var d = r.querySelector('.method-detail');
-      if (d) d.addEventListener('transitionend', progress);
-    });
-  })();
-
-  /* The hero used to follow the pointer by a few pixels. The new
-     environment is a composed photograph, not a stage set: once it
-     has resolved, nothing in it moves. Removed rather than disabled,
-     so there is no dormant listener on the section.                 */
-
-  /* ── Creator wall ───────────────────────────────────────────────
-     Eight clips across the creator wall and the activations is far
-     more video than any page should fetch on arrival, so nothing
-     loads until it is asked for: the poster carries the tile and
-     preload="none" holds the file back. One plays at a time across
-     both sections, because competing loops are noise, not evidence.
-     Without JS the posters and the copy still carry it.            */
-  (function () {
-    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame, .band-frame'));
-    if (!frames.length) return;
-    var playing = null;
-
-    function stop(frame) {
-      if (!frame) return;
-      var v = frame.querySelector('video');
-      if (v) v.pause();
-      frame.classList.remove('is-playing');
-      frame.setAttribute('aria-label', frame.dataset.labelPlay);
-      if (playing === frame) playing = null;
-    }
-
-    frames.forEach(function (frame) {
-      var v = frame.querySelector('video');
-      if (!v) return;
-      frame.dataset.labelPlay = frame.getAttribute('aria-label');
-
-      frame.addEventListener('click', function () {
-        if (playing === frame) { stop(frame); return; }
-        stop(playing);
-        playing = frame;
-        frame.classList.add('is-playing');
-        frame.setAttribute('aria-label', frame.dataset.labelPlay.replace(/^Play/, 'Pause'));
-        v.play().catch(function () { stop(frame); });
-      });
-      v.addEventListener('ended', function () { stop(frame); });
-    });
-
-    /* A clip scrolled out of view is not being watched. */
-    if ('IntersectionObserver' in window) {
-      var off = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (!e.isIntersecting) stop(e.target); });
-      }, { threshold: 0.2 });
-      frames.forEach(function (f) { off.observe(f); });
-    }
-  })();
-
-
-  /* ── Who this is for: the trades as a working index ─────────────
-     EXPLAIN: the real question behind a list of verticals is "what
-     would you do for a business like mine". So the list answers it.
-
-     Wide: one sticky panel, because there is room to show the list
-     and the answer at once. Narrow: the answer opens underneath the
-     trade you chose, because a panel that updates somewhere else is
-     a change you cannot see. The panel names the trade either way.
-
-     Every answer is in the markup already, so with no JS the list
-     simply reads as nine trades with their answers under them.     */
-  (function () {
-    var list  = document.getElementById('trade-list');
-    var panel = document.getElementById('trade-panel');
-    var said  = document.getElementById('panel-said');
-    var note  = document.getElementById('panel-note');
-    var forEl = document.getElementById('panel-for');
-    if (!list || !panel || !said || !note) return;
-
-    var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
-    var current = trades[0];
-    var swapTimer = null;
-
-    function select(btn) {
-      if (!btn) return;
-      trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
-      if (btn === current) return;
-      current = btn;
-
-      var nextSaid = btn.getAttribute('data-said');
-      var nextNote = btn.getAttribute('data-note');
-      var nextFor  = btn.textContent.trim().toLowerCase();
-      function write() {
-        said.textContent = nextSaid;
-        note.textContent = nextNote;
-        if (forEl) forEl.textContent = nextFor;
-      }
-      if (reduce) { write(); return; }
-
-      /* fade out, swap, fade back — the copy replaces itself rather
-         than sliding, so nothing moves that shouldn't. */
-      panel.classList.add('is-swapping');
-      clearTimeout(swapTimer);
-      swapTimer = setTimeout(function () {
-        write();
-        panel.classList.remove('is-swapping');
-      }, 200);
-    }
-
-    trades.forEach(function (btn) {
-      btn.addEventListener('click', function () { select(btn); });
-      btn.addEventListener('focus', function () { select(btn); });
-      /* Hover previews on a real pointer only — never on touch, where
-         it would fire on the way to a tap. */
-      if (fine) btn.addEventListener('pointerenter', function (e) {
-        if (e.pointerType === 'mouse') select(btn);
-      });
-    });
-
-    /* Arrow keys walk the index, the way a keyboard user expects a
-       single-select list to behave. */
-    list.addEventListener('keydown', function (e) {
-      var step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
-               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
-      if (!step) return;
-      e.preventDefault();
-      var i = trades.indexOf(document.activeElement);
-      if (i === -1) i = trades.indexOf(current);
-      trades[(i + step + trades.length) % trades.length].focus();
-    });
-  })();
-
-  /* ── Service plates — a few pixels of the same depth the hero has ─
-     REWARD: the figure sits in the cobalt world, so it should answer
-     to presence the way that world does. Desktop pointers only, never
-     on touch, never under reduced motion, and a no-op until real
-     artwork is in the plate.                                        */
-  (function () {
-    if (reduce || !fine) return;
-    var plates = document.querySelectorAll('.svc-plate');
-    if (!plates.length) return;
-    Array.prototype.forEach.call(plates, function (plate) {
-      var fig = plate.querySelector('.svc-fig');
-      if (!fig) return;
-      var queued = false, tx = 0, ty = 0;
-      plate.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        var r = plate.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () {
-          fig.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
-          queued = false;
-        });
-      }, { passive: true });
-      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
-    });
-  })();
-
-  /* ── Nav theme: which environment is under the bar ───────────────
-     Read from the sections themselves, never from a scroll percentage.
-     A sampling line is held at the nav's own lower edge; whichever
-     [data-nav-theme] crosses it owns the bar. The observer watches for
-     zones entering and leaving that line, and a throttled rAF handler
-     covers the case the observer cannot see — a jump that clears a
-     short zone between two frames fires no entry at all, which used to
-     leave the bar a section behind. Both call the same measurement.  */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var zones = document.querySelectorAll('[data-nav-theme]');
-    if (!zones.length) { nav.setAttribute('data-theme', 'cream'); return; }
-    var overlay = document.getElementById('nav-overlay');
-    var io = null, ticking = false, last = null;
-
-    /* Nine zones is nothing to measure, so measure them: the first one
-       spanning the line wins, which resolves an order-independent
-       answer even when one zone leaves as the next arrives. */
-    function resolve() {
-      var y = nav.offsetHeight + 1, theme = null;
-      for (var i = 0; i < zones.length; i++) {
-        var r = zones[i].getBoundingClientRect();
-        if (r.top <= y && r.bottom > y) { theme = zones[i].getAttribute('data-nav-theme'); break; }
-      }
-      if (!theme || theme === last) return;
-      last = theme;
-      nav.setAttribute('data-theme', theme);
-      if (overlay) overlay.setAttribute('data-theme', theme);
-    }
-
-    function tick() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { ticking = false; resolve(); });
-    }
-
-    /* Re-armed on resize because the nav's height is what positions
-       the line. */
-    function arm() {
-      if (!('IntersectionObserver' in window)) return;
-      if (io) io.disconnect();
-      var h = nav.offsetHeight;
-      var line = Math.max(0, window.innerHeight - h - 1);
-      io = new IntersectionObserver(tick, {
-        rootMargin: '-' + h + 'px 0px -' + line + 'px 0px', threshold: 0
-      });
-      zones.forEach(function (z) { io.observe(z); });
-    }
-
-    arm();
-    resolve();
-    window.addEventListener('scroll', tick, { passive: true });
-    var t;
-    window.addEventListener('resize', function () {
-      tick();
-      clearTimeout(t); t = setTimeout(function () { arm(); resolve(); }, 150);
-    }, { passive: true });
-    window.addEventListener('load', function () { arm(); resolve(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { arm(); resolve(); });
-  })();
-
-/* ── Sticky header ──────────────────────────────────────────────
-     Transparent over the cobalt hero, opaque paper once scrolled, so
-     it never has to hold contrast against moving artwork. One class,
-     flipped from a throttled rAF; no scroll work per frame.          */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var ticking = false;
-    /* Under Squarespace the stylesheet is scoped to .stir, which owns
-       its own --nav-h, so the measurement has to land on both. */
-    var scope = document.querySelector('.stir');
-    function sync() {
-      nav.classList.toggle('is-stuck', window.scrollY > 24);
-      var h = nav.offsetHeight + 'px';
-      document.documentElement.style.setProperty('--nav-h', h);
-      if (scope) scope.style.setProperty('--nav-h', h);
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
-    }
-    sync();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
-    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      document.documentElement.style.scrollBehavior = 'smooth';
-    }
-  })();
-
-  /* ── Selected work: which project holds the stage ───────────
-     Read from the index rows themselves, the same way the bar reads
-     its environment: whichever row spans the middle of the screen is
-     live. A pointer can take it over while it rests on a row, and the
-     scroll position takes it back when the pointer leaves. Nothing
-     here intercepts the scroll — the page moves at the speed the
-     reader moves it, and the stage just keeps up.                  */
-  (function () {
-    var stage = document.querySelector('.site-stage');
-    if (!stage) return;
-    var rows = [].slice.call(stage.querySelectorAll('.site-row'));
-    var shots = [].slice.call(stage.querySelectorAll('.site-shot'));
-    if (rows.length < 2 || rows.length !== shots.length) return;
-
-    var staged = window.matchMedia('(min-width: 1024px)');
-    var live = -1, held = null, ticking = false;
-
-    function paint(i) {
-      if (i === live) return;
-      live = i;
-      for (var n = 0; n < rows.length; n++) {
-        rows[n].classList.toggle('is-active', n === i);
-        shots[n].classList.toggle('is-active', n === i);
-      }
-    }
-
-    function fromScroll() {
-      var mid = window.innerHeight / 2, pick = 0;
-      for (var i = 0; i < rows.length; i++) {
-        var r = rows[i].getBoundingClientRect();
-        if (r.top <= mid && r.bottom > mid) { pick = i; break; }
-        if (r.top > mid) break;          /* past the middle: keep the last one */
-        pick = i;
-      }
-      return pick;
-    }
-
-    function resolve() {
-      if (!staged.matches) { paint(0); return; }
-      paint(held !== null ? held : fromScroll());
-    }
-
-    function tick() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { ticking = false; resolve(); });
-    }
-
-    rows.forEach(function (row, i) {
-      row.addEventListener('pointerenter', function () { held = i; resolve(); });
-      row.addEventListener('pointerleave', function () { held = null; resolve(); });
-      row.addEventListener('focusin', function () { held = i; resolve(); });
-      row.addEventListener('focusout', function () { held = null; resolve(); });
-    });
-
-    /* The red threshold runs once the stage is actually on screen,
-       rather than sitting at full width before anyone has seen it. */
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { stage.classList.toggle('is-live', e.isIntersecting); });
-      }, { threshold: 0.12 }).observe(stage);
-
-      var io = new IntersectionObserver(tick, { threshold: [0, 0.5, 1] });
-      rows.forEach(function (r) { io.observe(r); });
-    } else {
-      stage.classList.add('is-live');
-    }
-
-    window.addEventListener('scroll', tick, { passive: true });
-    window.addEventListener('resize', tick, { passive: true });
-    if (staged.addEventListener) staged.addEventListener('change', resolve);
-    resolve();
-  })();
-
-  /* ── Service panels on touch ───────────────────────────
-     A pointer gets the panel's move on hover. A finger never will, so
-     the panel performs it once as it arrives and then holds still —
-     not a loop, and not a state it stays in.                       */
-  (function () {
-    if (!window.matchMedia || !window.matchMedia('(hover: none)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!('IntersectionObserver' in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        io.unobserve(e.target);
-        var el = e.target;
-        el.classList.add('is-shown');
-        setTimeout(function () { el.classList.remove('is-shown'); }, 1400);
-      });
-    }, { threshold: 0.45 });
-    document.querySelectorAll('.svc').forEach(function (el) { io.observe(el); });
-  })();
-
-  /* ── Mobile menu ────────────────────────────────────────────────*/
-  (function () {
-    var btn = document.querySelector('.nav-menu');
-    var overlay = document.getElementById('nav-overlay');
-    if (!btn || !overlay) return;
-    var close = overlay.querySelector('.nav-overlay-close');
-    function setOpen(open) {
-      overlay.hidden = !open;
-      overlay.classList.toggle('is-open', open);
-      btn.setAttribute('aria-expanded', String(open));
-      document.documentElement.style.overflow = open ? 'hidden' : '';
-    }
-    btn.addEventListener('click', function () { setOpen(true); });
-    close.addEventListener('click', function () { setOpen(false); });
-    overlay.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
-    });
-  })();
-
-})();
-</script>
-
-</body>
-</html>
+</div>

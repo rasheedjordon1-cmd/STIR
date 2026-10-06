@@ -1,0 +1,145 @@
+
+/* ════════════════════════════════════════════════════════════════
+   SQUARESPACE HOST LAYER
+   Everything above is the STIR design system, scoped to .stir so
+   Squarespace's stylesheet can't leak in and ours can't leak out.
+   Everything below adapts it to Squarespace's DOM.
+   ════════════════════════════════════════════════════════════════ */
+
+/* The page ground. Squarespace paints its own white behind content. */
+body { background: #FAF2E6; }
+body.stir-dark-top { background: #0451AB; }
+
+/* Squarespace wraps blocks in padded containers that would inset our
+   full-bleed sections. Neutralise on STIR pages only. */
+.stir-page #sections,
+.stir-page .page-section,
+.stir-page .content-wrapper,
+.stir-page .sqs-layout,
+.stir-page .sqs-block,
+.stir-page .sqs-block-content,
+.stir-page .sqs-block-code {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+.stir-page .page-section > .content-wrapper { min-height: 0 !important; }
+
+/* We supply our own nav and footer. */
+.stir-page #header,
+.stir-page .header,
+.stir-page #footer-sections,
+.stir-page .sqs-announcement-bar-dropzone { display: none !important; }
+
+/* ── Defensive reset ─────────────────────────────────────────────
+   Squarespace styles bare elements directly — `h1 { font-family:
+   Georgia }`, `a { color: #0d7 }`, `ul { list-style: disc }` — and a
+   type selector in their sheet beats inheritance from our container,
+   however specific that container is. Inheritance is not a fight we
+   can win, so every element we use is reset to inherit explicitly and
+   our own rules then style it. Remove this and the headlines render
+   in the host's serif.                                             */
+.stir h1, .stir h2, .stir h3, .stir h4, .stir h5, .stir h6,
+.stir p, .stir ul, .stir ol, .stir li, .stir figure, .stir figcaption,
+.stir blockquote, .stir dl, .stir dd, .stir fieldset, .stir legend,
+.stir button, .stir input, .stir textarea, .stir select, .stir label,
+.stir a, .stir span, .stir strong, .stir em, .stir i, .stir form {
+  margin: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  font-style: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  /* inherit, not none: a <span> inside uppercase display type must
+     keep the transform it is sitting in. `none` silently lowercased
+     the struck phrase in the thesis. */
+  text-transform: inherit;
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 0;
+}
+.stir ul, .stir ol { list-style: none; }
+.stir img, .stir video { display: block; max-width: 100%; height: auto; }
+.stir button { cursor: pointer; -webkit-appearance: none; appearance: none; }
+.stir *, .stir *::before, .stir *::after { box-sizing: border-box; }
+
+/* Full-bleed that works inside ANY container width. The viewport-math
+   version used on the standalone build assumes our own shell is the
+   only wrapper; Squarespace nests several.
+
+   Margin, never transform: .reveal and [data-reveal] both animate
+   transform, and their resting `transform: none` would cancel a
+   translateX(-50%) and leave the band hanging half a screen right. */
+.stir { --bleed: 0px; }
+.stir .bleed,
+.stir .proof-reel-band,
+.stir .about-art,
+.stir .who-art {
+  width: 100vw;
+  max-width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   ENHANCEMENT 01 — ADAPTIVE NAV
+   The nav reads the section passing beneath it and inverts. Cobalt
+   environments get the ivory mark; ivory gets ink. One detail that
+   no template does.
+   ════════════════════════════════════════════════════════════════ */
+.stir .nav { transition: color 0.4s var(--ease); }
+
+/* The mark cross-fade and the ground inversion now live in the shared
+   stylesheet, driven by the header's scrolled state rather than by
+   whichever section is passing beneath it. data-ground stays because
+   the running index still reads it. */
+
+/* ════════════════════════════════════════════════════════════════
+   ENHANCEMENT 02 — RUNNING INDEX
+   A quiet publication marker: which part of the argument you're in.
+   State, not movement. Desktop only.
+   ════════════════════════════════════════════════════════════════ */
+.stir-index {
+  position: fixed;
+  left: clamp(20px, 3.2vw, 48px);
+  bottom: clamp(20px, 3vw, 40px);
+  z-index: 9;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease), color 0.4s var(--ease);
+}
+.stir-index.is-shown { opacity: 1; }
+.stir-index .idx-rule {
+  width: 34px; height: 1px;
+  background: currentColor;
+  opacity: 0.45;
+  position: relative;
+}
+.stir-index .idx-rule::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(var(--idx-progress, 0));
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+}
+.stir-index[data-on="cobalt"] { color: var(--ivory); }
+.stir-index[data-on="ivory"]  { color: var(--ink); }
+@media (min-width: 1024px) { .stir-index { display: flex; } }
+@media (prefers-reduced-motion: reduce) {
+  .stir-index, .stir-index .idx-rule::after { transition: none; }
+}

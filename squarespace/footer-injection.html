@@ -1,0 +1,625 @@
+<!-- ══ STIR · behaviour ══ Settings → Advanced → Code Injection → FOOTER -->
+<script>
+/* ════════════════════════════════════════════════════════════════
+   STIR — behavior. Motion has a job: explain, direct, reward or
+   confirm. Anything that does none of those is not here.
+   Everything below no-ops under prefers-reduced-motion.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine   = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* ── Reveal ─────────────────────────────────────────────────────
+     One observer drives every entrance variant. Elements opt in with
+     .reveal (default) or data-reveal="editorial|registration|structural".
+     Structural signals pass through and retire, so red never lingers
+     as decoration.                                                  */
+  var revealables = document.querySelectorAll('.reveal, [data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce) {
+    revealables.forEach(function (el) { el.classList.add('is-in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        el.classList.add('is-in');
+        io.unobserve(el);
+        if (el.getAttribute('data-reveal') === 'structural') {
+          setTimeout(function () { el.classList.add('sig-spent'); }, 900);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ── Metric count-up ────────────────────────────────────────────
+     EXPLAIN: the number is about scale, so it should accrue.        */
+  (function () {
+    var el = document.querySelector('[data-count]');
+    if (!el || !('IntersectionObserver' in window)) return;
+    var target = parseFloat(el.getAttribute('data-count'));
+    var suffix = el.getAttribute('data-count-suffix') || '';
+    if (reduce) { el.textContent = target + suffix; return; }
+    el.textContent = '0' + suffix;
+    var run = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        run.unobserve(e.target);
+        var t0 = null, dur = 1100;
+        requestAnimationFrame(function step(ts) {
+          if (t0 === null) t0 = ts;
+          var p = Math.min((ts - t0) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          var v = target * eased;
+          el.textContent = (p < 1 ? v.toFixed(target < 10 ? 1 : 0) : target) + suffix;
+          if (p < 1) requestAnimationFrame(step);
+        });
+      });
+    }, { threshold: 0.5 });
+    run.observe(el);
+  })();
+
+  /* ── Method: FIND ─ BUILD ─ RUN as one system ───────────────────
+     DIRECT: the red signal progresses down the spine to the active
+     stage, so the three rows read as sequence, not as a list.       */
+  (function () {
+    var index = document.getElementById('method-index');
+    if (!index) return;
+    var rows = Array.prototype.slice.call(index.querySelectorAll('.method-row'));
+
+    function progress() {
+      var active = index.querySelector('.method-row.is-active');
+      if (!active) return;
+      var head = active.querySelector('.method-row-head');
+      var h = active.offsetTop + (head ? head.offsetHeight : 0) * 0.55;
+      index.style.setProperty('--sig-progress', h + 'px');
+    }
+
+    rows.forEach(function (row) {
+      var btn = row.querySelector('.method-row-head');
+      btn.addEventListener('click', function () {
+        if (row.classList.contains('is-active')) return;
+        rows.forEach(function (r) {
+          r.classList.remove('is-active');
+          r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
+        });
+        row.classList.add('is-active');
+        btn.setAttribute('aria-expanded', 'true');
+        progress();
+      });
+    });
+
+    progress();
+    window.addEventListener('resize', progress, { passive: true });
+    /* the detail panel changes height as it opens */
+    rows.forEach(function (r) {
+      var d = r.querySelector('.method-detail');
+      if (d) d.addEventListener('transitionend', progress);
+    });
+  })();
+
+  /* The hero used to follow the pointer by a few pixels. The new
+     environment is a composed photograph, not a stage set: once it
+     has resolved, nothing in it moves. Removed rather than disabled,
+     so there is no dormant listener on the section.                 */
+
+  /* ── Creator wall ───────────────────────────────────────────────
+     Eight clips across the creator wall and the activations is far
+     more video than any page should fetch on arrival, so nothing
+     loads until it is asked for: the poster carries the tile and
+     preload="none" holds the file back. One plays at a time across
+     both sections, because competing loops are noise, not evidence.
+     Without JS the posters and the copy still carry it.            */
+  (function () {
+    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame, .band-frame'));
+    if (!frames.length) return;
+    var playing = null;
+
+    function stop(frame) {
+      if (!frame) return;
+      var v = frame.querySelector('video');
+      if (v) v.pause();
+      frame.classList.remove('is-playing');
+      frame.setAttribute('aria-label', frame.dataset.labelPlay);
+      if (playing === frame) playing = null;
+    }
+
+    frames.forEach(function (frame) {
+      var v = frame.querySelector('video');
+      if (!v) return;
+      frame.dataset.labelPlay = frame.getAttribute('aria-label');
+
+      frame.addEventListener('click', function () {
+        if (playing === frame) { stop(frame); return; }
+        stop(playing);
+        playing = frame;
+        frame.classList.add('is-playing');
+        frame.setAttribute('aria-label', frame.dataset.labelPlay.replace(/^Play/, 'Pause'));
+        v.play().catch(function () { stop(frame); });
+      });
+      v.addEventListener('ended', function () { stop(frame); });
+    });
+
+    /* A clip scrolled out of view is not being watched. */
+    if ('IntersectionObserver' in window) {
+      var off = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { if (!e.isIntersecting) stop(e.target); });
+      }, { threshold: 0.2 });
+      frames.forEach(function (f) { off.observe(f); });
+    }
+  })();
+
+
+  /* ── Who this is for: the trades as a working index ─────────────
+     EXPLAIN: the real question behind a list of verticals is "what
+     would you do for a business like mine". So the list answers it.
+
+     Wide: one sticky panel, because there is room to show the list
+     and the answer at once. Narrow: the answer opens underneath the
+     trade you chose, because a panel that updates somewhere else is
+     a change you cannot see. The panel names the trade either way.
+
+     Every answer is in the markup already, so with no JS the list
+     simply reads as nine trades with their answers under them.     */
+  (function () {
+    var list  = document.getElementById('trade-list');
+    var panel = document.getElementById('trade-panel');
+    var said  = document.getElementById('panel-said');
+    var note  = document.getElementById('panel-note');
+    var forEl = document.getElementById('panel-for');
+    if (!list || !panel || !said || !note) return;
+
+    var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
+    var current = trades[0];
+    var swapTimer = null;
+
+    function select(btn) {
+      if (!btn) return;
+      trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
+      if (btn === current) return;
+      current = btn;
+
+      var nextSaid = btn.getAttribute('data-said');
+      var nextNote = btn.getAttribute('data-note');
+      var nextFor  = btn.textContent.trim().toLowerCase();
+      function write() {
+        said.textContent = nextSaid;
+        note.textContent = nextNote;
+        if (forEl) forEl.textContent = nextFor;
+      }
+      if (reduce) { write(); return; }
+
+      /* fade out, swap, fade back — the copy replaces itself rather
+         than sliding, so nothing moves that shouldn't. */
+      panel.classList.add('is-swapping');
+      clearTimeout(swapTimer);
+      swapTimer = setTimeout(function () {
+        write();
+        panel.classList.remove('is-swapping');
+      }, 200);
+    }
+
+    trades.forEach(function (btn) {
+      btn.addEventListener('click', function () { select(btn); });
+      btn.addEventListener('focus', function () { select(btn); });
+      /* Hover previews on a real pointer only — never on touch, where
+         it would fire on the way to a tap. */
+      if (fine) btn.addEventListener('pointerenter', function (e) {
+        if (e.pointerType === 'mouse') select(btn);
+      });
+    });
+
+    /* Arrow keys walk the index, the way a keyboard user expects a
+       single-select list to behave. */
+    list.addEventListener('keydown', function (e) {
+      var step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
+               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      var i = trades.indexOf(document.activeElement);
+      if (i === -1) i = trades.indexOf(current);
+      trades[(i + step + trades.length) % trades.length].focus();
+    });
+  })();
+
+  /* ── Service plates — a few pixels of the same depth the hero has ─
+     REWARD: the figure sits in the cobalt world, so it should answer
+     to presence the way that world does. Desktop pointers only, never
+     on touch, never under reduced motion, and a no-op until real
+     artwork is in the plate.                                        */
+  (function () {
+    if (reduce || !fine) return;
+    var plates = document.querySelectorAll('.svc-plate');
+    if (!plates.length) return;
+    Array.prototype.forEach.call(plates, function (plate) {
+      var fig = plate.querySelector('.svc-fig');
+      if (!fig) return;
+      var queued = false, tx = 0, ty = 0;
+      plate.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var r = plate.getBoundingClientRect();
+        tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
+        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () {
+          fig.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
+          queued = false;
+        });
+      }, { passive: true });
+      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
+    });
+  })();
+
+  /* ── Nav theme: which environment is under the bar ───────────────
+     Read from the sections themselves, never from a scroll percentage.
+     A sampling line is held at the nav's own lower edge; whichever
+     [data-nav-theme] crosses it owns the bar. The observer watches for
+     zones entering and leaving that line, and a throttled rAF handler
+     covers the case the observer cannot see — a jump that clears a
+     short zone between two frames fires no entry at all, which used to
+     leave the bar a section behind. Both call the same measurement.  */
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var zones = document.querySelectorAll('[data-nav-theme]');
+    if (!zones.length) { nav.setAttribute('data-theme', 'cream'); return; }
+    var overlay = document.getElementById('nav-overlay');
+    var io = null, ticking = false, last = null;
+
+    /* Nine zones is nothing to measure, so measure them: the first one
+       spanning the line wins, which resolves an order-independent
+       answer even when one zone leaves as the next arrives. */
+    function resolve() {
+      var y = nav.offsetHeight + 1, theme = null;
+      for (var i = 0; i < zones.length; i++) {
+        var r = zones[i].getBoundingClientRect();
+        if (r.top <= y && r.bottom > y) { theme = zones[i].getAttribute('data-nav-theme'); break; }
+      }
+      if (!theme || theme === last) return;
+      last = theme;
+      nav.setAttribute('data-theme', theme);
+      if (overlay) overlay.setAttribute('data-theme', theme);
+    }
+
+    function tick() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; resolve(); });
+    }
+
+    /* Re-armed on resize because the nav's height is what positions
+       the line. */
+    function arm() {
+      if (!('IntersectionObserver' in window)) return;
+      if (io) io.disconnect();
+      var h = nav.offsetHeight;
+      var line = Math.max(0, window.innerHeight - h - 1);
+      io = new IntersectionObserver(tick, {
+        rootMargin: '-' + h + 'px 0px -' + line + 'px 0px', threshold: 0
+      });
+      zones.forEach(function (z) { io.observe(z); });
+    }
+
+    arm();
+    resolve();
+    window.addEventListener('scroll', tick, { passive: true });
+    var t;
+    window.addEventListener('resize', function () {
+      tick();
+      clearTimeout(t); t = setTimeout(function () { arm(); resolve(); }, 150);
+    }, { passive: true });
+    window.addEventListener('load', function () { arm(); resolve(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { arm(); resolve(); });
+  })();
+
+/* ── Sticky header ──────────────────────────────────────────────
+     Transparent over the cobalt hero, opaque paper once scrolled, so
+     it never has to hold contrast against moving artwork. One class,
+     flipped from a throttled rAF; no scroll work per frame.          */
+  (function () {
+    var nav = document.querySelector('.nav');
+    if (!nav) return;
+    var ticking = false;
+    /* Under Squarespace the stylesheet is scoped to .stir, which owns
+       its own --nav-h, so the measurement has to land on both. */
+    var scope = document.querySelector('.stir');
+    function sync() {
+      nav.classList.toggle('is-stuck', window.scrollY > 24);
+      var h = nav.offsetHeight + 'px';
+      document.documentElement.style.setProperty('--nav-h', h);
+      if (scope) scope.style.setProperty('--nav-h', h);
+    }
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { sync(); ticking = false; });
+    }
+    sync();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
+    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      document.documentElement.style.scrollBehavior = 'smooth';
+    }
+  })();
+
+  /* ── Selected work: which project holds the stage ───────────
+     Read from the index rows themselves, the same way the bar reads
+     its environment: whichever row spans the middle of the screen is
+     live. A pointer can take it over while it rests on a row, and the
+     scroll position takes it back when the pointer leaves. Nothing
+     here intercepts the scroll — the page moves at the speed the
+     reader moves it, and the stage just keeps up.                  */
+  (function () {
+    var stage = document.querySelector('.site-stage');
+    if (!stage) return;
+    var rows = [].slice.call(stage.querySelectorAll('.site-row'));
+    var shots = [].slice.call(stage.querySelectorAll('.site-shot'));
+    if (rows.length < 2 || rows.length !== shots.length) return;
+
+    var staged = window.matchMedia('(min-width: 1024px)');
+    var live = -1, held = null, ticking = false;
+
+    function paint(i) {
+      if (i === live) return;
+      live = i;
+      for (var n = 0; n < rows.length; n++) {
+        rows[n].classList.toggle('is-active', n === i);
+        shots[n].classList.toggle('is-active', n === i);
+      }
+    }
+
+    function fromScroll() {
+      var mid = window.innerHeight / 2, pick = 0;
+      for (var i = 0; i < rows.length; i++) {
+        var r = rows[i].getBoundingClientRect();
+        if (r.top <= mid && r.bottom > mid) { pick = i; break; }
+        if (r.top > mid) break;          /* past the middle: keep the last one */
+        pick = i;
+      }
+      return pick;
+    }
+
+    function resolve() {
+      if (!staged.matches) { paint(0); return; }
+      paint(held !== null ? held : fromScroll());
+    }
+
+    function tick() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { ticking = false; resolve(); });
+    }
+
+    rows.forEach(function (row, i) {
+      row.addEventListener('pointerenter', function () { held = i; resolve(); });
+      row.addEventListener('pointerleave', function () { held = null; resolve(); });
+      row.addEventListener('focusin', function () { held = i; resolve(); });
+      row.addEventListener('focusout', function () { held = null; resolve(); });
+    });
+
+    /* The red threshold runs once the stage is actually on screen,
+       rather than sitting at full width before anyone has seen it. */
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { stage.classList.toggle('is-live', e.isIntersecting); });
+      }, { threshold: 0.12 }).observe(stage);
+
+      var io = new IntersectionObserver(tick, { threshold: [0, 0.5, 1] });
+      rows.forEach(function (r) { io.observe(r); });
+    } else {
+      stage.classList.add('is-live');
+    }
+
+    window.addEventListener('scroll', tick, { passive: true });
+    window.addEventListener('resize', tick, { passive: true });
+    if (staged.addEventListener) staged.addEventListener('change', resolve);
+    resolve();
+  })();
+
+  /* ── Service panels on touch ───────────────────────────
+     A pointer gets the panel's move on hover. A finger never will, so
+     the panel performs it once as it arrives and then holds still —
+     not a loop, and not a state it stays in.                       */
+  (function () {
+    if (!window.matchMedia || !window.matchMedia('(hover: none)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        var el = e.target;
+        el.classList.add('is-shown');
+        setTimeout(function () { el.classList.remove('is-shown'); }, 1400);
+      });
+    }, { threshold: 0.45 });
+    document.querySelectorAll('.svc').forEach(function (el) { io.observe(el); });
+  })();
+
+  /* ── Mobile menu ────────────────────────────────────────────────*/
+  (function () {
+    var btn = document.querySelector('.nav-menu');
+    var overlay = document.getElementById('nav-overlay');
+    if (!btn || !overlay) return;
+    var close = overlay.querySelector('.nav-overlay-close');
+    function setOpen(open) {
+      overlay.hidden = !open;
+      overlay.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    }
+    btn.addEventListener('click', function () { setOpen(true); });
+    close.addEventListener('click', function () { setOpen(false); });
+    overlay.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
+    });
+  })();
+
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — the parts unique to /contact. Reveal, the mobile menu
+   and everything else already ran above; these two no-op on any
+   page that doesn't have the form.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Handoff from the homepage starter ──────────────────────────
+     Carry the answer over, then move the visitor to the next
+     unanswered question rather than the top of the form.           */
+  (function () {
+    var q = new URLSearchParams(window.location.search).get('business');
+    if (!q) return;
+    var field = document.getElementById('f-business');
+    if (!field) return;
+    field.value = q;
+    var next = document.querySelector('input[name="situation"]');
+    if (!next) return;
+    var block = next.closest('.q-block');
+    if (!block) return;
+    setTimeout(function () {
+      block.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      next.focus({ preventScroll: true });
+    }, 260);
+  })();
+
+  /* ── Submit ─────────────────────────────────────────────────────
+     Posts to Formspree over fetch so the success state is immediate.
+     CONFIRM: the red signal travels the rail while the request is in
+     flight, then the form is replaced by the acknowledgement. Without
+     JS the form still submits normally and Formspree answers.       */
+  (function () {
+    var form = document.getElementById('contact-form');
+    if (!form) return;
+    if (form.action.indexOf('FORMSPREE_ID') !== -1) {
+      console.warn('STIR: replace FORMSPREE_ID in the contact page Code Block.');
+    }
+    var ok  = document.getElementById('form-success');
+    var bad = document.getElementById('form-error');
+    var btn = form.querySelector('button[type="submit"]');
+
+    function show(el) {
+      form.style.display = 'none';
+      el.classList.add('is-shown');
+      el.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (btn) { btn.disabled = true; btn.firstChild.nodeValue = 'Sending '; }
+      form.classList.add('is-sending');
+      var travelled = new Promise(function (go) { setTimeout(go, reduce ? 0 : 620); });
+      var sent = fetch(form.action, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+      Promise.all([travelled, sent]).then(function (res) {
+        if (!res[1].ok) throw new Error(res[1].status);
+        show(ok);
+      }).catch(function () {
+        if (btn) { btn.disabled = false; btn.firstChild.nodeValue = 'Send it to STIR '; }
+        form.classList.remove('is-sending');
+        show(bad);
+      });
+    });
+  })();
+})();
+
+/* ════════════════════════════════════════════════════════════════
+   SQUARESPACE ENHANCEMENTS
+   01 · Adaptive nav — inverts against the ground passing beneath it
+   02 · Running index — which part of the argument you're in
+   Both are state, not movement. Both are inert under reduced motion
+   in the sense that nothing animates continuously.
+   ════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var root = document.querySelector('.stir');
+  if (!root) return;
+  var nav = root.querySelector('.nav');
+  var sections = Array.prototype.slice.call(root.querySelectorAll('[data-ground]'));
+  if (!sections.length) return;
+
+  /* running index element (desktop only via CSS) */
+  var idx = document.createElement('div');
+  idx.className = 'stir-index';
+  idx.setAttribute('aria-hidden', 'true');
+  idx.innerHTML = '<span class="idx-rule"></span><span class="idx-label"></span>';
+  document.body.appendChild(idx);
+  var label = idx.querySelector('.idx-label');
+
+  var navH = 64, current = null, ticking = false;
+
+  function measure() {
+    navH = nav ? nav.offsetHeight : 64;
+  }
+
+  function update() {
+    /* Viewport-relative, not offsetTop: Squarespace nests our root in
+       several positioned wrappers, and offsetTop is measured against
+       whichever of them happens to be the offsetParent. */
+    var line = navH * 0.6;
+    var active = sections[0];
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].getBoundingClientRect().top <= line) active = sections[i];
+    }
+    if (active !== current) {
+      current = active;
+      var ground = active.getAttribute('data-ground') || 'ivory';
+      if (nav) nav.setAttribute('data-on', ground);
+      idx.setAttribute('data-on', ground);
+      label.textContent = active.getAttribute('data-index') || '';
+    }
+    /* progress through the whole argument */
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var p = max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+    idx.style.setProperty('--idx-progress', p.toFixed(3));
+    /* Shown once the argument is underway, and retired once it lands:
+       the closing section owns the bottom-left corner, and a marker
+       counting a journey that has finished is just clutter. */
+    var last = sections[sections.length - 1];
+    var landed = last.getBoundingClientRect().top < window.innerHeight * 0.6;
+    idx.classList.toggle('is-shown', window.scrollY > window.innerHeight * 0.35 && !landed);
+  }
+
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { update(); ticking = false; });
+  }
+
+  function refresh() { measure(); update(); }
+
+  refresh();
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', refresh, { passive: true });
+
+  /* The first pass runs before the artwork has laid out, when every
+     section still reports roughly the same offset — which is how the
+     nav ended up reading the wrong ground at first paint. Recompute
+     whenever the page actually changes height. */
+  /* The first pass runs before the artwork has laid out, when every
+     section still reports roughly the same position — which is how the
+     nav ended up showing the wrong ground at first paint. Nothing here
+     is a poll: each is a one-shot settle as the page finishes
+     resolving. */
+  window.addEventListener('load', refresh);
+  [120, 500, 1200].forEach(function (ms) { setTimeout(refresh, ms); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  if ('ResizeObserver' in window) { new ResizeObserver(refresh).observe(root); }
+  root.querySelectorAll('img').forEach(function (img) {
+    if (!img.complete) img.addEventListener('load', refresh, { once: true });
+  });
+})();
+</script>

@@ -1,0 +1,3117 @@
+/* ════════════════════════════════════════════════════════════════
+   STIR — shared system
+   Semantic color roles:
+   COBALT — world / visual environment.  IVORY — information /
+   breathing room.  INK — structure / typography.  SIGNAL RED —
+   activation and commercial significance only. Red is never
+   atmosphere.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Founders Grotesk — licensed, self-hosted ─────────────────── */
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-light.woff2") format("woff2");
+  font-weight: 300; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-light-italic.woff2") format("woff2");
+  font-weight: 300; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/founders-grotesk-bold-italic.woff2") format("woff2");
+  font-weight: 700; font-style: italic; font-display: swap;
+}
+
+:root {
+  --ivory:   #FAF2E6;
+  --ink:     #161310;
+  --cobalt:  #0451AB;                    /* matches the artwork field  */
+  --red:     #F21B16;                    /* activation only            */
+  --red-deep: #C4120D;                   /* the plate: holds ivory type */
+  --red-press: #A80F0B;                  /* the same ink, under press   */
+
+  --ink-70: rgba(22, 19, 16, 0.72);
+  --ink-60: rgba(22, 19, 16, 0.58);
+  --ink-35: rgba(22, 19, 16, 0.32);
+  --ink-05: rgba(22, 19, 16, 0.05);
+  --ivory-75: rgba(250, 242, 230, 0.78);
+  --ivory-40: rgba(250, 242, 230, 0.40);
+
+  /* ── Motion grammar ───────────────────────────────────────────
+     Four durations and one curve for the whole interface. Pointer
+     work sits at the fast end, reveals in the middle, section-level
+     changes at the slow end. Amplitude stays between 2 and 8px: the
+     quality is meant to come from precision, not travel. */
+  --stir-fast:   160ms;
+  --stir-ui:     220ms;
+  --stir-medium: 320ms;
+  --stir-slow:   520ms;
+  --stir-ease:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  --wht-70: rgba(255, 255, 255, 0.70);
+  --wht-35: rgba(255, 255, 255, 0.35);
+  --wht-07: rgba(255, 255, 255, 0.07);
+
+  --font-display: "Founders Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
+
+  --max-w: 1520px;
+  --gutter: clamp(20px, 3.2vw, 48px);
+  --col-gap: clamp(16px, 1.6vw, 32px);
+  --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
+
+  /* Scale re-fit for Founders Grotesk (normal width, not condensed) */
+  --t-hero:    clamp(2.6rem, 7.1vw, 6.8rem);
+  --t-giant:   clamp(2.3rem, 6.4vw, 6.2rem);
+  --t-big:     clamp(1.8rem, 4.5vw, 4.3rem);
+  --t-metric:  clamp(5.5rem, 17vw, 16rem);
+  --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
+  --t-utility: 0.72rem;
+
+  --nav-h: 76px;                         /* compact once stuck      */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: clip; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+img, video { max-width: 100%; display: block; }
+/* Art images size from their CSS aspect-ratio, not the HTML height attr */
+.obs-art, .about-art { height: auto; }
+
+:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+::selection { background: var(--ink); color: var(--ivory); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* ── Shell + grid ─────────────────────────────────────────────── */
+.shell {
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+}
+@media (max-width: 1023px) { .grid { grid-template-columns: repeat(8, 1fr); } }
+@media (max-width: 639px)  { .grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── Type voices ──────────────────────────────────────────────── */
+/* Display: monumental, declarative — Founders Grotesk Bold */
+.display {
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.94;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+/* Body: clear, direct, commercial — someone explaining something
+   across a table */
+.body {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--ink-70);
+  max-width: 46ch;
+}
+.body strong { color: var(--ink); font-weight: 500; }
+/* Editorial serif: selective accent only (hero proposition, thesis) */
+.editorial {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.08);
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--ink-70);
+  max-width: 44ch;
+}
+/* Utility: publishing metadata, used only where it means something */
+.utility {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+}
+
+/* ── CTA vocabulary — red appears at the moment of action ─────── */
+/* ── Primary action ──────────────────────────────────────────────
+   One construction everywhere: a warm-paper label carrying the words
+   and a separate red compartment carrying the arrow. Paper holds its
+   own on cobalt and on ivory alike, and red stays on the part that
+   moves you forward rather than flooding the whole control.
+   ──────────────────────────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: stretch;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1;
+  text-align: left;
+  transition: transform 0.12s var(--ease);
+}
+/* ── PRIMARY · the signal button ──────────────────────────────────
+   One red rectangle, cream type. It replaces the two-compartment
+   paper-and-red construction, because the nav now changes colour
+   with its environment and the CTA has to be the thing that does
+   not. A constant can only be constant if it is one object.
+
+   Hover advances rather than jumps: the plate stays planted, a
+   deeper red arrives from the left under the label, the label moves
+   2px and the arrow 5px. Nothing scales. */
+/* Signal Red is a marker colour, not a type ground: ivory on #F21B16
+   measures 3.82:1 and ink on it 4.36:1, so neither label passes AA at
+   button size. The plate is therefore the deep red, which holds ivory
+   at 5.50:1, and pure Signal Red stays where it carries no type — the
+   squares, the rules, the marks. */
+.cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--red-deep);
+  color: var(--ivory);
+  border-radius: 1px;
+  isolation: isolate;
+}
+.cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--red-press);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.cta:hover::before,
+.cta:focus-visible::before { transform: scaleX(1); }
+.cta-label {
+  display: flex;
+  align-items: center;
+  min-height: 46px;                 /* comfortable on touch */
+  padding: 0 1.5em;
+  color: inherit;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.cta-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  min-width: 2.6em;
+  min-height: 46px;
+  padding-right: 1.2em;
+  color: inherit;
+  overflow: hidden;
+}
+.cta-glyph {
+  font-style: normal;
+  font-size: 1.1em;
+  line-height: 1;
+  display: block;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.cta:hover .cta-label,
+.cta:focus-visible .cta-label { transform: translateX(2px); }
+.cta:hover .cta-glyph,
+.cta:focus-visible .cta-glyph { transform: translate(5px, -5px); }
+.cta--flat:hover .cta-glyph,
+.cta--flat:focus-visible .cta-glyph { transform: translateX(5px); }
+.cta:active { transform: translateY(1px); }
+.cta:disabled { opacity: 0.55; cursor: default; }
+.cta:disabled .cta-glyph, .cta:disabled .cta-label { transform: none; }
+
+/* ── SECONDARY · structure ────────────────────────────────────────
+   Transparent with a rule. Red arrives on the bottom edge only, so
+   it never competes with the primary by filling. */
+.cta--ghost {
+  background: none;
+  color: inherit;
+  border: 1px solid currentColor;
+  border-radius: 0;
+}
+.cta--ghost::before {
+  inset: auto 0 0 0;
+  height: 2px;
+  background: var(--red);
+  z-index: 0;
+}
+.cta--ghost:hover .cta-label,
+.cta--ghost:focus-visible .cta-label { transform: translateX(2px); }
+
+/* The compact one, used in the nav bar. */
+.cta--sm { font-size: 0.7rem; }
+.cta--sm .cta-label { min-height: 44px; padding: 0 1.1em; }
+.cta--sm .cta-arrow { min-width: 2.4em; min-height: 44px; }
+
+/* Over the cobalt hero the paper label needs no ink hairline to
+   separate it from the ground. */
+
+.cta-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.8em;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  padding-bottom: 0.5em;
+  position: relative;
+}
+/* The full-width rule is the resting state; a Signal Red rule grows
+   under the first third of the label on hover, so the action reads as
+   starting rather than as a whole new underline. */
+.cta-line::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+}
+.cta-line > .cta-line-rule {
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 32%;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.cta-line:hover > .cta-line-rule,
+.cta-line:focus-visible > .cta-line-rule { transform: scaleX(1); }
+.cta-line { transition: transform var(--stir-ui) var(--stir-ease); }
+.cta-line:hover, .cta-line:focus-visible { transform: translateX(1px); }
+.cta-line .arrow { display: inline-block; transition: transform var(--stir-ui) var(--stir-ease); }
+.cta-line:hover .arrow, .cta-line:focus-visible .arrow { transform: translateX(5px); }
+
+/* ── Focus, everywhere, on its own terms ─────────────────
+   Hover is never the only signal. The outline colour follows the
+   ground so it stays visible on paper and on cobalt alike. */
+.cta:focus-visible,
+.cta-line:focus-visible,
+.site-name a:focus-visible,
+.press-row:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 3px;
+}
+.hero :focus-visible, .convert :focus-visible, .belief :focus-visible,
+.footer :focus-visible { outline-color: var(--ivory); }
+
+/* ── Press ──────────────────────────────────────────────
+   Touch has no hover, so press is where the primary gets to answer:
+   the fill completes under the finger instead of waiting for a
+   pointer that is never coming. The box itself takes one pixel —
+   enough to register, not enough to read as a jump.
+   ──────────────────────────────────────────────────────────────── */
+.cta:active::before { transform: scaleX(1); }
+
+/* Text actions have no box to shift, so they take the travel alone
+   and the rule beneath them goes live. */
+.cta-line:active { transform: translate(1px, 1px); }
+.cta-line:active > .cta-line-rule { transform: scaleX(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-label, .cta-arrow, .cta-glyph, .cta::before,
+  .cta-line, .cta-line > .cta-line-rule, .cta-line .arrow { transition: none; }
+  .cta:active,
+  .cta-line:active { transform: none; }
+  .cta-line:hover, .cta-line:focus-visible { transform: none; }
+  /* The field still arrives, it just arrives all at once. */
+  .nav-overlay.is-open,
+  .nav-overlay.is-open .nav-overlay-links a,
+  .nav-overlay.is-open .nav-overlay-foot { animation: none; }
+  .nav-overlay-links a, .nav-overlay-links a::after { transition: none; }
+  .nav-overlay-links a:active { transform: none; }
+}
+
+/* ── Annotation (used sparingly — structural, not decorative) ─── */
+.ann {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.7em;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.5;
+}
+.ann-mark {
+  flex: none;
+  width: 0.55em;
+  height: 0.55em;
+  background: var(--red);
+  align-self: center;
+}
+
+/* ── Development placeholder frames (final art drops in later) ── */
+.ph {
+  position: relative;
+  border: 1px solid var(--ink-35);
+  background: var(--ink-05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px;
+  overflow: hidden;
+}
+.ph .ph-id   { color: var(--ink); }
+.ph .ph-note { color: var(--ink-60); max-width: 34ch; font-size: 0.64rem; }
+.ph--on-cobalt { border-color: var(--wht-35); background: var(--wht-07); }
+.ph--on-cobalt .ph-id   { color: #fff; }
+.ph--on-cobalt .ph-note { color: var(--wht-70); }
+
+/* ── Reveal (respects reduced motion) ─────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  html.js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+  html.js .reveal.is-in { opacity: 1; transform: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   NAVIGATION — ivory system over the cobalt world
+   ════════════════════════════════════════════════════════════════ */
+/* Fixed, with two states. Transparent over the cobalt hero so the
+   artwork is uninterrupted; once you have scrolled it becomes an
+   opaque paper bar with the red mark, ink links and a hairline — so
+   it never has to hold contrast against moving imagery. */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  border-bottom: 1px solid transparent;
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease),
+              padding 0.3s var(--ease);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: clamp(18px, 2.2vw, 30px);
+  transition: padding-block 0.3s var(--ease);
+}
+/* Stuck only compresses the bar. The paper panel is gone: the nav
+   belongs inside whatever environment is under it, so it changes its
+   own colour instead of bringing a background with it. */
+.nav.is-stuck .nav-inner { padding-block: 11px; }
+
+/* ── Context-aware state ──────────────────────────────────────────
+   The nav reads data-nav-theme off the section beneath it. Ink and
+   ivory swap; Signal Red does not. The red CTA is the one element
+   that holds still while the interface around it changes, which is
+   what makes it read as a constant rather than as decoration. */
+.nav { --nav-fg: var(--ivory); --nav-dim: var(--ivory-75); --nav-rule: transparent; }
+.nav[data-theme="cream"] {
+  --nav-fg: var(--ink);
+  --nav-dim: rgba(22, 19, 16, 0.68);
+}
+.nav[data-theme="cream"].is-stuck { --nav-rule: var(--ink-05); }
+.nav[data-theme="cobalt"].is-stuck { --nav-rule: rgba(250, 242, 230, 0.18); }
+/* Nothing tracks the environment without script, and the bar crosses
+   both grounds, so it stops being transparent and brings its own. */
+html:not(.js) .nav {
+  background: var(--ivory);
+  --nav-fg: var(--ink);
+  --nav-dim: rgba(22, 19, 16, 0.68);
+  --nav-rule: var(--ink-05);
+}
+html:not(.js) .nav-logo .mark-ivory { opacity: 0; }
+html:not(.js) .nav-logo .mark-red { opacity: 1; }
+.nav { border-bottom-color: var(--nav-rule); }
+.nav,
+.nav .nav-links a:not(.nav-start) { color: var(--nav-dim); }
+.nav .nav-links a:not(.nav-start):hover,
+.nav .nav-links a:not(.nav-start):focus-visible,
+.nav .nav-links a:not(.nav-start)[aria-current] { color: var(--nav-fg); }
+.nav .nav-links .nav-no { color: var(--nav-dim); opacity: 0.6; }
+.nav .nav-links a:not(.nav-start) { transition: color var(--stir-ui) var(--stir-ease); }
+
+/* Both marks ship; which one shows is a state, not a page. */
+.nav-logo { position: relative; display: block; line-height: 0; }
+.nav-logo img {
+  height: clamp(22px, 2.1vw, 30px);
+  width: auto;
+  transition: opacity 0.3s var(--ease);
+}
+.nav-logo .mark-red { position: absolute; inset: 0; opacity: 0; }
+.nav-logo img { transition: opacity var(--stir-ui) var(--stir-ease); }
+.nav[data-theme="cream"] .nav-logo .mark-ivory,
+.nav--ink               .nav-logo .mark-ivory { opacity: 0; }
+.nav[data-theme="cream"] .nav-logo .mark-red,
+.nav--ink               .nav-logo .mark-red { opacity: 1; }
+
+/* Anything the nav can jump to has to clear the bar. */
+[id] { scroll-margin-top: calc(var(--nav-h) + 16px); }
+/* scroll-behavior is set from JS on the real document: under
+   Squarespace this stylesheet is scoped to .stir and cannot reach it. */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: clamp(22px, 2.6vw, 44px);
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ivory);
+  position: relative;
+  padding-bottom: 3px;
+}
+/* ── The nav as an index, not a menu ─────────────────────────────
+   Every section on this site is numbered. The nav points at two of
+   them, so it carries their numerals in the same mono the running
+   index uses. The numerals sit back until you reach for them.
+
+   And the small red square — already the mark on .ann-mark,
+   .cta-line and .trade — now means exactly one thing everywhere:
+   this is live. On the nav that makes it "you are here", which is
+   worth more than another underline.                                */
+.nav-links a { position: relative; }
+.nav-links .nav-no {
+  font-style: normal;
+  font-size: 0.85em;
+  letter-spacing: 0.04em;
+  margin-right: 0.6em;
+  color: var(--ivory-40);
+  transition: color 0.3s var(--ease);
+}
+.nav-links a:hover .nav-no,
+.nav-links a:focus-visible .nav-no,
+.nav-links a[aria-current] .nav-no { color: inherit; }
+
+.nav-links a:not(.nav-start)[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
+}
+/* The mark is the current state, so the hover rule stands down. */
+.nav-links a:not(.nav-start)[aria-current]::after { display: none; }
+
+.nav--ink .nav-links .nav-no { color: var(--ink-35); }
+
+/* Same index in the overlay, where the type is large enough that the
+   numeral needs to sit further out of the way. */
+.nav-overlay-links a { position: relative; }
+.nav-overlay-links .nav-no {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.3em;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  vertical-align: 0.9em;
+  margin-right: 0.5em;
+  color: var(--field-idx);
+}
+.nav-overlay-links a[aria-current] .nav-no { color: var(--red); }
+
+/* Hover is the same red square the site already uses for "this is
+   live" — on .ann-mark, on .cta-line, on the trade list. A rule
+   sweeping half the width would be a different language. */
+.nav-links a:not(.nav-start)::after {
+  content: "";
+  position: absolute;
+  left: -0.95em;
+  top: 0.44em;
+  width: 0.42em;
+  height: 0.42em;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.nav-links a:not(.nav-start):hover::after,
+.nav-links a:not(.nav-start):focus-visible::after { transform: scaleX(1); }
+/* .nav-start now carries the shared .cta construction; see Primary action. */
+
+/* ════════════════════════════════════════════════════════════════
+   01 — HERO · ATTENTION SHOULD PAY.
+   Full cobalt environment. The illustration sits full-bleed behind
+   the interface — one composition, no frame, no feather.
+   ════════════════════════════════════════════════════════════════ */
+.hero {
+  position: relative;
+  /* Sampled from the asset's own sky, not the brand token: this is
+     what shows for the instant before the image paints, and a token
+     cobalt there reads as a flash of a different blue. */
+  background: #013DB8;
+  color: var(--ivory);
+  min-height: max(92svh, 680px);
+  display: flex;
+  flex-direction: column;
+  overflow: clip;
+}
+.hero picture { position: absolute; inset: 0; z-index: 1; display: block; }
+
+/*
+  HERO ENVIRONMENT — assets/env/hero-cobalt-*
+  The architecture and its red windows are massed in the lower right.
+  object-position holds that mass in frame and lets the crop eat the
+  left, which is empty cobalt and the one part of the picture we can
+  afford to lose. No filter, no scrim, no gradient: the asset already
+  carries its own contrast, and the nav sits over open sky.
+*/
+.hero-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 68% 54%;
+  z-index: 1;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%; /* flex column + auto margins would otherwise shrink-wrap */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* Lands the block's optical centre around a third down the frame,
+     clear of the nav above and the architecture below right. */
+  padding-top: clamp(130px, 25vh, 250px);
+  padding-bottom: clamp(24px, 3.5vh, 44px);
+}
+
+/* Copy territory — the open cobalt. Held to the shell so it lines up
+   with the nav above it; a free 6vw inset would float off that edge. */
+.hero-copy { max-width: min(46%, 700px); }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ivory);
+  margin-bottom: clamp(20px, 3vh, 36px);
+}
+.eyebrow .arr { padding-inline: 0.35em; }
+.eyebrow-mark {
+  display: inline-block;
+  width: 7px; height: 7px;
+  margin-right: 0.85em;
+  vertical-align: 0.04em;
+  background: var(--red);
+}
+
+.hero-headline {
+  font-size: var(--t-hero);
+  line-height: 0.95;
+  color: var(--ivory);
+  width: max-content;
+  max-width: none;
+}
+.hl-line { display: block; overflow: hidden; }
+.hl-line > span { display: block; }
+
+.hero-prop {
+  margin-top: clamp(28px, 4vh, 48px);
+  color: var(--ivory-75);
+  max-width: 36ch;
+}
+.hero-prop strong { color: var(--ivory); font-weight: 500; }
+
+.hero-cta {
+  margin-top: clamp(28px, 4.5vh, 52px);
+  color: var(--ivory);
+}
+
+/* Below-the-fold index — quiet, structural */
+.hero-index {
+  margin-top: auto;
+  color: var(--ivory-75);
+}
+.hero-index .hi-label {
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--ivory-40);
+}
+.hero-index .down {
+  display: block;
+  margin-top: 14px;
+}
+
+/* Load choreography — arrive confidently, then stop performing */
+@media (prefers-reduced-motion: no-preference) {
+  .nav-inner {
+    opacity: 0;
+    animation: fade-up 0.6s var(--ease) 0.1s forwards;
+  }
+  /* The picture is present from the first frame and only resolves
+     its exposure — no zoom, nothing to wait for. Marker, headline,
+     then copy and CTA; the whole sequence is done inside 1.4s and
+     then the hero stops moving for good. */
+  .hero-art {
+    opacity: 0.82;
+    animation: art-settle 0.9s var(--ease) 0.05s forwards;
+  }
+  @keyframes art-settle { to { opacity: 1; } }
+
+  .hl-line > span {
+    transform: translateY(112%);
+    animation: hl-rise 0.7s var(--ease) 0.35s forwards;
+  }
+  .hl-line:nth-child(2) > span { animation-delay: 0.45s; }
+  @keyframes hl-rise { to { transform: none; } }
+
+  .eyebrow, .hero-prop, .hero-cta, .hero-index {
+    opacity: 0;
+    animation: fade-up 0.55s var(--ease) forwards;
+  }
+  .eyebrow     { animation-delay: 0.2s; }
+  .hero-prop   { animation-delay: 0.7s; }
+  .hero-cta    { animation-delay: 0.8s; }
+  .hero-index  { animation-delay: 0.9s; }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: none; }
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   02 — THE ARGUMENT · one headline, concentrated
+   A small concession, the statement people should leave with, and
+   the method underneath. Cobalt on paper, with one red field.
+   ════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   02 — THE ARGUMENT · CREAM ENVIRONMENT
+   The hero's opposite number: same system, inverted weighting. The
+   picture runs the full bleed and the copy is composed into the one
+   field it leaves open — the blue-black shadow across the left.
+   Sampled sky behind it so the pre-paint frame is the picture's own
+   colour rather than a flash of paper.
+   ════════════════════════════════════════════════════════════════ */
+.belief {
+  position: relative;
+  background: #011639;
+  color: var(--ivory);
+  min-height: min(86svh, 920px);
+  display: flex;
+  overflow: clip;
+}
+.belief picture { position: absolute; inset: 0; z-index: 1; display: block; }
+.belief-art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Holds the doorway and the building edge at the right; the crop
+     takes from the left, which is shadow. */
+  object-position: 42% 50%;
+  z-index: 1;
+}
+.belief-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  /* Measured off the asset, not guessed. The parapet band sits at
+     28.7–29.5% of the picture, and the crop puts it between 25% and
+     28% of this section across the desktop range; by 75% of the
+     picture's height the diagonal has taken the left third of the
+     frame. So the label rides the sky at ~9svh and everything under
+     it starts past 32% of the section, where the shadow is still
+     wide enough to hold a column. The section is min(86svh, 920px),
+     which is what lets svh track it instead of drifting. */
+  align-self: flex-start;
+  padding-top: 9svh;
+  padding-bottom: clamp(40px, 6vh, 90px);
+}
+.belief-label {
+  border-top: 1px solid var(--ivory-40);
+  color: var(--ivory-75);
+  padding-top: 12px;
+  max-width: 320px;
+  /* Carries the statement down past the parapet. The subtraction is
+     the label's own height, so the gap is measured to where the
+     statement lands rather than from where the label sits. */
+  margin-bottom: calc(18.5svh - 30px);
+}
+.belief-intro {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.1rem, 1.7vw, 1.6rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--ivory-75);
+  margin-bottom: clamp(16px, 2.2vh, 26px);
+}
+.belief-claim {
+  color: var(--ivory);
+  /* Smaller than it was on paper. The picture is the scale here, and
+     a poster-sized headline would bury the field it is sitting in.
+     Bound by height as well as width: on a short viewport the shadow
+     is short too, and a headline sized only off vw walks the last
+     lines of the deck straight onto the lit wall. */
+  font-size: clamp(2.2rem, min(4.9vw, 7.1svh), 4.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  max-width: 13ch;
+  text-wrap: balance;
+}
+/* Editorial emphasis, not a control: a block of red with the words
+   knocked out of it. Deliberately carries no hover, no cursor and
+   no focus behaviour, so nothing reads as clickable. */
+.belief-claim .field {
+  display: inline-block;
+  white-space: nowrap;
+  background: var(--red);
+  color: var(--ivory);
+  /* Sized off the measured cap height so the ink sits evenly above
+     and below the letters. An inline-block's box is driven by the
+     line box, not the glyphs, so the default leaves roughly four
+     times as much red under the word as over it. */
+  line-height: 0.46;
+  padding: 0.37em 0.15em 0;
+  margin: 0 0.02em;
+  cursor: inherit;
+}
+.belief-deck {
+  margin-top: clamp(18px, 2.8svh, 38px);
+  /* Measured against the shadow, not against comfort: a wider column
+     reaches the diagonal before the sentence ends. */
+  max-width: 28ch;
+  color: var(--ivory-75);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .belief-intro, html.js .belief-claim, html.js .belief-deck {
+    opacity: 0;
+    transform: translateY(0.4rem);
+    transition: opacity 0.6s var(--ease), transform 0.75s var(--ease);
+  }
+  html.js .belief-claim { transition-delay: 0.1s; }
+  html.js .belief-deck  { transition-delay: 0.22s; }
+  html.js .belief-statement.is-in .belief-intro,
+  html.js .belief-statement.is-in .belief-claim,
+  html.js .belief-statement.is-in .belief-deck { opacity: 1; transform: none; }
+}
+
+@media (max-width: 1023px) { .belief-claim { max-width: none; } }
+@media (max-width: 639px) {
+  .belief-claim { line-height: 0.95; letter-spacing: -0.025em; }
+  .belief-deck  { max-width: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   03 — PROOF · ivory section, one large cobalt evidence field
+   (Option B: the page stays ivory; cobalt returns as a block of
+   evidence rather than a second full environment.)
+   ════════════════════════════════════════════════════════════════ */
+.proof {
+  padding-top: clamp(60px, 8vh, 112px);
+  padding-bottom: clamp(64px, 9vh, 128px);
+}
+.proof-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.proof-meta { text-align: right; color: var(--ink-60); }
+
+.proof-title {
+  font-size: var(--t-giant);
+  margin-bottom: clamp(64px, 11vh, 160px);
+}
+
+.proof-body {
+  align-items: end;
+  margin-bottom: clamp(56px, 8vh, 110px);
+}
+.proof-lead { grid-column: 1 / 8; }
+.proof-statement-wrap { grid-column: 8 / 13; }
+.proof-metric {
+  font-size: var(--t-metric);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  margin-left: -0.03em;
+}
+.proof-metric-label { margin-top: 20px; color: var(--ink-60); }
+/* Overlapping totals, stated as overlapping. Kept small and kept
+   beneath the figure so the metric stays one figure, not a panel. */
+.proof-metric-note {
+  margin-top: 10px;
+  color: var(--ink-35);
+  line-height: 1.6;
+  /* ch is a narrow unit in a monospace face — 34ch measured 236px and
+     broke a two-sentence note over five lines. */
+  max-width: 56ch;
+}
+.proof-metric-note + .proof-metric-note { margin-top: 8px; }
+.proof-statement {
+  font-size: clamp(1.15rem, 1.8vw, 1.7rem);
+  font-weight: 500;
+  text-transform: uppercase;
+  line-height: 1.18;
+  letter-spacing: 0.005em;
+  max-width: 22ch;
+}
+
+/* ── Creator collaborations ──────────────────────────────────────
+   The evidence reel mixed real artifacts with photographs of the
+   shop, and the photographs were doing nothing. This is the
+   distribution arriving instead: short-form shown in a short-form
+   shaped frame, which is the only honest way to show short-form.
+   A fixed wall, not a carousel — nothing behind a swipe.
+   ──────────────────────────────────────────────────────────────── */
+.creators { margin-top: clamp(56px, 8vh, 110px); }
+.creators-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: clamp(20px, 4vw, 64px);
+  border-top: 1px solid var(--ink);
+  padding-top: 14px;
+  flex-wrap: wrap;
+}
+.creators-label { display: flex; color: var(--ink); flex: none; }
+/* The role is identical for every clip, so it is stated once here
+   rather than repeated five times under the tiles. */
+.creators-role { color: var(--ink-60); max-width: 54ch; }
+
+.creator-wall {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(14px, 1.6vw, 26px);
+  margin-top: clamp(32px, 5vh, 56px);
+}
+/* A flex column so the Watch links line up across the row even when
+   a tile has no follower count to show. */
+.creator { display: flex; flex-direction: column; }
+.creator-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.creator-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* The system's live mark, doing the job it does everywhere else. */
+.creator-cue {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.45em 0.7em;
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  transition: background 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.creator-frame:hover .creator-cue,
+.creator-frame:focus-visible .creator-cue { background: var(--red); }
+.creator-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+
+.creator-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+/* Reach is the argument on this wall, so it sits directly under the
+   name rather than being tucked away. */
+.creator-reach { color: var(--ink-60); margin-top: 4px; }
+.creator-link { margin-top: auto; padding-top: 10px; }
+.creator-link .cta-line { font-size: 0.68rem; }
+.creators-foot { color: var(--ink-35); margin-top: clamp(20px, 3vh, 30px); }
+
+@media (max-width: 1279px) { .creator-wall { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 767px) {
+  .creator-wall { grid-template-columns: repeat(2, 1fr); }
+  .creators-head { flex-direction: column; gap: 10px; }
+}
+
+/* ── Outcome bands ───────────────────────────────────────────────
+   What "It paid." actually cashes out to. Two bands, escalating:
+   brands booking the block, then kitchens buying the produce. The
+   second closes the argument the site opens with, so it lands last
+   and is set a little larger.
+
+   Each entry states STIR's role on its own line, because the whole
+   value of this section is the difference between being named next
+   to a brand and having done something.
+   ──────────────────────────────────────────────────────────────── */
+.bands {
+  margin-top: clamp(56px, 8vh, 110px);
+  display: grid;
+  gap: clamp(48px, 7vh, 88px);
+}
+.band { border-top: 1px solid var(--ink); padding-top: 14px; }
+.band-label { display: flex; color: var(--ink); margin-bottom: clamp(26px, 4vh, 44px); }
+.band-lede {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.08);
+  line-height: 1.45;
+  color: var(--ink);
+  max-width: 44ch;
+  margin-bottom: clamp(28px, 4vh, 44px);
+}
+.band-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(32px, 5vh, 56px) var(--col-gap);
+}
+.band-item { max-width: 46ch; }
+.band-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.6vw, 2.4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+}
+.band-said { margin-top: 14px; color: var(--ink-70); line-height: 1.5; }
+
+/* The role line is the point of the section, so it is marked rather
+   than left to blend into the description above it. */
+.band-role {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-35);
+  color: var(--ink-60);
+  line-height: 1.75;
+}
+.band-role-k {
+  color: var(--red);
+  font-weight: 500;
+  margin-right: 0.7em;
+}
+.band-meta { margin-top: 10px; color: var(--ink-35); }
+
+/* Wholesale: two names, set larger, nothing competing with them. */
+.band-list--pair .band-name { font-size: clamp(1.7rem, 3.4vw, 3.1rem); }
+.band-list--pair .band-meta { margin-top: 8px; color: var(--ink-60); }
+.band-role--wide { max-width: 62ch; margin-top: clamp(28px, 4vh, 44px); }
+
+.band-note {
+  margin-top: clamp(28px, 4vh, 44px);
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-05);
+  color: var(--ink-35);
+  max-width: 62ch;
+}
+/* Marked gap — an unfilled slot should read as unfilled, not as a
+   design decision. */
+.band-gap {
+  display: inline-block;
+  padding: 0.2em 0.55em;
+  background: var(--ink-05);
+  border: 1px dashed var(--ink-35);
+  color: var(--ink-60);
+}
+p.band-gap { margin-top: 12px; }
+
+/* Activations are rows, not tiles: media left, the account of what
+   happened right. Deliberately a different shape from the creator
+   wall above — three more 9:16 tiles in a grid would read as the same
+   section twice. */
+.band-list--rows {
+  grid-template-columns: 1fr;
+  gap: clamp(36px, 5vh, 60px);
+}
+.band-list--rows .band-item {
+  max-width: none;
+  display: grid;
+  /* The media is a 9:16 still beside a short account — small enough
+     that the row does not tower over its own text, and centred so the
+     two columns balance instead of hanging off the top. */
+  grid-template-columns: clamp(128px, 12vw, 168px) minmax(0, 1fr);
+  gap: clamp(20px, 2.6vw, 38px);
+  align-items: center;
+}
+.band-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  cursor: pointer;
+  overflow: hidden;
+}
+.band-vid { display: block; width: 100%; height: 100%; object-fit: cover; }
+.band-frame:hover .creator-cue,
+.band-frame:focus-visible .creator-cue { background: var(--red); }
+.band-frame.is-playing .creator-cue { opacity: 0; pointer-events: none; }
+.band-body { max-width: 62ch; }
+
+/* The citation inside a note — a footnote link, not a CTA. */
+.band-cite {
+  color: var(--ink-60);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-35);
+  transition: color 0.16s var(--ease), border-color 0.16s var(--ease);
+}
+.band-cite:hover { color: var(--red); border-bottom-color: var(--red); }
+.band-cite .arrow { margin-left: 0.2em; }
+
+/* Press — an index, not a logo wall. The cover is the one physical
+   artifact we have, so it is matted and set beside the list rather
+   than dropped into it. */
+.press-set {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  max-width: clamp(320px, 66vw, 880px);
+}
+.press-index {
+  list-style: none;
+  border-top: 1px solid var(--ink-35);
+}
+.press-item { border-bottom: 1px solid var(--ink-05); }
+.press-item:last-child { border-bottom: 0; }
+.press-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "pub go" "said said" "meta meta";
+  column-gap: 16px;
+  padding: clamp(16px, 2vh, 24px) 0 clamp(16px, 2vh, 24px) 0;
+  text-decoration: none;
+  color: inherit;
+  transition: padding-left 0.22s var(--ease);
+}
+.press-pub {
+  grid-area: pub;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+  transition: color 0.16s var(--ease);
+}
+.press-said {
+  grid-area: said;
+  margin-top: 8px;
+  font-family: var(--font-serif);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  color: var(--ink-70);
+  max-width: 54ch;
+}
+.press-meta { grid-area: meta; margin-top: 9px; color: var(--ink-35); }
+.press-go {
+  grid-area: go;
+  font-style: normal;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--ink-35);
+  transition: transform 0.22s var(--ease), color 0.16s var(--ease);
+}
+a.press-row:hover { padding-left: 14px; }
+a.press-row:hover .press-pub { color: var(--red); }
+a.press-row:hover .press-go { color: var(--red); transform: translate(3px, -3px); }
+a.press-row:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+/* The one row where STIR did more than run the account. Sits under the
+   link, not inside it, so the row stays a single destination. */
+.press-role { max-width: 54ch; margin: 0 0 clamp(16px, 2vh, 24px); }
+
+
+
+@media (max-width: 1023px) {
+}
+@media (max-width: 767px) {
+  .band-list { grid-template-columns: 1fr; }
+  .band-item { max-width: none; }
+  .band-list--rows .band-item { grid-template-columns: minmax(0, 150px) minmax(0, 1fr); gap: 18px; }
+}
+@media (max-width: 479px) {
+  .band-list--rows .band-item { grid-template-columns: 1fr; }
+  .band-frame { max-width: 190px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   04 — SELECTED WEBSITES
+   Other people's businesses, answering the objection the Labay case
+   study invites. Three screens at phone width, because that is where
+   a drain emergency and a Sunday service are both looked up.
+
+   The screenshot is the evidence, so it is given the room: no mat, no
+   device chrome, a 1px rule and a red underline that completes on
+   hover — the same register language as the service plates, applied
+   to something that is already a picture of a page.
+   ════════════════════════════════════════════════════════════════ */
+.sites {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: clamp(20px, 3vh, 40px);
+}
+.sites-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(44px, 7vh, 96px);
+}
+.sites-title { grid-column: 1 / 9; font-size: var(--t-big); }
+.sites-lede  { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
+
+/* ── Selected work: one project at a time ───────────────────
+   Three equal thumbnails made the reader choose before they had read
+   anything. An index on the left and a single stage on the right lets
+   the page do the choosing: the live project changes as the index
+   scrolls past, a pointer can take it over, and both halves open the
+   site. The ratio is the same one the grid already uses — roughly a
+   third of the width to the names, two thirds to the work.
+
+   The stage is the cobalt plate the services panels use, with the
+   capture standing in it rather than filling it: these are phone
+   screens, and a 4:5 capture blown across two thirds of a desktop
+   would be a picture of a phone, not a website.
+
+   Everything here is progressive. Without JavaScript the stage never
+   sticks, every capture shows with its name under it, and the index
+   is an ordinary list of links.                                     */
+.site-stage {
+  margin-top: clamp(60px, 9vh, 120px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.52fr) minmax(0, 1fr);
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+
+/* The list box itself is dissolved so its rows become grid items
+   alongside the stage: on a wide screen that puts the names in one
+   column and the stage in the other, and on a narrow one it lets each
+   capture sit directly under the project it belongs to instead of
+   three names followed by three pictures. The roles are restated
+   because display:contents has a long history of dropping them. */
+.site-index {
+  display: contents;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-row { grid-column: 1; }
+.site-screen { grid-column: 2; grid-row: 1 / -1; }
+.site-row {
+  border-top: 1px solid var(--ink-35);
+  padding-block: clamp(28px, 4vh, 44px);
+}
+.site-row:last-child { border-bottom: 1px solid var(--ink-35); }
+.site-no {
+  color: var(--ink-35);
+  display: flex;
+  margin-bottom: clamp(16px, 2.2vh, 24px);
+  transition: color var(--stir-ui) var(--stir-ease);
+}
+/* The index mark is the site's "this is live" square, so it is only
+   red on the row that is live. */
+.site-no .ann-mark {
+  background: var(--ink-35);
+  transition: background var(--stir-ui) var(--stir-ease), transform var(--stir-ui) var(--stir-ease);
+}
+.site-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 2.1vw, 1.95rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.site-name a {
+  color: var(--ink-70);
+  text-decoration: none;
+  transition: color var(--stir-ui) var(--stir-ease);
+}
+.site-name .arrow {
+  font-size: 0.72em;
+  display: inline-block;
+  transition: transform var(--stir-ui) var(--stir-ease);
+}
+.site-name a:focus-visible { outline: 2px solid var(--red); outline-offset: 3px; }
+.site-said {
+  margin-top: 14px;
+  font-family: var(--font-serif);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  color: var(--ink-70);
+}
+/* Scope, stated in the same shape as every other STIR role line on
+   the site — the part a buyer is actually reading for. */
+.site-scope {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--ink-05);
+  color: var(--ink-60);
+  line-height: 1.7;
+}
+.site-scope .band-role-k { margin-right: 0.6em; }
+
+/* Live, hovered, and focused all read the same: the row is the one on
+   the stage. Dimming the others would cost legibility for emphasis
+   that the cobalt is already carrying. */
+.site-row.is-active .site-no,
+.site-row:hover .site-no { color: var(--ink-60); }
+.site-row.is-active .site-no .ann-mark,
+.site-row:hover .site-no .ann-mark { background: var(--red); }
+.site-row.is-active .site-name a,
+.site-row:hover .site-name a,
+.site-row:focus-within .site-name a { color: var(--cobalt); }
+.site-row:hover .site-name .arrow,
+.site-row:focus-within .site-name .arrow { transform: translate(3px, -3px); }
+
+/* ── The stage ────────────────────────────────────── */
+.site-screen-inner {
+  position: relative;
+  background: var(--cobalt);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+}
+.site-shot { margin: 0; }
+.site-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 340px;
+  margin-inline: auto;
+}
+.site-shot-cap {
+  color: var(--ivory-75);
+  padding: 12px 16px 18px;
+  text-align: center;
+}
+.site-screen-rule {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform var(--stir-medium) var(--stir-ease);
+}
+
+/* The staged behaviour only exists once the script has confirmed it
+   can run it. */
+html.js .site-screen {
+  position: sticky;
+  top: calc(var(--nav-h) + clamp(16px, 4vh, 48px));
+}
+html.js .site-screen-inner {
+  height: min(68vh, 620px);
+  display: grid;
+  /* An auto row sizes to its content and overflows the fixed height,
+     which left the capture at its natural width and simply clipped.
+     The row is the plate. */
+  grid-template-rows: minmax(0, 1fr);
+}
+html.js .site-shot {
+  grid-area: 1 / 1;
+  width: 100%;
+  min-height: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: clamp(18px, 3vh, 34px) clamp(18px, 3vw, 40px) clamp(26px, 4vh, 48px);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 380ms var(--stir-ease), transform 380ms var(--stir-ease),
+              visibility 0s linear 380ms;
+}
+html.js .site-shot.is-active {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity 380ms var(--stir-ease), transform 380ms var(--stir-ease),
+              visibility 0s;
+}
+/* The capture is bounded, not stretched: align-self is what makes the
+   link's height definite, and without it a percentage height on the
+   image silently resolves to auto and the capture renders at its
+   natural 960px, cropped by the plate. */
+html.js .site-shot-link {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  min-width: 0;
+  width: 100%;
+}
+html.js .site-shot img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+html.js .site-shot-cap { display: none; }
+html.js .site-stage.is-live .site-screen-rule { transform: scaleX(1); }
+
+/* The pin. Each row is given enough height that one project holds the
+   stage for a little over half a screen before the next takes it —
+   long enough to read the scope line, short enough that nobody feels
+   held. Native scrolling throughout: nothing here intercepts a wheel,
+   a key or a swipe. */
+@media (min-width: 1024px) {
+  html.js .site-row {
+    min-height: 62vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.sites-foot {
+  grid-column: 1 / -1;
+  margin-top: clamp(32px, 4.5vh, 52px);
+  color: var(--ink-35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.js .site-shot { transition: opacity 0.01ms linear; transform: none; }
+  html.js .site-shot.is-active { transform: none; }
+  .site-screen-rule { transform: scaleX(1); }
+  .site-no, .site-no .ann-mark, .site-name a, .site-name .arrow { transition: none; }
+}
+
+/* Below the two-column threshold the stage stops being a stage: each
+   project is its own block, name first and capture under it, in
+   order, with nothing behind a swipe or a hover. */
+@media (max-width: 1023px) {
+  .sites-title { grid-column: 1 / -1; }
+  .sites-lede  { grid-column: 1 / 8; }
+  .site-stage { grid-template-columns: minmax(0, 1fr); }
+  html.js .site-screen, html.js .site-screen-inner,
+  .site-screen, .site-screen-inner { display: contents; }
+  html.js .site-screen-inner { height: auto; }
+  .site-screen-rule { display: none; }
+  html.js .site-screen { position: static; }
+
+  /* Name, then its capture, then the next name. The placements carry
+     the html.js prefix because the stage's own grid-area: 1 / 1 still
+     matches once the wrappers dissolve, and without it all three
+     captures land in one cell on top of each other. */
+  html.js .site-row[data-site="0"],  .site-row[data-site="0"]  { grid-row: 1; }
+  html.js .site-shot[data-site="0"], .site-shot[data-site="0"] { grid-row: 2; }
+  html.js .site-row[data-site="1"],  .site-row[data-site="1"]  { grid-row: 3; }
+  html.js .site-shot[data-site="1"], .site-shot[data-site="1"] { grid-row: 4; }
+  html.js .site-row[data-site="2"],  .site-row[data-site="2"]  { grid-row: 5; }
+  html.js .site-shot[data-site="2"], .site-shot[data-site="2"] { grid-row: 6; }
+  html.js .site-row, html.js .site-shot,
+  .site-row, .site-shot { grid-column: 1; }
+  .site-row:last-child { border-bottom: 0; }
+
+  /* Each capture carries its own plate now that there is no stage. */
+  html.js .site-shot,
+  .site-shot {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    display: block;
+    height: auto;
+    min-height: 0;
+    width: auto;
+    padding: clamp(14px, 3vw, 22px) clamp(14px, 3vw, 22px) 0;
+    margin-bottom: clamp(36px, 6vh, 64px);
+    background: var(--cobalt);
+    border: 1px solid var(--ink);
+    border-bottom: 3px solid var(--red);
+  }
+  html.js .site-shot-link, .site-shot-link { display: block; height: auto; width: auto; }
+  html.js .site-shot img, .site-shot img {
+    width: 100%;
+    height: auto;
+    max-width: 340px;
+    max-height: none;
+    margin-inline: auto;
+  }
+  html.js .site-shot-cap { display: block; }
+}
+@media (max-width: 767px) {
+  .sites-label { grid-column: 1 / -1; }
+  .sites-lede  { grid-column: 1 / -1; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   04 — WHAT WE DO · FIND / BUILD / RUN
+   Editorial index. Default: 1px ink rule. Hover: the word leans in,
+   contrast rises. Active: a tiny Signal Red marker + services unfold.
+   ════════════════════════════════════════════════════════════════ */
+.method {
+  padding-top: clamp(88px, 13vh, 170px);
+  padding-bottom: clamp(88px, 13vh, 170px);
+}
+.method-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+.method-intro {
+  grid-column: 5 / 12;
+  margin-bottom: clamp(72px, 11vh, 160px);
+}
+
+.method-index { grid-column: 1 / -1; }
+
+.method-row { border-top: 1px solid var(--ink); position: relative; }
+.method-row:last-child { border-bottom: 1px solid var(--ink); }
+
+.method-row-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  align-items: baseline;
+  background: none;
+  border: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  padding-block: clamp(28px, 4.5vh, 56px);
+}
+.method-no {
+  grid-column: 1 / 2;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+.method-word {
+  grid-column: 2 / 8;
+  font-size: var(--t-big);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.015em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  transition: transform 0.45s var(--ease);
+}
+.method-dot {
+  width: 0.16em; height: 0.16em;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.method-line {
+  grid-column: 8 / 12;
+  font-size: var(--t-body);
+  color: var(--ink-60);
+  transition: color 0.3s var(--ease);
+}
+
+.method-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.55s var(--ease);
+}
+.method-detail > div { overflow: hidden; }
+.method-detail-inner {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--col-gap);
+  padding-bottom: clamp(36px, 5vh, 64px);
+}
+.method-caps {
+  grid-column: 8 / 12;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* The method's detail panels carry a sentence now, not a second copy
+   of the service scope — and the sentence needs a column of its own.
+   It replaced a list that had one (8 / 12) and inherited nothing, so
+   it was auto-placing into track 1: 91px of a 1348px row, a single
+   sentence broken over sixteen lines.
+
+   It starts under the word, because it belongs to the word, and runs
+   to the measure a serif sentence wants. It is set as a statement
+   rather than a footnote: it is the whole payoff for opening the row,
+   so it should be worth having opened. */
+.method-said {
+  grid-column: 2 / 10;
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.25vw, 2.1rem);
+  line-height: 1.32;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  max-width: 40ch;
+  padding-bottom: 8px;
+}
+html.js .method-said {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s var(--ease), transform 0.5s var(--ease);
+}
+/* With no script there is nothing to open the rows, so they are all
+   open — the same bargain the trade list already makes with its
+   inline answers. */
+html:not(.js) .method-detail { grid-template-rows: 1fr; }
+.method-row.is-active .method-said {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.14s;
+}
+.method-caps li {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  border-bottom: 1px solid var(--ink-35);
+  padding-bottom: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+
+/* Hover: contrast, not color */
+@media (hover: hover) {
+  .method-row:hover .method-no { color: var(--ink); }
+  .method-row:hover .method-word { transform: translateX(0.35ch); }
+  .method-row:hover .method-line { color: var(--ink); }
+}
+/* Active: the row is held open, so it is held in Cobalt. Red still
+   marks the point of action — the dot — and blue marks the state, so
+   the two colours are doing different jobs rather than both shouting
+   "this one". The ground never flips: one ivory page, one row in
+   blue on it. */
+.method-row.is-active .method-no { color: var(--cobalt); }
+.method-row.is-active .method-word { transform: translateX(0.35ch); color: var(--cobalt); }
+.method-row.is-active .method-dot { opacity: 1; transform: none; }
+.method-row.is-active .method-line { color: var(--ink); }
+.method-row.is-active .method-detail { grid-template-rows: 1fr; }
+/* The open row is bracketed by its own rule, drawn rather than
+   switched — a 2px border would shift every row below it by a pixel.
+   ::after, because ::before is already the stage marker on the spine. */
+.method-row::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; top: -1px;
+  height: 2px;
+  background: var(--cobalt);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s var(--ease);
+  pointer-events: none;
+}
+.method-row.is-active::after { transform: scaleX(1); }
+.method-row.is-active .method-caps li { opacity: 1; transform: none; }
+.method-row.is-active .method-caps li:nth-child(1) { transition-delay: 0.10s; }
+.method-row.is-active .method-caps li:nth-child(2) { transition-delay: 0.16s; }
+.method-row.is-active .method-caps li:nth-child(3) { transition-delay: 0.22s; }
+.method-row.is-active .method-caps li:nth-child(4) { transition-delay: 0.28s; }
+.method-row.is-active .method-caps li:nth-child(5) { transition-delay: 0.34s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .method-word, .method-caps li { transition: none; }
+  .method-caps li { opacity: 1; transform: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   05 — ONE THOUGHT · a single interstitial observation
+   (The fuller Observations index moves to About / future Insights.)
+   ════════════════════════════════════════════════════════════════ */
+.obs {
+  padding-top: clamp(100px, 15vh, 200px);
+  padding-bottom: clamp(140px, 22vh, 280px);
+}
+.obs-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(72px, 12vh, 160px);
+}
+
+.obs-spread { align-items: start; }
+.obs-text {
+  grid-column: 1 / 6;
+  position: relative;
+  z-index: 2;
+}
+.obs-headline {
+  font-size: var(--t-big);
+  margin-bottom: clamp(32px, 4vh, 56px);
+}
+.obs-cta { color: var(--ink); }
+.obs-art {
+  grid-column: 5 / 13;
+  aspect-ratio: 16 / 10;
+  margin-top: clamp(80px, 14vh, 200px);
+  margin-right: calc(var(--bleed) * -1);
+  z-index: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   06 — CTA · quiet ivory; red appears only at the action
+   ════════════════════════════════════════════════════════════════ */
+.convert {
+  padding-top: clamp(100px, 16vh, 220px);
+  padding-bottom: clamp(120px, 20vh, 260px);
+}
+.convert-head {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.convert-q {
+  font-size: var(--t-giant);
+}
+.convert-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: clamp(56px, 9vh, 120px);
+}
+.convert-copy { max-width: 38ch; }
+
+/* ════════════════════════════════════════════════════════════════
+   FOOTER — deliberately quiet
+   ════════════════════════════════════════════════════════════════ */
+.footer { padding-block: clamp(40px, 6vh, 72px); }
+.footer-grid { row-gap: 24px; align-items: center; }
+.footer-logo { grid-column: 1 / 3; }
+.footer-logo img { height: 18px; width: auto; }
+.footer-place { grid-column: 3 / 6; color: var(--ink-60); }
+.footer-links {
+  grid-column: 6 / 9;
+  display: flex;
+  gap: 28px;
+}
+.footer-links a { color: var(--ink); border-bottom: 1px solid transparent; padding-bottom: 2px; }
+.footer-links a:hover, .footer-links a:focus-visible { border-bottom-color: var(--ink); }
+.footer-line { grid-column: 9 / 11; color: var(--ink-60); }
+.footer-copy { grid-column: 11 / 13; text-align: right; color: var(--ink-60); }
+
+/* ════════════════════════════════════════════════════════════════
+   TABLET / PHONE — the hero keeps its overlay. A portrait window
+   only shows 26% of a 16:9 picture, but on this one the right-hand
+   quarter is the whole composition in miniature: open cobalt on top,
+   storefront and red windows along the bottom. So the crop moves
+   right instead of the layout breaking apart, and the type stays
+   composed into the sky exactly as it is on desktop.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1023px) {
+  /* The roofline lands at ~56% of the frame whatever the crop, so the
+     sky is a fixed fraction and the copy is a fixed number of pixels.
+     Measured: the block overran the roofline by 13-96px at every
+     phone size. The floor buys sky (every 100px of frame is 56px of
+     it), the stack tightens, and the whole block stays in the cobalt
+     rather than running onto the lit storefront. */
+  .hero { min-height: max(94svh, 760px); }
+  .hero-art { object-position: 74% 50%; }
+  .hero-inner { padding-top: clamp(84px, 11svh, 140px); }
+  .hero-copy { max-width: min(86%, 560px); }
+  /* Bound by height as well as width. A short landscape tablet gets a
+     short sky but a full-width headline, which is the one case that
+     still ran past the roofline. */
+  .hero-headline { font-size: min(var(--t-hero), 8.2svh, 8.6vw); }
+  .eyebrow   { margin-bottom: clamp(14px, 2.2vh, 26px); }
+  .hero-prop { margin-top: clamp(18px, 2.8vh, 32px); }
+  .hero-cta  { margin-top: clamp(20px, 3vh, 36px); }
+  /* The index is pinned to the bottom of the frame on desktop, where
+     the bottom of the frame is cobalt. On a portrait crop the bottom
+     is the lit storefront, so it follows the CTA and stays in the
+     sky with the rest of the type. */
+  .hero-index { margin-top: clamp(30px, 5svh, 60px); }
+
+  .proof-lead { grid-column: 1 / -1; }
+  .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
+
+  .method-label  { grid-column: 1 / 4; }
+  .method-intro  { grid-column: 1 / 8; }
+  .method-word   { grid-column: 2 / 6; }
+  .method-line   { grid-column: 6 / 9; }
+  .method-caps   { grid-column: 6 / 9; }
+
+  .obs-label { grid-column: 1 / 4; }
+  .obs-text  { grid-column: 1 / 5; }
+  .obs-art   { grid-column: 4 / 9; }
+
+  .footer-logo  { grid-column: 1 / 2; }
+  .footer-place { grid-column: 2 / 5; }
+  .footer-links { grid-column: 5 / 8; }
+  .footer-line  { display: none; }
+  .footer-copy  { grid-column: 8 / 9; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ARGUMENT, NARROW — the overlay is not a taste call here, it is
+   geometry. A phone window shows 30% of this picture, and the widest
+   block of shadow any crop leaves is about 390x166px; the copy needs
+   roughly 330x340. Every anchor was measured and none of them fit,
+   and the ones with room at all lose the doorway, which is the only
+   red in the section.
+
+   So the environment extends instead of breaking. The shadow is a
+   flat navy, so it becomes the section's ground: the picture runs
+   whole and uncropped, the copy sits beneath it on the same colour
+   in the same ivory, and the section still reads as one field of
+   shadow with a lit wall and a red door in it. Same dynamic, built
+   out of the page rather than out of the crop.
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 1179px) {
+  .belief {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    /* sampled from the shadow itself, so the join is invisible */
+    background: #001126;
+  }
+  .belief-inner { order: 2; padding-top: clamp(40px, 6vh, 64px); padding-bottom: clamp(56px, 9vh, 96px); }
+  .belief picture { order: 1; position: static; display: block; }
+  .belief-art { position: static; width: 100%; height: auto; }
+  .belief-label { margin-bottom: clamp(30px, 4.5vh, 52px); }
+  .belief-claim { font-size: clamp(2.2rem, 7.4vw, 4.4rem); max-width: 13ch; }
+  .belief-deck { max-width: 42ch; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOBILE — headline first; illustration is its own controlled
+   scene; CTA stays close
+   ════════════════════════════════════════════════════════════════ */
+@media (max-width: 639px) {
+  :root { --gutter: 18px; }
+
+  .nav-logo img { height: 22px; }
+  .nav-links { gap: 16px; }
+  .nav-links a:not(.nav-start) { display: none; } /* menu returns with the ABOUT/CONTACT build */
+
+  .hero-copy { max-width: 100%; }
+  .hero-headline { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
+  /* Further right and a touch higher: on the narrowest window the
+     roofline has to sit below the CTA, not through it. */
+  .hero-art { object-position: 78% 44%; }
+  /* The sky in a phone crop is 445px tall and the copy needs 376 of
+     it. The index does not fit in what is left, and pushed any lower
+     it sits on the lit storefront at 1:1. It is a wayfinding mark,
+     not content, and the scroll affordance on a phone is the phone —
+     so it stands down rather than being made unreadable. */
+  .hero-index { display: none; }
+}
+
+/* On the smallest phones the supporting line wraps to five and the
+   copy runs past the roofline. The frame gets a taller floor, which
+   buys sky without changing the crop, and the stack tightens. */
+@media (max-width: 374px) {
+  .hero { min-height: max(94svh, 790px); }
+  .hero-inner { padding-top: clamp(80px, 11svh, 110px); }
+  .hero-headline { font-size: 11.2vw; }
+
+  /* The thesis → proof hand-off was ~180px of nothing on a phone. */
+  .belief { padding-top: clamp(64px, 9vh, 96px); padding-bottom: clamp(44px, 6vh, 68px); }
+  .proof  { padding-top: clamp(52px, 7vh, 80px); }
+
+  .proof-head { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .proof-meta { text-align: left; }
+  .proof-title { font-size: clamp(2.9rem, 14vw, 4rem); }
+  .proof-metric { font-size: clamp(5.5rem, 27vw, 8rem); }
+
+  .method-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .method-intro { grid-column: 1 / -1; margin-bottom: 72px; }
+  .method-row-head {
+    grid-template-columns: repeat(4, 1fr);
+    row-gap: 14px;
+    padding-block: 30px;
+  }
+  .method-no   { grid-column: 1 / -1; }
+  .method-word { grid-column: 1 / -1; font-size: clamp(2.4rem, 12vw, 3.2rem); }
+  .method-line { grid-column: 1 / -1; }
+  .method-detail-inner { grid-template-columns: repeat(4, 1fr); }
+  /* 2 / 10 clamps to 2 / 5 in a four-column grid, which indents the
+     sentence past the word it belongs to. */
+  .method-said { grid-column: 1 / -1; max-width: none; }
+  .method-caps { grid-column: 1 / -1; }
+
+  .obs { padding-bottom: 140px; }
+  .obs-label { grid-column: 1 / -1; margin-bottom: 64px; }
+  .obs-text { grid-column: 1 / -1; }
+  .obs-art  {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+    margin-inline: calc(var(--gutter) * -1);
+    aspect-ratio: 4 / 5;
+  }
+  .obs-headline { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+
+  .convert-q { font-size: clamp(2.7rem, 13.5vw, 4rem); }
+  .convert-foot { flex-direction: column; align-items: flex-start; gap: 32px; }
+
+  .footer-grid { row-gap: 18px; }
+  .footer-logo, .footer-place, .footer-links, .footer-copy { grid-column: 1 / -1; text-align: left; }
+  .footer-line { display: block; grid-column: 1 / -1; }
+}
+/* ════════════════════════════════════════════════════════════════
+   PROOF PAYOFF — the headline's promise, cashed
+   ════════════════════════════════════════════════════════════════ */
+.proof-payoff {
+  margin-top: clamp(72px, 11vh, 150px);
+  align-items: end;
+  row-gap: 40px;
+}
+.payoff-title {
+  grid-column: 1 / 6;
+  font-size: var(--t-giant);
+}
+.payoff-body {
+  grid-column: 7 / 13;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.payoff-creators { color: var(--ink-60); }
+
+/* ════════════════════════════════════════════════════════════════
+   NAV — ink variant for ivory pages (about, contact, 404)
+   ════════════════════════════════════════════════════════════════ */
+.nav--ink .nav-links a { color: var(--ink); }
+.nav--ink .nav-links a:not(.nav-start)::after { background: var(--ink); }
+
+/* ── Mobile menu ──────────────────────────────────────────────── */
+.nav-menu {
+  display: none;
+  background: none;
+  border: 0;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: inherit;
+  cursor: pointer;
+  padding: 0.6em 0;
+}
+/* The menu is a continuation of the bar, not a different place, so it
+   opens on the ground the reader is already standing on. Tapping Menu
+   over the cream half of the site and landing on cobalt inverts the
+   type mid-gesture; following the theme keeps the gesture whole. The
+   observer writes data-theme to the field at the same time it writes
+   it to the bar. */
+.nav-overlay {
+  --field: var(--cobalt);
+  --field-fg: var(--ivory);
+  --field-dim: var(--ivory-75);
+  --field-idx: var(--ivory-40);
+  position: fixed;
+  inset: 0;
+  background: var(--field);
+  color: var(--field-fg);
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  padding: var(--gutter);
+}
+.nav-overlay[data-theme="cream"] {
+  --field: var(--ivory);
+  --field-fg: var(--ink);
+  --field-dim: rgba(22, 19, 16, 0.68);
+  --field-idx: var(--ink-35);
+}
+.nav-overlay.is-open { display: flex; }
+
+/* The field arrives as a ground, not a fade: it wipes down from the
+   bar's own edge, which is where the tap happened. The rows follow it
+   in one short stagger so the list reads as settling rather than
+   animating. */
+.nav-overlay.is-open {
+  animation: field-in var(--stir-medium) var(--stir-ease) both;
+  transform-origin: top;
+}
+@keyframes field-in {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+.nav-overlay.is-open .nav-overlay-links a,
+.nav-overlay.is-open .nav-overlay-foot {
+  animation: field-row var(--stir-ui) var(--stir-ease) both;
+}
+.nav-overlay.is-open .nav-overlay-links a:nth-child(1) { animation-delay: 0.16s; }
+.nav-overlay.is-open .nav-overlay-links a:nth-child(2) { animation-delay: 0.20s; }
+.nav-overlay.is-open .nav-overlay-links a:nth-child(3) { animation-delay: 0.24s; }
+.nav-overlay.is-open .nav-overlay-links a:nth-child(4) { animation-delay: 0.28s; }
+.nav-overlay.is-open .nav-overlay-foot { animation-delay: 0.32s; }
+@keyframes field-row {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.nav-overlay-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: 4px;
+}
+.nav-overlay-head img { height: 22px; width: auto; }
+/* One mark per ground, the same pair the bar swaps. */
+.nav-overlay .mark-red { display: none; }
+.nav-overlay[data-theme="cream"] .mark-ivory { display: none; }
+.nav-overlay[data-theme="cream"] .mark-red { display: block; }
+.nav-overlay-close {
+  background: none; border: 0; color: var(--field-fg);
+  font-family: var(--font-mono); font-size: 0.9rem;
+  text-transform: uppercase; letter-spacing: 0.09em; cursor: pointer;
+  padding: 0.5em;
+}
+.nav-overlay-links {
+  margin-top: 14vh;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.nav-overlay-links a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2rem, 9vw, 2.8rem);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: var(--field-fg);
+}
+/* Touch has no hover, so the row answers the press instead: the red
+   square lands and the row steps one notch toward its destination. */
+.nav-overlay-links a::after {
+  content: "";
+  position: absolute;
+  left: -0.42em; top: 0.46em;
+  width: 0.2em; height: 0.2em;
+  background: var(--red);
+  transform: scale(0);
+  transition: transform var(--stir-fast) var(--stir-ease);
+}
+.nav-overlay-links a:active::after,
+.nav-overlay-links a:focus-visible::after { transform: scale(1); }
+.nav-overlay-links a { transition: transform var(--stir-fast) var(--stir-ease); }
+.nav-overlay-links a:active { transform: translateX(2px); }
+.nav-overlay-links a .arrow { font-size: 0.6em; vertical-align: 0.3em; padding-left: 0.3em; }
+.nav-overlay-foot {
+  margin-top: auto;
+  color: var(--field-dim);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SUBPAGES — quiet ivory pages (about / contact / 404)
+   ════════════════════════════════════════════════════════════════ */
+.page {
+  padding-top: clamp(140px, 20vh, 220px);
+  padding-bottom: clamp(100px, 16vh, 200px);
+}
+.page-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.page-title {
+  grid-column: 1 / 12;
+  font-size: var(--t-giant);
+  margin-bottom: clamp(56px, 9vh, 120px);
+}
+
+/* ── Contact form — hairline editorial, no boxes ──────────────── */
+.contact-info {
+  grid-column: 1 / 5;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 5vh, 56px);
+}
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.contact-links a {
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  width: fit-content;
+  transition: border-color 0.2s var(--ease);
+}
+.contact-links a:hover, .contact-links a:focus-visible { border-bottom-color: var(--ink); }
+
+.contact-form {
+  grid-column: 6 / 12;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(32px, 4.5vh, 48px);
+}
+.field { display: flex; flex-direction: column; gap: 10px; }
+.field label { color: var(--ink-60); }
+.field input,
+.field textarea {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 6px 0 12px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.field textarea { resize: vertical; min-height: 96px; line-height: 1.5; }
+.field input:focus-visible,
+.field textarea:focus-visible {
+  outline: none;
+  border-bottom-color: var(--red); /* activation */
+}
+.form-foot {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.form-note { color: var(--ink-60); }
+.form-success { display: none; }
+.form-success.is-shown { display: block; }
+.form-success .display { font-size: var(--t-big); margin-bottom: 24px; }
+
+/* ── 404 ──────────────────────────────────────────────────────── */
+.notfound {
+  min-height: 100svh;
+  background: var(--cobalt);
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+}
+.notfound-inner {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(32px, 5vh, 56px);
+}
+.notfound .display { font-size: var(--t-giant); }
+.notfound .cta-line { color: var(--ivory); width: fit-content; }
+
+/* ── Responsive for new components ────────────────────────────── */
+@media (max-width: 1023px) {
+  .payoff-title { grid-column: 1 / -1; }
+  .payoff-body  { grid-column: 1 / -1; }
+  .page-title   { grid-column: 1 / -1; }
+  .contact-info { grid-column: 1 / -1; margin-bottom: 56px; }
+  .contact-form { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+  .nav-menu { display: inline-block; }
+  .page-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .page-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
+  .payoff-title { font-size: clamp(2.2rem, 10.5vw, 3.2rem); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOTION SYSTEM — one small library, reused everywhere.
+   BLUE HOLDS · RED MOVES · IVORY REVEALS · BLACK EXPLAINS
+
+   Four primitives:
+     A  .sig-line / .sig-*      Signal Red enters when something acts
+     B  [data-reveal=registration]  print-registration resolve (art)
+     C  [data-reveal=editorial]     masked rise (typography)
+     D  [data-reveal=structural]    red progression (systems)
+
+   Every primitive is inert under prefers-reduced-motion: content
+   arrives complete, only the movement is dropped.
+   ════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ── C · Editorial reveal — typography rises out of a mask ───── */
+  /* NOTE: uses mask, not clip-path — clip-path zeroes the element's
+     intersection rect, so IntersectionObserver would never fire. */
+  html.js [data-reveal="editorial"] {
+    opacity: 0;
+    transform: translateY(14px);
+    -webkit-mask-image: linear-gradient(#000, #000);
+            mask-image: linear-gradient(#000, #000);
+    -webkit-mask-repeat: no-repeat;   mask-repeat: no-repeat;
+    -webkit-mask-position: 0 100%;    mask-position: 0 100%;
+    -webkit-mask-size: 100% 0%;       mask-size: 100% 0%;
+    /* Display type is set at line-height 0.94, so the glyphs draw
+       about 3px above the element box and 2px below it. mask-clip is
+       border-box and cannot be told to let that overshoot through —
+       growing the mask past the box does nothing, because the box is
+       what clips. So the box is padded until it contains its own ink.
+       Without this the mask shaves the apex off every A and flattens
+       every round letter and full stop.
+
+       The padding only exists where the mask does, inside this
+       media query, so reduced motion is unaffected. */
+    padding-top: 10px;
+    padding-bottom: 10px;
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.7s var(--ease),
+      -webkit-mask-size 0.7s var(--ease),
+      mask-size 0.7s var(--ease);
+  }
+  html.js [data-reveal="editorial"].is-in {
+    opacity: 1;
+    transform: none;
+    -webkit-mask-size: 100% 100%;     mask-size: 100% 100%;
+  }
+
+  /* The argument's picture resolves its exposure as the section
+     arrives, and that is the whole of its motion. No parallax: two
+     planes sliding against each other would turn a still photograph
+     into a device. Behind @supports because without :has() the image
+     would simply sit at the unresolved value forever. */
+  @supports selector(:has(*)) {
+    html.js .belief-art {
+      opacity: 0.86;
+      transition: opacity 0.9s var(--ease);
+    }
+    html.js .belief:has(.belief-statement.is-in) .belief-art { opacity: 1; }
+  }
+
+  /* ── B · Registration reveal — plates settling into register ─── */
+  html.js [data-reveal="registration"] {
+    opacity: 0;
+    transform: translate(4px, 2px);
+    transition: opacity 0.5s var(--ease), transform 0.8s var(--ease);
+  }
+  html.js [data-reveal="registration"].is-in {
+    opacity: 1;
+    transform: none;
+  }
+  /* Images carry a mis-registered cobalt plate that resolves */
+  img[data-reveal="registration"] {
+    box-shadow: 5px 3px 0 0 var(--cobalt);
+    transition:
+      opacity 0.5s var(--ease),
+      transform 0.8s var(--ease),
+      box-shadow 0.8s var(--ease);
+  }
+  img[data-reveal="registration"].is-in { box-shadow: 0 0 0 0 rgba(4, 81, 171, 0); }
+  /* A band that already reaches both viewport edges cannot also shift
+     sideways: the 4px would hang off the right for the length of the
+     entrance and flash a horizontal scrollbar. It registers on the
+     vertical only; the cobalt plate still carries the effect. */
+  html.js .who-art[data-reveal="registration"],
+  html.js .about-art[data-reveal="registration"] { transform: translateY(2px); }
+
+  /* ── D · Structural reveal — a red signal draws the rule ─────── */
+  [data-reveal="structural"] { position: relative; }
+  html.js [data-reveal="structural"]::before {
+    content: "";
+    position: absolute;
+    left: 0; top: -1px;
+    height: 2px;
+    width: 100%;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.55s var(--ease);
+  }
+  html.js [data-reveal="structural"].is-in::before { transform: scaleX(1); }
+  /* the signal passes through, it does not stay */
+  html.js [data-reveal="structural"].is-in.sig-spent::before {
+    transform-origin: right;
+    transform: scaleX(0);
+  }
+}
+
+/* ── A · Signal line — the shared "this is actionable" primitive ─ */
+.sig-line {
+  position: relative;
+}
+.sig-line::after {
+  content: "";
+  position: absolute;
+  left: 0; bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease);
+}
+.sig-line:hover::after,
+.sig-line:focus-visible::after,
+.sig-line[aria-current]::after,
+.sig-line.is-active::after { transform: scaleX(1); }
+
+/* Nav: active page gets a small permanent red marker (never colour alone —
+   it pairs with the underline and aria-current) */
+.nav-links a[aria-current]::before {
+  content: "";
+  position: absolute;
+  left: -12px; top: 50%;
+  width: 5px; height: 5px;
+  margin-top: -2px;
+  background: var(--red);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METHOD — FIND / BUILD / RUN reads as one system.
+   A structural spine runs the index; Signal Red progresses to the
+   active stage. Progress height is set from JS (--sig-progress).
+   ════════════════════════════════════════════════════════════════ */
+.method-index { position: relative; padding-left: 0; }
+.method-index::before,
+.method-index::after {
+  content: "";
+  position: absolute;
+  left: -18px;
+  top: 0;
+  width: 1px;
+}
+.method-index::before {
+  bottom: 0;
+  background: var(--ink-35);
+}
+.method-index::after {
+  width: 2px;
+  left: -18.5px;
+  height: var(--sig-progress, 0px);
+  background: var(--red);
+  transition: height 0.5s var(--ease);
+}
+/* Stage markers on the spine */
+.method-row { --dot: var(--ink-35); }
+.method-row::before {
+  content: "";
+  position: absolute;
+  left: -21px;
+  top: calc(clamp(28px, 4.5vh, 56px) + 0.35em);
+  width: 7px; height: 7px;
+  background: var(--ivory);
+  box-shadow: 0 0 0 1px var(--dot);
+  transition: background 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.method-row.is-active { --dot: var(--red); }
+.method-row.is-active::before { background: var(--red); box-shadow: 0 0 0 1px var(--red); }
+
+@media (max-width: 639px) {
+  .method-index::before, .method-index::after { left: -10px; }
+  .method-index::after { left: -10.5px; }
+  .method-row::before { left: -13px; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   METRIC — 10M+ counts up when it arrives (tabular so it can't jitter)
+   ════════════════════════════════════════════════════════════════ */
+.proof-metric { font-variant-numeric: tabular-nums; }
+
+/* ════════════════════════════════════════════════════════════════
+   REEL — drag to examine the evidence
+   ════════════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════════════
+   SERVICES — what you can hire us for
+   Three panels, all of them visible at every width. The reference
+   this came from puts one card on screen at a time behind a swipe;
+   information someone needs in order to decide cannot sit behind a
+   gesture, so the structure is borrowed and the carousel is not.
+   Warm paper, cobalt names, red numbering, thin rules.
+   ════════════════════════════════════════════════════════════════ */
+.services {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: clamp(104px, 15vh, 210px);
+}
+.svc-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(44px, 7vh, 96px);
+}
+.svc-title { grid-column: 1 / 9; font-size: var(--t-big); }
+.svc-lede  { grid-column: 1 / 7; margin-top: clamp(28px, 4vh, 48px); }
+
+.svc-set {
+  grid-column: 1 / -1;
+  margin-top: clamp(60px, 9vh, 120px);
+  display: grid;
+  /* The ongoing panel is given a little more room — enough to read as
+     the one we would point at, not enough to make the others look
+     like leftovers. */
+  grid-template-columns: 1fr 1fr 1.14fr;
+  column-gap: var(--col-gap);
+  row-gap: clamp(48px, 7vh, 72px);
+  align-items: stretch;
+}
+
+.svc {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--ink);
+  padding-top: 16px;
+}
+.svc-no { color: var(--ink-60); display: flex; margin-bottom: clamp(24px, 3.5vh, 40px); }
+.svc-name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.45rem, 2.3vw, 2.2rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--cobalt);
+}
+.svc-prop {
+  font-family: var(--font-serif);
+  font-size: calc(var(--t-body) * 1.02);
+  line-height: 1.45;
+  color: var(--ink);
+  margin-top: 14px;
+  max-width: 24ch;
+}
+
+/* ── The plate ───────────────────────────────────────────────────
+   The reference card works because a vivid object floats in a dark
+   field. STIR already owns that composition — it is the hero. So the
+   illustration slot is a cobalt plate: a window onto the same world,
+   with the figure lit against it.
+
+   Fixed height, not a ratio: the third column is wider, and a ratio
+   would make its plate taller and knock the scope lists out of line
+   across the three panels.
+
+   The plate does not clip. A cut-out figure is meant to break the top
+   edge and stand in the paper above it — artwork breaking the frame
+   is the house rule, and it is what stops three cobalt rectangles
+   reading as three boxes.                                           */
+.svc-plate {
+  position: relative;
+  margin-top: clamp(30px, 4.4vh, 52px);
+  /* Fixed height, not a ratio: the third column is wider, and a ratio
+     would make its plate taller and knock the scope lists out of line
+     across the three panels. The height is set so a 4:3 figure fills
+     the two narrow columns edge to edge and floats with a little
+     cobalt either side in the wide one. */
+  height: clamp(200px, 21.5vw, 310px);
+  background: var(--cobalt);
+  color: var(--ivory);
+}
+/* The artwork is cut out of its paper and sits in the cobalt field —
+   the hero's composition at panel scale. Contained rather than
+   cropped, because these are whole objects and cropping one would
+   just look like a mistake. The extra padding at the bottom keeps the
+   figure clear of the red threshold. */
+.svc-fig {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+  padding: 4% 4% 8%;
+  pointer-events: none;
+}
+
+/* The plate number, set like a folio on a printing form. It carries
+   the slot while the art is pending and sits behind the figure once
+   it lands, so the empty state is a composition rather than a gap. */
+.svc-plate-no {
+  position: absolute;
+  left: 0.32em;
+  bottom: -0.16em;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 7vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ivory);
+  opacity: 0.16;
+  user-select: none;
+}
+.svc-plate-note {
+  position: absolute;
+  top: 14px; left: 16px; right: 16px;
+  color: var(--ivory-40);
+}
+
+/* Signal Red at the threshold — a short tick at rest that runs the
+   width of the plate when the panel is addressed. Red moves. */
+.svc-plate-rule {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  z-index: 3;                       /* the threshold reads over the figure */
+  height: 3px;
+  background: var(--red);
+  transform: scaleX(0.18);
+  transform-origin: left;
+  transition: transform var(--stir-medium) var(--stir-ease);
+}
+.svc:hover .svc-plate-rule,
+.svc:focus-within .svc-plate-rule,
+.svc.is-shown .svc-plate-rule { transform: scaleX(1); }
+
+/* The panel answers with mis-registration rather than a lift: the
+   plate steps two pixels out of alignment with the card around it and
+   the heading steps one, which is the same second-pass-on-press
+   language as [data-reveal="registration"]. A card that floats on a
+   shadow would be a different site's idea. */
+.svc-name { transition: transform var(--stir-ui) var(--stir-ease); }
+.svc:hover .svc-name,
+.svc:focus-within .svc-name { transform: translateX(2px); }
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js .svc-plate { transition: transform var(--stir-medium) var(--stir-ease); }
+  .svc:hover .svc-plate,
+  .svc.is-shown .svc-plate { transform: translate(-2px, -2px); }
+}
+
+/* ── The hand-off, finished ───────────────────────────────
+   Panel 01 draws a card mid-pass between two hands, so addressing the
+   panel completes the pass: the card travels the last few pixels
+   toward the receiving hand and stops. The other two panels take the
+   plate's two-pixel step and nothing else — their drawings are single
+   opaque shapes with hand-cut edges, and every partial state we could
+   synthesise for them read as a crop or an airbrush rather than as an
+   action. One honest move beats three invented ones.              */
+.svc-fig--under, .svc-fig--hand { z-index: 1; }
+.svc-fig--hand {
+  z-index: 2;
+  transition: transform var(--stir-medium) var(--stir-ease);
+}
+.svc:hover .svc-fig--hand,
+.svc:focus-within .svc-fig--hand,
+.svc.is-shown .svc-fig--hand { transform: translate(7px, 5px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-plate-rule { transform: scaleX(1); }
+  .svc-name, .svc-fig--hand { transition: none; }
+  .svc:hover .svc-name, .svc:focus-within .svc-name,
+  .svc:hover .svc-fig--hand, .svc:focus-within .svc-fig--hand,
+  .svc.is-shown .svc-fig--hand { transform: none; }
+}
+
+/* Touch never hovers, so the panel performs its move once as it
+   arrives and then holds still. is-shown is added on entry and
+   removed when the animation has run; it is not a permanent state. */
+@media (hover: none) {
+  .svc.is-shown .svc-plate,
+  .svc.is-shown .svc-fig--hand { transition-duration: var(--stir-slow); }
+}
+@media (hover: hover) {
+  .svc.is-shown .svc-plate,
+  .svc.is-shown .svc-fig--hand { transform: none; }
+  .svc.is-shown .svc-plate-rule { transform: scaleX(0.18); }
+}
+
+.svc-scope {
+  list-style: none;
+  margin-top: clamp(22px, 3.2vh, 32px);
+  color: var(--ink-60);
+  line-height: 2;
+}
+.svc-scope li { border-bottom: 1px solid var(--ink-05); }
+.svc-scope li:last-child { border-bottom: 0; }
+
+/* Pushed to the bottom so the three actions line up across panels of
+   unequal length. */
+.svc-action { margin-top: auto; padding-top: clamp(22px, 3.2vh, 32px); }
+
+/* 03 — the ongoing relationship. Red rule, red numeral, more width.
+   No badge and no claim: the emphasis is typographic. */
+.svc--lead { border-top-width: 2px; border-top-color: var(--red); padding-top: 15px; }
+.svc--lead .svc-no { color: var(--red); }
+
+@media (max-width: 1023px) {
+  .svc-title, .svc-lede { grid-column: 1 / -1; }
+  .svc-set { grid-template-columns: 1fr 1fr; }
+  .svc--lead { grid-column: 1 / -1; }
+  .svc--lead .svc-prop { max-width: 36ch; }
+}
+@media (max-width: 639px) {
+  .svc-label { grid-column: 1 / -1; margin-bottom: 44px; }
+  .svc-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  /* A vertical stack, in order, with nothing hidden. */
+  .svc-set { grid-template-columns: 1fr; row-gap: 44px; }
+  .svc--lead { grid-column: auto; }
+  .svc-plate { height: clamp(220px, 68vw, 300px); }
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   CONTACT — a conversation, not a form.
+   ════════════════════════════════════════════════════════════════ */
+.q-block {
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr;
+  column-gap: var(--col-gap);
+  align-items: start;
+}
+.q-no { color: var(--ink-60); padding-top: 4px; }
+.q-body { min-width: 0; }
+.q-label {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1.8vw, 1.6rem);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  display: block;
+  margin-bottom: 4px;
+}
+.q-hint { color: var(--ink-60); margin-bottom: 18px; display: block; }
+
+/* Editorial inputs — rules, not boxes */
+.q-body input[type="text"],
+.q-body input[type="email"],
+.q-body input[type="url"],
+.q-body textarea {
+  width: 100%;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--ink-35);
+  border-radius: 0;
+  padding: 8px 0 14px;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: calc(var(--t-body) * 1.05);
+  color: var(--ink);
+  transition: border-color 0.25s var(--ease);
+}
+.q-body textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+.q-body input:focus,
+.q-body textarea:focus { outline: none; border-bottom-color: var(--red); }
+.q-body input:focus-visible,
+.q-body textarea:focus-visible { outline: none; }
+
+/* Two fields on one rule (name + email) */
+.q-pair { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); row-gap: 20px; }
+@media (max-width: 639px) { .q-pair { grid-template-columns: 1fr; } }
+.q-sub { color: var(--ink-60); display: block; margin-bottom: 2px; }
+
+/* Selectable situations — editorial rows, red indicator, never
+   colour alone (the label also goes to full Ink and shifts 2px) */
+.opts { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--col-gap); }
+@media (max-width: 639px) { .opts { grid-template-columns: 1fr; } }
+.opt { position: relative; display: block; }
+.opt input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  margin: 0;
+}
+.opt span {
+  display: flex;
+  align-items: baseline;
+  gap: 0.85em;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ink-35);
+  color: var(--ink-60);
+  cursor: pointer;
+  transition: color 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.opt span::before {
+  content: "";
+  flex: none;
+  width: 8px; height: 8px;
+  align-self: center;
+  box-shadow: inset 0 0 0 1px var(--ink-35);
+  background: transparent;
+  transition: background 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.opt:hover span { color: var(--ink); }
+.opt input:checked + span {
+  color: var(--ink);
+  font-weight: 500;
+  transform: translateX(2px);
+}
+.opt input:checked + span::before {
+  background: var(--red);
+  box-shadow: inset 0 0 0 1px var(--red);
+}
+.opt input:focus-visible + span {
+  outline: 2px solid var(--red);
+  outline-offset: 4px;
+}
+
+/* Submit: the signal travels, then confirmation */
+.send-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: clamp(16px, 2.5vh, 28px);
+}
+.send-rail {
+  position: relative;
+  height: 1px;
+  background: var(--ink-35);
+  flex: 1 1 160px;
+  min-width: 120px;
+  overflow: hidden;
+}
+.send-rail::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+@media (prefers-reduced-motion: no-preference) {
+  form.is-sending .send-rail::after {
+    transform: scaleX(1);
+    transition: transform 0.6s var(--ease);
+  }
+}
+form.is-sending .cta { opacity: 0.55; pointer-events: none; }
+
+.contact-note { color: var(--ink-60); margin-top: clamp(40px, 6vh, 72px); }
+
+/* ════════════════════════════════════════════════════════════════
+   PROOF — the role. The claim almost nobody else can make:
+   not "we ran a campaign" but "we operate this."
+   ════════════════════════════════════════════════════════════════ */
+.proof-role {
+  max-width: 34ch;
+  margin-bottom: clamp(48px, 7vh, 96px);
+}
+.proof-role .role-label { display: flex; margin-bottom: 18px; }
+.proof-role .role-said {
+  font-size: clamp(1.15rem, 1.9vw, 1.7rem);
+  font-weight: 300;
+  line-height: 1.32;
+  color: var(--ink);
+}
+.proof-role .role-said strong { font-weight: 700; }
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — answers the question a prospect is actually
+   asking by this point in the page.
+   ════════════════════════════════════════════════════════════════ */
+.who {
+  padding-top: clamp(96px, 14vh, 190px);
+  padding-bottom: 0;      /* the full-bleed art meets the invitation */
+}
+.who-label {
+  grid-column: 1 / 4;
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin-bottom: clamp(48px, 8vh, 110px);
+}
+.who-title { grid-column: 1 / 10; font-size: var(--t-big); }
+.who-copy  { grid-column: 1 / 6; margin-top: clamp(32px, 5vh, 56px); }
+.who-copy-2 { margin-top: 1.1em; }
+
+/* The trades, as an index — not a grid of cards */
+.who-trades {
+  grid-column: 7 / 13;
+  margin-top: clamp(32px, 5vh, 56px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 0;
+}
+.who-trades li {
+  display: flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.who-trades li:not(:last-child)::after {
+  content: "·";
+  color: var(--ink-35);
+  padding-inline: 0.9em;
+}
+.who-trades-note { grid-column: 7 / 12; margin-top: 20px; color: var(--ink-60); }
+
+/* The disqualifier — saying who it isn't for is what makes the
+   yes credible. Kept plain, never apologetic. */
+.who-not {
+  grid-column: 7 / 13;
+  margin-top: clamp(48px, 7vh, 88px);
+  border-top: 1px solid var(--ink-35);
+  padding-top: 18px;
+}
+.who-not .not-label { display: flex; color: var(--ink-60); margin-bottom: 14px; }
+
+/* the ordinary storefront: the argument for who this is for */
+.who-art {
+  /* the global img reset would otherwise clamp the bleed */
+  max-width: none;
+  margin-top: clamp(72px, 11vh, 150px);
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+  object-position: center 55%;
+  height: auto;
+  /* Viewport bleed measured against this element's own containing
+     block, so it lands on the edge whatever the grid, the gutter or
+     --bleed happen to be at this width. */
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: 0;
+}
+
+@media (max-width: 1023px) {
+  .who-title, .who-copy, .who-not { grid-column: 1 / -1; }
+}
+@media (max-width: 639px) {
+  .who-label { grid-column: 1 / -1; margin-bottom: 48px; }
+  .who-title { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+  .who-art { aspect-ratio: 4 / 3; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — show the journey, then start it
+   ════════════════════════════════════════════════════════════════ */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: var(--col-gap);
+  margin-top: clamp(56px, 8vh, 110px);
+}
+.step { border-top: 1px solid var(--ink); padding-top: 16px; }
+.step-no { color: var(--ink-60); display: flex; margin-bottom: 14px; }
+.step-said {
+  font-size: calc(var(--t-body) * 1.05);
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--ink);
+}
+.step-note { color: var(--ink-60); margin-top: 8px; max-width: 26ch; }
+@media (max-width: 639px) {
+  .steps { grid-template-columns: 1fr; row-gap: 28px; }
+}
+
+/* Start the conversation before the commitment */
+.starter {
+  margin-top: clamp(56px, 8vh, 110px);
+  max-width: 680px;
+}
+.starter-label { display: block; color: var(--ink-60); margin-bottom: 12px; }
+.starter-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 12px;
+}
+.starter-row input {
+  flex: 1;
+  min-width: 0;
+  background: none;
+  border: 0;
+  padding: 6px 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  color: var(--ink);
+}
+.starter-row input:focus { outline: none; }
+.starter-row input::placeholder { color: var(--ink-35); }
+/* The row's action is the system's secondary, not a bespoke text
+   button: transparent, ruled, red arriving on the bottom edge. It
+   keeps the mono label and the flat arrow; everything else it now
+   inherits from .cta--ghost. */
+.starter-go {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+}
+.starter-go .cta-label { min-height: 40px; padding: 0 1em; }
+.starter-go .cta-arrow { min-width: 2.2em; min-height: 40px; padding-right: 0.9em; }
+.starter-row:focus-within { border-bottom-color: var(--red); }
+.starter-note { color: var(--ink-60); margin-top: 16px; }
+
+/* ════════════════════════════════════════════════════════════════
+   ENTRANCE — masks the unstyled flash while the page boots, and
+   gives the arrival authorship. Cover and hero are both cobalt, so
+   nothing "wipes": the mark simply resolves into the site.
+   Capped at 700ms, once per session, skipped for reduced motion.
+   ════════════════════════════════════════════════════════════════ */
+/* The cover is lifted by script, so it must only exist where script
+   can lift it: with JavaScript off it was a cobalt screen over the
+   whole site with nothing to remove it. */
+.stir-enter { display: none; }
+html.js .stir-enter {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--cobalt);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  transition: opacity 0.45s var(--ease);
+}
+.stir-enter img { height: clamp(26px, 3vw, 38px); width: auto; }
+.stir-enter .enter-rail {
+  width: clamp(90px, 12vw, 150px);
+  height: 1px;
+  background: var(--ivory-40);
+  position: relative;
+  overflow: hidden;
+}
+.stir-enter .enter-rail::after {
+  content: "";
+  position: absolute; inset: 0;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s var(--ease);
+}
+.stir-enter.is-filling .enter-rail::after { transform: scaleX(1); }
+.stir-enter.is-done { opacity: 0; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .stir-enter { display: none; } }
+
+/* ════════════════════════════════════════════════════════════════
+   WHO THIS IS FOR — the trades at display scale, and what each one
+   actually gets. Demonstrates range across verticals, which is the
+   real question behind "do you work with someone like me".
+   ════════════════════════════════════════════════════════════════ */
+.who-body { grid-column: 1 / -1; margin-top: clamp(56px, 9vh, 120px); }
+.trades-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  column-gap: clamp(40px, 6vw, 110px);
+  align-items: start;
+}
+.trade-list { list-style: none; }
+.trade-list li { border-top: 1px solid var(--ink-35); }
+.trade-list li:last-child { border-bottom: 1px solid var(--ink-35); }
+
+.trade {
+  width: 100%;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: baseline;
+  gap: 0.7em;
+  padding: clamp(10px, 1.4vh, 18px) 0;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.1vw, 2.9rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--ink-35);
+  transition: color 0.3s var(--ease), transform 0.4s var(--ease);
+}
+.trade::before {
+  content: "";
+  flex: none;
+  width: 0.2em; height: 0.2em;
+  align-self: center;
+  background: var(--red);
+  opacity: 0;
+  transform: scale(0.4);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.trade:hover { color: var(--ink-60); }
+.trade[aria-pressed="true"] {
+  color: var(--ink);
+  transform: translateX(0.3ch);
+}
+.trade[aria-pressed="true"]::before { opacity: 1; transform: none; }
+
+/* The answer panel — what that kind of business actually gets */
+.trade-panel {
+  position: sticky;
+  top: clamp(120px, 18vh, 200px);
+  border-top: 1px solid var(--ink);
+  padding-top: 18px;
+  min-height: 12rem;
+}
+.trade-panel .panel-label { display: flex; color: var(--ink-60); margin-bottom: clamp(20px, 3vh, 34px); }
+.trade-panel .panel-for { color: var(--cobalt); }
+.trade-panel .panel-said {
+  font-size: clamp(1.3rem, 2.3vw, 2.1rem);
+  font-weight: 300;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  min-height: 2.7em;
+}
+.trade-panel .panel-note {
+  margin-top: clamp(18px, 2.6vh, 28px);
+  padding-top: 12px;
+  border-top: 1px solid var(--ink-35);
+  color: var(--ink-60);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .trade-panel .panel-said,
+  .trade-panel .panel-note {
+    transition: opacity 0.26s var(--ease), transform 0.34s var(--ease);
+  }
+  .trade-panel .panel-note { transition-delay: 0.04s; }
+  .trade-panel.is-swapping .panel-said,
+  .trade-panel.is-swapping .panel-note {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.who-body .who-trades-note {
+  grid-column: auto;
+  margin-top: clamp(28px, 4vh, 44px);
+  max-width: 44ch;
+}
+/* The inline answer lives in the markup, not in a script. With no JS
+   the whole list simply reads as nine trades and their answers; the
+   panel stands down, because without script it can only ever show
+   the first one. */
+.trade-inline > div { min-height: 0; }
+.trade-inline-said {
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+  font-weight: 300;
+  line-height: 1.3;
+  color: var(--ink);
+  padding-block: 4px 10px;
+}
+.trade-inline-note { color: var(--ink-60); padding-bottom: 18px; }
+html:not(.js) .trade-panel { display: none; }
+html.js .trade-inline { display: none; }    /* wide + JS: the panel does it */
+
+/* Narrow: no panel. The answer opens directly under the trade you
+   chose, because an update somewhere else on the page is a change
+   you cannot see — and a panel pinned to the top of the viewport
+   would sit behind the fixed header anyway. */
+@media (max-width: 1023px) {
+  .trades-grid { grid-template-columns: 1fr; }
+  .trade-panel { display: none; }
+
+  html.js .trade-inline {
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows 0.38s var(--ease);
+  }
+  html.js .trade[aria-pressed="true"] + .trade-inline { grid-template-rows: 1fr; }
+
+  .trade-inline-said { font-size: clamp(1.1rem, 4.4vw, 1.45rem); }
+
+  /* The chosen trade and its answer read as one block. */
+  .trade-list li:has(.trade[aria-pressed="true"]) {
+    border-left: 2px solid var(--red);
+    padding-left: 14px;
+  }
+  .trade[aria-pressed="true"] { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js .trade-inline { transition: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CONVERSION — the site opens in STIR's world and closes in it.
+   The observer returns, cropped to the eye: the site asked what an
+   ordinary business is hiding; now it asks you.
+   ════════════════════════════════════════════════════════════════ */
+.convert {
+  position: relative;
+  background: var(--cobalt);
+  color: var(--ivory);
+  overflow: hidden;
+  padding-top: clamp(96px, 15vh, 190px);
+  padding-bottom: clamp(96px, 15vh, 190px);
+}
+.convert-art {
+  position: absolute;
+  top: 0; right: 0;
+  width: min(58%, 900px);
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% 36%;
+  z-index: 0;
+  opacity: 0.95;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+          mask-image: linear-gradient(to right, transparent 0%, #000 42%);
+}
+.convert .convert-inner { position: relative; z-index: 1; max-width: 62%; }
+.convert .convert-head { border-top-color: var(--ivory-40); }
+.convert .convert-head .ann { color: var(--ivory); }
+.convert-q { font-size: var(--t-giant); color: var(--ivory); }
+.convert-copy { color: var(--ivory-75); max-width: 40ch; margin-top: clamp(32px, 5vh, 56px); }
+
+.convert .steps { margin-top: clamp(48px, 7vh, 96px); }
+.convert .step { border-top-color: var(--ivory-40); }
+.convert .step-no { color: var(--ivory-75); }
+.convert .step-said { color: var(--ivory); }
+.convert .step-note { color: var(--ivory-75); }
+
+.convert .starter-label { color: var(--ivory-75); }
+.convert .starter-row { border-bottom-color: var(--ivory); }
+.convert .starter-row input { color: var(--ivory); }
+.convert .starter-row input::placeholder { color: var(--ivory-40); }
+.convert .starter-row:focus-within { border-bottom-color: var(--red); }
+.convert .starter-note { color: var(--ivory-75); }
+
+@media (max-width: 1023px) {
+  .convert .convert-inner { max-width: 100%; }
+  .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
+}

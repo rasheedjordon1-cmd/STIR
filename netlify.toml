@@ -1,0 +1,47 @@
+# ══════════════════════════════════════════════════════════════════
+# STIR — static site. No framework, no bundler.
+# The "build" step only stamps the live domain into the share meta
+# (see scripts/prepare-deploy.sh); everything else is plain files.
+#
+# Deploy: connect this repo in Netlify → pick this branch → deploy.
+# Inquiries: /contact.html is picked up by Netlify Forms automatically.
+# Turn on notifications in Site configuration → Forms → Form notifications.
+# ══════════════════════════════════════════════════════════════════
+
+[build]
+  command = "bash ./scripts/prepare-deploy.sh"
+  publish = "."
+
+# This deploy doubles as the asset origin for the Squarespace build,
+# so /assets is served cross-origin. Fonts are the only thing that
+# strictly needs CORS, but the whole folder is public static art.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/fonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+    Cross-Origin-Resource-Policy = "cross-origin"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Pretty URLs: /about and /contact work as well as /about.html
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
