@@ -1,0 +1,237 @@
+<!-- Carriacou Logistics, Squarespace kit. Step 10 of 11: Get a rate and book a tour.
+     Paste into: one Code Block, alone in its own blank section. Display source off.
+     Formspree goes here later: replace https://formspree.io/f/YOUR_FORM_ID with your endpoint.
+-->
+<style>
+:is(.cl-page,#cl-_) .small{font-size:14px;line-height:1.5}
+:is(.cl-page,#cl-_) .quote-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
+@media(min-width:960px){:is(.cl-page,#cl-_) .quote-grid{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:var(--s7);align-items:start}
+}:is(.cl-page,#cl-_) .form{display:grid;gap:var(--s5)}
+:is(.cl-page,#cl-_) .seg{display:flex;flex-wrap:wrap;gap:var(--s2)}
+:is(.cl-page,#cl-_) .opt{position:relative}
+:is(.cl-page,#cl-_) .opt input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+:is(.cl-page,#cl-_) .opt span{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid var(--line-strong);background:transparent;cursor:pointer;font-variant-numeric:tabular-nums;transition:background-color var(--dur-micro) var(--ease-micro),color var(--dur-micro) var(--ease-micro),border-color var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .opt span:hover{border-color:var(--deep)}
+:is(.cl-page,#cl-_) .opt input:checked+span{background:var(--deep);border-color:var(--deep);color:var(--frost)}
+:is(.cl-page,#cl-_) .opt input:focus-visible+span{outline:2px solid var(--amber);outline-offset:3px}
+:is(.cl-page,#cl-_) .opt input:disabled+span{color:var(--galv);border-color:var(--line);cursor:not-allowed}
+:is(.cl-page,#cl-_) .field{position:relative;padding-top:20px}
+:is(.cl-page,#cl-_) .field input{width:100%;border:0;border-bottom:1px solid var(--line-strong);background:transparent;padding:8px 0 10px;font:inherit;color:inherit;border-radius:0;outline:none;min-height:44px;transition:border-color var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .field input:hover{border-bottom-color:var(--deep)}
+:is(.cl-page,#cl-_) .field label{position:absolute;left:0;top:28px;color:var(--slate);pointer-events:none;transform-origin:0 0;transition:transform var(--dur-micro) var(--ease-micro),color var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .field input:focus+label,:is(.cl-page,#cl-_) .field input:not(:placeholder-shown)+label{transform:translateY(-26px) scale(.8125);color:var(--deep)}
+:is(.cl-page,#cl-_) .field::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--deep);transform:scaleX(0);transform-origin:0 50%;transition:transform var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .field:focus-within::after{transform:scaleX(1)}
+:is(.cl-page,#cl-_) .field input:focus-visible{outline:none}
+:is(.cl-page,#cl-_) .field:focus-within label{color:var(--deep)}
+:is(.cl-page,#cl-_) .field.err input{border-bottom-color:var(--amber-deep)}
+:is(.cl-page,#cl-_) .field.err::after{background:var(--amber)}
+:is(.cl-page,#cl-_) .msg{font-size:14px;color:var(--slate);margin-top:6px;min-height:1.5em;opacity:0;transform:translateY(-4px);transition:opacity var(--dur-state) var(--ease-state),transform var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .msg.show{opacity:1;transform:none}
+:is(.cl-page,#cl-_) .err .msg{color:var(--deep);font-weight:500}
+:is(.cl-page,#cl-_) .group-msg{margin-top:var(--s2)}
+:is(.cl-page,#cl-_) .two{display:grid;gap:var(--s4) var(--s4)}
+@media(min-width:560px){:is(.cl-page,#cl-_) .two{grid-template-columns:repeat(2,minmax(0,1fr))}
+}:is(.cl-page,#cl-_) .form-foot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s3) var(--s4)}
+:is(.cl-page,#cl-_) .form-foot .small{max-width:36ch}
+:is(.cl-page,#cl-_) .form-state{display:none;padding:var(--s5);border:1.5px solid var(--deep)}
+:is(.cl-page,#cl-_) .form-state.show{display:block}
+:is(.cl-page,#cl-_) .form-state .h3{margin-bottom:var(--s3)}
+:is(.cl-page,#cl-_) .form-state .btn{margin-top:var(--s4)}
+:is(.cl-page,#cl-_) .form.sent{display:none}
+:is(.cl-page,#cl-_) .tabs{display:flex;flex-wrap:wrap;gap:var(--s2) var(--s5)}
+:is(.cl-page,#cl-_) .tab{font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:clamp(28px,3.6vw,48px);line-height:1.02;letter-spacing:-.02em;background:none;border:0;border-bottom:3px solid transparent;padding:0 0 6px;margin-left:-.03em;color:var(--galv);cursor:pointer;text-align:left;transition:color var(--dur-micro) var(--ease-micro),border-color var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .tab:hover{color:var(--slate)}
+:is(.cl-page,#cl-_) .tab[aria-selected=true]{color:var(--deep);border-bottom-color:var(--amber)}
+:is(.cl-page,#cl-_) .tab:focus-visible{outline:2px solid var(--amber);outline-offset:6px}
+:is(.cl-page,#cl-_) .quote[data-mode=rate] [data-mode=tour],:is(.cl-page,#cl-_) .quote[data-mode=tour] [data-mode=rate]{display:none!important}
+:is(.cl-page,#cl-_) .days{display:flex;flex-wrap:wrap;gap:var(--s2)}
+:is(.cl-page,#cl-_) .form-col{min-width:0}
+:is(.cl-page,#cl-_) .ticket{position:relative;border:1.5px solid var(--deep);padding:var(--s4);background:var(--frost);min-width:0}
+@media(min-width:960px){:is(.cl-page,#cl-_) .quote-grid>.form-col{grid-column:1;grid-row:1}
+:is(.cl-page,#cl-_) .ticket{grid-column:2;grid-row:1;position:sticky;top:calc(var(--hdr) + var(--s4))}
+}:is(.cl-page,#cl-_) .tk-kind{font-size:14px;color:var(--slate)}
+:is(.cl-page,#cl-_) .tk-co{font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:22px;line-height:1.1;letter-spacing:-.01em;margin-top:2px;min-height:1.1em;overflow-wrap:anywhere}
+:is(.cl-page,#cl-_) .tk-co.empty{color:var(--slate)}
+:is(.cl-page,#cl-_) .tk-sum{margin-top:var(--s1);font-size:14px;color:var(--slate);font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .tk-mini{width:100%;height:auto;margin-top:var(--s3);font-family:var(--sans)}
+:is(.cl-page,#cl-_) .tk-mini text{fill:var(--slate);font-size:24px;font-family:var(--wide);font-stretch:125%;font-weight:700}
+:is(.cl-page,#cl-_) .tk-mini .z{fill:var(--deep);fill-opacity:.05;transition:fill var(--dur-state) var(--ease-state),fill-opacity var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .tk-mini .z.on{fill:var(--amber);fill-opacity:.92}
+:is(.cl-page,#cl-_) .tk-mini .z.half{fill:var(--amber);fill-opacity:.45}
+:is(.cl-page,#cl-_) .tk-mini .u{fill:var(--deep);opacity:0;transform:translate(var(--x),var(--y)) scale(.6);transform-box:fill-box;transform-origin:center;transition:opacity 200ms var(--ease-reveal),transform var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .tk-mini .u.on{opacity:1;transform:translate(var(--x),var(--y))}
+:is(.cl-page,#cl-_) .tk-mini .u.more{fill:none;stroke:var(--deep);stroke-width:1;stroke-dasharray:2 2}
+:is(.cl-page,#cl-_) .tk-mini .door{fill:var(--deep);transition:transform var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .tk-mini .door.open{transform:translateY(-10px)}
+:is(.cl-page,#cl-_) .tk-mini .trl{fill:var(--amber);stroke:var(--deep);stroke-width:1;opacity:0;transition:opacity var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .tk-mini .trl.on{opacity:1}
+:is(.cl-page,#cl-_) .tk-mini .rt{fill:none;stroke:var(--amber);stroke-width:2;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 480ms var(--ease-state)}
+:is(.cl-page,#cl-_) .tk-mini .rt.on{stroke-dashoffset:0}
+:is(.cl-page,#cl-_) .tk-mini .rt-lbl,:is(.cl-page,#cl-_) .tk-mini .trl-lbl{font-family:var(--sans);font-stretch:100%;font-weight:500;font-size:20px;fill:var(--deep);opacity:0;transition:opacity var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .tk-mini .rt-lbl.on,:is(.cl-page,#cl-_) .tk-mini .trl-lbl.on{opacity:1}
+:is(.cl-page,#cl-_) .tk-rows{margin-top:var(--s3);border-top:1px solid var(--line-strong);font-size:14px}
+:is(.cl-page,#cl-_) .tk-rows>div{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:var(--s3);padding:10px 0;border-bottom:1px solid var(--line)}
+:is(.cl-page,#cl-_) .tk-rows dt{color:var(--slate)}
+:is(.cl-page,#cl-_) .tk-rows dd{font-weight:500;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+:is(.cl-page,#cl-_) .tk-rows dd.empty{color:var(--slate);font-weight:400}
+:is(.cl-page,#cl-_) .tk-rows dd.up{animation:cl-rowUp 180ms var(--ease-reveal)}
+:is(.cl-page,#cl-_) .stamp{position:absolute;right:var(--s4);top:var(--s4);padding:8px 14px;border:3px solid var(--amber);color:var(--deep);background:var(--frost);font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:20px;line-height:1;letter-spacing:-.01em;transform:rotate(-6deg) scale(1.3);opacity:0;pointer-events:none;transition:transform 560ms var(--ease-reveal),opacity 400ms var(--ease-reveal)}
+:is(.cl-page,#cl-_) .stamp small{display:block;font-family:var(--sans);font-stretch:100%;font-weight:500;font-size:12px;margin-top:4px;letter-spacing:0;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .ticket.stamped .stamp{transform:rotate(-6deg) scale(1);opacity:1}
+html:not(.cl-js) :is(.cl-page,#cl-_) .ticket{display:none}
+@media(max-width:959px){:is(.cl-page,#cl-_) .quote-grid>.ticket{order:-1}
+:is(.cl-page,#cl-_) .ticket:not(.stamped){position:sticky;top:var(--hdr);z-index:40;display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:0 var(--s3);align-items:center;padding:10px 0 12px;border:0;border-bottom:1px solid var(--line)}
+:is(.cl-page,#cl-_) .ticket:not(.stamped) .tk-rows,:is(.cl-page,#cl-_) .ticket:not(.stamped) .stamp{display:none}
+:is(.cl-page,#cl-_) .ticket:not(.stamped) .tk-mini{margin:0;grid-column:2;grid-row:1/4}
+:is(.cl-page,#cl-_) .ticket:not(.stamped) .tk-mini text{display:none}
+:is(.cl-page,#cl-_) .tk-co{font-size:18px}
+:is(.cl-page,#cl-_) .tab{font-size:clamp(24px,7vw,32px)}
+}@media(prefers-reduced-motion:reduce){:is(.cl-page,#cl-_) .tk-mini .u{transition:none}
+:is(.cl-page,#cl-_) .stamp{transition:none}
+}
+</style>
+<div class="cl-page" id="cl-s-quote">
+<section class="sec light rv quote" id="quote" data-mode="rate" data-view="Quote" data-view-temp="" aria-labelledby="quote-h" style="border-top:1px solid var(--line-strong)">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="sr" id="quote-h">Get a pallet rate or book a dock tour</h2>
+      <div class="mask"><div class="tabs" role="tablist" aria-label="What do you need">
+        <button class="tab" role="tab" type="button" id="tab-rate" aria-selected="true" aria-controls="quote-panel" data-mode-set="rate">Get a pallet rate.</button>
+        <button class="tab" role="tab" type="button" id="tab-tour" aria-selected="false" aria-controls="quote-panel" data-mode-set="tour" tabindex="-1">Book a dock tour.</button>
+      </div></div>
+      <p class="lead"><span class="mask"><span><span data-mode="rate">Seven questions. <span data-authorize="quote-turnaround">Quoted in one business day.</span> No account, no uploads.</span><span data-mode="tour">Pick a day and a window. The dock is yours to walk, and the time is confirmed by phone.</span></span></span></p>
+    </div>
+    <div class="quote-grid" id="quote-panel" role="tabpanel" aria-labelledby="tab-rate">
+      <div class="form-col">
+        <form class="form" id="quote-form" name="quote" method="post" action="https://formspree.io/f/YOUR_FORM_ID" novalidate>
+          <input type="hidden" name="intent" id="f-intent" value="rate">
+          <p class="sr" aria-hidden="true"><label>Leave this field empty <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
+          <fieldset>
+            <legend>Temperature needed</legend>
+            <div class="seg" id="seg-temp">
+              <label class="opt"><input type="radio" name="temp" value="freezer"><span>Freezer</span></label>
+              <label class="opt"><input type="radio" name="temp" value="cooler"><span>Cooler</span></label>
+              <label class="opt"><input type="radio" name="temp" value="dry"><span>Dry</span></label>
+              <label class="opt"><input type="radio" name="temp" value="mixed"><span>Mixed</span></label>
+            </div>
+            <p class="msg group-msg" id="msg-temp"></p>
+          </fieldset>
+          <fieldset>
+            <legend>Approximate pallet positions</legend>
+            <div class="seg" id="seg-pallets">
+              <label class="opt"><input type="radio" name="pallets" value="1-5"><span class="num">1 to 5</span></label>
+              <label class="opt"><input type="radio" name="pallets" value="6-20"><span class="num">6 to 20</span></label>
+              <label class="opt"><input type="radio" name="pallets" value="21-50"><span class="num">21 to 50</span></label>
+              <label class="opt"><input type="radio" name="pallets" value="50+"><span class="num">More than 50</span></label>
+            </div>
+            <p class="msg group-msg" id="msg-pallets"></p>
+          </fieldset>
+          <div class="field">
+            <input type="text" id="f-product" name="product" placeholder=" " autocomplete="off" aria-describedby="msg-product">
+            <label for="f-product">Product type</label>
+            <p class="msg" id="msg-product"></p>
+          </div>
+          <fieldset data-mode="rate">
+            <legend>Do you deliver into retail DCs?</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="retail" value="yes"><span>Yes</span></label>
+              <label class="opt"><input type="radio" name="retail" value="no"><span>No</span></label>
+              <label class="opt"><input type="radio" name="retail" value="not-yet"><span>Not yet</span></label>
+            </div>
+          </fieldset>
+          <fieldset data-mode="rate">
+            <legend>Need pickup and delivery?</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="delivery" value="yes"><span>Yes</span></label>
+              <label class="opt"><input type="radio" name="delivery" value="no"><span>No</span></label>
+              <label class="opt"><input type="radio" name="delivery" value="unsure"><span>Unsure</span></label>
+            </div>
+          </fieldset>
+          <fieldset data-mode="rate">
+            <legend>Start date</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="start" value="this-month"><span>This month</span></label>
+              <label class="opt"><input type="radio" name="start" value="next-month"><span>Next month</span></label>
+              <label class="opt"><input type="radio" name="start" value="exploring"><span>Exploring</span></label>
+            </div>
+          </fieldset>
+          <fieldset data-mode="tour">
+            <legend>Day of the visit</legend>
+            <div class="days" id="days"></div>
+            <input type="hidden" name="tour-day" id="f-tour-day">
+            <p class="msg group-msg" id="msg-tour-day"></p>
+          </fieldset>
+          <fieldset data-mode="tour">
+            <legend>Window</legend>
+            <div class="seg">
+              <label class="opt"><input type="radio" name="tour-window" value="morning"><span>Morning</span></label>
+              <label class="opt"><input type="radio" name="tour-window" value="afternoon"><span>Afternoon</span></label>
+            </div>
+            <p class="small muted" style="margin-top:8px">Receiving hours <span class="tk" data-fact="hours">TK</span>. We confirm the exact time by phone.</p>
+          </fieldset>
+          <div class="two">
+            <div class="field"><input type="text" id="f-company" name="company" placeholder=" " autocomplete="organization" aria-describedby="msg-company"><label for="f-company">Company</label><p class="msg" id="msg-company"></p></div>
+            <div class="field"><input type="text" id="f-name" name="name" placeholder=" " autocomplete="name" aria-describedby="msg-name"><label for="f-name">Your name</label><p class="msg" id="msg-name"></p></div>
+            <div class="field"><input type="email" id="f-email" name="email" placeholder=" " autocomplete="email" inputmode="email" aria-describedby="msg-email"><label for="f-email">Work email</label><p class="msg" id="msg-email"></p></div>
+            <div class="field"><input type="tel" id="f-phone" name="phone" placeholder=" " autocomplete="tel" inputmode="tel" aria-describedby="msg-phone"><label for="f-phone">Phone</label><p class="msg" id="msg-phone"></p></div>
+          </div>
+          <div class="form-foot">
+            <span class="mag"><button class="btn btn-primary" type="submit" id="f-submit">Send for a rate</button></span>
+            <p class="small muted">Sent to the warehouse directly. <span data-authorize="who-calls"><span class="tk" data-fact="who-calls">TK</span> calls you back.</span></p>
+          </div>
+        </form>
+        <div class="form-state" id="form-ok" role="status" aria-live="polite">
+          <h3 class="h3">Received.</h3>
+          <p class="copy" id="form-ok-copy"></p>
+          <p class="copy" style="margin-top:12px" id="form-ok-next"></p>
+          <a class="btn" href="#cl-top">Back to the plan</a>
+        </div>
+        <div class="form-state" id="form-fail" role="alert">
+          <h3 class="h3">This didn't send.</h3>
+          <p class="copy">Your answers are still on this page. Try again, or call <a class="num text-link" href="tel:"><span class="tk" data-fact="phone">TK</span></a> and read them out. It takes about a minute.</p>
+          <button class="btn" type="button" id="form-retry">Try again</button>
+        </div>
+      </div>
+      <aside class="ticket" id="ticket" aria-label="Your request, drawn as you answer">
+        <p class="tk-kind" id="tk-kind">Rate request</p>
+        <p class="tk-co empty" id="tk-co">Your company</p>
+        <p class="tk-sum" id="tk-sum" aria-live="polite">Nothing chosen yet</p>
+        <svg class="tk-mini" viewBox="0 0 960 640" aria-hidden="true">
+          <defs><pattern id="cl-tk-units" x="0" y="8" width="24" height="20" patternUnits="userSpaceOnUse"><rect x=".5" y=".5" width="23" height="19" fill="none" stroke="#0B1F2A" stroke-opacity=".22" stroke-width=".75"/></pattern></defs>
+          <rect class="z" id="tkz-freezer" x="48" y="56" width="288" height="392"/>
+          <rect class="z" id="tkz-cooler" x="336" y="56" width="288" height="392"/>
+          <rect class="z" id="tkz-dry" x="624" y="56" width="288" height="392"/>
+          <rect x="48" y="128" width="864" height="320" fill="url(#cl-tk-units)"/>
+          <g id="tk-pallets"></g>
+          <text x="64" y="98">Freezer</text><text x="352" y="98">Cooler</text><text x="640" y="98">Dry</text>
+          <path d="M48 56H912V512H48ZM336 56V448M624 56V448M48 448H912" fill="none" stroke="#0B1F2A" stroke-width="1.25" vector-effect="non-scaling-stroke"/>
+          <rect class="door" id="tk-door1" x="196" y="506" width="40" height="6"/>
+          <rect class="door" x="372" y="506" width="40" height="6"/>
+          <rect class="door" x="548" y="506" width="40" height="6"/>
+          <rect class="door" x="724" y="506" width="40" height="6"/>
+          <rect class="trl" id="tk-trl1" x="200" y="524" width="32" height="80"/>
+          <rect class="trl" id="tk-trl2" x="376" y="524" width="32" height="80"/>
+          <text class="trl-lbl" id="tk-trl1-lbl" x="244" y="572">Your visit, Dock 1</text>
+          <text class="trl-lbl" id="tk-trl2-lbl" x="420" y="572">Reefer, Dock 2</text>
+          <path class="rt" id="tk-rt" pathLength="1" d="M568 512V608H904"/>
+          <text class="rt-lbl" id="tk-rt-lbl" x="904" y="632" text-anchor="end">To the retail DC</text>
+        </svg>
+        <dl class="tk-rows">
+          <div><dt>Zone</dt><dd id="tr-zone" class="empty">Not set</dd></div>
+          <div><dt>Positions</dt><dd id="tr-pallets" class="empty">Not set</dd></div>
+          <div><dt>Product</dt><dd id="tr-product" class="empty">Not set</dd></div>
+          <div data-mode="rate"><dt>Retail DCs</dt><dd id="tr-retail" class="empty">Not set</dd></div>
+          <div data-mode="rate"><dt>Pickup and delivery</dt><dd id="tr-delivery" class="empty">Not set</dd></div>
+          <div data-mode="rate"><dt>Start</dt><dd id="tr-start" class="empty">Not set</dd></div>
+          <div data-mode="tour"><dt>Day</dt><dd id="tr-day" class="empty">Not set</dd></div>
+          <div data-mode="tour"><dt>Window</dt><dd id="tr-window" class="empty">Not set</dd></div>
+          <div data-mode="tour"><dt>Dock</dt><dd>Dock 1. Time confirmed by phone.</dd></div>
+          <div><dt>Contact</dt><dd id="tr-contact" class="empty">Not set</dd></div>
+        </dl>
+        <div class="stamp" aria-hidden="true">Received<small id="stamp-time"></small></div>
+      </aside>
+    </div>
+  </div>
+</section>
+</div>

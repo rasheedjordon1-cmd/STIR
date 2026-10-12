@@ -1,0 +1,45 @@
+<!-- Carriacou Logistics, Squarespace kit. Step 7 of 11: Who this is built for.
+     Paste into: one Code Block, alone in its own blank section. Display source off.
+-->
+<style>
+:is(.cl-page,#cl-_) .serve-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s5);border-top:1px solid var(--line-strong)}
+@media(min-width:768px){:is(.cl-page,#cl-_) .serve-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s6)}
+}:is(.cl-page,#cl-_) .serve{padding-top:var(--s4)}
+:is(.cl-page,#cl-_) .serve ul{margin-top:var(--s3);columns:2;column-gap:var(--s4)}
+:is(.cl-page,#cl-_) .serve li{position:relative;display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3);padding:8px 0;border-bottom:1px solid var(--line);break-inside:avoid;transition:color var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .serve li::before{content:"";position:absolute;left:calc(-1 * var(--s3));top:8px;bottom:8px;width:2px;background:var(--amber);transform:scaleY(0);transform-origin:50% 0;transition:transform var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .serve .tag{flex:none;font-size:13px;color:var(--slate);font-variant-numeric:tabular-nums;opacity:0;transform:translateX(6px);transition:opacity var(--dur-state) var(--ease-micro),transform var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .serve li.live::before,:is(.cl-page,#cl-_) .serve li:hover::before{transform:none}
+:is(.cl-page,#cl-_) .serve li.live .tag,:is(.cl-page,#cl-_) .serve li:hover .tag{opacity:1;transform:none}
+:is(.cl-page,#cl-_) .serve li.live{color:var(--deep)}
+@media(max-width:599px){:is(.cl-page,#cl-_) .serve ul{columns:1}
+}:is(.cl-page,#cl-_) .fit{margin-top:var(--s6);padding-top:var(--s4);border-top:1px solid var(--line-strong)}
+@media(prefers-reduced-motion:reduce){:is(.cl-page,#cl-_) .serve .tag{opacity:1;transform:none}
+:is(.cl-page,#cl-_) .serve li::before{display:none}
+}
+</style>
+<div class="cl-page" id="cl-s-serves">
+<section class="sec rv" id="serves" aria-labelledby="serves-h" data-view="Facility" data-view-temp="">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="serves-h"><span class="mask"><span>Who this is built for.</span></span></h2>
+      <p class="lead"><span class="mask"><span>Brands that sell into grocery, and the distributors who move their product. Regional and national.</span></span></p>
+    </div>
+    <div class="serve-grid">
+      <div class="serve">
+        <h3 class="h3">CPG brands</h3>
+        <ul>
+          <li><span>Frozen entrées and sides</span><span class="tag">Freezer</span></li><li><span>Ice cream and frozen desserts</span><span class="tag">Freezer</span></li><li><span>Frozen and fresh protein</span><span class="tag">Freezer or cooler</span></li><li><span>Dairy and plant-based dairy</span><span class="tag">Cooler</span></li><li><span>Fresh produce</span><span class="tag">Cooler</span></li><li><span>Beverage, cold and shelf-stable</span><span class="tag">Cooler or dry</span></li><li><span>Supplements and powders</span><span class="tag">Dry</span></li><li><span>Snacks and shelf-stable grocery</span><span class="tag">Dry</span></li>
+        </ul>
+      </div>
+      <div class="serve">
+        <h3 class="h3">Grocery retail supply</h3>
+        <ul>
+          <li><span>Grocery DC replenishment</span><span class="tag">Store and deliver</span></li><li><span>Regional distributor drops</span><span class="tag">Deliver</span></li><li><span>Direct-store delivery staging</span><span class="tag">Store</span></li><li><span>Overflow and seasonal build-up</span><span class="tag">Store</span></li><li><span>Promotional and display product</span><span class="tag">Store</span></li><li><span>Cross-dock <span class="tk" data-fact="cross-dock">TK</span></span><span class="tag">Receive and deliver</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="fit lead" data-authorize="fit">Built for brands running 5 pallets and brands running 500.</p>
+  </div>
+</section>
+</div>

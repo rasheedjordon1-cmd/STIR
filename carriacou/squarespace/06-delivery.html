@@ -1,0 +1,77 @@
+<!-- Carriacou Logistics, Squarespace kit. Step 6 of 11: Storage and delivery.
+     Paste into: one Code Block, alone in its own blank section. Display source off.
+-->
+<style>
+:is(.cl-page,#cl-_) .del-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6)}
+@media(min-width:960px){:is(.cl-page,#cl-_) .del-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s7);align-items:start}
+}:is(.cl-page,#cl-_) .steps{counter-reset:step;border-top:1px solid var(--line-dark)}
+:is(.cl-page,#cl-_) .step{display:grid;grid-template-columns:48px minmax(0,1fr);gap:var(--s3);padding:var(--s4) 0;border-bottom:1px solid var(--line-dark)}
+:is(.cl-page,#cl-_) .step .n{font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:28px;line-height:1;font-variant-numeric:tabular-nums;color:var(--amber)}
+:is(.cl-page,#cl-_) .step .h3{margin-bottom:var(--s1)}
+:is(.cl-page,#cl-_) .step p{color:var(--galv);max-width:44ch;text-wrap:pretty}
+:is(.cl-page,#cl-_) .step p b{color:var(--frost)}
+:is(.cl-page,#cl-_) .route{width:100%;height:auto;aspect-ratio:760/560;font-family:var(--sans);font-size:12px;color:var(--frost)}
+:is(.cl-page,#cl-_) .route text{fill:currentColor}
+:is(.cl-page,#cl-_) .route .land{fill:rgba(245,248,249,.05);stroke:var(--galv);stroke-width:1;vector-effect:non-scaling-stroke}
+:is(.cl-page,#cl-_) .route .hwy{fill:none;stroke:var(--galv);stroke-width:.75;stroke-opacity:.55;vector-effect:non-scaling-stroke}
+:is(.cl-page,#cl-_) .route .hwy-lbl{fill:var(--galv);font-size:11px}
+:is(.cl-page,#cl-_) .route .city{fill:var(--galv)}
+:is(.cl-page,#cl-_) .route .city-lbl{fill:var(--galv)}
+:is(.cl-page,#cl-_) .route .fac{fill:var(--amber)}
+:is(.cl-page,#cl-_) .route .fac-lbl{fill:var(--frost);font-weight:500}
+:is(.cl-page,#cl-_) .route .path{fill:none;stroke:var(--amber);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vector-effect:non-scaling-stroke;stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p))}
+:is(.cl-page,#cl-_) .route .path-2{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--p));stroke-opacity:.5;stroke-width:1.25}
+:is(.cl-page,#cl-_) .route .reefer{fill:var(--amber);offset-path:path("M300 296 L332 286 L352 272 L370 254 L392 246 L418 236 L428 212 L436 178 L440 140");offset-distance:calc(var(--p) * 100%);offset-rotate:auto}
+@supports (animation-timeline:view()){.cl-js :is(.cl-page,#cl-_) .delivery .path,.cl-js :is(.cl-page,#cl-_) .delivery .path-2{animation:cl-drawRoute linear both;animation-timeline:view();animation-range:entry 30% cover 70%}
+.cl-js :is(.cl-page,#cl-_) .delivery .reefer{animation:cl-ride linear both;animation-timeline:view();animation-range:entry 30% cover 70%}
+}:is(.cl-page,#cl-_) .route-note{margin-top:var(--s3);color:var(--galv);font-size:14px;max-width:48ch;text-wrap:pretty}
+@media(prefers-reduced-motion:reduce){:is(.cl-page,#cl-_) .route .path,:is(.cl-page,#cl-_) .route .path-2{stroke-dashoffset:0;animation:none!important}
+:is(.cl-page,#cl-_) .route .reefer{offset-distance:100%;animation:none!important}
+}
+</style>
+<div class="cl-page" id="cl-s-delivery">
+<section class="sec dark delivery rv" id="delivery" aria-labelledby="del-h" data-view="Route" data-view-temp="">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="del-h"><span class="mask"><span>Stored and delivered by one operation.</span></span></h2>
+      <p class="lead muted"><span class="mask"><span>One accountable party from your receipt to the retailer's dock. No handoff between a warehouse and a carrier who point at each other.</span></span></p>
+    </div>
+    <div class="del-grid">
+      <ol class="steps">
+        <li class="step"><span class="n num" aria-hidden="true">1</span><div><h3 class="h3">Receive</h3><p>Your product comes in on appointment, is checked against the lot code and the temperature on arrival, and is put away in its zone.</p></div></li>
+        <li class="step"><span class="n num" aria-hidden="true">2</span><div><h3 class="h3">Store</h3><p>Pallet positions are billed by the month. <b>Rotation and the temperature record run the whole time it sits.</b></p></div></li>
+        <li class="step"><span class="n num" aria-hidden="true">3</span><div><h3 class="h3">Deliver</h3><p>On request, a refrigerated Sprinter van or truck moves it to your customer's dock inside their receiving window.</p></div></li>
+      </ol>
+      <div>
+        <svg class="route" viewBox="0 0 760 560" role="img" aria-labelledby="route-t route-d">
+          <title id="route-t">Delivery route map</title>
+          <desc id="route-d">A drafted map of Connecticut with the I-84, I-91, and I-95 corridors. The facility in Waterbury is marked. A route draws outward from Waterbury along I-84 to Hartford and north on I-91 as the page scrolls. Service radius and states served are pending confirmation.</desc>
+          <path class="land" d="M96 112 L588 112 L588 118 L560 118 L560 124 L590 124 L596 300 L578 300 L556 306 L520 300 L490 296 L462 300 L440 306 L420 312 L400 316 L380 318 L360 322 L336 326 L322 332 L300 334 L282 338 L262 344 L246 352 L226 356 L206 362 L188 370 L166 372 L152 378 L138 386 L124 396 L112 402 L102 400 L110 388 L120 372 L124 356 L118 348 L110 330 L108 300 L102 200 Z"/>
+          <path class="hwy" d="M126 366 L156 336 L188 314 L226 304 L260 300 L300 296 L332 286 L352 272 L370 254 L392 246 L418 236 L436 212 L458 190 L486 170 L520 152 L560 138 L588 126"/>
+          <text class="hwy-lbl" x="300" y="284" text-anchor="middle">I-84</text>
+          <path class="hwy" d="M406 112 L410 150 L416 190 L424 224 L428 246 L424 274 L420 300 L418 312"/>
+          <text class="hwy-lbl" x="446" y="166">I-91</text>
+          <path class="hwy" d="M108 402 L140 384 L176 372 L210 362 L250 350 L290 336 L336 326 L380 318 L420 312 L470 300 L520 302 L560 308 L596 300"/>
+          <text class="hwy-lbl" x="250" y="366">I-95</text>
+          <text class="hwy-lbl" x="340" y="98">Massachusetts</text>
+          <text class="hwy-lbl" x="612" y="200">Rhode Island</text>
+          <text class="hwy-lbl" x="40" y="240">New York</text>
+          <text class="hwy-lbl" x="380" y="420">Long Island Sound</text>
+          <circle class="city" cx="428" cy="212" r="3"/><text class="city-lbl" x="438" y="208">Hartford</text>
+          <circle class="city" cx="188" cy="314" r="3"/><text class="city-lbl" x="160" y="330">Danbury</text>
+          <circle class="city" cx="336" cy="326" r="3"/><text class="city-lbl" x="322" y="346">New Haven</text>
+          <circle class="city" cx="262" cy="344" r="3"/><text class="city-lbl" x="236" y="364">Bridgeport</text>
+          <circle class="city" cx="556" cy="306" r="3"/><text class="city-lbl" x="536" y="326">New London</text>
+          <path class="path path-2" pathLength="1" d="M300 296 L260 300 L226 304 L188 314 L156 336 L126 366"/>
+          <path class="path" pathLength="1" d="M300 296 L332 286 L352 272 L370 254 L392 246 L418 236 L428 212 L436 178 L440 140"/>
+          <rect class="reefer" x="-7" y="-4" width="14" height="8"/>
+          <circle class="fac" cx="300" cy="296" r="5"/>
+          <text class="fac-lbl" x="300" y="260" text-anchor="middle">Waterbury</text>
+          <text class="fac-lbl" x="300" y="245" text-anchor="middle" font-size="11">85 South Leonard Street</text>
+        </svg>
+        <p class="route-note">Delivery radius <span class="tk" data-fact="delivery-radius">TK</span>. States served <span class="tk" data-fact="states-served">TK</span>. Scheduled retail routes <span class="tk" data-fact="scheduled-routes">TK</span>. Corridors drawn are I-84, I-91, and I-95.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</div>

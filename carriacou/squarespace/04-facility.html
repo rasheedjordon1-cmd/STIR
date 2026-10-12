@@ -1,0 +1,67 @@
+<!-- Carriacou Logistics, Squarespace kit. Step 4 of 11: The building.
+     Paste into: one Code Block, alone in its own blank section. Display source off.
+-->
+<style>
+:is(.cl-page,#cl-_) .big{font-family:var(--wide);font-stretch:125%;font-weight:700;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .big{font-size:clamp(36px,5vw,64px);line-height:1;letter-spacing:-.02em}
+:is(.cl-page,#cl-_) .facility{position:relative;overflow:hidden}
+:is(.cl-page,#cl-_) .shutter{position:absolute;inset:0;z-index:5;pointer-events:none;display:none}
+.cl-js :is(.cl-page,#cl-_) .shutter{display:block}
+:is(.cl-page,#cl-_) .shutter i{position:absolute;left:0;right:0;background:var(--galv);border-bottom:1px solid rgba(11,31,42,.5);transform-origin:50% 0;transition:transform 180ms var(--ease-state)}
+:is(.cl-page,#cl-_) .shutter.open i{transform:scaleY(0)}
+:is(.cl-page,#cl-_) .shutter.done{display:none}
+:is(.cl-page,#cl-_) .fac-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6);align-items:start}
+@media(min-width:960px){:is(.cl-page,#cl-_) .fac-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s7)}
+}:is(.cl-page,#cl-_) .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4) var(--s4)}
+@media(max-width:359px){:is(.cl-page,#cl-_) .stats{grid-template-columns:minmax(0,1fr)}
+}:is(.cl-page,#cl-_) .stat{padding-top:var(--s3);border-top:1px solid var(--line-dark)}
+:is(.cl-page,#cl-_) .stat .big{display:block}
+:is(.cl-page,#cl-_) .stat .big small{display:inline-block;font-family:var(--sans);font-stretch:100%;font-weight:400;font-size:16px;margin-left:6px;color:var(--galv)}
+:is(.cl-page,#cl-_) .stat .lbl{display:block;margin-top:var(--s2);color:var(--galv);font-size:14px}
+:is(.cl-page,#cl-_) .cap{margin-top:var(--s6);padding-top:var(--s3);border-top:1px solid var(--line-dark)}
+:is(.cl-page,#cl-_) .cap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:3px;margin-top:var(--s3);max-width:min(100%,640px)}
+:is(.cl-page,#cl-_) .cap-grid i{display:block;aspect-ratio:1;border:1px solid rgba(245,248,249,.35);background:var(--frost);opacity:0;transform:scale(.6);transition:opacity 220ms var(--ease-reveal),transform 220ms var(--ease-reveal)}
+:is(.cl-page,#cl-_) .cap-grid i.on{opacity:1;transform:none}
+:is(.cl-page,#cl-_) .cap-grid.pending i{opacity:1;transform:none;background:transparent}
+:is(.cl-page,#cl-_) .cap .big{display:inline-block}
+@media(prefers-reduced-motion:reduce){:is(.cl-page,#cl-_) .shutter{display:none!important}
+:is(.cl-page,#cl-_) .cap-grid i{transition:none}
+}
+</style>
+<div class="cl-page" id="cl-s-facility">
+<section class="sec dark facility rv" id="facility" aria-labelledby="fac-h" data-view="Docks" data-view-temp="">
+  <div class="shutter" id="shutter" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="fac-h"><span class="mask"><span>The building.</span></span></h2>
+      <p class="lead muted"><span class="mask"><span>One address, one roof, three temperatures, four doors.</span></span></p>
+    </div>
+    <div class="fac-grid">
+      <div>
+        <div class="stats">
+          <div class="stat"><span class="big num"><span class="count" data-count="4">4</span></span><span class="lbl">Loading docks</span></div>
+          <div class="stat"><span class="big num"><span class="count tk" data-count="" data-fact="square-feet">TK</span><small>sq ft</small></span><span class="lbl">Under roof</span></div>
+          <div class="stat"><span class="big num"><span class="count tk" data-count="" data-fact="clear-height">TK</span><small>ft</small></span><span class="lbl">Clear height</span></div>
+          <div class="stat"><span class="big num"><span class="count" data-count="3">3</span></span><span class="lbl">Temperature zones</span></div>
+        </div>
+        <div class="cap" id="cap">
+          <span class="big num"><span class="count tk" id="cap-count" data-count="" data-fact="total-positions">TK</span></span> <span class="muted">pallet positions in total</span>
+          <div class="cap-grid pending" id="cap-grid" aria-hidden="true"></div>
+        </div>
+      </div>
+      <dl class="spec">
+        <div><dt>Racking</dt><dd><span class="tk" data-fact="racking">TK</span></dd></div>
+        <div><dt>Receiving hours</dt><dd><span class="tk" data-fact="hours">TK</span></dd></div>
+        <div><dt>Appointments</dt><dd><span class="tk" data-fact="appointment-policy">TK</span></dd></div>
+        <div><dt>Dock equipment</dt><dd><span class="tk" data-fact="dock-levelers">TK</span></dd></div>
+        <div><dt>Backup power</dt><dd><span class="tk" data-fact="backup-power">TK</span></dd></div>
+        <div><dt>Temperature monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd></div>
+        <div><dt>Certifications</dt><dd><span class="tk" data-fact="certifications">TK</span></dd></div>
+        <div><dt>Warehouse management system</dt><dd><span class="tk" data-fact="wms">TK</span></dd></div>
+        <div><dt>Cross-docking</dt><dd><span class="tk" data-fact="cross-dock">TK</span></dd></div>
+        <div><dt>Fleet</dt><dd>Refrigerated Sprinter vans and trucks. Count <span class="tk" data-fact="fleet-size">TK</span>.</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+</div>

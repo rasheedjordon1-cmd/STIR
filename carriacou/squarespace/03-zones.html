@@ -1,0 +1,103 @@
+<!-- Carriacou Logistics, Squarespace kit. Step 3 of 11: Three temperature zones.
+     Paste into: one Code Block, alone in its own blank section. Display source off.
+-->
+<style>
+:is(.cl-page,#cl-_) .zone-name{font-family:var(--wide);font-stretch:125%;font-weight:700;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .zones{position:relative;isolation:isolate}
+:is(.cl-page,#cl-_) .scrub{position:absolute;inset:0;pointer-events:none;z-index:-1}
+:is(.cl-page,#cl-_) .scrub-cold{background:#DFE6EA;opacity:calc(1 - var(--p))}
+:is(.cl-page,#cl-_) .scrub-warm{background:#F6F5F2;opacity:var(--p)}
+@supports (animation-timeline:view()){.cl-js :is(.cl-page,#cl-_) .scrub-cold{animation:cl-scrubCold linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+.cl-js :is(.cl-page,#cl-_) .scrub-warm{animation:cl-scrubWarm linear both;animation-timeline:view();animation-range:entry 0% exit 100%}
+}:is(.cl-page,#cl-_) .zone-grid{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line-strong)}
+@media(min-width:768px){:is(.cl-page,#cl-_) .zone-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}:is(.cl-page,#cl-_) .zone{position:relative;padding:var(--s4) 0 var(--s5);border-bottom:1px solid var(--line)}
+@media(min-width:768px){:is(.cl-page,#cl-_) .zone{padding:var(--s5) var(--s4) var(--s6) 0}
+:is(.cl-page,#cl-_) .zone+.zone{padding-left:var(--s4);border-left:1px solid var(--line)}
+:is(.cl-page,#cl-_) .zone:last-child{padding-right:0}
+}:is(.cl-page,#cl-_) .zone-name{font-size:clamp(28px,3vw,40px);line-height:1;letter-spacing:-.02em}
+:is(.cl-page,#cl-_) .zone dl{margin-top:var(--s4);display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s3);align-items:baseline}
+:is(.cl-page,#cl-_) .zone dt{color:var(--slate);font-size:14px}
+:is(.cl-page,#cl-_) .zone dd{font-weight:500;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .zone .cats{margin-top:var(--s4);color:var(--slate);max-width:32ch;text-wrap:pretty}
+:is(.cl-page,#cl-_) .zone .cats b{color:var(--deep)}
+:is(.cl-page,#cl-_) .zone .zone-cta{margin-top:var(--s4)}
+:is(.cl-page,#cl-_) .frost{position:absolute;inset:-8px -8px -8px -28px;pointer-events:none;overflow:hidden}
+:is(.cl-page,#cl-_) .frost svg{position:absolute;inset:0;width:100%;height:100%}
+:is(.cl-page,#cl-_) .frost .fe{opacity:0;transition:transform 240ms var(--ease-state),opacity 240ms var(--ease-state)}
+:is(.cl-page,#cl-_) .frost .fe-t{transform:scaleY(0);transform-origin:50% 0}
+:is(.cl-page,#cl-_) .frost .fe-b{y:calc(100% - 28px);transform:scaleY(0);transform-origin:50% 100%}
+:is(.cl-page,#cl-_) .frost .fe-l{transform:scaleX(0);transform-origin:0 50%}
+:is(.cl-page,#cl-_) .frost .fe-r{x:calc(100% - 28px);transform:scaleX(0);transform-origin:100% 50%}
+:is(.cl-page,#cl-_) .frost .fe{transform-box:fill-box}
+:is(.cl-page,#cl-_) .zone:hover .frost .fe,:is(.cl-page,#cl-_) .zone:focus-within .frost .fe{opacity:.85;transform:none;transition:transform 400ms var(--ease-reveal),opacity 400ms var(--ease-reveal)}
+@media(prefers-reduced-motion:reduce){:is(.cl-page,#cl-_) .scrub-cold{opacity:.5;animation:none!important}
+:is(.cl-page,#cl-_) .scrub-warm{opacity:.5;animation:none!important}
+}
+</style>
+<div class="cl-page" id="cl-s-zones">
+<section class="sec zones rv" id="zones" aria-labelledby="zones-h">
+  <div class="scrub scrub-cold" aria-hidden="true"></div>
+  <div class="scrub scrub-warm" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head">
+      <h2 class="h2" id="zones-h"><span class="mask"><span>Three temperature zones under one roof.</span></span></h2>
+      <p class="lead"><span class="mask"><span>Rent positions in one zone or all three. Product moves between them without leaving the building.</span></span></p>
+    </div>
+    <div class="zone-grid">
+      <article class="zone" id="zone-freezer" data-view="Freezer" data-view-temp="">
+        <div class="frost" aria-hidden="true">
+          <svg preserveAspectRatio="none">
+            <defs>
+              <pattern id="cl-fr-t" width="20" height="28" patternUnits="userSpaceOnUse"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <pattern id="cl-fr-b" width="20" height="28" patternUnits="userSpaceOnUse" patternTransform="rotate(180)"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <pattern id="cl-fr-l" width="28" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(-90)"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <pattern id="cl-fr-r" width="28" height="20" patternUnits="userSpaceOnUse" patternTransform="rotate(90)"><path d="M10 0v24M10 4l-5 5M10 4l5 5M10 10l-4 4M10 10l4 4M10 16l-2.5 2.5M10 16l2.5 2.5M3 0v6l-2 2M17 0v8l2 2" fill="none" stroke="#0B1F2A" stroke-width=".8" stroke-opacity=".42"/></pattern>
+              <linearGradient id="cl-fr-fade-t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <linearGradient id="cl-fr-fade-b" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <linearGradient id="cl-fr-fade-l" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <linearGradient id="cl-fr-fade-r" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+              <mask id="cl-fr-m-t" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-t)"/></mask>
+              <mask id="cl-fr-m-b" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-b)"/></mask>
+              <mask id="cl-fr-m-l" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-l)"/></mask>
+              <mask id="cl-fr-m-r" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#cl-fr-fade-r)"/></mask>
+            </defs>
+            <rect class="fe fe-t" x="0" y="0" width="100%" height="28" fill="url(#cl-fr-t)" mask="url(#cl-fr-m-t)"/>
+            <rect class="fe fe-b" x="0" y="0" width="100%" height="28" fill="url(#cl-fr-b)" mask="url(#cl-fr-m-b)"/>
+            <rect class="fe fe-l" x="0" y="0" width="28" height="100%" fill="url(#cl-fr-l)" mask="url(#cl-fr-m-l)"/>
+            <rect class="fe fe-r" x="0" y="0" width="28" height="100%" fill="url(#cl-fr-r)" mask="url(#cl-fr-m-r)"/>
+          </svg>
+        </div>
+        <h3 class="zone-name">Freezer</h3>
+        <dl>
+          <dt>Temperature</dt><dd><span class="tk" data-fact="freezer-temp-range">TK</span> °F</dd>
+          <dt>Pallet positions</dt><dd><span class="tk" data-fact="freezer-positions">TK</span></dd>
+          <dt>Monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd>
+        </dl>
+        <p class="cats"><b>Typical product.</b> Frozen entrées and sides, ice cream and novelties, frozen protein, frozen fruit and vegetables, frozen bakery.</p>
+        <p class="zone-cta"><a class="text-link" href="#quote" data-prefill="freezer">Get a freezer rate</a></p>
+      </article>
+      <article class="zone" id="zone-cooler" data-view="Cooler" data-view-temp="">
+        <h3 class="zone-name">Cooler</h3>
+        <dl>
+          <dt>Temperature</dt><dd><span class="tk" data-fact="cooler-temp-range">TK</span> °F</dd>
+          <dt>Pallet positions</dt><dd><span class="tk" data-fact="cooler-positions">TK</span></dd>
+          <dt>Monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd>
+        </dl>
+        <p class="cats"><b>Typical product.</b> Dairy and plant-based dairy, fresh produce, fresh protein, cold-pressed juice and kombucha, prepared meals, eggs.</p>
+        <p class="zone-cta"><a class="text-link" href="#quote" data-prefill="cooler">Get a cooler rate</a></p>
+      </article>
+      <article class="zone" id="zone-dry" data-view="Dry" data-view-temp="">
+        <h3 class="zone-name">Dry</h3>
+        <dl>
+          <dt>Temperature</dt><dd><span class="tk" data-fact="dry-temp-range">TK</span> °F</dd>
+          <dt>Pallet positions</dt><dd><span class="tk" data-fact="dry-positions">TK</span></dd>
+          <dt>Monitoring</dt><dd><span class="tk" data-fact="monitoring">TK</span></dd>
+        </dl>
+        <p class="cats"><b>Typical product.</b> Shelf-stable beverage, supplements and powders, snacks, canned and jarred goods, packaging and point-of-sale material.</p>
+        <p class="zone-cta"><a class="text-link" href="#quote" data-prefill="dry">Get a dry rate</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+</div>

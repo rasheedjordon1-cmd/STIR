@@ -1,0 +1,161 @@
+<!-- Carriacou Logistics, Squarespace kit. Step 2 of 11: Hero and facility plan.
+     Paste into: one Code Block, alone in its own blank section. Display source off.
+-->
+<style>
+:is(.cl-page,#cl-_) .h1{font-family:var(--wide);font-stretch:125%;font-weight:700;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .h1{font-size:clamp(36px,4.5vw,64px);line-height:.98;letter-spacing:-.03em;margin-left:-.04em;text-wrap:balance;hanging-punctuation:first last}
+:is(.cl-page,#cl-_) .hero{padding:var(--s6) 0 var(--s8)}
+:is(.cl-page,#cl-_) .hero-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s6) var(--s6);align-items:center}
+@media(min-width:960px){:is(.cl-page,#cl-_) .hero{padding:var(--s7) 0 var(--s9)}
+:is(.cl-page,#cl-_) .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+:is(.cl-page,#cl-_) .hero-copy{position:relative;z-index:2;margin-right:calc(-1 * var(--s5))}
+}:is(.cl-page,#cl-_) .hero-copy .lead{margin-top:var(--s4)}
+:is(.cl-page,#cl-_) .hero-cta{display:flex;flex-wrap:wrap;gap:var(--s3) var(--s4);margin-top:var(--s5);align-items:center}
+:is(.cl-page,#cl-_) .hero-cta .mag{margin:-40px}
+:is(.cl-page,#cl-_) .pv-wrap{position:relative}
+:is(.cl-page,#cl-_) .pv{width:100%;height:auto;aspect-ratio:960/620;font-family:var(--sans);font-size:13px;color:var(--deep);overflow:visible;-webkit-user-select:none;user-select:none}
+:is(.cl-page,#cl-_) .pv text{fill:currentColor;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .pv .lbl{font-size:12px;fill:var(--slate)}
+:is(.cl-page,#cl-_) .pv .pv-outline{fill:none;stroke:var(--deep);stroke-width:1.25;vector-effect:non-scaling-stroke}
+:is(.cl-page,#cl-_) .pv .hair{fill:none;stroke:var(--deep);stroke-width:.75;stroke-opacity:.5;vector-effect:non-scaling-stroke}
+:is(.cl-page,#cl-_) .pv .apron{fill:url(#cl-hatch)}
+:is(.cl-page,#cl-_) .pv .pz{cursor:pointer;outline:none}
+:is(.cl-page,#cl-_) .pv .pz-fill{fill:var(--deep);transition:fill var(--dur-micro) var(--ease-micro),fill-opacity var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .pv .pz[data-zone=freezer] .pz-fill{fill-opacity:.13}
+:is(.cl-page,#cl-_) .pv .pz[data-zone=cooler] .pz-fill{fill-opacity:.065}
+:is(.cl-page,#cl-_) .pv .pz[data-zone=dry] .pz-fill{fill-opacity:.02}
+:is(.cl-page,#cl-_) .pv .pz:hover .pz-fill{fill-opacity:.2}
+:is(.cl-page,#cl-_) .pv .pz-grid{fill:url(#cl-units);pointer-events:none}
+:is(.cl-page,#cl-_) .pv .pz-name{font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:22px;letter-spacing:-.01em}
+:is(.cl-page,#cl-_) .pv .pz-temp{font-size:15px;font-weight:500}
+:is(.cl-page,#cl-_) .pv .pz-temp .tk{fill:var(--slate)}
+:is(.cl-page,#cl-_) .pv .pz-count{font-size:12px;fill:var(--slate)}
+:is(.cl-page,#cl-_) .pv .pz-ring{fill:none;stroke:var(--amber);stroke-width:2;vector-effect:non-scaling-stroke;opacity:0;transition:opacity var(--dur-micro) var(--ease-micro)}
+:is(.cl-page,#cl-_) .pv .pz:focus-visible .pz-ring{opacity:1}
+:is(.cl-page,#cl-_) .pv .pz{transition:opacity 200ms var(--ease-state)}
+:is(.cl-page,#cl-_) .pv .pz.sel .pz-fill{fill:var(--amber);fill-opacity:1;transition:fill 200ms var(--ease-state),fill-opacity 200ms var(--ease-state)}
+:is(.cl-page,#cl-_) .pv.has-sel .pz:not(.sel){opacity:.4}
+:is(.cl-page,#cl-_) .pv .pz.sel .pz-count{fill:var(--deep)}
+:is(.cl-page,#cl-_) .pv .dock-door{fill:var(--deep)}
+:is(.cl-page,#cl-_) .pv .trailer{fill:none;stroke:var(--deep);stroke-width:.75;stroke-dasharray:3 3;stroke-opacity:.6;vector-effect:non-scaling-stroke}
+:is(.cl-page,#cl-_) .pv .dock-num{font-family:var(--wide);font-stretch:125%;font-weight:700;font-size:14px}
+:is(.cl-page,#cl-_) .pv .unit-legend{fill:var(--deep)}
+:is(.cl-page,#cl-_) .pv-reticle{position:absolute;left:0;top:0;pointer-events:none;opacity:0;transition:opacity var(--dur-micro) var(--ease-micro);will-change:transform}
+:is(.cl-page,#cl-_) .pv-wrap.ret .pv-reticle{opacity:1}
+:is(.cl-page,#cl-_) .pv-reticle svg{width:32px;height:32px;margin:-16px 0 0 -16px}
+:is(.cl-page,#cl-_) .pv-reticle b{position:absolute;left:14px;top:12px;font-weight:500;font-size:12px;white-space:nowrap;background:var(--frost);padding:2px 6px;border:1px solid var(--line)}
+@media(hover:hover) and (pointer:fine){.cl-js :is(.cl-page,#cl-_) .pv-wrap.ret,.cl-js :is(.cl-page,#cl-_) .pv-wrap.ret *{cursor:none}
+}:is(.cl-page,#cl-_) .pv-panel{margin-top:var(--s4);min-height:128px;border-top:1px solid var(--line);padding-top:var(--s3);position:relative}
+:is(.cl-page,#cl-_) .pv-panel .pv-hint{color:var(--slate);transition:opacity var(--dur-state) var(--ease-state)}
+:is(.cl-page,#cl-_) .pv-panel .pv-spec,:is(.cl-page,#cl-_) .pv-panel .pv-cta{position:absolute;left:0;right:0;opacity:0;transform:translateY(8px);transition:opacity var(--dur-state) var(--ease-state),transform var(--dur-state) var(--ease-state);pointer-events:none}
+:is(.cl-page,#cl-_) .pv-panel .pv-spec{top:var(--s3);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+:is(.cl-page,#cl-_) .pv-panel .pv-cta{top:calc(var(--s3) + 56px);transition-delay:40ms}
+:is(.cl-page,#cl-_) .pv-panel.open .pv-hint{opacity:0}
+:is(.cl-page,#cl-_) .pv-panel.open .pv-spec,:is(.cl-page,#cl-_) .pv-panel.open .pv-cta{opacity:1;transform:none;pointer-events:auto}
+:is(.cl-page,#cl-_) .pv-spec dt{font-size:12px;color:var(--slate)}
+:is(.cl-page,#cl-_) .pv-spec dd{font-weight:500;font-variant-numeric:tabular-nums}
+:is(.cl-page,#cl-_) .pv-cta .btn{min-height:40px;padding:8px 16px;font-size:14px}
+@media(max-width:480px){:is(.cl-page,#cl-_) .pv-panel .pv-spec{grid-template-columns:1fr 1fr}
+:is(.cl-page,#cl-_) .pv-panel{min-height:200px}
+:is(.cl-page,#cl-_) .pv-panel .pv-cta{top:calc(var(--s3) + 120px)}
+}.cl-js :is(.cl-page,#cl-_) .pv .pv-outline{stroke-dasharray:1;stroke-dashoffset:1;animation:cl-draw 420ms var(--ease-state) forwards}
+.cl-js :is(.cl-page,#cl-_) .pv .pz-fill,.cl-js :is(.cl-page,#cl-_) .pv .pz-grid,.cl-js :is(.cl-page,#cl-_) .pv .pz text,.cl-js :is(.cl-page,#cl-_) .pv .pv-late{opacity:0;animation:cl-fadein 200ms var(--ease-reveal) forwards}
+.cl-js :is(.cl-page,#cl-_) .pv .pz[data-zone=dry] *{animation-delay:420ms}
+.cl-js :is(.cl-page,#cl-_) .pv .pz[data-zone=cooler] *{animation-delay:510ms}
+.cl-js :is(.cl-page,#cl-_) .pv .pz[data-zone=freezer] *{animation-delay:600ms}
+.cl-js :is(.cl-page,#cl-_) .pv .pv-late{animation-delay:380ms}
+.cl-js :is(.cl-page,#cl-_) .hero-copy .lead .mask>*,.cl-js :is(.cl-page,#cl-_) .hero-copy .hero-cta .mask>*{transform:translateY(102%);animation:cl-rise 280ms var(--ease-reveal) forwards}
+.cl-js :is(.cl-page,#cl-_) .hero-copy .lead .mask>*{animation-delay:220ms}
+.cl-js :is(.cl-page,#cl-_) .hero-copy .hero-cta .mask>*{animation-delay:300ms}
+@media(prefers-reduced-motion:reduce){.cl-js :is(.cl-page,#cl-_) .pv .pv-outline{stroke-dashoffset:0;animation:none}
+.cl-js :is(.cl-page,#cl-_) .pv .pz-fill,.cl-js :is(.cl-page,#cl-_) .pv .pz-grid,.cl-js :is(.cl-page,#cl-_) .pv .pz text,.cl-js :is(.cl-page,#cl-_) .pv .pv-late{opacity:1;animation:none}
+.cl-js :is(.cl-page,#cl-_) .hero-copy .mask>*{transform:none;animation:none}
+}
+</style>
+<div class="cl-page" id="cl-s-hero">
+<span id="cl-top"></span>
+<section class="hero" data-view="Facility" data-view-temp="">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1 class="h1">Freezer, cooler, and dry pallet storage in Waterbury, Connecticut. <span data-authorize="terms">Month to month.</span></h1>
+      <p class="lead"><span class="mask"><span>85 South Leonard Street, on the I-84 corridor. Four loading docks. Refrigerated Sprinter vans and trucks that deliver your product into the grocery DC's receiving window.</span></span></p>
+      <div class="hero-cta"><span class="mask"><span>
+        <span class="mag"><a class="btn btn-primary" href="#quote">Get a pallet rate</a></span>
+        <a class="btn" href="#quote" data-intent="tour">Book a dock tour</a>
+      </span></span></div>
+    </div>
+
+    <figure class="pv-wrap" id="pv-wrap">
+      <svg class="pv" id="pv" viewBox="0 0 960 620" role="img" aria-labelledby="pv-title pv-desc">
+        <title id="pv-title">Plan view of the Carriacou Logistics warehouse at 85 South Leonard Street, Waterbury, Connecticut</title>
+        <desc id="pv-desc">A drafted floor plan. Three temperature zones run left to right across the building: freezer, cooler, and dry, each drawn with a grid of pallet positions. A staging apron runs along the south wall, where four numbered loading docks open onto the truck court. Temperatures and pallet counts are pending confirmation.</desc>
+        <defs>
+          <pattern id="cl-units" x="0" y="8" width="24" height="20" patternUnits="userSpaceOnUse"><rect x=".5" y=".5" width="23" height="19" fill="none" stroke="#0B1F2A" stroke-opacity=".3" stroke-width=".75"/></pattern>
+          <pattern id="cl-hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="8" stroke="#0B1F2A" stroke-opacity=".16" stroke-width=".75"/></pattern>
+        </defs>
+
+        <g class="pv-late">
+          <text class="lbl" x="48" y="36">Facility plan. 85 South Leonard Street, Waterbury, Connecticut. Not to scale.</text>
+          <rect class="unit-legend" x="800" y="27" width="10" height="9"/>
+          <text class="lbl" x="816" y="36">1 pallet position</text>
+          <path class="hair" d="M936 84v40M936 84l-4 8M936 84l4 8"/>
+          <text class="lbl" x="936" y="140" text-anchor="middle">N</text>
+        </g>
+
+        <a href="#zone-freezer" class="pz" data-zone="freezer" data-label="Freezer">
+          <rect class="pz-fill" x="48" y="56" width="288" height="392"/>
+          <rect class="pz-grid" x="48" y="128" width="288" height="320"/>
+          <rect class="pz-ring" x="54" y="62" width="276" height="380"/>
+          <text class="pz-name" x="64" y="90">Freezer</text>
+          <text class="pz-temp" x="64" y="114"><tspan class="pz-num tk" data-setpoint="" data-fact="freezer-setpoint">TK</tspan> °F</text>
+          <text class="pz-count" x="320" y="114" text-anchor="end"><tspan class="tk" data-fact="freezer-positions">TK</tspan> positions</text>
+        </a>
+        <a href="#zone-cooler" class="pz" data-zone="cooler" data-label="Cooler">
+          <rect class="pz-fill" x="336" y="56" width="288" height="392"/>
+          <rect class="pz-grid" x="336" y="128" width="288" height="320"/>
+          <rect class="pz-ring" x="342" y="62" width="276" height="380"/>
+          <text class="pz-name" x="352" y="90">Cooler</text>
+          <text class="pz-temp" x="352" y="114"><tspan class="pz-num tk" data-setpoint="" data-fact="cooler-setpoint">TK</tspan> °F</text>
+          <text class="pz-count" x="608" y="114" text-anchor="end"><tspan class="tk" data-fact="cooler-positions">TK</tspan> positions</text>
+        </a>
+        <a href="#zone-dry" class="pz" data-zone="dry" data-label="Dry">
+          <rect class="pz-fill" x="624" y="56" width="288" height="392"/>
+          <rect class="pz-grid" x="624" y="128" width="288" height="320"/>
+          <rect class="pz-ring" x="630" y="62" width="276" height="380"/>
+          <text class="pz-name" x="640" y="90">Dry</text>
+          <text class="pz-temp" x="640" y="114"><tspan class="pz-num tk" data-setpoint="" data-fact="dry-setpoint">TK</tspan> °F</text>
+          <text class="pz-count" x="896" y="114" text-anchor="end"><tspan class="tk" data-fact="dry-positions">TK</tspan> positions</text>
+        </a>
+
+        <g class="pv-late" data-label="Staging apron">
+          <rect class="apron" x="48" y="448" width="864" height="64"/>
+          <text class="lbl" x="64" y="486">Staging apron</text>
+        </g>
+
+        <path class="pv-outline" pathLength="1" d="M48 56H912V512H48ZM336 56V448M624 56V448M48 448H912M196 512h40M372 512h40M548 512h40M724 512h40"/>
+
+        <g class="pv-late">
+          <g data-label="Dock 1"><rect class="dock-door" x="196" y="506" width="40" height="6"/><rect class="trailer" x="200" y="524" width="32" height="80"/><text class="dock-num" x="216" y="572" text-anchor="middle">1</text></g>
+          <g data-label="Dock 2"><rect class="dock-door" x="372" y="506" width="40" height="6"/><rect class="trailer" x="376" y="524" width="32" height="80"/><text class="dock-num" x="392" y="572" text-anchor="middle">2</text></g>
+          <g data-label="Dock 3"><rect class="dock-door" x="548" y="506" width="40" height="6"/><rect class="trailer" x="552" y="524" width="32" height="80"/><text class="dock-num" x="568" y="572" text-anchor="middle">3</text></g>
+          <g data-label="Dock 4"><rect class="dock-door" x="724" y="506" width="40" height="6"/><rect class="trailer" x="728" y="524" width="32" height="80"/><text class="dock-num" x="744" y="572" text-anchor="middle">4</text></g>
+          <text class="lbl" x="912" y="608" text-anchor="end">Truck court. 4 loading docks.</text>
+        </g>
+      </svg>
+      <div class="pv-reticle" id="pv-reticle" aria-hidden="true">
+        <svg viewBox="0 0 32 32"><path d="M16 0v11M16 21v11M0 16h11M21 16h11" stroke="#0B1F2A" stroke-width="1"/><circle cx="16" cy="16" r="3" fill="none" stroke="#0B1F2A" stroke-width="1"/></svg>
+        <b id="pv-reticle-lbl">Plan</b>
+      </div>
+      <figcaption class="pv-panel" id="pv-panel">
+        <p class="pv-hint">Select a zone on the plan for its temperature, capacity, and typical product. Pressing a zone also sets the temperature on the quote form.</p>
+        <dl class="pv-spec" aria-live="polite">
+          <div><dt>Zone</dt><dd id="ps-zone"></dd></div>
+          <div><dt>Temperature</dt><dd id="ps-temp"></dd></div>
+          <div><dt>Pallet positions</dt><dd id="ps-count"></dd></div>
+        </dl>
+        <p class="pv-cta"><a class="btn" id="ps-cta" href="#quote">Get a rate for this zone</a></p>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+</div>
