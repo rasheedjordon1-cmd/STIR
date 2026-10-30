@@ -3334,6 +3334,11 @@ html.js .hero-head .hl-line > span { animation: none; transform: none; }
 /* The bar is fixed over the hero, so the hero opens below it. */
 .hero { padding-block: clamp(104px, 15svh, 164px) clamp(30px, 5svh, 68px); }
 /* The giant scale no longer fits five of twelve columns — "Events &
-   wholesale." was losing its last letters to the editorial mask. */
-.payoff-title { grid-column: 1 / 8; }
-.payoff-body  { grid-column: 8 / 13; }
+   wholesale." was losing its last letters to the editorial mask.
+   Scoped to the twelve-column range: unscoped, this overrode the
+   narrow layout's own 1 / -1 and left the heading in a 96px box
+   holding 240px of type, with the mask quietly eating the rest. */
+@media (min-width: 1024px) {
+  .payoff-title { grid-column: 1 / 8; }
+  .payoff-body  { grid-column: 8 / 13; }
+}
