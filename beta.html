@@ -4,360 +4,453 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>STIR — Attention should pay</title>
-<meta name="description" content="STIR is a founder-led creative and growth practice in Brooklyn. Built by someone who has run the business you are running.">
+<meta name="description" content="STIR is a founder-led creative and growth practice in Brooklyn. Content, brand and websites for businesses with a street address.">
 <script>document.documentElement.classList.replace('no-js','js')</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-bold.woff2") format("woff2");font-weight:700;font-display:swap}
-@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-medium.woff2") format("woff2");font-weight:500;font-display:swap}
-@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-light.woff2") format("woff2");font-weight:300;font-display:swap}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-bold.woff2") format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-medium.woff2") format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-light.woff2") format("woff2");font-weight:300;font-display:block}
 
 :root{
-  --cobalt:#0451AB;
-  --cobalt-deep:#022F66;
-  --ivory:#FAF2E6;
+  --paper:#FAF2E6;          /* warm, never white */
+  --paper-2:#F3E8D6;        /* the second stock, for bands */
   --ink:#161310;
+  --cobalt:#0451AB;
   --red:#F21B16;
   --red-deep:#C4120D;
-  --ink-60:rgba(22,19,16,.58);
-  --ink-35:rgba(22,19,16,.32);
-  --ink-12:rgba(22,19,16,.12);
-  --ivory-70:rgba(250,242,230,.72);
-  --ivory-35:rgba(250,242,230,.35);
+  --ink-70:rgba(22,19,16,.70);
+  --ink-45:rgba(22,19,16,.45);
+  --ink-14:rgba(22,19,16,.14);
+  --paper-70:rgba(250,242,230,.72);
 
   --display:"Founders","Helvetica Neue",Arial,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --serif:"Newsreader",Georgia,serif;
 
-  --gut:clamp(20px,4vw,56px);
-  --ease:cubic-bezier(.22,.61,.36,1);
+  --gut:clamp(18px,4vw,64px);
+  --max:1560px;
+  /* Broadcast cuts, not drifts. Everything snaps. */
+  --cut:120ms;
+  --ui:200ms;
+  --ease:cubic-bezier(.2,.8,.2,1);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{-webkit-text-size-adjust:100%}
-body{background:var(--ivory);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.6;
-  -webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,video{display:block;max-width:100%}
 a{color:inherit}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* ── the strip: a thermal print header, edge to edge ───────────── */
+/* ── STATION STRIP ───────────────────────────────────────────────
+   The site is a broadcast and STIR is the station. This is the
+   channel bar, and it is the only place the word LIVE appears. */
 .strip{
-  background:var(--ink);color:var(--ivory);
-  font-family:var(--mono);font-size:11px;font-weight:500;
-  letter-spacing:.14em;text-transform:uppercase;
-  padding:9px var(--gut);
-  display:flex;justify-content:space-between;gap:1em;
-  white-space:nowrap;overflow:hidden;
+  position:sticky;top:0;z-index:50;
+  background:var(--ink);color:var(--paper);
+  font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;
+  display:flex;justify-content:space-between;align-items:center;gap:1em;
+  padding:9px var(--gut);white-space:nowrap
 }
-.strip b{font-weight:500;color:var(--red)}
-@media(max-width:700px){.strip span:nth-child(2){display:none}}
+.strip a{text-decoration:none}
+.live{display:inline-flex;align-items:center;gap:.6em;color:var(--red);font-weight:600}
+.live i{width:7px;height:7px;background:var(--red);border-radius:50%;flex:none;
+  animation:pulse 2s steps(2,end) infinite}
+@keyframes pulse{0%,49%{opacity:1}50%,100%{opacity:.25}}
+@media(prefers-reduced-motion:reduce){.live i{animation:none}}
+@media(max-width:760px){.strip .mid{display:none}}
 
-/* ── HERO ───────────────────────────────────────────────────────── */
-.hero{
-  position:relative;background:var(--cobalt);color:var(--ivory);
-  min-height:min(92svh,860px);
-  display:grid;grid-template-columns:1fr;align-items:end;
-  padding:clamp(48px,9svh,110px) var(--gut) clamp(32px,5svh,56px);
-  overflow:hidden;isolation:isolate;
-}
-#ascii{
-  position:absolute;inset:0;width:100%;height:100%;
-  z-index:0;opacity:.95;
-}
-.hero-in{position:relative;z-index:2;max-width:1500px;width:100%;margin-inline:auto}
-.plate{
-  position:absolute;z-index:2;top:clamp(26px,5svh,58px);left:var(--gut);
-  font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
-  line-height:1.9;color:var(--ivory-70);
-  border-left:2px solid var(--red);padding-left:12px
-}
-.kicker{
+/* ── HERO ────────────────────────────────────────────────────────── */
+.hero{padding:clamp(40px,8svh,104px) 0 0}
+.slug{
+  display:flex;align-items:center;gap:.8em;
   font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--ivory-70);display:flex;align-items:center;gap:.8em;margin-bottom:clamp(16px,3svh,30px)
+  color:var(--ink-70);margin-bottom:clamp(14px,2.2svh,26px)
 }
-.kicker i{width:8px;height:8px;background:var(--red);flex:none}
-.hero h1{
-  font-family:var(--display);font-weight:700;text-transform:uppercase;
-  font-size:clamp(2.6rem,9.2vw,8.4rem);line-height:.86;letter-spacing:-.035em;
-  max-width:14ch;
-}
-.hero h1 em{font-style:normal;color:var(--red);-webkit-text-stroke:0}
-.hero-foot{
-  margin-top:clamp(26px,4svh,52px);
-  display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,36px);align-items:flex-end;
-  justify-content:flex-start;max-width:62ch
-}
-.hero-said{
-  font-family:var(--serif);font-size:clamp(1rem,1.5vw,1.3rem);line-height:1.45;
-  max-width:34ch;color:var(--ivory)
-}
-.hero-said b{font-weight:600}
+.slug i{width:9px;height:9px;background:var(--red);flex:none}
 
-/* ── the button: a stamp, not a pill ────────────────────────────── */
+/* Oversized is the point. This is the loudest thing on the page and
+   nothing else competes with it. */
+.head{position:relative;margin-top:clamp(10px,2.4svh,34px)}
+.head h1{
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(3rem,11.4vw,11rem);line-height:.84;letter-spacing:-.04em;
+  margin:0
+}
+.head .l{display:block}
+.head .r{color:var(--red)}
+html.js .head[data-resolve] h1{visibility:hidden}
+#sync{position:absolute;inset:0;pointer-events:none}
+
+.lede{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:clamp(20px,3vw,56px);align-items:end;
+  margin-top:clamp(28px,4.4svh,56px);padding-bottom:clamp(30px,5svh,60px)
+}
+.lede p{font-family:var(--serif);font-size:clamp(1.05rem,1.55vw,1.4rem);line-height:1.45;max-width:38ch}
+.lede p b{font-weight:600}
+.lede .act{justify-self:end;text-align:right}
+@media(max-width:860px){
+  .lede{grid-template-columns:1fr;align-items:start;gap:26px}
+  .lede .act{justify-self:start;text-align:left}
+}
+
+/* ── THE STAMP (one button, everywhere) ─────────────────────────── */
 .stamp{
   font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  background:var(--red);color:var(--ivory);text-decoration:none;
-  display:inline-flex;align-items:center;gap:1.2em;
-  padding:16px 20px;border:0;cursor:pointer;flex:none;
-  position:relative;overflow:hidden;isolation:isolate;
+  background:var(--red);color:var(--paper);text-decoration:none;
+  display:inline-flex;align-items:center;gap:1.4em;padding:17px 22px;border:0;cursor:pointer;
+  position:relative;overflow:hidden;isolation:isolate
 }
 .stamp::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--red-deep);
-  transform:scaleX(0);transform-origin:left;transition:transform .22s var(--ease)}
+  transform:scaleX(0);transform-origin:left;transition:transform var(--ui) var(--ease)}
 .stamp:hover::before,.stamp:focus-visible::before{transform:scaleX(1)}
-.stamp span{transition:transform .22s var(--ease)}
+.stamp span:last-child{transition:transform var(--ui) var(--ease)}
 .stamp:hover span:last-child{transform:translateX(4px)}
-.stamp:focus-visible{outline:2px solid var(--ivory);outline-offset:3px}
+.stamp:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 
-/* ── THE LEDGER — the signature ─────────────────────────────────── */
-.ledger{padding:clamp(64px,11svh,150px) var(--gut)}
-.wrap{max-width:1500px;margin-inline:auto}
-.sec-head{
-  display:flex;justify-content:space-between;align-items:baseline;gap:2em;
-  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:clamp(34px,5svh,64px);
+/* ── FOOTAGE + LOWER-THIRDS ──────────────────────────────────────
+   Every piece of footage is captioned the way a broadcast captions
+   it: a red bar, a name, and the facts under it. No floating cards,
+   no overlays that hide the picture. */
+.band{position:relative;background:var(--ink);overflow:hidden}
+.band>img,.band>video{width:100%;height:clamp(300px,58svh,640px);object-fit:cover;object-position:center 42%}
+.l3{
+  position:absolute;left:0;bottom:clamp(18px,4svh,42px);
+  background:rgba(22,19,16,.86);color:var(--paper);
+  border-left:6px solid var(--red);
+  padding:12px 22px 13px 16px;max-width:min(92%,620px)
+}
+.l3 b{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(1rem,2vw,1.5rem);line-height:1.05;letter-spacing:-.015em}
+.l3 span{display:block;margin-top:5px;font-size:11px;font-weight:500;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--paper-70)}
+
+/* ── SECTION HEADS — the same lower-third, on paper ──────────────── */
+.seg{
+  display:flex;align-items:baseline;justify-content:space-between;gap:2em;
+  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:clamp(30px,5svh,62px);
   font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase
 }
-.sec-head em{font-style:normal;color:var(--ink-35);font-weight:400}
+.seg b{display:inline-flex;align-items:center;gap:.7em;font-weight:600}
+.seg b i{width:10px;height:14px;background:var(--red);flex:none}
+.seg em{font-style:normal;font-weight:400;color:var(--ink-45);text-align:right}
+.sec{padding:clamp(56px,10svh,140px) 0}
+.sec--tint{background:var(--paper-2)}
 
-.line{
-  display:grid;grid-template-columns:2.6rem 1fr auto auto;
-  gap:0 1rem;align-items:baseline;
-  padding:clamp(15px,2.4svh,22px) 0;border-bottom:1px solid var(--ink-12);
-  font-size:clamp(12px,1.25vw,14px);letter-spacing:.06em;text-transform:uppercase
+/* ── WHAT IT IS ──────────────────────────────────────────────────── */
+.says{font-family:var(--display);font-weight:500;font-size:clamp(1.5rem,3.6vw,3.1rem);
+  line-height:1.08;letter-spacing:-.025em;max-width:19ch}
+.says em{font-style:normal;color:var(--cobalt)}
+.offer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(20px,2.6vw,48px);
+  margin-top:clamp(40px,6svh,84px)}
+.offer h3{font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.05rem,1.7vw,1.4rem);letter-spacing:-.01em;line-height:1;
+  border-top:2px solid var(--ink);padding-top:12px}
+.offer p{margin-top:12px;font-family:var(--serif);font-size:1rem;line-height:1.5;color:var(--ink-70)}
+@media(max-width:800px){.offer{grid-template-columns:1fr;gap:28px}}
+
+/* ── ON AIR — the vertical reels, natively vertical ──────────────── */
+.reels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(10px,1.4vw,22px)}
+.reel{position:relative;background:var(--ink);overflow:hidden}
+.reel video,.reel img{width:100%;aspect-ratio:9/16;object-fit:cover}
+.reel figcaption{
+  position:absolute;left:0;right:0;bottom:0;
+  background:linear-gradient(to top,rgba(22,19,16,.92),rgba(22,19,16,0));
+  color:var(--paper);padding:34px 12px 12px;border-left:4px solid var(--red)
 }
-.line-no{color:var(--ink-35);font-variant-numeric:tabular-nums}
-.line-what{
-  position:relative;overflow:hidden;white-space:nowrap;color:var(--ink)
-}
-/* the leader: how a receipt joins a thing to its number */
-.line-what::after{
-  content:" ·········································································································";
-  color:var(--ink-35);letter-spacing:.22em
-}
-.line-num{
-  font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,3.2vw,2.5rem);
-  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ink);
-  justify-self:end
-}
-.line-src{
-  font-size:10px;font-weight:500;letter-spacing:.12em;justify-self:end;min-width:7.5em;text-align:right
-}
-.line-src a{color:var(--red);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .16s}
+.reel figcaption b{display:block;font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(.82rem,1.1vw,1rem);line-height:1.05}
+.reel figcaption span{display:block;margin-top:4px;font-size:10px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--paper-70)}
+@media(max-width:900px){.reels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ── THE LEDGER ──────────────────────────────────────────────────── */
+.line{display:grid;grid-template-columns:1fr auto auto;gap:0 1rem;align-items:baseline;
+  padding:clamp(14px,2.2svh,20px) 0;border-bottom:1px solid var(--ink-14);
+  font-size:clamp(11.5px,1.2vw,13.5px);letter-spacing:.07em;text-transform:uppercase}
+.line-what{position:relative;overflow:hidden;white-space:nowrap}
+.line-what::after{content:" ·······························································································";color:var(--ink-45);letter-spacing:.2em}
+.line-num{font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,3.3vw,2.6rem);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;justify-self:end}
+.line-src{font-size:10px;font-weight:500;letter-spacing:.12em;justify-self:end;min-width:7em;text-align:right}
+.line-src a{color:var(--red);text-decoration:none;border-bottom:1px solid transparent}
 .line-src a:hover,.line-src a:focus-visible{border-bottom-color:var(--red)}
-.line-src.none{color:var(--ink-35)}
-.line.total{border-bottom:2px solid var(--ink);border-top:2px solid var(--ink);margin-top:18px}
-.line.total .line-what,.line.total .line-no{color:var(--red)}
-.line.total .line-what::after{color:rgba(242,27,22,.4)}
-.line.total .line-num{color:var(--red);font-size:clamp(1.6rem,4.2vw,3.2rem)}
-.ledger-note{margin-top:20px;font-size:11px;letter-spacing:.08em;color:var(--ink-35);text-transform:uppercase}
-@media(max-width:720px){
-  .line{grid-template-columns:2.2rem 1fr auto;row-gap:6px}
-  .line-what::after{content:" ··················································"}
-  .line-src{grid-column:2/4;justify-self:start;text-align:left;margin-top:2px}
+.line-src.none{color:var(--ink-45)}
+.line.total{border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);margin-top:16px}
+.line.total .line-what{color:var(--red)}
+.line.total .line-what::after{color:rgba(242,27,22,.38)}
+.line.total .line-num{color:var(--red);font-size:clamp(1.6rem,4.4vw,3.3rem)}
+.note{margin-top:18px;font-size:11px;letter-spacing:.07em;color:var(--ink-45);text-transform:uppercase;max-width:70ch;line-height:1.8}
+@media(max-width:680px){
+  .line{grid-template-columns:1fr auto;row-gap:5px}
+  .line-what::after{content:" ····································"}
+  .line-src{grid-column:1/3;justify-self:start;text-align:left}
 }
 
-/* ── the one human paragraph ────────────────────────────────────── */
-.voice{background:var(--ink);color:var(--ivory);padding:clamp(64px,11svh,150px) var(--gut)}
-.voice .sec-head{border-bottom-color:var(--ivory-35);color:var(--ivory)}
-.voice .sec-head em{color:var(--ivory-35)}
-.voice p{font-family:var(--serif);font-size:clamp(1.25rem,2.6vw,2.1rem);line-height:1.34;max-width:24ch}
-.voice p+p{margin-top:.8em}
-.voice .sig{
-  margin-top:clamp(30px,5svh,56px);font-family:var(--mono);font-size:11px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--ivory-70)
-}
-.voice .sig b{color:var(--red);font-weight:500}
+/* ── WHO ─────────────────────────────────────────────────────────── */
+.who{background:var(--ink);color:var(--paper)}
+.who .seg{border-bottom-color:rgba(250,242,230,.3);color:var(--paper)}
+.who .seg em{color:rgba(250,242,230,.45)}
+.who-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+  gap:clamp(24px,4vw,72px);align-items:center}
+.who-grid img{width:100%;height:clamp(280px,50svh,480px);object-fit:cover;
+  object-position:center 18%;filter:grayscale(1) contrast(1.06)}
+.who p{font-family:var(--serif);font-size:clamp(1.3rem,2.7vw,2.2rem);line-height:1.3;max-width:22ch}
+.who p+p{margin-top:.7em}
+.who .sig{font-family:var(--mono);font-weight:500;max-width:none;margin-top:clamp(26px,4svh,52px);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--paper-70);line-height:2}
+.who .sig a{color:var(--red);text-decoration:none}
+@media(max-width:860px){.who-grid{grid-template-columns:1fr;gap:30px}}
 
-@media(prefers-reduced-motion:reduce){
-  *{animation:none!important;transition:none!important}
-}
+/* ── SIGN-OFF ────────────────────────────────────────────────────── */
+.end{background:var(--cobalt);color:var(--paper);text-align:center;
+  padding:clamp(60px,11svh,150px) var(--gut)}
+.end h2{font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(2rem,7.4vw,6rem);line-height:.88;letter-spacing:-.035em;margin-bottom:clamp(26px,4svh,48px)}
+.end .stamp{background:var(--paper);color:var(--ink)}
+.end .stamp::before{background:#fff}
+.end .stamp:focus-visible{outline-color:var(--paper)}
+.end .foot{margin-top:clamp(30px,5svh,60px);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--paper-70)}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
 
 <div class="strip">
-  <span>STIR<b> ●</b> Brooklyn, New York</span>
-  <span>Attention should pay</span>
-  <span>builtbystir.com</span>
+  <span class="live"><i></i>Live</span>
+  <span class="mid">STIR &mdash; Brooklyn, New York</span>
+  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
 </div>
 
 <header class="hero">
-  <canvas id="ascii" aria-hidden="true"></canvas>
-  <p class="plate">Fig. 01 &mdash; R. Jordon<br>Founder, STIR<br>Brooklyn, New York</p>
-  <div class="hero-in">
-    <p class="kicker"><i></i>Founder-led creative &amp; growth practice</p>
-    <h1>Attention should <em>pay.</em></h1>
-    <div class="hero-foot">
-      <p class="hero-said">I've opened a business, run one, and closed one. <b>I've been the client.</b> Now I build the content, the brand and the website that make a small business impossible to walk past.</p>
-      <a class="stamp" href="mailto:rasheed@builtbystir.com"><span>Start a project</span><span>&#8599;</span></a>
+  <div class="wrap">
+    <p class="slug"><i></i>Founder-led creative &amp; growth practice &mdash; Est. 2025</p>
+    <div class="head" data-resolve>
+      <h1><span class="l">Attention</span><span class="l">should <span class="r">pay.</span></span></h1>
+      <canvas id="sync" aria-hidden="true"></canvas>
+    </div>
+    <div class="lede">
+      <p>I make content, brands and websites for businesses with a street address &mdash; the kind people walk past, call, or order from. <b>I've run one myself.</b></p>
+      <p class="act"><a class="stamp" href="mailto:rasheed@builtbystir.com"><span>Start a project</span><span>&#8599;</span></a></p>
     </div>
   </div>
 </header>
 
-<section class="ledger">
-  <div class="wrap">
-    <div class="sec-head"><span>The ledger</span><em>Every number below links to where it came from</em></div>
+<figure class="band">
+  <img src="assets/labay/labay-market-interior.webp" alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her." width="1216" height="921" fetchpriority="high">
+  <figcaption class="l3"><b>Labay Market</b><span>Brooklyn, NY &middot; The business I ran &middot; Content, brand, website</span></figcaption>
+</figure>
 
-    <div class="line">
-      <span class="line-no">01</span>
-      <span class="line-what">Organic views, nine months</span>
-      <span class="line-num">5,000,000</span>
-      <span class="line-src"><a href="#">Receipt&#8599;</a></span>
+<section class="sec">
+  <div class="wrap">
+    <div class="seg"><b><i></i>What STIR does</b><em>Three ways in</em></div>
+    <p class="says">Most small businesses are not boring. They are just <em>badly filmed, badly written, and hard to buy from.</em></p>
+    <div class="offer">
+      <div>
+        <h3>Content &amp; campaigns</h3>
+        <p>Photography, short-form video, launch content and creator coordination. The reason someone stops.</p>
+      </div>
+      <div>
+        <h3>Brand &amp; websites</h3>
+        <p>Positioning, identity, and a website that makes the next step obvious: quote, call, order, visit.</p>
+      </div>
+      <div>
+        <h3>Ongoing creative support</h3>
+        <p>Monthly planning, production, publishing and site updates. The part that compounds.</p>
+      </div>
     </div>
-    <div class="line">
-      <span class="line-no">02</span>
-      <span class="line-what">Including creator collaborations</span>
-      <span class="line-num">10,000,000</span>
-      <span class="line-src"><a href="#">Receipt&#8599;</a></span>
-    </div>
-    <div class="line">
-      <span class="line-no">03</span>
-      <span class="line-what">Websites built and running</span>
-      <span class="line-num">3</span>
-      <span class="line-src"><a href="#">Visit&#8599;</a></span>
-    </div>
-    <div class="line">
-      <span class="line-no">04</span>
-      <span class="line-what">Press earned, not placed</span>
-      <span class="line-num">4</span>
-      <span class="line-src"><a href="#">Read&#8599;</a></span>
-    </div>
-    <div class="line total">
-      <span class="line-no">&#8721;</span>
-      <span class="line-what">Paid ad spend</span>
-      <span class="line-num">$0</span>
-      <span class="line-src none">&mdash;</span>
-    </div>
-    <p class="ledger-note">Figures are LABAY's, the business I ran. Press belongs to that business, not to STIR.</p>
   </div>
 </section>
 
-<section class="voice">
+<section class="sec sec--tint">
   <div class="wrap">
-    <div class="sec-head"><span>Who you're hiring</span><em>One person. Named.</em></div>
-    <p>Most people selling marketing to a small business have never had to make payroll from one.</p>
-    <p>I have.</p>
-    <p class="sig">Rasheed Jordon &middot; Founder, STIR &middot; <b>rasheed@builtbystir.com</b></p>
+    <div class="seg"><b><i></i>On air</b><em>Footage from the floor &middot; Labay Market</em></div>
+    <div class="reels">
+      <figure class="reel">
+        <video src="assets/labay/activations/act-01.mp4" poster="assets/labay/activations/act-01-poster.webp" muted loop playsinline preload="none" aria-label="Hoopbus activation outside Labay Market"></video>
+        <figcaption><b>Hoopbus activation</b><span>Street-level &middot; Activation</span></figcaption>
+      </figure>
+      <figure class="reel">
+        <video src="assets/labay/creators/creator-01.mp4" poster="assets/labay/creators/creator-01-poster.webp" muted loop playsinline preload="none" aria-label="Creator collaboration filmed in store"></video>
+        <figcaption><b>Creator collaboration</b><span>In store &middot; Short-form</span></figcaption>
+      </figure>
+      <figure class="reel">
+        <video src="assets/labay/activations/act-02.mp4" poster="assets/labay/activations/act-02-poster.webp" muted loop playsinline preload="none" aria-label="In-store activation"></video>
+        <figcaption><b>In-store activation</b><span>Brooklyn &middot; Activation</span></figcaption>
+      </figure>
+      <figure class="reel">
+        <video src="assets/labay/labay-social-01.mp4" poster="assets/labay/labay-social-01-poster.webp" muted loop playsinline preload="none" aria-label="Social content produced in store"></video>
+        <figcaption><b>Social content</b><span>In store &middot; Short-form</span></figcaption>
+      </figure>
+    </div>
+    <p class="note">Footage is Labay Market's, the business I ran and produced for. Creator collaborations were coordinated, not commissioned on a client's behalf.</p>
   </div>
+</section>
+
+<section class="sec">
+  <div class="wrap">
+    <div class="seg"><b><i></i>The ledger</b><em>Every number links to where it came from</em></div>
+    <div class="line"><span class="line-what">Organic views, nine months</span><span class="line-num">5,000,000</span><span class="line-src"><a href="#">Receipt&#8599;</a></span></div>
+    <div class="line"><span class="line-what">Including creator collaborations</span><span class="line-num">10,000,000</span><span class="line-src"><a href="#">Receipt&#8599;</a></span></div>
+    <div class="line"><span class="line-what">Websites built and running</span><span class="line-num">3</span><span class="line-src"><a href="#">Visit&#8599;</a></span></div>
+    <div class="line"><span class="line-what">Press earned, not placed</span><span class="line-num">4</span><span class="line-src"><a href="#">Read&#8599;</a></span></div>
+    <div class="line total"><span class="line-what">Paid ad spend</span><span class="line-num">$0</span><span class="line-src none">&mdash;</span></div>
+    <p class="note">Figures are Labay Market's over the same nine-month period. Press belongs to that business, not to STIR.</p>
+  </div>
+</section>
+
+<section class="sec who">
+  <div class="wrap">
+    <div class="seg"><b><i></i>Who you're hiring</b><em>One person. Named.</em></div>
+    <div class="who-grid">
+      <img src="assets/founder.webp" alt="Rasheed Jordon" width="900" height="1125" loading="lazy">
+      <div>
+        <p>Most people selling marketing to a small business have never had to make payroll from one.</p>
+        <p>I have.</p>
+        <p class="sig">Rasheed Jordon &middot; Founder, STIR<br>Brooklyn, New York<br><a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="end">
+  <h2>Tell us about<br>the business.</h2>
+  <a class="stamp" href="mailto:rasheed@builtbystir.com"><span>Start a project</span><span>&#8599;</span></a>
+  <p class="foot">builtbystir.com &middot; Brooklyn, New York &middot; Attention should pay</p>
 </section>
 
 <script>
-/* ── ASCII portrait ─────────────────────────────────────────────────
-   The hero is a thermal print of the founder: his own photograph
-   resampled to a character grid and set in the type the rest of the
-   page is set in. Not an illustration of a business — a document
-   produced by one. The drift is one slow pass, not a loop. */
+/* ── SYNC ────────────────────────────────────────────────────────────
+   The one disturbance on the page. The headline arrives as a signal
+   acquiring lock: a character grid that resolves, left to right, into
+   the type underneath, then cuts — broadcast cuts are hard, so there
+   is no fade at the end. It runs once. It never runs again, and it
+   never touches legibility, because what it resolves into is the real
+   text that was in the DOM the whole time.                          */
 (function () {
-  var cv = document.getElementById('ascii');
-  if (!cv || !cv.getContext) return;
-  var ctx = cv.getContext('2d', { alpha: false });
-  /* Ten steps, not fifty. A long ramp gives a face more tonal
-     resolution and less legibility: at arm's length it turns to
-     noise. Three opacity tiers multiply these ten into enough. */
-  var RAMP = ' .:-=+*#%@';
-  var img = new Image();
-  var src = null, cols = 0, rows = 0, cw = 0, ch = 0, px = 0;
-  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var t0 = 0, raf = 0;
+  var head = document.querySelector('.head[data-resolve]');
+  var cv = document.getElementById('sync');
+  if (!head || !cv || !cv.getContext) return;
 
-  function sample() {
-    var off = document.createElement('canvas');
-    off.width = cols; off.height = rows;
-    var o = off.getContext('2d');
-    /* White, so the empty field maps to nothing once inverted. */
-    o.fillStyle = '#fff';
-    o.fillRect(0, 0, cols, rows);
+  function reveal() { head.removeAttribute('data-resolve'); cv.style.display = 'none'; }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { reveal(); return; }
 
-    /* He sits in the right of the frame, clear of the headline, and
-       runs off the top edge: a print that was never centred on the
-       page. Sized in hero pixels, then converted to cells, so the
-       composition holds whatever the character size works out to. */
-    var W = cv.clientWidth, H = cv.clientHeight;
-    /* Head and collar only. The sweater is a flat black that maps to
-       one density across hundreds of cells, which came out as a slab
-       with no information in it and swallowed the corner of the page. */
-    var TOP = 0.11, CROP = 0.56;
-    var dw = W * 0.70, dh = dw * ((img.height * CROP) / img.width);
-    /* Cropped by two edges of the page, the way a printed portrait is
-       cropped by the trim. He runs off the top and the right, and the
-       headline is allowed to cross him: nothing is centred here. */
-    var dx = W - dw * 0.76, dy = H - dh * 1.02;
-    o.drawImage(img, 0, img.height * TOP, img.width, img.height * CROP,
-                dx / cw, dy / ch, dw / cw, dh / ch);
-    try { src = o.getImageData(0, 0, cols, rows).data; }
-    catch (e) { src = null; cv.style.display = 'none'; }
-  }
+  var ctx = cv.getContext('2d');
+  var RAMP = '.:-=+*#%@';
+  var NOISE = '/\\|_-=+*#%@<>[]{}10';
+  var cells = [], px = 0, cw = 0, ch = 0, t0 = 0, dur = 1050;
 
-  function layout() {
-    px = Math.max(7, Math.min(13, Math.round(window.innerWidth / 118)));
-    cw = px * 0.6; ch = px * 1.02;
+  function build() {
+    var box = head.getBoundingClientRect();
+    if (!box.width || !box.height) return false;
     var dpr = Math.min(devicePixelRatio || 1, 2);
-    var w = cv.clientWidth, h = cv.clientHeight;
-    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    cv.width = Math.round(box.width * dpr);
+    cv.height = Math.round(box.height * dpr);
+    cv.style.width = box.width + 'px';
+    cv.style.height = box.height + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    cols = Math.ceil(w / cw) + 1; rows = Math.ceil(h / ch) + 1;
-    if (img.complete && img.naturalWidth) sample();
-  }
 
-  /* The portrait is lit against a flat pale ground. Inverting alone
-     turned that ground into a dense field of its own and buried the
-     face in it, so everything above the ground's own value is cut
-     before the ramp sees it. */
-  var FLOOR = 0.30;
-  function tone(lum) {
-    var v = (1 - lum - FLOOR) / (1 - FLOOR);
-    if (v <= 0) return 0;
-    v = Math.pow(v > 1 ? 1 : v, 0.82);
-    /* Compress the top end: without it every near-black cell lands on
-       the same character and the shadows read as fill, not as tone. */
-    return v > 0.74 ? 0.74 + (v - 0.74) * 0.42 : v;
-  }
+    px = Math.max(6, Math.round(box.width / 190));
+    cw = px * 0.6; ch = px * 1.05;
+    var cols = Math.ceil(box.width / cw), rows = Math.ceil(box.height / ch);
 
-  function draw(now) {
-    if (!src) return;
-    ctx.fillStyle = '#0451AB';
-    ctx.fillRect(0, 0, cv.clientWidth, cv.clientHeight);
-    ctx.font = '500 ' + px + 'px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.textBaseline = 'top';
-    /* One pass of light across the grid, left to right, and then it
-       stops. The gradient lives in the character ramp, not a colour. */
-    var pass = reduce ? 1 : Math.min(1, (now - t0) / 2400);
-    var e = pass < 1 ? 1 - Math.pow(1 - pass, 3) : 1;
+    /* Each line is drawn from its own measured rect, so the grid is
+       registered to the type rather than to a guess about metrics. */
+    var off = document.createElement('canvas');
+    off.width = Math.max(1, Math.round(box.width));
+    off.height = Math.max(1, Math.round(box.height));
+    var o = off.getContext('2d');
+    o.fillStyle = '#fff'; o.fillRect(0, 0, off.width, off.height);
+    o.textBaseline = 'alphabetic';
+    var ok = false;
+    head.querySelectorAll('.l').forEach(function (line) {
+      var cs = getComputedStyle(line), r = line.getBoundingClientRect();
+      o.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      o.fillStyle = '#000';
+      /* alphabetic baseline sits near the bottom of the line box for
+         this face at this size; close enough for a character grid */
+      var base = r.bottom - box.top - (parseFloat(cs.fontSize) * 0.17);
+      o.fillText(line.textContent.toUpperCase(), r.left - box.left, base);
+      ok = true;
+    });
+    if (!ok) return false;
+
+    var d = o.getImageData(0, 0, off.width, off.height).data;
+    cells = [];
     for (var y = 0; y < rows; y++) {
       for (var x = 0; x < cols; x++) {
-        var i = (y * cols + x) * 4;
-        var v = tone((src[i] * 0.299 + src[i + 1] * 0.587 + src[i + 2] * 0.114) / 255);
-        if (v <= 0) continue;
-        var reach = e * 1.3 - (x / cols) * 0.3;
-        if (reach <= 0) continue;
-        v *= reach < 1 ? reach : 1;
-        if (v < 0.05) continue;
-        var k = Math.round(v * (RAMP.length - 1));
-        if (!k) continue;
-        ctx.fillStyle = v > 0.60 ? 'rgba(250,242,230,1)'
-                      : v > 0.30 ? 'rgba(250,242,230,.74)'
-                                 : 'rgba(250,242,230,.36)';
-        ctx.fillText(RAMP.charAt(k), x * cw, y * ch);
+        var sx = Math.min(off.width - 1, Math.round(x * cw + cw / 2));
+        var sy = Math.min(off.height - 1, Math.round(y * ch + ch / 2));
+        var i = (sy * off.width + sx) * 4;
+        var v = 1 - d[i] / 255;
+        if (v < 0.12) continue;
+        cells.push({
+          x: x * cw, y: y * ch,
+          g: RAMP.charAt(Math.min(RAMP.length - 1, Math.round(v * (RAMP.length - 1)))),
+          /* lock time sweeps left to right with a little jitter, so the
+             edge reads as a wipe rather than a line */
+          lock: (x / cols) * 0.62 + Math.random() * 0.3
+        });
       }
     }
-    if (pass < 1) raf = requestAnimationFrame(draw);
+    return cells.length > 0;
   }
 
-  img.onload = function () {
-    layout();
-    t0 = performance.now();
-    raf = requestAnimationFrame(draw);
-  };
-  img.src = 'assets/founder.webp';
+  function frame(now) {
+    var p = Math.min(1, (now - t0) / dur);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.font = '500 ' + px + 'px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textBaseline = 'top';
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i];
+      if (p < c.lock) {
+        /* not yet acquired: noise, in cobalt, quiet */
+        if (Math.random() > 0.55) continue;
+        ctx.fillStyle = 'rgba(4,81,171,.5)';
+        ctx.fillText(NOISE.charAt((Math.random() * NOISE.length) | 0), c.x, c.y);
+      } else {
+        ctx.fillStyle = '#161310';
+        ctx.fillText(c.g, c.x, c.y);
+      }
+    }
+    if (p < 1) requestAnimationFrame(frame);
+    else reveal();                 /* the cut */
+  }
 
-  var rt;
-  addEventListener('resize', function () {
-    clearTimeout(rt);
-    rt = setTimeout(function () {
-      cancelAnimationFrame(raf); layout(); t0 = performance.now() - 2600;
-      raf = requestAnimationFrame(draw);
-    }, 160);
-  }, { passive: true });
+  function go() {
+    if (!build()) { reveal(); return; }
+    t0 = performance.now();
+    requestAnimationFrame(frame);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    var bail = setTimeout(go, 1200);
+    document.fonts.ready.then(function () { clearTimeout(bail); go(); });
+  } else { go(); }
+})();
+
+/* ── Reels play only while they are on screen, and only the posters
+   load until then. Four autoplaying videos are a battery bill. ──── */
+(function () {
+  var reels = [].slice.call(document.querySelectorAll('.reel video'));
+  if (!reels.length) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var v = e.target;
+      if (e.isIntersecting) {
+        if (v.preload === 'none') { v.preload = 'auto'; v.load(); }
+        var q = v.play(); if (q && q.catch) q.catch(function () {});
+      } else if (!v.paused) { v.pause(); }
+    });
+  }, { threshold: 0.4 });
+  reels.forEach(function (v) { io.observe(v); });
 })();
 </script>
 </body>
