@@ -6,7 +6,6 @@
     "qc:nav": "node scripts/qc/navtheme.mjs",
     "qc:buttons": "node scripts/qc/buttons.mjs",
     "qc:stage": "node scripts/qc/stage.mjs",
-    "qc:overlay": "node scripts/qc/overlay.mjs",
     "qc:typeclip": "node scripts/qc/typeclip.mjs",
     "qc:structure": "node scripts/qc/structure.mjs",
     "serve": "python3 -m http.server 8777 --bind 127.0.0.1"

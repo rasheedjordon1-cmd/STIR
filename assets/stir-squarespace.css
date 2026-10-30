@@ -34,7 +34,8 @@
   font-weight: 700; font-style: italic; font-display: swap;
 }
 .stir {
-  --ivory:   #FAF2E6;
+  --ivory:   #FAF2E6;                    /* the first stock, warm      */
+  --paper-2: #F3E8D6;                    /* the second, for bands      */
   --ink:     #161310;
   --cobalt:  #0451AB;                    /* matches the artwork field  */
   --red:     #F21B16;                    /* activation only            */
@@ -58,6 +59,11 @@
   --stir-medium: 320ms;
   --stir-slow:   520ms;
   --stir-ease:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* Broadcast cuts are hard. Reveals snap into place rather than
+     drifting up through a fade, which is what every other site does
+     and what made this one feel like every other site. */
+  --cut:         120ms;
+  --cut-ease:    cubic-bezier(0.2, 0.8, 0.2, 1);
   --wht-70: rgba(255, 255, 255, 0.70);
   --wht-35: rgba(255, 255, 255, 0.35);
   --wht-07: rgba(255, 255, 255, 0.07);
@@ -72,9 +78,12 @@
   --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
 
   /* Scale re-fit for Founders Grotesk (normal width, not condensed) */
-  --t-hero:    clamp(2.6rem, 7.1vw, 6.8rem);
-  --t-giant:   clamp(2.3rem, 6.4vw, 6.2rem);
-  --t-big:     clamp(1.8rem, 4.5vw, 4.3rem);
+  /* Oversized is the point. The illustrations used to carry the
+     difference; now the type does, so it is set far larger than an
+     editorial page would set it and nothing competes with it. */
+  --t-hero:    clamp(3rem, 11.4vw, 11rem);
+  --t-giant:   clamp(2.6rem, 8.2vw, 7.6rem);
+  --t-big:     clamp(2rem, 5.6vw, 5.2rem);
   --t-metric:  clamp(5.5rem, 17vw, 16rem);
   --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
   --t-utility: 0.72rem;
@@ -2287,9 +2296,13 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
        every round letter and full stop.
 
        The padding only exists where the mask does, inside this
-       media query, so reduced motion is unaffected. */
-    padding-top: 10px;
-    padding-bottom: 10px;
+       media query, so reduced motion is unaffected.
+
+       A fixed 10px was enough when display type topped out around
+       6vw. The scale is oversized now and the overshoot scales with
+       the font, so the padding has to scale with it too. */
+    padding-top: max(10px, 0.14em);
+    padding-bottom: max(10px, 0.14em);
     transition:
       opacity 0.5s var(--ease),
       transform 0.7s var(--ease),
@@ -3233,6 +3246,261 @@ html.js .stir .trade-inline { transition: none; }
 .stir .convert .convert-inner { max-width: 100%; }
 .stir .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   BROADCAST
+   STIR is the station and the businesses are the programming. That
+   is not a style; it is where the structure comes from. A channel
+   strip at the top, lower-thirds on every piece of footage, and the
+   same lower-third — red bar, name, facts — standing in for section
+   heads on paper. The numbers that used to run 01 through 07 are
+   gone: those sections were never a sequence, so the numbering was
+   decoration wearing the costume of structure.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── The channel strip ──────────────────────────────────────────── */
+.stir .strip {
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 9px var(--gutter);
+  white-space: nowrap;
+  position: relative;
+  z-index: 60;
+}
+.stir .strip a { text-decoration: none; }
+.stir .strip a:hover,
+.stir .strip a:focus-visible { color: var(--red); }
+.stir .strip-live { display: inline-flex; align-items: center; gap: 0.6em; color: var(--red); font-weight: 600; }
+.stir .strip-live i {
+  width: 7px; height: 7px; background: var(--red); border-radius: 50%; flex: none;
+  animation: strip-pulse 2s steps(2, end) infinite;
+}
+@keyframes strip-pulse { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0.25 } }
+@media (prefers-reduced-motion: reduce) {
+.stir .strip-live i { animation: none }
+}
+@media (max-width: 760px) {
+.stir .strip-mid { display: none }
+}
+
+
+/* ── Segment heads ──────────────────────────────────────────────
+   One device for every section on every page. Full width, because a
+   head that only spans a third of the measure is a caption. */
+.stir .belief-label,
+.stir .sites-label,
+.stir .svc-label,
+.stir .method-label,
+.stir .who-label,
+.stir .page-label,
+.stir .b-label,
+.stir .founder-label {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2em;
+  border-top: 0;
+  border-bottom: 2px solid currentColor;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+.stir .belief-label b,
+.stir .sites-label b,
+.stir .svc-label b,
+.stir .method-label b,
+.stir .who-label b,
+.stir .page-label b,
+.stir .b-label b,
+.stir .founder-label b {
+  display: inline-flex; align-items: center; gap: 0.7em; font-weight: 600;
+}
+.stir .belief-label b i,
+.stir .sites-label b i,
+.stir .svc-label b i,
+.stir .method-label b i,
+.stir .who-label b i,
+.stir .page-label b i,
+.stir .b-label b i,
+.stir .founder-label b i {
+  width: 10px; height: 14px; background: var(--red); flex: none;
+}
+.stir .belief-label em,
+.stir .sites-label em,
+.stir .svc-label em,
+.stir .method-label em,
+.stir .who-label em,
+.stir .page-label em,
+.stir .b-label em,
+.stir .founder-label em {
+  font-style: normal; font-weight: 400; opacity: 0.5; text-align: right;
+}
+@media (max-width: 639px) {
+.stir .belief-label em,
+.stir .sites-label em,
+.stir .svc-label em,
+.stir .method-label em,
+.stir .who-label em,
+.stir .page-label em,
+.stir .b-label em,
+.stir .founder-label em { display: none }
+}
+
+
+/* ── Lower-thirds ───────────────────────────────────────────────
+   How a broadcast captions a shot: a red bar, a name, and the facts
+   under it. Nothing floats, nothing covers the picture. */
+.stir .l3 {
+  position: absolute;
+  left: 0;
+  bottom: clamp(14px, 3svh, 36px);
+  background: rgba(22, 19, 16, 0.86);
+  color: var(--ivory);
+  border-left: 6px solid var(--red);
+  padding: 11px 20px 12px 14px;
+  max-width: min(94%, 620px);
+}
+.stir .l3 b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(0.95rem, 1.9vw, 1.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.stir .l3 span {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ivory-75);
+}
+
+
+/* ── The second stock ───────────────────────────────────────────
+   Alternating bands of warm paper, so a long page reads as segments
+   rather than as one scroll. */
+.stir .on-stock-2 { background: var(--paper-2); }
+/* ── Cuts, not drifts ───────────────────────────────────────────
+   The reveal primitive keeps its job but loses its float: it snaps.
+   Broadcast cuts are hard, and the drift was the single biggest
+   thing making this read like every other site. */
+@media (prefers-reduced-motion: no-preference) {
+html.js .stir .reveal { transform: none; transition: opacity var(--cut) var(--cut-ease); }
+html.js .stir .reveal.is-in { opacity: 1; }
+}
+
+
+/* The structural signal rule used to ride the label's border-top.
+   Segment heads are ruled underneath now, so the signal moves with
+   the rule instead of floating above nothing. */
+html.js .stir .belief-label[data-reveal="structural"]::before,
+html.js .stir .sites-label[data-reveal="structural"]::before,
+html.js .stir .svc-label[data-reveal="structural"]::before,
+html.js .stir .method-label[data-reveal="structural"]::before,
+html.js .stir .who-label[data-reveal="structural"]::before,
+html.js .stir .page-label[data-reveal="structural"]::before,
+html.js .stir .b-label[data-reveal="structural"]::before,
+html.js .stir .founder-label[data-reveal="structural"]::before {
+  top: auto;
+  bottom: -2px;
+}
+
+
+/* ── The hero, on paper ─────────────────────────────────────────
+   It was a cobalt field holding an illustration. The illustration is
+   held and the type carries the frame now, set far larger than the
+   old editorial scale and sitting on warm stock. Cobalt is no longer
+   a wall here; it is kept for one field at the sign-off. */
+.stir .hero {
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 0;
+  padding-block: clamp(36px, 7svh, 104px) clamp(28px, 5svh, 64px);
+  display: block;
+  overflow: visible;
+}
+.stir .hero::after { content: none; }
+.stir .hero .hero-inner { display: block; }
+.stir .hero .hero-copy { max-width: none; }
+.stir .hero .eyebrow { color: var(--ink-60); margin-bottom: clamp(12px, 2.2svh, 26px); }
+.stir .hero .eyebrow-mark { background: var(--red); }
+.stir .hero-head { position: relative; }
+.stir .hero .hero-headline {
+  font-size: var(--t-hero);
+  line-height: 0.84;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  max-width: none;
+}
+.stir .hero .hero-headline em { font-style: normal; color: var(--red); }
+.stir .hero .hero-prop {
+  margin-top: clamp(22px, 3.6svh, 46px);
+  max-width: 44ch;
+  color: var(--ink);
+}
+.stir .hero .hero-prop b { font-weight: 600; }
+.stir .hero .hero-cta { margin-top: clamp(22px, 3.4svh, 42px); }
+.stir .hero :focus-visible { outline-color: var(--red); }
+
+
+/* The sync canvas sits exactly over the headline box. The real text
+   stays in the DOM throughout; the canvas is decoration on top. */
+.stir .hero-sync { position: absolute; inset: 0; pointer-events: none; }
+html.js .stir .hero-head[data-sync] .hero-headline { visibility: hidden; }
+
+
+/* ── The footage shot ───────────────────────────────────────────
+   Named .shot, not .band: .band is already the events block, and
+   the collision was painting a 14px rule across the top of it. */
+.stir .shot {
+  position: relative;
+  background: var(--ink);
+  overflow: hidden;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.stir .shot-art {
+  width: 100%;
+  height: clamp(280px, 56svh, 620px);
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+/* The sync is the hero's entrance, so the old line-rise does not also
+   run — two entrances on one headline is one too many. */
+html.js .stir .hero-head .hl-line > span { animation: none; transform: none; }
+
+/* .hero-inner carried 225px of top padding from when the hero was a
+   full-bleed field under a transparent bar. The bar is in flow now,
+   so that padding is just a hole. */
+.stir .hero .hero-inner { padding-top: 0; padding-bottom: 0; }
+
+
+/* The bar is fixed over the hero, so the hero opens below it. */
+.stir .hero { padding-block: clamp(104px, 15svh, 164px) clamp(30px, 5svh, 68px); }
+
+/* The giant scale no longer fits five of twelve columns — "Events &
+   wholesale." was losing its last letters to the editorial mask. */
+.stir .payoff-title { grid-column: 1 / 8; }
+.stir .payoff-body { grid-column: 8 / 13; }
 
 /* ── page CSS, from about.html ── */
 

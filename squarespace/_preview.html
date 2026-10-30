@@ -175,7 +175,8 @@
   font-weight: 700; font-style: italic; font-display: swap;
 }
 .stir {
-  --ivory:   #FAF2E6;
+  --ivory:   #FAF2E6;                    /* the first stock, warm      */
+  --paper-2: #F3E8D6;                    /* the second, for bands      */
   --ink:     #161310;
   --cobalt:  #0451AB;                    /* matches the artwork field  */
   --red:     #F21B16;                    /* activation only            */
@@ -199,6 +200,11 @@
   --stir-medium: 320ms;
   --stir-slow:   520ms;
   --stir-ease:   cubic-bezier(0.22, 0.61, 0.36, 1);
+  /* Broadcast cuts are hard. Reveals snap into place rather than
+     drifting up through a fade, which is what every other site does
+     and what made this one feel like every other site. */
+  --cut:         120ms;
+  --cut-ease:    cubic-bezier(0.2, 0.8, 0.2, 1);
   --wht-70: rgba(255, 255, 255, 0.70);
   --wht-35: rgba(255, 255, 255, 0.35);
   --wht-07: rgba(255, 255, 255, 0.07);
@@ -213,9 +219,12 @@
   --bleed: calc((100vw - min(100vw, var(--max-w))) / 2 + var(--gutter));
 
   /* Scale re-fit for Founders Grotesk (normal width, not condensed) */
-  --t-hero:    clamp(2.6rem, 7.1vw, 6.8rem);
-  --t-giant:   clamp(2.3rem, 6.4vw, 6.2rem);
-  --t-big:     clamp(1.8rem, 4.5vw, 4.3rem);
+  /* Oversized is the point. The illustrations used to carry the
+     difference; now the type does, so it is set far larger than an
+     editorial page would set it and nothing competes with it. */
+  --t-hero:    clamp(3rem, 11.4vw, 11rem);
+  --t-giant:   clamp(2.6rem, 8.2vw, 7.6rem);
+  --t-big:     clamp(2rem, 5.6vw, 5.2rem);
   --t-metric:  clamp(5.5rem, 17vw, 16rem);
   --t-body:    clamp(1.02rem, 0.9vw + 0.65rem, 1.2rem);
   --t-utility: 0.72rem;
@@ -2428,9 +2437,13 @@ html:not(.js) .stir .method-detail { grid-template-rows: 1fr; }
        every round letter and full stop.
 
        The padding only exists where the mask does, inside this
-       media query, so reduced motion is unaffected. */
-    padding-top: 10px;
-    padding-bottom: 10px;
+       media query, so reduced motion is unaffected.
+
+       A fixed 10px was enough when display type topped out around
+       6vw. The scale is oversized now and the overshoot scales with
+       the font, so the padding has to scale with it too. */
+    padding-top: max(10px, 0.14em);
+    padding-bottom: max(10px, 0.14em);
     transition:
       opacity 0.5s var(--ease),
       transform 0.7s var(--ease),
@@ -3375,6 +3388,261 @@ html.js .stir .trade-inline { transition: none; }
 .stir .convert-art { width: 100%; opacity: 0.18; mask-image: none; -webkit-mask-image: none; }
 }
 
+
+/* ════════════════════════════════════════════════════════════════
+   BROADCAST
+   STIR is the station and the businesses are the programming. That
+   is not a style; it is where the structure comes from. A channel
+   strip at the top, lower-thirds on every piece of footage, and the
+   same lower-third — red bar, name, facts — standing in for section
+   heads on paper. The numbers that used to run 01 through 07 are
+   gone: those sections were never a sequence, so the numbering was
+   decoration wearing the costume of structure.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── The channel strip ──────────────────────────────────────────── */
+.stir .strip {
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  padding: 9px var(--gutter);
+  white-space: nowrap;
+  position: relative;
+  z-index: 60;
+}
+.stir .strip a { text-decoration: none; }
+.stir .strip a:hover,
+.stir .strip a:focus-visible { color: var(--red); }
+.stir .strip-live { display: inline-flex; align-items: center; gap: 0.6em; color: var(--red); font-weight: 600; }
+.stir .strip-live i {
+  width: 7px; height: 7px; background: var(--red); border-radius: 50%; flex: none;
+  animation: strip-pulse 2s steps(2, end) infinite;
+}
+@keyframes strip-pulse { 0%, 49% { opacity: 1 } 50%, 100% { opacity: 0.25 } }
+@media (prefers-reduced-motion: reduce) {
+.stir .strip-live i { animation: none }
+}
+@media (max-width: 760px) {
+.stir .strip-mid { display: none }
+}
+
+
+/* ── Segment heads ──────────────────────────────────────────────
+   One device for every section on every page. Full width, because a
+   head that only spans a third of the measure is a caption. */
+.stir .belief-label,
+.stir .sites-label,
+.stir .svc-label,
+.stir .method-label,
+.stir .who-label,
+.stir .page-label,
+.stir .b-label,
+.stir .founder-label {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2em;
+  border-top: 0;
+  border-bottom: 2px solid currentColor;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+}
+.stir .belief-label b,
+.stir .sites-label b,
+.stir .svc-label b,
+.stir .method-label b,
+.stir .who-label b,
+.stir .page-label b,
+.stir .b-label b,
+.stir .founder-label b {
+  display: inline-flex; align-items: center; gap: 0.7em; font-weight: 600;
+}
+.stir .belief-label b i,
+.stir .sites-label b i,
+.stir .svc-label b i,
+.stir .method-label b i,
+.stir .who-label b i,
+.stir .page-label b i,
+.stir .b-label b i,
+.stir .founder-label b i {
+  width: 10px; height: 14px; background: var(--red); flex: none;
+}
+.stir .belief-label em,
+.stir .sites-label em,
+.stir .svc-label em,
+.stir .method-label em,
+.stir .who-label em,
+.stir .page-label em,
+.stir .b-label em,
+.stir .founder-label em {
+  font-style: normal; font-weight: 400; opacity: 0.5; text-align: right;
+}
+@media (max-width: 639px) {
+.stir .belief-label em,
+.stir .sites-label em,
+.stir .svc-label em,
+.stir .method-label em,
+.stir .who-label em,
+.stir .page-label em,
+.stir .b-label em,
+.stir .founder-label em { display: none }
+}
+
+
+/* ── Lower-thirds ───────────────────────────────────────────────
+   How a broadcast captions a shot: a red bar, a name, and the facts
+   under it. Nothing floats, nothing covers the picture. */
+.stir .l3 {
+  position: absolute;
+  left: 0;
+  bottom: clamp(14px, 3svh, 36px);
+  background: rgba(22, 19, 16, 0.86);
+  color: var(--ivory);
+  border-left: 6px solid var(--red);
+  padding: 11px 20px 12px 14px;
+  max-width: min(94%, 620px);
+}
+.stir .l3 b {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(0.95rem, 1.9vw, 1.4rem);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.stir .l3 span {
+  display: block;
+  margin-top: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ivory-75);
+}
+
+
+/* ── The second stock ───────────────────────────────────────────
+   Alternating bands of warm paper, so a long page reads as segments
+   rather than as one scroll. */
+.stir .on-stock-2 { background: var(--paper-2); }
+/* ── Cuts, not drifts ───────────────────────────────────────────
+   The reveal primitive keeps its job but loses its float: it snaps.
+   Broadcast cuts are hard, and the drift was the single biggest
+   thing making this read like every other site. */
+@media (prefers-reduced-motion: no-preference) {
+html.js .stir .reveal { transform: none; transition: opacity var(--cut) var(--cut-ease); }
+html.js .stir .reveal.is-in { opacity: 1; }
+}
+
+
+/* The structural signal rule used to ride the label's border-top.
+   Segment heads are ruled underneath now, so the signal moves with
+   the rule instead of floating above nothing. */
+html.js .stir .belief-label[data-reveal="structural"]::before,
+html.js .stir .sites-label[data-reveal="structural"]::before,
+html.js .stir .svc-label[data-reveal="structural"]::before,
+html.js .stir .method-label[data-reveal="structural"]::before,
+html.js .stir .who-label[data-reveal="structural"]::before,
+html.js .stir .page-label[data-reveal="structural"]::before,
+html.js .stir .b-label[data-reveal="structural"]::before,
+html.js .stir .founder-label[data-reveal="structural"]::before {
+  top: auto;
+  bottom: -2px;
+}
+
+
+/* ── The hero, on paper ─────────────────────────────────────────
+   It was a cobalt field holding an illustration. The illustration is
+   held and the type carries the frame now, set far larger than the
+   old editorial scale and sitting on warm stock. Cobalt is no longer
+   a wall here; it is kept for one field at the sign-off. */
+.stir .hero {
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 0;
+  padding-block: clamp(36px, 7svh, 104px) clamp(28px, 5svh, 64px);
+  display: block;
+  overflow: visible;
+}
+.stir .hero::after { content: none; }
+.stir .hero .hero-inner { display: block; }
+.stir .hero .hero-copy { max-width: none; }
+.stir .hero .eyebrow { color: var(--ink-60); margin-bottom: clamp(12px, 2.2svh, 26px); }
+.stir .hero .eyebrow-mark { background: var(--red); }
+.stir .hero-head { position: relative; }
+.stir .hero .hero-headline {
+  font-size: var(--t-hero);
+  line-height: 0.84;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  max-width: none;
+}
+.stir .hero .hero-headline em { font-style: normal; color: var(--red); }
+.stir .hero .hero-prop {
+  margin-top: clamp(22px, 3.6svh, 46px);
+  max-width: 44ch;
+  color: var(--ink);
+}
+.stir .hero .hero-prop b { font-weight: 600; }
+.stir .hero .hero-cta { margin-top: clamp(22px, 3.4svh, 42px); }
+.stir .hero :focus-visible { outline-color: var(--red); }
+
+
+/* The sync canvas sits exactly over the headline box. The real text
+   stays in the DOM throughout; the canvas is decoration on top. */
+.stir .hero-sync { position: absolute; inset: 0; pointer-events: none; }
+html.js .stir .hero-head[data-sync] .hero-headline { visibility: hidden; }
+
+
+/* ── The footage shot ───────────────────────────────────────────
+   Named .shot, not .band: .band is already the events block, and
+   the collision was painting a 14px rule across the top of it. */
+.stir .shot {
+  position: relative;
+  background: var(--ink);
+  overflow: hidden;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+.stir .shot-art {
+  width: 100%;
+  height: clamp(280px, 56svh, 620px);
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+/* The sync is the hero's entrance, so the old line-rise does not also
+   run — two entrances on one headline is one too many. */
+html.js .stir .hero-head .hl-line > span { animation: none; transform: none; }
+
+/* .hero-inner carried 225px of top padding from when the hero was a
+   full-bleed field under a transparent bar. The bar is in flow now,
+   so that padding is just a hole. */
+.stir .hero .hero-inner { padding-top: 0; padding-bottom: 0; }
+
+
+/* The bar is fixed over the hero, so the hero opens below it. */
+.stir .hero { padding-block: clamp(104px, 15svh, 164px) clamp(30px, 5svh, 68px); }
+
+/* The giant scale no longer fits five of twelve columns — "Events &
+   wholesale." was losing its last letters to the editorial mask. */
+.stir .payoff-title { grid-column: 1 / 8; }
+.stir .payoff-body { grid-column: 8 / 13; }
+
 /* ── page CSS, from about.html ── */
 
 /* Page-specific: About */
@@ -3621,6 +3889,14 @@ body.stir-dark-top { background: #0451AB; }
 <div data-pv="home"><!-- ══ STIR · HOME ══ One Code Block on a blank page.
      Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
 <div class="stir stir-home">
+<!-- ════════ CHANNEL STRIP ════════
+     The station bar. The only place the word LIVE appears. -->
+<div class="strip">
+  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
+  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
+  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+</div>
+
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
@@ -3656,44 +3932,42 @@ body.stir-dark-top { background: #0451AB; }
 
 <main>
 
-  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
-  <section class="hero" data-ground="cobalt" data-index="01 — Attention" data-nav-theme="cobalt" aria-label="STIR — attention should pay">
-    <!--
-      HERO ENVIRONMENT — ../assets/env/hero-cobalt-*
-      Not a background. The composition carries the interface: a deep
-      cobalt field holding roughly two thirds of the frame on the left
-      for type, with the architecture and its red window signals
-      massed into the lower right. object-position protects that mass;
-      the copy lives in the cobalt.
-
-      AVIF first, encoded high: the sky is one enormous flat field and
-      ordinary quality smooths its grain into bands.
-    -->
-    <picture>
-      <source type="image/avif" sizes="100vw" srcset="../assets/env/hero-cobalt-560.avif 560w, ../assets/env/hero-cobalt-768.avif 768w, ../assets/env/hero-cobalt-1024.avif 1024w, ../assets/env/hero-cobalt-1366.avif 1366w, ../assets/env/hero-cobalt-1672.avif 1672w">
-      <source type="image/webp" sizes="100vw" srcset="../assets/env/hero-cobalt-560.webp 560w, ../assets/env/hero-cobalt-768.webp 768w, ../assets/env/hero-cobalt-1024.webp 1024w, ../assets/env/hero-cobalt-1366.webp 1366w, ../assets/env/hero-cobalt-1672.webp 1672w">
-      <img class="hero-art" src="../assets/env/hero-cobalt-1366.webp"
-           width="1672" height="941" fetchpriority="high" decoding="async"
-           alt="A deep cobalt street scene: a cream corner storefront and the buildings behind it massed in the lower right, their windows lit red, under a wide empty cobalt sky">
-    </picture>
-
+  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════
+       The illustration is gone and the type carries the frame. The
+       one controlled disturbance on the site lives here: the
+       headline arrives as a signal acquiring lock, resolves, and
+       cuts. It runs once and never touches legibility, because what
+       it resolves into is the real text that was in the DOM all
+       along. The footage band underneath is the first real thing a
+       visitor sees: an actual business, in colour. -->
+  <section class="hero" data-ground="cobalt" data-index="01 — Attention" data-nav-theme="cream" aria-label="STIR — attention should pay">
     <div class="shell hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Independent creative &amp; growth practice</p>
+        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Founder-led creative &amp; growth practice &mdash; Est.&nbsp;2025</p>
 
-        <h1 class="display hero-headline">
-          <span class="hl-line"><span>Attention</span></span>
-          <span class="hl-line"><span>should pay.</span></span>
-        </h1>
+        <div class="hero-head" data-sync>
+          <h1 class="display hero-headline">
+            <span class="hl-line"><span>Attention</span></span>
+            <span class="hl-line"><span>should <em>pay.</em></span></span>
+          </h1>
+          <canvas class="hero-sync" aria-hidden="true"></canvas>
+        </div>
 
-        <p class="editorial hero-prop">We make content, campaigns, brands, and websites that help businesses get noticed&nbsp;— and make it easier for people to inquire, order, or&nbsp;book.</p>
+        <p class="editorial hero-prop">I make content, campaigns, brands and websites for businesses with a street address&nbsp;— the kind people walk past, call, or order&nbsp;from. <b>I've run one myself.</b></p>
 
         <p class="hero-cta"><a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
       </div>
-
-      <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
     </div>
   </section>
+
+  <!-- The first real thing: an actual business, captioned the way a
+       broadcast captions a shot. -->
+  <figure class="shot">
+    <img class="shot-art" src="../assets/labay/labay-market-interior.webp"
+         width="1216" height="921" fetchpriority="high" decoding="async"
+         alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
+    <figcaption class="l3"><b>Labay Market</b><span>Brooklyn, NY &middot; The business I ran &middot; Content, brand, website</span></figcaption>
+  </figure>
 
   <!-- ════════ 02 · THE ARGUMENT ════════
        One headline, not a staged reversal. The small line concedes
@@ -3702,25 +3976,9 @@ body.stir-dark-top { background: #0451AB; }
        WORTH is editorial emphasis — a printed block, not a control,
        so it carries no hover, no cursor and no affordance. -->
   <section class="belief" data-ground="ivory" data-index="02 — Thesis" data-nav-theme="cobalt" aria-labelledby="belief-title">
-    <!--
-      ARGUMENT ENVIRONMENT — ../assets/env/argument-cream-*
-      The opposite weighting to the hero: cream and still, one
-      geometric shadow, one red doorway held at the far right. The
-      shadow owns the left of the frame, so the copy sits in it and
-      sets in ivory — contrast decided by the picture, not by habit.
-      The red field behind "worth" and the red door answer each other
-      across the diagonal; nothing else in here is red.
-    -->
-    <picture>
-      <source type="image/avif" sizes="100vw" srcset="../assets/env/argument-cream-560.avif 560w, ../assets/env/argument-cream-768.avif 768w, ../assets/env/argument-cream-1024.avif 1024w, ../assets/env/argument-cream-1366.avif 1366w, ../assets/env/argument-cream-1672.avif 1672w">
-      <source type="image/webp" sizes="100vw" srcset="../assets/env/argument-cream-560.webp 560w, ../assets/env/argument-cream-768.webp 768w, ../assets/env/argument-cream-1024.webp 1024w, ../assets/env/argument-cream-1366.webp 1366w, ../assets/env/argument-cream-1672.webp 1672w">
-      <img class="belief-art" src="../assets/env/argument-cream-1366.webp"
-           width="1672" height="941" loading="lazy" decoding="async"
-           alt="A long cream wall under a deep blue sky, cut diagonally by a hard blue-black shadow, with one small red doorway at the far right">
-    </picture>
 
     <div class="shell belief-inner">
-    <p class="utility belief-label" data-reveal="structural">02 / The argument</p>
+    <p class="utility belief-label" data-reveal="structural"><b><i aria-hidden="true"></i>The argument</b><em>Why any of this works</em></p>
 
     <div class="belief-statement" data-reveal="stage">
       <p class="belief-intro">More content isn’t the whole&nbsp;answer.</p>
@@ -4026,7 +4284,7 @@ body.stir-dark-top { background: #0451AB; }
        for all three of these businesses, the screen that matters. -->
   <section class="sites shell" data-ground="ivory" data-index="04 — Selected websites" data-nav-theme="cream" id="sites" aria-labelledby="sites-title">
     <div class="grid">
-      <p class="utility sites-label" data-reveal="structural">04 / Selected websites</p>
+      <p class="utility sites-label" data-reveal="structural"><b><i aria-hidden="true"></i>Selected websites</b><em>Built and running</em></p>
 
       <h2 class="display sites-title" data-reveal="editorial" id="sites-title">Sites with a job to&nbsp;do.</h2>
       <p class="body sites-lede reveal">A storage business, a drain service, and a church. Each website needed to make the next step clear: request a quote, call for help, or plan a&nbsp;visit.</p>
@@ -4105,7 +4363,7 @@ body.stir-dark-top { background: #0451AB; }
        toward. The other two are full offers, not downgrades. -->
   <section class="services shell" data-ground="ivory" data-index="05 — Services" data-nav-theme="cream" id="services" aria-labelledby="services-title">
     <div class="grid">
-      <p class="utility svc-label" data-reveal="structural">05 / Services</p>
+      <p class="utility svc-label" data-reveal="structural"><b><i aria-hidden="true"></i>Services</b><em>What you can book</em></p>
 
       <h2 class="display svc-title" data-reveal="editorial" id="services-title">What you can hire us&nbsp;for.</h2>
       <p class="body svc-lede reveal">Bring us a specific project, or work with us on an ongoing&nbsp;basis.</p>
@@ -4115,15 +4373,6 @@ body.stir-dark-top { background: #0451AB; }
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
           <h3 class="svc-name">Content &amp;<br>campaigns</h3>
-          <div class="svc-plate" data-reveal="registration">
-            <span class="svc-plate-no" aria-hidden="true">01</span>
-            <!-- Two layers of one drawing: the card is cut out of the plate so
-                 it can travel the last of the hand-off. Nothing is added to the
-                 artwork; the separation reconstructs it exactly at rest. -->
-            <img class="svc-fig svc-fig--under" src="../assets/svc-01-base.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <img class="svc-fig svc-fig--hand" src="../assets/svc-01-red.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <i class="svc-plate-rule" aria-hidden="true"></i>
-          </div>
           <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
           <ul class="utility svc-scope">
             <li>Content planning</li>
@@ -4139,11 +4388,6 @@ body.stir-dark-top { background: #0451AB; }
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
           <h3 class="svc-name">Brand &amp;<br>websites</h3>
-          <div class="svc-plate" data-reveal="registration">
-            <span class="svc-plate-no" aria-hidden="true">02</span>
-            <img class="svc-fig" src="../assets/svc-02.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <i class="svc-plate-rule" aria-hidden="true"></i>
-          </div>
           <p class="svc-prop">Make the business clear, recognizable, and easy to buy&nbsp;from.</p>
           <ul class="utility svc-scope">
             <li>Positioning &amp; messaging</li>
@@ -4158,11 +4402,6 @@ body.stir-dark-top { background: #0451AB; }
         <article class="svc svc--lead reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
           <h3 class="svc-name">Ongoing creative<br>support</h3>
-          <div class="svc-plate" data-reveal="registration">
-            <span class="svc-plate-no" aria-hidden="true">03</span>
-            <img class="svc-fig" src="../assets/svc-03.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <i class="svc-plate-rule" aria-hidden="true"></i>
-          </div>
           <p class="svc-prop">Keep the content and website working together, month after&nbsp;month.</p>
           <ul class="utility svc-scope">
             <li>Monthly planning</li>
@@ -4184,7 +4423,7 @@ body.stir-dark-top { background: #0451AB; }
        actually read them. This section is only about sequence. -->
   <section class="method shell" data-ground="ivory" data-index="06 — How we work" data-nav-theme="cream" id="method" aria-labelledby="method-label">
     <div class="grid">
-      <p class="utility method-label" data-reveal="structural" id="method-label">06 / How we work</p>
+      <p class="utility method-label" data-reveal="structural" id="method-label"><b><i aria-hidden="true"></i>How we work</b><em>Find · Build · Run</em></p>
       <p class="body method-intro reveal">We agree on the priorities, make the work, and keep improving what needs ongoing&nbsp;attention.</p>
 
       <div class="method-index reveal" id="method-index">
@@ -4242,7 +4481,7 @@ body.stir-dark-top { background: #0451AB; }
   <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
   <section class="who shell" data-ground="ivory" data-index="07 — Who this is for" data-nav-theme="cream" aria-labelledby="who-title">
     <div class="grid">
-      <p class="utility who-label" data-reveal="structural" id="who-label">07 / Who this is for</p>
+      <p class="utility who-label" data-reveal="structural" id="who-label"><b><i aria-hidden="true"></i>Who this is for</b><em>And who it is not</em></p>
 
       <h2 class="display who-title" data-reveal="editorial" id="who-title">We work with businesses that already do something&nbsp;well.</h2>
 
@@ -4362,9 +4601,6 @@ body.stir-dark-top { background: #0451AB; }
          A sibling of the grid, not a member of it: a band that bleeds
          past the gutter is not grid content, and as a grid item it was
          picking up a few pixels of alignment nudge. -->
-    <img class="who-art" data-reveal="registration" src="../assets/illustration-corner.webp"
-         width="1800" height="1347" loading="lazy" decoding="async"
-         alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
   </section>
 
   <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
@@ -4374,9 +4610,6 @@ body.stir-dark-top { background: #0451AB; }
       It closes on the same artwork, cropped to the eye and masked into
       the cobalt, so the question reads as the eye asking it.
     -->
-    <img class="convert-art" src="../assets/hero-stir-attention.webp"
-         width="1800" height="1346" loading="lazy" decoding="async"
-         alt="" aria-hidden="true">
     <div class="shell">
      <div class="convert-inner">
       <div class="convert-head" data-reveal="structural">
@@ -4440,6 +4673,14 @@ body.stir-dark-top { background: #0451AB; }
 <div data-pv="about"><!-- ══ STIR · ABOUT ══ One Code Block on a blank page.
      Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
 <div class="stir stir-about">
+<!-- ════════ CHANNEL STRIP ════════
+     The station bar. The only place the word LIVE appears. -->
+<div class="strip">
+  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
+  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
+  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+</div>
+
 <header class="nav nav--ink">
   <div class="shell nav-inner">
     <a href="/" class="nav-logo">
@@ -4474,7 +4715,7 @@ body.stir-dark-top { background: #0451AB; }
 <main>
   <section class="page shell" data-ground="ivory" data-index="About" data-nav-theme="cream" aria-labelledby="about-title">
     <div class="grid">
-      <p class="utility page-label" data-reveal="structural">About</p>
+      <p class="utility page-label" data-reveal="structural"><b><i aria-hidden="true"></i>About</b><em>STIR · Brooklyn, New York</em></p>
       <h1 class="display page-title" data-reveal="editorial" id="about-title">Good businesses deserve<br>to be understood.</h1>
 
       <div class="about-intro reveal">
@@ -4488,7 +4729,7 @@ body.stir-dark-top { background: #0451AB; }
       </div>
 
       <div class="grid about-block" style="grid-column: 1 / -1;">
-        <p class="utility b-label" data-reveal="structural">What we believe</p>
+        <p class="utility b-label" data-reveal="structural"><b><i aria-hidden="true"></i>What we believe</b><em>The argument, in full</em></p>
         <h2 class="display b-title" data-reveal="editorial">Make it&nbsp;travel.</h2>
         <p class="body b-copy reveal">A good product, a useful service, or a place people care about gives us something to work with. We help communicate what matters and make the next step clear for someone who wants to visit, inquire, order, or&nbsp;book.</p>
       </div>
@@ -4515,7 +4756,7 @@ body.stir-dark-top { background: #0451AB; }
       </figure>
 
       <div class="founder-body">
-        <p class="utility founder-label" data-reveal="structural">Who you&rsquo;re talking to</p>
+        <p class="utility founder-label" data-reveal="structural"><b><i aria-hidden="true"></i>Who you&rsquo;re talking to</b><em>One person. Named.</em></p>
         <h2 class="display founder-name" data-reveal="editorial">Rasheed&nbsp;Jordon</h2>
         <p class="utility founder-role">Founder, STIR &middot; Brooklyn, New&nbsp;York</p>
 
@@ -4554,6 +4795,14 @@ body.stir-dark-top { background: #0451AB; }
 <div data-pv="contact"><!-- ══ STIR · CONTACT ══ One Code Block on a blank page.
      Find/replace ASSET_BASE with your Squarespace file URL prefix. -->
 <div class="stir stir-contact">
+<!-- ════════ CHANNEL STRIP ════════
+     The station bar. The only place the word LIVE appears. -->
+<div class="strip">
+  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
+  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
+  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+</div>
+
 <header class="nav nav--ink">
   <div class="shell nav-inner">
     <a href="/" class="nav-logo">
@@ -4588,7 +4837,7 @@ body.stir-dark-top { background: #0451AB; }
 <main>
   <section class="page shell" data-ground="ivory" data-index="Contact" data-nav-theme="cream" aria-labelledby="contact-title">
     <div class="grid">
-      <p class="utility page-label" data-reveal="structural">Contact</p>
+      <p class="utility page-label" data-reveal="structural"><b><i aria-hidden="true"></i>Contact</b><em>Tell us about the business</em></p>
       <h1 class="display page-title" data-reveal="editorial" id="contact-title">Tell us what<br>you need.</h1>
 
       <div class="contact-info reveal">
@@ -4968,33 +5217,112 @@ body.stir-dark-top { background: #0451AB; }
     });
   })();
 
-  /* ── Service plates — a few pixels of the same depth the hero has ─
-     REWARD: the figure sits in the cobalt world, so it should answer
-     to presence the way that world does. Desktop pointers only, never
-     on touch, never under reduced motion, and a no-op until real
-     artwork is in the plate.                                        */
+
+  /* ── SYNC ───────────────────────────────────────
+     The one controlled disturbance on the site. The headline arrives
+     as a signal acquiring lock: a character grid that resolves left
+     to right into the type underneath, then cuts — broadcast cuts are
+     hard, so there is no fade at the end. It runs once, and it cannot
+     cost legibility, because what it resolves into is the real text
+     that was in the DOM the whole time. Each line is drawn from its
+     own measured rect, so the grid registers to the type rather than
+     to a guess about font metrics.                                 */
   (function () {
-    if (reduce || !fine) return;
-    var plates = document.querySelectorAll('.svc-plate');
-    if (!plates.length) return;
-    Array.prototype.forEach.call(plates, function (plate) {
-      var fig = plate.querySelector('.svc-fig');
-      if (!fig) return;
-      var queued = false, tx = 0, ty = 0;
-      plate.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        var r = plate.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () {
-          fig.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
-          queued = false;
-        });
-      }, { passive: true });
-      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
-    });
+    var head = document.querySelector('.hero-head[data-sync]');
+    if (!head) return;
+    var cv = head.querySelector('.hero-sync');
+    if (!cv || !cv.getContext) { head.removeAttribute('data-sync'); return; }
+
+    function reveal() { head.removeAttribute('data-sync'); cv.style.display = 'none'; }
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { reveal(); return; }
+
+    var ctx = cv.getContext('2d');
+    var RAMP = '.:-=+*#%@', NOISE = '/\\|_-=+*#%@<>[]{}10';
+    var cells = [], px = 0, cw = 0, ch = 0, t0 = 0, DUR = 1050;
+
+    function build() {
+      var box = head.getBoundingClientRect();
+      if (!box.width || !box.height) return false;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(box.width * dpr);
+      cv.height = Math.round(box.height * dpr);
+      cv.style.width = box.width + 'px';
+      cv.style.height = box.height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      px = Math.max(6, Math.round(box.width / 190));
+      cw = px * 0.6; ch = px * 1.05;
+      var cols = Math.ceil(box.width / cw), rows = Math.ceil(box.height / ch);
+
+      var off = document.createElement('canvas');
+      off.width = Math.max(1, Math.round(box.width));
+      off.height = Math.max(1, Math.round(box.height));
+      var o = off.getContext('2d');
+      o.fillStyle = '#fff'; o.fillRect(0, 0, off.width, off.height);
+      o.textBaseline = 'alphabetic';
+      var drew = false;
+      head.querySelectorAll('.hl-line').forEach(function (line) {
+        var cs = window.getComputedStyle(line), r = line.getBoundingClientRect();
+        if (!r.width) return;
+        o.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+        o.fillStyle = '#000';
+        o.fillText(line.textContent.toUpperCase(), r.left - box.left,
+                   r.bottom - box.top - parseFloat(cs.fontSize) * 0.17);
+        drew = true;
+      });
+      if (!drew) return false;
+
+      var d;
+      try { d = o.getImageData(0, 0, off.width, off.height).data; }
+      catch (e) { return false; }      /* file:// taints the canvas */
+
+      cells = [];
+      for (var y = 0; y < rows; y++) {
+        for (var x = 0; x < cols; x++) {
+          var sx = Math.min(off.width - 1, Math.round(x * cw + cw / 2));
+          var sy = Math.min(off.height - 1, Math.round(y * ch + ch / 2));
+          var v = 1 - d[(sy * off.width + sx) * 4] / 255;
+          if (v < 0.12) continue;
+          cells.push({
+            x: x * cw, y: y * ch,
+            g: RAMP.charAt(Math.min(RAMP.length - 1, Math.round(v * (RAMP.length - 1)))),
+            lock: (x / cols) * 0.62 + Math.random() * 0.3
+          });
+        }
+      }
+      return cells.length > 0;
+    }
+
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / DUR);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.font = '500 ' + px + 'px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'top';
+      for (var i = 0; i < cells.length; i++) {
+        var c = cells[i];
+        if (p < c.lock) {
+          if (Math.random() > 0.55) continue;
+          ctx.fillStyle = 'rgba(4,81,171,.5)';
+          ctx.fillText(NOISE.charAt((Math.random() * NOISE.length) | 0), c.x, c.y);
+        } else {
+          ctx.fillStyle = '#161310';
+          ctx.fillText(c.g, c.x, c.y);
+        }
+      }
+      if (p < 1) requestAnimationFrame(frame);
+      else reveal();                     /* the cut */
+    }
+
+    function go() {
+      if (!build()) { reveal(); return; }
+      t0 = performance.now();
+      requestAnimationFrame(frame);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      var bail = setTimeout(go, 1400);
+      document.fonts.ready.then(function () { clearTimeout(bail); go(); });
+    } else { go(); }
   })();
 
   /* ── Nav theme: which environment is under the bar ───────────────

@@ -224,33 +224,112 @@
     });
   })();
 
-  /* ── Service plates — a few pixels of the same depth the hero has ─
-     REWARD: the figure sits in the cobalt world, so it should answer
-     to presence the way that world does. Desktop pointers only, never
-     on touch, never under reduced motion, and a no-op until real
-     artwork is in the plate.                                        */
+
+  /* ── SYNC ───────────────────────────────────────
+     The one controlled disturbance on the site. The headline arrives
+     as a signal acquiring lock: a character grid that resolves left
+     to right into the type underneath, then cuts — broadcast cuts are
+     hard, so there is no fade at the end. It runs once, and it cannot
+     cost legibility, because what it resolves into is the real text
+     that was in the DOM the whole time. Each line is drawn from its
+     own measured rect, so the grid registers to the type rather than
+     to a guess about font metrics.                                 */
   (function () {
-    if (reduce || !fine) return;
-    var plates = document.querySelectorAll('.svc-plate');
-    if (!plates.length) return;
-    Array.prototype.forEach.call(plates, function (plate) {
-      var fig = plate.querySelector('.svc-fig');
-      if (!fig) return;
-      var queued = false, tx = 0, ty = 0;
-      plate.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        var r = plate.getBoundingClientRect();
-        tx = ((e.clientX - r.left) / r.width - 0.5) * -6;
-        ty = ((e.clientY - r.top) / r.height - 0.5) * -4;
-        if (queued) return;
-        queued = true;
-        requestAnimationFrame(function () {
-          fig.style.transform = 'translate3d(' + tx.toFixed(2) + 'px,' + ty.toFixed(2) + 'px,0)';
-          queued = false;
-        });
-      }, { passive: true });
-      plate.addEventListener('pointerleave', function () { fig.style.transform = ''; });
-    });
+    var head = document.querySelector('.hero-head[data-sync]');
+    if (!head) return;
+    var cv = head.querySelector('.hero-sync');
+    if (!cv || !cv.getContext) { head.removeAttribute('data-sync'); return; }
+
+    function reveal() { head.removeAttribute('data-sync'); cv.style.display = 'none'; }
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { reveal(); return; }
+
+    var ctx = cv.getContext('2d');
+    var RAMP = '.:-=+*#%@', NOISE = '/\\|_-=+*#%@<>[]{}10';
+    var cells = [], px = 0, cw = 0, ch = 0, t0 = 0, DUR = 1050;
+
+    function build() {
+      var box = head.getBoundingClientRect();
+      if (!box.width || !box.height) return false;
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      cv.width = Math.round(box.width * dpr);
+      cv.height = Math.round(box.height * dpr);
+      cv.style.width = box.width + 'px';
+      cv.style.height = box.height + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      px = Math.max(6, Math.round(box.width / 190));
+      cw = px * 0.6; ch = px * 1.05;
+      var cols = Math.ceil(box.width / cw), rows = Math.ceil(box.height / ch);
+
+      var off = document.createElement('canvas');
+      off.width = Math.max(1, Math.round(box.width));
+      off.height = Math.max(1, Math.round(box.height));
+      var o = off.getContext('2d');
+      o.fillStyle = '#fff'; o.fillRect(0, 0, off.width, off.height);
+      o.textBaseline = 'alphabetic';
+      var drew = false;
+      head.querySelectorAll('.hl-line').forEach(function (line) {
+        var cs = window.getComputedStyle(line), r = line.getBoundingClientRect();
+        if (!r.width) return;
+        o.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+        o.fillStyle = '#000';
+        o.fillText(line.textContent.toUpperCase(), r.left - box.left,
+                   r.bottom - box.top - parseFloat(cs.fontSize) * 0.17);
+        drew = true;
+      });
+      if (!drew) return false;
+
+      var d;
+      try { d = o.getImageData(0, 0, off.width, off.height).data; }
+      catch (e) { return false; }      /* file:// taints the canvas */
+
+      cells = [];
+      for (var y = 0; y < rows; y++) {
+        for (var x = 0; x < cols; x++) {
+          var sx = Math.min(off.width - 1, Math.round(x * cw + cw / 2));
+          var sy = Math.min(off.height - 1, Math.round(y * ch + ch / 2));
+          var v = 1 - d[(sy * off.width + sx) * 4] / 255;
+          if (v < 0.12) continue;
+          cells.push({
+            x: x * cw, y: y * ch,
+            g: RAMP.charAt(Math.min(RAMP.length - 1, Math.round(v * (RAMP.length - 1)))),
+            lock: (x / cols) * 0.62 + Math.random() * 0.3
+          });
+        }
+      }
+      return cells.length > 0;
+    }
+
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / DUR);
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      ctx.font = '500 ' + px + 'px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'top';
+      for (var i = 0; i < cells.length; i++) {
+        var c = cells[i];
+        if (p < c.lock) {
+          if (Math.random() > 0.55) continue;
+          ctx.fillStyle = 'rgba(4,81,171,.5)';
+          ctx.fillText(NOISE.charAt((Math.random() * NOISE.length) | 0), c.x, c.y);
+        } else {
+          ctx.fillStyle = '#161310';
+          ctx.fillText(c.g, c.x, c.y);
+        }
+      }
+      if (p < 1) requestAnimationFrame(frame);
+      else reveal();                     /* the cut */
+    }
+
+    function go() {
+      if (!build()) { reveal(); return; }
+      t0 = performance.now();
+      requestAnimationFrame(frame);
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      var bail = setTimeout(go, 1400);
+      document.fonts.ready.then(function () { clearTimeout(bail); go(); });
+    } else { go(); }
   })();
 
   /* ── Nav theme: which environment is under the bar ───────────────

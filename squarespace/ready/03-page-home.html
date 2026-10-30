@@ -1,5 +1,13 @@
 <!-- ══ STIR · HOME ══ One Code Block on a blank page. -->
 <div class="stir stir-home">
+<!-- ════════ CHANNEL STRIP ════════
+     The station bar. The only place the word LIVE appears. -->
+<div class="strip">
+  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
+  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
+  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+</div>
+
 <!-- ════════ NAVIGATION ════════ -->
 <header class="nav">
   <div class="shell nav-inner">
@@ -35,44 +43,42 @@
 
 <main>
 
-  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════ -->
-  <section class="hero" data-ground="cobalt" data-index="01 — Attention" data-nav-theme="cobalt" aria-label="STIR — attention should pay">
-    <!--
-      HERO ENVIRONMENT — https://stirnyc.netlify.app/assets/env/hero-cobalt-*
-      Not a background. The composition carries the interface: a deep
-      cobalt field holding roughly two thirds of the frame on the left
-      for type, with the architecture and its red window signals
-      massed into the lower right. object-position protects that mass;
-      the copy lives in the cobalt.
-
-      AVIF first, encoded high: the sky is one enormous flat field and
-      ordinary quality smooths its grain into bands.
-    -->
-    <picture>
-      <source type="image/avif" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/hero-cobalt-560.avif 560w, https://stirnyc.netlify.app/assets/env/hero-cobalt-768.avif 768w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1024.avif 1024w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1366.avif 1366w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1672.avif 1672w">
-      <source type="image/webp" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/hero-cobalt-560.webp 560w, https://stirnyc.netlify.app/assets/env/hero-cobalt-768.webp 768w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1024.webp 1024w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1366.webp 1366w, https://stirnyc.netlify.app/assets/env/hero-cobalt-1672.webp 1672w">
-      <img class="hero-art" src="https://stirnyc.netlify.app/assets/env/hero-cobalt-1366.webp"
-           width="1672" height="941" fetchpriority="high" decoding="async"
-           alt="A deep cobalt street scene: a cream corner storefront and the buildings behind it massed in the lower right, their windows lit red, under a wide empty cobalt sky">
-    </picture>
-
+  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════
+       The illustration is gone and the type carries the frame. The
+       one controlled disturbance on the site lives here: the
+       headline arrives as a signal acquiring lock, resolves, and
+       cuts. It runs once and never touches legibility, because what
+       it resolves into is the real text that was in the DOM all
+       along. The footage band underneath is the first real thing a
+       visitor sees: an actual business, in colour. -->
+  <section class="hero" data-ground="cobalt" data-index="01 — Attention" data-nav-theme="cream" aria-label="STIR — attention should pay">
     <div class="shell hero-inner">
       <div class="hero-copy">
-        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Independent creative &amp; growth practice</p>
+        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Founder-led creative &amp; growth practice &mdash; Est.&nbsp;2025</p>
 
-        <h1 class="display hero-headline">
-          <span class="hl-line"><span>Attention</span></span>
-          <span class="hl-line"><span>should pay.</span></span>
-        </h1>
+        <div class="hero-head" data-sync>
+          <h1 class="display hero-headline">
+            <span class="hl-line"><span>Attention</span></span>
+            <span class="hl-line"><span>should <em>pay.</em></span></span>
+          </h1>
+          <canvas class="hero-sync" aria-hidden="true"></canvas>
+        </div>
 
-        <p class="editorial hero-prop">We make content, campaigns, brands, and websites that help businesses get noticed&nbsp;— and make it easier for people to inquire, order, or&nbsp;book.</p>
+        <p class="editorial hero-prop">I make content, campaigns, brands and websites for businesses with a street address&nbsp;— the kind people walk past, call, or order&nbsp;from. <b>I've run one myself.</b></p>
 
         <p class="hero-cta"><a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
       </div>
-
-      <p class="utility hero-index"><span class="hi-label">01 — Attention</span> <span class="down" aria-hidden="true">↓</span></p>
     </div>
   </section>
+
+  <!-- The first real thing: an actual business, captioned the way a
+       broadcast captions a shot. -->
+  <figure class="shot">
+    <img class="shot-art" src="https://stirnyc.netlify.app/assets/labay/labay-market-interior.webp"
+         width="1216" height="921" fetchpriority="high" decoding="async"
+         alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
+    <figcaption class="l3"><b>Labay Market</b><span>Brooklyn, NY &middot; The business I ran &middot; Content, brand, website</span></figcaption>
+  </figure>
 
   <!-- ════════ 02 · THE ARGUMENT ════════
        One headline, not a staged reversal. The small line concedes
@@ -81,25 +87,9 @@
        WORTH is editorial emphasis — a printed block, not a control,
        so it carries no hover, no cursor and no affordance. -->
   <section class="belief" data-ground="ivory" data-index="02 — Thesis" data-nav-theme="cobalt" aria-labelledby="belief-title">
-    <!--
-      ARGUMENT ENVIRONMENT — https://stirnyc.netlify.app/assets/env/argument-cream-*
-      The opposite weighting to the hero: cream and still, one
-      geometric shadow, one red doorway held at the far right. The
-      shadow owns the left of the frame, so the copy sits in it and
-      sets in ivory — contrast decided by the picture, not by habit.
-      The red field behind "worth" and the red door answer each other
-      across the diagonal; nothing else in here is red.
-    -->
-    <picture>
-      <source type="image/avif" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/argument-cream-560.avif 560w, https://stirnyc.netlify.app/assets/env/argument-cream-768.avif 768w, https://stirnyc.netlify.app/assets/env/argument-cream-1024.avif 1024w, https://stirnyc.netlify.app/assets/env/argument-cream-1366.avif 1366w, https://stirnyc.netlify.app/assets/env/argument-cream-1672.avif 1672w">
-      <source type="image/webp" sizes="100vw" srcset="https://stirnyc.netlify.app/assets/env/argument-cream-560.webp 560w, https://stirnyc.netlify.app/assets/env/argument-cream-768.webp 768w, https://stirnyc.netlify.app/assets/env/argument-cream-1024.webp 1024w, https://stirnyc.netlify.app/assets/env/argument-cream-1366.webp 1366w, https://stirnyc.netlify.app/assets/env/argument-cream-1672.webp 1672w">
-      <img class="belief-art" src="https://stirnyc.netlify.app/assets/env/argument-cream-1366.webp"
-           width="1672" height="941" loading="lazy" decoding="async"
-           alt="A long cream wall under a deep blue sky, cut diagonally by a hard blue-black shadow, with one small red doorway at the far right">
-    </picture>
 
     <div class="shell belief-inner">
-    <p class="utility belief-label" data-reveal="structural">02 / The argument</p>
+    <p class="utility belief-label" data-reveal="structural"><b><i aria-hidden="true"></i>The argument</b><em>Why any of this works</em></p>
 
     <div class="belief-statement" data-reveal="stage">
       <p class="belief-intro">More content isn’t the whole&nbsp;answer.</p>
@@ -405,7 +395,7 @@
        for all three of these businesses, the screen that matters. -->
   <section class="sites shell" data-ground="ivory" data-index="04 — Selected websites" data-nav-theme="cream" id="sites" aria-labelledby="sites-title">
     <div class="grid">
-      <p class="utility sites-label" data-reveal="structural">04 / Selected websites</p>
+      <p class="utility sites-label" data-reveal="structural"><b><i aria-hidden="true"></i>Selected websites</b><em>Built and running</em></p>
 
       <h2 class="display sites-title" data-reveal="editorial" id="sites-title">Sites with a job to&nbsp;do.</h2>
       <p class="body sites-lede reveal">A storage business, a drain service, and a church. Each website needed to make the next step clear: request a quote, call for help, or plan a&nbsp;visit.</p>
@@ -484,7 +474,7 @@
        toward. The other two are full offers, not downgrades. -->
   <section class="services shell" data-ground="ivory" data-index="05 — Services" data-nav-theme="cream" id="services" aria-labelledby="services-title">
     <div class="grid">
-      <p class="utility svc-label" data-reveal="structural">05 / Services</p>
+      <p class="utility svc-label" data-reveal="structural"><b><i aria-hidden="true"></i>Services</b><em>What you can book</em></p>
 
       <h2 class="display svc-title" data-reveal="editorial" id="services-title">What you can hire us&nbsp;for.</h2>
       <p class="body svc-lede reveal">Bring us a specific project, or work with us on an ongoing&nbsp;basis.</p>
@@ -494,15 +484,6 @@
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
           <h3 class="svc-name">Content &amp;<br>campaigns</h3>
-          <div class="svc-plate" data-reveal="registration">
-            <span class="svc-plate-no" aria-hidden="true">01</span>
-            <!-- Two layers of one drawing: the card is cut out of the plate so
-                 it can travel the last of the hand-off. Nothing is added to the
-                 artwork; the separation reconstructs it exactly at rest. -->
-            <img class="svc-fig svc-fig--under" src="https://stirnyc.netlify.app/assets/svc-01-base.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <img class="svc-fig svc-fig--hand" src="https://stirnyc.netlify.app/assets/svc-01-red.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <i class="svc-plate-rule" aria-hidden="true"></i>
-          </div>
           <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
           <ul class="utility svc-scope">
             <li>Content planning</li>
@@ -518,11 +499,6 @@
         <article class="svc reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
           <h3 class="svc-name">Brand &amp;<br>websites</h3>
-          <div class="svc-plate" data-reveal="registration">
-            <span class="svc-plate-no" aria-hidden="true">02</span>
-            <img class="svc-fig" src="https://stirnyc.netlify.app/assets/svc-02.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <i class="svc-plate-rule" aria-hidden="true"></i>
-          </div>
           <p class="svc-prop">Make the business clear, recognizable, and easy to buy&nbsp;from.</p>
           <ul class="utility svc-scope">
             <li>Positioning &amp; messaging</li>
@@ -537,11 +513,6 @@
         <article class="svc svc--lead reveal">
           <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
           <h3 class="svc-name">Ongoing creative<br>support</h3>
-          <div class="svc-plate" data-reveal="registration">
-            <span class="svc-plate-no" aria-hidden="true">03</span>
-            <img class="svc-fig" src="https://stirnyc.netlify.app/assets/svc-03.webp" alt="" width="1000" height="750" loading="lazy" decoding="async">
-            <i class="svc-plate-rule" aria-hidden="true"></i>
-          </div>
           <p class="svc-prop">Keep the content and website working together, month after&nbsp;month.</p>
           <ul class="utility svc-scope">
             <li>Monthly planning</li>
@@ -563,7 +534,7 @@
        actually read them. This section is only about sequence. -->
   <section class="method shell" data-ground="ivory" data-index="06 — How we work" data-nav-theme="cream" id="method" aria-labelledby="method-label">
     <div class="grid">
-      <p class="utility method-label" data-reveal="structural" id="method-label">06 / How we work</p>
+      <p class="utility method-label" data-reveal="structural" id="method-label"><b><i aria-hidden="true"></i>How we work</b><em>Find · Build · Run</em></p>
       <p class="body method-intro reveal">We agree on the priorities, make the work, and keep improving what needs ongoing&nbsp;attention.</p>
 
       <div class="method-index reveal" id="method-index">
@@ -621,7 +592,7 @@
   <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
   <section class="who shell" data-ground="ivory" data-index="07 — Who this is for" data-nav-theme="cream" aria-labelledby="who-title">
     <div class="grid">
-      <p class="utility who-label" data-reveal="structural" id="who-label">07 / Who this is for</p>
+      <p class="utility who-label" data-reveal="structural" id="who-label"><b><i aria-hidden="true"></i>Who this is for</b><em>And who it is not</em></p>
 
       <h2 class="display who-title" data-reveal="editorial" id="who-title">We work with businesses that already do something&nbsp;well.</h2>
 
@@ -741,9 +712,6 @@
          A sibling of the grid, not a member of it: a band that bleeds
          past the gutter is not grid content, and as a grid item it was
          picking up a few pixels of alignment nudge. -->
-    <img class="who-art" data-reveal="registration" src="https://stirnyc.netlify.app/assets/illustration-corner.webp"
-         width="1800" height="1347" loading="lazy" decoding="async"
-         alt="An aerial view of an ordinary corner store: one small lit doorway and its awning catching the light on an otherwise deep blue block">
   </section>
 
   <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
@@ -753,9 +721,6 @@
       It closes on the same artwork, cropped to the eye and masked into
       the cobalt, so the question reads as the eye asking it.
     -->
-    <img class="convert-art" src="https://stirnyc.netlify.app/assets/hero-stir-attention.webp"
-         width="1800" height="1346" loading="lazy" decoding="async"
-         alt="" aria-hidden="true">
     <div class="shell">
      <div class="convert-inner">
       <div class="convert-head" data-reveal="structural">
