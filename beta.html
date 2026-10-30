@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STIR — Attention should pay</title>
+<meta name="description" content="STIR is a founder-led creative and growth practice in Brooklyn. Built by someone who has run the business you are running.">
+<script>document.documentElement.classList.replace('no-js','js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-bold.woff2") format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-medium.woff2") format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-light.woff2") format("woff2");font-weight:300;font-display:swap}
+
+:root{
+  --cobalt:#0451AB;
+  --cobalt-deep:#022F66;
+  --ivory:#FAF2E6;
+  --ink:#161310;
+  --red:#F21B16;
+  --red-deep:#C4120D;
+  --ink-60:rgba(22,19,16,.58);
+  --ink-35:rgba(22,19,16,.32);
+  --ink-12:rgba(22,19,16,.12);
+  --ivory-70:rgba(250,242,230,.72);
+  --ivory-35:rgba(250,242,230,.35);
+
+  --display:"Founders","Helvetica Neue",Arial,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --serif:"Newsreader",Georgia,serif;
+
+  --gut:clamp(20px,4vw,56px);
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--ivory);color:var(--ink);font-family:var(--mono);font-size:15px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+
+/* ── the strip: a thermal print header, edge to edge ───────────── */
+.strip{
+  background:var(--ink);color:var(--ivory);
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:9px var(--gut);
+  display:flex;justify-content:space-between;gap:1em;
+  white-space:nowrap;overflow:hidden;
+}
+.strip b{font-weight:500;color:var(--red)}
+@media(max-width:700px){.strip span:nth-child(2){display:none}}
+
+/* ── HERO ───────────────────────────────────────────────────────── */
+.hero{
+  position:relative;background:var(--cobalt);color:var(--ivory);
+  min-height:min(92svh,860px);
+  display:grid;grid-template-columns:1fr;align-items:end;
+  padding:clamp(48px,9svh,110px) var(--gut) clamp(32px,5svh,56px);
+  overflow:hidden;isolation:isolate;
+}
+#ascii{
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:0;opacity:.95;
+}
+.hero-in{position:relative;z-index:2;max-width:1500px;width:100%;margin-inline:auto}
+.plate{
+  position:absolute;z-index:2;top:clamp(26px,5svh,58px);left:var(--gut);
+  font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;
+  line-height:1.9;color:var(--ivory-70);
+  border-left:2px solid var(--red);padding-left:12px
+}
+.kicker{
+  font-size:11px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ivory-70);display:flex;align-items:center;gap:.8em;margin-bottom:clamp(16px,3svh,30px)
+}
+.kicker i{width:8px;height:8px;background:var(--red);flex:none}
+.hero h1{
+  font-family:var(--display);font-weight:700;text-transform:uppercase;
+  font-size:clamp(2.6rem,9.2vw,8.4rem);line-height:.86;letter-spacing:-.035em;
+  max-width:14ch;
+}
+.hero h1 em{font-style:normal;color:var(--red);-webkit-text-stroke:0}
+.hero-foot{
+  margin-top:clamp(26px,4svh,52px);
+  display:flex;flex-wrap:wrap;gap:clamp(18px,2.4vw,36px);align-items:flex-end;
+  justify-content:flex-start;max-width:62ch
+}
+.hero-said{
+  font-family:var(--serif);font-size:clamp(1rem,1.5vw,1.3rem);line-height:1.45;
+  max-width:34ch;color:var(--ivory)
+}
+.hero-said b{font-weight:600}
+
+/* ── the button: a stamp, not a pill ────────────────────────────── */
+.stamp{
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  background:var(--red);color:var(--ivory);text-decoration:none;
+  display:inline-flex;align-items:center;gap:1.2em;
+  padding:16px 20px;border:0;cursor:pointer;flex:none;
+  position:relative;overflow:hidden;isolation:isolate;
+}
+.stamp::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--red-deep);
+  transform:scaleX(0);transform-origin:left;transition:transform .22s var(--ease)}
+.stamp:hover::before,.stamp:focus-visible::before{transform:scaleX(1)}
+.stamp span{transition:transform .22s var(--ease)}
+.stamp:hover span:last-child{transform:translateX(4px)}
+.stamp:focus-visible{outline:2px solid var(--ivory);outline-offset:3px}
+
+/* ── THE LEDGER — the signature ─────────────────────────────────── */
+.ledger{padding:clamp(64px,11svh,150px) var(--gut)}
+.wrap{max-width:1500px;margin-inline:auto}
+.sec-head{
+  display:flex;justify-content:space-between;align-items:baseline;gap:2em;
+  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:clamp(34px,5svh,64px);
+  font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase
+}
+.sec-head em{font-style:normal;color:var(--ink-35);font-weight:400}
+
+.line{
+  display:grid;grid-template-columns:2.6rem 1fr auto auto;
+  gap:0 1rem;align-items:baseline;
+  padding:clamp(15px,2.4svh,22px) 0;border-bottom:1px solid var(--ink-12);
+  font-size:clamp(12px,1.25vw,14px);letter-spacing:.06em;text-transform:uppercase
+}
+.line-no{color:var(--ink-35);font-variant-numeric:tabular-nums}
+.line-what{
+  position:relative;overflow:hidden;white-space:nowrap;color:var(--ink)
+}
+/* the leader: how a receipt joins a thing to its number */
+.line-what::after{
+  content:" ·········································································································";
+  color:var(--ink-35);letter-spacing:.22em
+}
+.line-num{
+  font-family:var(--display);font-weight:700;font-size:clamp(1.3rem,3.2vw,2.5rem);
+  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:var(--ink);
+  justify-self:end
+}
+.line-src{
+  font-size:10px;font-weight:500;letter-spacing:.12em;justify-self:end;min-width:7.5em;text-align:right
+}
+.line-src a{color:var(--red);text-decoration:none;border-bottom:1px solid transparent;transition:border-color .16s}
+.line-src a:hover,.line-src a:focus-visible{border-bottom-color:var(--red)}
+.line-src.none{color:var(--ink-35)}
+.line.total{border-bottom:2px solid var(--ink);border-top:2px solid var(--ink);margin-top:18px}
+.line.total .line-what,.line.total .line-no{color:var(--red)}
+.line.total .line-what::after{color:rgba(242,27,22,.4)}
+.line.total .line-num{color:var(--red);font-size:clamp(1.6rem,4.2vw,3.2rem)}
+.ledger-note{margin-top:20px;font-size:11px;letter-spacing:.08em;color:var(--ink-35);text-transform:uppercase}
+@media(max-width:720px){
+  .line{grid-template-columns:2.2rem 1fr auto;row-gap:6px}
+  .line-what::after{content:" ··················································"}
+  .line-src{grid-column:2/4;justify-self:start;text-align:left;margin-top:2px}
+}
+
+/* ── the one human paragraph ────────────────────────────────────── */
+.voice{background:var(--ink);color:var(--ivory);padding:clamp(64px,11svh,150px) var(--gut)}
+.voice .sec-head{border-bottom-color:var(--ivory-35);color:var(--ivory)}
+.voice .sec-head em{color:var(--ivory-35)}
+.voice p{font-family:var(--serif);font-size:clamp(1.25rem,2.6vw,2.1rem);line-height:1.34;max-width:24ch}
+.voice p+p{margin-top:.8em}
+.voice .sig{
+  margin-top:clamp(30px,5svh,56px);font-family:var(--mono);font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ivory-70)
+}
+.voice .sig b{color:var(--red);font-weight:500}
+
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <span>STIR<b> ●</b> Brooklyn, New York</span>
+  <span>Attention should pay</span>
+  <span>builtbystir.com</span>
+</div>
+
+<header class="hero">
+  <canvas id="ascii" aria-hidden="true"></canvas>
+  <p class="plate">Fig. 01 &mdash; R. Jordon<br>Founder, STIR<br>Brooklyn, New York</p>
+  <div class="hero-in">
+    <p class="kicker"><i></i>Founder-led creative &amp; growth practice</p>
+    <h1>Attention should <em>pay.</em></h1>
+    <div class="hero-foot">
+      <p class="hero-said">I've opened a business, run one, and closed one. <b>I've been the client.</b> Now I build the content, the brand and the website that make a small business impossible to walk past.</p>
+      <a class="stamp" href="mailto:rasheed@builtbystir.com"><span>Start a project</span><span>&#8599;</span></a>
+    </div>
+  </div>
+</header>
+
+<section class="ledger">
+  <div class="wrap">
+    <div class="sec-head"><span>The ledger</span><em>Every number below links to where it came from</em></div>
+
+    <div class="line">
+      <span class="line-no">01</span>
+      <span class="line-what">Organic views, nine months</span>
+      <span class="line-num">5,000,000</span>
+      <span class="line-src"><a href="#">Receipt&#8599;</a></span>
+    </div>
+    <div class="line">
+      <span class="line-no">02</span>
+      <span class="line-what">Including creator collaborations</span>
+      <span class="line-num">10,000,000</span>
+      <span class="line-src"><a href="#">Receipt&#8599;</a></span>
+    </div>
+    <div class="line">
+      <span class="line-no">03</span>
+      <span class="line-what">Websites built and running</span>
+      <span class="line-num">3</span>
+      <span class="line-src"><a href="#">Visit&#8599;</a></span>
+    </div>
+    <div class="line">
+      <span class="line-no">04</span>
+      <span class="line-what">Press earned, not placed</span>
+      <span class="line-num">4</span>
+      <span class="line-src"><a href="#">Read&#8599;</a></span>
+    </div>
+    <div class="line total">
+      <span class="line-no">&#8721;</span>
+      <span class="line-what">Paid ad spend</span>
+      <span class="line-num">$0</span>
+      <span class="line-src none">&mdash;</span>
+    </div>
+    <p class="ledger-note">Figures are LABAY's, the business I ran. Press belongs to that business, not to STIR.</p>
+  </div>
+</section>
+
+<section class="voice">
+  <div class="wrap">
+    <div class="sec-head"><span>Who you're hiring</span><em>One person. Named.</em></div>
+    <p>Most people selling marketing to a small business have never had to make payroll from one.</p>
+    <p>I have.</p>
+    <p class="sig">Rasheed Jordon &middot; Founder, STIR &middot; <b>rasheed@builtbystir.com</b></p>
+  </div>
+</section>
+
+<script>
+/* ── ASCII portrait ─────────────────────────────────────────────────
+   The hero is a thermal print of the founder: his own photograph
+   resampled to a character grid and set in the type the rest of the
+   page is set in. Not an illustration of a business — a document
+   produced by one. The drift is one slow pass, not a loop. */
+(function () {
+  var cv = document.getElementById('ascii');
+  if (!cv || !cv.getContext) return;
+  var ctx = cv.getContext('2d', { alpha: false });
+  /* Ten steps, not fifty. A long ramp gives a face more tonal
+     resolution and less legibility: at arm's length it turns to
+     noise. Three opacity tiers multiply these ten into enough. */
+  var RAMP = ' .:-=+*#%@';
+  var img = new Image();
+  var src = null, cols = 0, rows = 0, cw = 0, ch = 0, px = 0;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var t0 = 0, raf = 0;
+
+  function sample() {
+    var off = document.createElement('canvas');
+    off.width = cols; off.height = rows;
+    var o = off.getContext('2d');
+    /* White, so the empty field maps to nothing once inverted. */
+    o.fillStyle = '#fff';
+    o.fillRect(0, 0, cols, rows);
+
+    /* He sits in the right of the frame, clear of the headline, and
+       runs off the top edge: a print that was never centred on the
+       page. Sized in hero pixels, then converted to cells, so the
+       composition holds whatever the character size works out to. */
+    var W = cv.clientWidth, H = cv.clientHeight;
+    /* Head and collar only. The sweater is a flat black that maps to
+       one density across hundreds of cells, which came out as a slab
+       with no information in it and swallowed the corner of the page. */
+    var TOP = 0.11, CROP = 0.56;
+    var dw = W * 0.70, dh = dw * ((img.height * CROP) / img.width);
+    /* Cropped by two edges of the page, the way a printed portrait is
+       cropped by the trim. He runs off the top and the right, and the
+       headline is allowed to cross him: nothing is centred here. */
+    var dx = W - dw * 0.76, dy = H - dh * 1.02;
+    o.drawImage(img, 0, img.height * TOP, img.width, img.height * CROP,
+                dx / cw, dy / ch, dw / cw, dh / ch);
+    try { src = o.getImageData(0, 0, cols, rows).data; }
+    catch (e) { src = null; cv.style.display = 'none'; }
+  }
+
+  function layout() {
+    px = Math.max(7, Math.min(13, Math.round(window.innerWidth / 118)));
+    cw = px * 0.6; ch = px * 1.02;
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    var w = cv.clientWidth, h = cv.clientHeight;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cols = Math.ceil(w / cw) + 1; rows = Math.ceil(h / ch) + 1;
+    if (img.complete && img.naturalWidth) sample();
+  }
+
+  /* The portrait is lit against a flat pale ground. Inverting alone
+     turned that ground into a dense field of its own and buried the
+     face in it, so everything above the ground's own value is cut
+     before the ramp sees it. */
+  var FLOOR = 0.30;
+  function tone(lum) {
+    var v = (1 - lum - FLOOR) / (1 - FLOOR);
+    if (v <= 0) return 0;
+    v = Math.pow(v > 1 ? 1 : v, 0.82);
+    /* Compress the top end: without it every near-black cell lands on
+       the same character and the shadows read as fill, not as tone. */
+    return v > 0.74 ? 0.74 + (v - 0.74) * 0.42 : v;
+  }
+
+  function draw(now) {
+    if (!src) return;
+    ctx.fillStyle = '#0451AB';
+    ctx.fillRect(0, 0, cv.clientWidth, cv.clientHeight);
+    ctx.font = '500 ' + px + 'px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.textBaseline = 'top';
+    /* One pass of light across the grid, left to right, and then it
+       stops. The gradient lives in the character ramp, not a colour. */
+    var pass = reduce ? 1 : Math.min(1, (now - t0) / 2400);
+    var e = pass < 1 ? 1 - Math.pow(1 - pass, 3) : 1;
+    for (var y = 0; y < rows; y++) {
+      for (var x = 0; x < cols; x++) {
+        var i = (y * cols + x) * 4;
+        var v = tone((src[i] * 0.299 + src[i + 1] * 0.587 + src[i + 2] * 0.114) / 255);
+        if (v <= 0) continue;
+        var reach = e * 1.3 - (x / cols) * 0.3;
+        if (reach <= 0) continue;
+        v *= reach < 1 ? reach : 1;
+        if (v < 0.05) continue;
+        var k = Math.round(v * (RAMP.length - 1));
+        if (!k) continue;
+        ctx.fillStyle = v > 0.60 ? 'rgba(250,242,230,1)'
+                      : v > 0.30 ? 'rgba(250,242,230,.74)'
+                                 : 'rgba(250,242,230,.36)';
+        ctx.fillText(RAMP.charAt(k), x * cw, y * ch);
+      }
+    }
+    if (pass < 1) raf = requestAnimationFrame(draw);
+  }
+
+  img.onload = function () {
+    layout();
+    t0 = performance.now();
+    raf = requestAnimationFrame(draw);
+  };
+  img.src = 'assets/founder.webp';
+
+  var rt;
+  addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      cancelAnimationFrame(raf); layout(); t0 = performance.now() - 2600;
+      raf = requestAnimationFrame(draw);
+    }, 160);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
