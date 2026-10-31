@@ -12,3 +12,8 @@ node_modules/
 #                             .claude/skills/diorama && \
 #                           git -C .claude/skills/diorama checkout 077f604
 .claude/skills/diorama/
+
+# Scene project build artefacts (regenerate with: cd scene && npm i && node build.mjs)
+scene/node_modules/
+scene/dist/
+scene/standalone.html

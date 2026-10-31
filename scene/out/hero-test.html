@@ -1,0 +1,37 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STIR hero composition test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--cobalt:#0451AB;--ivory:#FAF2E6;--ink:#161310;--red:#F21B16;--red-deep:#C4120D}
+*{box-sizing:border-box;margin:0}
+body{background:var(--cobalt);color:var(--ivory);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;min-height:100vh}
+.nav{display:flex;justify-content:space-between;align-items:center;
+  padding:28px 56px;font-size:16px;font-weight:500}
+.nav b{font-weight:700;font-size:22px;letter-spacing:-.02em}
+.nav ul{display:flex;gap:36px;list-style:none}
+.hero{display:grid;grid-template-columns:42% 1fr;gap:40px;align-items:center;
+  padding:0 56px 56px}
+h1{font-size:clamp(56px,7.4vw,112px);line-height:.96;letter-spacing:-.02em;
+  font-weight:700;text-wrap:balance}
+.lede{margin-top:28px;font-size:20px;line-height:1.5;max-width:46ch;font-weight:400}
+.cta{margin-top:34px;display:flex;align-items:center;gap:28px}
+.btn{background:var(--red-deep);color:var(--ivory);text-decoration:none;
+  padding:16px 26px;font-weight:600;font-size:16px}
+.alt{color:var(--ivory);text-decoration:none;font-size:16px;font-weight:500;
+  border-bottom:1px solid rgba(250,242,230,.5);padding-bottom:3px}
+.slot img{width:100%;height:auto;display:block}
+</style></head><body>
+<div class="nav"><b>stir</b><ul><li>Work</li><li>Services</li><li>About</li><li>Start a project</li></ul></div>
+<div class="hero">
+  <div>
+    <h1>ATTENTION<br>SHOULD PAY.</h1>
+    <p class="lede">Brand direction, content and websites for food, hospitality and independent businesses. Built from real operating experience at LABAY Market, Brooklyn.</p>
+    <p class="cta"><a class="btn" href="#">Start a project</a><a class="alt" href="#">See the work</a></p>
+  </div>
+  <div class="slot"><img src="hero-slot.png" alt="Blockout of a Brooklyn corner market"></div>
+</div>
+</body></html>
