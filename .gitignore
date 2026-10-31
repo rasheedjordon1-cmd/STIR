@@ -1,2 +1,14 @@
 # QC tooling only — install with: npm install playwright-core pngjs
 node_modules/
+
+# Diorama playbook, cloned to .claude/skills/diorama at 077f604.
+# Ignored as a holding action, not a decision: the clone carries its own .git,
+# so committing it as-is records a gitlink whose contents no clone would fetch,
+# and the tree is 44 MB (20 MB of demo media). Both choices below are Rasheed's.
+#   keep it in the repo  -> rm -rf .claude/skills/diorama/.git, drop this rule,
+#                           optionally delete media/, then commit the files
+#   keep it out          -> leave this rule; re-clone when needed:
+#                           git clone https://github.com/sloemo01/diorama.git \
+#                             .claude/skills/diorama && \
+#                           git -C .claude/skills/diorama checkout 077f604
+.claude/skills/diorama/
