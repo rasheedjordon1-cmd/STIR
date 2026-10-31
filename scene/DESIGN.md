@@ -1,17 +1,22 @@
-# STIR — street corner, design sheet
+# STIR — studio and campaign sheet, design sheet
 
 Filled from the brief (31 Oct 2026) and the playbook defaults. Not a
 questionnaire for the client.
 
 ## Premise
 
-A Brooklyn corner market works an ordinary morning: produce is set out, a
-delivery arrives, it gets filmed, a customer goes in. The studio above it is
-the one that notices.
+Work leaves a small studio and takes a much larger place outside it. One
+standalone cream building; one oversized red campaign sheet extending from an
+upper opening into the open cobalt.
 
-- Archetype (router row): **market / shop** — stalls, prep, pass, dispatch.
-- Assumption line: 18 × 13 m slab, 24 s loop at 40 Hz, four roles, no
-  disruption, 32-entry palette on STIR's four colour roles, cobalt surround.
+**Supersedes** the market-led hero, the studio-above-a-shop premise and the
+24 s retail storyboard (brief revision, 31 Oct). The market scene's palette,
+pixel treatment and text/art balance carry over; its subject does not.
+
+- Assumption line: 4.6 × 3.4 m building on a 8.2 × 6.6 pavement fragment,
+  14 s loop, no cast, one symbolic event, cobalt surround.
+- The sheet is the single controlled impossible event. Everything else quiet:
+  no shopfront, no awning, no produce, no courier, no queue, no service props.
 
 ### Where the brief overrides the playbook
 
@@ -31,6 +36,14 @@ otherwise follow the wrong one.
 ## Camera side
 
 - Locked: azimuth 45, **orthographic**, elevation 26.565 (2:1 pixel isometric).
+- The sheet is composed in the camera's own plane (R/U span the lens plane,
+  N is the billow depth). Two earlier constructions took the width from world
+  up and then from the view vector; both put most of the breadth along the
+  view axis or along -Y, so the sheet foreshortened into a ribbon or draped
+  onto the pavement. The camera is locked, so composing in screen space is
+  the honest construction, not a cheat.
+- `?frame=phone` drops the far third of the sheet from the fit, so the phone
+  render is a reframe rather than a shrunken desktop composition.
   No orbit, no drift, no zoom. `?elev=iso` switches to true isometric (35.264)
   for comparison; 2:1 is the shipped default because a storefront's subject is
   its façade, and true iso trades façade for roof.
@@ -49,45 +62,33 @@ otherwise follow the wrong one.
 
 ## Cast sheet
 
-Four roles, the brief's cap. No crowd, no idle bobbing.
-
-| Role | Silhouette feature | Locomotion | Action | Reaction | Exit | Signature prop |
-| --- | --- | --- | --- | --- | --- | --- |
-| Shop owner | apron, forearms bare, stocky stance | short steps along the display | adjusts a crate, takes the handoff | looks up at the courier | returns to rest at the display | produce crate |
-| Courier | backpack, cap, high-vis band | walk in from -X behind the near mass | carries a crate, hands it over | steps back after release | walks out along +X | crate, hand truck |
-| Camera operator | tripod, shoulder bag, crouch | holds position | lifts camera, captures display, lowers | — | lowers and rests | camera + tripod |
-| Visitor | tote bag, longer coat | walk in from +X | pauses at the display, enters the doorway | — | passes through the door, concealed | tote |
+None. The brief caps figures at one or two optional scale references and
+forbids a staged agency team; the scene currently carries none, so the
+building and the sheet do all the work.
 
 ## System sheet
 
-- Loop 24.0 s, DT 1/40.
-- No defence systems, no machines, no economy, no score. The brief forbids
-  manufacturing them.
-- What changes first beat to last: a crate moves from the courier to the
-  display; the visitor is inside; everything else returns to rest.
+- Loop 14.0 s. One travelling wave through the already-extended sheet.
+- Building and camera stationary. No arrival, unrolling or retraction.
+- Seamless by construction: the wave is a pure function of a phase that wraps
+  0..1 over the loop, so the last frame and the first are the same geometry.
+  No crossfade, no reset to hide.
 
 ## Beat sheet
 
-| Time | Beat | Camera proof |
+| Phase | Visual behaviour | Review question |
 | --- | --- | --- |
-| 0.0–4.0 | hold; owner adjusts the display | `out/beat-00.png` |
-| 4.0–9.0 | courier enters, carries, hands off | `out/beat-04.png`, `out/beat-07.png` |
-| 9.0–14.0 | camera operator lifts, captures, lowers | `out/beat-11.png` |
-| 14.0–20.0 | visitor enters the door; courier leaves | `out/beat-16.png` |
-| 20.0–24.0 | rest poses; hold for the seam | `out/beat-22.png` |
-
-Seam: the courier is fully off-slab before reset; the visitor is concealed
-behind the door reveal. No visible figure teleports; the scene does not fade.
+| Opening | full composition readable, sheet already extended | does the frame read as a studio and work reaching beyond it? |
+| Middle | one gentle wave through the broad sheet, nothing else moves | restrained, coherent, clear of text? |
+| Return | the sheet returns to its initial visible state | is the final-to-first seam invisible? |
 
 ## Hero objects
 
 | Name | Type | Parts | Construction layers | Story detail | Contact |
 | --- | --- | --- | --- | --- | --- |
-| `cornerBlock` | landmark | 30–60 | brick courses, sills, cornice, fire escape, awning frame, roll gate | fire escape, rooftop antenna | footing on pavement |
-| `marketFront` | service station | 25–45 | stall boards, crates, canopy, price board, door reveal | mesh sacks, a leaning broom | pallets on pavement |
-| `stirStudio` | prop | 8–15 | window bay, sign band, interior warm light | one lit desk lamp | carried by the block |
-| `handTruck` | prop | 8–15 | frame, toe plate, two wheels, handle | strap wound on the handle | wheels on pavement |
-| `aBoard` | prop | 5–8 | two leaves, hinge, chalk face, foot | chalked price | feet on pavement |
+| `studio` | landmark | 30–45 | two storeys, storey band, cornice, parapet, dark window frames, red entrance with reveal and step, sign board, upper opening | lit worktable, desk lamp and one red print read through the ground-floor glass | footing on the pavement fragment |
+| `sheet` | the symbolic event | one surface + edges | fans from 0.85 m half-height at the opening to 3.5 m at the far edge; real thickness so the paper edge is geometry, not a drawn line | three cream blocks riding the surface | pinned at the opening by a ramp that cannot reach zero |
+| `pavement` | prop | 5 | pad, inset top, two seams at 0.085 m | — | grounds the building |
 
 ## Ambient loops
 

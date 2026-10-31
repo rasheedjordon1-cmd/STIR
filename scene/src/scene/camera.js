@@ -22,7 +22,7 @@ export const CAMERA = {
   azimuth: (45 * Math.PI) / 180,
   elevation: ISO_2_1,
   target: new THREE.Vector3(0, 0.9, 0),
-  fill: 0.92,          // fraction of the half-frame the fit points may occupy
+  fill: 0.97,          // fraction of the half-frame the fit points may occupy
   subjectScale: 1.0,
 };
 
