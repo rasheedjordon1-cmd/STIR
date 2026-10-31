@@ -12,7 +12,10 @@ import { SLAB, PAVE_Y } from '../config.js';
  * The first pass gave the slab an 18 m span for 7 m of building and the whole
  * foreground came back as dead grey apron.
  */
-const grey = (v) => new THREE.MeshStandardMaterial({ color: v, roughness: 0.92, metalness: 0 });
+/* Lambert + flatShading, not Standard. Standard's roughness/environment
+   response puts a gradient across every face; the reference is one flat tone
+   per face with a hard boundary between them. Shadow maps still work. */
+const grey = (v) => new THREE.MeshLambertMaterial({ color: v, flatShading: true });
 
 function box(parent, mat, w, h, d, x, y, z) {
   const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);

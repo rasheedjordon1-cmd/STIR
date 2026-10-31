@@ -25,10 +25,15 @@ otherwise follow the wrong one.
 | 46 s loop, 4–6 systems, 4–6 roles | **24 s, no systems, 4 roles** | The brief's beat table and cast cap. |
 | 64-entry palette | **32 entries** | The brief fixes four colour roles plus a few extras for people and fruit. Fewer, deliberate steps. |
 | Ship the scene as a live Three.js page | **Render a still + a short loop; the site ships neither three.js nor WebGL** | The brief: do not install a site-wide runtime merely to display a still or video. |
+| Perspective camera, fov 20.5, elevation 33 ("near-ortho") | **Orthographic, elevation 26.565** | The eBoy reference supplied 31 Oct is strict parallel projection: verticals stay vertical and diagonals hold one slope. That is a projection difference, not a lens length, so a long lens cannot reach it. |
+| `MeshStandardMaterial` | **`MeshLambertMaterial`, `flatShading`** | The reference is one flat tone per face with a hard boundary. Standard's roughness and environment response put a gradient across every face. |
 
 ## Camera side
 
-- Locked: azimuth 45, elevation 33, fov 20.5. No orbit, no drift, no zoom.
+- Locked: azimuth 45, **orthographic**, elevation 26.565 (2:1 pixel isometric).
+  No orbit, no drift, no zoom. `?elev=iso` switches to true isometric (35.264)
+  for comparison; 2:1 is the shipped default because a storefront's subject is
+  its façade, and true iso trades façade for roof.
 - Subject scale 1.0 for the desktop frame; a separate tighter framing for phone.
 - Exterior scene. Pavement and kerb on the camera side (+Z).
 - Slab 18 × 13 × 0.42. Deck y 0 is the kerb lane; pavement is a raised 0.16 slab.

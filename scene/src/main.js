@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createCamera, updateCamera, CAMERA } from './kit/camera.js';
+import { createCamera, updateCamera, CAMERA, ISO_TRUE, ISO_2_1 } from './scene/camera.js';
 import { SLAB } from './config.js';
 import { buildBlock } from './scene/block.js';
 
@@ -28,12 +28,16 @@ const scene = new THREE.Scene();
    switching to blue at the end is not the art direction. */
 scene.background = new THREE.Color(COBALT);
 
+/* ?elev=iso|2:1 switches the projection elevation for the A/B. */
+const elevParam = new URLSearchParams(location.search).get('elev');
+if (elevParam === 'iso') CAMERA.elevation = ISO_TRUE;
+if (elevParam === '2:1') CAMERA.elevation = ISO_2_1;
 const camera = createCamera(1.6, FIT);
 
 /* Daylight rig from the kit's numbers; the palette pass comes later. */
-const hemi = new THREE.HemisphereLight(0xd6ecf6, 0x6f6a60, 0.24);
+const hemi = new THREE.HemisphereLight(0xcfe3f2, 0x4a5a6b, 0.52);
 scene.add(hemi);
-const sun = new THREE.DirectionalLight(0xfff8ee, 3.3);
+const sun = new THREE.DirectionalLight(0xfff8ee, 1.55);
 sun.position.set(-15, 19.5, 17);
 sun.target.position.set(0, -0.4, 0);
 sun.castShadow = true;
@@ -44,7 +48,7 @@ sc.near = 4; sc.far = 70;
 sun.shadow.bias = -0.00022;
 sc.updateProjectionMatrix();
 scene.add(sun, sun.target);
-const fill = new THREE.DirectionalLight(0xbcd0e8, 0.46);
+const fill = new THREE.DirectionalLight(0xbcd0e8, 0.22);
 fill.position.set(14, 9, -10);
 scene.add(fill);
 
