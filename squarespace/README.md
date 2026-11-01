@@ -93,26 +93,24 @@ The stylesheet already neutralises Squarespace's padded wrappers and
 hides its header and footer on these pages, so their page settings do
 not matter.
 
-### 3 · The form — the one real gap
+### 3 · The form
 
-**Netlify Forms do not work on Squarespace.** The standalone site posts
-to Netlify's own handler; that handler does not exist on another host.
-There are three honest options:
+Both builds post to the same Formspree endpoint, so there is one inbox
+and one path to verify rather than two. Netlify Forms only works on
+Netlify, which is why the Squarespace kit could not use it; running the
+same endpoint on both sides keeps the two builds identical.
 
-1. **Formspree.** formspree.io → New Form → copy the id → put it in
-   `deploy.config.json` as `formspree_id` → re-run the build →
-   re-paste `ready/09-page-contact.html`. The typed routing, the
-   per-route questions and the validation all survive. Submit once
-   yourself to confirm delivery.
-2. **Keep the form on Netlify** and point `/contact` at it. Delivery
-   already works there and is already wired to your inbox. The cost is
-   one hop out of the Squarespace domain.
-3. **A Squarespace Form Block.** Native and reliable, but it cannot do
-   the four-route switching, so the intake becomes one generic form.
+The id lives in `deploy.config.json` as `formspree_id`. Change it there
+and re-run the build; nothing else references it.
 
-**With no `formspree_id` configured the build ships the contact page
-with its submit button disabled and a visible note**, rather than a
-button that silently throws submissions away. That is deliberate.
+**Formspree holds the first submission until you confirm it.** Send one
+yourself from the published page and click the link it emails you —
+until then nothing is delivered, however correct the form is.
+
+To go back to Netlify Forms on the Netlify build only: restore
+`action="/contact?sent=1"`, `data-netlify="true"`,
+`netlify-honeypot="bot-field"` and the hidden `form-name` field on
+`contact.html`. The Squarespace kit cannot use it either way.
 
 ---
 

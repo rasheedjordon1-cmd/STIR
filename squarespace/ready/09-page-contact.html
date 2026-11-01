@@ -52,10 +52,9 @@
       <!-- The stored `type` values are unchanged — business / creator /
            collaborator / general — so the visible labels can be
            rewritten without touching the backend mapping. -->
-      <form class="inquiry" name="inquiry" method="POST" data-netlify="true"
-            netlify-honeypot="bot-field" action="/contact?sent=1" id="inquiry" novalidate>
-        <input type="hidden" name="form-name" value="inquiry">
-        <p class="hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+      <form class="inquiry" name="inquiry" method="POST" action="https://formspree.io/f/mnppgeyr" id="inquiry" novalidate>
+        
+        <p class="hp"><label>Leave this empty: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="field-row">
           <span class="field-label" id="type-label">I&rsquo;m here about&hellip;</span>
@@ -109,11 +108,11 @@
           to respond about your inquiry and relevant project opportunities. You won&rsquo;t be added to a
           marketing list.</p>
 
-        <button class="action" type="submit" id="submit" disabled>
+        <button class="action" type="submit" id="submit">
           <span class="action-label">Send your note</span>
           <span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span>
         </button>
-        <p class="form-status" id="status" role="status">This form is not connected yet. Add a Formspree id to squarespace/deploy.config.json and rebuild, or email <a class="inline" href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>.</p>
+        <p class="form-status" id="status" role="status"></p>
       </form>
 
       <div>

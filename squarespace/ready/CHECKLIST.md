@@ -24,8 +24,8 @@ carrying this work and deploy. Nothing below will look right until it is.
 - [ ] Page `/contact` ← `09-page-contact.html`
 - [ ] Every other block removed from those seven pages
 - [ ] Page URLs match the table exactly (the nav links to them)
-- [ ] Form endpoint decided — see README step 3
-- [ ] One real submission sent and received
+- [ ] One real submission sent, and the Formspree confirmation email clicked
+      (Formspree holds the first submission until you do)
 
 ## On the published site
 

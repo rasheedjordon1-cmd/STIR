@@ -14,7 +14,11 @@ const ok = (c, m) => { console.log(`  ${c ? 'PASS' : 'FAIL'}  ${m}`); if (!c) fa
 
 async function open(q = '') {
   const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
-  // Block the POST outright: a stray submit must not reach the network.
+  /* Nothing in this file may reach the real endpoint. The form posts to
+     Formspree now, so blocking /contact alone is not enough — a
+     validation change could otherwise file a real record in the
+     owner's inbox from a test run. */
+  await p.route('https://formspree.io/**', r => r.abort());
   await p.route('**/contact*', r => r.request().method() === 'POST' ? r.abort() : r.continue());
   await p.goto('http://127.0.0.1:8080/contact.html' + q, { waitUntil: 'networkidle' });
   await p.waitForTimeout(400);
@@ -82,7 +86,7 @@ console.log('\nthe record carries only the asked questions');
   ok(names.includes('type') && names.includes('message'), `creator record has type + message (${names.join(', ')})`);
   ok(!names.includes('business') && !names.includes('engagement') && !names.includes('brings'),
      'and not the other routes’ fields');
-  ok(names.includes('form-name'), 'form-name is present for Netlify’s handler');
+  ok(names.includes('_gotcha'), 'the spam honeypot travels with the record');
   await p.close();
 }
 
