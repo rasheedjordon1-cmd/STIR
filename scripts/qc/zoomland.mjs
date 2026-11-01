@@ -21,7 +21,8 @@ for (const [name, w, h, dpr] of [
     const st = document.querySelector('.stage').getBoundingClientRect();
     const h1 = document.querySelector('.hero h1').getBoundingClientRect();
     const cta = document.querySelector('.hero .action').getBoundingClientRect();
-    const idx = document.querySelector('.band-head').getBoundingClientRect();
+    const idxEl = document.querySelector('#ways-t');
+    const idx = idxEl ? idxEl.getBoundingClientRect() : { height: 0 };
     return {
       over,
       stage: Math.round(st.width) + 'x' + Math.round(st.height),

@@ -5,9 +5,32 @@
    file runs. Nothing here reveals content; it only adds the motion
    score's three responses and attaches the scene loop.
    ════════════════════════════════════════════════════════════════════ */
+document.documentElement.classList.add('js');
+
 (function () {
   'use strict';
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── The workbench illustrations ────────────────────────────────
+     Each runs once when its compartment enters view. They are
+     decorative (aria-hidden) and the copy never waits on them: if
+     this never runs, CSS leaves them in their completed state. */
+  (function () {
+    var cells = document.querySelectorAll('[data-bench]');
+    if (!cells.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      cells.forEach(function (c) { c.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.35 });
+    cells.forEach(function (c) { io.observe(c); });
+  })();
 
   /* ── C01: the mobile menu ───────────────────────────────────────
      Opens in document flow. Closed items are not focusable because
@@ -179,6 +202,7 @@
      hidden, not removed, and no value is reset. Hidden rows are also
      taken out of the tab order and out of the accessibility tree. */
   function applyType(type) {
+    if (help) help.textContent = HELP[type] || HELP.general;
     rows.forEach(function (row) {
       var on = row.getAttribute('data-for') === type;
       row.hidden = !on;
@@ -194,10 +218,29 @@
   });
 
   /* ?type= selects the route the visitor arrived through. */
-  var want = new URLSearchParams(location.search).get('type');
+  /* Help text follows the route. The copy brief gives one line per
+     path; the field itself and its name never change, so the stored
+     record is unaffected. */
+  var HELP = {
+    business: 'What\u2019s working, what needs attention, and what would you like to change?',
+    creator: 'What do you make\u2014or want to make? Share a link or an idea.',
+    collaborator: 'What would you bring, and what kind of project would you like to work on?',
+    general: 'What would you like to talk about?'
+  };
+  var help = document.querySelector('[data-help]');
+
+  var params = new URLSearchParams(location.search);
+  var want = params.get('type');
   var match = want && form.querySelector('input[name="type"][value="' + CSS.escape(want) + '"]');
   if (match) match.checked = true;
   applyType(form.querySelector('input[name="type"]:checked').value);
+
+  /* /businesses deep-links carry the engagement they asked about. */
+  var eng = { partnership: 'Ongoing partnership', project: 'Defined project' }[params.get('engagement')];
+  if (eng) {
+    var e = form.querySelector('input[name="engagement"][value="' + CSS.escape(eng) + '"]');
+    if (e) e.checked = true;
+  }
 
   /* Arriving back at ?sent=1 is Netlify's own redirect after it has
      accepted the submission. Nothing here claims success on its own. */
@@ -226,7 +269,7 @@
     });
     if (bad) {
       e.preventDefault();
-      status.textContent = 'Check the highlighted fields and send again.';
+      status.textContent = 'Your note couldn\u2019t be sent. Please try again, or email rasheed@builtbystir.com. Your answers are still here.';
       bad.focus();
       return;
     }

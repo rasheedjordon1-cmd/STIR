@@ -98,7 +98,9 @@ a:focus-visible, .stir button:focus-visible, .stir input:focus-visible, .stir te
   letter-spacing: .02em; text-transform: uppercase;
 }.stir .on-ivory { background: var(--ivory); color: var(--ink); }.stir h1, .stir h2, .stir h3 { font-weight: 700; letter-spacing: -.035em; line-height: .96; }.stir /* Every page needs one h1. Outside the hero it is a section-scale
    title, .stir not a display one. */
-h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025em; }.stir h3 { font-size: var(--t-h3); line-height: 1.08; letter-spacing: -.025em; font-weight: 500; }.stir p { max-width: 60ch; }.stir strong, .stir b { font-weight: 500; }.stir /* ════════ C01 — Header compartments ════════════════════════════════
+h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025em; }.stir h3, .stir h2.sub { font-size: var(--t-h3); line-height: 1.08; letter-spacing: -.025em; font-weight: 500; }.stir /* A real second level that wants the third level's scale — so the
+   document outline stays h1 -> h2 without the type jumping. */
+p { max-width: 60ch; }.stir strong, .stir b { font-weight: 500; }.stir /* ════════ C01 — Header compartments ════════════════════════════════
    Static at launch. A ruled, .stir segmented row: brand cell at the left, .stir destinations right-aligned, .stir the commercial action in deep red. */
 .strip {
   border-bottom: 1px solid var(--ivory-25);
@@ -206,7 +208,7 @@ h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025e
   display: flex; justify-content: space-between; gap: var(--s24);
   padding: 14px 0; border-bottom: 1px solid currentColor; font-size: 16px;
 }.stir .rail b { font-weight: 500; }.stir /* ════════ C05 — Reading spreads, .stir dividers, .stir links ═══════════════════ */
-.band { padding-block: clamp(56px, 8vw, 96px); }.stir .band + .band { border-top: 1px solid var(--ivory-25); }.stir .on-ivory + .on-ivory { border-top-color: var(--ink-35); }.stir .band-head { display: flex; justify-content: space-between; gap: var(--s20); align-items: baseline; }.stir .band h2 { margin: var(--s20) 0 var(--s32); max-width: 18ch; }.stir .lede { font-size: 22px; max-width: 54ch; }.stir .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s64); align-items: start; }.stir .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s48); }.stir .three h3 { margin-bottom: var(--s12); }.stir .three p { font-size: 18px; }.stir a.inline { text-decoration: underline; text-underline-offset: 4px; }.stir a.inline:hover { text-decoration-thickness: 2px; }.stir .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s32); margin-top: var(--s32); }.stir .metric b { display: block; font-size: clamp(40px, 5vw, 72px); font-weight: 700; letter-spacing: -.04em; line-height: 1; }.stir .metric span { display: block; margin-top: var(--s12); font-size: 16px; max-width: 32ch; }.stir /* ════════ C06 — Inquiry controls ═══════════════════════════════════ */
+.band { padding-block: clamp(56px, 8vw, 96px); }.stir .band + .band { border-top: 1px solid var(--ivory-25); }.stir .band--tight { border-top: 0; }.stir .on-ivory + .on-ivory { border-top-color: var(--ink-35); }.stir .band-head { display: flex; justify-content: space-between; gap: var(--s20); align-items: baseline; }.stir .band h2 { margin: var(--s20) 0 var(--s32); max-width: 24ch; }.stir .band > .wrap > .utility, .stir .band > .utility { display: block; }.stir .lede { font-size: 22px; max-width: 54ch; }.stir .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s64); align-items: start; }.stir .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s48); }.stir .three h3 { margin-bottom: var(--s12); }.stir .three p { font-size: 18px; }.stir a.inline { text-decoration: underline; text-underline-offset: 4px; }.stir a.inline:hover { text-decoration-thickness: 2px; }.stir .metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--s32); margin-top: var(--s32); }.stir .metric b { display: block; font-size: clamp(40px, 5vw, 72px); font-weight: 700; letter-spacing: -.04em; line-height: 1; }.stir .metric span { display: block; margin-top: var(--s12); font-size: 16px; max-width: 32ch; }.stir /* ════════ C06 — Inquiry controls ═══════════════════════════════════ */
 .field-row { margin-bottom: var(--s24); }.stir .field-label { display: block; font-size: 16px; margin-bottom: var(--s8); }.stir .field-note { font-size: 15px; margin-top: 6px; color: currentColor; opacity: .75; }.stir .field {
   width: 100%; min-height: 52px; padding: var(--s16);
   background: var(--ivory); color: var(--ink);
@@ -218,8 +220,12 @@ h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025e
   border-left: 1px solid var(--ink); white-space: nowrap;
 }.stir .seg label:first-child span { border-left: 0; }.stir .seg span::before {
   content: ''; width: 12px; height: 12px; border: 1px solid var(--ink); flex: none;
-}.stir .seg input:checked + span { background: var(--cobalt); color: var(--ivory); }.stir .seg input:checked + span::before { background: var(--ivory); border-color: var(--ivory); }.stir .seg input:focus-visible + span { outline: 2px solid var(--cobalt); outline-offset: -4px; }.stir .hp { position: absolute; left: -9999px; }.stir .form-status { font-size: 16px; min-height: 24px; max-width: 65ch; margin-top: var(--s20); font-weight: 500; }.stir /* ════════ Hero ═════════════════════════════════════════════════════ */
-.hero { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 80px); }.stir .hero-grid { display: grid; grid-template-columns: minmax(0, 42fr) minmax(0, 58fr); gap: clamp(24px, 3.2vw, 56px); align-items: center; }.stir .hero h1 { font-size: var(--t-h1); }.stir .hero h1 span { display: block; }.stir .hero .lede { margin-top: var(--s24); }.stir .hero .actions { margin-top: var(--s32); }.stir .stage {
+}.stir .seg input:checked + span { background: var(--cobalt); color: var(--ivory); }.stir .seg input:checked + span::before { background: var(--ivory); border-color: var(--ivory); }.stir .seg input:focus-visible + span { outline: 2px solid var(--cobalt); outline-offset: -4px; }.stir .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }.stir .form-status { font-size: 16px; min-height: 24px; max-width: 65ch; margin-top: var(--s20); font-weight: 500; }.stir /* ════════ Hero ═════════════════════════════════════════════════════ */
+.hero { padding-block: clamp(40px, 6vw, 72px) 0; }.stir /* The band that follows the hero owns the whole gap, .stir so the two
+   paddings cannot compound. 48 desktop, .stir 32 phone. */
+.band--tight { padding-top: 48px; }.stir /* The eyebrow is an h2 (it is genuinely the section heading), .stir so it
+   was picking up .band h2's 20px top margin and pushing the gap to 68. */
+.band--tight > .utility { display: block; margin: 0 0 16px; }.stir .hero-grid { display: grid; grid-template-columns: minmax(0, 42fr) minmax(0, 58fr); gap: clamp(24px, 3.2vw, 56px); align-items: center; }.stir .hero h1 { font-size: var(--t-h1); }.stir .hero h1 span { display: block; }.stir .hero .lede { margin-top: var(--s24); }.stir .hero .actions { margin-top: var(--s32); }.stir .stage {
   --stage-ar: 1.3226;                 /* 820 / 620, the render's aspect */
   position: relative; width: 100%; line-height: 0;
   max-width: min(100%, max(360px, calc((100svh - 300px) * var(--stage-ar))));
@@ -259,6 +265,7 @@ h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025e
 @media (max-width: 1023px) {
   :root { --t-body: 19px; }
   .hero-grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--s32); align-items: start; }
+  .band--tight { padding-top: 32px; }
   .stage { --stage-ar: 1.1818; max-width: min(100%, 560px); margin-inline: auto 0; }
   .two { grid-template-columns: 1fr; gap: var(--s32); }
   .three { grid-template-columns: 1fr; gap: var(--s32); }
@@ -367,6 +374,65 @@ h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025e
 @media (max-width: 1023px) {.stir .wall { --wall-cols: 2; }.stir .press a { grid-template-columns: minmax(0, 1fr) auto; row-gap: var(--s8); }.stir .press .said { grid-column: 1 / -1; }.stir .press .where { text-align: left; grid-column: 1; }
 }
 @media (max-width: 767px) {.stir .wall { --wall-cols: 1; }.stir .tile + .tile { border-left: 0; border-top: 1px solid currentColor; }.stir .tile-frame { aspect-ratio: 1 / 1; }.stir .accounts { grid-template-columns: 1fr; }.stir .accounts > div + div { border-left: 0; border-top: 1px solid currentColor; }.stir .sign-rule { max-width: 100%; }
+}.stir /* ════════════════════════════════════════════════════════════════════
+   THE STUDIO WORKBENCH
+   One stepped outer frame, .stir three adjacent compartments, .stir shared edges
+   drawn once. The same signage construction as the building's sign and
+   the header cell, .stir applied to the method.
+   ════════════════════════════════════════════════════════════════════ */
+.bench {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--ivory);
+  margin-top: var(--s24);
+}.stir .bench-cell {
+  display: flex; flex-direction: column;
+  padding: clamp(28px, 2.2vw, 32px);
+}.stir .bench-cell + .bench-cell { border-left: 1px solid var(--ivory); }.stir /* The step, .stir lifted out of two opposing corners of the whole frame —
+   once, .stir like the sign, .stir not once per compartment. */
+.bench::before, .stir .bench::after {
+  content: ''; position: absolute; width: 10px; height: 10px;
+  background: var(--cobalt); pointer-events: none;
+}.stir .bench::before { left: -2px; top: -2px; }.stir .bench::after { right: -2px; bottom: -2px; }.stir /* Aligned regions: illustration, .stir heading, .stir, .stir outcome — so the three
+   read as one workbench rather than three cards. */
+.bench-slot { height: 96px; margin-bottom: var(--s24); }.stir .bench-art { width: 96px; height: 96px; color: var(--ivory); shape-rendering: crispEdges; }.stir .bench h3 { display: flex; gap: var(--s12); align-items: baseline; margin-bottom: var(--s12); }.stir .bench h3 i { font-style: normal; color: var(--signal); font-size: var(--t-utility); font-family: var(--utility); }.stir .bench p { font-size: 18px; max-width: 34ch; }.stir .bench-out { margin-top: auto; padding-top: var(--s20); }.stir .bench-out span {
+  display: inline-block; border-top: 1px solid var(--ivory-40); padding-top: var(--s12);
+  font-weight: 500; color: var(--ivory);
+}.stir /* ── The three actions, .stir each once on entry ───────────────────────────
+   Decorative, .stir so they are aria-hidden and nothing informational waits
+   on them. Reduced motion gets the completed state. */
+.bench-pick { opacity: 0; }.stir .bench-finder { transform-origin: 24px 24px; transform: scale(1.9); opacity: 0; }.stir .bench-piece { transform-origin: 24px 24px; }.stir .bench-pieces { shape-rendering: crispEdges; }.stir .bench-piece.p1 { transform: translateX(-14px); }.stir .bench-piece.p3 { transform: translateX(14px); }.stir .bench-mounts, .stir .bench-steps { opacity: 0; }.stir .bench-sheet .s2, .stir .bench-sheet .s3 { transform-origin: 22px 22px; transform: scaleX(0); }
+
+@media (prefers-reduced-motion: no-preference) {.stir /* Read the room — the finder steps in and the square is taken. */
+  .is-in[data-bench="read"] .bench-finder {
+    animation: finder 240ms steps(2, end) forwards;
+  }.stir .is-in[data-bench="read"] .bench-pick {
+    animation: pick 1ms linear 240ms forwards;
+  }
+  @keyframes finder { to { transform: scale(1); opacity: 1; } }
+  @keyframes pick   { to { opacity: 1; } }.stir /* Set the scene — three pieces close up, .stir then the fixings land. */
+  .is-in[data-bench="set"] .bench-piece {
+    animation: assemble 320ms steps(3, end) forwards;
+  }.stir .is-in[data-bench="set"] .bench-mounts, .stir .is-in[data-bench="set"] .bench-steps {
+    animation: pick 1ms linear 320ms forwards;
+  }
+  @keyframes assemble { to { transform: translateX(0); } }.stir /* Make it travel — the sheet extends in three discrete reaches. */
+  .is-in[data-bench="travel"] .bench-sheet .s2 {
+    animation: reach 200ms steps(2, end) forwards;
+  }.stir .is-in[data-bench="travel"] .bench-sheet .s3 {
+    animation: reach 200ms steps(2, end) 200ms forwards;
+  }
+  @keyframes reach { to { transform: scaleX(1); } }
+}.stir /* Completed state wherever the animation does not run: reduced motion, .stir no JavaScript, .stir or an observer that never fires. */
+@media (prefers-reduced-motion: reduce) {
+  .bench-pick, .bench-finder, .bench-mounts, .bench-steps { opacity: 1; }
+  .bench-finder { transform: scale(1); }
+  .bench-piece { transform: none; }
+  .bench-sheet .s2, .bench-sheet .s3 { transform: scaleX(1); }
+}.stir html:not(.js) .bench-pick, .stir html:not(.js) .bench-finder, .stir html:not(.js) .bench-mounts, .stir html:not(.js) .bench-steps { opacity: 1; }.stir html:not(.js) .bench-finder { transform: scale(1); }.stir html:not(.js) .bench-piece { transform: none; }.stir html:not(.js) .bench-sheet .s2, .stir html:not(.js) .bench-sheet .s3 { transform: scaleX(1); }
+
+@media (max-width: 767px) {.stir .bench { grid-template-columns: 1fr; }.stir .bench-cell { padding: var(--s24); }.stir .bench-cell + .bench-cell { border-left: 0; border-top: 1px solid var(--ivory); }.stir .bench-slot { height: 72px; margin-bottom: var(--s20); }.stir .bench-art { width: 72px; height: 72px; }.stir .bench p { max-width: none; }
 }
 
 /* ════════════════════════════════════════════════════════════════════

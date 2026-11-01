@@ -35,16 +35,19 @@ for (const [q, want] of [['?type=business', 'business'], ['?type=creator', 'crea
 }
 
 console.log('\neach route shows its own questions');
+/* The brief consolidates the creator and collaborator questions into
+   one "Tell us a little more" field whose help text follows the route,
+   so the only route-specific FIELDS are the business pair. */
 {
-  const p = await open('?type=creator');
-  ok(await visible(p, '#f-makes'), 'creator sees "what do you make"');
-  ok(!(await visible(p, '#f-business')), 'and not the business name');
-  await p.click('input[name="type"][value="collaborator"]');
-  ok(await visible(p, '#f-brings'), 'collaborator sees "what could you bring"');
-  ok(!(await visible(p, '#f-makes')), 'and not the creator question');
+  const p = await open('?type=business');
+  ok(await visible(p, '#f-business'), 'business sees the business name');
+  ok(await visible(p, 'input[name="engagement"]'), 'and how to work together');
+  await p.click('input[name="type"][value="creator"]');
+  ok(!(await visible(p, '#f-business')), 'creator does not see the business name');
+  ok(!(await visible(p, 'input[name="engagement"]')), 'nor the engagement question');
   await p.click('input[name="type"][value="general"]');
-  ok(!(await visible(p, '#f-business')) && !(await visible(p, '#f-makes')) && !(await visible(p, '#f-brings')),
-     'general sees none of the three');
+  ok(!(await visible(p, '#f-business')), 'general sees neither');
+  ok(await visible(p, '#f-message'), 'but every route gets the open question');
   await p.close();
 }
 
@@ -76,7 +79,7 @@ console.log('\nthe record carries only the asked questions');
     const d = new FormData(document.getElementById('inquiry'));
     return [...d.keys()];
   });
-  ok(names.includes('type') && names.includes('makes'), `creator record has type + makes (${names.join(', ')})`);
+  ok(names.includes('type') && names.includes('message'), `creator record has type + message (${names.join(', ')})`);
   ok(!names.includes('business') && !names.includes('engagement') && !names.includes('brings'),
      'and not the other routes’ fields');
   ok(names.includes('form-name'), 'form-name is present for Netlify’s handler');
@@ -95,12 +98,35 @@ console.log('\nvalidation and the submit guard');
   ok(await p.evaluate(() => document.activeElement.id === 'f-name'), 'focus moves to the first bad field');
   ok(await p.evaluate(() => document.getElementById('submit').textContent.indexOf('Sending') === -1),
      'and it does NOT claim to be sending');
+  ok(await p.evaluate(() => document.querySelector('[data-help]').textContent.indexOf('working') > -1),
+     'the business route shows its own help text');
   await p.fill('#f-email', 'not-an-email');
   await p.click('#submit');
   await p.waitForTimeout(200);
   ok(await p.evaluate(() => document.getElementById('f-email').getAttribute('aria-invalid') === 'true'),
      'a malformed email is caught');
   await p.close();
+}
+console.log('\nhelp text follows the route');
+{
+  const p = await open('?type=creator');
+  ok((await p.textContent('[data-help]')).indexOf('make') > -1, 'creator help text');
+  await p.click('input[name="type"][value="collaborator"]');
+  ok((await p.textContent('[data-help]')).indexOf('bring') > -1, 'collaborator help text');
+  await p.click('input[name="type"][value="general"]');
+  ok((await p.textContent('[data-help]')).indexOf('talk about') > -1, 'general help text');
+  await p.close();
+}
+console.log('\nengagement deep-link from /businesses');
+{
+  const p = await open('?type=business&engagement=partnership');
+  ok(await p.evaluate(() => document.querySelector('input[name="engagement"]:checked').value === 'Ongoing partnership'),
+     '?engagement=partnership preselects the partnership option');
+  await p.close();
+  const q = await open('?type=business&engagement=project');
+  ok(await q.evaluate(() => document.querySelector('input[name="engagement"]:checked').value === 'Defined project'),
+     '?engagement=project preselects the project option');
+  await q.close();
 }
 console.log(fails ? `\n${fails} FAILED` : '\nintake: all client-side checks pass');
 console.log('NOT verified here: actual delivery. Submitting would file a real record in the owner’s inbox.');

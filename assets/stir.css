@@ -127,7 +127,9 @@ h1, h2, h3 { font-weight: 700; letter-spacing: -.035em; line-height: .96; }
 /* Every page needs one h1. Outside the hero it is a section-scale
    title, not a display one. */
 h1, h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025em; }
-h3 { font-size: var(--t-h3); line-height: 1.08; letter-spacing: -.025em; font-weight: 500; }
+h3, h2.sub { font-size: var(--t-h3); line-height: 1.08; letter-spacing: -.025em; font-weight: 500; }
+/* A real second level that wants the third level's scale — so the
+   document outline stays h1 -> h2 without the type jumping. */
 p { max-width: 60ch; }
 strong, b { font-weight: 500; }
 
@@ -309,9 +311,11 @@ strong, b { font-weight: 500; }
 /* ════════ C05 — Reading spreads, dividers, links ═══════════════════ */
 .band { padding-block: clamp(56px, 8vw, 96px); }
 .band + .band { border-top: 1px solid var(--ivory-25); }
+.band--tight { border-top: 0; }
 .on-ivory + .on-ivory { border-top-color: var(--ink-35); }
 .band-head { display: flex; justify-content: space-between; gap: var(--s20); align-items: baseline; }
-.band h2 { margin: var(--s20) 0 var(--s32); max-width: 18ch; }
+.band h2 { margin: var(--s20) 0 var(--s32); max-width: 24ch; }
+.band > .wrap > .utility, .band > .utility { display: block; }
 .lede { font-size: 22px; max-width: 54ch; }
 .two { display: grid; grid-template-columns: 1.2fr 1fr; gap: var(--s64); align-items: start; }
 .three { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s48); }
@@ -355,11 +359,17 @@ textarea.field { min-height: 120px; resize: vertical; }
 .seg input:checked + span { background: var(--cobalt); color: var(--ivory); }
 .seg input:checked + span::before { background: var(--ivory); border-color: var(--ivory); }
 .seg input:focus-visible + span { outline: 2px solid var(--cobalt); outline-offset: -4px; }
-.hp { position: absolute; left: -9999px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form-status { font-size: 16px; min-height: 24px; max-width: 65ch; margin-top: var(--s20); font-weight: 500; }
 
 /* ════════ Hero ═════════════════════════════════════════════════════ */
-.hero { padding-block: clamp(40px, 6vw, 72px) clamp(48px, 6vw, 80px); }
+.hero { padding-block: clamp(40px, 6vw, 72px) 0; }
+/* The band that follows the hero owns the whole gap, so the two
+   paddings cannot compound. 48 desktop, 32 phone. */
+.band--tight { padding-top: 48px; }
+/* The eyebrow is an h2 (it is genuinely the section heading), so it
+   was picking up .band h2's 20px top margin and pushing the gap to 68. */
+.band--tight > .utility { display: block; margin: 0 0 16px; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 42fr) minmax(0, 58fr); gap: clamp(24px, 3.2vw, 56px); align-items: center; }
 .hero h1 { font-size: var(--t-h1); }
 .hero h1 span { display: block; }
@@ -426,6 +436,7 @@ textarea.field { min-height: 120px; resize: vertical; }
 @media (max-width: 1023px) {
   :root { --t-body: 19px; }
   .hero-grid { grid-template-columns: minmax(0, 1fr); row-gap: var(--s32); align-items: start; }
+  .band--tight { padding-top: 32px; }
   .stage { --stage-ar: 1.1818; max-width: min(100%, 560px); margin-inline: auto 0; }
   .two { grid-template-columns: 1fr; gap: var(--s32); }
   .three { grid-template-columns: 1fr; gap: var(--s32); }
@@ -622,4 +633,109 @@ textarea.field { min-height: 120px; resize: vertical; }
   .accounts { grid-template-columns: 1fr; }
   .accounts > div + div { border-left: 0; border-top: 1px solid currentColor; }
   .sign-rule { max-width: 100%; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   THE STUDIO WORKBENCH
+   One stepped outer frame, three adjacent compartments, shared edges
+   drawn once. The same signage construction as the building's sign and
+   the header cell, applied to the method.
+   ════════════════════════════════════════════════════════════════════ */
+.bench {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 2px solid var(--ivory);
+  margin-top: var(--s24);
+}
+.bench-cell {
+  display: flex; flex-direction: column;
+  padding: clamp(28px, 2.2vw, 32px);
+}
+.bench-cell + .bench-cell { border-left: 1px solid var(--ivory); }
+/* The step, lifted out of two opposing corners of the whole frame —
+   once, like the sign, not once per compartment. */
+.bench::before, .bench::after {
+  content: ''; position: absolute; width: 10px; height: 10px;
+  background: var(--cobalt); pointer-events: none;
+}
+.bench::before { left: -2px; top: -2px; }
+.bench::after  { right: -2px; bottom: -2px; }
+
+/* Aligned regions: illustration, heading, body, outcome — so the three
+   read as one workbench rather than three cards. */
+.bench-slot { height: 96px; margin-bottom: var(--s24); }
+.bench-art { width: 96px; height: 96px; color: var(--ivory); shape-rendering: crispEdges; }
+.bench h3 { display: flex; gap: var(--s12); align-items: baseline; margin-bottom: var(--s12); }
+.bench h3 i { font-style: normal; color: var(--signal); font-size: var(--t-utility); font-family: var(--utility); }
+.bench p { font-size: 18px; max-width: 34ch; }
+.bench-out { margin-top: auto; padding-top: var(--s20); }
+.bench-out span {
+  display: inline-block; border-top: 1px solid var(--ivory-40); padding-top: var(--s12);
+  font-weight: 500; color: var(--ivory);
+}
+
+/* ── The three actions, each once on entry ───────────────────────────
+   Decorative, so they are aria-hidden and nothing informational waits
+   on them. Reduced motion gets the completed state. */
+.bench-pick { opacity: 0; }
+.bench-finder { transform-origin: 24px 24px; transform: scale(1.9); opacity: 0; }
+.bench-piece { transform-origin: 24px 24px; }
+.bench-pieces { shape-rendering: crispEdges; }
+.bench-piece.p1 { transform: translateX(-14px); }
+.bench-piece.p3 { transform: translateX(14px); }
+.bench-mounts, .bench-steps { opacity: 0; }
+.bench-sheet .s2, .bench-sheet .s3 { transform-origin: 22px 22px; transform: scaleX(0); }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Read the room — the finder steps in and the square is taken. */
+  .is-in[data-bench="read"] .bench-finder {
+    animation: finder 240ms steps(2, end) forwards;
+  }
+  .is-in[data-bench="read"] .bench-pick {
+    animation: pick 1ms linear 240ms forwards;
+  }
+  @keyframes finder { to { transform: scale(1); opacity: 1; } }
+  @keyframes pick   { to { opacity: 1; } }
+
+  /* Set the scene — three pieces close up, then the fixings land. */
+  .is-in[data-bench="set"] .bench-piece {
+    animation: assemble 320ms steps(3, end) forwards;
+  }
+  .is-in[data-bench="set"] .bench-mounts,
+  .is-in[data-bench="set"] .bench-steps {
+    animation: pick 1ms linear 320ms forwards;
+  }
+  @keyframes assemble { to { transform: translateX(0); } }
+
+  /* Make it travel — the sheet extends in three discrete reaches. */
+  .is-in[data-bench="travel"] .bench-sheet .s2 {
+    animation: reach 200ms steps(2, end) forwards;
+  }
+  .is-in[data-bench="travel"] .bench-sheet .s3 {
+    animation: reach 200ms steps(2, end) 200ms forwards;
+  }
+  @keyframes reach { to { transform: scaleX(1); } }
+}
+/* Completed state wherever the animation does not run: reduced motion,
+   no JavaScript, or an observer that never fires. */
+@media (prefers-reduced-motion: reduce) {
+  .bench-pick, .bench-finder, .bench-mounts, .bench-steps { opacity: 1; }
+  .bench-finder { transform: scale(1); }
+  .bench-piece { transform: none; }
+  .bench-sheet .s2, .bench-sheet .s3 { transform: scaleX(1); }
+}
+html:not(.js) .bench-pick, html:not(.js) .bench-finder,
+html:not(.js) .bench-mounts, html:not(.js) .bench-steps { opacity: 1; }
+html:not(.js) .bench-finder { transform: scale(1); }
+html:not(.js) .bench-piece { transform: none; }
+html:not(.js) .bench-sheet .s2, html:not(.js) .bench-sheet .s3 { transform: scaleX(1); }
+
+@media (max-width: 767px) {
+  .bench { grid-template-columns: 1fr; }
+  .bench-cell { padding: var(--s24); }
+  .bench-cell + .bench-cell { border-left: 0; border-top: 1px solid var(--ivory); }
+  .bench-slot { height: 72px; margin-bottom: var(--s20); }
+  .bench-art { width: 72px; height: 72px; }
+  .bench p { max-width: none; }
 }

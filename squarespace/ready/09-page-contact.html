@@ -7,17 +7,12 @@
 <symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
 </defs></svg>
 
-<!-- A static strip. One real line about the studio; no live status,
-     no marquee, no invented open call. -->
 <div class="strip">
   <div class="wrap">
-    <span class="utility">STIR &mdash; Brooklyn, New York</span>
-    <span class="utility">Founder-led creative &amp; growth practice</span>
+    <span class="utility">Independent creative studio. Brooklyn, New York.</span>
   </div>
 </div>
 
-<!-- C01 — static segmented header. The brand cell is the same stepped
-     ivory sign construction as the building's sign and the footer. -->
 <header class="site-head">
   <div class="wrap">
     <nav class="nav" aria-label="Primary">
@@ -45,28 +40,28 @@
 </header>
 <main id="main">
 <section class="band wrap">
-  <div class="band-head"><span class="utility">Start here</span><span class="utility">One form, four routes</span></div>
-  <h1 data-rise>Tell STIR what you need, or what you bring.</h1>
-  <p class="lede">Every inquiry is read. Choosing a route only changes which questions you see &mdash; what you
-    have already typed is kept if you change it.</p>
+  <span class="utility">Start here</span>
+  <h1 data-rise>What are you working on?</h1>
+  <p class="lede">A business you want to grow, a project you need help with, or something you&rsquo;d like
+    to bring to STIR. Tell us a little about it.</p>
 </section>
 
 <section class="band on-ivory">
   <div class="wrap">
     <div class="two">
-      <!-- C06. One Netlify form; `type` keeps the four paths
-           distinguishable in the receiving inbox. The honeypot and the
-           form-name field are what Netlify's own handler requires. -->
+      <!-- The stored `type` values are unchanged — business / creator /
+           collaborator / general — so the visible labels can be
+           rewritten without touching the backend mapping. -->
       <form class="inquiry" name="inquiry" method="POST" data-netlify="true"
             netlify-honeypot="bot-field" action="/contact?sent=1" id="inquiry" novalidate>
         <input type="hidden" name="form-name" value="inquiry">
         <p class="hp"><label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="field-row">
-          <span class="field-label" id="type-label">What is this about?</span>
+          <span class="field-label" id="type-label">I&rsquo;m here about&hellip;</span>
           <div class="seg" role="radiogroup" aria-labelledby="type-label">
-            <label><input type="radio" name="type" value="business" checked><span>A business</span></label>
-            <label><input type="radio" name="type" value="creator"><span>Creating</span></label>
+            <label><input type="radio" name="type" value="business" checked><span>My business</span></label>
+            <label><input type="radio" name="type" value="creator"><span>Creating content</span></label>
             <label><input type="radio" name="type" value="collaborator"><span>Collaborating</span></label>
             <label><input type="radio" name="type" value="general"><span>Something else</span></label>
           </div>
@@ -74,91 +69,72 @@
 
         <div class="field-row">
           <label class="field-label" for="f-name">Your name</label>
-          <input class="field" id="f-name" name="name" type="text" required autocomplete="name"
-                 aria-describedby="e-name">
+          <input class="field" id="f-name" name="name" type="text" required autocomplete="name" aria-describedby="e-name">
           <p class="field-error" id="e-name" hidden>Add your name so we know who is writing.</p>
         </div>
 
         <div class="field-row">
           <label class="field-label" for="f-email">Email</label>
-          <input class="field" id="f-email" name="email" type="email" required autocomplete="email"
-                 aria-describedby="e-email">
+          <input class="field" id="f-email" name="email" type="email" required autocomplete="email" aria-describedby="e-email">
           <p class="field-error" id="e-email" hidden>Add an email address we can reply to.</p>
         </div>
 
-        <!-- Business-only -->
         <div class="field-row" data-for="business">
           <label class="field-label" for="f-business">Business name</label>
           <input class="field" id="f-business" name="business" type="text" autocomplete="organization">
         </div>
         <div class="field-row" data-for="business">
-          <span class="field-label" id="eng-label">What shape is this?</span>
+          <span class="field-label" id="eng-label">How would you like to work together?</span>
           <div class="seg" role="radiogroup" aria-labelledby="eng-label">
-            <label><input type="radio" name="engagement" value="Ongoing partnership"><span>Ongoing partnership</span></label>
-            <label><input type="radio" name="engagement" value="Defined project"><span>Defined project</span></label>
-            <label><input type="radio" name="engagement" value="Not sure" checked><span>Not sure</span></label>
+            <label><input type="radio" name="engagement" value="Ongoing partnership"><span>An ongoing partnership</span></label>
+            <label><input type="radio" name="engagement" value="Defined project"><span>A specific project</span></label>
+            <label><input type="radio" name="engagement" value="Not sure" checked><span>Let&rsquo;s figure it out</span></label>
           </div>
-          <p class="field-note">Not sure is a real answer &mdash; most conversations start there.</p>
-        </div>
-
-        <!-- Creator-only -->
-        <div class="field-row" data-for="creator" hidden>
-          <label class="field-label" for="f-makes">What do you make, or want to make?</label>
-          <textarea class="field" id="f-makes" name="makes" rows="3"></textarea>
-          <p class="field-note">No follower count needed. An idea is enough.</p>
-        </div>
-
-        <!-- Collaborator-only -->
-        <div class="field-row" data-for="collaborator" hidden>
-          <label class="field-label" for="f-brings">What could you bring?</label>
-          <textarea class="field" id="f-brings" name="brings" rows="3"></textarea>
-          <p class="field-note">A skill, production help, a connection, access, or a specific idea.</p>
         </div>
 
         <div class="field-row">
-          <label class="field-label" for="f-links">Website or links <span class="field-note" style="display:inline">(optional)</span></label>
+          <label class="field-label" for="f-links">Website or relevant links
+            <span class="field-note" style="display:inline">Optional</span></label>
           <input class="field" id="f-links" name="links" type="text" inputmode="url">
         </div>
 
         <div class="field-row">
-          <label class="field-label" for="f-message">What would you like to happen?</label>
-          <textarea class="field" id="f-message" name="message" rows="4" required aria-describedby="e-message"></textarea>
+          <label class="field-label" for="f-message">Tell us a little more.</label>
+          <textarea class="field" id="f-message" name="message" rows="4" required aria-describedby="e-message h-message"></textarea>
+          <p class="field-note" id="h-message" data-help>What&rsquo;s working, what needs attention, and what would you like to change?</p>
           <p class="field-error" id="e-message" hidden>Add a line or two so there is something to reply to.</p>
         </div>
 
-        <p class="field-note" style="max-width:52ch;margin-bottom:var(--s24)">STIR uses what you send here only
-          to reply about this inquiry. You are not added to any mailing list.</p>
+        <p class="field-note" style="max-width:54ch;margin-bottom:var(--s24)">We&rsquo;ll use your details
+          to respond about your inquiry and relevant project opportunities. You won&rsquo;t be added to a
+          marketing list.</p>
 
         <button class="action" type="submit" id="submit" disabled>
-          <span class="action-label">Send</span>
+          <span class="action-label">Send your note</span>
           <span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span>
         </button>
         <p class="form-status" id="status" role="status">This form is not connected yet. Add a Formspree id to squarespace/deploy.config.json and rebuild, or email <a class="inline" href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>.</p>
       </form>
 
       <div>
-        <h3>What happens next</h3>
-        <div class="rail">
-          <div><b>A business</b><span>STIR reviews the need and whether it is a fit</span></div>
-          <div><b>Creating</b><span>Kept for relevant future projects; outreach when there is a fit</span></div>
-          <div><b>Collaborating</b><span>Reviewed for fit on future work</span></div>
-          <div><b>Something else</b><span>Read and answered directly</span></div>
-        </div>
-        <p style="margin-top:var(--s24)">No reply deadline is promised, and expressing interest is not
-          selection, employment or an agreed rate.</p>
-        <p style="margin-top:var(--s24)">Prefer email? <a class="inline" href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a></p>
+        <h2 style="max-width:none">What happens next</h2>
+        <p style="margin-top:var(--s16)">For business inquiries, we&rsquo;ll review what you&rsquo;ve
+          shared and get in touch to discuss a possible next step.</p>
+        <p style="margin-top:var(--s16)">For creators and collaborators, we&rsquo;ll keep your details for
+          projects that fit your work.</p>
+        <p style="margin-top:var(--s24)">Prefer email?<br>
+          <a class="inline" href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a></p>
       </div>
     </div>
   </div>
 </section>
 </main>
-
 <footer class="site-foot">
   <div class="wrap">
     <span class="utility">What are you building?</span>
     <div class="foot-sign"><img src="https://stirnyc.netlify.app/assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
-    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content and digital presence for independent
-      businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content, and digital presence for
+      independent businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
     <p class="actions" style="margin-bottom:var(--s32)">
       <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
       <a class="action-3" href="/contact?type=creator">Create with STIR</a>
