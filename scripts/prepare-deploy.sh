@@ -4,7 +4,19 @@
 # under a stable filename.
 set -euo pipefail
 
-SITE="${DEPLOY_PRIME_URL:-${URL:-}}"
+# Netlify sets CONTEXT to production | deploy-preview | branch-deploy.
+# On a production build, URL is the real domain and DEPLOY_PRIME_URL is
+# the same; on a branch or preview build, DEPLOY_PRIME_URL is that
+# deploy's own subdomain. Preferring DEPLOY_PRIME_URL unconditionally
+# meant that when a branch deploy was published to production by hand,
+# the live site shipped with every canonical and og:url pointing at
+# claude-stir-...--stirnyc.netlify.app instead of the real domain --
+# which is what search engines were being told to index.
+if [ "${CONTEXT:-}" = "production" ]; then
+  SITE="${URL:-${DEPLOY_PRIME_URL:-}}"
+else
+  SITE="${DEPLOY_PRIME_URL:-${URL:-}}"
+fi
 if [ -n "$SITE" ]; then
   SITE="${SITE%/}"
   echo "prepare-deploy: setting canonical URL to $SITE"
