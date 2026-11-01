@@ -17,6 +17,13 @@ import * as THREE from 'three';
  */
 
 const flat = (hex) => new THREE.MeshLambertMaterial({ color: hex, flatShading: true });
+/* Surfaces that are their own light source. The studio room is a deep recess
+   facing the camera, so the exterior key never reaches into it and Lambert
+   alone renders it black — which is exactly what the first pass did to the
+   worktable, the lamp and the print that were already modelled in there. */
+const lit = (hex, k = 0.55) => new THREE.MeshLambertMaterial({
+  color: hex, emissive: hex, emissiveIntensity: k, flatShading: true,
+});
 
 export const C = {
   cream: 0xFAF2E6,
@@ -30,10 +37,17 @@ export const C = {
   paveEdge: 0x746E64,
   glass: 0x113A6E,
   glassLit: 0xE8C77A,
+  room: 0xE8D08A,        // the lit back wall of the studio room
+  roomDeep: 0xB99650,    // its floor, a step down in the same ramp
+  dark: 0x0C192B,        // an opening with nothing lit behind it
+  cobaltSign: 0x0451AB,  // the sign's lettering: the brand blue, not red
 };
 
 const M = {};
 for (const k of Object.keys(C)) M[k] = flat(C[k]);
+M.room = lit(C.room, 0.30);
+M.roomDeep = lit(C.roomDeep, 0.24);
+M.glassLit = lit(C.glassLit, 0.5);
 
 function box(parent, mat, w, h, d, x, y, z) {
   const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
@@ -69,29 +83,81 @@ export function buildStudio(scene) {
   for (const sx of [-1.9, 1.9]) box(G, M.paveEdge, 0.085, 0.012, padD - 0.4, sx, 0.19, 0.5);
 
   // ── Massing ─────────────────────────────────────────────────────────
-  box(G, M.cream, B.w, B.ground, B.d, 0, B.paveY, 0);
+  /* The ground floor is a shell, not a solid block. A solid one puts the
+     front face in front of everything, so the worktable, the lamp and the
+     print that were already modelled inside were never visible — the window
+     rendered as a flat amber rectangle. The mass is set back by REC and a
+     front skin is built around the openings, which makes the room real. */
+  const REC = 1.05;                       // depth of the room you can see into
+  box(G, M.cream, B.w, B.ground, B.d - REC, 0, B.paveY, -REC / 2);
   box(G, M.cream, B.w, B.upper, B.d, 0, B.paveY + B.ground, 0);
   // storey band and cornice: the two horizontals that say "building"
   box(G, M.creamDeep, B.w + 0.14, 0.14, B.d + 0.14, 0, B.paveY + B.ground - 0.07, 0);
   box(G, M.inkSoft, B.w + 0.22, 0.2, B.d + 0.22, 0, B.roof, 0);
   box(G, M.cream, B.w + 0.1, B.parapet - 0.2, B.d + 0.1, 0, B.roof + 0.2, 0);
 
-  // ── Ground floor, +Z face: red entrance, recessed with a threshold ───
-  const doorW = 0.92, doorH = 1.9;
-  box(G, M.ink, doorW + 0.22, doorH + 0.2, 0.16, -1.15, B.paveY, hd - 0.02);  // reveal
-  box(G, M.red, doorW, doorH, 0.1, -1.15, B.paveY + 0.06, hd + 0.02);          // leaf
-  box(G, M.creamDeep, doorW + 0.5, 0.12, 0.44, -1.15, B.paveY - 0.12, hd + 0.2); // step
+  // ── The front skin, with the two openings cut out of it ──────────────
+  const doorW = 0.92, doorH = 1.95, doorX = -1.15;
+  const winW = 2.1, winH = 1.5, winX = 0.75;
+  const sillY = B.paveY + 0.85, headY = sillY + winH;
+  const dL = doorX - doorW / 2 - 0.08, dR = doorX + doorW / 2 + 0.08;
+  const wL = winX - winW / 2, wR = winX + winW / 2;
+  const skinZ = hd - REC / 2;             // centre of the skin in depth
+  /* piece(x0, x1, y0, y1) — a panel of the front wall between two openings.
+     Writing it this way keeps the openings as gaps in a list of panels, which
+     is the only description of this wall that cannot drift out of register. */
+  const piece = (x0, x1, y0, y1) =>
+    box(G, M.cream, x1 - x0, y1 - y0, REC, (x0 + x1) / 2, y0, skinZ);
+  piece(-hw, dL, B.paveY, B.paveY + B.ground);            // left of the door
+  piece(dL, dR, B.paveY + doorH, B.paveY + B.ground);     // over the door
+  piece(dR, wL, B.paveY, B.paveY + B.ground);             // pier between them
+  piece(wL, wR, B.paveY, sillY);                          // under the window
+  piece(wL, wR, headY, B.paveY + B.ground);               // over the window
+  piece(wR, hw, B.paveY, B.paveY + B.ground);             // right of the window
 
-  // ── Ground floor, +Z face: the large studio window ───────────────────
-  const winW = 2.1, winH = 1.5;
-  box(G, M.ink, winW + 0.2, winH + 0.2, 0.14, 0.75, B.paveY + 0.75, hd - 0.01);
-  box(G, M.glassLit, winW, winH, 0.06, 0.75, B.paveY + 0.85, hd + 0.03);
-  box(G, M.ink, 0.07, winH, 0.09, 0.75, B.paveY + 0.85, hd + 0.06);           // mullion
-  // Working details read through the glass: a table, a lamp, one print.
-  box(G, M.inkSoft, 1.25, 0.08, 0.5, 0.75, B.paveY + 0.95, hd - 0.42);        // worktable
-  box(G, M.inkSoft, 0.07, 0.34, 0.07, 0.3, B.paveY + 1.03, hd - 0.42);        // lamp stem
-  box(G, M.cream, 0.26, 0.09, 0.2, 0.3, B.paveY + 1.37, hd - 0.42);           // lamp shade
-  box(G, M.red, 0.42, 0.56, 0.05, 1.28, B.paveY + 1.18, hd - 0.56);           // one print
+  // ── The room behind the window ───────────────────────────────────────
+  box(G, M.roomDeep, winW + 0.3, 0.05, REC, winX, B.paveY, skinZ);        // floor
+  box(G, M.room, winW + 0.3, winH + 0.5, 0.06, winX, sillY - 0.4, hd - REC);  // lit wall
+  /* Four members, not a slab. The previous "frame" was a solid 2.3 x 1.7 box
+     sitting in the opening, which is why the window rendered as a black
+     rectangle with a lit room behind it that nobody could see. */
+  const jamb = 0.1;
+  box(G, M.ink, jamb, winH + jamb * 2, 0.12, wL - jamb / 2, sillY - jamb, hd - 0.03);
+  box(G, M.ink, jamb, winH + jamb * 2, 0.12, wR + jamb / 2, sillY - jamb, hd - 0.03);
+  box(G, M.ink, winW + jamb * 2, jamb, 0.12, winX, headY, hd - 0.03);
+  box(G, M.ink, winW + jamb * 2, jamb, 0.12, winX, sillY - jamb, hd - 0.03);
+  box(G, M.ink, 0.07, winH, 0.1, winX, sillY, hd - 0.05);                     // mullion
+  box(G, M.creamDeep, winW + 0.26, 0.1, 0.22, winX, sillY - 0.1, hd + 0.02);  // sill
+  // What the window is for: a worktable, a lamp, and one print on the wall.
+  box(G, M.inkSoft, 1.5, 0.07, 0.46, winX - 0.1, B.paveY + 0.92, hd - 0.46);
+  box(G, M.inkSoft, 0.06, 0.3, 0.06, winX - 0.66, B.paveY + 0.99, hd - 0.46);
+  box(G, M.cream, 0.24, 0.08, 0.18, winX - 0.66, B.paveY + 1.29, hd - 0.46);
+  box(G, M.red, 0.4, 0.54, 0.04, winX + 0.62, B.paveY + 1.5, hd - REC + 0.05);
+
+  /* The lamp is an actual light, not a painted highlight: it is what puts a
+     gradient across the table and an edge on anyone standing at it. Kept low:
+     at 2.6 it blew the back wall to white and the palette snapped the falloff
+     into concentric rings, which is the bloom the brief rules out. */
+  const bulb = new THREE.PointLight(0xFFE3A8, 0.95, 2.9, 1.9);
+  bulb.position.set(winX - 0.66, B.paveY + 1.22, hd - 0.46);
+  G.add(bulb);
+
+  // ── The entrance, standing open ──────────────────────────────────────
+  /* The leaf is swung out against the jamb rather than closed. A closed door
+     is a red rectangle; an open one is a way in, which is the whole point of
+     a figure walking up to it, and it gives the façade a second plane. */
+  // Same again for the entrance: jambs and a lintel, so the opening is an
+  // opening and the figure can be seen stepping into the dark of it.
+  box(G, M.ink, 0.12, doorH + 0.12, 0.14, dL + 0.02, B.paveY, hd - 0.04);
+  box(G, M.ink, 0.12, doorH + 0.12, 0.14, dR - 0.02, B.paveY, hd - 0.04);
+  box(G, M.ink, doorW + 0.28, 0.12, 0.14, doorX, B.paveY + doorH, hd - 0.04);
+  box(G, M.dark, doorW, doorH - 0.06, 0.08, doorX, B.paveY, hd - REC + 0.04);  // the way in
+  box(G, M.red, 0.09, doorH - 0.04, 0.86, dL + 0.02, B.paveY + 0.02, hd + 0.44); // open leaf
+  box(G, M.inkSoft, 0.04, 0.1, 0.1, dL + 0.09, B.paveY + 1.04, hd + 0.78);       // handle
+  box(G, M.creamDeep, doorW + 0.5, 0.12, 0.42, doorX, B.paveY - 0.12, hd + 0.2); // step
+  // A bracket lamp over the entrance, which is how these fronts are lit.
+  box(G, M.ink, 0.06, 0.06, 0.26, doorX, B.paveY + doorH + 0.22, hd + 0.14);
+  box(G, M.room, 0.3, 0.1, 0.3, doorX, B.paveY + doorH + 0.14, hd + 0.3);
 
   // ── Upper floor, +Z face: two dark-framed windows ────────────────────
   for (const wx of [-1.25, 0.55]) {
@@ -114,10 +180,46 @@ export function buildStudio(scene) {
   // unmistakable STIR sign, and the in-scene sign is the one place the brief
   // allows constructed lettering. The interface wordmark stays a sharp HTML
   // asset; this is its pixel-scale cousin, not a substitute.
+  /* The 1 Nov revision makes the sign a shared construction: one stepped
+     ivory board with cobalt lettering and two small square mounting details,
+     repeated as the header brand cell and the closing invitation. So the
+     lettering is cobalt on ivory here, not red on cream — the scene's red is
+     the door and the sheet, and the sign belongs to the interface's family. */
   const signY = B.paveY + B.ground + 0.02;
-  box(G, M.ink, 1.96, 0.70, 0.1, 0.38, signY - 0.04, hd + 0.04);
-  box(G, M.cream, 1.84, 0.58, 0.06, 0.38, signY + 0.02, hd + 0.08);
-  stirSign(G, 0.38, signY + 0.31, hd + 0.12, 0.072);
+  const signW = 1.96, signH = 0.70;
+  box(G, M.inkSoft, signW, signH, 0.08, 0.38, signY - 0.04, hd + 0.03);   // shadow plate
+  box(G, M.cream, signW - 0.1, signH - 0.1, 0.07, 0.38, signY + 0.01, hd + 0.07);
+  // the two steps: one square lifted out of each opposing corner
+  const stepN = 0.1;
+  box(G, M.inkSoft, stepN, stepN, 0.09, 0.38 - (signW - 0.1) / 2 + stepN / 2,
+      signY + signH - 0.1 - stepN / 2 + 0.01, hd + 0.08);
+  box(G, M.inkSoft, stepN, stepN, 0.09, 0.38 + (signW - 0.1) / 2 - stepN / 2,
+      signY + 0.01, hd + 0.08);
+  // two mounting squares, the detail the header cell repeats
+  for (const mx of [-0.78, 0.78]) {
+    box(G, M.cobaltSign, 0.07, 0.07, 0.04, 0.38 + mx, signY + signH / 2 - 0.07, hd + 0.1);
+  }
+  stirSign(G, 0.38, signY + 0.31, hd + 0.11, 0.072);
+
+  // ── On the pavement ─────────────────────────────────────────────────
+  /* A bike against the pier and a bin at the kerb. Two objects, both
+     ordinary: the brief asks for a few observed details, not a street set. */
+  const bikeX = 1.0, bikeZ = hd + 0.62;
+  for (const bz of [bikeZ - 0.52, bikeZ + 0.52]) {
+    const w = new THREE.Mesh(new THREE.TorusGeometry(0.31, 0.035, 5, 12),
+      new THREE.MeshLambertMaterial({ color: C.ink, flatShading: true }));
+    w.position.set(bikeX, B.paveY + 0.31, bz);
+    w.castShadow = true;
+    G.add(w);
+  }
+  box(G, M.inkSoft, 0.05, 0.05, 1.0, bikeX, B.paveY + 0.52, bikeZ);   // down tube
+  box(G, M.inkSoft, 0.05, 0.34, 0.05, bikeX, B.paveY + 0.5, bikeZ - 0.4); // seat post
+  box(G, M.inkSoft, 0.05, 0.3, 0.05, bikeX, B.paveY + 0.56, bikeZ + 0.44); // steerer
+  box(G, M.inkSoft, 0.28, 0.04, 0.05, bikeX, B.paveY + 0.86, bikeZ + 0.44); // bars
+  box(G, M.creamDeep, 0.2, 0.05, 0.1, bikeX, B.paveY + 0.84, bikeZ - 0.4);  // saddle
+
+  box(G, M.inkSoft, 0.44, 0.62, 0.44, 2.45, B.paveY, hd + 0.5);      // bin
+  box(G, M.ink, 0.5, 0.06, 0.5, 2.45, B.paveY + 0.62, hd + 0.5);     // its lid
 
   // ── Roof: an aerial and a vent, the two Brooklyn tells ──────────────
   // The first version was a mast with one centred crossbar, which at this
@@ -163,7 +265,7 @@ function stirSign(parent, cx, cy, z, cell) {
            stroke instead of showing seams at the palette snap. */
         const m = new THREE.Mesh(
           new THREE.BoxGeometry(cell * 1.04, cell * 1.04, cell * 0.55),
-          M.red
+          M.cobaltSign
         );
         m.position.set(x0 + ox + c * cell, y0 - r * cell, z);
         m.castShadow = false;

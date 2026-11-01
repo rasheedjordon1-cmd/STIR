@@ -20,6 +20,12 @@ const H = +(process.env.H || 1400);
 const DPR = +(process.env.DPR || 1);
 const OUT = process.env.OUT || 'out/frames';
 const FRAME = process.env.FRAME || 'desk';
+/* Where in the loop frame 0 sits. Everything in the scene is a pure function
+   of phase, so rotating the start costs nothing and keeps the seam exact —
+   but it decides the poster, because the poster is frame 0. At t=0 the
+   pavement is empty (the walker is still behind the building), which is a
+   poor still; this opens on the approach instead. */
+const START_T = +(process.env.START_T || 0);
 
 mkdirSync(OUT, { recursive: true });
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
@@ -36,7 +42,7 @@ if (Math.abs(loop - SECONDS) > 0.01) {
 
 const total = Math.round(FPS * SECONDS);     // frame `total` == frame 0, omitted
 for (let i = 0; i < total; i++) {
-  const t = (i / total) * SECONDS;
+  const t = (START_T + (i / total) * SECONDS) % SECONDS;
   await page.evaluate((t) => window.__diorama.freeze(t), t);
   await page.screenshot({ path: `${OUT}/f${String(i).padStart(4, '0')}.png` });
   if (i % 48 === 0) process.stdout.write(`${i}/${total} `);

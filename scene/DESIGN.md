@@ -155,6 +155,57 @@ ink contour and the dithered rim back into the gradients they replaced.
   reframe kept only the near 58% of the sheet, which cut the wordmark to
   "STI"; it keeps 92% now and reframes vertically instead.
 
+## Cast
+
+Two figures, which is the brief's cap. The scene had none, and that was the
+whole of what "lacks charm" meant: a building with one moving banner is a
+model. The pool reference in the playbook's own media earns its charm from
+people doing ordinary things continuously — a lifeguard pacing the deck, a
+swimmer, someone on a lounger — not from one large event.
+
+Both come from the kit's `peopleModel-street.js` rig and `poses.js` walk
+cycle, which were copied into `src/kit/` during the blockout and left unused
+with a broken import (`../core/geometry.js`, a directory that is empty here).
+
+| Figure | What they do | Why they are placed where they are |
+| --- | --- | --- |
+| The arrival | Walks the pavement, turns at the door, steps into the dark of it. | Leg 1 starts at (-3.15, -0.75), which a 45° camera has behind the building mass, so he walks into view instead of appearing on an empty pavement. Leg 3 ends past the door plane, where the front wall hides him. The loop restarts while nothing of him is on screen, so the seam stays exact. |
+| The worker | Stands at the ground-floor worktable, leaning in and back across the loop. | Standing, not seated: a chair at this size is three pixels of ambiguity. Faces +Z because the table and the window are both on his +Z. |
+
+Walk phase windows are in `cast.js` under `T`. The export is rotated to start
+at `START_T=5.6` so frame 0 — and therefore the poster — opens on the
+approach rather than on an empty pavement.
+
+## The room behind the window
+
+The brief asks the large window to show "a working table, one original print,
+and a considered light source". A worktable, lamp and print were already
+modelled in there and had never once been visible, for two compounding
+reasons, both the same mistake:
+
+1. The ground floor was a **solid box**, so its front face at `z = hd` was
+   drawn in front of everything inside it. It is a shell now: the mass is set
+   back by `REC = 1.05` and a front skin is built as a list of panels between
+   the openings, which is the only description of that wall that cannot drift
+   out of register with them.
+2. The window "frame" was a **solid 2.3 × 1.7 slab** sitting in the opening,
+   not a frame. It is four members now. The entrance got the same treatment,
+   so the doorway is an opening the figure can be seen stepping into.
+
+The room is lit from inside: a recess facing the camera gets almost nothing
+from a key at (-13, 18, 15), and Lambert alone renders it black. The lit
+surfaces carry a small `emissive`, and the desk lamp is an actual
+`PointLight`. It is kept at 0.95/2.9m — at 2.6 it blew the back wall to white
+and the palette snapped the falloff into concentric rings, which is exactly
+the bloom the brief excludes.
+
+## Sign
+
+The 1 November revision makes the sign a shared construction across the
+building, the header brand cell and the closing invitation: a stepped ivory
+board, **cobalt** lettering, two small square mounting details. So the scene's
+sign is no longer red on cream. The scene's red is the door and the sheet.
+
 ## QA frames
 
 | Frame | Time | Proves |

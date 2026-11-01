@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { roundedBoxGeometry } from '../core/geometry.js';
+import { roundedBoxGeometry } from './geometry.js';
 
 /**
  * Diorama clothed rig: the 1.69 m skeleton with a skull/jaw head, layered

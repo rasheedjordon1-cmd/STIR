@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { createCamera, updateCamera, CAMERA, ISO_TRUE, ISO_2_1 } from './scene/camera.js';
 import { buildStudio, buildSheet, B, SHEET } from './scene/studio.js';
 import { PixelPost } from './kit/post.js';
+import { buildCast } from './scene/cast.js';
 
 const COBALT = 0x0451ab;
 const LOOP = 14.0;            // brief: a quiet 12-16 s seamless loop
@@ -102,6 +103,7 @@ scene.add(fill, fill.target);
 
 const studio = buildStudio(scene);
 const sheet = buildSheet(scene);
+const cast = buildCast(scene);
 
 function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight;
@@ -115,7 +117,9 @@ function draw(t) {
   /* One travelling wave, phase wrapping 0..1 over the loop, so the final
      frame and the first frame are the same geometry by construction rather
      than by a crossfade. */
-  sheet.userData.setPhase((t / LOOP) % 1);
+  const phase = (t / LOOP) % 1;
+  sheet.userData.setPhase(phase);
+  cast.userData.setPhase(phase);
   post.render(scene, camera);
 }
 
@@ -131,7 +135,7 @@ addEventListener('resize', resize, { passive: true });
 frame();
 
 window.__diorama = {
-  THREE, scene, camera, renderer, post, studio, sheet, LOOP,
+  THREE, scene, camera, renderer, post, studio, sheet, cast, LOOP,
   freeze(t) { frozen = t; draw(t); },
   play() { frozen = null; },
 };
