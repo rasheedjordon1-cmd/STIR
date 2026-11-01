@@ -15,7 +15,8 @@ for (const [name, file] of [['home', '_preview.html'], ['labay', '_preview-page-
   await p.waitForTimeout(1200);
   const r = await p.evaluate(() => {
     const cs = (s, prop) => { const el = document.querySelector(s); return el ? getComputedStyle(el)[prop] : null; };
-    const h = document.querySelector('.stir h2') || document.querySelector('.stir h1');
+    // not .utility headings: those are mono by design
+    const h = document.querySelector('.stir h1:not(.utility), .stir h2:not(.utility)');
     return {
       token: getComputedStyle(document.querySelector('.stir')).getPropertyValue('--cobalt').trim(),
       headFont: h ? getComputedStyle(h).fontFamily.split(',')[0] : null,

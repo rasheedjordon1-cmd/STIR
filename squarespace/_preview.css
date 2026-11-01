@@ -18,6 +18,16 @@
    already licensed here and on disk, .stir with IBM Plex Mono as the utility
    voice the brief itself names as the functional fallback. The serif
    is dropped: one resolved sans, .stir one utility, .stir as specified. */
+/* Metric-matched fallback. Measured, .stir not guessed: "ATTENTION" at
+   112px is 582px in Founders Grotesk and 629px in Arial, .stir a ratio of
+   92.5%. Without this, .stir font-display: swap paints a headline 17% too
+   wide on every cold cache, .stir and it runs into the artwork. */
+@font-face {
+  font-family: "Founders Fallback";
+  src: local("Arial"), local("Helvetica Neue"), local("Liberation Sans");
+  size-adjust: 92.5%;
+  font-weight: 300 700; font-style: normal; font-display: swap;
+}
 @font-face { font-family: "Founders Grotesk"; src: url("../assets/fonts/founders-grotesk-light.woff2") format("woff2");
   font-weight: 300; font-style: normal; font-display: swap; }
 @font-face { font-family: "Founders Grotesk"; src: url("../assets/fonts/founders-grotesk-light-italic.woff2") format("woff2");
@@ -42,7 +52,7 @@
   --ink-70:   rgba(22, 19, 16, 0.70);
   --ink-35:   rgba(22, 19, 16, 0.35);
 
-  --sans: "Founders Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --sans: "Founders Grotesk", "Founders Fallback", "Helvetica Neue", Arial, sans-serif;
   --utility: "IBM Plex Mono", "SFMono-Regular", Menlo, monospace;
 
   /* Spacing — base 4, the scale the brief lists and nothing between. */
@@ -54,7 +64,10 @@
   --nav-h: 76px;
 
   /* Type scale, from the brief's exact figures. */
-  --t-h1:      clamp(48px, 7.8vw, 112px);
+  /* The brief specifies clamp(48px, 7.8vw, 112px). That assumes a
+     wider measure than the 42% hero column: at 112px "ATTENTION" is
+     582px of text in a 537px box. 6.9vw/99px is the measured fit. */
+  --t-h1:      clamp(44px, 6.9vw, 99px);
   --t-h2:      clamp(34px, 4vw, 60px);
   --t-h3:      clamp(24px, 2.2vw, 32px);
   --t-body:    20px;
@@ -83,7 +96,9 @@ a:focus-visible, .stir button:focus-visible, .stir input:focus-visible, .stir te
 }.stir .skip:focus { top: var(--s12); }.stir .wrap { max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter); }.stir .utility {
   font: 400 var(--t-utility)/1.3 var(--utility);
   letter-spacing: .02em; text-transform: uppercase;
-}.stir .on-ivory { background: var(--ivory); color: var(--ink); }.stir h1, .stir h2, .stir h3 { font-weight: 700; letter-spacing: -.035em; line-height: .96; }.stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025em; }.stir h3 { font-size: var(--t-h3); line-height: 1.08; letter-spacing: -.025em; font-weight: 500; }.stir p { max-width: 60ch; }.stir strong, .stir b { font-weight: 500; }.stir /* ════════ C01 — Header compartments ════════════════════════════════
+}.stir .on-ivory { background: var(--ivory); color: var(--ink); }.stir h1, .stir h2, .stir h3 { font-weight: 700; letter-spacing: -.035em; line-height: .96; }.stir /* Every page needs one h1. Outside the hero it is a section-scale
+   title, .stir not a display one. */
+h1, .stir h2 { font-size: var(--t-h2); line-height: 1.05; letter-spacing: -.025em; }.stir h3 { font-size: var(--t-h3); line-height: 1.08; letter-spacing: -.025em; font-weight: 500; }.stir p { max-width: 60ch; }.stir strong, .stir b { font-weight: 500; }.stir /* ════════ C01 — Header compartments ════════════════════════════════
    Static at launch. A ruled, .stir segmented row: brand cell at the left, .stir destinations right-aligned, .stir the commercial action in deep red. */
 .strip {
   border-bottom: 1px solid var(--ivory-25);
