@@ -13,7 +13,10 @@ fi
 SITE="${SITE%/}"   # strip any trailing slash
 
 echo "prepare-deploy: setting canonical URL to $SITE"
-for f in index.html about.html contact.html 404.html robots.txt sitemap.xml; do
+# Every HTML page plus the two text files. This was a hardcoded list of
+# four pages, which meant /businesses, /creators, /collaborate and /labay
+# would have shipped with a literal "SITE_URL" in their share tags.
+for f in ./*.html robots.txt sitemap.xml; do
   [ -f "$f" ] || continue
   sed -i "s|SITE_URL|$SITE|g" "$f"
 done

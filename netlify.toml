@@ -35,7 +35,9 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Pretty URLs: /about and /contact work as well as /about.html
+# Pretty URLs. Netlify will usually serve /about from about.html on its
+# own, but every route the site links to is declared here rather than
+# left to that default — the nav now depends on six of them.
 [[redirects]]
   from = "/about"
   to = "/about.html"
@@ -44,4 +46,24 @@
 [[redirects]]
   from = "/contact"
   to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/businesses"
+  to = "/businesses.html"
+  status = 200
+
+[[redirects]]
+  from = "/creators"
+  to = "/creators.html"
+  status = 200
+
+[[redirects]]
+  from = "/collaborate"
+  to = "/collaborate.html"
+  status = 200
+
+[[redirects]]
+  from = "/labay"
+  to = "/labay.html"
   status = 200
