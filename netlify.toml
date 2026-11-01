@@ -15,10 +15,37 @@
 # This deploy doubles as the asset origin for the Squarespace build,
 # so /assets is served cross-origin. Fonts are the only thing that
 # strictly needs CORS, but the whole folder is public static art.
+# Fonts, images and video: the filename identifies the content, so a
+# year of immutable caching is correct for them.
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# The stylesheet and the script under their UNHASHED names are a
+# different matter: their contents change while the name stays. The
+# build serves fingerprinted copies to the site itself, but these
+# names are still reachable — the Squarespace kit and any old bookmark
+# use them — so they must revalidate rather than pin for a year.
+# Getting this wrong is what served a pre-rebuild stylesheet to every
+# returning visitor.
+[[headers]]
+  for = "/assets/stir.css"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/stir.js"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Access-Control-Allow-Origin = "*"
+
+[[headers]]
+  for = "/assets/stir-squarespace.css"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
     Access-Control-Allow-Origin = "*"
 
 [[headers]]
