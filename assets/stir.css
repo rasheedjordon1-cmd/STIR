@@ -695,7 +695,11 @@ html:not(.js) .nav-logo .mark-red { opacity: 1; }
   --stage-ar: 1.3226;                 /* 820 / 620, the render's aspect */
   position: relative;
   width: 100%;
-  max-width: calc((100svh - 280px) * var(--stage-ar));
+  /* Height-derived so the diorama stays inside the first screen on a laptop,
+     but floored: a short landscape window (1024x480) drove the height term to
+     265px, which is a thumbnail, not a hero. Below the floor the page scrolls
+     instead, which on a 480px-tall window it was going to do anyway. */
+  max-width: min(100%, max(360px, calc((100svh - 280px) * var(--stage-ar))));
   margin-inline-start: auto;
   line-height: 0;
 }
