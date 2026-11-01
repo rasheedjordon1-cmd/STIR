@@ -547,31 +547,50 @@ textarea.field { min-height: 120px; resize: vertical; }
 .on-ink { background: var(--ink); color: var(--ivory); }
 .on-ink .press a:hover, .on-ink .press a:focus-visible { background: var(--ivory); color: var(--ink); }
 
-/* ── The headline's signage rule ─────────────────────────────────────
-   The one looping thing in the interface. It is the sign's own
-   vocabulary: a mounting rule, two square fixings, an ivory block that
-   advances in discrete steps, and a red mark at the end of the track.
-   Attention travelling toward the thing that pays. No easing, no glow,
-   no bounce; it holds still under reduced motion. */
+/* ── The headline's signage rule ───────────────────────────────
+   The one looping thing in the interface, and it is the sign's own
+   vocabulary rather than an invented effect: a mounting rule, two
+   square fixings, blocks that advance in discrete steps, and a mark at
+   the end of the track. Attention travelling toward the thing that
+   pays.
+
+   Louder than the first pass: the rule runs the width of the copy
+   column instead of 34ch, the blocks are 12px instead of 8, there are
+   two of them in convoy -- the brief's own "passing signal" is two
+   squares advancing -- the cadence is 3.6s over eight positions
+   instead of 5.6s over six, and the mark at the end answers when the
+   lead block lands on it -- the track's last position is exactly the
+   end mark's 12px, so the block covers it rather than needing a
+   separate colour animation to announce the arrival. Still
+   steps(1,end): no easing, no glow, no bounce, and the whole thing
+   holds still under reduced motion. */
 .sign-rule {
-  position: relative; height: 10px; margin-top: var(--s24);
-  max-width: 34ch; border-top: 1px solid var(--ivory-40);
+  position: relative; height: 14px; margin-top: var(--s24);
+  border-top: 2px solid var(--ivory-40);
 }
 .sign-rule i { position: absolute; display: block; }
-.sign-mount { top: -2px; width: 4px; height: 4px; background: var(--ivory); }
-.sign-mount.a { left: 0; }
-.sign-mount.b { right: 0; }
-.sign-end { top: -4px; right: 0; width: 8px; height: 8px; background: var(--signal); }
-.sign-tick { top: -4px; left: 0; width: 8px; height: 8px; background: var(--ivory); }
+/* One fixing at the head of the track; the red mark is the one at
+   the other end, so a second ivory square there was dead markup. */
+.sign-mount { top: -4px; left: 0; width: 6px; height: 6px; background: var(--ivory); }
+.sign-end { top: -6px; right: 0; width: 12px; height: 12px; background: var(--signal); }
+.sign-tick { top: -6px; left: 0; width: 12px; height: 12px; background: var(--ivory); }
+.sign-tick.trail { opacity: .5; }
+
 @media (prefers-reduced-motion: no-preference) {
-  .sign-tick { animation: tick 5.6s steps(1, end) infinite; }
+  .sign-tick { animation: tick 3.6s steps(1, end) infinite; }
+  /* One step behind the leader: the cycle is eight steps of 450ms, so
+     a negative delay of seven of them trails by exactly one. */
+  .sign-tick.trail { animation-delay: -3.15s; }
+
   @keyframes tick {
-    0%   { left: 0; }
-    16%  { left: 18%; }
-    32%  { left: 36%; }
-    48%  { left: 54%; }
-    64%  { left: 72%; }
-    80%, 100% { left: calc(100% - 8px); }
+    0%          { left: 0; }
+    12.5%       { left: 13%; }
+    25%         { left: 26%; }
+    37.5%       { left: 39%; }
+    50%         { left: 52%; }
+    62.5%       { left: 65%; }
+    75%         { left: 78%; }
+    87.5%, 100% { left: calc(100% - 12px); }
   }
 }
 
