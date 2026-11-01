@@ -1,782 +1,370 @@
-<!-- ══ STIR · HOME ══ One Code Block on a blank page. -->
-<div class="stir stir-home">
-<!-- ════════ CHANNEL STRIP ════════
-     The station bar. The only place the word LIVE appears. -->
+<!-- STIR — /
+     One Code Block, full width, on an otherwise empty page.
+     GENERATED from index.html by scripts/build-squarespace.py. -->
+<div class="stir">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
+</defs></svg>
+
+<!-- A static strip. One real line about the studio; no live status,
+     no marquee, no invented open call. -->
 <div class="strip">
-  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
-  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
-  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+  <div class="wrap">
+    <span class="utility">STIR &mdash; Brooklyn, New York</span>
+    <span class="utility">Founder-led creative &amp; growth practice</span>
+  </div>
 </div>
 
-<!-- ════════ NAVIGATION ════════ -->
-<header class="nav">
-  <div class="shell nav-inner">
-    <a href="/" class="nav-logo">
-      <img class="mark-ivory" src="https://stirnyc.netlify.app/assets/stir-mark-ivory.png" alt="STIR — Home">
-      <img class="mark-red" src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="" aria-hidden="true">
-    </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">05</i>Services</a>
-      <a href="/about">About</a>
-      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="/contact" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
+<!-- C01 — static segmented header. The brand cell is the same stepped
+     ivory sign construction as the building's sign and the footer. -->
+<header class="site-head">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="STIR — home">
+        <img src="https://stirnyc.netlify.app/assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR">
+      </a>
+      <div class="nav-links">
+        <a href="/#what">What we do</a>
+        <a href="/labay">LABAY</a>
+        <a href="/about">Studio</a>
+        <a class="nav-start" href="/contact?type=business">Start a project</a>
+      </div>
+      <button class="nav-menu" type="button" aria-controls="nav-panel" aria-expanded="false">Menu</button>
     </nav>
+    <div class="nav-panel" id="nav-panel" hidden>
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/about">Studio</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate with STIR</a>
+      <a href="/contact?type=business">Start a project</a>
+    </div>
   </div>
 </header>
+<main id="main">
 
-<!-- Mobile menu overlay -->
-<div class="nav-overlay" id="nav-overlay" hidden>
-  <div class="nav-overlay-head">
-    <img class="mark-ivory" src="https://stirnyc.netlify.app/assets/stir-mark-ivory.png" alt="STIR">
-    <img class="mark-red" src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="" aria-hidden="true">
-    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
-  </div>
-  <nav class="nav-overlay-links" aria-label="Menu">
-    <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">05</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="/about">About <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="/contact">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
-  </nav>
-  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
-</div>
-
-<main>
-
-  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════
-       The illustration is gone and the type carries the frame. The
-       one controlled disturbance on the site lives here: the
-       headline arrives as a signal acquiring lock, resolves, and
-       cuts. It runs once and never touches legibility, because what
-       it resolves into is the real text that was in the DOM all
-       along. The footage band underneath is the first real thing a
-       visitor sees: an actual business, in colour. -->
-  <section class="hero" data-ground="cobalt" data-index="01 — Attention" data-nav-theme="cream" aria-label="STIR — attention should pay">
-    <div class="shell hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Founder-led creative &amp; growth practice &mdash; Est.&nbsp;2025</p>
-
-        <div class="hero-head" data-sync>
-          <h1 class="display hero-headline">
-            <span class="hl-line"><span>Attention</span></span>
-            <span class="hl-line"><span>should <em>pay.</em></span></span>
-          </h1>
-          <canvas class="hero-sync" aria-hidden="true"></canvas>
-        </div>
-
-        <p class="editorial hero-prop">I make content, campaigns, brands and websites for businesses with a street address&nbsp;— the kind people walk past, call, or order&nbsp;from. <b>I've run one myself.</b></p>
-
-        <p class="hero-cta"><a class="cta" href="/contact"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
+<!-- ════════ 1 · HERO ════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="reveal-h1"><span>ATTENTION</span><span>SHOULD</span><span>PAY.</span></h1>
+      <!-- The sign's own vocabulary, looping: a mounting rule, two
+           square fixings, a block advancing in discrete steps toward
+           the red mark at the end of the track. -->
+      <div class="sign-rule" aria-hidden="true">
+        <i class="sign-mount a"></i><i class="sign-end"></i>
+        <i class="sign-tick trail"></i><i class="sign-tick"></i>
       </div>
-    </div>
-  </section>
-
-  <!-- The first real thing: an actual business, captioned the way a
-       broadcast captions a shot. -->
-  <figure class="shot">
-    <img class="shot-art" src="https://stirnyc.netlify.app/assets/labay/labay-market-interior.webp"
-         width="1216" height="921" fetchpriority="high" decoding="async"
-         alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
-    <figcaption class="l3"><b>Labay Market</b><span>Brooklyn, NY &middot; The business I ran &middot; Content, brand, website</span></figcaption>
-  </figure>
-
-  <!-- ════════ 02 · THE ARGUMENT ════════
-       One headline, not a staged reversal. The small line concedes
-       the obvious, the headline says the thing worth remembering,
-       and the deck explains how it is done. The red field behind
-       WORTH is editorial emphasis — a printed block, not a control,
-       so it carries no hover, no cursor and no affordance. -->
-  <section class="belief" data-ground="ivory" data-index="02 — Thesis" data-nav-theme="cobalt" aria-labelledby="belief-title">
-
-    <div class="shell belief-inner">
-    <p class="utility belief-label" data-reveal="structural"><b><i aria-hidden="true"></i>The argument</b><em>Why any of this works</em></p>
-
-    <div class="belief-statement" data-reveal="stage">
-      <p class="belief-intro">More content isn’t the whole&nbsp;answer.</p>
-
-      <h2 class="display belief-claim" id="belief-title">Something <span class="field">worth</span> talking&nbsp;about.</h2>
-
-      <p class="editorial belief-deck">The interesting part is usually already there. We find it, build the story around it, and give people a reason to&nbsp;act.</p>
-    </div>
-    </div>
-  </section>
-
-  <!-- ════════ 03 · PROOF — LABAY ════════ -->
-  <section class="proof" data-ground="ivory" data-index="03 — Proof" data-nav-theme="cream" id="proof" aria-labelledby="proof-title">
-    <div class="shell">
-      <div class="proof-head utility" data-reveal="structural">
-        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
-        <span class="proof-meta">Brooklyn, New York<br>March 2025–present</span>
-      </div>
-
-      <h2 class="display proof-title" data-reveal="editorial" id="proof-title">LABAY<br>Market.</h2>
-
-      <p class="proof-role reveal">
-        <span class="ann role-label"><i class="ann-mark" aria-hidden="true"></i>The role</span>
-        <span class="role-said">STIR leads LABAY’s <strong>creative direction and digital channels</strong>, produces short-form content, manages its website and e-commerce work, and handles wholesale account&nbsp;relationships.</span>
+      <p class="lede" style="margin-top:var(--s24)">STIR connects brand, content and digital presence for independent businesses.</p>
+      <p class="actions">
+        <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+        <a class="action-2" href="/labay">Explore LABAY <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+        <a class="action-3" href="/about">About the studio</a>
       </p>
+    </div>
 
-      <div class="grid proof-body">
-        <div class="proof-lead">
-          <p class="proof-metric reveal" data-count="5" data-count-suffix="M">5M</p>
-          <p class="utility proof-metric-label">Organic views</p>
-          <!-- Two overlapping totals for one nine-month period, stated as
-               overlapping. They are not additive and they are not people. -->
-          <p class="utility proof-metric-note">Excluding creator&nbsp;collaborations.</p>
-          <p class="utility proof-metric-note">10M+ including creator collaborations, across the same nine-month period. No paid&nbsp;ads.</p>
-        </div>
-        <div class="proof-statement-wrap">
-          <p class="proof-statement reveal">The work connects what people see online with what happens at the&nbsp;market.</p>
+    <figure class="stage" data-scene>
+      <picture>
+        <source media="(max-width: 767px)" srcset="https://stirnyc.netlify.app/assets/scene/hero-phone-poster.webp" width="390" height="330">
+        <img class="stage-still" src="https://stirnyc.netlify.app/assets/scene/hero-desk-poster.webp"
+             width="820" height="620" fetchpriority="high" decoding="async"
+             alt="Illustration: a small cream studio building drawn as an isometric pixel diorama, its sign reading STIR, with one oversized red campaign sheet carrying the STIR wordmark billowing out of an upper opening into open blue. Someone works at a lit table inside; another figure walks to the open red door.">
+      </picture>
+    </figure>
+  </div>
+</section>
+
+<!-- ════════ 2 · THREE WAYS IN ═══════════════════════════════════ -->
+<section class="band wrap" aria-labelledby="ways-t">
+  <div class="band-head">
+    <span class="utility" id="ways-t">Three entrances, one studio</span>
+    <span class="utility">Businesses first</span>
+  </div>
+  <div class="ways" style="margin-top:var(--s24)">
+    <a href="/businesses">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 4h20v4H2z M3 10h3v10H3z M18 10h3v10h-3z M6 17h5v3H6z M13 11h5v9h-5z M7 11h3v3H7z"/></svg>
+      <h3>For businesses</h3>
+      <p>Connect your brand, content and digital presence through a partnership or a defined project.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+    <a href="/creators">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M7 3h8v3h7v15H2V6h5z M5 9v9h14V9z M9 11h6v5H9z M17 7h2v2h-2z"/></svg>
+      <h3>For creators</h3>
+      <p>Bring your perspective. A small following is welcome; there is no minimum.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+    <a href="/collaborate">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 3h10v5h4v5h-4v8H2V3z M5 6v12h4v-8h4V8H9V6z M15 3h7v18h-7v-3h4V6h-4z"/></svg>
+      <h3>Collaborate with STIR</h3>
+      <p>Bring a skill, production help, a connection, access or an idea to future work.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ════════ 3 · ONE LINE, ALONE ═════════════════════════════════
+     A deliberate break in the band rhythm: no label, no columns. -->
+<section class="band wrap">
+  <p class="statement">The work connects what people see online with what happens at the market.</p>
+</section>
+
+<!-- ════════ 4 · LABAY — the flagship, with the work on it ═══════ -->
+<section class="band on-ivory" aria-labelledby="labay-t">
+  <div class="wrap">
+    <div class="band-head"><span class="utility">The flagship case</span><span class="utility">01</span></div>
+    <h2 id="labay-t" data-rise>A neighborhood market.<br>A much larger reach.</h2>
+
+    <div class="two">
+      <figure class="evidence">
+        <img src="https://stirnyc.netlify.app/assets/labay/labay-market-interior.webp" width="1216" height="921" loading="lazy" decoding="async"
+             alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
+        <figcaption><span>Labay Market &mdash; Nostrand Avenue, Brooklyn</span><span>The business I ran</span></figcaption>
+      </figure>
+      <div>
+        <p>STIR leads LABAY&rsquo;s <strong>creative direction and digital channels</strong>, produces short-form
+          content, manages its website and e-commerce work, and coordinates wholesale account relationships.</p>
+        <div class="metrics">
+          <div class="metric"><b>5M</b><span>Organic views, excluding creator collaborations.</span></div>
+          <!-- The same nine months counted two ways. Overlapping
+               totals: never added, and not people. -->
+          <div class="metric"><b>10M+</b><span>Including creator collaborations, across the same nine-month period. No paid ads.</span></div>
         </div>
       </div>
     </div>
+  </div>
 
-    <!--
-      CREATOR COLLABORATIONS — videos featuring LABAY, described
-      neutrally. Per-clip coordination credits are not resolved, so the
-      wall does not assert that STIR arranged every one of them.
-
-      Posters only until someone asks for a clip. preload="none" keeps
-      the section at ~320KB of stills rather than 11MB of video, and
-      with no JS the posters and the links still carry it.
-
-      Follower counts have been removed: they drift, they are not a
-      result, and they were only ever as supplied.
-    -->
-    <div class="shell">
-      <div class="creators reveal">
-        <div class="creators-head">
-          <p class="ann creators-label"><i class="ann-mark" aria-hidden="true"></i>Creator collaborations</p>
-          <p class="utility creators-role">Videos featuring&nbsp;LABAY.</p>
-        </div>
-
-        <ul class="creator-wall">
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Kemoy Martin">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="https://stirnyc.netlify.app/assets/labay/creators/creator-01-poster.webp">
-                <source src="https://stirnyc.netlify.app/assets/labay/creators/creator-01.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Kemoy Martin</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/DYvKWWZRby3/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Kemoy Martin on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Nicolas Nuvan">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="https://stirnyc.netlify.app/assets/labay/creators/creator-04-poster.webp">
-                <source src="https://stirnyc.netlify.app/assets/labay/creators/creator-04.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Nicolas Nuvan</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/C9vRyRUPNgx/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Nicolas Nuvan on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from MarcosWorldNyc">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="https://stirnyc.netlify.app/assets/labay/creators/creator-02-poster.webp">
-                <source src="https://stirnyc.netlify.app/assets/labay/creators/creator-02.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">MarcosWorldNyc</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/Dax-jCpxhsr/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> MarcosWorldNyc on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Eating With Experts">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="https://stirnyc.netlify.app/assets/labay/creators/creator-05-poster.webp">
-                <source src="https://stirnyc.netlify.app/assets/labay/creators/creator-05.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Eating With Experts</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/Dd-HmshRCTj/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Eating With Experts on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Melissa Rose Cooper">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="https://stirnyc.netlify.app/assets/labay/creators/creator-03-poster.webp">
-                <source src="https://stirnyc.netlify.app/assets/labay/creators/creator-03.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Melissa Rose Cooper</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/DcHzjyNhuQh/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Melissa Rose Cooper on Instagram, opens in a new tab</span></a></p>
-          </li>
-        </ul>
-
-      </div>
-
-      <!-- The payoff — the headline's promise, cashed.
-           Two bands, escalating: brands booking the block, then
-           kitchens buying the produce. The second is the one that
-           closes the site's argument, so it lands last.
-
-           Every claim is scoped to what STIR actually did. "Booked as
-           the F&B vendor" is not "brand partnership", and that
-           difference is the kind of thing a buyer tests. -->
-      <div class="grid proof-payoff">
-        <h3 class="display payoff-title" data-reveal="editorial">Events &amp; wholesale.</h3>
-        <div class="payoff-body reveal">
-          <p class="body">STIR’s work also extends to event production and wholesale coordination for&nbsp;LABAY.</p>
-        </div>
-      </div>
-
-      <div class="bands">
-
-        <section class="band reveal" aria-labelledby="band-activations">
-          <p class="ann band-label" id="band-activations"><i class="ann-mark" aria-hidden="true"></i>Events</p>
-          <ul class="band-list band-list--rows">
-            <li class="band-item">
-              <button class="band-frame" type="button" aria-label="Play the clip from Nike Tennis">
-                <video class="band-vid" muted loop playsinline preload="none"
-                       width="720" height="1280"
-                       poster="https://stirnyc.netlify.app/assets/labay/activations/act-02-poster.webp">
-                  <source src="https://stirnyc.netlify.app/assets/labay/activations/act-02.mp4" type="video/mp4">
-                </video>
-                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-              </button>
-              <div class="band-body">
-                <h4 class="band-name">Nike Tennis</h4>
-                <p class="band-said">LABAY’s fruit stand at a Nike Tennis block party produced by&nbsp;Kindred.</p>
-                <p class="utility band-role"><span class="band-role-k">STIR</span> Developed the menu and concept, coordinated staffing, and ran LABAY’s stand on the&nbsp;day.</p>
-                <p class="utility band-meta">August 2026 &middot; Marcy Playground, Brooklyn &middot; Produced by&nbsp;Kindred</p>
-              </div>
-            </li>
-            <li class="band-item">
-              <button class="band-frame" type="button" aria-label="Play the clip from Hoopbus &times; Red&nbsp;Bull">
-                <video class="band-vid" muted loop playsinline preload="none"
-                       width="720" height="1280"
-                       poster="https://stirnyc.netlify.app/assets/labay/activations/act-01-poster.webp">
-                  <source src="https://stirnyc.netlify.app/assets/labay/activations/act-01.mp4" type="video/mp4">
-                </video>
-                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-              </button>
-              <div class="band-body">
-                <h4 class="band-name">Hoopbus &times; Red&nbsp;Bull</h4>
-                <p class="band-said">A community basketball event outside LABAY on Nostrand&nbsp;Avenue.</p>
-                <p class="utility band-role"><span class="band-role-k">STIR</span> Coordinated LABAY’s participation and the street-closure&nbsp;arrangements.</p>
-                <p class="utility band-meta">Nostrand Avenue, Brooklyn</p>
-              </div>
-            </li>
-            <li class="band-item">
-              <button class="band-frame" type="button" aria-label="Play the clip from NYC Health + Hospitals">
-                <video class="band-vid" muted loop playsinline preload="none"
-                       width="720" height="1280"
-                       poster="https://stirnyc.netlify.app/assets/labay/activations/act-03-poster.webp">
-                  <source src="https://stirnyc.netlify.app/assets/labay/activations/act-03.mp4" type="video/mp4">
-                </video>
-                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-              </button>
-              <div class="band-body">
-                <h4 class="band-name">NYC Health + Hospitals</h4>
-                <p class="band-said">LABAY’s participation in a Caribbean Heritage Month celebration at South Brooklyn&nbsp;Health.</p>
-                <p class="utility band-role"><span class="band-role-k">STIR</span> Produced and managed LABAY’s&nbsp;participation.</p>
-                <p class="utility band-meta">South Brooklyn Health</p>
-              </div>
-            </li>
-          </ul>
-        </section>
-
-        <section class="band reveal" aria-labelledby="band-wholesale">
-          <p class="ann band-label" id="band-wholesale"><i class="ann-mark" aria-hidden="true"></i>LABAY’s wholesale customers</p>
-          <p class="band-lede">LABAY supplies produce to Kabawa and Café&nbsp;Charmant.</p>
-          <ul class="band-list band-list--pair">
-            <li class="band-item">
-              <h4 class="band-name">Kabawa</h4>
-              <p class="utility band-meta">Momofuku Group</p>
-            </li>
-            <li class="band-item">
-              <h4 class="band-name">Caf&eacute; Charmant</h4>
-              <p class="utility band-meta">Catch Hospitality Group</p>
-            </li>
-          </ul>
-          <p class="utility band-role band-role--wide"><span class="band-role-k">STIR</span> Manages LABAY’s relationships with Kabawa and Café&nbsp;Charmant, serving as the point of contact for both accounts. The work includes all account communication, invoicing and payments, and delivery coordination with our&nbsp;staff.</p>
-          <p class="utility band-note"><a class="band-cite" href="https://www.newyorker.com/culture/the-food-scene/the-caribbean-restaurant-reinventing-the-momofuku-empire" rel="noopener" target="_blank">The New&nbsp;Yorker <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a> describes Kabawa’s sourcing relationship with&nbsp;LABAY.</p>
-        </section>
-
-        <!-- Press. Third because it is the weakest kind of evidence on
-             the page: someone else's judgement, not a booking or an
-             invoice. It earns its place by being verifiable — every
-             row goes to the article it describes.
-
-             No logos. A wall of mastheads is a trust badge, and it
-             would also be the only place on this site where someone
-             else's brand does our talking. The index says what each
-             one actually published instead. -->
-        <section class="band press reveal" aria-labelledby="band-press">
-          <p class="ann band-label" id="band-press"><i class="ann-mark" aria-hidden="true"></i>Press</p>
-          <p class="band-lede">Selected coverage of the&nbsp;market.</p>
-
-          <div class="press-set">
-
-            <ol class="press-index">
-              <li class="press-item">
-                <a class="press-row" href="https://www.newyorker.com/culture/the-food-scene/the-caribbean-restaurant-reinventing-the-momofuku-empire" rel="noopener" target="_blank">
-                  <span class="press-pub">The New&nbsp;Yorker</span>
-                  <span class="press-said">LABAY is named as a produce source for&nbsp;Kabawa.</span>
-                  <span class="utility press-meta">The Food Scene</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://nymag.com/strategist/article/what-vic-mensa-cant-live-without.html" rel="noopener" target="_blank">
-                  <span class="press-pub">New York Magazine</span>
-                  <span class="press-said">Vic Mensa names LABAY in &ldquo;What I Can’t Live&nbsp;Without.&rdquo;</span>
-                  <span class="utility press-meta">The Strategist &middot; August&nbsp;2026</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.grubstreet.com/article/best-summer-markets-delis-bakeries-nyc.html" rel="noopener" target="_blank">
-                  <span class="press-pub">Grub Street</span>
-                  <span class="press-said">LABAY featured in Grub&nbsp;Street.</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.timeout.com/newyork/news/heres-how-to-spend-a-day-in-black-owned-flatbush-brooklyn-022825" rel="noopener" target="_blank">
-                  <span class="press-pub">Time Out New&nbsp;York</span>
-                  <span class="press-said">LABAY is included in a guide to Black-owned&nbsp;Flatbush.</span>
-                  <span class="utility press-meta">Morgan Carter &middot; February&nbsp;2025</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.ebony.com/video/labay-market-brooklyn-best-mangoes/" rel="noopener" target="_blank">
-                  <span class="press-pub">Ebony</span>
-                  <span class="press-said">&ldquo;Why This Market In Brooklyn Has The Best Mangos In&nbsp;NYC.&rdquo;</span>
-                  <span class="utility press-meta">Starr Rocque &middot; September&nbsp;2025</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.thegrocerylistshow.com" rel="noopener" target="_blank">
-                  <span class="press-pub">The Grocery List&nbsp;Show</span>
-                  <span class="press-said">An episode filmed at the&nbsp;market.</span>
-                  <span class="utility press-meta">PBS Independent Lens &middot; June&nbsp;2025</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-            </ol>
-          </div>
-
-        </section>
-
-      </div>
+  <!-- The work itself, framed in the same system as everything else. -->
+  <div class="wrap" style="margin-top:var(--s64)">
+    <div class="band-head" style="margin-bottom:var(--s24)">
+      <span class="utility">Creator collaborations</span>
+      <span class="utility">Videos featuring LABAY</span>
     </div>
-  </section>
+    <ul class="wall" style="--wall-cols:3">
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Kemoy Martin">
+          <img src="https://stirnyc.netlify.app/assets/labay/creators/creator-01-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Kemoy Martin&rsquo;s video featuring Labay Market.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="https://stirnyc.netlify.app/assets/labay/creators/creator-01.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Kemoy Martin</b>
+          <span>Featured LABAY</span>
+          <a href="https://www.instagram.com/reel/DYvKWWZRby3/" rel="noopener" target="_blank">Watch &#8599;<span class="hp"> on Instagram, opens in a new tab</span></a>
+        </div>
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Nicolas Nuvan">
+          <img src="https://stirnyc.netlify.app/assets/labay/creators/creator-04-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Nicolas Nuvan&rsquo;s video featuring Labay Market.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="https://stirnyc.netlify.app/assets/labay/creators/creator-04.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Nicolas Nuvan</b>
+          <span>Featured LABAY</span>
+          <a href="https://www.instagram.com/reel/C9vRyRUPNgx/" rel="noopener" target="_blank">Watch &#8599;<span class="hp"> on Instagram, opens in a new tab</span></a>
+        </div>
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from MarcosWorldNyc">
+          <img src="https://stirnyc.netlify.app/assets/labay/creators/creator-02-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from MarcosWorldNyc&rsquo;s video featuring Labay Market.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="https://stirnyc.netlify.app/assets/labay/creators/creator-02.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>MarcosWorldNyc</b>
+          <span>Featured LABAY</span>
+          <a href="https://www.instagram.com/reel/Dax-jCpxhsr/" rel="noopener" target="_blank">Watch &#8599;<span class="hp"> on Instagram, opens in a new tab</span></a>
+        </div>
+      </li>
+    </ul>
+    <p class="field-note" style="margin-top:var(--s16);max-width:56ch">Creators who featured LABAY are not
+      automatically STIR clients. Per-clip coordination credits are not resolved, so this does not claim STIR
+      arranged every one.</p>
+  </div>
 
-  <!-- ════════ 04 · SELECTED WEBSITES ════════
-       Work for other people's businesses, with other people's
-       deadlines — the counterweight to a case study built around a
-       single long engagement.
-
-       Every line here is either the client's own copy or the scope as
-       agreed. No results are claimed, because none have been supplied
-       — a build with an invented metric under it is worth less than a
-       build with nothing under it.
-
-       Shown at phone width because that is the capture we have and,
-       for all three of these businesses, the screen that matters. -->
-  <section class="sites shell" data-ground="ivory" data-index="04 — Selected websites" data-nav-theme="cream" id="sites" aria-labelledby="sites-title">
-    <div class="grid">
-      <p class="utility sites-label" data-reveal="structural"><b><i aria-hidden="true"></i>Selected websites</b><em>Built and running</em></p>
-
-      <h2 class="display sites-title" data-reveal="editorial" id="sites-title">Sites with a job to&nbsp;do.</h2>
-      <p class="body sites-lede reveal">A storage business, a drain service, and a church. Each website needed to make the next step clear: request a quote, call for help, or plan a&nbsp;visit.</p>
+  <div class="wrap" style="margin-top:var(--s48)">
+    <div class="band-head" style="margin-bottom:var(--s24)">
+      <span class="utility">Events &amp; activations</span>
+      <span class="utility">Produced with and for LABAY</span>
     </div>
-
-    <!--
-      The index names the work and the stage shows it. One project is
-      live at a time: scrolling the index moves it along, hovering a
-      row takes it over, and either half opens the site. Without
-      JavaScript the stage unsticks and the captures stack under the
-      index with their names attached, so nothing here depends on it.
-    -->
-    <div class="site-stage">
-
-      <ol class="site-index" role="list">
-        <li class="site-row is-active" role="listitem" data-site="0">
-          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <h3 class="site-name"><a href="https://carriacoulogistics.com" rel="noopener" target="_blank">Carriacou Logistics <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-          <p class="site-said">A website that explains storage options and helps prospective customers request a&nbsp;quote.</p>
-          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-        </li>
-        <li class="site-row" role="listitem" data-site="1">
-          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <h3 class="site-name"><a href="https://24hrpipepatrol.com" rel="noopener" target="_blank">24 Hour Pipe Patrol <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-          <p class="site-said">A website that makes drain and sewer services easy to understand, with a clear route to call for&nbsp;help.</p>
-          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-        </li>
-        <li class="site-row" role="listitem" data-site="2">
-          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <h3 class="site-name"><a href="https://torbk.org" rel="noopener" target="_blank">Temple of Refuge <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-          <p class="site-said">A website that helps visitors learn about the church and plan a&nbsp;visit.</p>
-          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build</p>
-        </li>
-      </ol>
-
-      <div class="site-screen" aria-hidden="true">
-        <div class="site-screen-inner">
-          <figure class="site-shot is-active" data-site="0">
-            <a class="site-shot-link" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1">
-              <img src="https://stirnyc.netlify.app/assets/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-            </a>
-            <figcaption class="utility site-shot-cap">Carriacou Logistics</figcaption>
-          </figure>
-          <figure class="site-shot" data-site="1">
-            <a class="site-shot-link" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1">
-              <img src="https://stirnyc.netlify.app/assets/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-            </a>
-            <figcaption class="utility site-shot-cap">24 Hour Pipe Patrol</figcaption>
-          </figure>
-          <figure class="site-shot" data-site="2">
-            <a class="site-shot-link" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1">
-              <img src="https://stirnyc.netlify.app/assets/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-            </a>
-            <figcaption class="utility site-shot-cap">Temple of Refuge</figcaption>
-          </figure>
-          <i class="site-screen-rule" aria-hidden="true"></i>
+    <ul class="wall" style="--wall-cols:3">
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Nike Tennis">
+          <img src="https://stirnyc.netlify.app/assets/labay/activations/act-01-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Nike Tennis: LABAY&rsquo;s fruit stand at a Nike Tennis block party produced by Kindred.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="https://stirnyc.netlify.app/assets/labay/activations/act-01.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Nike Tennis</b>
+          <span>August 2026 &middot; Marcy Playground, Brooklyn &middot; Produced by Kindred</span>
+          <p style="font-size:15px;margin-top:var(--s8)">STIR developed the menu and concept, coordinated staffing, and ran LABAY&rsquo;s stand on the day.</p>
         </div>
-      </div>
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Hoopbus &times; Red Bull">
+          <img src="https://stirnyc.netlify.app/assets/labay/activations/act-02-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Hoopbus &times; Red Bull: A community basketball event outside LABAY on Nostrand Avenue.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="https://stirnyc.netlify.app/assets/labay/activations/act-02.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Hoopbus &times; Red Bull</b>
+          <span>Nostrand Avenue, Brooklyn</span>
+          <p style="font-size:15px;margin-top:var(--s8)">STIR coordinated LABAY&rsquo;s participation and the street-closure arrangements.</p>
+        </div>
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from NYC Health + Hospitals">
+          <img src="https://stirnyc.netlify.app/assets/labay/activations/act-03-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from NYC Health + Hospitals: LABAY&rsquo;s participation in a Caribbean Heritage Month celebration at South Brooklyn Health.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="https://stirnyc.netlify.app/assets/labay/activations/act-03.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>NYC Health + Hospitals</b>
+          <span>South Brooklyn Health</span>
+          <p style="font-size:15px;margin-top:var(--s8)">STIR produced and managed LABAY&rsquo;s participation.</p>
+        </div>
+      </li>
+    </ul>
+    <p class="actions" style="margin-top:var(--s32)">
+      <a class="action-2" href="/labay">All of it, in one place <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+    </p>
+  </div>
+</section>
 
+<!-- ════════ 5 · PRESS — a third temperature ═════════════════════ -->
+<section class="band on-ink" aria-labelledby="press-t">
+  <div class="wrap">
+    <div class="band-head"><span class="utility">Coverage</span><span class="utility">02</span></div>
+    <h2 id="press-t" data-rise>It happened on our watch.</h2>
+    <p class="lede" style="margin-bottom:var(--s32)">Selected coverage of the market. This is press about
+      LABAY &mdash; it is not an award for STIR.</p>
+    <div class="press">
+    <a href="https://www.newyorker.com/culture/the-food-scene/the-caribbean-restaurant-reinventing-the-momofuku-empire" rel="noopener" target="_blank">
+      <b>The New Yorker</b><span class="said">LABAY is named as a produce source for Kabawa.</span><span class="where">The Food Scene</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://nymag.com/strategist/article/what-vic-mensa-cant-live-without.html" rel="noopener" target="_blank">
+      <b>New York Magazine</b><span class="said">Vic Mensa names LABAY in &ldquo;What I Can&rsquo;t Live Without.&rdquo;</span><span class="where">The Strategist &middot; August 2026</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.ebony.com/video/labay-market-brooklyn-best-mangoes/" rel="noopener" target="_blank">
+      <b>Ebony</b><span class="said">&ldquo;Why This Market In Brooklyn Has The Best Mangos In NYC.&rdquo;</span><span class="where">Starr Rocque &middot; September 2025</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.timeout.com/newyork/news/heres-how-to-spend-a-day-in-black-owned-flatbush-brooklyn-022825" rel="noopener" target="_blank">
+      <b>Time Out New York</b><span class="said">LABAY is included in a guide to Black-owned Flatbush.</span><span class="where">Morgan Carter &middot; February 2025</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.grubstreet.com/article/best-summer-markets-delis-bakeries-nyc.html" rel="noopener" target="_blank">
+      <b>Grub Street</b><span class="said">LABAY featured in Grub Street.</span><span class="where"></span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.thegrocerylistshow.com" rel="noopener" target="_blank">
+      <b>The Grocery List Show</b><span class="said">An episode filmed at the market.</span><span class="where">PBS Independent Lens &middot; June 2025</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+  </div>
+  </div>
+</section>
+
+<!-- ════════ 6 · WHAT WE DO ══════════════════════════════════════ -->
+<section class="band wrap" id="what" aria-labelledby="what-t">
+  <div class="band-head"><span class="utility">What we do</span><span class="utility">03</span></div>
+  <h2 id="what-t" data-rise>A business with something worthwhile, and a partner with room to shape it.</h2>
+  <div class="two">
+    <div>
+      <p class="lede">Most of this work is connected: the way a business is positioned shows up in its
+        content, and the content only pays if the website and the channels behind it can take the weight.
+        STIR works across those at once rather than handing over one piece and leaving.</p>
+      <p style="margin-top:var(--s24)">A clearly defined single project is a valid way to start. Scope,
+        responsibilities and capacity are agreed for each engagement &mdash; LABAY shows how wide the
+        relationship <em>can</em> go, not what every engagement includes.</p>
+      <p class="actions" style="margin-top:var(--s32)">
+        <a class="action-3" href="/businesses">How an engagement works</a>
+      </p>
     </div>
-
-    <div class="grid">
-      <p class="utility sites-foot">Shown the way most people arrive at them &mdash; on a&nbsp;phone.</p>
+    <div class="rail" style="margin-top:0">
+      <div><b>Brand &amp; direction</b><span>Positioning, identity, art direction</span></div>
+      <div><b>Content &amp; campaigns</b><span>Short-form, production, creator work</span></div>
+      <div><b>Digital presence</b><span>Website, e-commerce, ongoing support</span></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ════════ 05 · SERVICES ════════
-       Replaces "What you leave with", which restated the method in
-       different words. This answers the question a visitor actually
-       has: what can I hire these people for, and what does it cost me
-       to find out. Three panels, all visible at every width — nothing
-       essential is behind a swipe or a hover.
+<!-- ════════ 7 · METHOD ══════════════════════════════════════════ -->
+<section class="band wrap" aria-labelledby="method-t">
+  <div class="band-head"><span class="utility">How an engagement works</span><span class="utility">04</span></div>
+  <h2 id="method-t" data-rise>Find &rarr; Build &rarr; Run</h2>
+  <div class="three">
+    <div><h3>Find</h3><p>Understand the business, its customers and what actually needs to move first.</p></div>
+    <div><h3>Build</h3><p>Make the agreed work: positioning, identity, content, the site behind them.</p></div>
+    <div><h3>Run</h3><p>Keep it moving &mdash; support, review and the next round of work.</p></div>
+  </div>
+</section>
 
-       Panel 03 carries the red rule and the red numeral because the
-       ongoing relationship is the one we would steer most businesses
-       toward. The other two are full offers, not downgrades. -->
-  <section class="services shell" data-ground="ivory" data-index="05 — Services" data-nav-theme="cream" id="services" aria-labelledby="services-title">
-    <div class="grid">
-      <p class="utility svc-label" data-reveal="structural"><b><i aria-hidden="true"></i>Services</b><em>What you can book</em></p>
-
-      <h2 class="display svc-title" data-reveal="editorial" id="services-title">What you can hire us&nbsp;for.</h2>
-      <p class="body svc-lede reveal">Bring us a specific project, or work with us on an ongoing&nbsp;basis.</p>
-
-      <div class="svc-set">
-
-        <article class="svc reveal">
-          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <h3 class="svc-name">Content &amp;<br>campaigns</h3>
-          <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
-          <ul class="utility svc-scope">
-            <li>Content planning</li>
-            <li>Photography</li>
-            <li>Short-form video</li>
-            <li>Campaign creative</li>
-            <li>Launch content</li>
-            <li>Creator coordination</li>
-          </ul>
-          <p class="svc-action"><a class="cta-line" href="/contact"><i class="cta-line-rule" aria-hidden="true"></i>Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
-        </article>
-
-        <article class="svc reveal">
-          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <h3 class="svc-name">Brand &amp;<br>websites</h3>
-          <p class="svc-prop">Make the business clear, recognizable, and easy to buy&nbsp;from.</p>
-          <ul class="utility svc-scope">
-            <li>Positioning &amp; messaging</li>
-            <li>Visual identity</li>
-            <li>Website design &amp; build</li>
-            <li>Service &amp; product copy</li>
-            <li>Inquiry &amp; ordering flows</li>
-          </ul>
-          <p class="svc-action"><a class="cta-line" href="/contact"><i class="cta-line-rule" aria-hidden="true"></i>Talk about brand &amp; websites <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
-        </article>
-
-        <article class="svc svc--lead reveal">
-          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <h3 class="svc-name">Ongoing creative<br>support</h3>
-          <p class="svc-prop">Keep the content and website working together, month after&nbsp;month.</p>
-          <ul class="utility svc-scope">
-            <li>Monthly planning</li>
-            <li>Content production</li>
-            <li>Publishing &amp; distribution</li>
-            <li>Website updates</li>
-            <li>Performance reviews</li>
-          </ul>
-          <p class="svc-action"><a class="cta-line" href="/contact"><i class="cta-line-rule" aria-hidden="true"></i>Talk about ongoing support <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
-        </article>
-
-      </div>
+<!-- ════════ 8 · STUDIO ══════════════════════════════════════════ -->
+<section class="band wrap" aria-labelledby="studio-t">
+  <div class="band-head"><span class="utility">The studio</span><span class="utility">05</span></div>
+  <h2 id="studio-t" data-rise>Led by Rasheed Jordon.<br>Built in Brooklyn.</h2>
+  <div class="two">
+    <div>
+      <p class="lede">A founder-led practice, not an agency. The reason the creative judgment and the
+        operating reality line up is that both have been done here &mdash; the same hands on the brand and
+        on the business it belongs to.</p>
     </div>
-  </section>
-
-  <!-- ════════ 05 · HOW WE WORK — FIND / BUILD / RUN ════════
-       The capability lists that used to live here now sit in the
-       services panels, where someone deciding what to buy will
-       actually read them. This section is only about sequence. -->
-  <section class="method shell" data-ground="ivory" data-index="06 — How we work" data-nav-theme="cream" id="method" aria-labelledby="method-label">
-    <div class="grid">
-      <p class="utility method-label" data-reveal="structural" id="method-label"><b><i aria-hidden="true"></i>How we work</b><em>Find · Build · Run</em></p>
-      <p class="body method-intro reveal">We agree on the priorities, make the work, and keep improving what needs ongoing&nbsp;attention.</p>
-
-      <div class="method-index reveal" id="method-index">
-
-        <div class="method-row is-active">
-          <button class="method-row-head" type="button" aria-expanded="true" aria-controls="method-find">
-            <span class="method-no">01</span>
-            <span class="method-word">Find <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Find what’s worth attention.</span>
-          </button>
-          <div class="method-detail" id="method-find">
-            <div>
-              <div class="method-detail-inner">
-                <p class="method-said">We look at the product, the people, and how the business works. Then we agree on what needs to be communicated and what the work should help people&nbsp;do.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="method-row">
-          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-build">
-            <span class="method-no">02</span>
-            <span class="method-word">Build <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Make the work people notice.</span>
-          </button>
-          <div class="method-detail" id="method-build">
-            <div>
-              <div class="method-detail-inner">
-                <p class="method-said">We create the content, identity, or website around that brief, with a clear scope and points for your&nbsp;input.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="method-row">
-          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-run">
-            <span class="method-no">03</span>
-            <span class="method-word">Run <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Keep it working, week after week.</span>
-          </button>
-          <div class="method-detail" id="method-run">
-            <div>
-              <div class="method-detail-inner">
-                <p class="method-said">For ongoing work, we manage the agreed channels and updates, review the response, and use inquiries and sales data where available to guide the next&nbsp;round.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
+    <div>
+      <p>STIR is building a network of creators and collaborators around the work. A very small following
+        is welcome; a relevant perspective or a specific contribution can matter more than audience size.
+        Expressing interest is a review for future project fit &mdash; it is not an open role, a placement
+        or a promise of payment.</p>
+      <p class="actions" style="margin-top:var(--s24)">
+        <a class="action-3" href="/creators">For creators</a>
+        <a class="action-3" href="/collaborate">Collaborate with STIR</a>
+      </p>
     </div>
-  </section>
+  </div>
+</section>
 
-
-  <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
-  <section class="who shell" data-ground="ivory" data-index="07 — Who this is for" data-nav-theme="cream" aria-labelledby="who-title">
-    <div class="grid">
-      <p class="utility who-label" data-reveal="structural" id="who-label"><b><i aria-hidden="true"></i>Who this is for</b><em>And who it is not</em></p>
-
-      <h2 class="display who-title" data-reveal="editorial" id="who-title">We work with businesses that already do something&nbsp;well.</h2>
-
-      <p class="body who-copy reveal">You have something worth choosing. You need more people to understand it, a clearer way to buy, or help keeping the work&nbsp;moving.</p>
-      <p class="body who-copy who-copy-2 reveal">Our strongest experience is in food, hospitality, and independent businesses. The same attention to clear communication carries into our website work across other&nbsp;fields.</p>
-
-      <!--
-        The trades are the answer to "do you work with someone like me".
-        Answering it as a wrapped list of nouns wastes the question, so
-        each one is a working control: choose a trade, and the panel
-        states what STIR actually does for it.
-      -->
-      <div class="who-body reveal">
-        <div class="trades-grid">
-          <ul class="trade-list" id="trade-list">
-          <li><button class="trade" type="button" aria-pressed="true"
-                      data-said="Show people what’s in the market and why it’s worth a visit."
-                      data-note="Product content · Website · Visit information" aria-controls="answer-markets">Markets</button>
-            <div class="trade-inline" id="answer-markets">
-              <div>
-                <p class="trade-inline-said">Show people what’s in the market and why it’s worth a visit.</p>
-                <p class="utility trade-inline-note">Product content · Website · Visit information</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Show what’s coming out of the oven and how to order."
-                      data-note="Product photography · Launch content · Pre-order pages" aria-controls="answer-bakeries">Bakeries</button>
-            <div class="trade-inline" id="answer-bakeries">
-              <div>
-                <p class="trade-inline-said">Show what’s coming out of the oven and how to order.</p>
-                <p class="utility trade-inline-note">Product photography · Launch content · Pre-order pages</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Give people a feel for the place before they visit."
-                      data-note="Identity · Photography · Local content" aria-controls="answer-caf-s">Cafés</button>
-            <div class="trade-inline" id="answer-caf-s">
-              <div>
-                <p class="trade-inline-said">Give people a feel for the place before they visit.</p>
-                <p class="utility trade-inline-note">Identity · Photography · Local content</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Show people what’s on the menu and make booking straightforward."
-                      data-note="Campaign content · Creator coordination · Booking links" aria-controls="answer-restaurants">Restaurants</button>
-            <div class="trade-inline" id="answer-restaurants">
-              <div>
-                <p class="trade-inline-said">Show people what’s on the menu and make booking straightforward.</p>
-                <p class="utility trade-inline-note">Campaign content · Creator coordination · Booking links</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Make the operation clear to the people who need it."
-                      data-note="Positioning · Website · Quote inquiries" aria-controls="answer-logistics">Logistics</button>
-            <div class="trade-inline" id="answer-logistics">
-              <div>
-                <p class="trade-inline-said">Make the operation clear to the people who need it.</p>
-                <p class="utility trade-inline-note">Positioning · Website · Quote inquiries</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Explain a complex operation to the people who buy it."
-                      data-note="Positioning · Capability video · Sales materials" aria-controls="answer-industrial">Industrial</button>
-            <div class="trade-inline" id="answer-industrial">
-              <div>
-                <p class="trade-inline-said">Explain a complex operation to the people who buy it.</p>
-                <p class="utility trade-inline-note">Positioning · Capability video · Sales materials</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Explain the practice and make the first inquiry clear."
-                      data-note="Service copy · Website · Inquiry forms" aria-controls="answer-law">Law</button>
-            <div class="trade-inline" id="answer-law">
-              <div>
-                <p class="trade-inline-said">Explain the practice and make the first inquiry clear.</p>
-                <p class="utility trade-inline-note">Service copy · Website · Inquiry forms</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Show the property and the neighborhood around it."
-                      data-note="Photography · Local content · Inquiry pages" aria-controls="answer-real-estate">Real estate</button>
-            <div class="trade-inline" id="answer-real-estate">
-              <div>
-                <p class="trade-inline-said">Show the property and the neighborhood around it.</p>
-                <p class="utility trade-inline-note">Photography · Local content · Inquiry pages</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Make the work visible, then make it bookable."
-                      data-note="Project photography · Service pages · Booking inquiries" aria-controls="answer-services">Services</button>
-            <div class="trade-inline" id="answer-services">
-              <div>
-                <p class="trade-inline-said">Make the work visible, then make it bookable.</p>
-                <p class="utility trade-inline-note">Project photography · Service pages · Booking inquiries</p>
-              </div>
-            </div></li>
-          </ul>
-
-          <div class="trade-panel" id="trade-panel">
-            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>For <span class="panel-for" id="panel-for">markets</span></p>
-            <p class="panel-said" id="panel-said">Show people what’s in the market and why it’s worth a visit.</p>
-            <p class="utility panel-note" id="panel-note">Product content · Website · Visit information</p>
-          </div>
-        </div>
-
-        <p class="utility who-trades-note">Some businesses need a specific project. Others need ongoing support. The scope should match what you need and what you can commit&nbsp;to.</p>
-      </div>
-
-      <div class="who-not reveal">
-        <p class="ann not-label"><i class="ann-mark" aria-hidden="true"></i>Not for you if</p>
-        <p class="body">The business isn’t ready to invest in ongoing creative work, or there isn’t something specific it wants people to do. We’d rather say that early than take the&nbsp;work.</p>
-      </div>
-
-    </div>
-
-    <!-- The ordinary storefront: the argument for who this is for.
-         A sibling of the grid, not a member of it: a band that bleeds
-         past the gutter is not grid content, and as a grid item it was
-         picking up a few pixels of alignment nudge. -->
-  </section>
-
-  <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
-  <section class="convert" data-ground="cobalt" data-index="Your turn" data-nav-theme="cobalt" id="contact" aria-labelledby="convert-q">
-    <!--
-      The site opened on the observer looking at an ordinary business.
-      It closes on the same artwork, cropped to the eye and masked into
-      the cobalt, so the question reads as the eye asking it.
-    -->
-    <div class="shell">
-     <div class="convert-inner">
-      <div class="convert-head" data-reveal="structural">
-        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
-      </div>
-      <h2 class="display convert-q" data-reveal="editorial" id="convert-q">Tell us<br>about the<br>business.</h2>
-
-      <div class="convert-foot reveal">
-        <p class="body convert-copy">Tell us what you do and what needs work. We’ll review it and reply about whether STIR can&nbsp;help.</p>
-      </div>
-
-      <div class="steps reveal">
-        <div class="step">
-          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <p class="step-said">Tell us about it.</p>
-          <p class="utility step-note">A few lines about the business and what you need.</p>
-        </div>
-        <div class="step">
-          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <p class="step-said">We review it.</p>
-          <p class="utility step-note">The business, the work, and whether we can help.</p>
-        </div>
-        <div class="step">
-          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <p class="step-said">We reply.</p>
-          <p class="utility step-note">If there’s a fit, we discuss the scope and next step.</p>
-        </div>
-      </div>
-
-      <!-- Starts the contact conversation here and carries the answer over. -->
-      <form class="starter reveal" id="starter" action="/contact" method="GET">
-        <label class="utility starter-label" for="starter-input">Business name</label>
-        <div class="starter-row">
-          <input id="starter-input" name="business" type="text" autocomplete="organization"
-                 placeholder="Your business name">
-          <button class="cta cta--ghost cta--flat cta--sm starter-go" type="submit"><span class="cta-label">Continue</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">→</i></span></button>
-        </div>
-        <p class="utility starter-note">Next: a few details about what you need and how to reach&nbsp;you.</p>
-      </form>
-     </div>
-    </div>
-  </section>
+<!-- ════════ 9 · CLOSE ═══════════════════════════════════════════ -->
+<section class="band wrap" aria-labelledby="close-t">
+  <div class="band-head"><span class="utility">Start here</span><span class="utility">06</span></div>
+  <h2 id="close-t" data-rise>What are you building?</h2>
+  <p class="lede">Tell STIR about the business and what you&rsquo;d like to change. Every inquiry gets read.</p>
+  <p class="actions" style="margin-top:var(--s32)">
+    <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+    <a class="action-3" href="/contact">Something else</a>
+  </p>
+</section>
 
 </main>
-
-<!-- ════════ FOOTER — quiet ════════ -->
-<footer class="footer shell" data-nav-theme="cobalt">
-  <div class="grid footer-grid utility">
-    <span class="footer-logo"><img src="https://stirnyc.netlify.app/assets/stir-mark.png" alt="STIR"></span>
-    <span class="footer-place">Brooklyn, New&nbsp;York</span>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
-      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
-    </nav>
-    <span class="footer-line">Attention should pay.</span>
-    <span class="footer-copy">© 2026 STIR</span>
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="utility">What are you building?</span>
+    <div class="foot-sign"><img src="https://stirnyc.netlify.app/assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content and digital presence for independent
+      businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="actions" style="margin-bottom:var(--s32)">
+      <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      <a class="action-3" href="/contact?type=creator">Create with STIR</a>
+      <a class="action-3" href="/contact?type=collaborator">Collaborate with STIR</a>
+    </p>
+    <div class="foot-links">
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate</a>
+      <a href="/about">Studio</a>
+      <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+    </div>
   </div>
 </footer>
 </div>

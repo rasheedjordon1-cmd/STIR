@@ -1,145 +1,73 @@
+/* ════════════════════════════════════════════════════════════════════
+   HOST LAYER — what Squarespace needs that Netlify does not.
 
-/* ════════════════════════════════════════════════════════════════
-   SQUARESPACE HOST LAYER
-   Everything above is the STIR design system, scoped to .stir so
-   Squarespace's stylesheet can't leak in and ours can't leak out.
-   Everything below adapts it to Squarespace's DOM.
-   ════════════════════════════════════════════════════════════════ */
+   Appended after the scoped stylesheet. Everything here exists because
+   the page is a Code Block inside somebody else's document, not
+   because the design wants it.
+   ════════════════════════════════════════════════════════════════════ */
 
-/* The page ground. Squarespace paints its own white behind content. */
-body { background: #FAF2E6; }
-body.stir-dark-top { background: #0451AB; }
-
-/* Squarespace wraps blocks in padded containers that would inset our
-   full-bleed sections. Neutralise on STIR pages only. */
-.stir-page #sections,
-.stir-page .page-section,
-.stir-page .content-wrapper,
-.stir-page .sqs-layout,
-.stir-page .sqs-block,
-.stir-page .sqs-block-content,
-.stir-page .sqs-block-code {
+/* 1 · Let the block out of its wrappers.
+   Squarespace nests a page wrapper, a section, a row, a column and a
+   block, each with its own padding and max-width. The design is
+   full-bleed, so the block is pulled back to the viewport. */
+.stir {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  max-width: none;
+}
+/* The ancestors still clip and pad. These are the wrappers Squarespace
+   actually ships; the list is deliberately narrow so the rest of the
+   site keeps its own layout. */
+body:has(.stir) #sections,
+body:has(.stir) .page-section,
+body:has(.stir) .content-wrapper,
+body:has(.stir) .sqs-layout,
+body:has(.stir) .sqs-row,
+body:has(.stir) .sqs-block,
+body:has(.stir) .sqs-block-content {
   padding: 0 !important;
   margin: 0 !important;
   max-width: none !important;
-  width: 100% !important;
+  overflow: visible !important;
 }
-.stir-page .page-section > .content-wrapper { min-height: 0 !important; }
+body:has(.stir) { overflow-x: hidden; background: #0451AB; }
 
-/* We supply our own nav and footer. */
-.stir-page #header,
-.stir-page .header,
-.stir-page #footer-sections,
-.stir-page .sqs-announcement-bar-dropzone { display: none !important; }
+/* 2 · Hide the host's own chrome on STIR pages.
+   The design ships its own header and footer. Two of them on one page
+   is the single most template-looking failure available. */
+body:has(.stir) #header,
+body:has(.stir) .header,
+body:has(.stir) #footer-sections,
+body:has(.stir) .sqs-announcement-bar-dropzone { display: none !important; }
 
-/* ── Defensive reset ─────────────────────────────────────────────
-   Squarespace styles bare elements directly — `h1 { font-family:
-   Georgia }`, `a { color: #0d7 }`, `ul { list-style: disc }` — and a
-   type selector in their sheet beats inheritance from our container,
-   however specific that container is. Inheritance is not a fight we
-   can win, so every element we use is reset to inherit explicitly and
-   our own rules then style it. Remove this and the headlines render
-   in the host's serif.                                             */
-.stir h1, .stir h2, .stir h3, .stir h4, .stir h5, .stir h6,
-.stir p, .stir ul, .stir ol, .stir li, .stir figure, .stir figcaption,
-.stir blockquote, .stir dl, .stir dd, .stir fieldset, .stir legend,
-.stir button, .stir input, .stir textarea, .stir select, .stir label,
-.stir a, .stir span, .stir strong, .stir em, .stir i, .stir form {
-  margin: 0;
-  padding: 0;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  font-style: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-  /* inherit, not none: a <span> inside uppercase display type must
-     keep the transform it is sitting in. `none` silently lowercased
-     the struck phrase in the thesis. */
-  text-transform: inherit;
-  text-decoration: none;
-  color: inherit;
-  background: none;
-  border: 0;
-  border-radius: 0;
+/* 3 · Defensive reset.
+   Squarespace styles elements directly — `h1 { font-family: ... }`,
+   `a { color: ... }`, `ul { list-style: disc }` — and element
+   selectors in their sheet beat our inherited values. Everything the
+   design relies on is restated inside the scope. */
+.stir, .stir *, .stir *::before, .stir *::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+.stir h1, .stir h2, .stir h3, .stir h4, .stir p, .stir ul, .stir li,
+.stir figure, .stir figcaption, .stir form, .stir fieldset, .stir blockquote {
+  margin: 0; padding: 0; border: 0; background: none;
+  font-family: inherit; letter-spacing: inherit; text-transform: none;
 }
 .stir ul, .stir ol { list-style: none; }
-.stir img, .stir video { display: block; max-width: 100%; height: auto; }
-.stir button { cursor: pointer; -webkit-appearance: none; appearance: none; }
-.stir *, .stir *::before, .stir *::after { box-sizing: border-box; }
-
-/* Full-bleed that works inside ANY container width. The viewport-math
-   version used on the standalone build assumes our own shell is the
-   only wrapper; Squarespace nests several.
-
-   Margin, never transform: .reveal and [data-reveal] both animate
-   transform, and their resting `transform: none` would cancel a
-   translateX(-50%) and leave the band hanging half a screen right. */
-.stir { --bleed: 0px; }
-.stir .bleed,
-.stir .proof-reel-band,
-.stir .about-art,
-.stir .who-art {
-  width: 100vw;
-  max-width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: 0;
+.stir a { color: inherit; text-decoration: none; background: none; }
+.stir a:hover { color: inherit; }
+.stir img, .stir video, .stir svg { max-width: 100%; display: block; border: 0; }
+.stir button, .stir input, .stir textarea, .stir select {
+  font: inherit; color: inherit; border-radius: 0;
+  -webkit-appearance: none; appearance: none;
 }
+.stir button { background: none; border: 0; }
+.stir strong, .stir b { font-weight: 500; }
 
-
-/* ════════════════════════════════════════════════════════════════
-   ENHANCEMENT 01 — ADAPTIVE NAV
-   The nav reads the section passing beneath it and inverts. Cobalt
-   environments get the ivory mark; ivory gets ink. One detail that
-   no template does.
-   ════════════════════════════════════════════════════════════════ */
-.stir .nav { transition: color 0.4s var(--ease); }
-
-/* The mark cross-fade and the ground inversion now live in the shared
-   stylesheet, driven by the header's scrolled state rather than by
-   whichever section is passing beneath it. data-ground stays because
-   the running index still reads it. */
-
-/* ════════════════════════════════════════════════════════════════
-   ENHANCEMENT 02 — RUNNING INDEX
-   A quiet publication marker: which part of the argument you're in.
-   State, not movement. Desktop only.
-   ════════════════════════════════════════════════════════════════ */
-.stir-index {
-  position: fixed;
-  left: clamp(20px, 3.2vw, 48px);
-  bottom: clamp(20px, 3vw, 40px);
-  z-index: 9;
-  display: none;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 0.66rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.09em;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.5s var(--ease), color 0.4s var(--ease);
-}
-.stir-index.is-shown { opacity: 1; }
-.stir-index .idx-rule {
-  width: 34px; height: 1px;
-  background: currentColor;
-  opacity: 0.45;
-  position: relative;
-}
-.stir-index .idx-rule::after {
-  content: "";
-  position: absolute; inset: 0;
-  background: var(--red);
-  transform: scaleX(var(--idx-progress, 0));
-  transform-origin: left;
-  transition: transform 0.4s var(--ease);
-}
-.stir-index[data-on="cobalt"] { color: var(--ivory); }
-.stir-index[data-on="ivory"]  { color: var(--ink); }
-@media (min-width: 1024px) { .stir-index { display: flex; } }
-@media (prefers-reduced-motion: reduce) {
-  .stir-index, .stir-index .idx-rule::after { transition: none; }
-}
+/* 4 · The header is fixed, not in flow.
+   On Netlify the header is the first thing in the document. Here the
+   document belongs to Squarespace, so the bar is pinned instead. */
+.stir .site-head { position: sticky; top: 0; z-index: 40; background: var(--cobalt); }
+.stir .strip { position: relative; z-index: 41; background: var(--cobalt); }
