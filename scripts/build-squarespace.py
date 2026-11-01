@@ -153,7 +153,10 @@ def contact_form(body: str) -> str:
 
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
-    for f in OUT.glob('*'):
+    # Clear the generated files only. CHECKLIST.md is hand-written and
+    # lives here because this is the folder you paste from; an earlier
+    # version of this loop deleted it on every build.
+    for f in OUT.glob('*.html'):
         f.unlink()
 
     scoped = scope_css((ROOT / 'assets' / 'stir.css').read_text())
