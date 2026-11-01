@@ -3,36 +3,90 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — Not found</title>
-<meta name="robots" content="noindex">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
+<title>Page not found — STIR</title>
+<meta name="description" content="That page is not here.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/stir.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
+</defs></svg>
 
-<div class="notfound">
-<!-- ════════ CHANNEL STRIP ════════
-     The station bar. The only place the word LIVE appears. -->
+<!-- A static strip. One real line about the studio; no live status,
+     no marquee, no invented open call. -->
 <div class="strip">
-  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
-  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
-  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
-</div>
-
-  <header class="nav">
-    <div class="shell nav-inner">
-      <a href="index.html" class="nav-logo"><img src="assets/stir-mark-ivory.png" alt="STIR — Home"></a>
-    </div>
-  </header>
-  <div class="shell notfound-inner">
-    <p class="utility" style="color: var(--ivory-75);">404 — Not found</p>
-    <h1 class="display">Nothing here is<br>worth attention.</h1>
-    <a class="cta-line" href="index.html">The rest of the site is <span class="arrow" aria-hidden="true">→</span></a>
+  <div class="wrap">
+    <span class="utility">STIR &mdash; Brooklyn, New York</span>
+    <span class="utility">Founder-led creative &amp; growth practice</span>
   </div>
 </div>
 
+<!-- C01 — static segmented header. The brand cell is the same stepped
+     ivory sign construction as the building's sign and the footer. -->
+<header class="site-head">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="STIR — home">
+        <img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR">
+      </a>
+      <div class="nav-links">
+        <a href="/#what">What we do</a>
+        <a href="/labay">LABAY</a>
+        <a href="/about">Studio</a>
+        <a class="nav-start" href="/contact?type=business">Start a project</a>
+      </div>
+      <button class="nav-menu" type="button" aria-controls="nav-panel" aria-expanded="false">Menu</button>
+    </nav>
+    <div class="nav-panel" id="nav-panel" hidden>
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/about">Studio</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate with STIR</a>
+      <a href="/contact?type=business">Start a project</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="band wrap">
+  <div class="band-head"><span class="utility">404</span><span class="utility">Page not found</span></div>
+  <h2 data-rise>That page isn&rsquo;t here.</h2>
+  <p class="lede">The link may be old, or the address may have a typo in it.</p>
+  <p class="actions" style="margin-top:var(--s32)">
+    <a class="action" href="/"><span class="action-label">Back to the start</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+    <a class="action-3" href="/labay">Read the LABAY case</a>
+  </p>
+</section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="utility">What are you building?</span>
+    <div class="foot-sign"><img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content and digital presence for independent
+      businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="actions" style="margin-bottom:var(--s32)">
+      <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      <a class="action-3" href="/contact?type=creator">Create with STIR</a>
+      <a class="action-3" href="/contact?type=collaborator">Collaborate with STIR</a>
+    </p>
+    <div class="foot-links">
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate</a>
+      <a href="/about">Studio</a>
+      <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/stir.js" defer></script>
 </body>
 </html>

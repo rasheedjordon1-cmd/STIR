@@ -2,342 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — About</title>
-<meta name="description" content="STIR is an independent creative and growth practice founded by Rasheed Jordon in Brooklyn, New York. Content, campaigns, identities and websites, with ongoing support for the work that needs to keep moving.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
-<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
+<title>Studio — STIR</title>
+<meta name="description" content="STIR is a founder-led creative practice in Brooklyn, led by Rasheed Jordon, building a network of creators and collaborators around the work.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/stir.css">
-<style>
-/* Page-specific: About */
-.about-intro { grid-column: 1 / 8; }
-.about-facts {
-  grid-column: 9 / 13;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  color: var(--ink-60);
-}
-.about-block { margin-top: clamp(96px, 15vh, 200px); }
-.about-block .b-label { grid-column: 1 / 4; border-top: 1px solid var(--ink); padding-top: 12px; }
-.about-block .b-title { grid-column: 1 / 10; font-size: var(--t-big); margin-top: clamp(32px, 5vh, 56px); }
-.about-block .b-copy  { grid-column: 5 / 11; margin-top: clamp(32px, 5vh, 56px); }
-.about-block .b-copy-2 { margin-top: 1.1em; }
-/*
-  ILLUSTRATION ASSET SLOT: assets/illustration-city.webp
-  Cobalt rooftop city — attention hidden in every window.
-  Full-bleed band between story blocks; drops in with no
-  structural change.
-*/
-.about-art {
-  max-width: none;   /* the global img reset would clamp the bleed */
-  margin-top: clamp(96px, 15vh, 200px);
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  margin-right: 0;
-  aspect-ratio: 21 / 9;
-  object-fit: cover;
-  object-position: center 58%;
-}
-.about-cta { margin-top: clamp(96px, 15vh, 200px); display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
-@media (max-width: 1023px) {
-  .about-intro { grid-column: 1 / -1; }
-  .about-facts { grid-column: 1 / -1; margin-top: 40px; flex-direction: row; gap: 32px; flex-wrap: wrap; }
-  .about-block .b-title { grid-column: 1 / -1; }
-  .about-block .b-copy  { grid-column: 1 / -1; }
-}
-
-/* ── Founder ──────────────────────────────────────────────────────
-   The portrait keeps its own grey ground; a cobalt mat around a
-   person's face reads like an ID card, and recolouring someone into
-   the brand palette is not ours to do. It sits in its own column so
-   the bio can run at a readable measure beside it. */
-.founder { margin-top: clamp(96px, 15vh, 200px); align-items: start; }
-.founder-plate { grid-column: 1 / 5; margin: 0; }
-.founder-plate img { display: block; width: 100%; height: auto; }
-.founder-body { grid-column: 6 / 12; }
-.founder-label {
-  border-top: 1px solid var(--ink);
-  padding-top: 12px;
-  margin-bottom: clamp(28px, 4vh, 44px);
-}
-.founder-name { font-size: clamp(1.9rem, 3.6vw, 3.2rem); }
-.founder-role { margin-top: 16px; color: var(--ink-60); }
-.founder-lede {
-  font-family: var(--font-serif);
-  font-size: calc(var(--t-body) * 1.2);
-  line-height: 1.4;
-  color: var(--ink);
-  max-width: 32ch;
-  margin-top: clamp(28px, 4vh, 44px);
-  padding-top: clamp(24px, 3.5vh, 36px);
-  border-top: 1px solid var(--ink-35);
-}
-.founder-story { margin-top: clamp(28px, 4vh, 40px); display: grid; gap: 1.15em; max-width: 58ch; }
-.founder-story p {
-  font-family: var(--font-serif);
-  font-size: var(--t-body);
-  line-height: 1.6;
-  color: var(--ink-70);
-}
-.founder-story strong { color: var(--ink); font-weight: 500; }
-
-@media (max-width: 1023px) {
-  .founder-plate { grid-column: 1 / 4; }
-  .founder-body  { grid-column: 4 / -1; }
-}
-@media (max-width: 639px) {
-  .founder-plate { grid-column: 1 / -1; max-width: 280px; }
-  .founder-body  { grid-column: 1 / -1; margin-top: 40px; }
-}
-</style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
+</defs></svg>
 
-<!-- ════════ CHANNEL STRIP ════════
-     The station bar. The only place the word LIVE appears. -->
+<!-- A static strip. One real line about the studio; no live status,
+     no marquee, no invented open call. -->
 <div class="strip">
-  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
-  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
-  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+  <div class="wrap">
+    <span class="utility">STIR &mdash; Brooklyn, New York</span>
+    <span class="utility">Founder-led creative &amp; growth practice</span>
+  </div>
 </div>
 
-<header class="nav nav--ink">
-  <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
-      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
-    </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="index.html#proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="index.html#services"><i class="nav-no" aria-hidden="true">05</i>Services</a>
-      <a href="about.html" aria-current="page">About</a>
-      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
+<!-- C01 — static segmented header. The brand cell is the same stepped
+     ivory sign construction as the building's sign and the footer. -->
+<header class="site-head">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="STIR — home">
+        <img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR">
+      </a>
+      <div class="nav-links">
+        <a href="/#what">What we do</a>
+        <a href="/labay">LABAY</a>
+        <a href="/about" aria-current="page">Studio</a>
+        <a class="nav-start" href="/contact?type=business">Start a project</a>
+      </div>
+      <button class="nav-menu" type="button" aria-controls="nav-panel" aria-expanded="false">Menu</button>
     </nav>
+    <div class="nav-panel" id="nav-panel" hidden>
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/about">Studio</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate with STIR</a>
+      <a href="/contact?type=business">Start a project</a>
+    </div>
   </div>
 </header>
+<main id="main">
+<section class="band wrap">
+  <div class="band-head"><span class="utility">The studio</span><span class="utility">Brooklyn, New York</span></div>
+  <h2 data-rise>Led by Rasheed Jordon.<br>Built in Brooklyn.</h2>
+  <p class="lede">STIR is a founder-led creative practice. I make content, campaigns, brands and websites for
+    businesses with a street address &mdash; the kind people walk past, call, or order from. I have run one
+    myself.</p>
+</section>
 
-<div class="nav-overlay" id="nav-overlay" hidden>
-  <div class="nav-overlay-head">
-    <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR">
-    <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
-    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
+<section class="band on-ivory">
+  <div class="wrap two">
+    <div>
+      <h3>Why the two halves line up</h3>
+      <p style="margin-top:var(--s12)">Most creative work arrives from outside the business and leaves again.
+        The reason the judgment and the operating reality line up here is that both have been done in the same
+        place: the brand and the business it belongs to.</p>
+      <p style="margin-top:var(--s24)">LABAY Market is the flagship case for exactly that reason &mdash; it is
+        where creative direction, content, the website and the wholesale side are all one job.</p>
+      <p class="actions" style="margin-top:var(--s32)">
+        <a class="action-2" href="/labay">Read the full case <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+      </p>
+    </div>
+    <div>
+      <h3>The network around the work</h3>
+      <p style="margin-top:var(--s12)">STIR is building a group of creators and collaborators around the
+        projects rather than an agency staff. A very small following is welcome; a relevant perspective or one
+        specific contribution can matter more than audience size.</p>
+      <p style="margin-top:var(--s24)">Expressing interest is a review for future project fit. It is not an
+        open role, a placement, or an agreed rate.</p>
+      <p class="actions" style="margin-top:var(--s24)">
+        <a class="action-3" href="/creators">For creators</a>
+        <a class="action-3" href="/collaborate">Collaborate with STIR</a>
+      </p>
+    </div>
   </div>
-  <nav class="nav-overlay-links" aria-label="Menu">
-    <a href="index.html#proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="index.html#services"><i class="nav-no" aria-hidden="true">05</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
-  </nav>
-  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
-</div>
+</section>
 
-<main>
-  <section class="page shell" data-nav-theme="cream" aria-labelledby="about-title">
-    <div class="grid">
-      <p class="utility page-label" data-reveal="structural"><b><i aria-hidden="true"></i>About</b><em>STIR · Brooklyn, New York</em></p>
-      <h1 class="display page-title" data-reveal="editorial" id="about-title">Good businesses deserve<br>to be understood.</h1>
-
-      <div class="about-intro reveal">
-        <p class="editorial">STIR is an independent creative and growth practice founded by Rasheed Jordon in Brooklyn. We make content, campaigns, identities, and websites, with ongoing support for the work that needs to keep&nbsp;moving.</p>
-      </div>
-      <div class="about-facts utility reveal">
-        <span>Independent</span>
-        <span>Brooklyn, New&nbsp;York</span>
-        <span>Est.&nbsp;2025</span>
-        <span>@builtbystir</span>
-      </div>
-
-      <div class="grid about-block" style="grid-column: 1 / -1;">
-        <p class="utility b-label" data-reveal="structural"><b><i aria-hidden="true"></i>What we believe</b><em>The argument, in full</em></p>
-        <h2 class="display b-title" data-reveal="editorial">Make it&nbsp;travel.</h2>
-        <p class="body b-copy reveal">A good product, a useful service, or a place people care about gives us something to work with. We help communicate what matters and make the next step clear for someone who wants to visit, inquire, order, or&nbsp;book.</p>
-      </div>
-
-      <div class="grid about-block" style="grid-column: 1 / -1;">
-        <h2 class="display b-title" data-reveal="editorial">The work so&nbsp;far.</h2>
-        <p class="body b-copy reveal">At LABAY Market, a Grenadian grocer in Brooklyn, our work spans creative direction, content, websites, e-commerce, partnerships, and wholesale&nbsp;coordination.</p>
-        <p class="body b-copy b-copy-2 reveal">Our website work also includes Carriacou Logistics, 24 Hour Pipe Patrol, and Temple of Refuge. Different organizations, each with something specific their visitors need to understand or&nbsp;do.</p>
-      </div>
-    </div>
-
-    <!-- ILLUSTRATION: assets/illustration-city.webp — every window a business -->
-    <img class="about-art" data-reveal="registration" src="assets/illustration-city.webp"
-         width="2000" height="1497" loading="lazy" decoding="async"
-         alt="An aerial view of a dense block of buildings in deep blue shadow and warm light, each window and storefront its own small world">
-
-    <!-- Who you are actually hiring. It sits after the argument and
-         the evidence rather than before them: the work earns the
-         introduction, not the other way round. -->
-    <div class="grid founder">
-      <figure class="founder-plate" data-reveal="registration">
-        <img src="assets/founder.webp" width="900" height="1125" loading="lazy" decoding="async"
-             alt="A black and white portrait of Rasheed Jordon, founder of STIR, facing the camera against a plain grey wall.">
-      </figure>
-
-      <div class="founder-body">
-        <p class="utility founder-label" data-reveal="structural"><b><i aria-hidden="true"></i>Who you&rsquo;re talking to</b><em>One person. Named.</em></p>
-        <h2 class="display founder-name" data-reveal="editorial">Rasheed&nbsp;Jordon</h2>
-        <p class="utility founder-role">Founder, STIR &middot; Brooklyn, New&nbsp;York</p>
-
-        <p class="founder-lede reveal">I&rsquo;ve opened a business, run one, and closed one. That&rsquo;s the lens I bring to every owner I work&nbsp;with.</p>
-
-        <div class="founder-story reveal">
-          <p>I left college to help my father open a restaurant, handling operations, marketing, sales, and design, often in the same day. Later I built a restaurant concept of my own. Creative decisions there had real consequences, and I learned to judge work by what it actually&nbsp;does.</p>
-          <p>Before that, I interned in music &mdash; at Universal Music Group, Roc Nation, and iHeartRadio. That&rsquo;s where I learned that a rollout is a system: identity, timing, relationships, and a reason for people to tell someone&nbsp;else.</p>
-          <p>STIR combines both. I work with operator-owned businesses to find what deserves attention, give it an identity worth remembering, and build the systems that get it discovered, talked about, and bought, from Caribbean food to cold-chain&nbsp;logistics.</p>
-          <p>At LABAY Market, a Grenadian grocer in Brooklyn, I lead creative direction and digital channels, produce short-form content, manage the website and e-commerce work, and handle wholesale account relationships. <strong>That includes being the point of contact for LABAY&rsquo;s wholesale customers, Kabawa and Caf&eacute;&nbsp;Charmant.</strong></p>
-        </div>
-      </div>
-    </div>
-
-    <div class="about-cta reveal">
-      <a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
-      <a class="cta-line" href="index.html#proof"><i class="cta-line-rule" aria-hidden="true"></i>See the work <span class="arrow" aria-hidden="true">→</span></a>
-    </div>
-  </section>
+<section class="band wrap">
+  <h2 data-rise>What are you building?</h2>
+  <p class="actions" style="margin-top:var(--s32)">
+    <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+  </p>
+</section>
 </main>
-
-<footer class="footer shell" data-nav-theme="cobalt">
-  <div class="grid footer-grid utility">
-    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
-    <span class="footer-place">Brooklyn, New&nbsp;York</span>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
-      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
-    </nav>
-    <span class="footer-line">Attention should pay.</span>
-    <span class="footer-copy">© 2026 STIR</span>
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="utility">What are you building?</span>
+    <div class="foot-sign"><img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content and digital presence for independent
+      businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="actions" style="margin-bottom:var(--s32)">
+      <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      <a class="action-3" href="/contact?type=creator">Create with STIR</a>
+      <a class="action-3" href="/contact?type=collaborator">Collaborate with STIR</a>
+    </p>
+    <div class="foot-links">
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate</a>
+      <a href="/about">Studio</a>
+      <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+    </div>
   </div>
 </footer>
 
-<script>
-(function () {
-  var els = document.querySelectorAll('.reveal, [data-reveal]');
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!('IntersectionObserver' in window) || reduce) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); if (e.target.getAttribute('data-reveal') === 'structural') setTimeout(function(){ e.target.classList.add('sig-spent'); }, 900); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-  els.forEach(function (el) { io.observe(el); });
-})();
-  /* ── Nav theme: which environment is under the bar ───────────────
-     Read from the sections themselves, never from a scroll percentage.
-     A sampling line is held at the nav's own lower edge; whichever
-     [data-nav-theme] crosses it owns the bar. The observer watches for
-     zones entering and leaving that line, and a throttled rAF handler
-     covers the case the observer cannot see — a jump that clears a
-     short zone between two frames fires no entry at all, which used to
-     leave the bar a section behind. Both call the same measurement.  */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var zones = document.querySelectorAll('[data-nav-theme]');
-    if (!zones.length) { nav.setAttribute('data-theme', 'cream'); return; }
-    var overlay = document.getElementById('nav-overlay');
-    var io = null, ticking = false, last = null;
-
-    /* Nine zones is nothing to measure, so measure them: the first one
-       spanning the line wins, which resolves an order-independent
-       answer even when one zone leaves as the next arrives. */
-    function resolve() {
-      var y = nav.offsetHeight + 1, theme = null;
-      for (var i = 0; i < zones.length; i++) {
-        var r = zones[i].getBoundingClientRect();
-        if (r.top <= y && r.bottom > y) { theme = zones[i].getAttribute('data-nav-theme'); break; }
-      }
-      if (!theme || theme === last) return;
-      last = theme;
-      nav.setAttribute('data-theme', theme);
-      if (overlay) overlay.setAttribute('data-theme', theme);
-    }
-
-    function tick() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { ticking = false; resolve(); });
-    }
-
-    /* Re-armed on resize because the nav's height is what positions
-       the line. */
-    function arm() {
-      if (!('IntersectionObserver' in window)) return;
-      if (io) io.disconnect();
-      var h = nav.offsetHeight;
-      var line = Math.max(0, window.innerHeight - h - 1);
-      io = new IntersectionObserver(tick, {
-        rootMargin: '-' + h + 'px 0px -' + line + 'px 0px', threshold: 0
-      });
-      zones.forEach(function (z) { io.observe(z); });
-    }
-
-    arm();
-    resolve();
-    window.addEventListener('scroll', tick, { passive: true });
-    var t;
-    window.addEventListener('resize', function () {
-      tick();
-      clearTimeout(t); t = setTimeout(function () { arm(); resolve(); }, 150);
-    }, { passive: true });
-    window.addEventListener('load', function () { arm(); resolve(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { arm(); resolve(); });
-  })();
-
-/* ── Sticky header ──────────────────────────────────────────────
-   Transparent over the cobalt hero, opaque paper once scrolled, so
-   it never has to hold contrast against moving artwork. One class,
-   flipped from a throttled rAF; no scroll work per frame.          */
-(function () {
-  var nav = document.querySelector('.nav');
-  if (!nav) return;
-  var ticking = false;
-  /* Under Squarespace the stylesheet is scoped to .stir, which owns
-     its own --nav-h, so the measurement has to land on both. */
-  var scope = document.querySelector('.stir');
-  function sync() {
-    nav.classList.toggle('is-stuck', window.scrollY > 24);
-    var h = nav.offsetHeight + 'px';
-    document.documentElement.style.setProperty('--nav-h', h);
-    if (scope) scope.style.setProperty('--nav-h', h);
-  }
-  function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () { sync(); ticking = false; });
-  }
-  sync();
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll, { passive: true });
-
-  /* Anchor jumps glide rather than cut, except where that is unwelcome. */
-  if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-    document.documentElement.style.scrollBehavior = 'smooth';
-  }
-})();
-
-(function () {
-  var btn = document.querySelector('.nav-menu');
-  var overlay = document.getElementById('nav-overlay');
-  if (!btn || !overlay) return;
-  var close = overlay.querySelector('.nav-overlay-close');
-  function setOpen(open) {
-    overlay.hidden = !open;
-    overlay.classList.toggle('is-open', open);
-    btn.setAttribute('aria-expanded', String(open));
-    document.documentElement.style.overflow = open ? 'hidden' : '';
-  }
-  btn.addEventListener('click', function () { setOpen(true); });
-  close.addEventListener('click', function () { setOpen(false); });
-  overlay.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) setOpen(false); });
-})();
-</script>
-
+<script src="assets/stir.js" defer></script>
 </body>
 </html>

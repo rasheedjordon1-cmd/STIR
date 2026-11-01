@@ -2,1554 +2,252 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<script>document.documentElement.classList.add('js')</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — Attention should pay</title>
-<meta name="description" content="STIR is an independent creative and growth practice in Brooklyn, New York. We make content, campaigns, brands and websites that help businesses get noticed and make it easier for people to inquire, order or book.">
-<!-- TODO at deploy: replace SITE_URL below with the production domain -->
-<meta property="og:type" content="website">
-<meta property="og:title" content="STIR — Attention should pay">
-<meta property="og:description" content="Content, campaigns, brands and websites that help businesses get noticed — and make it easier for people to inquire, order or book.">
-<meta property="og:image" content="SITE_URL/assets/og-stir.jpg">
-<meta property="og:url" content="SITE_URL/">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="STIR — Attention should pay">
-<meta name="twitter:description" content="Independent creative and growth practice. Brooklyn, New York.">
-<meta name="twitter:image" content="SITE_URL/assets/og-stir.jpg">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230451AB'/%3E%3Crect x='5' y='5' width='6' height='6' fill='%23F21B16'/%3E%3C/svg%3E">
-
-<!--
-  Typography: Founders Grotesk (licensed, self-hosted in assets/fonts).
-  Newsreader = selective editorial serif accent. IBM Plex Mono = utility.
--->
-<link rel="preload" href="assets/fonts/founders-grotesk-bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/founders-grotesk-light.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/labay/labay-market-interior.webp" as="image" fetchpriority="high">
+<title>STIR — Attention should pay.</title>
+<meta name="description" content="STIR connects brand, content and digital presence for independent businesses. Founder-led creative studio in Brooklyn, New York.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/stir.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
+</defs></svg>
 
-<!-- ════════ ENTRANCE ════════
-     Not a progress bar — there is nothing worth measuring on a page
-     this size. A cobalt hold that covers the unstyled flash, resolves
-     the instant the hero image is decoded, and is capped at 700ms so
-     it can never become a wait. Once per session; never with reduced
-     motion. Removed from the DOM after it lifts.                     -->
-<div class="stir-enter" id="stir-enter" aria-hidden="true">
-  <img src="assets/stir-mark-ivory.png" alt="">
-  <span class="enter-rail"></span>
-</div>
-<script>
-(function () {
-  var cover = document.getElementById('stir-enter');
-  if (!cover) return;
-  function drop() { if (cover.parentNode) cover.parentNode.removeChild(cover); }
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen = false;
-  try { seen = sessionStorage.getItem('stir-entered') === '1'; } catch (e) {}
-  /* Runs before paint, so a return visit within the session never
-     sees a flash of the cover at all. */
-  if (reduce || seen) { drop(); return; }
-  try { sessionStorage.setItem('stir-entered', '1'); } catch (e) {}
-
-  var t0 = Date.now(), lifted = false, cap;
-  /* Inline rather than a class: the same script runs inside
-     Squarespace, where our CSS is scoped to .stir and cannot
-     reach <html>. */
-  var root = document.documentElement, held = root.style.overflow;
-  root.style.overflow = 'hidden';
-
-  function lift() {
-    if (lifted) return;
-    lifted = true;
-    clearTimeout(cap);
-    cover.classList.add('is-done');
-    root.style.overflow = held;
-    setTimeout(drop, 520);
-  }
-
-  requestAnimationFrame(function () { cover.classList.add('is-filling'); });
-  cap = setTimeout(lift, 700);   /* hard ceiling — never a wait */
-
-  document.addEventListener('DOMContentLoaded', function () {
-    var art = document.querySelector('.band-art');
-    var ready = (art && art.decode) ? art.decode() : Promise.resolve();
-    ready.catch(function () {}).then(function () {
-      /* a short floor so the mark registers instead of flickering */
-      setTimeout(lift, Math.max(0, 360 - (Date.now() - t0)));
-    });
-  });
-})();
-</script>
-
-<!-- ════════ CHANNEL STRIP ════════
-     The station bar. The only place the word LIVE appears. -->
+<!-- A static strip. One real line about the studio; no live status,
+     no marquee, no invented open call. -->
 <div class="strip">
-  <span class="strip-live"><i aria-hidden="true"></i>Live</span>
-  <span class="strip-mid">STIR &mdash; Brooklyn, New York</span>
-  <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+  <div class="wrap">
+    <span class="utility">STIR &mdash; Brooklyn, New York</span>
+    <span class="utility">Founder-led creative &amp; growth practice</span>
+  </div>
 </div>
 
-<!-- ════════ NAVIGATION ════════ -->
-<header class="nav">
-  <div class="shell nav-inner">
-    <a href="index.html" class="nav-logo">
-      <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR — Home">
-      <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
-    </a>
-    <nav class="nav-links" aria-label="Primary">
-      <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work</a>
-      <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">05</i>Services</a>
-      <a href="about.html">About</a>
-      <button class="nav-menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">Menu</button>
-      <a href="contact.html" class="cta cta--sm nav-start"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a>
+<!-- C01 — static segmented header. The brand cell is the same stepped
+     ivory sign construction as the building's sign and the footer. -->
+<header class="site-head">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="STIR — home">
+        <img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR">
+      </a>
+      <div class="nav-links">
+        <a href="/#what">What we do</a>
+        <a href="/labay">LABAY</a>
+        <a href="/about">Studio</a>
+        <a class="nav-start" href="/contact?type=business">Start a project</a>
+      </div>
+      <button class="nav-menu" type="button" aria-controls="nav-panel" aria-expanded="false">Menu</button>
     </nav>
+    <div class="nav-panel" id="nav-panel" hidden>
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/about">Studio</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate with STIR</a>
+      <a href="/contact?type=business">Start a project</a>
+    </div>
   </div>
 </header>
 
-<!-- Mobile menu overlay -->
-<div class="nav-overlay" id="nav-overlay" hidden>
-  <div class="nav-overlay-head">
-    <img class="mark-ivory" src="assets/stir-mark-ivory.png" alt="STIR">
-    <img class="mark-red" src="assets/stir-mark.png" alt="" aria-hidden="true">
-    <button class="nav-overlay-close" type="button" aria-label="Close menu">Close ×</button>
-  </div>
-  <nav class="nav-overlay-links" aria-label="Menu">
-    <a href="#proof" data-spy="proof"><i class="nav-no" aria-hidden="true">03</i>Work <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="#services" data-spy="services"><i class="nav-no" aria-hidden="true">05</i>Services <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="about.html">About <span class="arrow" aria-hidden="true">↗</span></a>
-    <a href="contact.html">Start a project <span class="arrow" aria-hidden="true">↗</span></a>
-  </nav>
-  <p class="utility nav-overlay-foot">Brooklyn, New York&nbsp;&nbsp;·&nbsp;&nbsp;Attention should pay.</p>
-</div>
+<main id="main">
 
-<main>
-
-  <!-- ════════ 01 · HERO — ATTENTION SHOULD PAY ════════
-       The illustration is gone and the type carries the frame. The
-       one controlled disturbance on the site lives here: the
-       headline arrives as a signal acquiring lock, resolves, and
-       cuts. It runs once and never touches legibility, because what
-       it resolves into is the real text that was in the DOM all
-       along. The footage band underneath is the first real thing a
-       visitor sees: an actual business, in colour. -->
-  <section class="hero" data-nav-theme="cream" aria-label="STIR — attention should pay">
-    <div class="shell hero-inner">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Founder-led creative &amp; growth practice &mdash; Est.&nbsp;2025</p>
-
-          <div class="hero-head" data-sync>
-            <h1 class="display hero-headline">
-              <span class="hl-line"><span>Attention</span></span>
-              <span class="hl-line"><span>should <em>pay.</em></span></span>
-            </h1>
-            <canvas class="hero-sync" aria-hidden="true"></canvas>
-          </div>
-
-          <p class="editorial hero-prop">I make content, campaigns, brands and websites for businesses with a street address&nbsp;— the kind people walk past, call, or order&nbsp;from. <b>I've run one myself.</b></p>
-
-          <p class="hero-cta"><a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a><a class="hero-alt" href="#proof">See the work</a></p>
-        </div>
-
-        <!-- THE SCENE. A conceptual pixel diorama, not a photograph of a
-             place: a small studio with one oversized campaign sheet
-             leaving it. The still is the markup; the loop is attached by
-             script only when motion is allowed, so no-JS, reduced-motion,
-             a refused autoplay and a missing file all land on the same
-             correct frame rather than on a hole. -->
-        <figure class="hero-stage" data-scene>
-          <picture>
-            <source media="(max-width: 859px)" srcset="assets/scene/hero-phone-poster.webp" width="390" height="330">
-            <img class="hero-still" src="assets/scene/hero-desk-poster.webp"
-                 width="820" height="620" fetchpriority="high" decoding="async"
-                 alt="Illustration: a small cream studio building drawn as an isometric pixel diorama, its sign reading STIR, with one oversized red campaign sheet carrying a cream graphic billowing out of an upper opening into open blue.">
-          </picture>
-        </figure>
-      </div>
-
-      <!-- Reconnects the hero to the work underneath it. These are the
-           real section ids on this page, not decoration. -->
-      <nav class="hero-index" aria-label="Sections below">
-        <span class="hi-label">Below</span>
-        <a href="#proof"><i>01</i>Labay Market</a>
-        <a href="#sites"><i>02</i>Websites</a>
-        <a href="#services"><i>03</i>Services</a>
-        <span class="hi-down" aria-hidden="true">&darr;</span>
-      </nav>
-    </div>
-  </section>
-
-  <!-- The first real thing: an actual business, captioned the way a
-       broadcast captions a shot. -->
-  <figure class="shot">
-    <img class="shot-art" src="assets/labay/labay-market-interior.webp"
-         width="1216" height="921" fetchpriority="high" decoding="async"
-         alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
-    <figcaption class="l3"><b>Labay Market</b><span>Brooklyn, NY &middot; The business I ran &middot; Content, brand, website</span></figcaption>
-  </figure>
-
-  <!-- ════════ 02 · THE ARGUMENT ════════
-       One headline, not a staged reversal. The small line concedes
-       the obvious, the headline says the thing worth remembering,
-       and the deck explains how it is done. The red field behind
-       WORTH is editorial emphasis — a printed block, not a control,
-       so it carries no hover, no cursor and no affordance. -->
-  <section class="belief" data-nav-theme="cobalt" aria-labelledby="belief-title">
-
-    <div class="shell belief-inner">
-    <p class="utility belief-label" data-reveal="structural"><b><i aria-hidden="true"></i>The argument</b><em>Why any of this works</em></p>
-
-    <div class="belief-statement" data-reveal="stage">
-      <p class="belief-intro">More content isn’t the whole&nbsp;answer.</p>
-
-      <h2 class="display belief-claim" id="belief-title">Something <span class="field">worth</span> talking&nbsp;about.</h2>
-
-      <p class="editorial belief-deck">The interesting part is usually already there. We find it, build the story around it, and give people a reason to&nbsp;act.</p>
-    </div>
-    </div>
-  </section>
-
-  <!-- ════════ 03 · PROOF — LABAY ════════ -->
-  <section class="proof" data-nav-theme="cream" id="proof" aria-labelledby="proof-title">
-    <div class="shell">
-      <div class="proof-head utility" data-reveal="structural">
-        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Proof / 001</span>
-        <span class="proof-meta">Brooklyn, New York<br>March 2025–present</span>
-      </div>
-
-      <h2 class="display proof-title" data-reveal="editorial" id="proof-title">LABAY<br>Market.</h2>
-
-      <p class="proof-role reveal">
-        <span class="ann role-label"><i class="ann-mark" aria-hidden="true"></i>The role</span>
-        <span class="role-said">STIR leads LABAY’s <strong>creative direction and digital channels</strong>, produces short-form content, manages its website and e-commerce work, and handles wholesale account&nbsp;relationships.</span>
+<!-- ════════ 1 · HERO ════════════════════════════════════════════
+     Cobalt is continuous. Live copy left, the conceptual studio
+     right. The still is the markup; the loop is attached by script,
+     so no-JS, reduced motion, a refused autoplay and a missing file
+     all land on the same correct frame. -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="reveal-h1"><span>ATTENTION</span><span>SHOULD</span><span>PAY.</span></h1>
+      <p class="lede">STIR connects brand, content and digital presence for independent businesses.</p>
+      <p class="actions">
+        <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+        <a class="action-2" href="/labay">Explore LABAY <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+        <a class="action-3" href="/about">About the studio</a>
       </p>
-
-      <div class="grid proof-body">
-        <div class="proof-lead">
-          <p class="proof-metric reveal" data-count="5" data-count-suffix="M">5M</p>
-          <p class="utility proof-metric-label">Organic views</p>
-          <!-- Two overlapping totals for one nine-month period, stated as
-               overlapping. They are not additive and they are not people. -->
-          <p class="utility proof-metric-note">Excluding creator&nbsp;collaborations.</p>
-          <p class="utility proof-metric-note">10M+ including creator collaborations, across the same nine-month period. No paid&nbsp;ads.</p>
-        </div>
-        <div class="proof-statement-wrap">
-          <p class="proof-statement reveal">The work connects what people see online with what happens at the&nbsp;market.</p>
-        </div>
-      </div>
     </div>
 
-    <!--
-      CREATOR COLLABORATIONS — videos featuring LABAY, described
-      neutrally. Per-clip coordination credits are not resolved, so the
-      wall does not assert that STIR arranged every one of them.
+    <figure class="stage" data-scene>
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/scene/hero-phone-poster.webp" width="390" height="330">
+        <img class="stage-still" src="assets/scene/hero-desk-poster.webp"
+             width="820" height="620" fetchpriority="high" decoding="async"
+             alt="Illustration: a small cream studio building drawn as an isometric pixel diorama, its sign reading STIR, with one oversized red campaign sheet carrying the STIR wordmark billowing out of an upper opening into open blue. Someone works at a lit table inside; another figure walks to the open red door.">
+      </picture>
+    </figure>
+  </div>
+</section>
 
-      Posters only until someone asks for a clip. preload="none" keeps
-      the section at ~320KB of stills rather than 11MB of video, and
-      with no JS the posters and the links still carry it.
+<!-- ════════ 2 · THREE WAYS IN ═══════════════════════════════════
+     C03. One connected frame, zero gaps, three real destinations. -->
+<section class="band wrap" aria-labelledby="ways-t">
+  <div class="band-head">
+    <span class="utility" id="ways-t">Three entrances, one studio</span>
+    <span class="utility">Businesses first</span>
+  </div>
+  <div class="ways" style="margin-top:var(--s24)">
+    <a href="/businesses">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 4h20v4H2z M3 10h3v10H3z M18 10h3v10h-3z M6 17h5v3H6z M13 11h5v9h-5z M7 11h3v3H7z"/></svg>
+      <h3>For businesses</h3>
+      <p>Connect your brand, content and digital presence through a partnership or a defined project.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+    <a href="/creators">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M7 3h8v3h7v15H2V6h5z M5 9v9h14V9z M9 11h6v5H9z M17 7h2v2h-2z"/></svg>
+      <h3>For creators</h3>
+      <p>Bring your perspective. A small following is welcome; there is no minimum.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+    <a href="/collaborate">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 3h10v5h4v5h-4v8H2V3z M5 6v12h4v-8h4V8H9V6z M15 3h7v18h-7v-3h4V6h-4z"/></svg>
+      <h3>Collaborate with STIR</h3>
+      <p>Bring a skill, production help, a connection, access or an idea to future work.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+  </div>
+</section>
 
-      Follower counts have been removed: they drift, they are not a
-      result, and they were only ever as supplied.
-    -->
-    <div class="shell">
-      <div class="creators reveal">
-        <div class="creators-head">
-          <p class="ann creators-label"><i class="ann-mark" aria-hidden="true"></i>Creator collaborations</p>
-          <p class="utility creators-role">Videos featuring&nbsp;LABAY.</p>
-        </div>
+<!-- ════════ 3 · WHAT WE DO ══════════════════════════════════════ -->
+<section class="band wrap" id="what" aria-labelledby="what-t">
+  <div class="band-head"><span class="utility">What we do</span><span class="utility">01</span></div>
+  <h2 id="what-t" data-rise>A business with something worthwhile, and a partner with room to shape it.</h2>
+  <div class="two">
+    <div>
+      <p class="lede">Most of this work is connected: the way a business is positioned shows up in its
+        content, and the content only pays if the website and the channels behind it can take the weight.
+        STIR works across those at once rather than handing over one piece and leaving.</p>
+      <p style="margin-top:var(--s24)">A clearly defined single project is a valid way to start. Scope,
+        responsibilities and capacity are agreed for each engagement &mdash; LABAY shows how wide the
+        relationship <em>can</em> go, not what every engagement includes.</p>
+      <p class="actions" style="margin-top:var(--s32)">
+        <a class="action-3" href="/businesses">How an engagement works</a>
+      </p>
+    </div>
+    <div class="rail" style="margin-top:0">
+      <div><b>Brand &amp; direction</b><span>Positioning, identity, art direction</span></div>
+      <div><b>Content &amp; campaigns</b><span>Short-form, production, creator work</span></div>
+      <div><b>Digital presence</b><span>Website, e-commerce, ongoing support</span></div>
+    </div>
+  </div>
+</section>
 
-        <ul class="creator-wall">
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Kemoy Martin">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="assets/labay/creators/creator-01-poster.webp">
-                <source src="assets/labay/creators/creator-01.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Kemoy Martin</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/DYvKWWZRby3/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Kemoy Martin on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Nicolas Nuvan">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="assets/labay/creators/creator-04-poster.webp">
-                <source src="assets/labay/creators/creator-04.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Nicolas Nuvan</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/C9vRyRUPNgx/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Nicolas Nuvan on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from MarcosWorldNyc">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="assets/labay/creators/creator-02-poster.webp">
-                <source src="assets/labay/creators/creator-02.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">MarcosWorldNyc</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/Dax-jCpxhsr/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> MarcosWorldNyc on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Eating With Experts">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="assets/labay/creators/creator-05-poster.webp">
-                <source src="assets/labay/creators/creator-05.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Eating With Experts</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/Dd-HmshRCTj/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Eating With Experts on Instagram, opens in a new tab</span></a></p>
-          </li>
-          <li class="creator">
-            <button class="creator-frame" type="button" aria-label="Play the clip from Melissa Rose Cooper">
-              <video class="creator-vid" muted loop playsinline preload="none"
-                     width="720" height="1280"
-                     poster="assets/labay/creators/creator-03-poster.webp">
-                <source src="assets/labay/creators/creator-03.mp4" type="video/mp4">
-              </video>
-              <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-            </button>
-            <p class="creator-name">Melissa Rose Cooper</p>
-            <p class="creator-link"><a class="cta-line" href="https://www.instagram.com/reel/DcHzjyNhuQh/" rel="noopener" target="_blank"><i class="cta-line-rule" aria-hidden="true"></i>Watch <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only"> Melissa Rose Cooper on Instagram, opens in a new tab</span></a></p>
-          </li>
-        </ul>
-
-      </div>
-
-      <!-- The payoff — the headline's promise, cashed.
-           Two bands, escalating: brands booking the block, then
-           kitchens buying the produce. The second is the one that
-           closes the site's argument, so it lands last.
-
-           Every claim is scoped to what STIR actually did. "Booked as
-           the F&B vendor" is not "brand partnership", and that
-           difference is the kind of thing a buyer tests. -->
-      <div class="grid proof-payoff">
-        <h3 class="display payoff-title" data-reveal="editorial">Events &amp; wholesale.</h3>
-        <div class="payoff-body reveal">
-          <p class="body">STIR’s work also extends to event production and wholesale coordination for&nbsp;LABAY.</p>
-        </div>
-      </div>
-
-      <div class="bands">
-
-        <section class="band reveal" aria-labelledby="band-activations">
-          <p class="ann band-label" id="band-activations"><i class="ann-mark" aria-hidden="true"></i>Events</p>
-          <ul class="band-list band-list--rows">
-            <li class="band-item">
-              <button class="band-frame" type="button" aria-label="Play the clip from Nike Tennis">
-                <video class="band-vid" muted loop playsinline preload="none"
-                       width="720" height="1280"
-                       poster="assets/labay/activations/act-02-poster.webp">
-                  <source src="assets/labay/activations/act-02.mp4" type="video/mp4">
-                </video>
-                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-              </button>
-              <div class="band-body">
-                <h4 class="band-name">Nike Tennis</h4>
-                <p class="band-said">LABAY’s fruit stand at a Nike Tennis block party produced by&nbsp;Kindred.</p>
-                <p class="utility band-role"><span class="band-role-k">STIR</span> Developed the menu and concept, coordinated staffing, and ran LABAY’s stand on the&nbsp;day.</p>
-                <p class="utility band-meta">August 2026 &middot; Marcy Playground, Brooklyn &middot; Produced by&nbsp;Kindred</p>
-              </div>
-            </li>
-            <li class="band-item">
-              <button class="band-frame" type="button" aria-label="Play the clip from Hoopbus &times; Red&nbsp;Bull">
-                <video class="band-vid" muted loop playsinline preload="none"
-                       width="720" height="1280"
-                       poster="assets/labay/activations/act-01-poster.webp">
-                  <source src="assets/labay/activations/act-01.mp4" type="video/mp4">
-                </video>
-                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-              </button>
-              <div class="band-body">
-                <h4 class="band-name">Hoopbus &times; Red&nbsp;Bull</h4>
-                <p class="band-said">A community basketball event outside LABAY on Nostrand&nbsp;Avenue.</p>
-                <p class="utility band-role"><span class="band-role-k">STIR</span> Coordinated LABAY’s participation and the street-closure&nbsp;arrangements.</p>
-                <p class="utility band-meta">Nostrand Avenue, Brooklyn</p>
-              </div>
-            </li>
-            <li class="band-item">
-              <button class="band-frame" type="button" aria-label="Play the clip from NYC Health + Hospitals">
-                <video class="band-vid" muted loop playsinline preload="none"
-                       width="720" height="1280"
-                       poster="assets/labay/activations/act-03-poster.webp">
-                  <source src="assets/labay/activations/act-03.mp4" type="video/mp4">
-                </video>
-                <span class="creator-cue" aria-hidden="true"><i class="ann-mark"></i>Play</span>
-              </button>
-              <div class="band-body">
-                <h4 class="band-name">NYC Health + Hospitals</h4>
-                <p class="band-said">LABAY’s participation in a Caribbean Heritage Month celebration at South Brooklyn&nbsp;Health.</p>
-                <p class="utility band-role"><span class="band-role-k">STIR</span> Produced and managed LABAY’s&nbsp;participation.</p>
-                <p class="utility band-meta">South Brooklyn Health</p>
-              </div>
-            </li>
-          </ul>
-        </section>
-
-        <section class="band reveal" aria-labelledby="band-wholesale">
-          <p class="ann band-label" id="band-wholesale"><i class="ann-mark" aria-hidden="true"></i>LABAY’s wholesale customers</p>
-          <p class="band-lede">LABAY supplies produce to Kabawa and Café&nbsp;Charmant.</p>
-          <ul class="band-list band-list--pair">
-            <li class="band-item">
-              <h4 class="band-name">Kabawa</h4>
-              <p class="utility band-meta">Momofuku Group</p>
-            </li>
-            <li class="band-item">
-              <h4 class="band-name">Caf&eacute; Charmant</h4>
-              <p class="utility band-meta">Catch Hospitality Group</p>
-            </li>
-          </ul>
-          <p class="utility band-role band-role--wide"><span class="band-role-k">STIR</span> Manages LABAY’s relationships with Kabawa and Café&nbsp;Charmant, serving as the point of contact for both accounts. The work includes all account communication, invoicing and payments, and delivery coordination with our&nbsp;staff.</p>
-          <p class="utility band-note"><a class="band-cite" href="https://www.newyorker.com/culture/the-food-scene/the-caribbean-restaurant-reinventing-the-momofuku-empire" rel="noopener" target="_blank">The New&nbsp;Yorker <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a> describes Kabawa’s sourcing relationship with&nbsp;LABAY.</p>
-        </section>
-
-        <!-- Press. Third because it is the weakest kind of evidence on
-             the page: someone else's judgement, not a booking or an
-             invoice. It earns its place by being verifiable — every
-             row goes to the article it describes.
-
-             No logos. A wall of mastheads is a trust badge, and it
-             would also be the only place on this site where someone
-             else's brand does our talking. The index says what each
-             one actually published instead. -->
-        <section class="band press reveal" aria-labelledby="band-press">
-          <p class="ann band-label" id="band-press"><i class="ann-mark" aria-hidden="true"></i>Press</p>
-          <p class="band-lede">Selected coverage of the&nbsp;market.</p>
-
-          <div class="press-set">
-
-            <ol class="press-index">
-              <li class="press-item">
-                <a class="press-row" href="https://www.newyorker.com/culture/the-food-scene/the-caribbean-restaurant-reinventing-the-momofuku-empire" rel="noopener" target="_blank">
-                  <span class="press-pub">The New&nbsp;Yorker</span>
-                  <span class="press-said">LABAY is named as a produce source for&nbsp;Kabawa.</span>
-                  <span class="utility press-meta">The Food Scene</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://nymag.com/strategist/article/what-vic-mensa-cant-live-without.html" rel="noopener" target="_blank">
-                  <span class="press-pub">New York Magazine</span>
-                  <span class="press-said">Vic Mensa names LABAY in &ldquo;What I Can’t Live&nbsp;Without.&rdquo;</span>
-                  <span class="utility press-meta">The Strategist &middot; August&nbsp;2026</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.grubstreet.com/article/best-summer-markets-delis-bakeries-nyc.html" rel="noopener" target="_blank">
-                  <span class="press-pub">Grub Street</span>
-                  <span class="press-said">LABAY featured in Grub&nbsp;Street.</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.timeout.com/newyork/news/heres-how-to-spend-a-day-in-black-owned-flatbush-brooklyn-022825" rel="noopener" target="_blank">
-                  <span class="press-pub">Time Out New&nbsp;York</span>
-                  <span class="press-said">LABAY is included in a guide to Black-owned&nbsp;Flatbush.</span>
-                  <span class="utility press-meta">Morgan Carter &middot; February&nbsp;2025</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.ebony.com/video/labay-market-brooklyn-best-mangoes/" rel="noopener" target="_blank">
-                  <span class="press-pub">Ebony</span>
-                  <span class="press-said">&ldquo;Why This Market In Brooklyn Has The Best Mangos In&nbsp;NYC.&rdquo;</span>
-                  <span class="utility press-meta">Starr Rocque &middot; September&nbsp;2025</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-              <li class="press-item">
-                <a class="press-row" href="https://www.thegrocerylistshow.com" rel="noopener" target="_blank">
-                  <span class="press-pub">The Grocery List&nbsp;Show</span>
-                  <span class="press-said">An episode filmed at the&nbsp;market.</span>
-                  <span class="utility press-meta">PBS Independent Lens &middot; June&nbsp;2025</span>
-                  <span class="press-go" aria-hidden="true">&#8599;</span>
-                  <span class="sr-only">Opens in a new tab</span>
-                </a>
-              </li>
-            </ol>
+<!-- ════════ 4 · LABAY — the sole flagship case ══════════════════
+     C04. One dominant piece of real media, an attached caption rail,
+     and metrics that stay as two overlapping totals. -->
+<section class="band on-ivory" aria-labelledby="labay-t">
+  <div class="wrap">
+    <div class="band-head"><span class="utility">The flagship case</span><span class="utility">02</span></div>
+    <h2 id="labay-t" data-rise>A neighborhood market.<br>A much larger reach.</h2>
+    <div class="two">
+      <figure class="evidence">
+        <img src="assets/labay/labay-market-interior.webp" width="1216" height="921" loading="lazy" decoding="async"
+             alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
+        <figcaption><span>Labay Market &mdash; Nostrand Avenue, Brooklyn</span><span>The business I ran</span></figcaption>
+      </figure>
+      <div>
+        <p>STIR leads LABAY&rsquo;s <strong>creative direction and digital channels</strong>, produces short-form
+          content, manages its website and e-commerce work, and coordinates wholesale account relationships.</p>
+        <div class="metrics">
+          <div class="metric">
+            <b>5M</b>
+            <span>Organic views, excluding creator collaborations.</span>
           </div>
-
-        </section>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 04 · SELECTED WEBSITES ════════
-       Work for other people's businesses, with other people's
-       deadlines — the counterweight to a case study built around a
-       single long engagement.
-
-       Every line here is either the client's own copy or the scope as
-       agreed. No results are claimed, because none have been supplied
-       — a build with an invented metric under it is worth less than a
-       build with nothing under it.
-
-       Shown at phone width because that is the capture we have and,
-       for all three of these businesses, the screen that matters. -->
-  <section class="sites shell" data-nav-theme="cream" id="sites" aria-labelledby="sites-title">
-    <div class="grid">
-      <p class="utility sites-label" data-reveal="structural"><b><i aria-hidden="true"></i>Selected websites</b><em>Built and running</em></p>
-
-      <h2 class="display sites-title" data-reveal="editorial" id="sites-title">Sites with a job to&nbsp;do.</h2>
-      <p class="body sites-lede reveal">A storage business, a drain service, and a church. Each website needed to make the next step clear: request a quote, call for help, or plan a&nbsp;visit.</p>
-    </div>
-
-    <!--
-      The index names the work and the stage shows it. One project is
-      live at a time: scrolling the index moves it along, hovering a
-      row takes it over, and either half opens the site. Without
-      JavaScript the stage unsticks and the captures stack under the
-      index with their names attached, so nothing here depends on it.
-    -->
-    <div class="site-stage">
-
-      <ol class="site-index" role="list">
-        <li class="site-row is-active" role="listitem" data-site="0">
-          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <h3 class="site-name"><a href="https://carriacoulogistics.com" rel="noopener" target="_blank">Carriacou Logistics <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-          <p class="site-said">A website that explains storage options and helps prospective customers request a&nbsp;quote.</p>
-          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-        </li>
-        <li class="site-row" role="listitem" data-site="1">
-          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <h3 class="site-name"><a href="https://24hrpipepatrol.com" rel="noopener" target="_blank">24 Hour Pipe Patrol <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-          <p class="site-said">A website that makes drain and sewer services easy to understand, with a clear route to call for&nbsp;help.</p>
-          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build + ongoing&nbsp;management</p>
-        </li>
-        <li class="site-row" role="listitem" data-site="2">
-          <p class="ann site-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <h3 class="site-name"><a href="https://torbk.org" rel="noopener" target="_blank">Temple of Refuge <span class="arrow" aria-hidden="true">&#8599;</span><span class="sr-only">, opens in a new tab</span></a></h3>
-          <p class="site-said">A website that helps visitors learn about the church and plan a&nbsp;visit.</p>
-          <p class="utility site-scope"><span class="band-role-k">STIR</span> Build</p>
-        </li>
-      </ol>
-
-      <div class="site-screen" aria-hidden="true">
-        <div class="site-screen-inner">
-          <figure class="site-shot is-active" data-site="0">
-            <a class="site-shot-link" href="https://carriacoulogistics.com" rel="noopener" target="_blank" tabindex="-1">
-              <img src="assets/sites/site-carriacou.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-            </a>
-            <figcaption class="utility site-shot-cap">Carriacou Logistics</figcaption>
-          </figure>
-          <figure class="site-shot" data-site="1">
-            <a class="site-shot-link" href="https://24hrpipepatrol.com" rel="noopener" target="_blank" tabindex="-1">
-              <img src="assets/sites/site-pipepatrol.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-            </a>
-            <figcaption class="utility site-shot-cap">24 Hour Pipe Patrol</figcaption>
-          </figure>
-          <figure class="site-shot" data-site="2">
-            <a class="site-shot-link" href="https://torbk.org" rel="noopener" target="_blank" tabindex="-1">
-              <img src="assets/sites/site-torbk.webp" alt="" width="960" height="1200" loading="lazy" decoding="async">
-            </a>
-            <figcaption class="utility site-shot-cap">Temple of Refuge</figcaption>
-          </figure>
-          <i class="site-screen-rule" aria-hidden="true"></i>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="grid">
-      <p class="utility sites-foot">Shown the way most people arrive at them &mdash; on a&nbsp;phone.</p>
-    </div>
-  </section>
-
-  <!-- ════════ 05 · SERVICES ════════
-       Replaces "What you leave with", which restated the method in
-       different words. This answers the question a visitor actually
-       has: what can I hire these people for, and what does it cost me
-       to find out. Three panels, all visible at every width — nothing
-       essential is behind a swipe or a hover.
-
-       Panel 03 carries the red rule and the red numeral because the
-       ongoing relationship is the one we would steer most businesses
-       toward. The other two are full offers, not downgrades. -->
-  <section class="services shell" data-nav-theme="cream" id="services" aria-labelledby="services-title">
-    <div class="grid">
-      <p class="utility svc-label" data-reveal="structural"><b><i aria-hidden="true"></i>Services</b><em>What you can book</em></p>
-
-      <h2 class="display svc-title" data-reveal="editorial" id="services-title">What you can hire us&nbsp;for.</h2>
-      <p class="body svc-lede reveal">Bring us a specific project, or work with us on an ongoing&nbsp;basis.</p>
-
-      <div class="svc-set">
-
-        <article class="svc reveal">
-          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <h3 class="svc-name">Content &amp;<br>campaigns</h3>
-          <p class="svc-prop">Give people a reason to notice&nbsp;— and act.</p>
-          <ul class="utility svc-scope">
-            <li>Content planning</li>
-            <li>Photography</li>
-            <li>Short-form video</li>
-            <li>Campaign creative</li>
-            <li>Launch content</li>
-            <li>Creator coordination</li>
-          </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html"><i class="cta-line-rule" aria-hidden="true"></i>Talk about content <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
-        </article>
-
-        <article class="svc reveal">
-          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <h3 class="svc-name">Brand &amp;<br>websites</h3>
-          <p class="svc-prop">Make the business clear, recognizable, and easy to buy&nbsp;from.</p>
-          <ul class="utility svc-scope">
-            <li>Positioning &amp; messaging</li>
-            <li>Visual identity</li>
-            <li>Website design &amp; build</li>
-            <li>Service &amp; product copy</li>
-            <li>Inquiry &amp; ordering flows</li>
-          </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html"><i class="cta-line-rule" aria-hidden="true"></i>Talk about brand &amp; websites <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
-        </article>
-
-        <article class="svc svc--lead reveal">
-          <p class="ann svc-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <h3 class="svc-name">Ongoing creative<br>support</h3>
-          <p class="svc-prop">Keep the content and website working together, month after&nbsp;month.</p>
-          <ul class="utility svc-scope">
-            <li>Monthly planning</li>
-            <li>Content production</li>
-            <li>Publishing &amp; distribution</li>
-            <li>Website updates</li>
-            <li>Performance reviews</li>
-          </ul>
-          <p class="svc-action"><a class="cta-line" href="contact.html"><i class="cta-line-rule" aria-hidden="true"></i>Talk about ongoing support <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ════════ 05 · HOW WE WORK — FIND / BUILD / RUN ════════
-       The capability lists that used to live here now sit in the
-       services panels, where someone deciding what to buy will
-       actually read them. This section is only about sequence. -->
-  <section class="method shell" data-nav-theme="cream" id="method" aria-labelledby="method-label">
-    <div class="grid">
-      <p class="utility method-label" data-reveal="structural" id="method-label"><b><i aria-hidden="true"></i>How we work</b><em>Find · Build · Run</em></p>
-      <p class="body method-intro reveal">We agree on the priorities, make the work, and keep improving what needs ongoing&nbsp;attention.</p>
-
-      <div class="method-index reveal" id="method-index">
-
-        <div class="method-row is-active">
-          <button class="method-row-head" type="button" aria-expanded="true" aria-controls="method-find">
-            <span class="method-no">01</span>
-            <span class="method-word">Find <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Find what’s worth attention.</span>
-          </button>
-          <div class="method-detail" id="method-find">
-            <div>
-              <div class="method-detail-inner">
-                <p class="method-said">We look at the product, the people, and how the business works. Then we agree on what needs to be communicated and what the work should help people&nbsp;do.</p>
-              </div>
-            </div>
+          <div class="metric">
+            <b>10M+</b>
+            <!-- The same nine months, counted two ways. They overlap;
+                 they are not added, and they are not people. -->
+            <span>Including creator collaborations, across the same nine-month period. No paid ads.</span>
           </div>
         </div>
-
-        <div class="method-row">
-          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-build">
-            <span class="method-no">02</span>
-            <span class="method-word">Build <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Make the work people notice.</span>
-          </button>
-          <div class="method-detail" id="method-build">
-            <div>
-              <div class="method-detail-inner">
-                <p class="method-said">We create the content, identity, or website around that brief, with a clear scope and points for your&nbsp;input.</p>
-              </div>
-            </div>
-          </div>
+        <div class="rail">
+          <div><b>Role</b><span>Creative direction, content, website, wholesale</span></div>
+          <div><b>Nike Tennis</b><span>LABAY&rsquo;s fruit stand at a block party produced by Kindred</span></div>
+          <div><b>Press</b><span>Coverage of LABAY, not an award for STIR</span></div>
         </div>
-
-        <div class="method-row">
-          <button class="method-row-head" type="button" aria-expanded="false" aria-controls="method-run">
-            <span class="method-no">03</span>
-            <span class="method-word">Run <span class="method-dot" aria-hidden="true"></span></span>
-            <span class="method-line">Keep it working, week after week.</span>
-          </button>
-          <div class="method-detail" id="method-run">
-            <div>
-              <div class="method-detail-inner">
-                <p class="method-said">For ongoing work, we manage the agreed channels and updates, review the response, and use inquiries and sales data where available to guide the next&nbsp;round.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <p class="actions" style="margin-top:var(--s32)">
+          <a class="action-2" href="/labay">Read the full case <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
+<!-- ════════ 5 · METHOD ══════════════════════════════════════════ -->
+<section class="band wrap" aria-labelledby="method-t">
+  <div class="band-head"><span class="utility">How an engagement works</span><span class="utility">03</span></div>
+  <h2 id="method-t" data-rise>Find &rarr; Build &rarr; Run</h2>
+  <div class="three">
+    <div><h3>Find</h3><p>Understand the business, its customers and what actually needs to move first.</p></div>
+    <div><h3>Build</h3><p>Make the agreed work: positioning, identity, content, the site behind them.</p></div>
+    <div><h3>Run</h3><p>Keep it moving &mdash; support, review and the next round of work.</p></div>
+  </div>
+</section>
 
-  <!-- ════════ 06 · WHO THIS IS FOR ════════ -->
-  <section class="who shell" data-nav-theme="cream" aria-labelledby="who-title">
-    <div class="grid">
-      <p class="utility who-label" data-reveal="structural" id="who-label"><b><i aria-hidden="true"></i>Who this is for</b><em>And who it is not</em></p>
-
-      <h2 class="display who-title" data-reveal="editorial" id="who-title">We work with businesses that already do something&nbsp;well.</h2>
-
-      <p class="body who-copy reveal">You have something worth choosing. You need more people to understand it, a clearer way to buy, or help keeping the work&nbsp;moving.</p>
-      <p class="body who-copy who-copy-2 reveal">Our strongest experience is in food, hospitality, and independent businesses. The same attention to clear communication carries into our website work across other&nbsp;fields.</p>
-
-      <!--
-        The trades are the answer to "do you work with someone like me".
-        Answering it as a wrapped list of nouns wastes the question, so
-        each one is a working control: choose a trade, and the panel
-        states what STIR actually does for it.
-      -->
-      <div class="who-body reveal">
-        <div class="trades-grid">
-          <ul class="trade-list" id="trade-list">
-          <li><button class="trade" type="button" aria-pressed="true"
-                      data-said="Show people what’s in the market and why it’s worth a visit."
-                      data-note="Product content · Website · Visit information" aria-controls="answer-markets">Markets</button>
-            <div class="trade-inline" id="answer-markets">
-              <div>
-                <p class="trade-inline-said">Show people what’s in the market and why it’s worth a visit.</p>
-                <p class="utility trade-inline-note">Product content · Website · Visit information</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Show what’s coming out of the oven and how to order."
-                      data-note="Product photography · Launch content · Pre-order pages" aria-controls="answer-bakeries">Bakeries</button>
-            <div class="trade-inline" id="answer-bakeries">
-              <div>
-                <p class="trade-inline-said">Show what’s coming out of the oven and how to order.</p>
-                <p class="utility trade-inline-note">Product photography · Launch content · Pre-order pages</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Give people a feel for the place before they visit."
-                      data-note="Identity · Photography · Local content" aria-controls="answer-caf-s">Cafés</button>
-            <div class="trade-inline" id="answer-caf-s">
-              <div>
-                <p class="trade-inline-said">Give people a feel for the place before they visit.</p>
-                <p class="utility trade-inline-note">Identity · Photography · Local content</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Show people what’s on the menu and make booking straightforward."
-                      data-note="Campaign content · Creator coordination · Booking links" aria-controls="answer-restaurants">Restaurants</button>
-            <div class="trade-inline" id="answer-restaurants">
-              <div>
-                <p class="trade-inline-said">Show people what’s on the menu and make booking straightforward.</p>
-                <p class="utility trade-inline-note">Campaign content · Creator coordination · Booking links</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Make the operation clear to the people who need it."
-                      data-note="Positioning · Website · Quote inquiries" aria-controls="answer-logistics">Logistics</button>
-            <div class="trade-inline" id="answer-logistics">
-              <div>
-                <p class="trade-inline-said">Make the operation clear to the people who need it.</p>
-                <p class="utility trade-inline-note">Positioning · Website · Quote inquiries</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Explain a complex operation to the people who buy it."
-                      data-note="Positioning · Capability video · Sales materials" aria-controls="answer-industrial">Industrial</button>
-            <div class="trade-inline" id="answer-industrial">
-              <div>
-                <p class="trade-inline-said">Explain a complex operation to the people who buy it.</p>
-                <p class="utility trade-inline-note">Positioning · Capability video · Sales materials</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Explain the practice and make the first inquiry clear."
-                      data-note="Service copy · Website · Inquiry forms" aria-controls="answer-law">Law</button>
-            <div class="trade-inline" id="answer-law">
-              <div>
-                <p class="trade-inline-said">Explain the practice and make the first inquiry clear.</p>
-                <p class="utility trade-inline-note">Service copy · Website · Inquiry forms</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Show the property and the neighborhood around it."
-                      data-note="Photography · Local content · Inquiry pages" aria-controls="answer-real-estate">Real estate</button>
-            <div class="trade-inline" id="answer-real-estate">
-              <div>
-                <p class="trade-inline-said">Show the property and the neighborhood around it.</p>
-                <p class="utility trade-inline-note">Photography · Local content · Inquiry pages</p>
-              </div>
-            </div></li>
-          <li><button class="trade" type="button" aria-pressed="false"
-                      data-said="Make the work visible, then make it bookable."
-                      data-note="Project photography · Service pages · Booking inquiries" aria-controls="answer-services">Services</button>
-            <div class="trade-inline" id="answer-services">
-              <div>
-                <p class="trade-inline-said">Make the work visible, then make it bookable.</p>
-                <p class="utility trade-inline-note">Project photography · Service pages · Booking inquiries</p>
-              </div>
-            </div></li>
-          </ul>
-
-          <div class="trade-panel" id="trade-panel">
-            <p class="ann panel-label"><i class="ann-mark" aria-hidden="true"></i>For <span class="panel-for" id="panel-for">markets</span></p>
-            <p class="panel-said" id="panel-said">Show people what’s in the market and why it’s worth a visit.</p>
-            <p class="utility panel-note" id="panel-note">Product content · Website · Visit information</p>
-          </div>
-        </div>
-
-        <p class="utility who-trades-note">Some businesses need a specific project. Others need ongoing support. The scope should match what you need and what you can commit&nbsp;to.</p>
-      </div>
-
-      <div class="who-not reveal">
-        <p class="ann not-label"><i class="ann-mark" aria-hidden="true"></i>Not for you if</p>
-        <p class="body">The business isn’t ready to invest in ongoing creative work, or there isn’t something specific it wants people to do. We’d rather say that early than take the&nbsp;work.</p>
-      </div>
-
+<!-- ════════ 6 · THE STUDIO AND THE PEOPLE AROUND IT ═════════════ -->
+<section class="band wrap" aria-labelledby="studio-t">
+  <div class="band-head"><span class="utility">The studio</span><span class="utility">04</span></div>
+  <h2 id="studio-t" data-rise>Led by Rasheed Jordon.<br>Built in Brooklyn.</h2>
+  <div class="two">
+    <div>
+      <p class="lede">A founder-led practice, not an agency. The reason the creative judgment and the
+        operating reality line up is that both have been done here &mdash; the same hands on the brand and
+        on the business it belongs to.</p>
     </div>
-
-    <!-- The ordinary storefront: the argument for who this is for.
-         A sibling of the grid, not a member of it: a band that bleeds
-         past the gutter is not grid content, and as a grid item it was
-         picking up a few pixels of alignment nudge. -->
-  </section>
-
-  <!-- ════════ 07 · CONVERSION — the journey, and its first step ════════ -->
-  <section class="convert" data-nav-theme="cobalt" id="contact" aria-labelledby="convert-q">
-    <!--
-      The site opened on the observer looking at an ordinary business.
-      It closes on the same artwork, cropped to the eye and masked into
-      the cobalt, so the question reads as the eye asking it.
-    -->
-    <div class="shell">
-     <div class="convert-inner">
-      <div class="convert-head" data-reveal="structural">
-        <span class="ann"><i class="ann-mark" aria-hidden="true"></i>Your turn.</span>
-      </div>
-      <h2 class="display convert-q" data-reveal="editorial" id="convert-q">Tell us<br>about the<br>business.</h2>
-
-      <div class="convert-foot reveal">
-        <p class="body convert-copy">Tell us what you do and what needs work. We’ll review it and reply about whether STIR can&nbsp;help.</p>
-      </div>
-
-      <div class="steps reveal">
-        <div class="step">
-          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>01</p>
-          <p class="step-said">Tell us about it.</p>
-          <p class="utility step-note">A few lines about the business and what you need.</p>
-        </div>
-        <div class="step">
-          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>02</p>
-          <p class="step-said">We review it.</p>
-          <p class="utility step-note">The business, the work, and whether we can help.</p>
-        </div>
-        <div class="step">
-          <p class="ann step-no"><i class="ann-mark" aria-hidden="true"></i>03</p>
-          <p class="step-said">We reply.</p>
-          <p class="utility step-note">If there’s a fit, we discuss the scope and next step.</p>
-        </div>
-      </div>
-
-      <!-- Starts the contact conversation here and carries the answer over. -->
-      <form class="starter reveal" id="starter" action="contact.html" method="GET">
-        <label class="utility starter-label" for="starter-input">Business name</label>
-        <div class="starter-row">
-          <input id="starter-input" name="business" type="text" autocomplete="organization"
-                 placeholder="Your business name">
-          <button class="cta cta--ghost cta--flat cta--sm starter-go" type="submit"><span class="cta-label">Continue</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">→</i></span></button>
-        </div>
-        <p class="utility starter-note">Next: a few details about what you need and how to reach&nbsp;you.</p>
-      </form>
-     </div>
+    <div>
+      <p>STIR is building a network of creators and collaborators around the work. A very small following
+        is welcome; a relevant perspective or a specific contribution can matter more than audience size.
+        Expressing interest is a review for future project fit &mdash; it is not an open role, a placement
+        or a promise of payment.</p>
+      <p class="actions" style="margin-top:var(--s24)">
+        <a class="action-3" href="/creators">For creators</a>
+        <a class="action-3" href="/collaborate">Collaborate with STIR</a>
+      </p>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- ════════ 7 · CLOSE ═══════════════════════════════════════════ -->
+<section class="band wrap" aria-labelledby="close-t">
+  <div class="band-head"><span class="utility">Start here</span><span class="utility">05</span></div>
+  <h2 id="close-t" data-rise>What are you building?</h2>
+  <p class="lede">Tell STIR about the business and what you&rsquo;d like to change. Every inquiry gets read.</p>
+  <p class="actions" style="margin-top:var(--s32)">
+    <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+    <a class="action-3" href="/contact">Something else</a>
+  </p>
+</section>
 
 </main>
 
-<!-- ════════ FOOTER — quiet ════════ -->
-<footer class="footer shell" data-nav-theme="cobalt">
-  <div class="grid footer-grid utility">
-    <span class="footer-logo"><img src="assets/stir-mark.png" alt="STIR"></span>
-    <span class="footer-place">Brooklyn, New&nbsp;York</span>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="https://www.instagram.com/builtbystir/" rel="noopener" target="_blank">Instagram</a>
-      <a href="mailto:rasheedjordon1@gmail.com">Email</a>
-    </nav>
-    <span class="footer-line">Attention should pay.</span>
-    <span class="footer-copy">© 2026 STIR</span>
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="utility">What are you building?</span>
+    <div class="foot-sign"><img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content and digital presence for independent
+      businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="actions" style="margin-bottom:var(--s32)">
+      <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      <a class="action-3" href="/contact?type=creator">Create with STIR</a>
+      <a class="action-3" href="/contact?type=collaborator">Collaborate with STIR</a>
+    </p>
+    <div class="foot-links">
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate</a>
+      <a href="/about">Studio</a>
+      <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+    </div>
   </div>
 </footer>
 
-<script>
-/* ════════════════════════════════════════════════════════════════
-   STIR — behavior. Motion has a job: explain, direct, reward or
-   confirm. Anything that does none of those is not here.
-   Everything below no-ops under prefers-reduced-motion.
-   ════════════════════════════════════════════════════════════════ */
-(function () {
-  'use strict';
-
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine   = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-  /* ── Reveal ─────────────────────────────────────────────────────
-     One observer drives every entrance variant. Elements opt in with
-     .reveal (default) or data-reveal="editorial|registration|structural".
-     Structural signals pass through and retire, so red never lingers
-     as decoration.                                                  */
-  var revealables = document.querySelectorAll('.reveal, [data-reveal]');
-  if (!('IntersectionObserver' in window) || reduce) {
-    revealables.forEach(function (el) { el.classList.add('is-in'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        var el = e.target;
-        el.classList.add('is-in');
-        io.unobserve(el);
-        if (el.getAttribute('data-reveal') === 'structural') {
-          setTimeout(function () { el.classList.add('sig-spent'); }, 900);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    revealables.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ── Metric count-up ────────────────────────────────────────────
-     EXPLAIN: the number is about scale, so it should accrue.        */
-  (function () {
-    var el = document.querySelector('[data-count]');
-    if (!el || !('IntersectionObserver' in window)) return;
-    var target = parseFloat(el.getAttribute('data-count'));
-    var suffix = el.getAttribute('data-count-suffix') || '';
-    if (reduce) { el.textContent = target + suffix; return; }
-    el.textContent = '0' + suffix;
-    var run = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        run.unobserve(e.target);
-        var t0 = null, dur = 1100;
-        requestAnimationFrame(function step(ts) {
-          if (t0 === null) t0 = ts;
-          var p = Math.min((ts - t0) / dur, 1);
-          var eased = 1 - Math.pow(1 - p, 3);
-          var v = target * eased;
-          el.textContent = (p < 1 ? v.toFixed(target < 10 ? 1 : 0) : target) + suffix;
-          if (p < 1) requestAnimationFrame(step);
-        });
-      });
-    }, { threshold: 0.5 });
-    run.observe(el);
-  })();
-
-  /* ── Method: FIND ─ BUILD ─ RUN as one system ───────────────────
-     DIRECT: the red signal progresses down the spine to the active
-     stage, so the three rows read as sequence, not as a list.       */
-  (function () {
-    var index = document.getElementById('method-index');
-    if (!index) return;
-    var rows = Array.prototype.slice.call(index.querySelectorAll('.method-row'));
-
-    function progress() {
-      var active = index.querySelector('.method-row.is-active');
-      if (!active) return;
-      var head = active.querySelector('.method-row-head');
-      var h = active.offsetTop + (head ? head.offsetHeight : 0) * 0.55;
-      index.style.setProperty('--sig-progress', h + 'px');
-    }
-
-    rows.forEach(function (row) {
-      var btn = row.querySelector('.method-row-head');
-      btn.addEventListener('click', function () {
-        if (row.classList.contains('is-active')) return;
-        rows.forEach(function (r) {
-          r.classList.remove('is-active');
-          r.querySelector('.method-row-head').setAttribute('aria-expanded', 'false');
-        });
-        row.classList.add('is-active');
-        btn.setAttribute('aria-expanded', 'true');
-        progress();
-      });
-    });
-
-    progress();
-    window.addEventListener('resize', progress, { passive: true });
-    /* the detail panel changes height as it opens */
-    rows.forEach(function (r) {
-      var d = r.querySelector('.method-detail');
-      if (d) d.addEventListener('transitionend', progress);
-    });
-  })();
-
-  /* The hero used to follow the pointer by a few pixels. The new
-     environment is a composed photograph, not a stage set: once it
-     has resolved, nothing in it moves. Removed rather than disabled,
-     so there is no dormant listener on the section.                 */
-
-  /* ── Creator wall ───────────────────────────────────────────────
-     Eight clips across the creator wall and the activations is far
-     more video than any page should fetch on arrival, so nothing
-     loads until it is asked for: the poster carries the tile and
-     preload="none" holds the file back. One plays at a time across
-     both sections, because competing loops are noise, not evidence.
-     Without JS the posters and the copy still carry it.            */
-  (function () {
-    var frames = Array.prototype.slice.call(document.querySelectorAll('.creator-frame, .band-frame'));
-    if (!frames.length) return;
-    var playing = null;
-
-    function stop(frame) {
-      if (!frame) return;
-      var v = frame.querySelector('video');
-      if (v) v.pause();
-      frame.classList.remove('is-playing');
-      frame.setAttribute('aria-label', frame.dataset.labelPlay);
-      if (playing === frame) playing = null;
-    }
-
-    frames.forEach(function (frame) {
-      var v = frame.querySelector('video');
-      if (!v) return;
-      frame.dataset.labelPlay = frame.getAttribute('aria-label');
-
-      frame.addEventListener('click', function () {
-        if (playing === frame) { stop(frame); return; }
-        stop(playing);
-        playing = frame;
-        frame.classList.add('is-playing');
-        frame.setAttribute('aria-label', frame.dataset.labelPlay.replace(/^Play/, 'Pause'));
-        v.play().catch(function () { stop(frame); });
-      });
-      v.addEventListener('ended', function () { stop(frame); });
-    });
-
-    /* A clip scrolled out of view is not being watched. */
-    if ('IntersectionObserver' in window) {
-      var off = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { if (!e.isIntersecting) stop(e.target); });
-      }, { threshold: 0.2 });
-      frames.forEach(function (f) { off.observe(f); });
-    }
-  })();
-
-
-  /* ── Who this is for: the trades as a working index ─────────────
-     EXPLAIN: the real question behind a list of verticals is "what
-     would you do for a business like mine". So the list answers it.
-
-     Wide: one sticky panel, because there is room to show the list
-     and the answer at once. Narrow: the answer opens underneath the
-     trade you chose, because a panel that updates somewhere else is
-     a change you cannot see. The panel names the trade either way.
-
-     Every answer is in the markup already, so with no JS the list
-     simply reads as nine trades with their answers under them.     */
-  (function () {
-    var list  = document.getElementById('trade-list');
-    var panel = document.getElementById('trade-panel');
-    var said  = document.getElementById('panel-said');
-    var note  = document.getElementById('panel-note');
-    var forEl = document.getElementById('panel-for');
-    if (!list || !panel || !said || !note) return;
-
-    var trades = Array.prototype.slice.call(list.querySelectorAll('.trade'));
-    var current = trades[0];
-    var swapTimer = null;
-
-    function select(btn) {
-      if (!btn) return;
-      trades.forEach(function (t) { t.setAttribute('aria-pressed', String(t === btn)); });
-      if (btn === current) return;
-      current = btn;
-
-      var nextSaid = btn.getAttribute('data-said');
-      var nextNote = btn.getAttribute('data-note');
-      var nextFor  = btn.textContent.trim().toLowerCase();
-      function write() {
-        said.textContent = nextSaid;
-        note.textContent = nextNote;
-        if (forEl) forEl.textContent = nextFor;
-      }
-      if (reduce) { write(); return; }
-
-      /* fade out, swap, fade back — the copy replaces itself rather
-         than sliding, so nothing moves that shouldn't. */
-      panel.classList.add('is-swapping');
-      clearTimeout(swapTimer);
-      swapTimer = setTimeout(function () {
-        write();
-        panel.classList.remove('is-swapping');
-      }, 200);
-    }
-
-    trades.forEach(function (btn) {
-      btn.addEventListener('click', function () { select(btn); });
-      btn.addEventListener('focus', function () { select(btn); });
-      /* Hover previews on a real pointer only — never on touch, where
-         it would fire on the way to a tap. */
-      if (fine) btn.addEventListener('pointerenter', function (e) {
-        if (e.pointerType === 'mouse') select(btn);
-      });
-    });
-
-    /* Arrow keys walk the index, the way a keyboard user expects a
-       single-select list to behave. */
-    list.addEventListener('keydown', function (e) {
-      var step = e.key === 'ArrowDown' || e.key === 'ArrowRight' ? 1
-               : e.key === 'ArrowUp'   || e.key === 'ArrowLeft'  ? -1 : 0;
-      if (!step) return;
-      e.preventDefault();
-      var i = trades.indexOf(document.activeElement);
-      if (i === -1) i = trades.indexOf(current);
-      trades[(i + step + trades.length) % trades.length].focus();
-    });
-  })();
-
-
-  /* ── SYNC ───────────────────────────────────────
-     The one controlled disturbance on the site. The headline arrives
-     as a signal acquiring lock: a character grid that resolves left
-     to right into the type underneath, then cuts — broadcast cuts are
-     hard, so there is no fade at the end. It runs once, and it cannot
-     cost legibility, because what it resolves into is the real text
-     that was in the DOM the whole time. Each line is drawn from its
-     own measured rect, so the grid registers to the type rather than
-     to a guess about font metrics.                                 */
-  (function () {
-    var head = document.querySelector('.hero-head[data-sync]');
-    if (!head) return;
-    var cv = head.querySelector('.hero-sync');
-    if (!cv || !cv.getContext) { head.removeAttribute('data-sync'); return; }
-
-    function reveal() { head.removeAttribute('data-sync'); cv.style.display = 'none'; }
-    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { reveal(); return; }
-
-    var ctx = cv.getContext('2d');
-    var RAMP = '.:-=+*#%@', NOISE = '/\\|_-=+*#%@<>[]{}10';
-    var cells = [], px = 0, cw = 0, ch = 0, t0 = 0, DUR = 1050;
-
-    function build() {
-      var box = head.getBoundingClientRect();
-      if (!box.width || !box.height) return false;
-      var dpr = Math.min(window.devicePixelRatio || 1, 2);
-      cv.width = Math.round(box.width * dpr);
-      cv.height = Math.round(box.height * dpr);
-      cv.style.width = box.width + 'px';
-      cv.style.height = box.height + 'px';
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      px = Math.max(6, Math.round(box.width / 190));
-      cw = px * 0.6; ch = px * 1.05;
-      var cols = Math.ceil(box.width / cw), rows = Math.ceil(box.height / ch);
-
-      var off = document.createElement('canvas');
-      off.width = Math.max(1, Math.round(box.width));
-      off.height = Math.max(1, Math.round(box.height));
-      var o = off.getContext('2d');
-      o.fillStyle = '#fff'; o.fillRect(0, 0, off.width, off.height);
-      o.textBaseline = 'alphabetic';
-      var drew = false;
-      head.querySelectorAll('.hl-line').forEach(function (line) {
-        var cs = window.getComputedStyle(line), r = line.getBoundingClientRect();
-        if (!r.width) return;
-        o.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
-        o.fillStyle = '#000';
-        o.fillText(line.textContent.toUpperCase(), r.left - box.left,
-                   r.bottom - box.top - parseFloat(cs.fontSize) * 0.17);
-        drew = true;
-      });
-      if (!drew) return false;
-
-      var d;
-      try { d = o.getImageData(0, 0, off.width, off.height).data; }
-      catch (e) { return false; }      /* file:// taints the canvas */
-
-      cells = [];
-      for (var y = 0; y < rows; y++) {
-        for (var x = 0; x < cols; x++) {
-          var sx = Math.min(off.width - 1, Math.round(x * cw + cw / 2));
-          var sy = Math.min(off.height - 1, Math.round(y * ch + ch / 2));
-          var v = 1 - d[(sy * off.width + sx) * 4] / 255;
-          if (v < 0.12) continue;
-          cells.push({
-            x: x * cw, y: y * ch,
-            g: RAMP.charAt(Math.min(RAMP.length - 1, Math.round(v * (RAMP.length - 1)))),
-            lock: (x / cols) * 0.62 + Math.random() * 0.3
-          });
-        }
-      }
-      return cells.length > 0;
-    }
-
-    function frame(now) {
-      var p = Math.min(1, (now - t0) / DUR);
-      ctx.clearRect(0, 0, cv.width, cv.height);
-      ctx.font = '500 ' + px + 'px "IBM Plex Mono", ui-monospace, monospace';
-      ctx.textBaseline = 'top';
-      for (var i = 0; i < cells.length; i++) {
-        var c = cells[i];
-        if (p < c.lock) {
-          if (Math.random() > 0.55) continue;
-          ctx.fillStyle = 'rgba(4,81,171,.5)';
-          ctx.fillText(NOISE.charAt((Math.random() * NOISE.length) | 0), c.x, c.y);
-        } else {
-          ctx.fillStyle = '#161310';
-          ctx.fillText(c.g, c.x, c.y);
-        }
-      }
-      if (p < 1) requestAnimationFrame(frame);
-      else reveal();                     /* the cut */
-    }
-
-    function go() {
-      if (!build()) { reveal(); return; }
-      t0 = performance.now();
-      requestAnimationFrame(frame);
-    }
-
-    if (document.fonts && document.fonts.ready) {
-      var bail = setTimeout(go, 1400);
-      document.fonts.ready.then(function () { clearTimeout(bail); go(); });
-    } else { go(); }
-  })();
-
-  /* ── Nav theme: which environment is under the bar ───────────────
-     Read from the sections themselves, never from a scroll percentage.
-     A sampling line is held at the nav's own lower edge; whichever
-     [data-nav-theme] crosses it owns the bar. The observer watches for
-     zones entering and leaving that line, and a throttled rAF handler
-     covers the case the observer cannot see — a jump that clears a
-     short zone between two frames fires no entry at all, which used to
-     leave the bar a section behind. Both call the same measurement.  */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var zones = document.querySelectorAll('[data-nav-theme]');
-    if (!zones.length) { nav.setAttribute('data-theme', 'cream'); return; }
-    var overlay = document.getElementById('nav-overlay');
-    var io = null, ticking = false, last = null;
-
-    /* Nine zones is nothing to measure, so measure them: the first one
-       spanning the line wins, which resolves an order-independent
-       answer even when one zone leaves as the next arrives. */
-    function resolve() {
-      var y = nav.offsetHeight + 1, theme = null;
-      for (var i = 0; i < zones.length; i++) {
-        var r = zones[i].getBoundingClientRect();
-        if (r.top <= y && r.bottom > y) { theme = zones[i].getAttribute('data-nav-theme'); break; }
-      }
-      if (!theme || theme === last) return;
-      last = theme;
-      nav.setAttribute('data-theme', theme);
-      if (overlay) overlay.setAttribute('data-theme', theme);
-    }
-
-    function tick() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { ticking = false; resolve(); });
-    }
-
-    /* Re-armed on resize because the nav's height is what positions
-       the line. */
-    function arm() {
-      if (!('IntersectionObserver' in window)) return;
-      if (io) io.disconnect();
-      var h = nav.offsetHeight;
-      var line = Math.max(0, window.innerHeight - h - 1);
-      io = new IntersectionObserver(tick, {
-        rootMargin: '-' + h + 'px 0px -' + line + 'px 0px', threshold: 0
-      });
-      zones.forEach(function (z) { io.observe(z); });
-    }
-
-    arm();
-    resolve();
-    window.addEventListener('scroll', tick, { passive: true });
-    var t;
-    window.addEventListener('resize', function () {
-      tick();
-      clearTimeout(t); t = setTimeout(function () { arm(); resolve(); }, 150);
-    }, { passive: true });
-    window.addEventListener('load', function () { arm(); resolve(); });
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { arm(); resolve(); });
-  })();
-
-/* ── Sticky header ──────────────────────────────────────────────
-     Transparent over the cobalt hero, opaque paper once scrolled, so
-     it never has to hold contrast against moving artwork. One class,
-     flipped from a throttled rAF; no scroll work per frame.          */
-  (function () {
-    var nav = document.querySelector('.nav');
-    if (!nav) return;
-    var ticking = false;
-    /* Under Squarespace the stylesheet is scoped to .stir, which owns
-       its own --nav-h, so the measurement has to land on both. */
-    var scope = document.querySelector('.stir');
-    function sync() {
-      nav.classList.toggle('is-stuck', window.scrollY > 24);
-      var h = nav.offsetHeight + 'px';
-      document.documentElement.style.setProperty('--nav-h', h);
-      if (scope) scope.style.setProperty('--nav-h', h);
-    }
-    function onScroll() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { sync(); ticking = false; });
-    }
-    sync();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-
-    /* Anchor jumps glide rather than cut, except where that is unwelcome. */
-    if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
-      document.documentElement.style.scrollBehavior = 'smooth';
-    }
-  })();
-
-  /* ── Selected work: which project holds the stage ───────────
-     Read from the index rows themselves, the same way the bar reads
-     its environment: whichever row spans the middle of the screen is
-     live. A pointer can take it over while it rests on a row, and the
-     scroll position takes it back when the pointer leaves. Nothing
-     here intercepts the scroll — the page moves at the speed the
-     reader moves it, and the stage just keeps up.                  */
-  (function () {
-    var stage = document.querySelector('.site-stage');
-    if (!stage) return;
-    var rows = [].slice.call(stage.querySelectorAll('.site-row'));
-    var shots = [].slice.call(stage.querySelectorAll('.site-shot'));
-    if (rows.length < 2 || rows.length !== shots.length) return;
-
-    var staged = window.matchMedia('(min-width: 1024px)');
-    var live = -1, held = null, ticking = false;
-
-    function paint(i) {
-      if (i === live) return;
-      live = i;
-      for (var n = 0; n < rows.length; n++) {
-        rows[n].classList.toggle('is-active', n === i);
-        shots[n].classList.toggle('is-active', n === i);
-      }
-    }
-
-    function fromScroll() {
-      var mid = window.innerHeight / 2, pick = 0;
-      for (var i = 0; i < rows.length; i++) {
-        var r = rows[i].getBoundingClientRect();
-        if (r.top <= mid && r.bottom > mid) { pick = i; break; }
-        if (r.top > mid) break;          /* past the middle: keep the last one */
-        pick = i;
-      }
-      return pick;
-    }
-
-    function resolve() {
-      if (!staged.matches) { paint(0); return; }
-      paint(held !== null ? held : fromScroll());
-    }
-
-    function tick() {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { ticking = false; resolve(); });
-    }
-
-    rows.forEach(function (row, i) {
-      row.addEventListener('pointerenter', function () { held = i; resolve(); });
-      row.addEventListener('pointerleave', function () { held = null; resolve(); });
-      row.addEventListener('focusin', function () { held = i; resolve(); });
-      row.addEventListener('focusout', function () { held = null; resolve(); });
-    });
-
-    /* The red threshold runs once the stage is actually on screen,
-       rather than sitting at full width before anyone has seen it. */
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { stage.classList.toggle('is-live', e.isIntersecting); });
-      }, { threshold: 0.12 }).observe(stage);
-
-      var io = new IntersectionObserver(tick, { threshold: [0, 0.5, 1] });
-      rows.forEach(function (r) { io.observe(r); });
-    } else {
-      stage.classList.add('is-live');
-    }
-
-    window.addEventListener('scroll', tick, { passive: true });
-    window.addEventListener('resize', tick, { passive: true });
-    if (staged.addEventListener) staged.addEventListener('change', resolve);
-    resolve();
-  })();
-
-  /* ── Service panels on touch ───────────────────────────
-     A pointer gets the panel's move on hover. A finger never will, so
-     the panel performs it once as it arrives and then holds still —
-     not a loop, and not a state it stays in.                       */
-  (function () {
-    if (!window.matchMedia || !window.matchMedia('(hover: none)').matches) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (!('IntersectionObserver' in window)) return;
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        io.unobserve(e.target);
-        var el = e.target;
-        el.classList.add('is-shown');
-        setTimeout(function () { el.classList.remove('is-shown'); }, 1400);
-      });
-    }, { threshold: 0.45 });
-    document.querySelectorAll('.svc').forEach(function (el) { io.observe(el); });
-  })();
-
-  /* ── Mobile menu ────────────────────────────────────────────────*/
-  (function () {
-    var btn = document.querySelector('.nav-menu');
-    var overlay = document.getElementById('nav-overlay');
-    if (!btn || !overlay) return;
-    var close = overlay.querySelector('.nav-overlay-close');
-    function setOpen(open) {
-      overlay.hidden = !open;
-      overlay.classList.toggle('is-open', open);
-      btn.setAttribute('aria-expanded', String(open));
-      document.documentElement.style.overflow = open ? 'hidden' : '';
-    }
-    btn.addEventListener('click', function () { setOpen(true); });
-    close.addEventListener('click', function () { setOpen(false); });
-    overlay.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { setOpen(false); });
-    });
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
-    });
-  })();
-
-  /* ── The diorama loop ───────────────────────────────────────────
-     The still in the markup is the real hero image; this attaches a
-     14s seamless loop over it and nothing else. Every failure mode
-     lands on that still rather than on a hole:
-
-       no JS                  -> the <picture> is already correct
-       prefers-reduced-motion -> we never create the video
-       no <video> support     -> canPlayType is empty, we return
-       autoplay refused       -> play() rejects, we remove the video
-       file missing / error   -> 'error' handler removes the video
-
-     The loop's first frame IS the poster, so the fade is a crossfade
-     between identical geometry: the handoff cannot be seen.          */
-  (function () {
-    var stage = document.querySelector('.hero-stage[data-scene]');
-    if (!stage || reduce) return;
-
-    var probe = document.createElement('video');
-    if (!probe.canPlayType) return;
-    var mp4  = probe.canPlayType('video/mp4; codecs="avc1.64001f"');
-    var webm = probe.canPlayType('video/webm; codecs="vp9"');
-    if (!mp4 && !webm) return;
-
-    /* Phone gets the reframed render, not a shrunk desktop one. The
-       breakpoint matches the <source media> on the still exactly, so
-       the loop and the poster are always the same composition. */
-    var narrow = window.matchMedia('(max-width: 859px)');
-    var base = 'assets/scene/hero-' + (narrow.matches ? 'phone' : 'desk');
-
-    var v = document.createElement('video');
-    v.className = 'hero-loop';
-    v.muted = true;            /* set before src: a later mute can be
-                                  too late for the autoplay check */
-    v.defaultMuted = true;
-    v.loop = true;
-    v.playsInline = true;
-    v.setAttribute('playsinline', '');
-    v.setAttribute('muted', '');
-    v.setAttribute('aria-hidden', 'true');
-    v.preload = 'auto';
-    v.tabIndex = -1;
-    v.src = base + (webm ? '.webm' : '.mp4');
-
-    var userPaused = false, gone = false;
-
-    function drop() {
-      if (gone) return;
-      gone = true;
-      stage.classList.remove('has-loop');
-      if (v.parentNode) v.parentNode.removeChild(v);
-    }
-    v.addEventListener('error', drop);
-
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'hero-motion';
-    function label() {
-      var paused = v.paused;
-      btn.textContent = paused ? 'Play motion' : 'Pause motion';
-      btn.setAttribute('aria-label',
-        (paused ? 'Play' : 'Pause') + ' the illustration\u2019s motion');
-      btn.setAttribute('aria-pressed', String(paused));
-    }
-    btn.addEventListener('click', function () {
-      if (v.paused) { userPaused = false; v.play().then(label, label); }
-      else { userPaused = true; v.pause(); label(); }
-    });
-    v.addEventListener('play', label);
-    v.addEventListener('pause', label);
-
-    /* Offscreen and background tabs stop the decode. A pause the
-       visitor asked for is sticky: coming back to the tab or
-       scrolling the hero into view must not override their choice. */
-    function resume() {
-      if (gone || userPaused || !v.paused) return;
-      var r = v.play();
-      if (r && r.catch) r.catch(function () {});
-    }
-    document.addEventListener('visibilitychange', function () {
-      if (document.hidden) { if (!v.paused) v.pause(); } else resume();
-    });
-    if ('IntersectionObserver' in window) {
-      new IntersectionObserver(function (es) {
-        es.forEach(function (e) {
-          if (e.isIntersecting) resume();
-          else if (!v.paused) v.pause();
-        });
-      }, { threshold: 0.12 }).observe(stage);
-    }
-
-    v.addEventListener('canplay', function () {
-      if (gone) return;
-      var r = v.play();
-      if (r && r.then) {
-        r.then(function () {
-          stage.appendChild(btn);
-          stage.classList.add('has-loop');
-          v.classList.add('is-on');
-          label();
-        }, drop);                 /* autoplay refused: keep the still */
-      } else {
-        stage.appendChild(btn);
-        stage.classList.add('has-loop');
-        v.classList.add('is-on');
-        label();
-      }
-    }, { once: true });
-
-    stage.appendChild(v);
-  })();
-
-})();
-</script>
-
+<script src="assets/stir.js" defer></script>
 </body>
 </html>

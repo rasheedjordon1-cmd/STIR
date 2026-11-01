@@ -18,10 +18,10 @@ for (const [name, w, h, dpr] of [
   await p.waitForTimeout(1500);
   const r = await p.evaluate(() => {
     const over = document.documentElement.scrollWidth - document.documentElement.clientWidth;
-    const st = document.querySelector('.hero-stage').getBoundingClientRect();
-    const h1 = document.querySelector('.hero-headline').getBoundingClientRect();
-    const cta = document.querySelector('.hero-cta .cta').getBoundingClientRect();
-    const idx = document.querySelector('.hero-index').getBoundingClientRect();
+    const st = document.querySelector('.stage').getBoundingClientRect();
+    const h1 = document.querySelector('.hero h1').getBoundingClientRect();
+    const cta = document.querySelector('.hero .action').getBoundingClientRect();
+    const idx = document.querySelector('.band-head').getBoundingClientRect();
     return {
       over,
       stage: Math.round(st.width) + 'x' + Math.round(st.height),

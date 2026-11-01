@@ -19,11 +19,11 @@ async function page(opts = {}) {
   return p;
 }
 const still = (p) => p.evaluate(() => {
-  const i = document.querySelector('.hero-still');
+  const i = document.querySelector('.stage-still');
   return { src: i && i.currentSrc.split('/').pop(), w: i && i.naturalWidth, shown: !!(i && i.offsetWidth) };
 });
 const loop = (p) => p.evaluate(() => {
-  const v = document.querySelector('.hero-loop');
+  const v = document.querySelector('.stage-loop');
   return v ? { playing: !v.paused, on: v.classList.contains('is-on'), muted: v.muted } : null;
 });
 
@@ -45,7 +45,7 @@ console.log('\nno javascript');
   ok(!(await loop(p)), 'no video');
   const s = await still(p);
   ok(s.shown && s.w === 820, `the still still paints (${s.src}, ${s.w}px)`);
-  const h = await p.evaluate(() => document.querySelector('.hero-headline').offsetHeight > 40);
+  const h = await p.evaluate(() => document.querySelector('.hero h1').offsetHeight > 40);
   ok(h, 'the headline is live text, not part of an image');
   await ctx.close();
 }
@@ -59,7 +59,7 @@ console.log('\nmissing media');
   await p.goto(URL, { waitUntil: 'load' });
   await p.waitForTimeout(2200);
   ok(!(await loop(p)), 'the failed video removes itself rather than sitting black');
-  ok(!(await p.$('.hero-motion')), 'and takes its control with it');
+  ok(!(await p.$('.stage-motion')), 'and takes its control with it');
   const s = await still(p);
   ok(s.shown, 'the still is what remains');
   await ctx.close();
@@ -72,7 +72,7 @@ console.log('\npause control');
   ok((await loop(p)).muted, 'and is muted');
   // keyboard: reachable and operable without a pointer
   const reached = await p.evaluate(async () => {
-    const btn = document.querySelector('.hero-motion');
+    const btn = document.querySelector('.stage-motion');
     btn.focus();
     return document.activeElement === btn;
   });
@@ -80,7 +80,7 @@ console.log('\npause control');
   await p.keyboard.press('Enter');
   await p.waitForTimeout(300);
   ok(!(await loop(p)).playing, 'Enter pauses it');
-  ok((await p.textContent('.hero-motion')).trim() === 'Play motion', 'and the label says what it will now do');
+  ok((await p.textContent('.stage-motion')).trim() === 'Play motion', 'and the label says what it will now do');
 
   // the pause must survive a hidden tab
   await p.evaluate(() => {
