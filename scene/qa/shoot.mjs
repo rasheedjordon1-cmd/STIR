@@ -9,6 +9,14 @@ for (const [name, w, h, dpr] of [['1440', 1440, 900, 1], ['1024', 1024, 900, 1],
   p.on('pageerror', e => errs.push(`${name}: PAGEERROR ${e.message}`));
   p.on('response', r => { if (r.status() >= 400) errs.push(`${name}: ${r.status()} ${r.url()}`); });
   await p.goto(URL, { waitUntil: 'networkidle' });
+  // Walk the page so lazy images are actually requested; a fullPage
+  // shot otherwise captures empty frames and reads as a broken build.
+  await p.evaluate(async () => {
+    for (let y = 0; y < document.body.scrollHeight; y += 600) {
+      window.scrollTo(0, y); await new Promise(r => setTimeout(r, 70));
+    }
+    window.scrollTo(0, 0);
+  });
   await p.waitForTimeout(1800);
   await p.screenshot({ path: `out/site/${TAG}-${name}.png`, fullPage: name === '1440' });
   const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

@@ -240,3 +240,55 @@
     status.textContent = '';
   });
 })();
+
+/* ════════════════════════════════════════════════════════════════════
+   C04 — clips play on intent, never before.
+
+   Each tile ships a poster image and a <template> holding the source.
+   Nothing downloads until someone presses Play, so a page carrying
+   eight clips still weighs what eight stills weigh. No hover playback,
+   no autoplay, and only one clip runs at a time.
+   ════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var frames = document.querySelectorAll('.tile-frame[data-clip]');
+  if (!frames.length) return;
+  var playing = null;
+
+  function stop(frame) {
+    var v = frame.querySelector('video');
+    if (v) { v.pause(); v.remove(); }
+    frame.removeAttribute('data-playing');
+    frame.querySelector('.tile-play').textContent = 'Play';
+    frame.setAttribute('aria-label', frame.getAttribute('data-label'));
+  }
+
+  frames.forEach(function (frame) {
+    frame.setAttribute('data-label', frame.getAttribute('aria-label'));
+    frame.addEventListener('click', function () {
+      if (frame.getAttribute('data-playing') === 'true') { stop(frame); playing = null; return; }
+      if (playing && playing !== frame) stop(playing);
+
+      var src = frame.querySelector('template').getAttribute('data-src');
+      var v = document.createElement('video');
+      v.muted = true;             /* no sound, ever, without a control */
+      v.defaultMuted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      v.setAttribute('muted', '');
+      v.setAttribute('aria-hidden', 'true');
+      v.preload = 'auto';
+      v.src = src;
+      v.addEventListener('error', function () { stop(frame); playing = null; });
+      frame.appendChild(v);
+      var r = v.play();
+      if (r && r.catch) r.catch(function () { stop(frame); playing = null; });
+
+      frame.setAttribute('data-playing', 'true');
+      frame.querySelector('.tile-play').textContent = 'Pause';
+      frame.setAttribute('aria-label', 'Pause ' + frame.getAttribute('data-label').replace(/^Play /, ''));
+      playing = frame;
+    });
+  });
+})();
