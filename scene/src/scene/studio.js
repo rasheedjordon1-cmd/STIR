@@ -26,8 +26,8 @@ export const C = {
   inkSoft: 0x2A2520,
   red: 0xF21B16,
   redDeep: 0xC4120D,
-  pave: 0xB9AE9B,
-  paveEdge: 0x8E8475,
+  pave: 0x9C9488,
+  paveEdge: 0x746E64,
   glass: 0x113A6E,
   glassLit: 0xE8C77A,
 };
@@ -108,22 +108,69 @@ export function buildStudio(scene) {
   box(G, M.ink, 0.12, 1.3, 1.0, hw - 0.01, B.paveY + 0.8, 0.6);
   box(G, M.glass, 0.05, 1.14, 0.84, hw + 0.03, B.paveY + 0.88, 0.6);
 
-  // ── STIR sign: a cream board on the +Z face, between the storeys ─────
-  box(G, M.ink, 2.0, 0.5, 0.1, 0.4, B.paveY + B.ground + 0.04, hd + 0.04);
-  box(G, M.cream, 1.88, 0.38, 0.06, 0.4, B.paveY + B.ground + 0.1, hd + 0.08);
-  // four red blocks standing in for the wordmark at this scale; the real
-  // wordmark is an interface asset and stays sharp in HTML, not pixelated here
-  for (let i = 0; i < 4; i++) {
-    box(G, M.red, 0.26, 0.2, 0.04, -0.22 + i * 0.42, B.paveY + B.ground + 0.19, hd + 0.11);
-  }
+  // ── STIR sign ───────────────────────────────────────────────────────
+  // Real letterforms, built from blocks on a 5x7 grid. The first pass used
+  // four abstract red bars, which read as nothing: the brief asks for an
+  // unmistakable STIR sign, and the in-scene sign is the one place the brief
+  // allows constructed lettering. The interface wordmark stays a sharp HTML
+  // asset; this is its pixel-scale cousin, not a substitute.
+  const signY = B.paveY + B.ground + 0.02;
+  box(G, M.ink, 1.96, 0.70, 0.1, 0.38, signY - 0.04, hd + 0.04);
+  box(G, M.cream, 1.84, 0.58, 0.06, 0.38, signY + 0.02, hd + 0.08);
+  stirSign(G, 0.38, signY + 0.31, hd + 0.12, 0.072);
 
-  // ── Roof: antenna and a vent, the two Brooklyn tells ────────────────
-  box(G, M.ink, 0.07, 1.35, 0.07, -1.5, B.roof + B.parapet, -0.9);
-  box(G, M.ink, 0.52, 0.06, 0.06, -1.5, B.roof + B.parapet + 1.05, -0.9);
-  box(G, M.ink, 0.3, 0.44, 0.3, 1.5, B.roof + B.parapet, -0.6);
+  // ── Roof: an aerial and a vent, the two Brooklyn tells ──────────────
+  // The first version was a mast with one centred crossbar, which at this
+  // size is a crucifix on a roof — it read as a church. A Yagi's spars are
+  // asymmetric, several, and all on one side of the boom, so the silhouette
+  // can only be an aerial.
+  const my = B.roof + B.parapet;
+  box(G, M.ink, 0.07, 1.4, 0.07, -1.5, my, -0.9);
+  [[0.46, 0.72], [0.38, 0.95], [0.3, 1.14]].forEach(([len, h]) => {
+    box(G, M.ink, len, 0.05, 0.05, -1.5 + len / 2 + 0.03, my + h, -0.9);
+  });
+  box(G, M.ink, 0.3, 0.44, 0.3, 1.5, my, -0.6);
 
   scene.add(G);
   return G;
+}
+
+/* ── Constructed lettering ──────────────────────────────────────────
+   A 5x7 block alphabet, enough for S T I R. Tested a second "STUDIO" line
+   beneath it and cut it: at the scale the building renders on the page a
+   0.022 m cell is about one screen pixel, which is noise, not a word. */
+const WORD = 'STIR';
+const GLYPH = {
+  S: ['01110', '10001', '10000', '01110', '00001', '10001', '01110'],
+  T: ['11111', '00100', '00100', '00100', '00100', '00100', '00100'],
+  I: ['11111', '00100', '00100', '00100', '00100', '00100', '11111'],
+  R: ['11110', '10001', '10001', '11110', '10100', '10010', '10001'],
+};
+
+/** Centre "STIR" at (cx, cy, z) on the +Z face, one block per lit cell. */
+function stirSign(parent, cx, cy, z, cell) {
+  const word = 'STIR';
+  const cols = word.length * 5 + (word.length - 1);     // 1-cell letterspace
+  const x0 = cx - (cols * cell) / 2 + cell / 2;
+  const y0 = cy + (7 * cell) / 2 - cell / 2;
+  word.split('').forEach((ch, n) => {
+    const rows = GLYPH[ch];
+    const ox = n * 6 * cell;
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 5; c++) {
+        if (rows[r][c] !== '1') continue;
+        /* Blocks are a hair over one cell so adjacent cells fuse into a
+           stroke instead of showing seams at the palette snap. */
+        const m = new THREE.Mesh(
+          new THREE.BoxGeometry(cell * 1.04, cell * 1.04, cell * 0.55),
+          M.red
+        );
+        m.position.set(x0 + ox + c * cell, y0 - r * cell, z);
+        m.castShadow = false;
+        parent.add(m);
+      }
+    }
+  });
 }
 
 /* ── The campaign sheet ───────────────────────────────────────────────
@@ -143,13 +190,17 @@ const R = new THREE.Vector3(0.7071, 0, -0.7071);              // screen right
 const U = new THREE.Vector3(-0.3162, 0.8944, -0.3162);        // screen up
 const N = new THREE.Vector3(0.6325, 0.4472, 0.6325);          // toward the lens
 
+/* h0 -> h1 was 0.85 -> 3.5, a 4:1 taper. That is a windsock, not a sheet: a
+   printed sheet holds its width, and only appears to widen because the far
+   end is nearer the lens. 1.5 -> 2.6 is that much and no more, and it leaves
+   the wordmark sitting on a flat enough span to stay readable. */
 const SHEET = {
   origin: new THREE.Vector3(B.w / 2 - 0.1, B.paveY + B.ground + 0.62, -0.2),
-  len: 9.2,          // travel along screen right
-  h0: 0.85,          // half-height at the opening
-  h1: 3.5,           // half-height at the far edge
-  rise: 2.3,         // how far the centreline climbs
-  amp: 0.42,         // billow depth along N
+  len: 8.6,          // travel along screen right
+  h0: 1.5,           // half-height at the opening
+  h1: 2.6,           // half-height at the far edge
+  rise: 1.95,        // how far the centreline climbs
+  amp: 0.46,         // billow depth along N
   thick: 0.09,
   segU: 46,
   segV: 26,
@@ -270,9 +321,36 @@ function graphicGeometry(phase) {
     base += rows * cols;
   };
 
-  patch(0.30, 0.44, -0.74, 0.74);    // broad bar across the sheet
-  patch(0.54, 0.63, -0.74, 0.02);    // short bar, offset
-  patch(0.70, 0.93, -0.26, 0.62);    // block at the far end
+  /* Three plain rectangles read as windows punched through the sheet —
+     the eye takes any pale rectangle on a dark field as an opening. A
+     wordmark cannot be misread as a hole, and it is the true subject:
+     the work leaving the studio carries the studio's name. Same 5x7
+     alphabet as the sign, so the two agree. */
+  const cw = 0.155;                                  // world units per cell
+  const aMid = 0.66;
+  const halfH = SHEET.h0 + (SHEET.h1 - SHEET.h0) * smooth01(aMid);
+  const da = cw / SHEET.len;
+  const db = cw / halfH;
+  const cols = WORD.length * 5 + (WORD.length - 1);
+  const a0 = aMid - (cols * da) / 2;
+  const bTop = (7 * db) / 2;
+
+  WORD.split('').forEach((ch, n) => {
+    const rows = GLYPH[ch];
+    for (let r = 0; r < 7; r++) {
+      for (let c = 0; c < 5; c++) {
+        if (rows[r][c] !== '1') continue;
+        const aa = a0 + (n * 6 + c) * da;
+        const bb = bTop - r * db;
+        // 1.02 so neighbouring cells fuse into a stroke instead of
+        // showing a seam once the palette snaps them.
+        patch(aa, aa + da * 1.02, bb - db, bb + db * 0.02, 2, 2);
+      }
+    }
+  });
+  // The rule under it: the sheet's own baseline, and the one element
+  // that shows the surface curving away from the type.
+  patch(a0, a0 + cols * da, bTop - 7 * db - db * 1.5, bTop - 7 * db - db * 0.7, 14, 2);
 
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));

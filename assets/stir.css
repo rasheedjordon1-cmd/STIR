@@ -585,39 +585,19 @@ html:not(.js) .nav-logo .mark-red { opacity: 1; }
 
 /* ════════════════════════════════════════════════════════════════
    01 — HERO · ATTENTION SHOULD PAY.
-   Full cobalt environment. The illustration sits full-bleed behind
-   the interface — one composition, no frame, no feather.
+   Two territories on one cobalt field: live interface type on the
+   left, the pixel diorama on the right. The scene is a figure in a
+   column, not a full-bleed backdrop — nothing is set over it, so
+   nothing depends on where its roofline happens to land.
    ════════════════════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  /* Sampled from the asset's own sky, not the brand token: this is
-     what shows for the instant before the image paints, and a token
-     cobalt there reads as a flash of a different blue. */
-  background: #013DB8;
+  background: var(--cobalt);
   color: var(--ivory);
   min-height: max(92svh, 680px);
   display: flex;
   flex-direction: column;
   overflow: clip;
-}
-.hero picture { position: absolute; inset: 0; z-index: 1; display: block; }
-
-/*
-  HERO ENVIRONMENT — assets/env/hero-cobalt-*
-  The architecture and its red windows are massed in the lower right.
-  object-position holds that mass in frame and lets the crop eat the
-  left, which is empty cobalt and the one part of the picture we can
-  afford to lose. No filter, no scrim, no gradient: the asset already
-  carries its own contrast, and the nav sits over open sky.
-*/
-.hero-art {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 68% 54%;
-  z-index: 1;
 }
 
 .hero-inner {
@@ -627,15 +607,22 @@ html:not(.js) .nav-logo .mark-red { opacity: 1; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* Lands the block's optical centre around a third down the frame,
-     clear of the nav above and the architecture below right. */
-  padding-top: clamp(130px, 25vh, 250px);
-  padding-bottom: clamp(24px, 3.5vh, 44px);
+  /* Clears the fixed nav and leaves the index room at the bottom. */
+  padding-top: clamp(96px, 11.5vh, 140px);
+  padding-bottom: clamp(20px, 3vh, 40px);
 }
 
-/* Copy territory — the open cobalt. Held to the shell so it lines up
-   with the nav above it; a free 6vw inset would float off that edge. */
-.hero-copy { max-width: min(46%, 700px); }
+/* 42/58 — the split the direction asks for. minmax(0,…) so a long
+   unbroken headline cannot push its own column wider than its share. */
+.hero-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  column-gap: clamp(24px, 3.2vw, 60px);
+  align-items: center;
+}
+
+.hero-copy { max-width: 100%; }
 
 .eyebrow {
   font-family: var(--font-mono);
@@ -644,7 +631,7 @@ html:not(.js) .nav-logo .mark-red { opacity: 1; }
   text-transform: uppercase;
   letter-spacing: 0.09em;
   color: var(--ivory);
-  margin-bottom: clamp(20px, 3vh, 36px);
+  margin-bottom: clamp(18px, 2.6vh, 32px);
 }
 .eyebrow .arr { padding-inline: 0.35em; }
 .eyebrow-mark {
@@ -655,41 +642,132 @@ html:not(.js) .nav-logo .mark-red { opacity: 1; }
   background: var(--red);
 }
 
+/* Re-fitted for the 42% column. The old scale was set for a headline
+   that had the whole frame: at 11.4vw "should pay." is 220px of type
+   in a 566px box, which is where the clipping came from. This ceiling
+   is the measured fit for the longest line at the widest column. */
 .hero-headline {
-  font-size: var(--t-hero);
+  font-size: clamp(2.6rem, 7.3vw, 6.6rem);
   line-height: 0.95;
   color: var(--ivory);
-  width: max-content;
   max-width: none;
 }
 .hl-line { display: block; overflow: hidden; }
 .hl-line > span { display: block; }
 
 .hero-prop {
-  margin-top: clamp(28px, 4vh, 48px);
+  margin-top: clamp(22px, 3.2vh, 40px);
   color: var(--ivory-75);
-  max-width: 36ch;
+  max-width: 34ch;
 }
-.hero-prop strong { color: var(--ivory); font-weight: 500; }
+.hero-prop strong, .hero-prop b { color: var(--ivory); font-weight: 500; }
 
 .hero-cta {
-  margin-top: clamp(28px, 4.5vh, 52px);
+  margin-top: clamp(24px, 3.8vh, 44px);
   color: var(--ivory);
+  display: flex;
+  align-items: center;
+  gap: clamp(18px, 2.2vw, 34px);
+  flex-wrap: wrap;
 }
-
-/* Below-the-fold index — quiet, structural */
-.hero-index {
-  margin-top: auto;
-  color: var(--ivory-75);
-}
-.hero-index .hi-label {
-  padding-bottom: 6px;
+/* The second action is a route, not a second plate. One red field in
+   the hero; this one carries its weight with a rule. */
+.hero-alt {
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ivory);
+  text-decoration: none;
+  padding-bottom: 4px;
   border-bottom: 1px solid var(--ivory-40);
+  transition: border-color var(--cut, 120ms) linear;
 }
-.hero-index .down {
-  display: block;
-  margin-top: 14px;
+.hero-alt:hover { border-bottom-color: var(--ivory); }
+
+/* ── The scene ───────────────────────────────────────────────────
+   The still is the element that reserves the space; the loop is laid
+   over it at the same aspect. max-width is derived from the viewport
+   height so the diorama stays inside the first screen on a laptop
+   instead of pushing the index off the bottom. */
+.hero-stage {
+  --stage-ar: 1.3226;                 /* 820 / 620, the render's aspect */
+  position: relative;
+  width: 100%;
+  max-width: calc((100svh - 280px) * var(--stage-ar));
+  margin-inline-start: auto;
+  line-height: 0;
 }
+/* The scene is rendered at one art pixel per CSS pixel and must be scaled
+   by whole numbers. Without this a 2x display resamples it smoothly and the
+   palette snap, the ink contour and the dithered rim — the entire pixel
+   presentation — are averaged back into the gradients they were built to
+   replace. */
+.hero-still, .hero-loop { image-rendering: pixelated; }
+.hero-still { width: 100%; height: auto; display: block; }
+.hero-loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 600ms linear;
+}
+.hero-loop.is-on { opacity: 1; }
+
+/* Solid ink plate, not a translucent one: the chip sits over cobalt,
+   red and cream in turn as the sheet moves, and a scrim that reads on
+   one of those fails on the others. Ivory on ink is 14.9:1. */
+.hero-motion {
+  position: absolute;
+  right: 8px; bottom: 8px;
+  display: none;                      /* only shown once motion runs */
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--ivory);
+  background: var(--ink);
+  border: 0;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: background var(--cut, 120ms) linear;
+}
+.hero-stage.has-loop .hero-motion { display: block; }
+.hero-motion:hover { background: var(--red-deep); }
+
+/* ── Index: the hero's hand-off to the work ──────────────────────── */
+.hero-index {
+  margin-top: clamp(26px, 4vh, 52px);
+  display: flex;
+  align-items: baseline;
+  gap: clamp(14px, 1.8vw, 30px);
+  flex-wrap: wrap;
+  font-family: var(--font-mono);
+  font-size: var(--t-utility);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ivory-75);
+  border-top: 1px solid var(--ivory-20, rgba(250, 242, 230, 0.2));
+  padding-top: 14px;
+}
+.hero-index .hi-label { color: var(--ivory-40); }
+.hero-index a {
+  color: var(--ivory);
+  text-decoration: none;
+  transition: color var(--cut, 120ms) linear;
+}
+.hero-index a i {
+  font-style: normal;
+  color: var(--red);
+  margin-right: 0.6em;
+}
+.hero-index a:hover { color: var(--ivory-75); }
+.hero-index .hi-down { margin-left: auto; color: var(--ivory-40); }
 
 /* Load choreography — arrive confidently, then stop performing */
 @media (prefers-reduced-motion: no-preference) {
@@ -697,11 +775,12 @@ html:not(.js) .nav-logo .mark-red { opacity: 1; }
     opacity: 0;
     animation: fade-up 0.6s var(--ease) 0.1s forwards;
   }
-  /* The picture is present from the first frame and only resolves
-     its exposure — no zoom, nothing to wait for. Marker, headline,
-     then copy and CTA; the whole sequence is done inside 1.4s and
-     then the hero stops moving for good. */
-  .hero-art {
+  /* The scene is present from the first frame and only resolves its
+     exposure — no zoom, nothing to wait for. Marker, headline, then
+     copy and CTA; the whole sequence is done inside 1.4s and then the
+     hero stops moving for good. The diorama's own loop is separate
+     and starts after this has finished. */
+  .hero-stage {
     opacity: 0.82;
     animation: art-settle 0.9s var(--ease) 0.05s forwards;
   }
@@ -1779,22 +1858,29 @@ html:not(.js) .method-detail { grid-template-rows: 1fr; }
      phone size. The floor buys sky (every 100px of frame is 56px of
      it), the stack tightens, and the whole block stays in the cobalt
      rather than running onto the lit storefront. */
-  .hero { min-height: max(94svh, 760px); }
-  .hero-art { object-position: 74% 50%; }
+  /* Below the split the two territories stack: type, then the scene.
+     No min-height floor — the content sets the height, so a short
+     landscape window scrolls instead of being squeezed. */
+  .hero { min-height: 0; }
   .hero-inner { padding-top: clamp(84px, 11svh, 140px); }
-  .hero-copy { max-width: min(86%, 560px); }
-  /* Bound by height as well as width. A short landscape tablet gets a
-     short sky but a full-width headline, which is the one case that
-     still ran past the roofline. */
-  .hero-headline { font-size: min(var(--t-hero), 8.2svh, 8.6vw); }
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: clamp(24px, 4vh, 44px);
+    align-items: start;
+  }
+  .hero-copy { max-width: min(92%, 620px); }
+  .hero-headline { font-size: clamp(2.6rem, 9.2vw, 5.4rem); }
+  /* Width-bound now, not height-bound: it sits under the type rather
+     than beside it, so the first screen no longer has to hold both. */
+  .hero-stage {
+    --stage-ar: 1.1818;               /* 390 / 330: the phone reframe */
+    max-width: min(100%, 560px);
+    margin-inline: auto 0;
+  }
   .eyebrow   { margin-bottom: clamp(14px, 2.2vh, 26px); }
   .hero-prop { margin-top: clamp(18px, 2.8vh, 32px); }
   .hero-cta  { margin-top: clamp(20px, 3vh, 36px); }
-  /* The index is pinned to the bottom of the frame on desktop, where
-     the bottom of the frame is cobalt. On a portrait crop the bottom
-     is the lit storefront, so it follows the CTA and stays in the
-     sky with the rest of the type. */
-  .hero-index { margin-top: clamp(30px, 5svh, 60px); }
+  .hero-index { margin-top: clamp(26px, 4svh, 48px); }
 
   .proof-lead { grid-column: 1 / -1; }
   .proof-statement-wrap { grid-column: 1 / -1; margin-top: clamp(32px, 5vh, 56px); }
@@ -1860,22 +1946,18 @@ html:not(.js) .method-detail { grid-template-rows: 1fr; }
 
   .hero-copy { max-width: 100%; }
   .hero-headline { font-size: clamp(2.5rem, 12.5vw, 3.6rem); }
-  /* Further right and a touch higher: on the narrowest window the
-     roofline has to sit below the CTA, not through it. */
-  .hero-art { object-position: 78% 44%; }
-  /* The sky in a phone crop is 445px tall and the copy needs 376 of
-     it. The index does not fit in what is left, and pushed any lower
-     it sits on the lit storefront at 1:1. It is a wayfinding mark,
-     not content, and the scroll affordance on a phone is the phone —
-     so it stands down rather than being made unreadable. */
-  .hero-index { display: none; }
+  .hero-stage { max-width: 100%; margin-inline: 0; }
+  /* Three labels, a rule and an arrow will not sit on one phone line.
+     It keeps its label row and drops the arrow, which was only ever
+     restating what a phone already affords. */
+  .hero-index { gap: 12px 18px; }
+  .hero-index .hi-down { display: none; }
 }
 
 /* On the smallest phones the supporting line wraps to five and the
    copy runs past the roofline. The frame gets a taller floor, which
    buys sky without changing the crop, and the stack tightens. */
 @media (max-width: 374px) {
-  .hero { min-height: max(94svh, 790px); }
   .hero-inner { padding-top: clamp(80px, 11svh, 110px); }
   .hero-headline { font-size: 11.2vw; }
 
@@ -3265,46 +3347,19 @@ html.js .founder-label[data-reveal="structural"]::before {
   bottom: -2px;
 }
 
-/* ── The hero, on paper ─────────────────────────────────────────
-   It was a cobalt field holding an illustration. The illustration is
-   held and the type carries the frame now, set far larger than the
-   old editorial scale and sitting on warm stock. Cobalt is no longer
-   a wall here; it is kept for one field at the sign-off. */
-.hero {
-  background: var(--ivory);
-  color: var(--ink);
-  min-height: 0;
-  padding-block: clamp(36px, 7svh, 104px) clamp(28px, 5svh, 64px);
-  display: block;
-  overflow: visible;
-}
-.hero::after { content: none; }
-.hero .hero-inner { display: block; }
-.hero .hero-copy { max-width: none; }
-.hero .eyebrow { color: var(--ink-60); margin-bottom: clamp(12px, 2.2svh, 26px); }
-.hero .eyebrow-mark { background: var(--red); }
+/* ── The hero, on cobalt ────────────────────────────────────────
+   The paper re-skin of the broadcast pass is withdrawn here: the
+   revised direction puts the hero back on a continuous cobalt field
+   with live ivory interface type, and gives the red to one thing —
+   the campaign sheet in the diorama. What survives from that pass is
+   the sync canvas and the headline's single entrance.
+   ──────────────────────────────────────────────────────────────── */
 .hero-head { position: relative; }
-.hero .hero-headline {
-  font-size: var(--t-hero);
-  line-height: 0.84;
-  letter-spacing: -0.04em;
-  color: var(--ink);
-  max-width: none;
-}
-.hero .hero-headline em { font-style: normal; color: var(--red); }
-.hero .hero-prop {
-  margin-top: clamp(22px, 3.6svh, 46px);
-  max-width: 44ch;
-  color: var(--ink);
-}
-.hero .hero-prop b { font-weight: 600; }
-.hero .hero-cta { margin-top: clamp(22px, 3.4svh, 42px); }
-.hero :focus-visible { outline-color: var(--red); }
-
-/* The sync canvas sits exactly over the headline box. The real text
-   stays in the DOM throughout; the canvas is decoration on top. */
-.hero-sync { position: absolute; inset: 0; pointer-events: none; }
-html.js .hero-head[data-sync] .hero-headline { visibility: hidden; }
+/* Red on cobalt measures 1.78:1. The emphasis cannot be a colour
+   here, and a red plate behind one word would be a third red in a
+   frame whose red event is the sheet. So the word is set like the
+   rest and the headline carries itself. */
+.hero .hero-headline em { font-style: normal; color: inherit; }
 
 /* ── The footage shot ───────────────────────────────────────────
    Named .shot, not .band: .band is already the events block, and
@@ -3326,13 +3381,8 @@ html.js .hero-head[data-sync] .hero-headline { visibility: hidden; }
 /* The sync is the hero's entrance, so the old line-rise does not also
    run — two entrances on one headline is one too many. */
 html.js .hero-head .hl-line > span { animation: none; transform: none; }
-/* .hero-inner carried 225px of top padding from when the hero was a
-   full-bleed field under a transparent bar. The bar is in flow now,
-   so that padding is just a hole. */
-.hero .hero-inner { padding-top: 0; padding-bottom: 0; }
-
-/* The bar is fixed over the hero, so the hero opens below it. */
-.hero { padding-block: clamp(104px, 15svh, 164px) clamp(30px, 5svh, 68px); }
+/* The bar is fixed over the hero, so .hero-inner opens below it;
+   the padding lives there, on the flex column, not on .hero. */
 /* The giant scale no longer fits five of twelve columns — "Events &
    wholesale." was losing its last letters to the editorial mask.
    Scoped to the twelve-column range: unscoped, this overrode the

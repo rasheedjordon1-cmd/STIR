@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { PALETTE_RGB } from './palette.js';
+import { PALETTE_RGB, toLinear } from '../scene/palette.js';
 
 const VERT = /* glsl */ `
 out vec2 vUv;
@@ -19,6 +19,8 @@ uniform sampler2D tScene;
 uniform vec2 uResolution;
 uniform vec3 uPalette[64];
 uniform float uDither;
+uniform vec3 uBg;        // the surround, display sRGB
+uniform vec3 uBgLinear;  // the same colour, linear
 
 float bayer2(vec2 a) {
   a = floor(a);
@@ -67,16 +69,18 @@ void main() {
   cov = max(cov, centreCov);
   vec3 c = mix(gathered, centre.rgb, smoothstep(0.62, 0.92, centreCov));
 
-  // Composite the model onto paper white before grading.
-  c = mix(vec3(1.0), c, smoothstep(0.26, 0.72, cov));
+  // Composite onto the cobalt field before grading. This is linear space,
+  // so the surround is supplied linear; the rim writes below are post-gamma
+  // and use the display value instead.
+  c = mix(uBgLinear, c, smoothstep(0.26, 0.72, cov));
 
   // Linear render target -> display sRGB.
   c = pow(max(c, vec3(0.0)), vec3(1.0 / 2.2));
 
   // Gentle grade, then the crisp ink contour.
   float l = luma(c);
-  c = mix(vec3(l), c, 1.07);
-  c = clamp((c - 0.5) * 1.028 + 0.5, 0.0, 1.0);
+  c = mix(vec3(l), c, 1.20);   // the snap can only pick what it is given
+  c = clamp((c - 0.5) * 1.012 + 0.5, 0.0, 1.0);
 
   float l0 = luma(texture(tScene, vUv).rgb);
   float l1 = luma(texture(tScene, vUv + vec2(px.x, 0.0)).rgb);
@@ -94,7 +98,9 @@ void main() {
   float sparkle = fract(sin(dot(gl_FragCoord.xy, vec2(12.9898, 78.233))) * 43758.5453) - 0.5;
   // Dither hardest where tones are actually transitioning; flat areas stay calm.
   float gate = smoothstep(0.004, 0.055, edge);
-  c += (d * (0.0012 + 0.019 * gate) + sparkle * 0.0012) * uDither;
+  // Halved: at full strength the sheet is one continuous ramp, so every
+  // pixel of it dithered at once and read as film grain, not as banding.
+  c += (d * (0.0008 + 0.0095 * gate) + sparkle * 0.0006) * uDither;
 
   vec3 best = uPalette[0];
   float bestD = 1e9;
@@ -113,16 +119,16 @@ void main() {
   float rim = 1.0 - smoothstep(0.78, 0.995, cov);
   float threshold = bayer4(gl_FragCoord.xy * 1.0) * 0.92 + 0.018;
   if (rim > 0.002 && cov < threshold) {
-    c = vec3(1.0);
+    c = uBg;
   }
-  if (cov < 0.02) c = vec3(1.0);
+  if (cov < 0.02) c = uBg;
 
   fragColor = vec4(c, 1.0);
 }
 `;
 
 export class PixelPost {
-  constructor(renderer, maxDim = 1600, renderScale = 1) {
+  constructor(renderer, maxDim = 1600, renderScale = 1, bg = [0.0157, 0.3176, 0.6706]) {
     this.renderer = renderer;
     this.maxDim = maxDim;
     this.renderScale = renderScale;
@@ -144,6 +150,8 @@ export class PixelPost {
       uResolution: { value: new THREE.Vector2(2, 2) },
       uPalette: { value: PALETTE_RGB.map((c) => new THREE.Vector3(c[0], c[1], c[2])) },
       uDither: { value: 1.0 },
+      uBg: { value: new THREE.Vector3(bg[0], bg[1], bg[2]) },
+      uBgLinear: { value: new THREE.Vector3(...bg.map(toLinear)) },
     };
 
     this.material = new THREE.ShaderMaterial({

@@ -99,13 +99,61 @@ building and the sheet do all the work.
 
 Two loops, phased apart. No flicker, no particles.
 
-## Palette
+## Palette and pixel presentation
 
-- Length 32. Must equal `uPalette[N]` in the shader and the JS array.
-- Roles: cobalt `#0451AB` ground and shadow steps; ivory `#FAF2E6` façade and
-  light; ink `#161310` frames and structure; signal red `#F21B16` awning and one
-  mark. Extras: four skin steps, three produce greens/golds, two timber steps.
-- Forbidden: pure black, gradients, any colour not in the array.
+`src/scene/palette.js` — exactly 64 entries, the length the shader declares as
+`vec3[64]`. Built from the brand colours, not from the kit's own palette: the
+shipped one is a pool/market set (skin, water, swimwear) with no entry anywhere
+near cream `#FAF2E6`, cobalt `#0451AB` or red `#F21B16`, so snapping to it
+would quietly repaint the brand.
+
+Ramps: cream ×10, warm grey / pavement ×8, ink ×6, red ×8, cobalt ×10,
+blue-black glass ×8, cool-cream shadow ×6, accent/metal ×8.
+
+The cream ramp is **generated from cream's own ratio** (250:242:230), not
+picked by eye. A hand-picked ramp drifted to R−B = 40 where cream itself is 20,
+which is what first rendered the building khaki.
+
+Forbidden: pure black, gradients, any colour not in the array.
+
+### The post pass — this is what makes it a diorama
+
+`src/kit/post.js`, ported from the playbook's `templates/post.js`. The first
+pass of this scene shipped without it and the result was a smooth low-poly
+render with continuous gradients: Look Contract rules 3 (palette snap), 4 (ink
+contour) and 5 (gated dither) were simply absent. The port restores all three
+plus the fragmented silhouette.
+
+Two adaptations, both required by the brief:
+
+| Kit | Here | Why |
+| --- | --- | --- |
+| Composites onto paper white; rim fragments to white | `uBg` / `uBgLinear` uniforms, both cobalt | The surround is the page's own cobalt field, and the pre-grade composite is in linear space while the rim writes are post-gamma, so the colour is supplied in both spaces. |
+| `mix(vec3(l), c, 1.07)` | `1.20` | Cream is only 8% warm. With the kit's grade the lit faces snapped to a neutral and the building came back as concrete. |
+| dither `0.0012 + 0.019 * gate` | `0.0008 + 0.0095 * gate` | The sheet is one continuous ramp, so every pixel of it dithered at once and read as film grain rather than banding. |
+
+Resolution is the kit's own ratio — one target pixel per CSS pixel — so the
+page must carry `image-rendering: pixelated` on the still and the loop. Without
+it a 2× display resamples the art smoothly and averages the palette snap, the
+ink contour and the dithered rim back into the gradients they replaced.
+
+### Scene corrections the first renders forced
+
+- **Roof aerial.** A mast with one centred crossbar is a crucifix at this size;
+  it read as a church. Replaced with three asymmetric spars on one side of the
+  boom, which can only be an aerial.
+- **Sheet proportion.** `h0 → h1` was 0.85 → 3.5, a 4:1 taper — a windsock, not
+  a sheet. Now 1.5 → 2.6.
+- **Sheet graphic.** Three plain pale rectangles read as windows punched
+  through the sheet; the eye takes any pale rectangle on a dark field as an
+  opening. Replaced with the STIR wordmark built from the same 5×7 alphabet as
+  the building's sign, plus one rule.
+- **Pavement.** Was the same value as the building, so the base dissolved into
+  the slab. Darkened and cooled.
+- **Framing.** Rendered portrait (760×830) against a landscape subject, which
+  wasted roughly half the slot. Desktop is 820×620, phone 390×330. The phone
+  reframe kept only the near 58% of the sheet, which cut the wordmark to
+  "STI"; it keeps 92% now and reframes vertically instead.
 
 ## QA frames
 

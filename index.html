@@ -140,21 +140,48 @@
        visitor sees: an actual business, in colour. -->
   <section class="hero" data-nav-theme="cream" aria-label="STIR — attention should pay">
     <div class="shell hero-inner">
-      <div class="hero-copy">
-        <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Founder-led creative &amp; growth practice &mdash; Est.&nbsp;2025</p>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow"><i class="eyebrow-mark" aria-hidden="true"></i>Founder-led creative &amp; growth practice &mdash; Est.&nbsp;2025</p>
 
-        <div class="hero-head" data-sync>
-          <h1 class="display hero-headline">
-            <span class="hl-line"><span>Attention</span></span>
-            <span class="hl-line"><span>should <em>pay.</em></span></span>
-          </h1>
-          <canvas class="hero-sync" aria-hidden="true"></canvas>
+          <div class="hero-head" data-sync>
+            <h1 class="display hero-headline">
+              <span class="hl-line"><span>Attention</span></span>
+              <span class="hl-line"><span>should <em>pay.</em></span></span>
+            </h1>
+            <canvas class="hero-sync" aria-hidden="true"></canvas>
+          </div>
+
+          <p class="editorial hero-prop">I make content, campaigns, brands and websites for businesses with a street address&nbsp;— the kind people walk past, call, or order&nbsp;from. <b>I've run one myself.</b></p>
+
+          <p class="hero-cta"><a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a><a class="hero-alt" href="#proof">See the work</a></p>
         </div>
 
-        <p class="editorial hero-prop">I make content, campaigns, brands and websites for businesses with a street address&nbsp;— the kind people walk past, call, or order&nbsp;from. <b>I've run one myself.</b></p>
-
-        <p class="hero-cta"><a class="cta" href="contact.html"><span class="cta-label">Start a project</span><span class="cta-arrow" aria-hidden="true"><i class="cta-glyph">↗</i></span></a></p>
+        <!-- THE SCENE. A conceptual pixel diorama, not a photograph of a
+             place: a small studio with one oversized campaign sheet
+             leaving it. The still is the markup; the loop is attached by
+             script only when motion is allowed, so no-JS, reduced-motion,
+             a refused autoplay and a missing file all land on the same
+             correct frame rather than on a hole. -->
+        <figure class="hero-stage" data-scene>
+          <picture>
+            <source media="(max-width: 859px)" srcset="assets/scene/hero-phone-poster.webp" width="390" height="330">
+            <img class="hero-still" src="assets/scene/hero-desk-poster.webp"
+                 width="820" height="620" fetchpriority="high" decoding="async"
+                 alt="Illustration: a small cream studio building drawn as an isometric pixel diorama, its sign reading STIR, with one oversized red campaign sheet carrying a cream graphic billowing out of an upper opening into open blue.">
+          </picture>
+        </figure>
       </div>
+
+      <!-- Reconnects the hero to the work underneath it. These are the
+           real section ids on this page, not decoration. -->
+      <nav class="hero-index" aria-label="Sections below">
+        <span class="hi-label">Below</span>
+        <a href="#proof"><i>01</i>Labay Market</a>
+        <a href="#sites"><i>02</i>Websites</a>
+        <a href="#services"><i>03</i>Services</a>
+        <span class="hi-down" aria-hidden="true">&darr;</span>
+      </nav>
     </div>
   </section>
 
@@ -1408,6 +1435,117 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && !overlay.hidden) setOpen(false);
     });
+  })();
+
+  /* ── The diorama loop ───────────────────────────────────────────
+     The still in the markup is the real hero image; this attaches a
+     14s seamless loop over it and nothing else. Every failure mode
+     lands on that still rather than on a hole:
+
+       no JS                  -> the <picture> is already correct
+       prefers-reduced-motion -> we never create the video
+       no <video> support     -> canPlayType is empty, we return
+       autoplay refused       -> play() rejects, we remove the video
+       file missing / error   -> 'error' handler removes the video
+
+     The loop's first frame IS the poster, so the fade is a crossfade
+     between identical geometry: the handoff cannot be seen.          */
+  (function () {
+    var stage = document.querySelector('.hero-stage[data-scene]');
+    if (!stage || reduce) return;
+
+    var probe = document.createElement('video');
+    if (!probe.canPlayType) return;
+    var mp4  = probe.canPlayType('video/mp4; codecs="avc1.64001f"');
+    var webm = probe.canPlayType('video/webm; codecs="vp9"');
+    if (!mp4 && !webm) return;
+
+    /* Phone gets the reframed render, not a shrunk desktop one. The
+       breakpoint matches the <source media> on the still exactly, so
+       the loop and the poster are always the same composition. */
+    var narrow = window.matchMedia('(max-width: 859px)');
+    var base = 'assets/scene/hero-' + (narrow.matches ? 'phone' : 'desk');
+
+    var v = document.createElement('video');
+    v.className = 'hero-loop';
+    v.muted = true;            /* set before src: a later mute can be
+                                  too late for the autoplay check */
+    v.defaultMuted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.setAttribute('playsinline', '');
+    v.setAttribute('muted', '');
+    v.setAttribute('aria-hidden', 'true');
+    v.preload = 'auto';
+    v.tabIndex = -1;
+    v.src = base + (webm ? '.webm' : '.mp4');
+
+    var userPaused = false, gone = false;
+
+    function drop() {
+      if (gone) return;
+      gone = true;
+      stage.classList.remove('has-loop');
+      if (v.parentNode) v.parentNode.removeChild(v);
+    }
+    v.addEventListener('error', drop);
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'hero-motion';
+    function label() {
+      var paused = v.paused;
+      btn.textContent = paused ? 'Play motion' : 'Pause motion';
+      btn.setAttribute('aria-label',
+        (paused ? 'Play' : 'Pause') + ' the illustration\u2019s motion');
+      btn.setAttribute('aria-pressed', String(paused));
+    }
+    btn.addEventListener('click', function () {
+      if (v.paused) { userPaused = false; v.play().then(label, label); }
+      else { userPaused = true; v.pause(); label(); }
+    });
+    v.addEventListener('play', label);
+    v.addEventListener('pause', label);
+
+    /* Offscreen and background tabs stop the decode. A pause the
+       visitor asked for is sticky: coming back to the tab or
+       scrolling the hero into view must not override their choice. */
+    function resume() {
+      if (gone || userPaused || !v.paused) return;
+      var r = v.play();
+      if (r && r.catch) r.catch(function () {});
+    }
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { if (!v.paused) v.pause(); } else resume();
+    });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (e.isIntersecting) resume();
+          else if (!v.paused) v.pause();
+        });
+      }, { threshold: 0.12 }).observe(stage);
+    }
+
+    v.addEventListener('canplay', function () {
+      if (gone) return;
+      var r = v.play();
+      if (r && r.then) {
+        r.then(function () {
+          stage.appendChild(btn);
+          stage.classList.add('has-loop');
+          v.classList.add('is-on');
+          label();
+        }, drop);                 /* autoplay refused: keep the still */
+      } else {
+        stage.appendChild(btn);
+        stage.classList.add('has-loop');
+        v.classList.add('is-on');
+        label();
+      }
+    }, { once: true });
+
+    stage.appendChild(v);
   })();
 
 })();

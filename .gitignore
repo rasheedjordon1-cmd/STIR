@@ -17,3 +17,11 @@ node_modules/
 scene/node_modules/
 scene/dist/
 scene/standalone.html
+
+# Rendered frame sequences and the scene project's own copy of the exports.
+# 672 PNGs per build, and the exports the site actually serves are committed
+# at assets/scene/. Regenerate with:
+#   cd scene && W=820 H=620 DPR=1 OUT=out/frames-desk FRAME=desk node qa/render-loop.mjs
+#   ./qa/encode.sh out/frames-desk out/media/hero-desk 24 0000
+scene/out/frames-*/
+scene/out/media/
