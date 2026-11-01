@@ -3,6 +3,14 @@ import { createCamera, updateCamera, CAMERA, ISO_TRUE, ISO_2_1 } from './scene/c
 import { buildStudio, buildSheet, B, SHEET } from './scene/studio.js';
 import { PixelPost } from './kit/post.js';
 import { buildCast } from './scene/cast.js';
+import { buildRoom, roomFit } from './scene/room.js';
+import { buildSeat, seatFit } from './scene/seat.js';
+
+/* Three scenes, one set of settings. ?scene= picks which to build;
+   the camera, the post pass, the palette, the lighting and the
+   materials are shared, which is what makes them read as views of the
+   same building rather than three separate illustrations. */
+const SCENE = new URLSearchParams(location.search).get('scene') || 'hero';
 
 const COBALT = 0x0451ab;
 const LOOP = 14.0;            // brief: a quiet 12-16 s seamless loop
@@ -70,7 +78,9 @@ const post = new PixelPost(renderer, 1600, 1, [0.0157, 0.3176, 0.6706]);
 const elevParam = new URLSearchParams(location.search).get('elev');
 if (elevParam === 'iso') CAMERA.elevation = ISO_TRUE;
 if (elevParam === '2:1') CAMERA.elevation = ISO_2_1;
-const camera = createCamera(1.6, FIT);
+const FIT_FOR = { hero: FIT, room: roomFit(THREE), seat: seatFit(THREE) };
+const FITS = FIT_FOR[SCENE] || FIT;
+const camera = createCamera(1.6, FITS);
 
 /* Flat tone steps: a strong hemisphere for the ambient step, one key, one
    low fill. A hard key alone crushes the shadow faces to mud. */
@@ -101,15 +111,22 @@ fill.position.set(19, 13, 19);
 fill.target.position.set(2, 3, 0);
 scene.add(fill, fill.target);
 
-const studio = buildStudio(scene);
-const sheet = buildSheet(scene);
-const cast = buildCast(scene);
+let studio = null, sheet = null, cast = null, room = null, seat = null;
+if (SCENE === 'room') {
+  room = buildRoom(scene);
+} else if (SCENE === 'seat') {
+  seat = buildSeat(scene);
+} else {
+  studio = buildStudio(scene);
+  sheet = buildSheet(scene);
+  cast = buildCast(scene);
+}
 
 function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight;
   if (w < 2 || h < 2) return;
   post.setSize(w, h);          /* sets the renderer size itself */
-  updateCamera(camera, w / h, FIT);
+  updateCamera(camera, w / h, FITS);
 }
 
 function draw(t) {
@@ -117,9 +134,14 @@ function draw(t) {
   /* One travelling wave, phase wrapping 0..1 over the loop, so the final
      frame and the first frame are the same geometry by construction rather
      than by a crossfade. */
-  const phase = (t / LOOP) % 1;
-  sheet.userData.setPhase(phase);
-  cast.userData.setPhase(phase);
+  /* Only the hero animates. The two interior scenes are stills by
+     direction: the empty chair and the open door do the work, and a
+     moving object would compete with the call to action beside them. */
+  if (sheet) {
+    const phase = (t / LOOP) % 1;
+    sheet.userData.setPhase(phase);
+    cast.userData.setPhase(phase);
+  }
   post.render(scene, camera);
 }
 
@@ -135,7 +157,7 @@ addEventListener('resize', resize, { passive: true });
 frame();
 
 window.__diorama = {
-  THREE, scene, camera, renderer, post, studio, sheet, cast, LOOP,
+  THREE, scene, camera, renderer, post, studio, sheet, cast, room, seat, SCENE, LOOP,
   freeze(t) { frozen = t; draw(t); },
   play() { frozen = null; },
 };

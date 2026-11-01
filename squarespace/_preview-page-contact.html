@@ -100,8 +100,14 @@
       <!-- The stored `type` values are unchanged — business / creator /
            collaborator / general — so the visible labels can be
            rewritten without touching the backend mapping. -->
-      <form class="inquiry" name="inquiry" method="POST" action="https://formspree.io/f/mnppgeyr" id="inquiry" novalidate>
-        
+      <!-- One endpoint for both builds. Netlify Forms only works on
+           Netlify, so the Squarespace kit had to use something else;
+           running the same endpoint here means one inbox and one path
+           to verify rather than two. Swap the action back to
+           /contact?sent=1 with data-netlify="true" to return to
+           Netlify Forms. -->
+      <form class="inquiry" name="inquiry" method="POST"
+            action="https://formspree.io/f/mnppgeyr" id="inquiry" novalidate>
         <p class="hp"><label>Leave this empty: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="field-row">
@@ -451,13 +457,7 @@ document.documentElement.classList.add('js');
     if (e) e.checked = true;
   }
 
-  /* Arriving back at ?sent=1 is Netlify's own redirect after it has
-     accepted the submission. Nothing here claims success on its own. */
   var status = document.getElementById('status');
-  if (new URLSearchParams(location.search).has('sent')) {
-    status.textContent = 'Thanks — that reached STIR. You will get a reply at the address you gave.';
-    form.reset();
-  }
 
   var CHECKS = [
     ['f-name', 'e-name', function (v) { return v.trim().length > 0; }],
@@ -465,9 +465,10 @@ document.documentElement.classList.add('js');
     ['f-message', 'e-message', function (v) { return v.trim().length > 0; }],
   ];
   var busy = false;
+  var btn = document.getElementById('submit');
+  var label = btn.querySelector('.action-label');
 
-  form.addEventListener('submit', function (e) {
-    if (busy) { e.preventDefault(); return; }
+  function valid() {
     var bad = null;
     CHECKS.forEach(function (c) {
       var f = document.getElementById(c[0]), err = document.getElementById(c[1]);
@@ -476,71 +477,50 @@ document.documentElement.classList.add('js');
       err.hidden = ok;
       if (!ok && !bad) bad = f;
     });
+    return bad;
+  }
+  function settle(msg) {
+    busy = false;
+    btn.removeAttribute('aria-busy');
+    label.textContent = 'Send your note';
+    status.textContent = msg;
+  }
+
+  /* Submitted over fetch so the visitor stays on the page and gets the
+     real outcome: success only after the endpoint accepts it, and on
+     failure the answers are left exactly as typed. Without JavaScript
+     this is an ordinary POST and the endpoint answers in its own page,
+     which is why the form keeps a real action and method. */
+  form.addEventListener('submit', function (e) {
+    if (busy) { e.preventDefault(); return; }
+    var bad = valid();
     if (bad) {
       e.preventDefault();
-      status.textContent = 'Your note couldn\u2019t be sent. Please try again, or email rasheed@builtbystir.com. Your answers are still here.';
+      status.textContent = 'Check the highlighted fields and send again.';
       bad.focus();
       return;
     }
-    /* The real request is happening now. The label says Sending, the
-       button is blocked against a second click, and nothing claims the
-       submission succeeded — only Netlify's redirect does that. */
+    if (!window.fetch || !window.FormData) return;   /* let it post normally */
+    e.preventDefault();
+
     busy = true;
-    var btn = document.getElementById('submit');
     btn.setAttribute('aria-busy', 'true');
-    btn.querySelector('.action-label').textContent = 'Sending…';
+    label.textContent = 'Sending\u2026';
     status.textContent = '';
-  });
-})();
 
-/* ════════════════════════════════════════════════════════════════════
-   C04 — clips play on intent, never before.
-
-   Each tile ships a poster image and a <template> holding the source.
-   Nothing downloads until someone presses Play, so a page carrying
-   eight clips still weighs what eight stills weigh. No hover playback,
-   no autoplay, and only one clip runs at a time.
-   ════════════════════════════════════════════════════════════════════ */
-(function () {
-  'use strict';
-  var frames = document.querySelectorAll('.tile-frame[data-clip]');
-  if (!frames.length) return;
-  var playing = null;
-
-  function stop(frame) {
-    var v = frame.querySelector('video');
-    if (v) { v.pause(); v.remove(); }
-    frame.removeAttribute('data-playing');
-    frame.querySelector('.tile-play').textContent = 'Play';
-    frame.setAttribute('aria-label', frame.getAttribute('data-label'));
-  }
-
-  frames.forEach(function (frame) {
-    frame.setAttribute('data-label', frame.getAttribute('aria-label'));
-    frame.addEventListener('click', function () {
-      if (frame.getAttribute('data-playing') === 'true') { stop(frame); playing = null; return; }
-      if (playing && playing !== frame) stop(playing);
-
-      var src = frame.querySelector('template').getAttribute('data-src');
-      var v = document.createElement('video');
-      v.muted = true;             /* no sound, ever, without a control */
-      v.defaultMuted = true;
-      v.loop = true;
-      v.playsInline = true;
-      v.setAttribute('playsinline', '');
-      v.setAttribute('muted', '');
-      v.setAttribute('aria-hidden', 'true');
-      v.preload = 'auto';
-      v.src = src;
-      v.addEventListener('error', function () { stop(frame); playing = null; });
-      frame.appendChild(v);
-      var r = v.play();
-      if (r && r.catch) r.catch(function () { stop(frame); playing = null; });
-
-      frame.setAttribute('data-playing', 'true');
-      frame.querySelector('.tile-play').textContent = 'Pause';
-      frame.setAttribute('aria-label', 'Pause ' + frame.getAttribute('data-label').replace(/^Play /, ''));
-      playing = frame;
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    }).then(function (r) {
+      if (!r.ok) throw new Error('rejected ' + r.status);
+      settle('Your note is in. Thanks for introducing yourself.');
+      form.reset();
+      applyType(form.querySelector('input[name="type"]:checked').value);
+    }).catch(function () {
+      /* Nothing is cleared: the answers are still in the fields. */
+      settle('Your note couldn\u2019t be sent. Please try again, or email ' +
+             'rasheed@builtbystir.com. Your answers are still here.');
     });
   });
 })();

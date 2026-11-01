@@ -16,12 +16,12 @@ import * as THREE from 'three';
  * construction rather than by a crossfade.
  */
 
-const flat = (hex) => new THREE.MeshLambertMaterial({ color: hex, flatShading: true });
+export const flat = (hex) => new THREE.MeshLambertMaterial({ color: hex, flatShading: true });
 /* Surfaces that are their own light source. The studio room is a deep recess
    facing the camera, so the exterior key never reaches into it and Lambert
    alone renders it black — which is exactly what the first pass did to the
    worktable, the lamp and the print that were already modelled in there. */
-const lit = (hex, k = 0.55) => new THREE.MeshLambertMaterial({
+export const lit = (hex, k = 0.55) => new THREE.MeshLambertMaterial({
   color: hex, emissive: hex, emissiveIntensity: k, flatShading: true,
 });
 
@@ -41,15 +41,17 @@ export const C = {
   roomDeep: 0xB99650,    // its floor, a step down in the same ramp
   dark: 0x0C192B,        // an opening with nothing lit behind it
   cobaltSign: 0x0451AB,  // the sign's lettering: the brand blue, not red
+  pageLit: 0xF3E9DA,     // a lit screen showing a cream page
 };
 
-const M = {};
+export const M = {};
 for (const k of Object.keys(C)) M[k] = flat(C[k]);
 M.room = lit(C.room, 0.30);
 M.roomDeep = lit(C.roomDeep, 0.24);
 M.glassLit = lit(C.glassLit, 0.5);
+M.pageLit = lit(C.pageLit, 0.55);
 
-function box(parent, mat, w, h, d, x, y, z) {
+export function box(parent, mat, w, h, d, x, y, z) {
   const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
   m.position.set(x, y + h / 2, z);
   m.castShadow = true;

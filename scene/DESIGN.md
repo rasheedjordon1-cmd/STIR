@@ -226,3 +226,58 @@ sign is no longer red on cream. The scene's red is the door and the sheet.
 - Four figures at 30–45 px on a 56% column — the courier/owner handoff is the
   one close contact and the most likely to read badly.
 - The STIR sign must stay legible at phone size or it becomes noise.
+
+## The interior scenes
+
+Two further views of the same building, sharing every setting with the
+hero rather than restating any of them: the orthographic 45°/26.565°
+camera, `fill 0.96`, the PixelPost pass on the same cobalt, the 64
+colour palette, and the `flat()` / `lit()` material helpers — all
+imported from `studio.js`, which now exports them. `?scene=hero|room|seat`
+picks which one `main.js` builds.
+
+| | The Working Room | The Open Seat |
+| --- | --- | --- |
+| where | beside the founder introduction | beside the closing invitation |
+| room | 5.6 × 4.2 × 2.9 | 2.9 × 2.2 × 1.65 |
+| export | 620×460 desk, 390×300 phone | 520×420 desk, 390×330 phone |
+| share of its row | 34% | 38% |
+| motion | none | none |
+
+Both are stills. The hero stays the only moving scene: a second
+animation beside a call to action competes with it, and the empty chair
+and open door already carry the open seat's meaning.
+
+### What the renders forced
+
+- **Interiors are lit from inside.** At `lit(C.cream, 0.16)` both rooms
+  came back grey — the only thing reaching an interior face is the cool
+  hemisphere, because the exterior key is outside. The walls carry
+  their own warmth now (0.58), and the floor and back wall sit a step
+  under it.
+- **No point lights.** Both scenes had a desk lamp as a real
+  `PointLight`. Its falloff snapped to the palette as a hard yellow
+  disc on the table and concentric rings up the wall — the same bloom
+  the hero's window lamp had to be pulled back from, worse here because
+  the surfaces are closer. The lamps keep a `lit()` shade, which is
+  what makes them read as lit; nothing else is needed.
+- **A door has to be an opening.** The room's first door was a red
+  panel against the wall: the dark void behind it sat *inside* the
+  wall's thickness, so the inner face covered it. It is on the inner
+  face now, with jambs and a lintel, like the hero's entrance.
+- **The open seat was framed too wide.** At 3.6 × 2.8 the chair was a
+  stool in a hall and the full-height door was the largest shape and
+  the darkest value in frame. The room is smaller, the door is pushed
+  to the frame edge so it is genuinely partial, and the fit is taken on
+  the furniture rather than on the empty volume above it.
+
+### Not built: the founder figure
+
+The brief asks for a pixel character of Rasheed Jordon in the working
+room, and says to take his appearance and clothing from supplied
+photographs. No photographs were supplied with it. A likeness of a real
+person is the one thing in this project that must not be guessed, so
+the room ships unoccupied — which is also what its own composition
+paragraph specifies. The table is clear on its viewer-facing side and
+the proof is already on it, so the figure drops in without moving
+anything else.

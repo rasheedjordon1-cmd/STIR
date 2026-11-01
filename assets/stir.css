@@ -739,3 +739,37 @@ html:not(.js) .bench-sheet .s2, html:not(.js) .bench-sheet .s3 { transform: scal
   .bench-art { width: 72px; height: 72px; }
   .bench p { max-width: none; }
 }
+
+/* ════════════════════════════════════════════════════════════════════
+   THE INTERIOR SCENES
+   Two quieter views of the same building: the working room beside the
+   founder introduction, the open seat beside the closing invitation.
+   Both are stills. The hero stays the largest and the only one that
+   moves — a second animation beside a call to action competes with it.
+   ════════════════════════════════════════════════════════════════════ */
+/* The track is written out rather than carried in a custom property:
+   minmax(0, var(--art)) invalidates the whole declaration, and the
+   grid silently collapses to a single column with the art at full
+   width. Explicit percentages cannot do that. */
+.scene-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34%;
+  gap: clamp(24px, 3vw, 56px);
+  align-items: center;
+}
+/* The working room sits beside a longer introduction, so it takes a
+   little less of the row than the open seat does. */
+.scene-pair--seat { grid-template-columns: minmax(0, 1fr) 38%; }
+
+.scene-art { margin: 0; line-height: 0; }
+/* One art pixel per CSS pixel, scaled only by whole numbers — the same
+   rule the hero needs, for the same reason. */
+.scene-art img { width: 100%; height: auto; image-rendering: pixelated; }
+
+@media (max-width: 1023px) {
+  /* Text and its actions stay together and come first; the scene
+     follows. The grid is single-column, so source order carries it. */
+  .scene-pair,
+  .scene-pair--seat { grid-template-columns: minmax(0, 1fr); row-gap: var(--s32); align-items: start; }
+  .scene-art { max-width: 520px; }
+}

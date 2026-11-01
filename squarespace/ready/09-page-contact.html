@@ -52,8 +52,14 @@
       <!-- The stored `type` values are unchanged — business / creator /
            collaborator / general — so the visible labels can be
            rewritten without touching the backend mapping. -->
-      <form class="inquiry" name="inquiry" method="POST" action="https://formspree.io/f/mnppgeyr" id="inquiry" novalidate>
-        
+      <!-- One endpoint for both builds. Netlify Forms only works on
+           Netlify, so the Squarespace kit had to use something else;
+           running the same endpoint here means one inbox and one path
+           to verify rather than two. Swap the action back to
+           /contact?sent=1 with data-netlify="true" to return to
+           Netlify Forms. -->
+      <form class="inquiry" name="inquiry" method="POST"
+            action="https://formspree.io/f/mnppgeyr" id="inquiry" novalidate>
         <p class="hp"><label>Leave this empty: <input name="_gotcha" tabindex="-1" autocomplete="off"></label></p>
 
         <div class="field-row">

@@ -433,6 +433,31 @@ p { max-width: 60ch; }.stir strong, .stir b { font-weight: 500; }.stir /* ══
 }.stir html:not(.js) .bench-pick, .stir html:not(.js) .bench-finder, .stir html:not(.js) .bench-mounts, .stir html:not(.js) .bench-steps { opacity: 1; }.stir html:not(.js) .bench-finder { transform: scale(1); }.stir html:not(.js) .bench-piece { transform: none; }.stir html:not(.js) .bench-sheet .s2, .stir html:not(.js) .bench-sheet .s3 { transform: scaleX(1); }
 
 @media (max-width: 767px) {.stir .bench { grid-template-columns: 1fr; }.stir .bench-cell { padding: var(--s24); }.stir .bench-cell + .bench-cell { border-left: 0; border-top: 1px solid var(--ivory); }.stir .bench-slot { height: 72px; margin-bottom: var(--s20); }.stir .bench-art { width: 72px; height: 72px; }.stir .bench p { max-width: none; }
+}.stir /* ════════════════════════════════════════════════════════════════════
+   THE INTERIOR SCENES
+   Two quieter views of the same building: the working room beside the
+   founder introduction, .stir the open seat beside the closing invitation.
+   Both are stills. The hero stays the largest and the only one that
+   moves — a second animation beside a call to action competes with it.
+   ════════════════════════════════════════════════════════════════════ */
+/* The track is written out rather than carried in a custom property:
+   minmax(0, .stir var(--art)) invalidates the whole declaration, .stir and the
+   grid silently collapses to a single column with the art at full
+   width. Explicit percentages cannot do that. */
+.scene-pair {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34%;
+  gap: clamp(24px, 3vw, 56px);
+  align-items: center;
+}.stir /* The working room sits beside a longer introduction, .stir so it takes a
+   little less of the row than the open seat does. */
+.scene-pair--seat { grid-template-columns: minmax(0, 1fr) 38%; }.stir .scene-art { margin: 0; line-height: 0; }.stir /* One art pixel per CSS pixel, .stir scaled only by whole numbers — the same
+   rule the hero needs, .stir for the same reason. */
+.scene-art img { width: 100%; height: auto; image-rendering: pixelated; }
+
+@media (max-width: 1023px) {.stir /* Text and its actions stay together and come first; the scene
+     follows. The grid is single-column, .stir so source order carries it. */
+  .scene-pair, .stir .scene-pair--seat { grid-template-columns: minmax(0, 1fr); row-gap: var(--s32); align-items: start; }.stir .scene-art { max-width: 520px; }
 }
 
 /* ════════════════════════════════════════════════════════════════════
