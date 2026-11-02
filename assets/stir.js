@@ -99,7 +99,15 @@ document.documentElement.classList.add('js');
     /* Matches the <source media> on the still exactly, so the loop and
        the poster are always the same composition. */
     var narrow = matchMedia('(max-width: 767px)');
-    var base = 'assets/scene/hero-' + (narrow.matches ? 'phone' : 'desk');
+    /* Where the assets live. The standalone site serves them beside the
+       page, so the relative default is right there. Anywhere this script
+       is pasted into someone else's document — the Squarespace build —
+       the page is on a different origin and a relative path resolves
+       against THAT host: it 404s, the error handler drops the video and
+       the hero silently falls back to the still. The host says where the
+       assets are by setting window.STIR_ASSETS before this runs. */
+    var root = window.STIR_ASSETS || 'assets/';
+    var base = root + 'scene/hero-' + (narrow.matches ? 'phone' : 'desk');
 
     var v = document.createElement('video');
     v.className = 'stage-loop';

@@ -4,6 +4,7 @@ import { chromium } from 'playwright-core';
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
 let fails = 0;
 const ok = (c, m) => { console.log(`  ${c ? 'PASS' : 'FAIL'}  ${m}`); if (!c) fails++; };
+const ORIGIN = 'http://127.0.0.1:8080';
 
 for (const [name, file] of [['home', '_preview.html'], ['labay', '_preview-page-labay.html'], ['contact', '_preview-page-contact.html']]) {
   console.log('\n' + name);
@@ -44,6 +45,37 @@ for (const [name, file] of [['home', '_preview.html'], ['labay', '_preview-page-
   await p.screenshot({ path: `out/site/sqsp-${name}.png`, fullPage: name !== 'home' });
   await p.close();
 }
+
+/* The hero loop, in the host's document.
+   The footer script used a relative path for the loop, which on a
+   foreign origin resolves to <that host>/assets/... — a 404, after
+   which its own error handler removes the video and the hero falls
+   back to the still. Nothing here asked whether it moved, so the
+   preview rendered a static hero and still reported a clean pass. */
+console.log('\nthe hero loop, on the host origin');
+{
+  const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+  const missing = [];
+  p.on('response', r => { if (r.status() >= 400) missing.push(r.status() + ' ' + r.url().replace(ORIGIN, '')); });
+  await p.goto(ORIGIN + '/squarespace/_preview.html', { waitUntil: 'networkidle' });
+  await p.waitForTimeout(3000);
+  const v = await p.evaluate(() => {
+    const stage = document.querySelector('.stage[data-scene]');
+    const el = document.querySelector('.stage-loop');
+    return { stage: !!stage, on: !!stage && stage.classList.contains('has-loop'),
+             el: !!el, src: el ? (el.currentSrc || el.src) : '', btn: !!document.querySelector('.stage-motion') };
+  });
+  ok(v.stage, 'the hero stage is in the pasted markup');
+  ok(v.el, v.el ? `the loop element survives (${v.src.split('/').pop()})` : 'the loop was DROPPED — its src 404d on this origin');
+  ok(v.on && v.btn, 'it attached and the motion control is offered');
+  const t1 = await p.evaluate(() => { const e = document.querySelector('.stage-loop'); return e ? e.currentTime : -1; });
+  await p.waitForTimeout(1200);
+  const t2 = await p.evaluate(() => { const e = document.querySelector('.stage-loop'); return e ? e.currentTime : -1; });
+  ok(t2 > t1, `and it is actually playing (${t1.toFixed(2)} -> ${t2.toFixed(2)})`);
+  ok(!missing.length, missing.length ? 'asset 404s: ' + missing.join(', ') : 'no asset 404s on the page');
+  await p.close();
+}
+
 console.log(fails ? `\n${fails} FAILED` : '\nthe package survives the hostile host');
 await b.close();
 process.exit(fails ? 1 : 0);

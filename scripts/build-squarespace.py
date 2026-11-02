@@ -240,6 +240,13 @@ def main():
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="{BASE}{sheet}">
+<script>
+  /* Where the footer script should load the hero loop from. Without
+     this it uses its own relative default, which on this host resolves
+     to <your-domain>/assets/... — a 404, after which the hero quietly
+     drops back to the still image and never moves. */
+  window.STIR_ASSETS = '{BASE}';
+</script>
 <style>
   /* Carried inline so the cobalt is painted before the stylesheet
      arrives; otherwise the first frame is a white Squarespace page. */
