@@ -9,7 +9,7 @@
    this one asks for the build by name. */
 (async () => {
   const BASE  = 'https://stirnyc.netlify.app/assets/';
-  const SHEET = 'stir-squarespace.4ae77a5ff5.css';
+  const SHEET = 'stir-squarespace.b59547d2d8.css';
   const MUST  = ["scene/room-desk.webp", "scene/room-phone.webp", "scene/seat-desk.webp", "scene/seat-phone.webp", "scene/hero-desk-poster.webp", "scene/hero-phone-poster.webp", "stir-mark-cobalt.png", "scene/hero-desk.webm", "scene/hero-desk.mp4", "scene/hero-phone.webm", "scene/hero-phone.mp4", "scene/room-desk.webm", "scene/room-desk.mp4", "scene/room-phone.webm", "scene/room-phone.mp4", "scene/seat-desk.webm", "scene/seat-desk.mp4", "scene/seat-phone.webm", "scene/seat-phone.mp4"];
   const tag = (ok, m) => console.log('%c' + (ok ? 'PASS' : 'FAIL') + '%c  ' + m,
     'color:#fff;background:' + (ok ? '#1a7f37' : '#C4120D') +

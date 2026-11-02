@@ -8,7 +8,17 @@
      site; it is the test rig. -->
 <style>
   body { margin: 0; font-family: Georgia, serif; color: #333; background: #fff; }
-  h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: normal; margin: 1em 0; letter-spacing: .02em; }
+  /* Colours here are deliberately loud and wrong. The mock used to
+     set the host's font and weight on headings but not its colour,
+     so a heading colour leaking from the real theme was a thing
+     this preview could not see — and it shipped a near-black
+     headline on a cobalt hero. If any of these show up in a
+     screenshot, the defensive reset has a hole. */
+  h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: normal; margin: 1em 0;
+                   letter-spacing: .02em; color: #B3002D; }
+  p, li, figcaption, label, span { color: #7A5C00; }
+  button { color: #B3002D; background: #EEE; }
+  svg { fill: #B3002D; }
   p { margin: 1em 0; line-height: 1.8; }
   a { color: #1a7f4b; text-decoration: underline; }
   ul { list-style: disc; padding-left: 40px; margin: 1em 0; }

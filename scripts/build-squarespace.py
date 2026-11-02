@@ -85,7 +85,24 @@ def scope_css(css: str) -> str:
 
     out, i = [], 0
     while i < len(css):
-        # pass comments through untouched
+        # Whitespace first, then comments, and keep going round. Both
+        # of the next two branches test the character AT i, so if the
+        # cursor is sitting on the newline after a rule it sees neither
+        # a comment nor an at-rule: the comment gets swallowed into the
+        # next selector, and an @media preceded by a comment stops
+        # being recognised as an at-rule at all — it is handled as an
+        # ordinary rule and its whole body is emitted UNSCOPED.
+        #
+        # That is not hypothetical. '/* Responsive */' sits directly
+        # above '@media (max-width: 1023px)', so every mobile rule in
+        # that block shipped without its .stir prefix, lost to the
+        # unprefixed base rules on specificity. The hero never
+        # collapsed to one column on a phone: the headline and the
+        # diorama stayed side by side in half the screen each, and the
+        # headline broke mid-word because that was the only way it fit.
+        ws = len(css[i:]) - len(css[i:].lstrip())
+        if ws:
+            out.append(css[i:i + ws]); i += ws; continue
         if css.startswith('/*', i):
             j = css.index('*/', i) + 2
             out.append(css[i:j]); i = j; continue

@@ -50,10 +50,28 @@ body:has(.stir) .sqs-announcement-bar-dropzone { display: none !important; }
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
 }
+/* Colour, for everything, in one rule.
+   Colour is inherited, and inheritance loses to ANY direct rule on the
+   element — so a single `span { color: ... }` in the host's theme
+   repaints text that never had a colour of its own in our stylesheet.
+   Naming the elements one at a time does not work: the hero headline
+   is built from <span>s, so defending h1 left the headline untouched
+   and it rendered off-colour on cobalt anyway.
+   `.stir *` is one class and beats a bare element selector. Every
+   colour our own design sets is on a class inside .stir, which is
+   more specific than this, so this restores normal inheritance
+   without overriding anything we meant. */
+.stir * { color: inherit; }
 .stir h1, .stir h2, .stir h3, .stir h4, .stir p, .stir ul, .stir li,
 .stir figure, .stir figcaption, .stir form, .stir fieldset, .stir blockquote {
   margin: 0; padding: 0; border: 0; background: none;
   font-family: inherit; letter-spacing: inherit; text-transform: none;
+  /* Colour is inherited, and inheritance loses to ANY direct rule on
+     the element. The host's theme sets a heading colour, so our ivory
+     reached every heading on the standalone site and none of them
+     here: the hero headline rendered near-black on cobalt. Restating
+     it as `inherit` puts the cascade back the way the design assumes. */
+  color: inherit;
 }
 .stir ul, .stir ol { list-style: none; }
 .stir a { color: inherit; text-decoration: none; background: none; }
@@ -64,7 +82,8 @@ body:has(.stir) .sqs-announcement-bar-dropzone { display: none !important; }
   -webkit-appearance: none; appearance: none;
 }
 .stir button { background: none; border: 0; }
-.stir strong, .stir b { font-weight: 500; }
+.stir strong, .stir b { font-weight: 500; color: inherit; }
+.stir svg { fill: currentColor; stroke: currentColor; }
 
 /* 4 · The header is fixed, not in flow.
    On Netlify the header is the first thing in the document. Here the
