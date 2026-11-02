@@ -451,9 +451,17 @@ p { max-width: 60ch; }.stir strong, .stir b { font-weight: 500; }.stir /* ══
   align-items: center;
 }.stir /* The working room sits beside a longer introduction, .stir so it takes a
    little less of the row than the open seat does. */
-.scene-pair--seat { grid-template-columns: minmax(0, 1fr) 38%; }.stir .scene-art { margin: 0; line-height: 0; }.stir /* One art pixel per CSS pixel, .stir scaled only by whole numbers — the same
+.scene-pair--seat { grid-template-columns: minmax(0, 1fr) 38%; }.stir .scene-art { margin: 0; line-height: 0; position: relative; }.stir /* One art pixel per CSS pixel, .stir scaled only by whole numbers — the same
    rule the hero needs, .stir for the same reason. */
-.scene-art img { width: 100%; height: auto; image-rendering: pixelated; }
+.scene-art img, .stir .scene-loop { image-rendering: pixelated; }.stir .scene-art img { width: 100%; height: auto; }.stir /* The loop lies over its own poster. The still underneath is what sets
+   the height, .stir so nothing reflows when the video arrives or is dropped. */
+.scene-loop {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity 600ms linear;
+}.stir .scene-loop.is-on { opacity: 1; }.stir /* The interiors' motion control, .stir the same object as the hero's and
+   gated on the same class, .stir so a dropped loop takes its control with
+   it rather than leaving a button that pauses nothing. */
+.scene-art.has-loop .stage-motion { display: block; }
 
 @media (max-width: 1023px) {.stir /* Text and its actions stay together and come first; the scene
      follows. The grid is single-column, .stir so source order carries it. */

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { buildPerson, setPose } from '../kit/peopleModel-street.js';
-import { STAND, mixPose } from '../kit/poses.js';
+import { mixPose } from '../kit/poses.js';
 import { flat, lit } from './studio.js';
 
 /**
@@ -72,6 +72,59 @@ const MATS = {
 
 const TALL = 1.10;
 
+/* He works from the far side of the table, facing back into the room,
+   so the table separates him from the floor and the key light reaches
+   his face instead of the back of his head. Both poses are built off
+   STAND, so what moves is a working posture rather than a performance.
+
+   ABSORBED: head down over the sheets, both hands planted.
+   LOOKING:  he straightens and looks across at the monitor, his near
+             hand staying on the paper so he is checking one against
+             the other rather than simply standing up. */
+const ABSORBED = {
+  torso: [0.19, 0.03, 0],
+  head: [0.20, -0.05, 0],
+  shoulderL: [-0.56, 0, -0.26],
+  shoulderR: [-0.52, 0, 0.21],
+  elbowL: [-0.18, 0, 0],
+  elbowR: [-0.24, 0, 0],
+  wristL: [0.26, 0, 0],
+  wristR: [0.22, 0, 0],
+  hipL: [0.06, 0, 0.03],
+  hipR: [-0.06, 0, -0.03],
+  kneeL: [0.05, 0, 0],
+  kneeR: [0.13, 0, 0],
+  ankleL: [-0.02, 0, 0],
+  ankleR: [-0.07, 0, 0],
+};
+
+const LOOKING = {
+  torso: [0.05, -0.10, 0],
+  head: [-0.04, -0.30, 0],
+  shoulderL: [-0.30, 0, -0.18],
+  shoulderR: [-0.46, 0, 0.19],
+  elbowL: [-0.46, 0, 0],
+  elbowR: [-0.22, 0, 0],
+  wristL: [0.04, 0, 0],
+  wristR: [0.20, 0, 0],
+  hipL: [0.02, 0, 0.03],
+  hipR: [-0.02, 0, -0.03],
+  kneeL: [0.03, 0, 0],
+  kneeR: [0.07, 0, 0],
+  ankleL: [-0.01, 0, 0],
+  ankleR: [-0.04, 0, 0],
+};
+
+/* A window that leaves and returns to zero inside the loop, so the
+   last frame is the first frame by construction rather than by a
+   crossfade. Outside [a, b] it is flat zero; inside it is a raised
+   cosine, which has zero slope at both ends — he settles into the
+   look and out of it instead of snapping. */
+function window01(p, a, b) {
+  if (p <= a || p >= b) return 0;
+  return 0.5 - 0.5 * Math.cos((2 * Math.PI * (p - a)) / (b - a));
+}
+
 export function buildFounder(parent, x, y, z, rotY) {
   const p = buildPerson(MATS, {
     skin: SKIN[0],
@@ -86,29 +139,49 @@ export function buildFounder(parent, x, y, z, rotY) {
   g.position.set(x, y, z);
   g.rotation.y = rotY;
 
-  /* He works from the far side of the table, facing back into the room,
-     so the table separates him from the floor and the key light reaches
-     his face instead of the back of his head. Both hands are planted on
-     the sheets, weight on one leg, head down over the work. Built off
-     STAND so the stance stays a stance and not a posed figure. */
-  const absorbed = {
-    torso: [0.19, 0.03, 0],
-    head: [0.20, -0.05, 0],
-    shoulderL: [-0.56, 0, -0.26],
-    shoulderR: [-0.52, 0, 0.21],
-    elbowL: [-0.18, 0, 0],
-    elbowR: [-0.24, 0, 0],
-    wristL: [0.26, 0, 0],
-    wristR: [0.22, 0, 0],
-    hipL: [0.06, 0, 0.03],
-    hipR: [-0.06, 0, -0.03],
-    kneeL: [0.05, 0, 0],
-    kneeR: [0.13, 0, 0],
-    ankleL: [-0.02, 0, 0],
-    ankleR: [-0.07, 0, 0],
-  };
-  setPose(p, mixPose(STAND, absorbed, 1));
+  setFounderPhase(p, 0);
 
   parent.add(g);
   return p;
+}
+
+/**
+ * Drive the figure from loop phase (0..1). Three rhythms at different
+ * periods, so the result never reads as a metronome:
+ *
+ *   look     once per loop, inside a window, he straightens and checks
+ *            the monitor, then goes back to the paper
+ *   sway     one slow weight shift across the whole loop
+ *   breathe  three shallow cycles, a couple of hundredths of a radian
+ *
+ * Every term is a function of phase alone and every one of them is
+ * equal at phase 0 and phase 1, so the encoded loop closes exactly.
+ */
+export function setFounderPhase(person, phase) {
+  const p = ((phase % 1) + 1) % 1;
+  const look = window01(p, 0.30, 0.62);
+  const pose = mixPose(ABSORBED, LOOKING, look);
+
+  const sway = Math.sin(2 * Math.PI * p);
+  const breathe = Math.sin(2 * Math.PI * 3 * p);
+
+  /* Weight moves between the legs rather than the whole body sliding:
+     a figure that translates is skating, a figure whose hips take
+     turns carrying it is standing. */
+  pose.hipL[0] += 0.022 * sway;
+  pose.hipR[0] -= 0.022 * sway;
+  pose.kneeL[0] -= 0.030 * sway;
+  pose.kneeR[0] += 0.030 * sway;
+  pose.torso[2] += 0.012 * sway;
+
+  pose.torso[0] += 0.016 * breathe;
+  pose.shoulderL[2] -= 0.014 * breathe;
+  pose.shoulderR[2] += 0.014 * breathe;
+
+  /* The planted hand keeps contact with the paper through the look,
+     which is what stops the straighten reading as him walking away. */
+  pose.wristR[0] += 0.05 * look;
+
+  setPose(person, pose);
+  return { look, sway };
 }

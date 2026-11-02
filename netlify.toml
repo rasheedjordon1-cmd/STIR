@@ -15,12 +15,25 @@
 # This deploy doubles as the asset origin for the Squarespace build,
 # so /assets is served cross-origin. Fonts are the only thing that
 # strictly needs CORS, but the whole folder is public static art.
-# Fonts, images and video: the filename identifies the content, so a
+# Fonts and the wordmark: the filename identifies the content, so a
 # year of immutable caching is correct for them.
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+    Access-Control-Allow-Origin = "*"
+
+# The rendered scenes are the exception, and the reason is the one the
+# stylesheet already taught: room-desk.webm keeps its name when its
+# contents change, so a year of immutable caching would pin whatever a
+# visitor happened to load first and no redeploy could reach them. A
+# day, then revalidate — a conditional request on an unchanged file is
+# a 304 and costs nothing, and a re-rendered loop is visible tomorrow
+# instead of next year.
+[[headers]]
+  for = "/assets/scene/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, must-revalidate"
     Access-Control-Allow-Origin = "*"
 
 # The stylesheet and the script under their UNHASHED names are a

@@ -48,9 +48,43 @@ const seam = await p.evaluate(() => {
 ok(seam.room.delta <= 2, `working room corner ${seam.room.hex} vs page ${seam.page} (delta ${seam.room.delta})`);
 ok(seam.seat.delta <= 2, `open seat corner ${seam.seat.hex} vs page ${seam.page} (delta ${seam.seat.delta})`);
 
-console.log('\nstills, not animations');
-ok(await p.evaluate(() => document.querySelectorAll('.scene-art video, .scene-art canvas').length === 0),
-   'neither scene ships a video or canvas');
+/* Both interiors move now. They used to be stills by direction and
+   this block asserted that; the direction changed, so the assertion
+   is inverted rather than deleted — a scene that silently stopped
+   moving is exactly the regression worth catching, and the hero has
+   already been shipped dead once by a check that never asked. */
+console.log('\nboth interiors actually move');
+await p.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+await p.waitForTimeout(3500);
+const motion = await p.evaluate(() => {
+  const out = {};
+  document.querySelectorAll('[data-loop]').forEach(f => {
+    const v = f.querySelector('video');
+    out[f.getAttribute('data-loop')] = v
+      ? { src: v.currentSrc.split('/').pop(), t: v.currentTime, on: v.classList.contains('is-on'),
+          btn: !!f.querySelector('.stage-motion'), canvas: !!f.querySelector('canvas') }
+      : null;
+  });
+  return out;
+});
+await p.waitForTimeout(1400);
+const after = await p.evaluate(() => {
+  const out = {};
+  document.querySelectorAll('[data-loop]').forEach(f => {
+    const v = f.querySelector('video');
+    out[f.getAttribute('data-loop')] = v ? v.currentTime : null;
+  });
+  return out;
+});
+for (const k of ['room', 'seat']) {
+  const m = motion[k];
+  ok(!!m, m ? `${k}: a loop is attached (${m.src})` : `${k}: NO loop — its source 404d or autoplay was refused`);
+  if (!m) continue;
+  ok(m.on, `${k}: faded in over its own poster`);
+  ok(m.btn, `${k}: offers a pause control beside the motion`);
+  ok(!m.canvas, `${k}: ships video, not a live WebGL canvas`);
+  ok(after[k] > m.t, `${k}: is playing (${m.t.toFixed(2)} -> ${after[k].toFixed(2)})`);
+}
 await p.close();
 
 console.log('\nmobile order: text and actions first');

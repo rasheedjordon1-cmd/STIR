@@ -9,7 +9,10 @@ const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' })
 const p = await b.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 const errs = [];
 p.on('pageerror', e => errs.push(e.message));
-await p.goto(`http://127.0.0.1:4180/index.html?scene=${S}`, { waitUntil: 'load' });
+/* T freezes the loop at a time in seconds, so a still is a frame
+   you chose rather than whichever one the clock happened to be on. */
+const T = process.env.T;
+await p.goto(`http://127.0.0.1:4180/index.html?scene=${S}` + (T === undefined ? '' : `&t=${T}`), { waitUntil: 'load' });
 await p.waitForFunction(() => window.__dioramaReady === true, null, { timeout: 20000 });
 await p.waitForTimeout(700);
 await p.screenshot({ path: OUT });

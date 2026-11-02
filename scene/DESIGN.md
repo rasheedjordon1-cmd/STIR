@@ -242,11 +242,40 @@ picks which one `main.js` builds.
 | room | 5.6 × 4.2 × 2.9 | 2.9 × 2.2 × 1.65 |
 | export | 620×460 desk, 390×300 phone | 520×420 desk, 390×330 phone |
 | share of its row | 34% | 38% |
-| motion | none | none |
+| motion | the founder works: head down over the sheets, up to the monitor once per loop, back down; a weight shift and a shallow breath under it; the printer feeds twice; the proof tilts under his hand | one gust through the open door: the leaf swings, the waiting sheet lifts at its near corner, the top of the finished stack stirs, each a beat behind the last |
 
-Both are stills. The hero stays the only moving scene: a second
-animation beside a call to action competes with it, and the empty chair
-and open door already carry the open seat's meaning.
+All three scenes move, and they are deliberately not equally loud. The
+hero carries the page. The working room is a person at work, which is
+the only thing in any of these pictures that reads as life on its own.
+The open seat is the quietest of the three because it sits beside the
+closing call to action and the buttons should win.
+
+An earlier revision shipped both interiors as stills on the reasoning
+that a second animation beside a call to action competes with it. That
+was over-cautious: a page of three dioramas where two never move reads
+as two broken images, not as restraint. The answer was to keep the
+interiors quiet, not to keep them still.
+
+Nothing sits down in the open seat and nothing is produced there. The
+scene's whole point is the empty chair, and motion that contradicted
+that would be worse than no motion.
+
+### What the motion forced
+
+- **Rotation walks a flat face across palette steps.** The door leaf's
+  broad face sat on `#670905` for most of the loop, but a negative
+  excursion of 0.022 rad was enough to carry it onto the next red step,
+  and the ordered dither rendered the crossing as a 50/50 checkerboard.
+  A large flat surface sparkling is not a door turning. The leaf's
+  breath is one-sided now: it only ever swings open from rest. Measured
+  across sixteen phases, the face holds one colour.
+- **A window, not a wave.** Every term is a raised cosine over an
+  interval strictly inside the loop, so it leaves and returns to zero
+  with zero slope. The last frame is the first frame by construction,
+  which is what the encode assumes, and nothing snaps at the seam.
+- **Lag is what makes it one event.** The open seat's three moving
+  objects start 0.08 of a loop apart. Started together they read as
+  three things twitching; staggered they read as one gust.
 
 ### What the renders forced
 

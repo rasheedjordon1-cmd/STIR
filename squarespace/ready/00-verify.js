@@ -9,15 +9,15 @@
    this one asks for the build by name. */
 (async () => {
   const BASE  = 'https://stirnyc.netlify.app/assets/';
-  const SHEET = 'stir-squarespace.26e3f464e6.css';
-  const MUST  = ["scene/room-desk.webp", "scene/room-phone.webp", "scene/seat-desk.webp", "scene/seat-phone.webp", "scene/hero-desk-poster.webp", "scene/hero-phone-poster.webp", "stir-mark-cobalt.png"];
+  const SHEET = 'stir-squarespace.4ae77a5ff5.css';
+  const MUST  = ["scene/room-desk.webp", "scene/room-phone.webp", "scene/seat-desk.webp", "scene/seat-phone.webp", "scene/hero-desk-poster.webp", "scene/hero-phone-poster.webp", "stir-mark-cobalt.png", "scene/hero-desk.webm", "scene/hero-desk.mp4", "scene/hero-phone.webm", "scene/hero-phone.mp4", "scene/room-desk.webm", "scene/room-desk.mp4", "scene/room-phone.webm", "scene/room-phone.mp4", "scene/seat-desk.webm", "scene/seat-desk.mp4", "scene/seat-phone.webm", "scene/seat-phone.mp4"];
   const tag = (ok, m) => console.log('%c' + (ok ? 'PASS' : 'FAIL') + '%c  ' + m,
     'color:#fff;background:' + (ok ? '#1a7f37' : '#C4120D') +
     ';padding:1px 6px;border-radius:3px;font-weight:600', '');
   let bad = 0;
-  const check = async (url, label) => {
+  const check = async (url, label, head) => {
     try {
-      const r = await fetch(url, { cache: 'no-store' });
+      const r = await fetch(url, { cache: 'no-store', method: head ? 'HEAD' : 'GET' });
       if (!r.ok) { bad++; tag(false, label + '  — HTTP ' + r.status); return null; }
       tag(true, label); return r;
     } catch (e) { bad++; tag(false, label + '  — ' + e.message); return null; }
@@ -33,7 +33,7 @@
     if (missing.length) { bad++; tag(false, 'stylesheet is missing ' + missing.join(', ')); }
     else tag(true, 'stylesheet carries the signature classes');
   }
-  for (const f of MUST) await check(BASE + f, f);
+  for (const f of MUST) await check(BASE + f, f, true);
 
   console.log('%c' + (bad
     ? bad + ' problem(s). Do not paste yet — the pages will render ' +

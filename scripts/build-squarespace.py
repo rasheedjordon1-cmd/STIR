@@ -36,9 +36,9 @@ VERIFY_JS = """\
     'color:#fff;background:' + (ok ? '#1a7f37' : '#C4120D') +
     ';padding:1px 6px;border-radius:3px;font-weight:600', '');
   let bad = 0;
-  const check = async (url, label) => {
+  const check = async (url, label, head) => {
     try {
-      const r = await fetch(url, { cache: 'no-store' });
+      const r = await fetch(url, { cache: 'no-store', method: head ? 'HEAD' : 'GET' });
       if (!r.ok) { bad++; tag(false, label + '  \u2014 HTTP ' + r.status); return null; }
       tag(true, label); return r;
     } catch (e) { bad++; tag(false, label + '  \u2014 ' + e.message); return null; }
@@ -54,7 +54,7 @@ VERIFY_JS = """\
     if (missing.length) { bad++; tag(false, 'stylesheet is missing ' + missing.join(', ')); }
     else tag(true, 'stylesheet carries the signature classes');
   }
-  for (const f of MUST) await check(BASE + f, f);
+  for (const f of MUST) await check(BASE + f, f, true);
 
   console.log('%c' + (bad
     ? bad + ' problem(s). Do not paste yet \u2014 the pages will render ' +
@@ -261,7 +261,16 @@ def main():
     must = ['scene/room-desk.webp', 'scene/room-phone.webp',
             'scene/seat-desk.webp', 'scene/seat-phone.webp',
             'scene/hero-desk-poster.webp', 'scene/hero-phone-poster.webp',
-            'stir-mark-cobalt.png']
+            'stir-mark-cobalt.png',
+            # the three loops, in both framings and both codecs. A
+            # missing one does not throw: the script drops the video
+            # and leaves the still, so the scene simply stops moving.
+            'scene/hero-desk.webm', 'scene/hero-desk.mp4',
+            'scene/hero-phone.webm', 'scene/hero-phone.mp4',
+            'scene/room-desk.webm', 'scene/room-desk.mp4',
+            'scene/room-phone.webm', 'scene/room-phone.mp4',
+            'scene/seat-desk.webm', 'scene/seat-desk.mp4',
+            'scene/seat-phone.webm', 'scene/seat-phone.mp4']
     verify = (VERIFY_JS
               .replace('__BASE__', BASE)
               .replace('__SHEET__', sheet)

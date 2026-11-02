@@ -156,17 +156,22 @@ function applyView() {
 function draw(t) {
   resize();
   applyView();
-  /* One travelling wave, phase wrapping 0..1 over the loop, so the final
-     frame and the first frame are the same geometry by construction rather
-     than by a crossfade. */
-  /* Only the hero animates. The two interior scenes are stills by
-     direction: the empty chair and the open door do the work, and a
-     moving object would compete with the call to action beside them. */
+  /* One phase, wrapping 0..1 over the loop, drives every scene: the
+     final frame and the first are the same geometry by construction
+     rather than by a crossfade.
+
+     All three scenes move now. They are not equally loud, and that is
+     the direction rather than an accident — the hero carries the page,
+     the working room is a person at work, and the open seat is the
+     quietest of the three because it sits beside the closing call to
+     action and the buttons should win. */
+  const phase = (t / LOOP) % 1;
   if (sheet) {
-    const phase = (t / LOOP) % 1;
     sheet.userData.setPhase(phase);
     cast.userData.setPhase(phase);
   }
+  if (room && room.userData.setPhase) room.userData.setPhase(phase);
+  if (seat && seat.userData.setPhase) seat.userData.setPhase(phase);
   post.render(scene, camera);
 }
 

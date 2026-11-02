@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { C, M, box, flat, lit } from './studio.js';
-import { buildFounder } from './founder.js';
+import { buildFounder, setFounderPhase } from './founder.js';
 
 /**
  * THE WORKING ROOM — a room inside the cream STIR building, seen as an
@@ -117,7 +117,7 @@ export function buildRoom(scene) {
   /* The founder, at the far long side of the table, facing back into
      the room. Placed after the furniture so his contact shadow falls on
      the floor that is already there. */
-  buildFounder(G, tx - 0.42, 0, tz - 0.82, 0.20);
+  const founder = buildFounder(G, tx - 0.42, 0, tz - 0.82, 0.20);
 
   /* The proof he is reading: a cream sheet with one red mark, square
      to him rather than to the table. */
@@ -125,6 +125,37 @@ export function buildRoom(scene) {
   proof.rotation.y = -0.34;
   const mark = box(G, M.red, 0.14, 0.008, 0.09, tx - 0.54, tH + 0.082, tz - 0.26);
   mark.rotation.y = -0.34;
+
+  /* ── Motion ──────────────────────────────────────────────────────
+     The figure carries it. Everything else is a supporting tick, kept
+     under the threshold where it would compete with the copy beside
+     the picture: a printer feeding, and the proof shifting under his
+     hand so his movement is connected to an object rather than
+     happening in mid-air.
+
+     Every term is a pure function of phase and returns to its phase-0
+     value at phase 1, so the encoded loop closes by construction.    */
+  const printZ = prz + 0.3, printY = tH + 0.3;
+  G.userData.setPhase = function (phase) {
+    const p = ((phase % 1) + 1) % 1;
+    const { look } = setFounderPhase(founder, p);
+
+    /* The printer works in bursts, not continuously: two feeds per
+       loop, each a short advance and a settle, with a rest between. A
+       sheet gliding out at constant speed for fourteen seconds reads
+       as a conveyor belt. */
+    const feed = 0.5 - 0.5 * Math.cos(2 * Math.PI * 2 * p);
+    print.position.z = printZ + 0.085 * feed;
+    print.position.y = printY + 0.004 * feed;
+    print.rotation.x = -0.07 * feed;
+
+    /* The proof tilts a degree or so as he lifts his hand off it. */
+    proof.rotation.y = -0.34 + 0.035 * look;
+    proof.position.y = tH + 0.07 + 0.006 * look;
+    mark.rotation.y = proof.rotation.y;
+    mark.position.y = tH + 0.082 + 0.006 * look;
+  };
+  G.userData.setPhase(0);
 
   scene.add(G);
   G.userData.print = print;

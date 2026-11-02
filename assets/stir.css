@@ -761,10 +761,22 @@ html:not(.js) .bench-sheet .s2, html:not(.js) .bench-sheet .s3 { transform: scal
    little less of the row than the open seat does. */
 .scene-pair--seat { grid-template-columns: minmax(0, 1fr) 38%; }
 
-.scene-art { margin: 0; line-height: 0; }
+.scene-art { margin: 0; line-height: 0; position: relative; }
 /* One art pixel per CSS pixel, scaled only by whole numbers — the same
    rule the hero needs, for the same reason. */
-.scene-art img { width: 100%; height: auto; image-rendering: pixelated; }
+.scene-art img, .scene-loop { image-rendering: pixelated; }
+.scene-art img { width: 100%; height: auto; }
+/* The loop lies over its own poster. The still underneath is what sets
+   the height, so nothing reflows when the video arrives or is dropped. */
+.scene-loop {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; opacity: 0; transition: opacity 600ms linear;
+}
+.scene-loop.is-on { opacity: 1; }
+/* The interiors' motion control, the same object as the hero's and
+   gated on the same class, so a dropped loop takes its control with
+   it rather than leaving a button that pauses nothing. */
+.scene-art.has-loop .stage-motion { display: block; }
 
 @media (max-width: 1023px) {
   /* Text and its actions stay together and come first; the scene
