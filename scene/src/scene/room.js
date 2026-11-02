@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { C, M, box, flat, lit } from './studio.js';
+import { buildFounder } from './founder.js';
 
 /**
  * THE WORKING ROOM — a room inside the cream STIR building, seen as an
@@ -12,10 +13,9 @@ import { C, M, box, flat, lit } from './studio.js';
  * outside it is the oversized sheet, here it is a working proof pinned
  * to the back wall at a fraction of the size.
  *
- * Unoccupied. The brief's founder figure is NOT here: it asks for his
- * appearance and clothing to come from supplied photographs, and none
- * were supplied. Inventing a likeness of a real person is the one thing
- * that must not be guessed, so the room is built to take him later.
+ * Occupied by one figure: the founder, at the table, reviewing a proof.
+ * His appearance comes from the supplied photograph and nothing else.
+ * No second figure, and nothing that would imply a larger team.
  */
 
 const R = { w: 5.6, d: 4.2, h: 2.9, wall: 0.18 };
@@ -113,6 +113,18 @@ export function buildRoom(scene) {
   box(G, M.ink, 0.1, 0.03, 0.1, tx - 1.22, tH + 0.07, tz - 0.3);
   box(G, M.ink, 0.04, 0.5, 0.04, tx - 1.22, tH + 0.1, tz - 0.3);
   box(G, M.glassLit, 0.24, 0.09, 0.2, tx - 1.26, tH + 0.58, tz - 0.28);   // the lit shade
+
+  /* The founder, at the far long side of the table, facing back into
+     the room. Placed after the furniture so his contact shadow falls on
+     the floor that is already there. */
+  buildFounder(G, tx - 0.42, 0, tz - 0.82, 0.20);
+
+  /* The proof he is reading: a cream sheet with one red mark, square
+     to him rather than to the table. */
+  const proof = box(G, M.cream, 0.44, 0.012, 0.32, tx - 0.46, tH + 0.07, tz - 0.22);
+  proof.rotation.y = -0.34;
+  const mark = box(G, M.red, 0.14, 0.008, 0.09, tx - 0.54, tH + 0.082, tz - 0.26);
+  mark.rotation.y = -0.34;
 
   scene.add(G);
   G.userData.print = print;

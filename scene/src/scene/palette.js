@@ -22,19 +22,35 @@ export const PALETTE_HEX = [
   // red — door and campaign sheet
   '#FF6A5C', '#FA4136', '#F21B16', '#DF1510',
   '#C4120D', '#A50F0A', '#860C07', '#670905',
-  // cobalt — the field, and anything catching it
-  '#2E86E8', '#1E78DC', '#0F69CD', '#0A5CBC', '#0451AB',
-  '#044897', '#053F83', '#05356D', '#042B58', '#031F42',
+  // cobalt — the field, and anything catching it. Trimmed from ten to
+  // seven: the surround is written as an exact value by the post pass
+  // rather than picked from this ramp, so the extra steps were only
+  // ever available to geometry that never used them.
+  '#0F69CD', '#0451AB',
+  '#044897', '#053F83', '#042B58', '#031F42',
   // glass: blue-black, not grey. Unlit windows are holes with sky in them.
-  '#1B3250', '#152942', '#102036', '#0C192B',
-  '#081220', '#0E2238', '#17304A', '#223E5C',
+  '#1B3250', '#152942', '#0C192B', '#081220', '#17304A',
+
+  // skin — four steps of one deep brown, read from the supplied
+  // photograph rather than chosen. Without these the figures in every
+  // scene were snapping to the warm grey ramp, which is why the hero's
+  // two read as silhouettes.
+  '#8B6446', '#6E4B34', '#4F3425', '#352318',
+  /* The sage crew top, from the same photograph. Four steps, not two:
+     the torso is a lathe and its facets span a wider range of N·L than
+     two steps can hold, so with a two-step ramp the lit facets walked
+     off the top of it into the warm greys and put a grey band across
+     his chest. Measured across all three scenes, the brightest cobalt
+     and the chrome step were snapped to by nothing, so this ramp is
+     paid for out of those two slots rather than added. */
+  '#B8C4A2', '#9DAA8A', '#7E8B6C', '#616B52',
   // cream turned by the blue bounce on shadow faces. These were neutral
   // greys, which is what the lit cream was snapping to; they keep their
   // cool cast relative to the cream ramp but are no longer colourless.
   '#DDD5C7', '#C9C0AF', '#B4AA98', '#9E9583', '#88806F', '#72695B',
   // lit glass, brass, metal
   '#F7E7B8', '#E8D08A', '#D4B36A', '#B99650',
-  '#8E9AA3', '#73808A', '#5A666F', '#434E56',
+  '#73808A', '#5A666F', '#434E56',
 ];
 
 if (PALETTE_HEX.length !== 64) {

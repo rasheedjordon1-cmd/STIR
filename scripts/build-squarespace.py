@@ -226,6 +226,11 @@ def main():
         page = shell.replace('<!--STIR-HEAD-->', head)
         page = page.replace('<!--STIR-BODY-->', body)
         page = page.replace('<!--STIR-FOOT-->', foot)
+        # The markup needs the same rewrite the stylesheet already got.
+        # Without it every <img> and <source> in the preview pointed at
+        # the live deploy, so the one check that is supposed to run with
+        # no network at all silently depended on one.
+        page = page.replace(BASE, '../assets/')
         name = '_preview.html' if src == 'index.html' else f'_preview-{num[3:]}.html'
         (ROOT / 'squarespace' / name).write_text(page)
 

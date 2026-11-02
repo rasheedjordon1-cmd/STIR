@@ -129,8 +129,33 @@ function resize() {
   updateCamera(camera, w / h, FITS);
 }
 
+/* Debug camera for the QA harness. view(pos, tgt, span) frames `span`
+   metres around tgt, seen from pos, so one figure can be checked close up
+   for joint gaps, floating parts and a knee bending the wrong way — all of
+   which hide at the 30-45 px a figure occupies in the real frame. view()
+   with no arguments restores the locked fit. Nothing on the page calls it;
+   the website ships rendered stills, not this bundle. */
+let override = null;
+function applyView() {
+  if (!override) return;
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  if (w < 2 || h < 2) return;
+  const a = Math.max(0.3, w / h);
+  const { pos, tgt, span } = override;
+  camera.left = (-span * a) / 2;
+  camera.right = (span * a) / 2;
+  camera.top = span / 2;
+  camera.bottom = -span / 2;
+  camera.position.set(pos[0], pos[1], pos[2]);
+  camera.lookAt(new THREE.Vector3(tgt[0], tgt[1], tgt[2]));
+  camera.near = 0.01;
+  camera.far = 400;
+  camera.updateProjectionMatrix();
+}
+
 function draw(t) {
   resize();
+  applyView();
   /* One travelling wave, phase wrapping 0..1 over the loop, so the final
      frame and the first frame are the same geometry by construction rather
      than by a crossfade. */
@@ -160,5 +185,9 @@ window.__diorama = {
   THREE, scene, camera, renderer, post, studio, sheet, cast, room, seat, SCENE, LOOP,
   freeze(t) { frozen = t; draw(t); },
   play() { frozen = null; },
+  view(pos, tgt, span = 2.6) {
+    override = pos ? { pos, tgt: tgt || [0, 1, 0], span } : null;
+    draw(frozen ?? 0);
+  },
 };
 window.__dioramaReady = true;

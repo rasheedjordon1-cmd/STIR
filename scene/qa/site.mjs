@@ -12,8 +12,8 @@ for (const [name, w, h, dpr] of [['1440', 1440, 900, 1], ['1024', 1024, 820, 1],
   // horizontal overflow
   const over = await p.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   const loop = await p.evaluate(() => {
-    const v = document.querySelector('.hero-loop');
-    return v ? { src: v.currentSrc.split('/').pop(), playing: !v.paused, on: v.classList.contains('is-on'), btn: !!document.querySelector('.hero-motion') } : null;
+    const v = document.querySelector('.stage-loop');
+    return v ? { src: v.currentSrc.split('/').pop(), playing: !v.paused, on: v.classList.contains('is-on'), btn: !!document.querySelector('.stage-motion') } : null;
   });
   console.log(`${name}: overflow ${over}px  loop ${JSON.stringify(loop)}`);
   await p.close();
