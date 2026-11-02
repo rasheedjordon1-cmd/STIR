@@ -1,18 +1,25 @@
 # Paste checklist
 
-Before anything: confirm the assets are actually being served.
+Before anything: confirm Netlify is serving **this** build.
 
-```js
-fetch('https://stirnyc.netlify.app/assets/stir-squarespace.css')
-  .then(r => console.log(r.status === 200 ? 'assets live' : 'NOT SERVED: ' + r.status));
-```
+Paste the whole of `00-verify.js` into a browser console. It prints a
+PASS/FAIL line per asset and tells you whether it is safe to paste.
 
-If that is not 200, point Netlify's production branch at the branch
-carrying this work and deploy. Nothing below will look right until it is.
+Do not substitute a plain `fetch(...).status === 200` check. That is
+what was here before, and it passed for as long as the site was
+broken: the pre-rewrite stylesheet answered 200 too, with none of the
+classes these pages use. See README for the full account.
+
+If anything FAILs, point Netlify's production branch at the branch
+carrying this work and deploy. Nothing below will look right until the
+verifier is clean.
 
 ---
 
+- [ ] `00-verify.js` run in the console, all PASS
 - [ ] Settings → Advanced → Code Injection → **HEADER** ← `01-code-injection-header.html`
+      (re-paste this after **every** rebuild: it names the stylesheet
+       by content hash, so the previous one points at a dead file)
 - [ ] Settings → Advanced → Code Injection → **FOOTER** ← `02-code-injection-footer.html`
 - [ ] Design → Custom CSS is **empty** (LESS breaks the stylesheet — see README)
 - [ ] Page `/` — one full-width Code Block ← `03-page-home.html`

@@ -29,19 +29,43 @@ deploy of this repository, and Netlify builds **one branch**.
 
 At the time of writing, the branch carrying this work is
 `claude/stir-homepage-prototype-1wopp0`, and Netlify has not been
-pointed at it. **Until it is, every asset URL in this kit 404s and the
-Squarespace pages will render as unstyled markup.**
+pointed at it. **Until it is, the pages render against a stylesheet
+from before the 1 Nov rewrite and the two interior scenes 404.**
 
 > Netlify → Site configuration → Build & deploy → Branches and deploy
 > contexts → Production branch → `claude/stir-homepage-prototype-1wopp0`
 > → Deploy site.
 
-Confirm before pasting anything, in a browser console:
+Run **`ready/00-verify.js`** in a browser console before pasting
+anything. Paste the whole file; it prints a PASS/FAIL line per asset.
+
+### Why the old check missed this
+
+The check this replaces was:
 
 ```js
-fetch('https://stirnyc.netlify.app/assets/stir-squarespace.css')
-  .then(r => console.log(r.status === 200 ? 'assets live' : 'NOT SERVED: ' + r.status));
+fetch('.../assets/stir-squarespace.css').then(r => r.status === 200 ...)
 ```
+
+That URL returned **200** the whole time the site was broken. It was
+serving the pre-rewrite stylesheet — 140 KB of a stylesheet containing
+**zero** rules for `.scene-pair`, `.action-label`, `.ways`,
+`.evidence`, `.seg`, `.sign-rule` or `.stage-loop`, every one of which
+the current markup is built from. New markup against old CSS falls
+back to Squarespace's own defaults, which is what "it comes out messed
+up" looks like.
+
+Reachability cannot answer *which version*, so the stylesheet is now
+content-addressed — `stir-squarespace.<hash>.css`, a new name on every
+build. That makes the question answerable by the URL itself: the file
+either exists or it does not. It also closes the second half of the
+problem, which was that `/assets/*` is served `immutable` for a year,
+so a browser that had once loaded the old sheet went on serving it no
+matter what Netlify deployed.
+
+**The header injection changes whenever the stylesheet does.** After
+any rebuild, re-paste `ready/01-code-injection-header.html` — the old
+one points at a filename that no longer exists.
 
 ---
 

@@ -26,10 +26,17 @@
 # The stylesheet and the script under their UNHASHED names are a
 # different matter: their contents change while the name stays. The
 # build serves fingerprinted copies to the site itself, but these
-# names are still reachable — the Squarespace kit and any old bookmark
-# use them — so they must revalidate rather than pin for a year.
-# Getting this wrong is what served a pre-rebuild stylesheet to every
-# returning visitor.
+# names are still reachable from an old bookmark, so they must
+# revalidate rather than pin for a year. Getting this wrong is what
+# served a pre-rebuild stylesheet to every returning visitor.
+#
+# The Squarespace kit no longer appears here: it used to request
+# /assets/stir-squarespace.css, a stable name under a year of
+# immutable caching, so a browser that had once loaded the old sheet
+# kept serving it no matter what was deployed. That stylesheet is now
+# content-addressed (stir-squarespace.<hash>.css) and is covered by
+# the /assets/* rule above, which is the correct policy for a name
+# that changes whenever its contents do.
 [[headers]]
   for = "/assets/stir.css"
   [headers.values]
@@ -38,12 +45,6 @@
 
 [[headers]]
   for = "/assets/stir.js"
-  [headers.values]
-    Cache-Control = "public, max-age=0, must-revalidate"
-    Access-Control-Allow-Origin = "*"
-
-[[headers]]
-  for = "/assets/stir-squarespace.css"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
     Access-Control-Allow-Origin = "*"
