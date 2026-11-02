@@ -25,3 +25,7 @@ scene/standalone.html
 #   ./qa/encode.sh out/frames-desk out/media/hero-desk 24 0000
 scene/out/frames-*/
 scene/out/media/
+
+# Python bytecode from importing the build script in a test harness.
+__pycache__/
+*.pyc
