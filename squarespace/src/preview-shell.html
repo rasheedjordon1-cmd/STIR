@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STIR — Squarespace preview (mock host)</title>
+<!-- A deliberately hostile mock of Squarespace's document: their serif
+     headings, their green links, their disc bullets, their nested
+     padded wrappers, their header and footer. If the package survives
+     this, the defensive reset is doing its job. This file is NOT the
+     site; it is the test rig. -->
+<style>
+  body { margin: 0; font-family: Georgia, serif; color: #333; background: #fff; }
+  /* Colours here are deliberately loud and wrong. The mock used to
+     set the host's font and weight on headings but not its colour,
+     so a heading colour leaking from the real theme was a thing
+     this preview could not see — and it shipped a near-black
+     headline on a cobalt hero. If any of these show up in a
+     screenshot, the defensive reset has a hole. */
+  h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: normal; margin: 1em 0;
+                   letter-spacing: .02em; color: #B3002D; }
+  p, li, figcaption, label, span { color: #7A5C00; }
+  button { color: #B3002D; background: #EEE; }
+  svg { fill: #B3002D; }
+  p { margin: 1em 0; line-height: 1.8; }
+  a { color: #1a7f4b; text-decoration: underline; }
+  ul { list-style: disc; padding-left: 40px; margin: 1em 0; }
+  li { margin: .4em 0; }
+  button, input, textarea { font-family: Georgia, serif; border: 2px solid #999; border-radius: 8px; padding: 10px; }
+  img { border: 1px solid #ccc; }
+  #header { padding: 28px 40px; border-bottom: 1px solid #ddd; font-size: 22px; }
+  #sections { padding: 48px 0; }
+  .page-section { padding: 40px 0; }
+  .content-wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  .sqs-layout { padding: 0 24px; }
+  .sqs-row { padding: 0 16px; }
+  .sqs-block { padding: 17px 0; }
+  .sqs-block-content { padding: 0 8px; }
+  #footer-sections { padding: 60px 40px; background: #f4f4f4; }
+</style>
+<!--STIR-HEAD-->
+</head><body>
+<div class="sqs-announcement-bar-dropzone">Host announcement bar</div>
+<div id="header">Squarespace header &mdash; should be hidden on STIR pages</div>
+<div id="sections"><section class="page-section"><div class="content-wrapper">
+  <div class="sqs-layout"><div class="sqs-row"><div class="sqs-block">
+    <div class="sqs-block-content">
+<!--STIR-BODY-->
+    </div>
+  </div></div></div>
+</div></section></div>
+<div id="footer-sections">Squarespace footer &mdash; should be hidden on STIR pages</div>
+<!--STIR-FOOT-->
+</body></html>

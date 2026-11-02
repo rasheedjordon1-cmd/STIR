@@ -1,0 +1,17 @@
+{
+  "name": "stir-scene",
+  "private": true,
+  "type": "module",
+  "description": "Isolated pixel-diorama scene project for STIR. Renders a still and a short loop; the website consumes the exports only and never ships three.js.",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "python3 -m http.server 4180 --bind 127.0.0.1",
+    "shoot": "node qa/shoot.mjs",
+    "audit": "node qa/audit.mjs"
+  },
+  "devDependencies": {
+    "three": "^0.187.0",
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.64.1"
+  }
+}

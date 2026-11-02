@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STIR — hero composition test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{--cobalt:#0451AB;--ivory:#FAF2E6;--ink:#161310;--red:#F21B16;--red-deep:#C4120D}
+*{box-sizing:border-box;margin:0}
+body{background:var(--cobalt);color:var(--ivory);
+  font-family:"Bricolage Grotesque",system-ui,sans-serif;min-height:100vh;overflow-x:hidden}
+.nav{display:flex;justify-content:space-between;align-items:center;
+  padding:26px 56px;font-size:16px;font-weight:500}
+.nav img{height:26px;width:auto;display:block}
+.nav ul{display:flex;gap:34px;list-style:none;flex-wrap:wrap;justify-content:flex-end}
+.hero{display:grid;grid-template-columns:42% 1fr;gap:24px;align-items:center;
+  padding:0 56px 48px;min-height:calc(100vh - 78px)}
+h1{font-size:clamp(56px,7.6vw,118px);line-height:0.98;letter-spacing:-.02em;
+  font-weight:600;text-wrap:balance}
+.lede{margin-top:26px;font-size:20px;line-height:1.5;max-width:46ch;font-weight:400}
+.cta{margin-top:32px;display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+.btn{background:var(--red-deep);color:var(--ivory);text-decoration:none;
+  padding:16px 26px;font-weight:600;font-size:16px}
+.alt{color:var(--ivory);text-decoration:none;font-size:16px;font-weight:500;
+  border-bottom:1px solid rgba(250,242,230,.5);padding-bottom:3px}
+.slot img{width:100%;height:auto;display:block}
+@media(max-width:860px){
+  .nav{padding:18px 20px;font-size:14px}
+  .nav ul{gap:16px}
+  .nav img{height:22px}
+}
+/* At 320 the four nav items plus the wordmark cannot share one line without
+   pushing the document wider than the viewport. */
+@media(max-width:380px){
+  .nav{flex-direction:column;align-items:flex-start;gap:10px;padding:14px 16px}
+  .nav ul{gap:14px;justify-content:flex-start}
+  .hero{padding:0 16px 32px}
+}
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;gap:20px;padding:0 20px 36px;min-height:0;align-items:start}
+  h1{font-size:clamp(44px,13vw,64px)}
+  .lede{font-size:17px;margin-top:18px}
+  .cta{margin-top:22px}
+}
+</style></head><body>
+<div class="nav"><img src="stir-mark-ivory.png" alt="STIR">
+  <ul><li>Work</li><li>Services</li><li>About</li><li>Start a project</li></ul></div>
+<div class="hero">
+  <div>
+    <h1>ATTENTION SHOULD PAY.</h1>
+    <p class="lede">Brand direction, content and websites for food, hospitality and independent businesses. Built from real operating experience at LABAY Market, Brooklyn.</p>
+    <p class="cta"><a class="btn" href="#">Start a project</a><a class="alt" href="#">See the work</a></p>
+  </div>
+  <div class="slot"><img id="art" src="scene-desk.png"
+    alt="A conceptual pixel-art STIR studio: a small cream building with dark window frames and a red door, with one oversized red campaign sheet extending from an upper opening into open blue."></div>
+</div>
+<script>
+  // phone uses the reframed render, not a shrunken desktop poster
+  const m = matchMedia('(max-width: 860px)');
+  const set = () => { document.getElementById('art').src = m.matches ? 'scene-phone.png' : 'scene-desk.png'; };
+  m.addEventListener('change', set); set();
+</script>
+</body></html>

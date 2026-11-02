@@ -1,0 +1,514 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>STIR — Squarespace preview (mock host)</title>
+<!-- A deliberately hostile mock of Squarespace's document: their serif
+     headings, their green links, their disc bullets, their nested
+     padded wrappers, their header and footer. If the package survives
+     this, the defensive reset is doing its job. This file is NOT the
+     site; it is the test rig. -->
+<style>
+  body { margin: 0; font-family: Georgia, serif; color: #333; background: #fff; }
+  /* Colours here are deliberately loud and wrong. The mock used to
+     set the host's font and weight on headings but not its colour,
+     so a heading colour leaking from the real theme was a thing
+     this preview could not see — and it shipped a near-black
+     headline on a cobalt hero. If any of these show up in a
+     screenshot, the defensive reset has a hole. */
+  h1, h2, h3, h4 { font-family: Georgia, serif; font-weight: normal; margin: 1em 0;
+                   letter-spacing: .02em; color: #B3002D; }
+  p, li, figcaption, label, span { color: #7A5C00; }
+  button { color: #B3002D; background: #EEE; }
+  svg { fill: #B3002D; }
+  p { margin: 1em 0; line-height: 1.8; }
+  a { color: #1a7f4b; text-decoration: underline; }
+  ul { list-style: disc; padding-left: 40px; margin: 1em 0; }
+  li { margin: .4em 0; }
+  button, input, textarea { font-family: Georgia, serif; border: 2px solid #999; border-radius: 8px; padding: 10px; }
+  img { border: 1px solid #ccc; }
+  #header { padding: 28px 40px; border-bottom: 1px solid #ddd; font-size: 22px; }
+  #sections { padding: 48px 0; }
+  .page-section { padding: 40px 0; }
+  .content-wrapper { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+  .sqs-layout { padding: 0 24px; }
+  .sqs-row { padding: 0 16px; }
+  .sqs-block { padding: 17px 0; }
+  .sqs-block-content { padding: 0 8px; }
+  #footer-sections { padding: 60px 40px; background: #f4f4f4; }
+</style>
+<!-- STIR — paste into Settings > Advanced > Code Injection > HEADER.
+     NOT into Design > Custom CSS: Squarespace compiles that field with
+     LESS, which tries to evaluate calc(var(--stage-ar) * 1) as
+     arithmetic, throws, and silently drops the whole stylesheet. Code
+     Injection is passed through untouched. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./_preview.css">
+<script>
+  /* Where the footer script should load the hero loop from. Without
+     this it uses its own relative default, which on this host resolves
+     to <your-domain>/assets/... — a 404, after which the hero quietly
+     drops back to the still image and never moves. */
+  window.STIR_ASSETS = '../assets/';
+</script>
+<style>
+  /* Carried inline so the cobalt is painted before the stylesheet
+     arrives; otherwise the first frame is a white Squarespace page. */
+  body { background: #0451AB; }
+</style>
+
+</head><body>
+<div class="sqs-announcement-bar-dropzone">Host announcement bar</div>
+<div id="header">Squarespace header &mdash; should be hidden on STIR pages</div>
+<div id="sections"><section class="page-section"><div class="content-wrapper">
+  <div class="sqs-layout"><div class="sqs-row"><div class="sqs-block">
+    <div class="sqs-block-content">
+<!-- STIR — /collaborate
+     One Code Block, full width, on an otherwise empty page.
+     GENERATED from collaborate.html by scripts/build-squarespace.py. -->
+<div class="stir">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
+</defs></svg>
+
+<div class="strip">
+  <div class="wrap">
+    <span class="utility">Independent creative studio. Brooklyn, New York.</span>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="STIR — home">
+        <img src="../assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR">
+      </a>
+      <div class="nav-links">
+        <a href="/#what">What we do</a>
+        <a href="/labay">LABAY</a>
+        <a href="/about">Studio</a>
+        <a class="nav-start" href="/contact?type=business">Start a project</a>
+      </div>
+      <button class="nav-menu" type="button" aria-controls="nav-panel" aria-expanded="false">Menu</button>
+    </nav>
+    <div class="nav-panel" id="nav-panel" hidden>
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/about">Studio</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate with STIR</a>
+      <a href="/contact?type=business">Start a project</a>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="band wrap">
+  <span class="utility">Collaborate with STIR</span>
+  <h1 data-rise>What do you bring to the table?</h1>
+  <p class="lede">A sharp edit. A good eye. A space we should know about. The ability to get a complicated
+    shoot over the line.</p>
+  <p style="margin-top:var(--s24);max-width:60ch">We&rsquo;re building a network of people who can make
+    the work better. Tell us what you do well and where you&rsquo;d like to get involved.</p>
+</section>
+
+<section class="band wrap">
+  <div class="three">
+    <div><h2 class="sub">Bring your craft.</h2><p style="margin-top:var(--s12)">Design, photography, production,
+      editing, development, strategy, or the practical work that keeps a project moving.</p></div>
+    <div><h2 class="sub">Bring a connection.</h2><p style="margin-top:var(--s12)">A venue, a business, a community,
+      or someone we should be talking to.</p></div>
+    <div><h2 class="sub">Bring an idea.</h2><p style="margin-top:var(--s12)">Something specific you think we could
+      make together&mdash;and why it should exist.</p></div>
+  </div>
+  <p class="actions" style="margin-top:var(--s48)"><a class="action" href="/contact?type=collaborator"><span class="action-label">Introduce yourself</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a></p>
+  <p class="field-note" style="margin-top:var(--s16)">Share a link or an example if you have one.
+    We&rsquo;ll get in touch when there&rsquo;s a relevant project to discuss.</p>
+</section>
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="utility">What are you building?</span>
+    <div class="foot-sign"><img src="../assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content, and digital presence for
+      independent businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="actions" style="margin-bottom:var(--s32)">
+      <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      <a class="action-3" href="/contact?type=creator">Create with STIR</a>
+      <a class="action-3" href="/contact?type=collaborator">Collaborate with STIR</a>
+    </p>
+    <div class="foot-links">
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate</a>
+      <a href="/about">Studio</a>
+      <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+    </div>
+  </div>
+</footer>
+</div>
+
+    </div>
+  </div></div></div>
+</div></section></div>
+<div id="footer-sections">Squarespace footer &mdash; should be hidden on STIR pages</div>
+<!-- STIR — paste into Settings > Advanced > Code Injection > FOOTER.
+     Runs after the Code Blocks exist. -->
+<script>
+/* ════════════════════════════════════════════════════════════════════
+   STIR — behaviour.
+
+   Everything essential is already in the DOM and readable before this
+   file runs. Nothing here reveals content; it only adds the motion
+   score's three responses and attaches the scene loop.
+   ════════════════════════════════════════════════════════════════════ */
+document.documentElement.classList.add('js');
+
+(function () {
+  'use strict';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── The workbench illustrations ────────────────────────────────
+     Each runs once when its compartment enters view. They are
+     decorative (aria-hidden) and the copy never waits on them: if
+     this never runs, CSS leaves them in their completed state. */
+  (function () {
+    var cells = document.querySelectorAll('[data-bench]');
+    if (!cells.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      cells.forEach(function (c) { c.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-in');
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.35 });
+    cells.forEach(function (c) { io.observe(c); });
+  })();
+
+  /* ── C01: the mobile menu ───────────────────────────────────────
+     Opens in document flow. Closed items are not focusable because
+     the panel is [hidden], Escape closes and returns focus. */
+  (function () {
+    var btn = document.querySelector('.nav-menu');
+    var panel = document.getElementById('nav-panel');
+    if (!btn || !panel) return;
+    function setOpen(open) {
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.textContent = open ? 'Close' : 'Menu';
+    }
+    btn.addEventListener('click', function () {
+      setOpen(btn.getAttribute('aria-expanded') !== 'true');
+    });
+    panel.querySelectorAll('a').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hidden) { setOpen(false); btn.focus(); }
+    });
+    matchMedia('(min-width: 768px)').addEventListener('change', function (e) {
+      if (e.matches) setOpen(false);
+    });
+  })();
+
+  /* ── Section titles: one 8px rise, once, title only ─────────────── */
+  (function () {
+    var titles = document.querySelectorAll('h2[data-rise]');
+    if (!titles.length) return;
+    if (reduce || !('IntersectionObserver' in window)) {
+      titles.forEach(function (t) { t.classList.add('is-in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.2 });
+    titles.forEach(function (t) { io.observe(t); });
+  })();
+
+  /* ── The diorama loops ──────────────────────────────────────────
+     The still in the markup is the real image; this lays a seamless
+     14s loop over it. Every failure mode lands back on that still:
+
+       no JS                  -> the <picture> is already correct
+       prefers-reduced-motion -> no video is created at all
+       no <video> support     -> canPlayType is empty, we return
+       autoplay refused       -> play() rejects, the video is removed
+       file missing / error   -> 'error' removes it
+
+     Each loop's first frame IS its poster, so the crossfade is between
+     identical geometry and cannot be seen.
+
+     Three scenes use this: the hero, and the two interiors further
+     down. The hero attaches immediately because it is the first thing
+     on the page; the interiors wait until they are near the viewport,
+     so a visitor who never scrolls never pays for them.             */
+  (function () {
+    if (reduce) return;
+
+    var probe = document.createElement('video');
+    if (!probe.canPlayType) return;
+    var mp4 = probe.canPlayType('video/mp4; codecs="avc1.64001f"');
+    var webm = probe.canPlayType('video/webm; codecs="vp9"');
+    if (!mp4 && !webm) return;
+
+    /* Matches the <source media> on each still exactly, so a loop and
+       its poster are always the same composition. */
+    var narrow = matchMedia('(max-width: 767px)');
+    /* Where the assets live. The standalone site serves them beside the
+       page, so the relative default is right there. Anywhere this script
+       is pasted into someone else's document — the Squarespace build —
+       the page is on a different origin and a relative path resolves
+       against THAT host: it 404s, the error handler drops the video and
+       the scene silently falls back to the still. The host says where
+       the assets are by setting window.STIR_ASSETS before this runs. */
+    var root = window.STIR_ASSETS || 'assets/';
+
+    function attach(host, name, cls) {
+      var v = document.createElement('video');
+      v.className = cls;
+      v.muted = true;            /* before src: a later mute can be too
+                                    late for the autoplay check */
+      v.defaultMuted = true;
+      v.loop = true;
+      v.playsInline = true;
+      v.setAttribute('playsinline', '');
+      v.setAttribute('muted', '');
+      v.setAttribute('aria-hidden', 'true');
+      v.preload = 'auto';
+      v.tabIndex = -1;
+      v.src = root + 'scene/' + name + '-' + (narrow.matches ? 'phone' : 'desk') +
+              (webm ? '.webm' : '.mp4');
+
+      var userPaused = false, gone = false;
+      function drop() {
+        if (gone) return;
+        gone = true;
+        host.classList.remove('has-loop');
+        if (v.parentNode) v.parentNode.removeChild(v);
+        if (btn.parentNode) btn.parentNode.removeChild(btn);
+      }
+      v.addEventListener('error', drop);
+
+      /* Each loop carries its own control. One page-level control would
+         be tidier, but it would sit in the hero and be off-screen by the
+         time a visitor reaches the scenes at the bottom — a pause you
+         cannot reach from the moving thing is not a pause. */
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'stage-motion';
+      function label() {
+        var paused = v.paused;
+        btn.textContent = paused ? 'Play motion' : 'Pause motion';
+        btn.setAttribute('aria-label', (paused ? 'Play' : 'Pause') + ' the illustration\u2019s motion');
+        btn.setAttribute('aria-pressed', String(paused));
+      }
+      btn.addEventListener('click', function () {
+        if (v.paused) { userPaused = false; v.play().then(label, label); }
+        else { userPaused = true; v.pause(); label(); }
+      });
+      v.addEventListener('play', label);
+      v.addEventListener('pause', label);
+
+      /* A pause the visitor asked for is sticky: returning to the tab or
+         scrolling the scene back into view must not override it. */
+      function resume() {
+        if (gone || userPaused || !v.paused) return;
+        var r = v.play();
+        if (r && r.catch) r.catch(function () {});
+      }
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) { if (!v.paused) v.pause(); } else resume();
+      });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) {
+            if (e.isIntersecting) resume();
+            else if (!v.paused) v.pause();
+          });
+        }, { threshold: 0.12 }).observe(host);
+      }
+
+      v.addEventListener('canplay', function () {
+        if (gone) return;
+        var r = v.play();
+        if (r && r.then) {
+          r.then(function () {
+            host.appendChild(btn);
+            host.classList.add('has-loop');
+            v.classList.add('is-on');
+            label();
+          }, drop);                 /* autoplay refused: keep the still */
+        } else {
+          host.appendChild(btn);
+          host.classList.add('has-loop');
+          v.classList.add('is-on');
+          label();
+        }
+      }, { once: true });
+
+      host.appendChild(v);
+    }
+
+    var hero = document.querySelector('.stage[data-scene]');
+    if (hero) attach(hero, 'hero', 'stage-loop');
+
+    /* The interiors: three loops downloading at once on a page the
+       visitor has only seen the top of is not a trade worth making, so
+       these wait until they are within a screen of the viewport. */
+    var later = [].slice.call(document.querySelectorAll('[data-loop]'));
+    if (!later.length) return;
+    if (!('IntersectionObserver' in window)) {
+      later.forEach(function (el) { attach(el, el.getAttribute('data-loop'), 'scene-loop'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        attach(e.target, e.target.getAttribute('data-loop'), 'scene-loop');
+      });
+    }, { rootMargin: '100% 0px' });
+    later.forEach(function (el) { io.observe(el); });
+  })();
+})();
+
+/* ════════════════════════════════════════════════════════════════════
+   C06 — the typed intake.
+
+   The form works with JavaScript off: it is a real Netlify form, every
+   field is present in the markup, and the server sees whichever `type`
+   radio is selected. This only adds the route switching, client-side
+   validation messages, and a submit guard.
+   ════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+  var form = document.getElementById('inquiry');
+  if (!form) return;
+
+  var rows = form.querySelectorAll('[data-for]');
+  var radios = form.querySelectorAll('input[name="type"]');
+
+  /* Switching route never clears what has been typed: the rows are
+     hidden, not removed, and no value is reset. Hidden rows are also
+     taken out of the tab order and out of the accessibility tree. */
+  function applyType(type) {
+    if (help) help.textContent = HELP[type] || HELP.general;
+    rows.forEach(function (row) {
+      var on = row.getAttribute('data-for') === type;
+      row.hidden = !on;
+      row.querySelectorAll('input, textarea, select').forEach(function (f) {
+        f.disabled = !on;         /* a disabled field is not submitted,
+                                     so the record carries only the
+                                     questions the route actually asked */
+      });
+    });
+  }
+  radios.forEach(function (r) {
+    r.addEventListener('change', function () { if (r.checked) applyType(r.value); });
+  });
+
+  /* ?type= selects the route the visitor arrived through. */
+  /* Help text follows the route. The copy brief gives one line per
+     path; the field itself and its name never change, so the stored
+     record is unaffected. */
+  var HELP = {
+    business: 'What\u2019s working, what needs attention, and what would you like to change?',
+    creator: 'What do you make\u2014or want to make? Share a link or an idea.',
+    collaborator: 'What would you bring, and what kind of project would you like to work on?',
+    general: 'What would you like to talk about?'
+  };
+  var help = document.querySelector('[data-help]');
+
+  var params = new URLSearchParams(location.search);
+  var want = params.get('type');
+  var match = want && form.querySelector('input[name="type"][value="' + CSS.escape(want) + '"]');
+  if (match) match.checked = true;
+  applyType(form.querySelector('input[name="type"]:checked').value);
+
+  /* /businesses deep-links carry the engagement they asked about. */
+  var eng = { partnership: 'Ongoing partnership', project: 'Defined project' }[params.get('engagement')];
+  if (eng) {
+    var e = form.querySelector('input[name="engagement"][value="' + CSS.escape(eng) + '"]');
+    if (e) e.checked = true;
+  }
+
+  var status = document.getElementById('status');
+
+  var CHECKS = [
+    ['f-name', 'e-name', function (v) { return v.trim().length > 0; }],
+    ['f-email', 'e-email', function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }],
+    ['f-message', 'e-message', function (v) { return v.trim().length > 0; }],
+  ];
+  var busy = false;
+  var btn = document.getElementById('submit');
+  var label = btn.querySelector('.action-label');
+
+  function valid() {
+    var bad = null;
+    CHECKS.forEach(function (c) {
+      var f = document.getElementById(c[0]), err = document.getElementById(c[1]);
+      var ok = c[2](f.value);
+      f.setAttribute('aria-invalid', String(!ok));
+      err.hidden = ok;
+      if (!ok && !bad) bad = f;
+    });
+    return bad;
+  }
+  function settle(msg) {
+    busy = false;
+    btn.removeAttribute('aria-busy');
+    label.textContent = 'Send your note';
+    status.textContent = msg;
+  }
+
+  /* Submitted over fetch so the visitor stays on the page and gets the
+     real outcome: success only after the endpoint accepts it, and on
+     failure the answers are left exactly as typed. Without JavaScript
+     this is an ordinary POST and the endpoint answers in its own page,
+     which is why the form keeps a real action and method. */
+  form.addEventListener('submit', function (e) {
+    if (busy) { e.preventDefault(); return; }
+    var bad = valid();
+    if (bad) {
+      e.preventDefault();
+      status.textContent = 'Check the highlighted fields and send again.';
+      bad.focus();
+      return;
+    }
+    if (!window.fetch || !window.FormData) return;   /* let it post normally */
+    e.preventDefault();
+
+    busy = true;
+    btn.setAttribute('aria-busy', 'true');
+    label.textContent = 'Sending\u2026';
+    status.textContent = '';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' }
+    }).then(function (r) {
+      if (!r.ok) throw new Error('rejected ' + r.status);
+      settle('Your note is in. Thanks for introducing yourself.');
+      form.reset();
+      applyType(form.querySelector('input[name="type"]:checked').value);
+    }).catch(function () {
+      /* Nothing is cleared: the answers are still in the fields. */
+      settle('Your note couldn\u2019t be sent. Please try again, or email ' +
+             'rasheed@builtbystir.com. Your answers are still here.');
+    });
+  });
+})();
+
+</script>
+
+</body></html>

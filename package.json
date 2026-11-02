@@ -1,0 +1,17 @@
+{
+  "name": "stir-site",
+  "private": true,
+  "description": "STIR — static site. No build step and no runtime dependencies: index.html, about.html, contact.html and beta.html are served as written. These packages drive the QC scripts in scripts/qc only.",
+  "scripts": {
+    "qc:nav": "node scripts/qc/navtheme.mjs",
+    "qc:buttons": "node scripts/qc/buttons.mjs",
+    "qc:stage": "node scripts/qc/stage.mjs",
+    "qc:typeclip": "node scripts/qc/typeclip.mjs",
+    "qc:structure": "node scripts/qc/structure.mjs",
+    "serve": "python3 -m http.server 8777 --bind 127.0.0.1"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.1",
+    "pngjs": "^7.0.0"
+  }
+}

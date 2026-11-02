@@ -1,0 +1,31 @@
+# QC tooling only — install with: npm install playwright-core pngjs
+node_modules/
+
+# Diorama playbook, cloned to .claude/skills/diorama at 077f604.
+# Ignored as a holding action, not a decision: the clone carries its own .git,
+# so committing it as-is records a gitlink whose contents no clone would fetch,
+# and the tree is 44 MB (20 MB of demo media). Both choices below are Rasheed's.
+#   keep it in the repo  -> rm -rf .claude/skills/diorama/.git, drop this rule,
+#                           optionally delete media/, then commit the files
+#   keep it out          -> leave this rule; re-clone when needed:
+#                           git clone https://github.com/sloemo01/diorama.git \
+#                             .claude/skills/diorama && \
+#                           git -C .claude/skills/diorama checkout 077f604
+.claude/skills/diorama/
+
+# Scene project build artefacts (regenerate with: cd scene && npm i && node build.mjs)
+scene/node_modules/
+scene/dist/
+scene/standalone.html
+
+# Rendered frame sequences and the scene project's own copy of the exports.
+# 672 PNGs per build, and the exports the site actually serves are committed
+# at assets/scene/. Regenerate with:
+#   cd scene && W=820 H=620 DPR=1 OUT=out/frames-desk FRAME=desk node qa/render-loop.mjs
+#   ./qa/encode.sh out/frames-desk out/media/hero-desk 24 0000
+scene/out/frames-*/
+scene/out/media/
+
+# Python bytecode from importing the build script in a test harness.
+__pycache__/
+*.pyc

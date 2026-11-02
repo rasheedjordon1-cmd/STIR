@@ -1,0 +1,92 @@
+/* ════════════════════════════════════════════════════════════════════
+   HOST LAYER — what Squarespace needs that Netlify does not.
+
+   Appended after the scoped stylesheet. Everything here exists because
+   the page is a Code Block inside somebody else's document, not
+   because the design wants it.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* 1 · Let the block out of its wrappers.
+   Squarespace nests a page wrapper, a section, a row, a column and a
+   block, each with its own padding and max-width. The design is
+   full-bleed, so the block is pulled back to the viewport. */
+.stir {
+  width: 100vw;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  max-width: none;
+}
+/* The ancestors still clip and pad. These are the wrappers Squarespace
+   actually ships; the list is deliberately narrow so the rest of the
+   site keeps its own layout. */
+body:has(.stir) #sections,
+body:has(.stir) .page-section,
+body:has(.stir) .content-wrapper,
+body:has(.stir) .sqs-layout,
+body:has(.stir) .sqs-row,
+body:has(.stir) .sqs-block,
+body:has(.stir) .sqs-block-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  overflow: visible !important;
+}
+body:has(.stir) { overflow-x: hidden; background: #0451AB; }
+
+/* 2 · Hide the host's own chrome on STIR pages.
+   The design ships its own header and footer. Two of them on one page
+   is the single most template-looking failure available. */
+body:has(.stir) #header,
+body:has(.stir) .header,
+body:has(.stir) #footer-sections,
+body:has(.stir) .sqs-announcement-bar-dropzone { display: none !important; }
+
+/* 3 · Defensive reset.
+   Squarespace styles elements directly — `h1 { font-family: ... }`,
+   `a { color: ... }`, `ul { list-style: disc }` — and element
+   selectors in their sheet beat our inherited values. Everything the
+   design relies on is restated inside the scope. */
+.stir, .stir *, .stir *::before, .stir *::after {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+}
+/* Colour, for everything, in one rule.
+   Colour is inherited, and inheritance loses to ANY direct rule on the
+   element — so a single `span { color: ... }` in the host's theme
+   repaints text that never had a colour of its own in our stylesheet.
+   Naming the elements one at a time does not work: the hero headline
+   is built from <span>s, so defending h1 left the headline untouched
+   and it rendered off-colour on cobalt anyway.
+   `.stir *` is one class and beats a bare element selector. Every
+   colour our own design sets is on a class inside .stir, which is
+   more specific than this, so this restores normal inheritance
+   without overriding anything we meant. */
+.stir * { color: inherit; }
+.stir h1, .stir h2, .stir h3, .stir h4, .stir p, .stir ul, .stir li,
+.stir figure, .stir figcaption, .stir form, .stir fieldset, .stir blockquote {
+  margin: 0; padding: 0; border: 0; background: none;
+  font-family: inherit; letter-spacing: inherit; text-transform: none;
+  /* Colour is inherited, and inheritance loses to ANY direct rule on
+     the element. The host's theme sets a heading colour, so our ivory
+     reached every heading on the standalone site and none of them
+     here: the hero headline rendered near-black on cobalt. Restating
+     it as `inherit` puts the cascade back the way the design assumes. */
+  color: inherit;
+}
+.stir ul, .stir ol { list-style: none; }
+.stir a { color: inherit; text-decoration: none; background: none; }
+.stir a:hover { color: inherit; }
+.stir img, .stir video, .stir svg { max-width: 100%; display: block; border: 0; }
+.stir button, .stir input, .stir textarea, .stir select {
+  font: inherit; color: inherit; border-radius: 0;
+  -webkit-appearance: none; appearance: none;
+}
+.stir button { background: none; border: 0; }
+.stir strong, .stir b { font-weight: 500; color: inherit; }
+.stir svg { fill: currentColor; stroke: currentColor; }
+
+/* 4 · The header is fixed, not in flow.
+   On Netlify the header is the first thing in the document. Here the
+   document belongs to Squarespace, so the bar is pinned instead. */
+.stir .site-head { position: sticky; top: 0; z-index: 40; background: var(--cobalt); }
+.stir .strip { position: relative; z-index: 41; background: var(--cobalt); }

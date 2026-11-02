@@ -1,0 +1,205 @@
+# STIR on Squarespace
+
+The whole site as custom code. Squarespace handles hosting, the domain,
+SSL and billing. Netlify serves the files. Nothing about the result
+reads as a Squarespace template.
+
+> **Everything in `ready/` and both `_preview*` files is generated.**
+> The standalone site is the only source of truth. After changing any
+> page or `assets/stir.css` or `assets/stir.js`, run:
+>
+> ```
+> python3 scripts/build-squarespace.py
+> ```
+>
+> Hand-edit `squarespace/src/` — never the generated files. Patching
+> the output by hand is how this package previously lost its defensive
+> reset without anyone noticing.
+
+**Plan requirement:** Code Blocks and Code Injection need a Business
+plan or above. Verify the current tiering — Squarespace moves it.
+
+---
+
+## Read this before anything else
+
+The package loads its stylesheet, fonts, images and video from
+**`https://stirnyc.netlify.app/assets/`**. That origin is the Netlify
+deploy of this repository, and Netlify builds **one branch**.
+
+At the time of writing, the branch carrying this work is
+`claude/stir-homepage-prototype-1wopp0`, and Netlify has not been
+pointed at it. **Until it is, the pages render against a stylesheet
+from before the 1 Nov rewrite and the two interior scenes 404.**
+
+> Netlify → Site configuration → Build & deploy → Branches and deploy
+> contexts → Production branch → `claude/stir-homepage-prototype-1wopp0`
+> → Deploy site.
+
+Run **`ready/00-verify.js`** in a browser console before pasting
+anything. Paste the whole file; it prints a PASS/FAIL line per asset.
+
+### Why the old check missed this
+
+The check this replaces was:
+
+```js
+fetch('.../assets/stir-squarespace.css').then(r => r.status === 200 ...)
+```
+
+That URL returned **200** the whole time the site was broken. It was
+serving the pre-rewrite stylesheet — 140 KB of a stylesheet containing
+**zero** rules for `.scene-pair`, `.action-label`, `.ways`,
+`.evidence`, `.seg`, `.sign-rule` or `.stage-loop`, every one of which
+the current markup is built from. New markup against old CSS falls
+back to Squarespace's own defaults, which is what "it comes out messed
+up" looks like.
+
+Reachability cannot answer *which version*, so the stylesheet is now
+content-addressed — `stir-squarespace.<hash>.css`, a new name on every
+build. That makes the question answerable by the URL itself: the file
+either exists or it does not. It also closes the second half of the
+problem, which was that `/assets/*` is served `immutable` for a year,
+so a browser that had once loaded the old sheet went on serving it no
+matter what Netlify deployed.
+
+**The header injection changes whenever the stylesheet does.** After
+any rebuild, re-paste `ready/01-code-injection-header.html` — the old
+one points at a filename that no longer exists.
+
+---
+
+## Paste it in
+
+Everything you paste is in **`ready/`**, already resolved. No find and
+replace, nothing to upload.
+
+### 1 · Code Injection
+
+**Settings → Advanced → Code Injection.**
+
+| slot | file |
+|---|---|
+| HEADER | `ready/01-code-injection-header.html` |
+| FOOTER | `ready/02-code-injection-footer.html` |
+
+> **Design → Custom CSS stays empty.**
+>
+> Squarespace compiles that field with LESS, which tries to evaluate
+> expressions like `calc((100svh - 300px) * var(--stage-ar))` as
+> arithmetic, throws, and drops the whole stylesheet. The symptom is a
+> site that renders as a bare template with every image loading
+> perfectly — nothing looks broken enough to point at the CSS. Code
+> Injection is passed through untouched, so the stylesheet goes there.
+
+The header has to be in the head: a Code Block paints too late to stop
+Squarespace's white flash before the cobalt arrives.
+
+### 2 · The pages
+
+Create seven blank pages and give each one a single **Code Block**, set
+to full width. Remove every other block from those pages.
+
+| page | file |
+|---|---|
+| `/` | `ready/03-page-home.html` |
+| `/labay` | `ready/04-page-labay.html` |
+| `/businesses` | `ready/05-page-businesses.html` |
+| `/creators` | `ready/06-page-creators.html` |
+| `/collaborate` | `ready/07-page-collaborate.html` |
+| `/about` | `ready/08-page-about.html` |
+| `/contact` | `ready/09-page-contact.html` |
+
+The page URLs must match that table exactly — the navigation, the three
+audience panels and the footer all link to those paths.
+
+The stylesheet already neutralises Squarespace's padded wrappers and
+hides its header and footer on these pages, so their page settings do
+not matter.
+
+### 3 · The form
+
+Both builds post to the same Formspree endpoint, so there is one inbox
+and one path to verify rather than two. Netlify Forms only works on
+Netlify, which is why the Squarespace kit could not use it; running the
+same endpoint on both sides keeps the two builds identical.
+
+The id lives in `deploy.config.json` as `formspree_id`. Change it there
+and re-run the build; nothing else references it.
+
+**Formspree holds the first submission until you confirm it.** Send one
+yourself from the published page and click the link it emails you —
+until then nothing is delivered, however correct the form is.
+
+To go back to Netlify Forms on the Netlify build only: restore
+`action="/contact?sent=1"`, `data-netlify="true"`,
+`netlify-honeypot="bot-field"` and the hidden `form-name` field on
+`contact.html`. The Squarespace kit cannot use it either way.
+
+---
+
+## Where the assets come from
+
+`netlify.toml` already sends `Access-Control-Allow-Origin: *` on
+`/assets/*`, which the self-hosted fonts need cross-origin. That is why
+there is nothing to upload: Squarespace gets the markup, Netlify gets
+the files.
+
+**Do not delete that Netlify site.** It costs nothing and it is the
+asset origin for the entire Squarespace build.
+
+To host on Squarespace instead: upload under **Design → Custom CSS →
+Manage Custom Files**, put that URL prefix in `deploy.config.json` as
+`asset_base`, re-run the build. Squarespace will not host `.mp4`, so
+the scene loop and the LABAY clips stay on Netlify either way.
+
+---
+
+## What is different from the standalone build
+
+Same design system, same motion, same copy. Four adaptations, all of
+them because the page is a block inside someone else's document:
+
+1. **Everything is scoped to `.stir`.** Squarespace's stylesheet is on
+   the same page and its element selectors (`h1 { font-family: ... }`,
+   `a { color: ... }`, `ul { list-style: disc }`) beat our inherited
+   values. `src/host-layer.css` restates everything the design relies
+   on inside the scope.
+2. **`body { … }` becomes `.stir { … }`** in the generated stylesheet.
+   The base typography lives there; dropping it is how the preview once
+   showed Georgia on every heading.
+3. **Full bleed is viewport-based** (`width:100vw; margin-left:50%;
+   transform:translateX(-50%)`) because Squarespace nests five padded
+   wrappers around a Code Block.
+4. **The header is sticky, not in flow**, since the document scrolls
+   under it rather than beginning with it.
+
+## Check it before you paste
+
+```
+python3 -m http.server 8080      # from the repo root
+```
+
+Open `squarespace/_preview.html`. It renders the generated package
+inside a deliberately hostile mock of Squarespace's DOM — their serif
+headings, their green links, their disc bullets, their nested padded
+wrappers, their header and footer. Append the page name for the others
+(`_preview-page-labay.html`, `_preview-page-contact.html`, …).
+
+It reads the repo's own files, so it works with no network at all. The
+automated version of the same check:
+
+```
+node scene/qa/sqsp.mjs
+```
+
+That asserts the tokens resolve, the headings keep their font and
+weight, no host underline or bullet leaks in, the host chrome is
+hidden, the block escapes the wrappers, and nothing overflows.
+
+## What lives in `src/`
+
+| file | what it is |
+|---|---|
+| `host-layer.css` | wrapper neutralisers, the defensive reset, host-chrome hiding, viewport full-bleed, sticky header |
+| `preview-shell.html` | the hostile mock the previews are built into |

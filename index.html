@@ -3,567 +3,428 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>STIR — AI-native creative production</title>
-<meta name="description" content="Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%23F2F0EB'/%3E%3Ccircle cx='8' cy='8' r='4' fill='%231D4ED8'/%3E%3C/svg%3E">
+<title>STIR — Attention should pay.</title>
+<meta name="description" content="You’ve built something people should know about. We shape the brand, make the content, and build the digital presence to help it travel. Brooklyn, New York.">
+<link rel="canonical" href="SITE_URL/">
+<!-- SITE_URL is stamped with the live domain by scripts/prepare-deploy.sh
+     at build time, so cards resolve on branch previews too. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="STIR — Attention should pay.">
+<meta property="og:description" content="You’ve built something people should know about. We shape the brand, make the content, and build the digital presence to help it travel. Brooklyn, New York.">
+<meta property="og:url" content="SITE_URL/">
+<meta property="og:image" content="SITE_URL/assets/og-stir.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="STIR — Attention should pay.">
+<meta name="twitter:description" content="You’ve built something people should know about. We shape the brand, make the content, and build the digital presence to help it travel. Brooklyn, New York.">
+<meta name="twitter:image" content="SITE_URL/assets/og-stir.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --paper: #F2F0EB;
-    --ink: #111110;
-    --ink-60: #5C5A55;
-    --stamp: #1D4ED8;
-    --line: #C9C6BF;
-    --display: "Archivo", sans-serif;
-    --body: "Inter", sans-serif;
-    --mono: "IBM Plex Mono", monospace;
-    --space: 8px;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-  }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--body);
-    font-size: 15px;
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  :focus-visible {
-    outline: 2px solid var(--stamp);
-    outline-offset: 2px;
-  }
-
-  a { color: var(--stamp); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-
-  .wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
-
-  /* ---- Spec-field label vocabulary (caps, tracked, small) ---- */
-  .field-label {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 11px;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink);
-  }
-
-  .field-value {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink);
-  }
-
-  /* ---- Section scaffolding ---- */
-  .section { padding-top: 112px; }
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
-    border-top: 1px solid var(--ink);
-    padding-top: 12px;
-    margin-bottom: 40px;
-  }
-  .section-no {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--ink-60);
-  }
-
-  /* ================= SPEC (hero) ================= */
-  .hero { padding-top: 96px; }
-
-  .spec-sheet {
-    border: 1px solid var(--ink);
-    background: var(--paper);
-  }
-
-  .spec-masthead {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 24px;
-    padding: 32px 32px 24px;
-  }
-
-  .logotype {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: clamp(40px, 8vw, 72px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-  }
-  .logotype sup {
-    font-size: 0.28em;
-    font-weight: 600;
-    vertical-align: 1.6em;
-    letter-spacing: 0;
-  }
-
-  .tagline {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 12px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    margin-top: 12px;
-    color: var(--ink);
-  }
-
-  .status {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-    padding-top: 10px;
-  }
-  .status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--stamp);
-    animation: pulse 2.4s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
-
-  .spec-rows { border-top: 1px solid var(--ink); }
-
-  .spec-row {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    padding: 14px 32px;
-    border-top: 1px solid var(--line);
-  }
-  .spec-row:first-child { border-top: 0; }
-
-  .spec-actions {
-    display: flex;
-    gap: 16px;
-    padding: 24px 32px;
-    border-top: 1px solid var(--ink);
-    flex-wrap: wrap;
-  }
-
-  .btn {
-    font-family: var(--display);
-    font-weight: 600;
-    font-size: 13px;
-    letter-spacing: 0.02em;
-    color: var(--ink);
-    background: var(--paper);
-    border: 1px solid var(--ink);
-    border-radius: 0;
-    padding: 12px 28px;
-    cursor: pointer;
-    display: inline-block;
-  }
-  .btn:hover {
-    background: var(--ink);
-    color: var(--paper);
-    text-decoration: none;
-  }
-  .btn-primary { background: var(--ink); color: var(--paper); }
-  .btn-primary:hover { background: var(--stamp); border-color: var(--stamp); }
-
-  .hero-notes {
-    margin-top: 24px;
-    max-width: 52ch;
-  }
-  .hero-notes p { color: var(--ink-60); }
-  .hero-notes .proof { margin-top: 8px; }
-
-  /* Print-in load sequence */
-  @media (prefers-reduced-motion: no-preference) {
-    .print-in {
-      opacity: 0;
-      transform: translateY(-4px);
-      animation: print-in 0.28s ease-out forwards;
-    }
-    @keyframes print-in {
-      to { opacity: 1; transform: translateY(0); }
-    }
-  }
-
-  /* ================= OUTPUT ================= */
-  .output-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .asset { margin: 0; }
-
-  .asset-frame {
-    position: relative;
-    aspect-ratio: 1 / 1;
-    border: 1px solid var(--line);
-    background: var(--line);
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
-  .asset-frame video,
-  .asset-frame img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .asset-pending {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--ink-60);
-    background: var(--paper);
-    border: 1px solid var(--line);
-    padding: 6px 12px;
-  }
-
-  .asset-caption {
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    color: var(--ink-60);
-    padding-top: 10px;
-    display: inline-block;
-  }
-  .asset:hover .asset-caption,
-  .asset:focus-within .asset-caption {
-    text-decoration: underline;
-    text-underline-offset: 3px;
-  }
-
-  /* ================= PROCESS ================= */
-  .process-row {
-    display: grid;
-    grid-template-columns: 64px 180px 1fr;
-    gap: 24px;
-    align-items: baseline;
-    padding: 20px 0;
-    border-top: 1px solid var(--line);
-  }
-  .process-row:last-of-type { border-bottom: 1px solid var(--line); }
-
-  .process-no {
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--ink-60);
-  }
-  .process-desc { color: var(--ink-60); }
-  .process-desc strong {
-    color: var(--ink);
-    font-weight: 500;
-  }
-
-  .price {
-    margin-top: 40px;
-    font-family: var(--mono);
-    font-size: 15px;
-    color: var(--ink);
-  }
-
-  /* ================= CONTACT ================= */
-  .request-field {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 24px;
-    align-items: baseline;
-    border: 1px solid var(--ink);
-    padding: 24px 32px;
-  }
-  .request-field .field-value { font-size: 15px; }
-  .request-field a { color: var(--stamp); }
-
-  /* ================= FOOTER ================= */
-  .footer {
-    margin-top: 128px;
-    border-top: 1px solid var(--ink);
-    padding: 24px 0 48px;
-  }
-  .footer-inner {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-family: var(--mono);
-    font-size: 11px;
-    letter-spacing: 0.04em;
-    color: var(--ink-60);
-  }
-  .footer-logo {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 13px;
-    letter-spacing: 0;
-    color: var(--ink);
-  }
-
-  .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
-  }
-
-  /* ================= Mobile ================= */
-  @media (max-width: 720px) {
-    .section { padding-top: 96px; }
-
-    .spec-masthead {
-      flex-direction: column;
-      padding: 24px 20px 20px;
-    }
-    .status { padding-top: 0; }
-
-    .spec-row {
-      grid-template-columns: 1fr;
-      gap: 4px;
-      padding: 12px 20px;
-    }
-    .spec-actions { padding: 20px; }
-    .btn { flex: 1; text-align: center; }
-
-    .output-grid {
-      grid-template-columns: 1fr;
-      /* full-bleed on mobile */
-      margin-left: -24px;
-      margin-right: -24px;
-    }
-    .asset-frame { border-left: 0; border-right: 0; }
-    .asset-caption { padding-left: 24px; }
-
-    .process-row { grid-template-columns: 40px 1fr; }
-    .process-desc { grid-column: 2; }
-
-    .request-field {
-      grid-template-columns: 1fr;
-      gap: 8px;
-      padding: 20px;
-    }
-  }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/stir.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="arr" viewBox="0 0 20 20"><path d="M3 10H16M11 5L16 10L11 15"/></symbol>
+</defs></svg>
 
-<main>
+<div class="strip">
+  <div class="wrap">
+    <span class="utility">Independent creative studio. Brooklyn, New York.</span>
+  </div>
+</div>
 
-  <!-- ============ 01 · SPEC ============ -->
-  <header class="hero wrap">
-    <h1 class="sr-only">STIR — AI-native creative production</h1>
-
-    <div class="spec-sheet" aria-label="Studio specification">
-      <div class="spec-masthead print-in" style="animation-delay: 0ms">
-        <div>
-          <div class="logotype" aria-hidden="true">STIR<sup>®</sup></div>
-          <div class="tagline">AI-native creative production</div>
-        </div>
-        <div class="status">
-          <span class="status-dot" aria-hidden="true"></span>
-          ACCEPTING
-        </div>
+<header class="site-head">
+  <div class="wrap">
+    <nav class="nav" aria-label="Primary">
+      <a class="brand" href="/" aria-label="STIR — home">
+        <img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR">
+      </a>
+      <div class="nav-links">
+        <a href="/#what">What we do</a>
+        <a href="/labay">LABAY</a>
+        <a href="/about">Studio</a>
+        <a class="nav-start" href="/contact?type=business">Start a project</a>
       </div>
+      <button class="nav-menu" type="button" aria-controls="nav-panel" aria-expanded="false">Menu</button>
+    </nav>
+    <div class="nav-panel" id="nav-panel" hidden>
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/about">Studio</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate with STIR</a>
+      <a href="/contact?type=business">Start a project</a>
+    </div>
+  </div>
+</header>
+<main id="main">
 
-      <dl class="spec-rows">
-        <div class="spec-row print-in" style="animation-delay: 90ms">
-          <dt class="field-label">Output</dt>
-          <dd class="field-value">15–30 assets / month</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 180ms">
-          <dt class="field-label">Formats</dt>
-          <dd class="field-value">video · image · motion</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 270ms">
-          <dt class="field-label">Turnaround</dt>
-          <dd class="field-value">72h first concepts</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 360ms">
-          <dt class="field-label">Direction</dt>
-          <dd class="field-value">human</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 450ms">
-          <dt class="field-label">Production</dt>
-          <dd class="field-value">machine</dd>
-        </div>
-        <div class="spec-row print-in" style="animation-delay: 540ms">
-          <dt class="field-label">Est.</dt>
-          <dd class="field-value">Brooklyn, NY</dd>
-        </div>
-      </dl>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1 class="reveal-h1"><span>ATTENTION</span><span>SHOULD</span><span>PAY.</span></h1>
+      <div class="sign-rule" aria-hidden="true">
+        <i class="sign-mount a"></i><i class="sign-end"></i>
+        <i class="sign-tick trail"></i><i class="sign-tick"></i>
+      </div>
+      <p class="lede" style="margin-top:var(--s24)">You&rsquo;ve built something people should know about.
+        We shape the brand, make the content, and build the digital presence to help it travel.</p>
+      <p class="actions">
+        <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+        <a class="action-2" href="/labay">See the LABAY story <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+        <a class="action-3" href="/about">About the studio</a>
+      </p>
+    </div>
 
-      <div class="spec-actions print-in" style="animation-delay: 630ms">
-        <a class="btn btn-primary" href="#output">View output</a>
-        <a class="btn" href="#contact">Start a request</a>
+    <figure class="stage" data-scene>
+      <picture>
+        <source media="(max-width: 767px)" srcset="assets/scene/hero-phone-poster.webp" width="390" height="330">
+        <img class="stage-still" src="assets/scene/hero-desk-poster.webp"
+             width="820" height="620" fetchpriority="high" decoding="async"
+             alt="Illustration: a small cream studio building drawn as an isometric pixel diorama, its sign reading STIR, with one oversized red campaign sheet carrying the STIR wordmark billowing out of an upper opening into open blue. Someone works at a lit table inside; another figure walks to the open red door.">
+      </picture>
+    </figure>
+  </div>
+</section>
+
+<section class="band band--tight wrap" aria-labelledby="ways-t">
+  <h2 class="utility" id="ways-t">Three ways into STIR</h2>
+  <div class="ways">
+    <a href="/businesses">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 4h20v4H2z M3 10h3v10H3z M18 10h3v10h-3z M6 17h5v3H6z M13 11h5v9h-5z M7 11h3v3H7z"/></svg>
+      <h3>For businesses</h3>
+      <p>Make what people see match what you&rsquo;ve built.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+    <a href="/creators">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M7 3h8v3h7v15H2V6h5z M5 9v9h14V9z M9 11h6v5H9z M17 7h2v2h-2z"/></svg>
+      <h3>For creators</h3>
+      <p>Have an eye for a story? Show us what you make.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+    <a href="/collaborate">
+      <svg class="pixicon" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M2 3h10v5h4v5h-4v8H2V3z M5 6v12h4v-8h4V8H9V6z M15 3h7v18h-7v-3h4V6h-4z"/></svg>
+      <h3>Collaborate with STIR</h3>
+      <p>Bring your skill, your perspective, or an idea worth making.</p>
+      <svg class="arr" aria-hidden="true"><use href="#arr"/></svg>
+    </a>
+  </div>
+</section>
+
+<section class="band wrap" id="what" aria-labelledby="what-t">
+  <span class="utility">What we do</span>
+  <h2 id="what-t" data-rise>Give people a reason to pay attention. Then somewhere to take it.</h2>
+  <div class="two">
+    <div>
+      <p class="lede">A business gives us plenty to work with: a product people come back for, a founder
+        with a point of view, a story that hasn&rsquo;t reached enough people.</p>
+      <p style="margin-top:var(--s24)">We find what matters and build around it&mdash;from the way the brand
+        looks to the content people share and the website they land on.</p>
+      <p class="actions" style="margin-top:var(--s32)">
+        <a class="action-3" href="/businesses">See how we can work together</a>
+      </p>
+    </div>
+    <div class="rail" style="margin-top:0">
+      <div><b>Brand &amp; direction</b><span>Find the angle. Shape the identity. Give the business a recognizable voice.</span></div>
+      <div><b>Content &amp; campaigns</b><span>Turn what&rsquo;s happening in the business into something people want to watch, share, and remember.</span></div>
+      <div><b>Web &amp; digital presence</b><span>Make it easier for people to understand the offer, place an order, or get in touch.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band on-ivory" aria-labelledby="labay-t">
+  <div class="wrap">
+    <span class="utility">The flagship</span>
+    <h2 id="labay-t" data-rise>A neighborhood market.<br>A much larger reach.</h2>
+
+    <div class="two">
+      <figure class="evidence">
+        <img src="assets/labay/labay-market-interior.webp" width="1216" height="921" loading="lazy" decoding="async"
+             alt="Inside Labay Market in Brooklyn: a worker in an apron holding breadfruit, shelves of Caribbean goods behind her.">
+        <figcaption><span>Inside LABAY Market &middot; Little Caribbean, Brooklyn.</span></figcaption>
+      </figure>
+      <div>
+        <p class="lede">At LABAY Market, the story starts with Grenadian produce and the people around it.
+          Our work connects that world to the content, website, and relationships carrying it further.</p>
+        <p style="margin-top:var(--s24)">Creative direction. Short-form content. E-commerce. Events.
+          Wholesale coordination. One ongoing relationship across the business.</p>
+        <div class="metrics">
+          <div class="metric"><b>5M</b><span>Organic views across LABAY&rsquo;s channels, excluding creator collaborations.</span></div>
+          <!-- The same nine months counted two ways. Overlapping
+               totals: never added, and not people. -->
+          <div class="metric"><b>10M+</b><span>Including creator collaborations, across the same reported nine-month period. No paid ads.</span></div>
+        </div>
+        <p class="actions" style="margin-top:var(--s32)">
+          <a class="action-2" href="/labay">Inside the LABAY project <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+        </p>
       </div>
     </div>
+  </div>
 
-    <div class="hero-notes">
-      <p>Monthly creative engines for consumer brands. 15–30 finished assets. Directed by a human, produced at machine speed.</p>
-      <p class="proof">The operator behind LABAY Market's digital transformation.</p>
-    </div>
-  </header>
-
-  <!-- ============ 02 · OUTPUT ============ -->
-  <section class="section wrap" id="output" aria-labelledby="output-label">
-    <div class="section-head">
-      <span class="section-no">02</span>
-      <h2 class="field-label" id="output-label">Output</h2>
-    </div>
-
-    <div class="output-grid">
-      <!--
-        TEMPORARY: mock assets are hotlinked from Higgsfield's CDN while this
-        sandbox cannot download them. Localize before launch: save each image
-        to assets/<slug>.jpg (compressed, ~200KB) and point src back to it.
-        Drop real work into these slots: replace .asset-frame contents with
-        <video muted playsinline loop preload="none" poster="...">
-          <source src="..." type="video/mp4">
-        </video>
-        Keep each file under 4MB. Update the caption to the real record.
-      -->
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011106_b8d36656-c4bf-49bf-87b1-36ec69e4037e.png" width="720" height="720" aria-label="Sparkling water can with frozen splash on cobalt blue — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011750_f8a41767-0a61-4776-9166-cca05c6447a4.mp4" type="video/mp4">
-          </video>
+  <div class="wrap" style="margin-top:var(--s64)">
+    <span class="utility">LABAY through their lens</span>
+    <h3 style="margin:var(--s12) 0 var(--s24)">Selected videos from creators who visited and featured the market.</h3>
+    <ul class="wall" style="--wall-cols:3">
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Kemoy Martin">
+          <img src="assets/labay/creators/creator-01-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Kemoy Martin&rsquo;s video featuring Labay Market.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="assets/labay/creators/creator-01.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Kemoy Martin</b>
+          <span>Featured LABAY</span>
+          <a href="https://www.instagram.com/reel/DYvKWWZRby3/" rel="noopener" target="_blank">Watch &#8599;<span class="hp"> on Instagram, opens in a new tab</span></a>
         </div>
-        <figcaption class="asset-caption">NO. 001 · BEVERAGE · :15 VIDEO</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011108_e148dbb9-76cc-4193-a63d-16b61d6e9d3b.png" alt="Stacked fresh oranges on warm red-orange" loading="lazy" width="928" height="1152">
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Nicolas Nuvan">
+          <img src="assets/labay/creators/creator-04-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Nicolas Nuvan&rsquo;s video featuring Labay Market.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="assets/labay/creators/creator-04.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Nicolas Nuvan</b>
+          <span>Featured LABAY</span>
+          <a href="https://www.instagram.com/reel/C9vRyRUPNgx/" rel="noopener" target="_blank">Watch &#8599;<span class="hp"> on Instagram, opens in a new tab</span></a>
         </div>
-        <figcaption class="asset-caption">NO. 002 · GROCERY · KEY VISUAL</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011110_ee74357b-6a4d-48d3-ad9b-9c48b2b0ce71.png" width="720" height="720" aria-label="Frosted cream jar with cream smear on pale sage — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011753_1717872d-50fa-43c7-8f4e-8300d5d1314e.mp4" type="video/mp4">
-          </video>
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from MarcosWorldNyc">
+          <img src="assets/labay/creators/creator-02-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from MarcosWorldNyc&rsquo;s video featuring Labay Market.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="assets/labay/creators/creator-02.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>MarcosWorldNyc</b>
+          <span>Featured LABAY</span>
+          <a href="https://www.instagram.com/reel/Dax-jCpxhsr/" rel="noopener" target="_blank">Watch &#8599;<span class="hp"> on Instagram, opens in a new tab</span></a>
         </div>
-        <figcaption class="asset-caption">NO. 003 · SKINCARE · :06 LOOP</figcaption>
-      </figure>
+      </li>
+    </ul>
+  </div>
 
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011115_9d78b8d8-b503-406f-a7c1-599256cd4a48.png" width="720" height="720" aria-label="Running sneaker floating on acid yellow — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011756_64b90ae0-23e1-4c77-8772-787751a152de.mp4" type="video/mp4">
-          </video>
+  <div class="wrap" style="margin-top:var(--s48)">
+    <span class="utility">Out in the neighborhood</span>
+    <h3 style="margin:var(--s12) 0 var(--s24)">Events and activations that brought LABAY into new settings.</h3>
+    <ul class="wall" style="--wall-cols:3">
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Nike Tennis">
+          <img src="assets/labay/activations/act-01-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Nike Tennis: LABAY&rsquo;s fruit stand at a Nike Tennis block party produced by Kindred.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="assets/labay/activations/act-01.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Nike Tennis</b>
+          <span>August 2026 &middot; Marcy Playground, Brooklyn &middot; Produced by Kindred</span>
+          <p style="font-size:15px;margin-top:var(--s8)">STIR developed the menu and concept, coordinated staffing, and ran LABAY&rsquo;s stand on the day.</p>
         </div>
-        <figcaption class="asset-caption">NO. 004 · FOOTWEAR · :30 VIDEO</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <img src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011117_5e56c63b-2bb8-4e5d-b223-6cc68f25344f.png" alt="Amber whiskey bottle with rim light on espresso brown" loading="lazy" width="928" height="1152">
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from Hoopbus &times; Red Bull">
+          <img src="assets/labay/activations/act-02-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from Hoopbus &times; Red Bull: A community basketball event outside LABAY on Nostrand Avenue.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="assets/labay/activations/act-02.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>Hoopbus &times; Red Bull</b>
+          <span>Nostrand Avenue, Brooklyn</span>
+          <p style="font-size:15px;margin-top:var(--s8)">STIR coordinated LABAY&rsquo;s participation and the street-closure arrangements.</p>
         </div>
-        <figcaption class="asset-caption">NO. 005 · SPIRITS · KEY VISUAL</figcaption>
-      </figure>
-
-      <figure class="asset">
-        <div class="asset-frame">
-          <video muted playsinline loop preload="none" poster="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011119_a821a96d-64d9-4215-85f0-753cffb3f538.png" width="720" height="720" aria-label="Cotton t-shirt frozen mid-billow on crimson red — plays on hover">
-            <source src="https://d8j0ntlcm91z4.cloudfront.net/user_33kMKlQnYkvAH08GwbZk3KOLfna/hf_20260720_011758_6febe99a-35b5-44a0-b151-61ba790e2482.mp4" type="video/mp4">
-          </video>
+      </li>
+      <li class="tile">
+        <button class="tile-frame" type="button" data-clip aria-label="Play the clip from NYC Health + Hospitals">
+          <img src="assets/labay/activations/act-03-poster.webp" width="720" height="1280" loading="lazy" decoding="async"
+               alt="A still from NYC Health + Hospitals: LABAY&rsquo;s participation in a Caribbean Heritage Month celebration at South Brooklyn Health.">
+          <span class="tile-play" aria-hidden="true">Play</span>
+          <template data-src="assets/labay/activations/act-03.mp4"></template>
+        </button>
+        <div class="tile-cap">
+          <b>NYC Health + Hospitals</b>
+          <span>South Brooklyn Health</span>
+          <p style="font-size:15px;margin-top:var(--s8)">STIR produced and managed LABAY&rsquo;s participation.</p>
         </div>
-        <figcaption class="asset-caption">NO. 006 · APPAREL · :15 VIDEO</figcaption>
+      </li>
+    </ul>
+    <p class="actions" style="margin-top:var(--s32)">
+      <a class="action-2" href="/labay">Inside the LABAY project <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+    </p>
+  </div>
+</section>
+
+<section class="band on-ink" aria-labelledby="press-t">
+  <div class="wrap">
+    <span class="utility">LABAY in the press</span>
+    <h2 id="press-t" data-rise>Selected stories, features, and mentions of the market.</h2>
+    <div class="press">
+    <a href="https://www.newyorker.com/culture/the-food-scene/the-caribbean-restaurant-reinventing-the-momofuku-empire" rel="noopener" target="_blank">
+      <b>The New Yorker</b><span class="said">LABAY is named as a produce source for Kabawa.</span><span class="where">The Food Scene</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://nymag.com/strategist/article/what-vic-mensa-cant-live-without.html" rel="noopener" target="_blank">
+      <b>New York Magazine</b><span class="said">Vic Mensa names LABAY in &ldquo;What I Can&rsquo;t Live Without.&rdquo;</span><span class="where">The Strategist &middot; August 2026</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.ebony.com/video/labay-market-brooklyn-best-mangoes/" rel="noopener" target="_blank">
+      <b>Ebony</b><span class="said">&ldquo;Why This Market In Brooklyn Has The Best Mangos In NYC.&rdquo;</span><span class="where">Starr Rocque &middot; September 2025</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.timeout.com/newyork/news/heres-how-to-spend-a-day-in-black-owned-flatbush-brooklyn-022825" rel="noopener" target="_blank">
+      <b>Time Out New York</b><span class="said">LABAY is included in a guide to Black-owned Flatbush.</span><span class="where">Morgan Carter &middot; February 2025</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.grubstreet.com/article/best-summer-markets-delis-bakeries-nyc.html" rel="noopener" target="_blank">
+      <b>Grub Street</b><span class="said">LABAY featured in Grub Street.</span><span class="where"></span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+    <a href="https://www.thegrocerylistshow.com" rel="noopener" target="_blank">
+      <b>The Grocery List Show</b><span class="said">An episode filmed at the market.</span><span class="where">PBS Independent Lens &middot; June 2025</span><span class="go" aria-hidden="true">&#8599;</span>
+      <span class="hp">Opens in a new tab</span>
+    </a>
+  </div>
+  </div>
+</section>
+
+<section class="band wrap" aria-labelledby="method-t">
+  <span class="utility">The STIR approach</span>
+  <h2 id="method-t" data-rise class="hp">The STIR approach</h2>
+  <div class="bench">
+    <div class="bench-cell" data-bench="read">
+      <div class="bench-slot"><svg class="bench-art" viewBox="0 0 48 48" aria-hidden="true">
+  <!-- a field of squares; the viewfinder closes onto the one that matters.
+       The brackets sit clear of the cluster so they read at 96px. -->
+  <g fill="currentColor">
+    <rect x="4"  y="6"  width="6" height="6"/><rect x="14" y="4"  width="6" height="6"/>
+    <rect x="38" y="8"  width="6" height="6"/><rect x="4"  y="22" width="6" height="6"/>
+    <rect x="38" y="24" width="6" height="6"/><rect x="6"  y="38" width="6" height="6"/>
+    <rect x="18" y="40" width="6" height="6"/><rect x="36" y="38" width="6" height="6"/>
+  </g>
+  <rect class="bench-pick" x="20" y="19" width="10" height="10" fill="var(--signal)"/>
+  <g class="bench-finder" fill="currentColor">
+    <path d="M12 12h9v3h-6v6h-3z"/><path d="M38 12h-9v3h6v6h3z"/>
+    <path d="M12 36h9v-3h-6v-6h-3z"/><path d="M38 36h-9v-3h6v-6h3z"/>
+  </g>
+</svg></div>
+      <h3><i>01</i>Read the room.</h3>
+      <p>Every business has its own rhythm. We get close to the people, the product, and the customers to understand what&rsquo;s already working&mdash;and what deserves more attention.</p>
+      <p class="bench-out"><span>A clear direction.</span></p>
+    </div>
+    <div class="bench-cell" data-bench="set">
+      <div class="bench-slot"><svg class="bench-art" viewBox="0 0 48 48" aria-hidden="true">
+  <!-- three pieces close into the studio sign: an ivory board with the
+       step lifted from opposing corners and two mounting squares. The
+       same object as the sign on the building and the header cell. -->
+  <g class="bench-pieces" fill="currentColor">
+    <path class="bench-piece p1" d="M6 16h12v20H6V22h4v-6H6z"/>
+    <rect class="bench-piece p2" x="18" y="16" width="12" height="20"/>
+    <path class="bench-piece p3" d="M30 16h12v14h-4v6h-8z"/>
+  </g>
+  <g class="bench-mounts" fill="var(--cobalt)">
+    <rect x="10" y="24" width="4" height="4"/><rect x="34" y="24" width="4" height="4"/>
+  </g>
+</svg></div>
+      <h3><i>02</i>Set the scene.</h3>
+      <p>We give that direction a form people can recognize. The identity, the content, the website: each piece helps tell the story and gives people a reason to take the next step.</p>
+      <p class="bench-out"><span>Work ready to meet the world.</span></p>
+    </div>
+    <div class="bench-cell" data-bench="travel">
+      <div class="bench-slot"><svg class="bench-art" viewBox="0 0 48 48" aria-hidden="true">
+  <!-- the studio, reduced; the sheet leaves it -->
+  <g fill="currentColor">
+    <rect x="6" y="14" width="16" height="26"/>
+  </g>
+  <rect x="10" y="30" width="5" height="10" fill="var(--signal)"/>
+  <rect x="16" y="19" width="4" height="4" fill="var(--cobalt)"/>
+  <g class="bench-sheet" fill="var(--signal)">
+    <rect x="22" y="17" width="8" height="10"/>
+    <rect class="s2" x="30" y="15" width="8" height="13"/>
+    <rect class="s3" x="38" y="13" width="7" height="16"/>
+  </g>
+</svg></div>
+      <h3><i>03</i>Make it travel.</h3>
+      <p>We put the work where people can find it. For ongoing partners, we keep creating, learn from the response, and improve the path from first impression to inquiry or order.</p>
+      <p class="bench-out"><span>A presence that keeps moving.</span></p>
+    </div>
+  </div>
+</section>
+
+<section class="band wrap" aria-labelledby="studio-t">
+  <span class="utility">The studio</span>
+  <h2 id="studio-t" data-rise>Led by Rasheed Jordon.<br>Built in Brooklyn.</h2>
+  <div class="scene-pair scene-pair--room">
+    <div>
+      <p class="lede">STIR brings creative direction close to the business. Close enough to understand the
+        product, hear the customers, and see what needs to happen after a post goes live.</p>
+      <p style="margin-top:var(--s24)">That&rsquo;s the approach Rasheed is building the studio
+        around&mdash;with room for creators and collaborators who bring something of their own.</p>
+      <p class="actions" style="margin-top:var(--s24)">
+        <a class="action-2" href="/about">Meet Rasheed <svg class="arr" aria-hidden="true"><use href="#arr"/></svg></a>
+      </p>
+    </div>
+    <figure class="scene-art" data-loop="room">
+        <picture>
+          <source media="(max-width: 767px)" srcset="assets/scene/room-phone.webp" width="390" height="300">
+          <img src="assets/scene/room-desk.webp" width="620" height="460" loading="lazy" decoding="async"
+               alt="Illustration: a cutaway of a room inside the STIR studio, drawn as an isometric pixel diorama. Rasheed stands at a worktable, leaning over paper layouts with one hand on a proof; a camera and a monitor showing a cream and cobalt page sit beside him, a small red campaign proof hangs on the cream wall and the familiar red door stands open at one edge.">
+        </picture>
       </figure>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ============ 03 · PROCESS ============ -->
-  <section class="section wrap" id="process" aria-labelledby="process-label">
-    <div class="section-head">
-      <span class="section-no">03</span>
-      <h2 class="field-label" id="process-label">Process</h2>
+<section class="band wrap" aria-labelledby="close-t">
+  <div class="scene-pair scene-pair--seat">
+    <div>
+      <h2 id="close-t" data-rise>What are you building?</h2>
+      <p class="lede">Tell us what&rsquo;s working, what isn&rsquo;t, and where you want to take it.</p>
+      <p class="actions" style="margin-top:var(--s32)">
+        <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      </p>
+      <p style="margin-top:var(--s24)">Have something else to bring?
+        <a class="inline" href="/contact?type=creator">Create with STIR</a> &middot;
+        <a class="inline" href="/contact?type=collaborator">Collaborate with STIR</a></p>
     </div>
-
-    <div class="process-row">
-      <span class="process-no">01</span>
-      <span class="field-label">Brief</span>
-      <p class="process-desc">A 30-minute call. You bring the product; <strong>we leave with the brief.</strong></p>
-    </div>
-    <div class="process-row">
-      <span class="process-no">02</span>
-      <span class="field-label">Production</span>
-      <p class="process-desc">First concepts land <strong>within 72 hours.</strong></p>
-    </div>
-    <div class="process-row">
-      <span class="process-no">03</span>
-      <span class="field-label">Engine</span>
-      <p class="process-desc">A monthly cadence of <strong>15–30 finished assets.</strong></p>
-    </div>
-
-    <p class="price">Engines from $3,500/mo.</p>
-  </section>
-
-  <!-- ============ 04 · CONTACT ============ -->
-  <section class="section wrap" id="contact" aria-labelledby="contact-label">
-    <div class="section-head">
-      <span class="section-no">04</span>
-      <h2 class="field-label" id="contact-label">Contact</h2>
-    </div>
-
-    <div class="request-field">
-      <span class="field-label">Request →</span>
-      <span class="field-value"><a href="mailto:rasheedjordon1@gmail.com">rasheedjordon1@gmail.com</a></span>
-    </div>
-  </section>
+    <figure class="scene-art" data-loop="seat">
+        <picture>
+          <source media="(max-width: 767px)" srcset="assets/scene/seat-phone.webp" width="390" height="330">
+          <img src="assets/scene/seat-desk.webp" width="520" height="420" loading="lazy" decoding="async"
+               alt="Illustration: a corner of the STIR studio drawn as an isometric pixel diorama. An empty chair is pulled back from a worktable holding one cream project sheet with a small red mark, a pencil and a task lamp; finished work is stacked at the far edge and the red door stands open behind.">
+        </picture>
+      </figure>
+  </div>
+</section>
 
 </main>
-
-<footer class="footer">
-  <div class="wrap footer-inner">
-    <span class="footer-logo">STIR<sup style="font-size:0.6em">®</sup></span>
-    <span>2026</span>
-    <span>PRODUCED IN BROOKLYN</span>
+<footer class="site-foot">
+  <div class="wrap">
+    <span class="utility">What are you building?</span>
+    <div class="foot-sign"><img src="assets/stir-mark-cobalt.png" width="666" height="352" alt="STIR"></div>
+    <p class="lede" style="margin-bottom:var(--s32)">Brand direction, content, and digital presence for
+      independent businesses. Led by Rasheed Jordon. Built in Brooklyn.</p>
+    <p class="actions" style="margin-bottom:var(--s32)">
+      <a class="action" href="/contact?type=business"><span class="action-label">Start a project</span><span class="action-arrow"><svg class="arr" aria-hidden="true"><use href="#arr"/></svg></span></a>
+      <a class="action-3" href="/contact?type=creator">Create with STIR</a>
+      <a class="action-3" href="/contact?type=collaborator">Collaborate with STIR</a>
+    </p>
+    <div class="foot-links">
+      <a href="/#what">What we do</a>
+      <a href="/labay">LABAY</a>
+      <a href="/businesses">For businesses</a>
+      <a href="/creators">For creators</a>
+      <a href="/collaborate">Collaborate</a>
+      <a href="/about">Studio</a>
+      <a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a>
+    </div>
   </div>
 </footer>
 
-<script>
-  // Hover/tap plays any asset video that has been dropped into a slot.
-  // No-op while slots hold placeholders.
-  document.querySelectorAll('.asset').forEach(function (asset) {
-    var video = asset.querySelector('video');
-    if (!video) return;
-    var reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function play() { if (!reduced.matches) video.play(); }
-    function stop() { video.pause(); video.currentTime = 0; }
-    asset.addEventListener('mouseenter', play);
-    asset.addEventListener('mouseleave', stop);
-    asset.addEventListener('focusin', play);
-    asset.addEventListener('focusout', stop);
-    asset.addEventListener('touchstart', function () {
-      video.paused ? play() : stop();
-    }, { passive: true });
-  });
-</script>
-
+<script src="assets/stir.js" defer></script>
 </body>
 </html>

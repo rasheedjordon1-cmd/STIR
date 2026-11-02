@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STIR — Attention should pay</title>
+<meta name="description" content="STIR is a founder-led creative and growth practice in Brooklyn. Content, brand and websites for businesses with a street address.">
+<script>document.documentElement.classList.replace('no-js','js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400..600;1,7..72,400..500&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-bold.woff2") format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-medium.woff2") format("woff2");font-weight:500;font-display:block}
+@font-face{font-family:"Founders";src:url("assets/fonts/founders-grotesk-light.woff2") format("woff2");font-weight:300;font-display:block}
+
+:root{
+  /* Drenched, not restrained. The ground IS the brand colour; the
+     warm near-white is the ink. Reference: a 1984 public-television
+     station ident — one saturated field, warm type, a hard signal. */
+  --field:#0451AB;
+  --field-deep:#01336F;
+  --field-lift:#0A5CBC;
+  --ink:#161310;
+  --paper:#FAF2E6;
+  --signal:#F21B16;
+  /* Red on cobalt measures 1.78:1, so red is never type here. It is
+     a solid field or it is nothing. */
+
+  --sans:"Founders","Helvetica Neue",Arial,sans-serif;
+  --read:"Literata",Georgia,serif;
+
+  --gut:clamp(20px,4.4vw,72px);
+  --max:1640px;
+  --out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;background:var(--field)}
+body{
+  background:var(--field);color:var(--paper);
+  font-family:var(--sans);font-weight:300;
+  font-size:clamp(1rem,.45vw + .88rem,1.18rem);line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:clip;
+}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--max);margin-inline:auto;padding-inline:var(--gut)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+:focus-visible{outline:3px solid var(--paper);outline-offset:3px}
+
+/* ── IDENT ───────────────────────────────────────────────────────
+   Not a tracked mono strip. Founders at reading weight, sentence
+   case, the way a station names itself on screen. */
+.ident{
+  display:flex;align-items:baseline;justify-content:space-between;gap:1.5rem;
+  padding:clamp(16px,2.4vh,28px) var(--gut);font-size:.95rem;font-weight:500
+}
+.ident .on{display:inline-flex;align-items:baseline;gap:.55em}
+.ident .on b{
+  font-weight:700;background:var(--signal);color:var(--paper);
+  padding:.14em .5em .18em;line-height:1
+}
+.ident nav{display:flex;gap:clamp(1rem,2.4vw,2.6rem)}
+.ident nav a{position:relative;padding-bottom:.2em}
+.ident nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--paper);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s var(--out)
+}
+.ident nav a:hover::after,.ident nav a:focus-visible::after{transform:scaleX(1)}
+@media(max-width:720px){.ident .where{display:none}}
+
+/* ── HERO ────────────────────────────────────────────────────────── */
+.hero{padding:clamp(28px,6vh,76px) 0 clamp(26px,5vh,58px)}
+.head{position:relative}
+.head h1{
+  font-weight:700;text-transform:uppercase;
+  /* ceiling is 6rem — above that it is shouting, not designing */
+  font-size:clamp(2.7rem,8.6vw,6rem);
+  line-height:.88;letter-spacing:-.03em;text-wrap:balance
+}
+.head h1 .b{display:block}
+/* The signal is a field the word sits inside, never coloured type. */
+.head h1 mark{background:var(--signal);color:var(--paper);padding:0 .12em;margin-left:-.06em}
+#sync{position:absolute;inset:0;pointer-events:none}
+html.js .head[data-sync] h1{visibility:hidden}
+
+.under{
+  margin-top:clamp(26px,4vh,52px);
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(22px,3vw,64px);align-items:end
+}
+.under p{font-family:var(--read);font-size:clamp(1.05rem,1.15vw,1.35rem);line-height:1.5;max-width:46ch}
+.under p em{font-style:italic}
+.under .go{justify-self:end}
+@media(max-width:860px){.under{grid-template-columns:1fr;align-items:start}.under .go{justify-self:start}}
+
+/* ── THE ACTION ────────────────────────────────────────────────── */
+.go{
+  display:inline-flex;align-items:center;gap:1.1em;
+  font-weight:700;text-transform:uppercase;font-size:1rem;letter-spacing:.01em;
+  background:var(--paper);color:var(--field-deep);
+  padding:1.05em 1.4em;position:relative;overflow:hidden;isolation:isolate
+}
+.go::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--signal);
+  transform:translateY(101%);transition:transform .34s var(--out)}
+.go span:last-child{transition:transform .34s var(--out)}
+.go:hover,.go:focus-visible{color:var(--paper)}
+.go:hover::before,.go:focus-visible::before{transform:translateY(0)}
+.go:hover span:last-child{transform:translate(4px,-4px)}
+
+/* ── FOOTAGE ─────────────────────────────────────────────────────
+   Big. The register says a brand page where type carries all the
+   visual weight is the failure mode, and there is real footage here. */
+.reel-wide{position:relative;margin-top:clamp(20px,3vh,40px)}
+.reel-wide img{width:100%;height:clamp(320px,64vh,720px);object-fit:cover;object-position:center 44%}
+/* No panel, no side stripe. The caption sits in the field. */
+.cap{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:.5em 1.1em;
+  padding-top:.85rem;font-size:.95rem
+}
+.cap b{font-weight:700;text-transform:uppercase;letter-spacing:-.005em}
+.cap span{font-weight:300;opacity:.86}
+
+/* ── SECTIONS ────────────────────────────────────────────────────
+   No tracked eyebrow above anything. The heading is the heading. */
+.sec{padding:clamp(56px,11vh,150px) 0}
+.sec--deep{background:var(--field-deep)}
+.say{
+  font-weight:700;text-transform:uppercase;
+  font-size:clamp(1.9rem,5.2vw,4rem);line-height:.94;letter-spacing:-.028em;
+  max-width:17ch;text-wrap:balance
+}
+.say mark{background:var(--signal);color:var(--paper);padding:0 .1em}
+.offer{
+  margin-top:clamp(36px,6vh,84px);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:clamp(26px,3vw,60px)
+}
+.offer h3{
+  font-weight:700;text-transform:uppercase;font-size:clamp(1.1rem,1.6vw,1.45rem);
+  line-height:1;letter-spacing:-.015em;padding-bottom:.7rem;
+  border-bottom:2px solid var(--paper)
+}
+.offer p{margin-top:1rem;font-family:var(--read);font-size:1.02rem;line-height:1.52;opacity:.92}
+
+.strip{
+  margin-top:clamp(36px,6vh,80px);
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:clamp(10px,1.2vw,20px)
+}
+.strip figure{position:relative;background:var(--field-deep);overflow:hidden}
+.strip video,.strip img{width:100%;aspect-ratio:9/16;object-fit:cover}
+.strip figcaption{padding-top:.7rem;font-size:.9rem;font-weight:500}
+.strip figcaption span{display:block;font-weight:300;opacity:.82;margin-top:.15rem}
+
+/* ── SIGN-OFF ────────────────────────────────────────────────────── */
+.end{background:var(--signal);padding:clamp(60px,13vh,170px) var(--gut)}
+.end h2{
+  font-weight:700;text-transform:uppercase;
+  font-size:clamp(2rem,7vw,6rem);line-height:.88;letter-spacing:-.03em;
+  max-width:13ch;text-wrap:balance
+}
+.end .go{background:var(--paper);color:var(--signal);margin-top:clamp(28px,4vh,56px)}
+.end .go::before{background:var(--ink)}
+.end .go:hover{color:var(--paper)}
+.end .sig{margin-top:clamp(34px,5vh,70px);font-size:.95rem;font-weight:500;line-height:1.9}
+.end .sig a{border-bottom:2px solid rgba(250,242,230,.45)}
+.end .sig a:hover{border-bottom-color:var(--paper)}
+
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<header class="ident">
+  <span class="on"><b>On air</b> <span class="where">STIR, Brooklyn</span></span>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#offer">What we do</a>
+    <a href="mailto:rasheed@builtbystir.com">Contact</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="head" data-sync>
+      <h1><span class="b">Attention</span><span class="b">should <mark>pay.</mark></span></h1>
+      <canvas id="sync" aria-hidden="true"></canvas>
+    </div>
+    <div class="under">
+      <p>I make content, brands and websites for businesses with a street address: the kind people walk past, call, or order from. <em>I've run one myself.</em></p>
+      <p class="go-wrap"><a class="go" href="mailto:rasheed@builtbystir.com"><span>Start a project</span><span aria-hidden="true">&#8599;</span></a></p>
+    </div>
+
+    <figure class="reel-wide">
+      <img src="assets/labay/labay-market-interior.webp" width="1216" height="921" fetchpriority="high"
+           alt="Inside Labay Market, Brooklyn: a worker in a patchwork apron holding breadfruit, shelves of Caribbean goods stacked behind her.">
+      <figcaption class="cap"><b>Labay Market, Nostrand Avenue</b><span>The business I ran. Content, brand, website.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="sec sec--deep" id="offer">
+  <div class="wrap">
+    <h2 class="say">Most small businesses are not boring. They are <mark>badly filmed.</mark></h2>
+    <div class="offer">
+      <div>
+        <h3>Content &amp; campaigns</h3>
+        <p>Photography, short-form video, launch content, creator coordination. The reason somebody stops.</p>
+      </div>
+      <div>
+        <h3>Brand &amp; websites</h3>
+        <p>Positioning, identity, and a site that makes the next step obvious. Quote, call, order, visit.</p>
+      </div>
+      <div>
+        <h3>Ongoing support</h3>
+        <p>Monthly planning, production, publishing, site updates. The part that compounds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <div class="wrap">
+    <h2 class="say">Filmed on the floor, on Nostrand Avenue.</h2>
+    <div class="strip">
+      <figure>
+        <video src="assets/labay/activations/act-01.mp4" poster="assets/labay/activations/act-01-poster.webp" muted loop playsinline preload="none" aria-label="Hoopbus parked outside Labay Market"></video>
+        <figcaption>Hoopbus × Red Bull<span>Street activation</span></figcaption>
+      </figure>
+      <figure>
+        <video src="assets/labay/creators/creator-01.mp4" poster="assets/labay/creators/creator-01-poster.webp" muted loop playsinline preload="none" aria-label="Creator filming inside the market"></video>
+        <figcaption>Kemoy Martin<span>Creator collaboration</span></figcaption>
+      </figure>
+      <figure>
+        <video src="assets/labay/activations/act-02.mp4" poster="assets/labay/activations/act-02-poster.webp" muted loop playsinline preload="none" aria-label="In-store activation at Labay Market"></video>
+        <figcaption>Customer appreciation<span>In-store</span></figcaption>
+      </figure>
+      <figure>
+        <video src="assets/labay/labay-social-01.mp4" poster="assets/labay/labay-social-01-poster.webp" muted loop playsinline preload="none" aria-label="Social content produced in store"></video>
+        <figcaption>Social content<span>Short-form</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="end">
+  <div class="wrap" style="padding-inline:0">
+    <h2>Tell us about the business.</h2>
+    <a class="go" href="mailto:rasheed@builtbystir.com"><span>Start a project</span><span aria-hidden="true">&#8599;</span></a>
+    <p class="sig">Rasheed Jordon, Founder of STIR<br>Brooklyn, New York<br><a href="mailto:rasheed@builtbystir.com">rasheed@builtbystir.com</a></p>
+  </div>
+</section>
+
+<script>
+/* ── SYNC ──────────────────────────────────────────────────────────
+   One disturbance. The headline arrives as a signal acquiring lock,
+   resolves left to right, then cuts. It runs once and cannot cost
+   legibility, because what it resolves into is the real text that was
+   in the DOM the whole time.                                       */
+(function () {
+  var head = document.querySelector('.head[data-sync]');
+  var cv = document.getElementById('sync');
+  if (!head || !cv || !cv.getContext) { if (head) head.removeAttribute('data-sync'); return; }
+  function reveal() { head.removeAttribute('data-sync'); cv.style.display = 'none'; }
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { reveal(); return; }
+
+  var ctx = cv.getContext('2d');
+  var RAMP = '.:-=+*#%@', NOISE = '/\\|_-=+*#%<>[]{}10';
+  var cells = [], px = 0, cw = 0, ch = 0, t0 = 0, DUR = 980;
+
+  function build() {
+    var box = head.getBoundingClientRect();
+    if (!box.width || !box.height) return false;
+    var dpr = Math.min(devicePixelRatio || 1, 2);
+    cv.width = Math.round(box.width * dpr); cv.height = Math.round(box.height * dpr);
+    cv.style.width = box.width + 'px'; cv.style.height = box.height + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    px = Math.max(6, Math.round(box.width / 200)); cw = px * 0.6; ch = px * 1.05;
+    var cols = Math.ceil(box.width / cw), rows = Math.ceil(box.height / ch);
+
+    var off = document.createElement('canvas');
+    off.width = Math.max(1, Math.round(box.width)); off.height = Math.max(1, Math.round(box.height));
+    var o = off.getContext('2d');
+    o.fillStyle = '#fff'; o.fillRect(0, 0, off.width, off.height);
+    o.textBaseline = 'alphabetic';
+    var drew = false;
+    head.querySelectorAll('.b').forEach(function (line) {
+      var cs = getComputedStyle(line), r = line.getBoundingClientRect();
+      if (!r.width) return;
+      o.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+      o.fillStyle = '#000';
+      o.fillText(line.textContent.toUpperCase(), r.left - box.left,
+                 r.bottom - box.top - parseFloat(cs.fontSize) * 0.17);
+      drew = true;
+    });
+    if (!drew) return false;
+    var d;
+    try { d = o.getImageData(0, 0, off.width, off.height).data; } catch (e) { return false; }
+
+    cells = [];
+    for (var y = 0; y < rows; y++) for (var x = 0; x < cols; x++) {
+      var sx = Math.min(off.width - 1, Math.round(x * cw + cw / 2));
+      var sy = Math.min(off.height - 1, Math.round(y * ch + ch / 2));
+      var v = 1 - d[(sy * off.width + sx) * 4] / 255;
+      if (v < 0.12) continue;
+      cells.push({ x: x * cw, y: y * ch,
+        g: RAMP.charAt(Math.min(RAMP.length - 1, Math.round(v * (RAMP.length - 1)))),
+        lock: (x / cols) * 0.6 + Math.random() * 0.3 });
+    }
+    return cells.length > 0;
+  }
+
+  function frame(now) {
+    var p = Math.min(1, (now - t0) / DUR);
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.font = '500 ' + px + 'px ui-monospace, Menlo, monospace';
+    ctx.textBaseline = 'top';
+    for (var i = 0; i < cells.length; i++) {
+      var c = cells[i];
+      if (p < c.lock) {
+        if (Math.random() > 0.5) continue;
+        ctx.fillStyle = 'rgba(250,242,230,.28)';
+        ctx.fillText(NOISE.charAt((Math.random() * NOISE.length) | 0), c.x, c.y);
+      } else {
+        ctx.fillStyle = '#FAF2E6';
+        ctx.fillText(c.g, c.x, c.y);
+      }
+    }
+    if (p < 1) requestAnimationFrame(frame); else reveal();
+  }
+
+  function go() { if (!build()) { reveal(); return; } t0 = performance.now(); requestAnimationFrame(frame); }
+  if (document.fonts && document.fonts.ready) {
+    var bail = setTimeout(go, 1400);
+    document.fonts.ready.then(function () { clearTimeout(bail); go(); });
+  } else { go(); }
+})();
+
+/* Reels play only on screen; four autoplaying videos is a battery bill. */
+(function () {
+  var v = [].slice.call(document.querySelectorAll('.strip video'));
+  if (!v.length || !('IntersectionObserver' in window)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var el = e.target;
+      if (e.isIntersecting) {
+        if (el.preload === 'none') { el.preload = 'auto'; el.load(); }
+        var q = el.play(); if (q && q.catch) q.catch(function () {});
+      } else if (!el.paused) el.pause();
+    });
+  }, { threshold: 0.35 });
+  v.forEach(function (x) { io.observe(x); });
+})();
+</script>
+</body>
+</html>
